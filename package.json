@@ -1,0 +1,115 @@
+{
+  "name": "bits",
+  "main": "index.js",
+  "author": "Mike Barkmin",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "lerna run test --no-private --stream",
+    "test:watch": "lerna run test:watch",
+    "test:ci": "lerna run test:ci",
+    "test:coverage": "lerna run test:coverage",
+    "lint": "lerna run lint --no-private --stream",
+    "clean": "lerna run clean --no-private --stream",
+    "build": "lerna run build --no-private --stream",
+    "prestart": "yarn && yarn bootstrap",
+    "boot": "yarn prestart && yarn build",
+    "start": "yarn build && yarn storybook",
+    "bootstrap": "lerna bootstrap --use-workspaces",
+    "commit": "git-cz",
+    "release": "auto shipit --base-branch main",
+    "storybook": "start-storybook -s .storybook/public -p 6006",
+    "storybook:build": "build-storybook -s .storybook/public",
+    "storybook:build:docs": "build-storybook -s .storybook/public --docs"
+  },
+  "dependencies": {
+    "@auto-it/all-contributors": "^10.18.1",
+    "@auto-it/conventional-commits": "^10.18.1",
+    "@auto-it/first-time-contributor": "^10.18.1",
+    "@babel/core": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.13.9",
+    "@babel/preset-env": "^7.13.9",
+    "@babel/preset-react": "^7.12.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@emotion/babel-preset-css-prop": "^11.2.0",
+    "@emotion/cache": "^11.1.3",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
+    "@hookform/resolvers": "^1.3.5",
+    "@octokit/core": "^3.2.5",
+    "@openpatch/patches": "^1.6.1",
+    "@storybook/addon-a11y": "^6.1.21",
+    "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-controls": "^6.1.21",
+    "@storybook/addon-docs": "^6.1.21",
+    "@storybook/addon-essentials": "^6.1.21",
+    "@storybook/addon-links": "^6.1.21",
+    "@storybook/addon-storysource": "^6.1.21",
+    "@storybook/addon-toolbars": "^6.1.21",
+    "@storybook/addon-viewport": "^6.1.21",
+    "@storybook/cli": "^6.1.21",
+    "@storybook/react": "^6.1.21",
+    "@testing-library/dom": "^7.29.6",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@types/jest": "^26.0.20",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "auto": "^10.18.1",
+    "babel-jest": "^26.6.3",
+    "babel-loader": "^8.2.2",
+    "concurrently": "^6.0.0",
+    "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^4.3.8",
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3",
+    "lerna": "^4.0.0",
+    "plop": "^2.7.4",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^6.15.4",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.5.2",
+    "typescript": "^4.2.2",
+    "typescript-styled-plugin": "^0.15.0",
+    "webpack": "^5.24.3",
+    "zod": "^2.0.0-beta.30"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
+      "pre-commit": "pretty-quick --staged && yarn test"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "auto": {
+    "plugins": [
+      "npm",
+      "all-contributors",
+      "conventional-commits",
+      "first-time-contributor"
+    ]
+  }
+}
