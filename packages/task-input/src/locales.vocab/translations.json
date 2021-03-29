@@ -1,0 +1,53 @@
+{
+  "add-pattern": {
+    "message": "Add Pattern"
+  },
+  "delete-pattern": {
+    "message": "Delete"
+  },
+  "error": {
+    "message": "Error"
+  },
+  "info": {
+    "message": "Info"
+  },
+  "instruction": {
+    "message": "Instruction"
+  },
+  "message": {
+    "message": "Message"
+  },
+  "pattern": {
+    "message": "Pattern"
+  },
+  "pattern-error-duplicate": {
+    "message": "A pattern can not contain duplicates"
+  },
+  "pattern-error-exists": {
+    "message": "This pattern already exists"
+  },
+  "pattern-error-invalid": {
+    "message": "Not a valid pattern"
+  },
+  "pattern-regex": {
+    "message": "You can input a RegEx"
+  },
+  "pattern-title": {
+    "message": "Pattern {pattern}"
+  },
+  "patterns": {
+    "message": "Patterns"
+  },
+  "severity": {
+    "message": "Severity"
+  },
+  "success": {
+    "message": "Success"
+  },
+  "up": {
+    "message": "Up"
+  },
+  "warning": {
+    "message": "Warning"
+  }
+}

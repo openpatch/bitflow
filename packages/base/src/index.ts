@@ -1,75 +1,46 @@
-import { FC } from "react";
-
 export * from "./lerpColor";
 export * from "./levenshtein";
+export * from "./schemas";
 export * from "./uuid";
 
-export type LocaleFunction = (...params: any[]) => string;
-export type Locales = Record<string, string | LocaleFunction>;
-
-export interface Title {}
-
-export interface TitleProps<T extends Title> {
-  title: T;
-  locales?: Locales;
-}
-export interface TitleFormProps {
-  locales?: Locales;
-}
-
-export interface Privacy {}
-
-export interface PrivacyProps<P extends Privacy> {
-  privacy: P;
-  locales?: Locales;
-}
-export interface PrivacyFormProps {
-  locales?: Locales;
-}
-
-export interface Input {}
-
-export interface InputProps<I extends Input> {
-  input: I;
-  locales?: Locales;
-}
-export interface InputFormProps {
-  locales?: Locales;
-}
+import { Input, Privacy, Task, TaskAnswer, TaskResult, Title } from "./schemas";
 
 export interface Action {
   type: string;
   payload?: any;
 }
 
-export interface Answer {}
-export interface Result {
-  state: "correct" | "wrong" | "unknown" | "manual";
-  allowRetry?: boolean;
-  feedback?: any;
-}
-export interface Feedback {}
-export interface FeedbackFormProps<T extends Task, E extends Evaluation> {
-  locales?: Locales;
-  task: T;
-  taskLocales?: Locales;
-  evaluation: E;
-  evaluationLocales?: Locales;
+export interface TitleProps<T extends Title> {
+  title: Pick<T, "view" | "subtype">;
 }
 
-export interface Task {
-  title: string;
-  instruction: string;
+export interface TitleViewFormProps {
+  name: string;
 }
+
+export interface PrivacyProps<P extends Privacy> {
+  privacy: Pick<P, "view" | "subtype">;
+}
+export interface PrivacyViewFormProps {
+  name: string;
+}
+
+export interface InputProps<I extends Input> {
+  input: Pick<I, "view" | "subtype">;
+}
+
+export interface InputViewFormProps {
+  name: string;
+}
+
 export interface TaskProps<
   T extends Task,
-  R extends Result,
-  A extends Answer,
+  R extends TaskResult,
+  A extends TaskAnswer,
   Act extends Action
 > {
   mode: "default" | "recording" | "result";
-  task: T;
-  locales?: Locales;
+  task: Pick<T, "view" | "subtype">;
   result?: R;
   answer?: A;
   onChange?: (value: A) => void;
@@ -79,152 +50,56 @@ export type TaskRef<Act> = {
   dispatch: (action: Act) => void;
 };
 
-export interface TaskFormProps {
-  locales?: Locales;
+export interface TaskEvaluationFormProps {
+  name: string;
 }
 
-export interface Evaluation {
-  mode: "auto" | "skip" | "manual";
-  enableRetry: boolean;
-  showFeedback: boolean;
-}
-export interface EvaluationFormProps<T extends Task> {
-  locales?: Locales;
-  task: T;
-  taskLocales?: Locales;
+export interface TaskViewFormProps {
+  name: string;
 }
 
-export interface Statistic {
+export interface TaskFeedbackFormProps {
+  name: string;
+}
+
+export interface TaskStatistic {
   count: number;
 }
-export interface StatisticProps<
-  S extends Statistic,
-  T extends Task,
-  E extends Evaluation
-> {
+
+export interface TaskStatisticProps<S extends TaskStatistic, T extends Task> {
   statistic: S;
-  locales?: Locales;
   task: T;
-  taskLocales?: Locales;
-  evaluation: E;
-  evaluationLocales?: Locales;
-}
-export type StatisticFC<
-  S extends Statistic,
-  T extends Task,
-  E extends Evaluation
-> = FC<StatisticProps<S, T, E>>;
-
-export interface ValidationError {
-  code: string;
-  path: (string | number)[];
-  message: string;
 }
 
-export interface ValidateTaskParams {
-  task: any;
-}
-export type ValidateTask<T extends Task> = ({
-  task,
-}: ValidateTaskParams) => Promise<
-  | {
-      success: true;
-      data: T;
-    }
-  | {
-      success: false;
-      errors: ValidationError[];
-    }
->;
-
-export interface ValidateEvaluationParams<T extends Task> {
-  task: T;
-  evaluation: any;
-}
-export type ValidateEvaluation<E extends Evaluation, T extends Task> = ({
-  task,
-  evaluation,
-}: ValidateEvaluationParams<T>) => Promise<
-  | {
-      success: true;
-      data: E;
-    }
-  | {
-      success: false;
-      errors: ValidationError[];
-    }
->;
-
-export interface ValidateFeedbackParams<T extends Task, E extends Evaluation> {
-  task: T;
-  evaluation: E;
-  feedback: any;
-}
-export type ValidateFeedback<
-  F extends Feedback,
-  T extends Task,
-  E extends Evaluation
-> = ({
-  task,
-  evaluation,
-  feedback,
-}: ValidateFeedbackParams<T, E>) => Promise<
-  | {
-      success: true;
-      data: F;
-    }
-  | {
-      success: false;
-      errors: ValidationError[];
-    }
->;
-
-export interface EvaluateParams<
-  A extends Answer,
-  E extends Evaluation,
-  T extends Task,
-  F extends Feedback
-> {
+export interface TaskEvaluateParams<A extends TaskAnswer, T extends Task> {
   answer?: A;
-  evaluation: E;
   task: T;
-  feedback?: F;
 }
 export type Evaluate<
-  A extends Answer,
-  E extends Evaluation,
+  A extends TaskAnswer,
   T extends Task,
-  R extends Result,
-  F extends Feedback
-> = ({ answer, evaluation, task }: EvaluateParams<A, E, T, F>) => Promise<R>;
+  R extends TaskResult
+> = ({ answer, task }: TaskEvaluateParams<A, T>) => Promise<R>;
 
-export interface UpdateStatisticParams<
-  S extends Statistic,
-  A extends Answer,
+export interface UpdateTaskStatisticParams<
+  S extends TaskStatistic,
+  A extends TaskAnswer,
   T extends Task,
-  R extends Result,
-  E extends Evaluation,
-  F extends Feedback
+  R extends TaskResult
 > {
   statistic?: S;
   answer: A;
   task: T;
   result?: R;
-  evaluation: E;
-  feedback?: F;
 }
-export type UpdateStatistic<
-  S extends Statistic,
-  A extends Answer,
+export type UpdateTaskStatistic<
+  S extends TaskStatistic,
+  A extends TaskAnswer,
   T extends Task,
-  R extends Result,
-  E extends Evaluation,
-  F extends Feedback
+  R extends TaskResult
 > = ({
   statistic,
   answer,
   task,
   result,
-  evaluation,
-  feedback,
-}: UpdateStatisticParams<S, A, T, R, E, F>) => Promise<S>;
+}: UpdateTaskStatisticParams<S, A, T, R>) => Promise<S>;

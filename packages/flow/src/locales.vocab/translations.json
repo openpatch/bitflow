@@ -1,0 +1,215 @@
+{
+  "add-bit-task-first": {
+    "message": "You need to add a bit taks node first."
+  },
+  "bit": {
+    "message": "Bit"
+  },
+  "bit-type-properties-invalid": {
+    "message": "The properties of this bit are invalid. Take a lot at the errors."
+  },
+  "bit-type-unsupported": {
+    "message": "Configuration of this bit type is currently unsupported."
+  },
+  "checkpoint": {
+    "message": "Checkpoint"
+  },
+  "checkpoint-helper-text": {
+    "message": "Stop students from going backwards"
+  },
+  "control": {
+    "message": "Control"
+  },
+  "description": {
+    "message": "Description"
+  },
+  "end": {
+    "message": "End"
+  },
+  "end-helper-text": {
+    "message": "The last node in your flow"
+  },
+  "end-markdown": {
+    "message": "Markdown"
+  },
+  "end-points": {
+    "message": "{points} {points, plural, =0 {Points} one {Point} other {Points}}"
+  },
+  "end-properties-invalid": {
+    "message": "End Node Properties are invalid."
+  },
+  "end-show-points": {
+    "message": "Show Points"
+  },
+  "end-show-results": {
+    "message": "Show Results"
+  },
+  "errors": {
+    "message": "Errors"
+  },
+  "evaluation": {
+    "message": "Evaluation"
+  },
+  "evaluation-enable-retry": {
+    "message": "Enable retry"
+  },
+  "evaluation-mode": {
+    "message": "Mode"
+  },
+  "evaluation-mode-auto": {
+    "message": "Auto"
+  },
+  "evaluation-mode-auto-helper-text": {
+    "message": "Automatic evaluation"
+  },
+  "evaluation-mode-manual": {
+    "message": "Manual"
+  },
+  "evaluation-mode-manual-helper-text": {
+    "message": "Manual evaluation"
+  },
+  "evaluation-mode-skip": {
+    "message": "Skip"
+  },
+  "evaluation-mode-skip-helper-text": {
+    "message": "Skip evaluation"
+  },
+  "evaluation-show-feedback": {
+    "message": "Show feedback"
+  },
+  "feedback": {
+    "message": "Feedback"
+  },
+  "flow-properties": {
+    "message": "Flow Properties"
+  },
+  "input": {
+    "message": "Input"
+  },
+  "input-markdown": {
+    "message": "Markdown"
+  },
+  "key": {
+    "message": "Key"
+  },
+  "meta": {
+    "message": "Meta"
+  },
+  "name": {
+    "message": "Name"
+  },
+  "new-flow-title": {
+    "message": "New Flow"
+  },
+  "new-node-title": {
+    "message": "New {type}"
+  },
+  "node-no-properties": {
+    "message": "Nothing to configure for this node"
+  },
+  "nodes": {
+    "message": "Nodes"
+  },
+  "preview": {
+    "message": "Preview"
+  },
+  "privacy": {
+    "message": "Privacy"
+  },
+  "privacy-markdown": {
+    "message": "Markdown"
+  },
+  "properties": {
+    "message": "Properties"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "select-node": {
+    "message": "Select a node"
+  },
+  "split-answer": {
+    "message": "Split Answer"
+  },
+  "split-answer-helper-text": {
+    "message": "Students will be directed based on their answer"
+  },
+  "split-answer-properties": {
+    "message": "Split Answer Properties"
+  },
+  "split-points": {
+    "message": "Split Points"
+  },
+  "split-points-helper-text": {
+    "message": "Students will be directed based on their points"
+  },
+  "split-points-properties": {
+    "message": "Split Points Properties"
+  },
+  "split-random": {
+    "message": "Split Random"
+  },
+  "split-random-helper-text": {
+    "message": "Students will be directed randomly"
+  },
+  "split-result": {
+    "message": "Split Result"
+  },
+  "split-result-helper-text": {
+    "message": "Students will be directed based on their results"
+  },
+  "split-result-properties": {
+    "message": "Split Result Properties"
+  },
+  "start": {
+    "message": "Start"
+  },
+  "start-helper-text": {
+    "message": "The first node in your flow"
+  },
+  "start-markdown": {
+    "message": "Markdown"
+  },
+  "start-properties-invalid": {
+    "message": "Start Node Properties are invalid."
+  },
+  "start-title": {
+    "message": "Title"
+  },
+  "subtype": {
+    "message": "Subtype"
+  },
+  "synchronize": {
+    "message": "Synchronize"
+  },
+  "synchronize-helper-text": {
+    "message": "Force students to wait on your signal"
+  },
+  "task": {
+    "message": "Task"
+  },
+  "task-choice": {
+    "message": "Choice"
+  },
+  "task-fill-in-the-blank": {
+    "message": "Fill in the blank"
+  },
+  "task-input": {
+    "message": "Input"
+  },
+  "title": {
+    "message": "Title"
+  },
+  "title-simple": {
+    "message": "Simple"
+  },
+  "type": {
+    "message": "Type"
+  },
+  "value": {
+    "message": "Value"
+  },
+  "view": {
+    "message": "View"
+  }
+}

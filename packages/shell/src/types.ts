@@ -5,4 +5,5 @@ export interface IShell {
     max: number;
   };
   onClose?: () => void;
+  onPrevious?: () => void;
 }

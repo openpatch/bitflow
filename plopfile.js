@@ -1,18 +1,18 @@
 module.exports = function (plop) {
-  plop.setGenerator("bit", {
+  plop.setGenerator("package", {
     prompts: [
       {
         type: "input",
         name: "packageName",
-        message: "bit name please",
+        message: "package name please",
       },
     ],
     actions: [
       {
         type: "addMany",
-        templateFiles: "plop-templates/bit/**/*",
+        templateFiles: "plop-templates/package/**/*",
         destination: "packages/{{ dashCase packageName }}/",
-        base: "plop-templates/bit/",
+        base: "plop-templates/package/",
       },
     ],
   });

@@ -1,0 +1,56 @@
+{
+  "bitflow": {
+    "message": "Bitflow"
+  },
+  "bitflow-description": {
+    "message": "A library for creating and conducting dynamic flow-based assessments."
+  },
+  "contact": {
+    "message": "Contact"
+  },
+  "convert-flow-json-to-string": {
+    "message": "Convert JSON to String"
+  },
+  "convert-flow-string-to-json": {
+    "message": "Convert String to JSON"
+  },
+  "converter": {
+    "message": "Converter"
+  },
+  "demo-flows": {
+    "message": "Demo Flows"
+  },
+  "do-flow": {
+    "message": "Do"
+  },
+  "documentation": {
+    "message": "Documentation"
+  },
+  "download": {
+    "message": "Download"
+  },
+  "edit-flow": {
+    "message": "Edit"
+  },
+  "editor": {
+    "message": "Editor"
+  },
+  "flow-json": {
+    "message": "Flow JSON"
+  },
+  "flow-string": {
+    "message": "Flow String"
+  },
+  "getting-started": {
+    "message": "Getting Started"
+  },
+  "preview": {
+    "message": "Preview"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "share": {
+    "message": "Share"
+  }
+}

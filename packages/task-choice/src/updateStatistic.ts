@@ -1,27 +1,17 @@
-import { UpdateStatistic } from "@openpatch/bits-base";
-import {
-  IAnswer,
-  IEvaluation,
-  IFeedback,
-  IResult,
-  IStatistic,
-  ITask,
-  Option,
-  options,
-} from "./types";
+import { UpdateTaskStatistic } from "@bitflow/base";
+import { ITask, options } from "./schemas";
+import { IAnswer, IResult, IStatistic } from "./types";
 
-export const updateStatistic: UpdateStatistic<
+export const updateStatistic: UpdateTaskStatistic<
   IStatistic,
   IAnswer,
   ITask,
-  IResult,
-  IEvaluation,
-  IFeedback
-> = ({ answer, evaluation, statistic, task, result }) =>
+  IResult
+> = ({ answer, statistic, task }) =>
   new Promise((resolve) => {
     let pattern: string = "";
 
-    task.choices.forEach((_, i) => {
+    task.view.choices.forEach((_, i) => {
       const c = options[i];
       const checked = answer?.checked[c] || false;
 
@@ -30,6 +20,7 @@ export const updateStatistic: UpdateStatistic<
       }
     });
 
+    const correctPattern = task.evaluation.correct.sort().join("");
     pattern = pattern.split("").sort().join("");
 
     resolve({
@@ -38,6 +29,7 @@ export const updateStatistic: UpdateStatistic<
         ...statistic?.patterns,
         [pattern]: {
           count: (statistic?.patterns?.[pattern]?.count || 0) + 1,
+          correct: correctPattern === pattern,
         },
       },
     });

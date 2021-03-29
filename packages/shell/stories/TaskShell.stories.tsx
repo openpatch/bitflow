@@ -1,17 +1,15 @@
-import { Story, Meta } from "@storybook/react/types-6-0";
 import {
-  taskChoiceEvaluate,
-  ITaskChoiceAction,
-  ITaskChoiceAnswer,
-  ITaskChoiceEvaluation,
-  ITaskChoiceFeedback,
-  ITaskChoiceResult,
-  ITaskChoice,
-  TaskChoice,
-} from "@openpatch/bits-task-choice";
-
-import { TaskShellProps, TaskShell, TaskShellRef } from "../src/TaskShell";
+  evaluate,
+  IAction,
+  IAnswer,
+  IResult,
+  ITask,
+  Task,
+} from "@bitflow/task-choice";
+import { Box } from "@openpatch/patches";
+import { Meta, Story } from "@storybook/react/types-6-0";
 import { useEffect, useRef } from "react";
+import { TaskShell, TaskShellProps, TaskShellRef } from "../src/TaskShell";
 import { IShellAction, ITaskAction } from "../src/TaskShell/actions";
 
 export default {
@@ -32,63 +30,60 @@ export default {
 } as Meta;
 
 const data: {
-  task: ITaskChoice;
-  evaluation: ITaskChoiceEvaluation;
-  feedback: ITaskChoiceFeedback;
+  task: ITask;
 } = {
   task: {
-    title: "A title",
-    instruction: `This is a interessting task. Please select the options you **want**, but be sure to only select **Answer A**.
+    subtype: "choice",
+    description: "",
+    name: "A title",
+    view: {
+      instruction: `This is a interessting task. Please select the options you **want**, but be sure to only select **Answer A**.
 ![](https://upload.wikimedia.org/wikipedia/commons/f/f1/SWTestbild.png)`,
-    choices: [{ markdown: "Answer A" }, { markdown: "Answer B" }],
-    variant: "multiple",
-  },
-  evaluation: {
-    mode: "auto",
-    correct: ["a"],
-    enableRetry: true,
-    showFeedback: true,
-  },
-  feedback: {
-    patterns: {
-      b: { message: "A feedback for pattern b", severity: "error" },
-      ab: { message: "A feedback for pattern ab", severity: "error" },
+      choices: [{ markdown: "Answer A" }, { markdown: "Answer B" }],
+      variant: "multiple",
     },
-    choices: {},
+    evaluation: {
+      mode: "auto",
+      correct: ["a"],
+      enableRetry: true,
+      showFeedback: true,
+    },
+    feedback: {
+      patterns: {
+        b: { message: "A feedback for pattern b", severity: "error" },
+        ab: { message: "A feedback for pattern ab", severity: "error" },
+      },
+      choices: {},
+    },
   },
 };
 
-const evaluateRemoteMock = ({ task, evaluation }) => ({
-  answer,
-}: {
-  answer?: ITaskChoiceAnswer;
-}): Promise<ITaskChoiceResult> => {
+const evaluateRemoteMock = ({ task }: { task: ITask }) => (
+  answer?: IAnswer
+): Promise<IResult> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(taskChoiceEvaluate({ answer, task, evaluation }));
+      resolve(evaluate({ answer, task }));
     }, 2000);
   });
 };
 
-const props: TaskShellProps<
-  ITaskChoice,
-  ITaskChoiceResult,
-  ITaskChoiceAnswer,
-  ITaskChoiceAction,
-  ITaskChoiceEvaluation,
-  ITaskChoiceFeedback
-> = {
+const evaluateLocalMock = ({ task }: { task: ITask }) => (
+  answer?: IAnswer
+): Promise<IResult> => {
+  return evaluate({ answer, task });
+};
+
+const props: TaskShellProps<ITask, IResult, IAnswer, IAction> = {
   title: "A Test",
   progress: {
     value: 2,
     max: 6,
   },
   mode: "default",
-  TaskComponent: TaskChoice,
-  evaluate: taskChoiceEvaluate,
+  TaskComponent: Task,
+  evaluate: evaluateLocalMock({ task: data.task }),
   task: data.task,
-  evaluation: data.evaluation,
-  feedback: data.feedback,
   soundUrls: {
     correct: "/correct.mp3",
     wrong: "/wrong.mp3",
@@ -100,194 +95,130 @@ const props: TaskShellProps<
 };
 
 export const Default: Story<
-  TaskShellProps<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
+  TaskShellProps<ITask, IResult, IAnswer, IAction>
 > = (args) => (
-  <TaskShell<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
-    {...props}
-    {...args}
-  />
+  <Box height="100vh" width="100wv">
+    <TaskShell<ITask, IResult, IAnswer, IAction> {...props} {...args} />
+  </Box>
 );
 
 export const WithReasoningAndConfidence: Story<
-  TaskShellProps<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
+  TaskShellProps<ITask, IResult, IAnswer, IAction>
 > = (args) => (
-  <TaskShell<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
-    {...props}
-    {...args}
-    enableConfidence
-    enableReasoning
-  />
+  <Box height="100vh" width="100wv">
+    <TaskShell<ITask, IResult, IAnswer, IAction>
+      {...props}
+      {...args}
+      enableConfidence
+      enableReasoning
+    />
+  </Box>
 );
 
 export const EvaluationRemote: Story<
-  TaskShellProps<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
+  TaskShellProps<ITask, IResult, IAnswer, IAction>
 > = (args) => (
-  <TaskShell<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
-    {...props}
-    {...args}
-    evaluate={evaluateRemoteMock({
-      task: props.task,
-      evaluation: props.evaluation,
-    })}
-  />
+  <Box height="100vh" width="100wv">
+    <TaskShell<ITask, IResult, IAnswer, IAction>
+      {...props}
+      {...args}
+      evaluate={evaluateRemoteMock({
+        task: data.task,
+      })}
+    />
+  </Box>
 );
 
 export const NoEvaluation: Story<
-  TaskShellProps<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
+  TaskShellProps<ITask, IResult, IAnswer, IAction>
 > = (args) => (
-  <TaskShell<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
-    {...props}
-    {...args}
-    evaluation={undefined}
-  />
+  <Box height="100vh" width="100wv">
+    <TaskShell<ITask, IResult, IAnswer, IAction>
+      {...props}
+      {...args}
+      evaluate={evaluateLocalMock({
+        task: {
+          ...data.task,
+          evaluation: {
+            mode: "skip",
+            correct: [],
+            enableRetry: false,
+            showFeedback: false,
+          },
+        },
+      })}
+    />
+  </Box>
 );
 
 export const EvaluationManual: Story<
-  TaskShellProps<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
+  TaskShellProps<ITask, IResult, IAnswer, IAction>
 > = (args) => (
-  <TaskShell<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
-    {...props}
-    {...args}
-    evaluation={{ ...props.evaluation, mode: "manual" }}
-  />
+  <Box height="100vh" width="100wv">
+    <TaskShell<ITask, IResult, IAnswer, IAction>
+      {...props}
+      {...args}
+      evaluate={evaluateLocalMock({
+        task: {
+          ...data.task,
+          evaluation: {
+            mode: "manual",
+            correct: data.task.evaluation.correct,
+            enableRetry: false,
+            showFeedback: false,
+          },
+        },
+      })}
+    />
+  </Box>
 );
 
 export const NoFeedback: Story<
-  TaskShellProps<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
+  TaskShellProps<ITask, IResult, IAnswer, IAction>
 > = (args) => (
-  <TaskShell<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
-    {...props}
-    {...args}
-    feedback={undefined}
-  />
+  <Box height="100vh" width="100wv">
+    <TaskShell<ITask, IResult, IAnswer, IAction>
+      {...props}
+      {...args}
+      evaluate={evaluateLocalMock({
+        task: {
+          ...data.task,
+          feedback: {
+            choices: {},
+            patterns: {},
+          },
+        },
+      })}
+    />
+  </Box>
 );
 
 export const NoRetry: Story<
-  TaskShellProps<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
+  TaskShellProps<ITask, IResult, IAnswer, IAction>
 > = (args) => (
-  <TaskShell<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
-    {...props}
-    {...args}
-    evaluation={{ ...props.evaluation, enableRetry: false }}
-  />
+  <Box height="100vh" width="100wv">
+    <TaskShell<ITask, IResult, IAnswer, IAction>
+      {...props}
+      {...args}
+      evaluate={evaluateLocalMock({
+        task: {
+          ...data.task,
+          evaluation: {
+            ...data.task.evaluation,
+            enableRetry: false,
+          },
+        },
+      })}
+    />
+  </Box>
 );
 
 export const Recording: Story<
-  TaskShellProps<
-    ITaskChoice,
-    ITaskChoiceResult,
-    ITaskChoiceAnswer,
-    ITaskChoiceAction,
-    ITaskChoiceEvaluation,
-    ITaskChoiceFeedback
-  >
+  TaskShellProps<ITask, IResult, IAnswer, IAction>
 > = (args) => {
-  const ref = useRef<
-    TaskShellRef<ITaskChoiceAnswer, ITaskChoiceResult, ITaskChoiceAction>
-  >();
+  const ref = useRef<TaskShellRef<IAnswer, IResult, IAction>>(null);
   const actions = useRef<
-    (
-      | IShellAction<ITaskChoiceAnswer, ITaskChoiceResult>
-      | ITaskAction<ITaskChoiceAction>
-    )[]
+    (IShellAction<IAnswer, IResult> | ITaskAction<IAction>)[]
   >([
     {
       scope: "shell",
@@ -313,7 +244,7 @@ export const Recording: Story<
     {
       scope: "shell",
       type: "evaluate",
-      payload: null,
+      payload: { answer: { checked: {} } },
     },
     {
       type: "check",
@@ -346,18 +277,13 @@ export const Recording: Story<
   }, []);
 
   return (
-    <TaskShell<
-      ITaskChoice,
-      ITaskChoiceResult,
-      ITaskChoiceAnswer,
-      ITaskChoiceAction,
-      ITaskChoiceEvaluation,
-      ITaskChoiceFeedback
-    >
-      {...props}
-      {...args}
-      mode="recording"
-      shellRef={ref}
-    />
+    <Box height="100vh" width="100wv">
+      <TaskShell<ITask, IResult, IAnswer, IAction>
+        {...props}
+        {...args}
+        mode="recording"
+        shellRef={ref}
+      />
+    </Box>
   );
 };

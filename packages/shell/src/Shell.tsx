@@ -1,23 +1,36 @@
-import { FC, ReactNode } from "react";
+import { css } from "@emotion/react";
 import { Box, BoxProps, Heading, Icon } from "@openpatch/patches";
 import { Close } from "@openpatch/patches/dist/cjs/icons/shade";
-import { css } from "@emotion/react";
+import { ChevronLeft } from "@openpatch/patches/dist/cjs/icons/solid";
+import { useTranslations } from "@vocab/react";
+import { FC, ReactNode } from "react";
+import translations from "./locales.vocab";
 import { Progress } from "./Progress";
 
 export type ShellProps = {
   children: ReactNode;
+  noHeader?: boolean;
 };
 
-export const Shell: FC<ShellProps> = ({ children }) => {
+export const Shell: FC<ShellProps> = ({ children, noHeader }) => {
   return (
     <Box
-      css={css`
-        display: grid;
-        grid-template-rows: 60px 1fr auto;
-      `}
-      height="100vh"
-      width="100wh"
-      position="relative"
+      css={[
+        css`
+          display: grid;
+          grid-template-rows: 60px 1fr auto;
+        `,
+        noHeader &&
+          css`
+            grid-template-rows: 1fr auto;
+          `,
+      ]}
+      top="0"
+      bottom="0"
+      left="0"
+      right="0"
+      position="absolute"
+      overflow="hidden"
     >
       {children}
     </Box>
@@ -26,6 +39,7 @@ export const Shell: FC<ShellProps> = ({ children }) => {
 
 export type ShellHeaderProps = {
   onClose?: () => void;
+  onPrevious?: () => void;
   children: ReactNode;
   progress?: {
     value: number;
@@ -35,9 +49,11 @@ export type ShellHeaderProps = {
 
 export const ShellHeader: FC<ShellHeaderProps> = ({
   onClose,
+  onPrevious,
   children,
   progress,
 }) => {
+  const { t } = useTranslations(translations);
   return (
     <Box
       zIndex="10"
@@ -49,6 +65,24 @@ export const ShellHeader: FC<ShellHeaderProps> = ({
       alignItems="center"
       position="relative"
     >
+      {onPrevious && (
+        <Box
+          position="absolute"
+          left="standard"
+          role="button"
+          onClick={onPrevious}
+          title={t("previous")}
+          fontSize="xlarge"
+          cursor="pointer"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Icon color="text" size="auto">
+            <ChevronLeft />
+          </Icon>
+        </Box>
+      )}
       <Heading fontSize="small">{children}</Heading>
       {onClose && (
         <Box
@@ -56,6 +90,7 @@ export const ShellHeader: FC<ShellHeaderProps> = ({
           right="standard"
           role="button"
           onClick={onClose}
+          title={t("close")}
           fontSize="xlarge"
           cursor="pointer"
           display="flex"

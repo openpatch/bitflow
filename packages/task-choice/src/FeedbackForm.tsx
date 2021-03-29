@@ -1,6 +1,5 @@
-import { FeedbackFormProps as FeeedbackFormPropsBase } from "@openpatch/bits-base";
+import { TaskFeedbackFormProps } from "@bitflow/base";
 import {
-  AutoGrid,
   Box,
   ButtonSecondary,
   Divider,
@@ -11,55 +10,35 @@ import {
   MarkdownEditor,
   Select,
 } from "@openpatch/patches";
-import { Fragment, useState } from "react";
+import { useTranslations } from "@vocab/react";
+import { Fragment, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { IEvaluation, IFeedback, ITask, Option, options } from "./types";
+import translations from "./locales.vocab";
+import { IOption, ITask, options } from "./schemas";
 
-export interface FeedbackFormProps
-  extends FeeedbackFormPropsBase<ITask, IEvaluation> {
-  locales?: {
-    choice?: (option: Option) => string;
-    checkedFeedback?: string;
-    notCheckedFeedback?: string;
-    patterns?: string;
-    addPattern?: string;
-    deletePattern?: string;
-    pattern?: (p: string) => string;
-    patternErrorInvalid?: string;
-    patternErrorDuplicate?: string;
-    patternErrorExists?: string;
-  };
-}
-
-const defaultLocales: Required<FeedbackFormProps["locales"]> = {
-  choice: (option) => `Choice ${option.toUpperCase()}`,
-  checkedFeedback: "Checked Feeedback",
-  notCheckedFeedback: "Not Checked Feedback",
-  patterns: "Patterns",
-  addPattern: "Add Pattern",
-  deletePattern: "Delete",
-  pattern: (p) => `Pattern ${p.toUpperCase()}`,
-  patternErrorInvalid: "Not a valid pattern",
-  patternErrorDuplicate: "A pattern can not contain duplicates",
-  patternErrorExists: "This pattern already exists",
-};
-
-export const FeedbackForm = ({
-  locales,
-  task,
-  evaluation,
-}: FeedbackFormProps) => {
-  const { control, getValues, setValue } = useFormContext<IFeedback>();
-  const defaultPatterns = getValues("patterns");
+export const FeedbackForm = ({ name }: TaskFeedbackFormProps) => {
+  const { t } = useTranslations(translations);
+  const { control, watch, getValues, setValue } = useFormContext();
+  const defaultPatterns = getValues(
+    `${name}.feedback.patterns`
+  ) as ITask["feedback"]["patterns"];
   const [pattern, setPattern] = useState("");
-  const [patterns, setPatterns] = useState(defaultPatterns || {});
+  const [patterns, setPatterns] = useState<ITask["feedback"]["patterns"]>(
+    defaultPatterns || {}
+  );
   const [patternError, setPatternError] = useState<
     "exists" | "invalid" | "duplicate" | false
   >(false);
+  const view = watch(`${name}.view`) as Partial<ITask["view"]> | undefined;
 
-  function handlePatternChange(v: string) {
-    setPattern(v.toLowerCase());
+  useEffect(() => {
+    validatePattern(pattern);
+  }, [view, pattern]);
 
+  function validatePattern(v: string) {
+    if (!v) {
+      return setPatternError("invalid");
+    }
     const patternKeys: string[] = Object.keys(patterns);
     v = v.toLowerCase().split("").sort().join("");
 
@@ -70,10 +49,10 @@ export const FeedbackForm = ({
 
     const patternParts = v.split("");
 
-    const taskOptions = task.choices.map((_, i) => options[i]);
+    const taskOptions = view?.choices?.map((_, i) => options[i]) || [];
 
     for (let o of patternParts) {
-      if (!taskOptions.includes(o as Option)) {
+      if (!taskOptions.includes(o as IOption)) {
         return setPatternError("invalid");
       }
     }
@@ -83,6 +62,10 @@ export const FeedbackForm = ({
     }
 
     setPatternError(false);
+  }
+
+  function handlePatternChange(v: string) {
+    setPattern(v.toLowerCase());
   }
 
   function handleAddPattern() {
@@ -105,20 +88,17 @@ export const FeedbackForm = ({
 
   return (
     <Fragment>
-      {task.choices.map((choice, index) => {
+      {view?.choices?.map((choice, index) => {
         const option = options[index];
         return (
           <Fragment key={index}>
             <Heading as="h2" fontSize="large">
-              {locales?.choice
-                ? locales.choice(option)
-                : defaultLocales.choice(option)}
+              {t("choice", { option })}
             </Heading>
             <HookFormController
-              name={`choices.${option}.checkedFeedback.message`}
-              control={control}
+              name={`${name}.feedback.choices.${option}.checkedFeedback.message`}
               defaultValue=""
-              label={locales?.checkedFeedback || defaultLocales.checkedFeedback}
+              label={t("checked-feedback")}
               render={({ value, onChange, onBlur }) => (
                 <MarkdownEditor
                   value={value}
@@ -129,12 +109,23 @@ export const FeedbackForm = ({
               )}
             />
             <HookFormController
-              name={`choices.${option}.notCheckedFeedback.message`}
-              control={control}
+              name={`${name}.feedback.choices.${option}.checkedFeedback.severity`}
+              defaultValue="error"
+              render={({ value, onChange, onBlur }) => (
+                <Fragment>
+                  <Select value={value} onChange={onChange} onBlur={onBlur}>
+                    <option value="error">{t("error")}</option>
+                    <option value="warning">{t("warning")}</option>
+                    <option value="info">{t("info")}</option>
+                    <option value="success">{t("success")}</option>
+                  </Select>
+                </Fragment>
+              )}
+            />
+            <HookFormController
+              name={`${name}.feedback.choices.${option}.notCheckedFeedback.message`}
               defaultValue=""
-              label={
-                locales?.notCheckedFeedback || defaultLocales.notCheckedFeedback
-              }
+              label={t("not-checked-feedback")}
               render={({ value, onChange, onBlur }) => (
                 <MarkdownEditor
                   value={value}
@@ -142,6 +133,20 @@ export const FeedbackForm = ({
                   onChange={(_, v) => onChange(v)}
                   onBlur={onBlur}
                 />
+              )}
+            />
+            <HookFormController
+              name={`${name}.feedback.choices.${option}.notCheckedFeedback.severity`}
+              defaultValue="error"
+              render={({ value, onChange, onBlur }) => (
+                <Fragment>
+                  <Select value={value} onChange={onChange} onBlur={onBlur}>
+                    <option value="error">{t("error")}</option>
+                    <option value="warning">{t("warning")}</option>
+                    <option value="info">{t("info")}</option>
+                    <option value="success">{t("success")}</option>
+                  </Select>
+                </Fragment>
               )}
             />
 
@@ -153,22 +158,19 @@ export const FeedbackForm = ({
       })}
 
       {Object.keys(patterns).map((p) => (
-        <AutoGrid gap="small" key={p}>
+        <Box mb="standard">
           <Box display="flex" width="100%" alignItems="center">
             <Box flex="1">
               <Heading as="h3" fontSize="large">
-                {locales?.pattern
-                  ? locales.pattern(p)
-                  : defaultLocales.pattern(p)}
+                {t("pattern", { pattern: p })}
               </Heading>
             </Box>
             <ButtonSecondary tone="error" onClick={handleDeletePattern(p)}>
-              {locales?.deletePattern || defaultLocales.deletePattern}
+              {t("delete-pattern")}
             </ButtonSecondary>
           </Box>
           <HookFormController
-            name={`patterns.${p}.message`}
-            control={control}
+            name={`${name}.feedback.patterns.${p}.message`}
             defaultValue=""
             render={({ value, onChange, onBlur }) => (
               <MarkdownEditor
@@ -181,22 +183,23 @@ export const FeedbackForm = ({
           />
           <HookFormController
             key={p}
-            name={`patterns.${p}.severity`}
-            control={control}
+            name={`${name}.feedback.patterns.${p}.severity`}
             defaultValue="error"
             render={({ value, onChange, onBlur }) => (
               <Fragment>
                 <Select value={value} onChange={onChange} onBlur={onBlur}>
-                  <option value="error">Error</option>
-                  <option value="warning">Warning</option>
-                  <option value="info">Info</option>
-                  <option value="success">Success</option>
+                  <option value="error">{t("error")}</option>
+                  <option value="warning">{t("warning")}</option>
+                  <option value="info">{t("info")}</option>
+                  <option value="success">{t("success")}</option>
                 </Select>
               </Fragment>
             )}
           />
-          <Divider />
-        </AutoGrid>
+          <Box paddingY="standard">
+            <Divider />
+          </Box>
+        </Box>
       ))}
       <Box display="flex" marginY="standard">
         <Box flex="1" mr="small">
@@ -210,24 +213,17 @@ export const FeedbackForm = ({
           disabled={patternError !== false}
           onClick={handleAddPattern}
         >
-          {locales?.addPattern || defaultLocales.addPattern}
+          {t("add-pattern")}
         </ButtonSecondary>
       </Box>
       {patternError === "invalid" && (
-        <FormErrorText>
-          {locales?.patternErrorInvalid || defaultLocales.patternErrorInvalid}
-        </FormErrorText>
+        <FormErrorText>{t("pattern-error-invalid")}</FormErrorText>
       )}
       {patternError === "duplicate" && (
-        <FormErrorText>
-          {locales?.patternErrorDuplicate ||
-            defaultLocales.patternErrorDuplicate}
-        </FormErrorText>
+        <FormErrorText>{t("pattern-error-duplicate")}</FormErrorText>
       )}
       {patternError === "exists" && (
-        <FormErrorText>
-          {locales?.patternErrorExists || defaultLocales.patternErrorExists}
-        </FormErrorText>
+        <FormErrorText>{t("pattern-error-exists")}</FormErrorText>
       )}
     </Fragment>
   );

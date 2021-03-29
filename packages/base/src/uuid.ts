@@ -1,11 +1,14 @@
 export function uuidv4(): string {
-  let d = new Date().getTime();
-  if (window.performance && typeof window.performance.now === "function") {
-    d += performance.now(); //use high-precision timer if available
+  var uuid = "",
+    i,
+    random;
+  for (i = 0; i < 32; i++) {
+    random = (Math.random() * 16) | 0;
+
+    if (i == 8 || i == 12 || i == 16 || i == 20) {
+      uuid += "-";
+    }
+    uuid += (i == 12 ? 4 : i == 16 ? (random & 3) | 8 : random).toString(16);
   }
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-    let r = (d + Math.random() * 16) % 16 | 0;
-    d = Math.floor(d / 16);
-    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
-  });
+  return uuid;
 }

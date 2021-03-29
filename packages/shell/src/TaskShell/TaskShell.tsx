@@ -1,30 +1,27 @@
-import { css } from "@emotion/react";
 import {
   Action,
-  Answer,
-  Evaluate,
-  Evaluation,
-  Feedback,
-  Locales,
-  Result,
   Task,
+  TaskAnswer,
   TaskProps,
   TaskRef,
-} from "@openpatch/bits-base";
+  TaskResult,
+} from "@bitflow/base";
+import { css } from "@emotion/react";
 import {
-  MoodHappy,
-  ThumbsDown,
-  ThumbsUp,
-  Asterisk,
-} from "@openpatch/patches/dist/cjs/icons/shade";
-import {
-  Textarea,
   Box,
   ButtonPrimary,
   Heading,
   Icon,
   Text,
+  Textarea,
 } from "@openpatch/patches";
+import {
+  Asterisk,
+  MoodHappy,
+  ThumbsDown,
+  ThumbsUp,
+} from "@openpatch/patches/dist/cjs/icons/shade";
+import { useTranslations } from "@vocab/react";
 import {
   ForwardRefExoticComponent,
   Fragment,
@@ -36,6 +33,9 @@ import {
   useRef,
 } from "react";
 import { ConfidenceLevels, ConfidenceLevelsProps } from "../ConfidenceLevels";
+import translations from "../locales.vocab";
+import { Shell, ShellContent, ShellFooter, ShellHeader } from "../Shell";
+import { IShell } from "../types";
 import {
   answerChangeAction,
   confidenceLevelsChangeAction,
@@ -58,19 +58,15 @@ import {
   wrongResultStateAction,
 } from "./actions";
 import { createReducer } from "./reducer";
-import { IShell } from "../types";
-import { Shell, ShellContent, ShellFooter, ShellHeader } from "../Shell";
 
 export type TaskShellProps<
   T extends Task,
-  R extends Result,
-  A extends Answer,
-  Act extends Action,
-  E extends Evaluation,
-  F extends Feedback
+  R extends TaskResult,
+  A extends TaskAnswer,
+  Act extends Action
 > = {
   mode: "default" | "recording";
-  task: T;
+  task: Pick<T, "view" | "subtype">;
   TaskComponent: ForwardRefExoticComponent<
     TaskProps<T, R, A, Act> & RefAttributes<TaskRef<Act>>
   >;
@@ -79,11 +75,8 @@ export type TaskShellProps<
     value: number;
     max: number;
   };
-  evaluate?: Evaluate<A, E, T, R, F>;
-  evaluation?: E;
-  feedback?: F;
+  evaluate?: (answer: A) => Promise<R>;
   onSkip: () => void;
-  onClose?: () => void;
   onAction?: (action: IShellAction<A, R> | ITaskAction<Act>) => void;
   enableReasoning?: boolean;
   enableConfidence?: boolean;
@@ -93,24 +86,12 @@ export type TaskShellProps<
     unknown: string;
     manual: string;
   };
-  locales?: {
-    retry: string;
-    next: string;
-    answer: string;
-    skip: string;
-    correctNudges: string[];
-    wrongNudges: string[];
-    unknownNudges: string[];
-    manualNudges: string[];
-    reasoning: string;
-    confidence: string;
-  };
   shellRef?: RefObject<TaskShellRef<A, R, Act>>;
 } & IShell;
 
 export type TaskShellRef<
-  A extends Answer,
-  R extends Result,
+  A extends TaskAnswer,
+  R extends TaskResult,
   Act extends Action
 > = {
   dispatch: (action: IShellAction<A, R> | ITaskAction<Act>) => void;
@@ -118,16 +99,12 @@ export type TaskShellRef<
 
 export const TaskShell = <
   T extends Task,
-  R extends Result,
-  A extends Answer,
-  Act extends Action,
-  E extends Evaluation,
-  F extends Feedback
+  R extends TaskResult,
+  A extends TaskAnswer,
+  Act extends Action
 >({
   mode,
   evaluate,
-  evaluation,
-  feedback,
   task,
   TaskComponent,
   progress,
@@ -137,31 +114,12 @@ export const TaskShell = <
   onSkip,
   onClose,
   onNext,
+  onPrevious,
   onAction,
   soundUrls,
-  locales = {
-    retry: "Retry",
-    next: "Next",
-    answer: "Answer",
-    skip: "Skip",
-    correctNudges: ["Nice one!", "Great!", "Keep it going!"],
-    wrongNudges: [
-      "Maybe next time!",
-      "No worries!",
-      "Every wrong answer is a learning opportunity!",
-      '"The phoenix must burn to emerge." - Janet Fitch',
-      '"There is no failure except in no longer trying." - Chris Bradford',
-      '"Success is not final, failure is not fatal: it is the courage to continue that counts." - Winston Churchill',
-      '"The only real mistake is the one from which we learn nothing." - Henry Ford',
-      '"It’s not how far you fall, but how high you bounce that counts." - Zig Ziglar',
-    ],
-    manualNudges: ["Your answer will be check manually!"],
-    unknownNudges: ["Thanks for your answer!", "Thank you for answering!"],
-    reasoning: "Reasoning",
-    confidence: "Confidence (higher is more confident)",
-  },
   shellRef,
-}: TaskShellProps<T, R, A, Act, E, F>) => {
+}: TaskShellProps<T, R, A, Act>) => {
+  const { t } = useTranslations(translations);
   const [reducerState, dispatch] = useReducer(createReducer<A, R>(), {
     state: "interact",
   });
@@ -254,7 +212,7 @@ export const TaskShell = <
     );
     let result: R | null = null;
     if (evaluate) {
-      result = await evaluate({ answer, evaluation, task, feedback });
+      result = await evaluate(answer);
     }
 
     if (result) {
@@ -264,10 +222,9 @@ export const TaskShell = <
             new Audio(soundUrls.correct).play();
           } catch (e) {}
         }
-        const nudge =
-          locales.correctNudges[
-            Math.floor(Math.random() * locales.correctNudges.length)
-          ];
+        const nudge = t("correctNudges", {
+          index: Math.floor(Math.random() * 2),
+        });
         customDispatch(correctResultStateAction({ nudge }));
       } else if (result.state === "wrong" && result.allowRetry) {
         if (soundUrls) {
@@ -282,10 +239,9 @@ export const TaskShell = <
             new Audio(soundUrls.wrong).play();
           } catch (e) {}
         }
-        const nudge =
-          locales.wrongNudges[
-            Math.floor(Math.random() * locales.wrongNudges.length)
-          ];
+        const nudge = t("wrongNudges", {
+          index: Math.floor(Math.random() * 3),
+        });
         customDispatch(wrongResultStateAction({ nudge }));
       } else if (result.state === "unknown") {
         if (soundUrls) {
@@ -293,10 +249,9 @@ export const TaskShell = <
             new Audio(soundUrls.unknown).play();
           } catch (e) {}
         }
-        const nudge =
-          locales.unknownNudges[
-            Math.floor(Math.random() * locales.unknownNudges.length)
-          ];
+        const nudge = t("unknownNudges", {
+          index: Math.floor(Math.random() * 2),
+        });
         customDispatch(unknownResultStateAction({ nudge }));
       } else if (result.state === "manual") {
         if (soundUrls) {
@@ -304,10 +259,9 @@ export const TaskShell = <
             new Audio(soundUrls.manual).play();
           } catch (e) {}
         }
-        const nudge =
-          locales.manualNudges[
-            Math.floor(Math.random() * locales.manualNudges.length)
-          ];
+        const nudge = t("manualNudges", {
+          index: Math.floor(Math.random() * 2),
+        });
         customDispatch(manualResultStateAction({ nudge }));
       }
       customDispatch(resultReceiveAction({ result }));
@@ -336,10 +290,17 @@ export const TaskShell = <
     }
   }
 
+  function handlePrevious() {
+    if (onPrevious) {
+      onPrevious();
+    }
+  }
+
   return (
     <Shell>
       <ShellHeader
         progress={progress}
+        onPrevious={onPrevious ? handlePrevious : undefined}
         onClose={onClose ? handleClose : undefined}
       >
         {title}
@@ -356,7 +317,7 @@ export const TaskShell = <
         {enableReasoning && state === "interact" && (
           <Box padding="standard">
             <Heading id="reasoning" as="h2" fontSize="standard" mb="standard">
-              {locales.reasoning}
+              {t("reasoning")}
             </Heading>
             <Textarea
               aria-labelledby="reasoning"
@@ -368,7 +329,7 @@ export const TaskShell = <
         {enableConfidence && state === "interact" && (
           <Box padding="standard">
             <Heading id="confidence" as="h2" fontSize="standard">
-              {locales.confidence}
+              {t("confidence")}
             </Heading>
             <ConfidenceLevels
               aria-labelledby="confidence"
@@ -396,7 +357,7 @@ export const TaskShell = <
               {nudge}
             </Text>
             <ButtonPrimary onClick={handleNext} fullWidth>
-              {locales.next}
+              {t("next")}
             </ButtonPrimary>
           </Box>
         )}
@@ -417,7 +378,7 @@ export const TaskShell = <
               {nudge}
             </Text>
             <ButtonPrimary onClick={handleNext} fullWidth>
-              {locales.next}
+              {t("next")}
             </ButtonPrimary>
           </Box>
         )}
@@ -438,7 +399,7 @@ export const TaskShell = <
               {nudge}
             </Text>
             <ButtonPrimary onClick={handleNext} fullWidth>
-              {locales.next}
+              {t("next")}
             </ButtonPrimary>
           </Box>
         )}
@@ -459,7 +420,7 @@ export const TaskShell = <
               {nudge}
             </Text>
             <ButtonPrimary onClick={handleNext} fullWidth>
-              {locales.next}
+              {t("next")}
             </ButtonPrimary>
           </Box>
         )}
@@ -479,7 +440,7 @@ export const TaskShell = <
                   onClick={handleSubmit}
                   fullWidth
                 >
-                  {locales.answer}
+                  {t("answer")}
                 </ButtonPrimary>
               ) : (
                 <ButtonPrimary
@@ -490,7 +451,7 @@ export const TaskShell = <
                   onClick={handleRetry}
                   fullWidth
                 >
-                  {locales.retry}
+                  {t("retry")}
                 </ButtonPrimary>
               )}
             </Box>
@@ -503,7 +464,7 @@ export const TaskShell = <
                 onClick={handleSkip}
                 fullWidth
               >
-                {locales.skip}
+                {t("skip")}
               </ButtonPrimary>
             </Box>
           </Fragment>

@@ -1,0 +1,23 @@
+{
+  "bitflow": {
+    "message": "Bitflow"
+  },
+  "bitflow-description": {
+    "message": "Eine Bibliothek zum Erstellen und Durchführen von dynamischen flow-basierten Assessments."
+  },
+  "contact": {
+    "message": "Contact"
+  },
+  "demo-flows": {
+    "message": "Demo Flows"
+  },
+  "documentation": {
+    "message": "Documentation"
+  },
+  "editor": {
+    "message": "Editor"
+  },
+  "getting-started": {
+    "message": "Getting Started"
+  }
+}

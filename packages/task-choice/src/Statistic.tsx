@@ -1,29 +1,22 @@
+import { lerpColor, TaskStatisticProps } from "@bitflow/base";
 import { css } from "@emotion/react";
-import {
-  lerpColor,
-  StatisticProps as StatisticPropsBase,
-} from "@openpatch/bits-base";
 import { AutoGrid, Box, Heading, Text } from "@openpatch/patches";
-import { IEvaluation, IStatistic, ITask } from "./types";
+import { useTranslations } from "@vocab/react";
+import translations from "./locales.vocab";
+import { ITask } from "./schemas";
+import { IStatistic } from "./types";
 
-export interface StatisticProps
-  extends StatisticPropsBase<IStatistic, ITask, IEvaluation> {
-  locales?: {
-    patterns?: string;
-  };
-}
-
-const defaultLocales: Required<StatisticProps["locales"]> = {
-  patterns: "Patterns",
-};
-
-export const Statistic = ({ statistic, locales }: StatisticProps) => {
+export const Statistic = ({
+  statistic,
+}: TaskStatisticProps<IStatistic, ITask>) => {
+  const { t } = useTranslations(translations);
   const patterns = Object.keys(statistic.patterns)
     .map((c) => {
       const pattern = statistic.patterns[c];
       return {
         pattern: c,
         count: pattern?.count || 0,
+        correct: pattern?.correct || false,
       };
     })
     .sort((a, b) => (a.count > b.count ? -1 : 1));
@@ -31,19 +24,15 @@ export const Statistic = ({ statistic, locales }: StatisticProps) => {
   return (
     <Box padding="standard">
       <AutoGrid gap="standard">
-        <Heading as="h2">
-          {locales?.patterns || defaultLocales.patterns}
-        </Heading>
+        <Heading as="h2">{t("patterns")}</Heading>
         {patterns.map((p, i) => (
           <Box
             display="flex"
             borderRadius="standard"
             css={css`
-              background-color: ${lerpColor(
-                "#84C5F4",
-                "#DCEEFB",
-                i / patterns.length
-              )};
+              background-color: ${p.correct
+                ? "#d6ffd6"
+                : lerpColor("#84C5F4", "#DCEEFB", i / patterns.length)};
             `}
             padding="standard"
           >

@@ -1,8 +1,8 @@
 {
-  "name": "@openpatch/bits",
-  "version": "0.0.1",
+  "name": "@bitflow/bits",
+  "version": "0.0.0",
   "author": "Mike Barkmin",
-  "homepage": "https://github.com/openpatch/bits#readme",
+  "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -23,7 +23,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openpatch/bits.git"
+    "url": "git+https://github.com/openpatch/bitflow.git",
+    "directory": "packages/bits"
   },
   "bugs": {
     "url": "https://github.com/openpatch/bits/issues"
@@ -36,16 +37,18 @@
     "test": "jest --env=jsdom --passWithNoTests",
     "test:coverage": "yarn test --coverage",
     "version": "yarn build",
-    "build:esm": "tsc --project tsconfig.json --declaration --declarationDir dist/esm --module esnext --target es2015 --outDir dist/esm",
-    "build:cjs": "tsc --project tsconfig.json --declaration --declarationDir dist/cjs --module commonjs --target es5 --outDir dist/cjs",
-    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types"
+    "lint": "tsc",
+    "build:esm": "tsc --project tsconfig.build.json --declaration --declarationDir dist/esm --module esnext --target es2015 --outDir dist/esm",
+    "build:cjs": "tsc --project tsconfig.build.json --declaration --declarationDir dist/cjs --module commonjs --target es5 --outDir dist/cjs",
+    "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "@openpatch/bits-base": "0.0.1",
-    "@openpatch/bits-input-markdown": "0.0.1",
-    "@openpatch/bits-privacy-markdown": "0.0.1",
-    "@openpatch/bits-shell": "0.0.1",
-    "@openpatch/bits-task-choice": "0.0.1"
+    "@bitflow/task-input": "0.0.0",
+    "@bitflow/task-choice": "0.0.0",
+    "@bitflow/task-fill-in-the-blank": "0.0.0",
+    "@bitflow/title-simple": "0.0.0",
+    "@bitflow/input-markdown": "0.0.0",
+    "@bitflow/provider": "0.0.0"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",

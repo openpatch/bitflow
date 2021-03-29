@@ -1,5 +1,6 @@
-import withTheme from "./utils/theme-decorator";
 import * as themes from "@openpatch/patches/dist/esm/themes";
+import withBitProvider from "./utils/provider-decorator";
+import withTheme from "./utils/theme-decorator";
 
 export const parameters = {
   layout: "fullscreen",
@@ -58,6 +59,24 @@ export const globalTypes = {
       ],
     },
   },
+  locale: {
+    name: "Locale",
+    description: "Locale",
+    defaultValue: "en",
+    toolbar: {
+      icon: "globe",
+      items: [
+        {
+          value: "en",
+          title: "english",
+        },
+        {
+          value: "de",
+          title: "german",
+        },
+      ],
+    },
+  },
 };
 
-export const decorators = [withTheme];
+export const decorators = [withTheme, withBitProvider];

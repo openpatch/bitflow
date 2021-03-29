@@ -1,8 +1,8 @@
-import { css } from "@emotion/react";
-import { Markdown, Box, BoxProps } from "@openpatch/patches";
+import { css, Theme } from "@emotion/react";
+import { Box, BoxProps, Markdown } from "@openpatch/patches";
 import { Check } from "@openpatch/patches/dist/cjs/icons/shade";
-import { Feedback } from "./Feedback";
 import { FC, KeyboardEvent } from "react";
+import { Feedback } from "./Feedback";
 import { IResult } from "./types";
 
 export type ChoiceProps = {
@@ -54,7 +54,7 @@ export const Choice: FC<ChoiceProps> = ({
         cursor="pointer"
         onKeyDown={handleKeyDown}
         onClick={handleClick}
-        css={(theme) => css`
+        css={(theme: Theme) => css`
           :focus {
             box-shadow: ${theme.shadows["outline"]};
           }

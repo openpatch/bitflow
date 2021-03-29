@@ -1,0 +1,68 @@
+{
+  "add-pattern": {
+    "message": "Add Pattern"
+  },
+  "answers": {
+    "message": "Answers"
+  },
+  "delete-pattern": {
+    "message": "Delete"
+  },
+  "error": {
+    "message": "Error"
+  },
+  "feedback-for-blank": {
+    "message": "Feedback for {blank}"
+  },
+  "info": {
+    "message": "Info"
+  },
+  "instruction": {
+    "message": "Instruction"
+  },
+  "message": {
+    "message": "Message"
+  },
+  "pattern": {
+    "message": "Pattern {pattern}"
+  },
+  "pattern-error-duplicate": {
+    "message": "A pattern can not contain duplicates"
+  },
+  "pattern-error-exists": {
+    "message": "This pattern already exists"
+  },
+  "pattern-error-invalid": {
+    "message": "Not a valid pattern"
+  },
+  "pattern-for-blank": {
+    "message": "Pattern for {blank}"
+  },
+  "pattern-regex": {
+    "message": "Pattern"
+  },
+  "pattern-regex-helper-text": {
+    "message": "You can use a regular expression"
+  },
+  "patterns": {
+    "message": "Patterns"
+  },
+  "severity": {
+    "message": "Severity"
+  },
+  "success": {
+    "message": "Success"
+  },
+  "text-with-blanks": {
+    "message": "Text with blanks"
+  },
+  "text-with-blanks-helper-text": {
+    "message": "A blank can be defined like so: ~~ID~~. Markdown is supported, but blanks do not work in advanced sections like code blocks."
+  },
+  "up": {
+    "message": "Up"
+  },
+  "warning": {
+    "message": "Warning"
+  }
+}

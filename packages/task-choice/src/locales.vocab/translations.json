@@ -1,0 +1,74 @@
+{
+  "add": {
+    "message": "Add Choice"
+  },
+  "add-pattern": {
+    "message": "Add Pattern"
+  },
+  "checked-feedback": {
+    "message": "Checked Feeedback"
+  },
+  "choice": {
+    "message": "Choice {option}"
+  },
+  "correct-choices": {
+    "message": "Correct Choices"
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "delete-pattern": {
+    "message": "Delete"
+  },
+  "down": {
+    "message": "Down"
+  },
+  "error": {
+    "message": "Error"
+  },
+  "info": {
+    "message": "Info"
+  },
+  "instruction": {
+    "message": "Instruction"
+  },
+  "not-checked-feedback": {
+    "message": "Not Checked Feedback"
+  },
+  "one-choice-required": {
+    "message": "At least one choice is required!"
+  },
+  "pattern": {
+    "message": "Pattern {pattern}"
+  },
+  "pattern-error-duplicate": {
+    "message": "A pattern can not contain duplicates"
+  },
+  "pattern-error-exists": {
+    "message": "This pattern already exists"
+  },
+  "pattern-error-invalid": {
+    "message": "Not a valid pattern"
+  },
+  "patterns": {
+    "message": "Patterns"
+  },
+  "success": {
+    "message": "Success"
+  },
+  "up": {
+    "message": "Up"
+  },
+  "variant": {
+    "message": "Variant"
+  },
+  "variant-multiple": {
+    "message": "Multiple"
+  },
+  "variant-single": {
+    "message": "Single"
+  },
+  "warning": {
+    "message": "Warning"
+  }
+}

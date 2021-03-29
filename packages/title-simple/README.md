@@ -1,11 +1,11 @@
-# @openpatch/bits-title-simple
+# @bitflow/title-simple
 
 A Quick description of the package
 
 ## Installation
 
 ```sh
-yarn add @openpatch/bits-title-simple
+yarn add @bitflow/title-simple
 # or
-npm i @openpatch/bits-title-simple
+npm i @bitflow/title-simple
 ```

@@ -1,9 +1,9 @@
-import { TaskFeedbackFormShell } from "@openpatch/bits-shell";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ButtonPrimary, Form } from "@openpatch/patches";
 import { Meta, Story } from "@storybook/react/types-6-0";
-import { IEvaluation } from "../dist/types/types";
+import { FormProvider, useForm } from "react-hook-form";
 import { FeedbackForm } from "../src/FeedbackForm";
-import { feedbackSchema } from "../src/schemas";
-import { IFeedback, ITask } from "../src/types";
+import { ITask, TaskSchema } from "../src/schemas";
 
 export default {
   title: "Tasks/Multiple Choice/FeedbackForm",
@@ -12,37 +12,54 @@ export default {
     onSubmit: {
       action: "submit",
     },
+    onError: {
+      action: "error",
+    },
   },
 } as Meta;
 
-const task: ITask = {
-  title: "Title",
-  instruction: "Instruction",
-  variant: "single",
-  choices: [
-    {
-      markdown: "A",
-    },
-    {
-      markdown: "B",
-    },
-  ],
+const task: Partial<ITask> = {
+  id: "a-id",
+  type: "task",
+  subtype: "choice",
+  name: "Title",
+  description: "",
+  view: {
+    instruction: "Instruction",
+    variant: "single",
+    choices: [
+      {
+        markdown: "A",
+      },
+      {
+        markdown: "B",
+      },
+    ],
+  },
+  evaluation: {
+    mode: "auto",
+    correct: ["a"],
+    enableRetry: false,
+    showFeedback: false,
+  },
 };
 
-const evaluation: IEvaluation = {
-  mode: "auto",
-  correct: ["a"],
-  enableRetry: false,
-  showFeedback: false,
-};
-
-export const Shell: Story = (args) => {
+export const Default: Story = (args) => {
+  const methods = useForm<ITask>({
+    defaultValues: task,
+    resolver: zodResolver(TaskSchema),
+    reValidateMode: "onBlur",
+    shouldUnregister: false,
+    mode: "onBlur",
+  });
   return (
-    <TaskFeedbackFormShell<IFeedback, ITask, IEvaluation>
-      onSubmit={args.onSubmit}
-      FeedbackForm={FeedbackForm}
-      schema={feedbackSchema({ task, evaluation })}
-      task={task}
-    />
+    <FormProvider {...methods}>
+      <Form onSubmit={methods.handleSubmit(args.onSubmit, args.onError)}>
+        <FeedbackForm name="" />
+        <ButtonPrimary fullWidth type="submit">
+          Submit
+        </ButtonPrimary>
+      </Form>
+    </FormProvider>
   );
 };

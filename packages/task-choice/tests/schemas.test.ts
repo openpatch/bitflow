@@ -1,28 +1,57 @@
-import { evaluationSchema, taskSchema } from "../src/schemas";
-import { ITask } from "../src/types";
+import { uuidv4 } from "@bitflow/base";
+import { ITask, TaskSchema } from "../src/schemas";
 
 describe("task schema", () => {
   it("should succeed validating", () => {
-    const task: any = {
-      title: "Title",
-      instruction: "Instruction",
-      choices: [{ markdown: "A" }, { markdown: "B" }],
-      variant: "single",
+    const task: ITask = {
+      subtype: "choice",
+      description: "desc",
+      name: "name",
+      view: {
+        instruction: "Instruction",
+        choices: [{ markdown: "A" }, { markdown: "B" }],
+        variant: "single",
+      },
+      feedback: {
+        choices: {},
+        patterns: {},
+      },
+      evaluation: {
+        mode: "auto",
+        correct: [],
+        enableRetry: false,
+        showFeedback: false,
+      },
     };
 
-    const result = taskSchema.safeParse(task);
+    const result = TaskSchema.safeParse(task);
 
     expect(result.success).toBeTruthy();
   });
 
   it("should fail validating when missing choices", () => {
     const task: any = {
-      title: "Title",
-      instruction: "Instruction",
-      variant: "single",
+      subtype: "choice",
+      description: "desc",
+      name: "name",
+      id: uuidv4(),
+      view: {
+        instruction: "Instruction",
+        variant: "single",
+      },
+      feedback: {
+        choices: {},
+        patterns: {},
+      },
+      evaluation: {
+        mode: "auto",
+        correct: [],
+        enableRetry: false,
+        showFeedback: false,
+      },
     };
 
-    const result = taskSchema.safeParse(task);
+    const result = TaskSchema.safeParse(task);
 
     expect(result.success).toBeFalsy();
   });
@@ -31,60 +60,81 @@ describe("task schema", () => {
 describe("evaluation schema", () => {
   it("should succeed validating for single variant", () => {
     const task: ITask = {
-      title: "Title",
-      instruction: "Instruction",
-      choices: [{ markdown: "A" }, { markdown: "B" }],
-      variant: "single",
+      subtype: "choice",
+      description: "desc",
+      name: "name",
+      view: {
+        instruction: "Instruction",
+        choices: [{ markdown: "A" }, { markdown: "B" }],
+        variant: "single",
+      },
+      evaluation: {
+        mode: "auto",
+        correct: ["a"],
+        showFeedback: false,
+        enableRetry: false,
+      },
+      feedback: {
+        choices: {},
+        patterns: {},
+      },
     };
 
-    const evaluation: any = {
-      mode: "auto",
-      correct: ["a"],
-      showFeedback: false,
-      enableRetry: false,
-    };
-
-    const result = evaluationSchema({ task }).safeParse(evaluation);
+    const result = TaskSchema.safeParse(task);
 
     expect(result.success).toBeTruthy();
   });
 
   it("should fail validating for single variant with more than one correct", () => {
     const task: ITask = {
-      title: "Title",
-      instruction: "Instruction",
-      choices: [{ markdown: "A" }, { markdown: "B" }],
-      variant: "single",
+      subtype: "choice",
+      description: "desc",
+      name: "name",
+      view: {
+        instruction: "Instruction",
+        choices: [{ markdown: "A" }, { markdown: "B" }],
+        variant: "single",
+      },
+      evaluation: {
+        mode: "auto",
+        correct: ["a", "b"],
+        showFeedback: false,
+        enableRetry: false,
+      },
+      feedback: {
+        choices: {},
+        patterns: {},
+      },
     };
 
-    const evaluation: any = {
-      mode: "auto",
-      correct: ["a", "b"],
-      showFeedback: false,
-      enableRetry: false,
-    };
-
-    const result = evaluationSchema({ task }).safeParse(evaluation);
+    const result = TaskSchema.safeParse(task);
 
     expect(result.success).toBeFalsy();
   });
 
   it("should fail validating when correct option not in task", () => {
     const task: ITask = {
-      title: "Title",
-      instruction: "Instruction",
-      choices: [{ markdown: "A" }, { markdown: "B" }],
-      variant: "single",
+      subtype: "choice",
+      description: "desc",
+      name: "name",
+      view: {
+        instruction: "Instruction",
+        choices: [{ markdown: "A" }, { markdown: "B" }],
+        variant: "single",
+      },
+      evaluation: {
+        mode: "auto",
+        correct: ["c"],
+        showFeedback: false,
+        enableRetry: false,
+      },
+      feedback: {
+        choices: {},
+        patterns: {},
+      },
     };
 
-    const evaluation: any = {
-      mode: "auto",
-      correct: ["c"],
-      showFeedback: false,
-      enableRetry: false,
-    };
-
-    const result = evaluationSchema({ task }).safeParse(evaluation);
+    const result = TaskSchema.safeParse(task);
 
     expect(result.success).toBeFalsy();
   });

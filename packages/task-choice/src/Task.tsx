@@ -1,21 +1,19 @@
-import produce, { Draft } from "immer";
+import { TaskProps, TaskRef } from "@bitflow/base";
 import { AutoGrid, Box, Markdown } from "@openpatch/patches";
-import { TaskProps, TaskRef } from "@openpatch/bits-base";
+import produce, { Draft } from "immer";
 import { forwardRef, useEffect, useImperativeHandle, useReducer } from "react";
-import {
-  IAnswer,
-  IResult,
-  ITask,
-  ITaskState,
-  IAction,
-  Option,
-  ICheckAction,
-  IUncheckAction,
-  IAnswerAction,
-  options,
-} from "./types";
 import { Choice } from "./Choice";
 import { Feedback } from "./Feedback";
+import { IOption, ITask, options } from "./schemas";
+import {
+  IAction,
+  IAnswer,
+  IAnswerAction,
+  ICheckAction,
+  IResult,
+  ITaskState,
+  IUncheckAction,
+} from "./types";
 
 // Initial State
 export const initialState: ITaskState = {
@@ -27,8 +25,8 @@ export const checkAction = ({
   choice,
   variant,
 }: {
-  choice: Option;
-  variant: ITask["variant"];
+  choice: IOption;
+  variant: ITask["view"]["variant"];
 }): ICheckAction => {
   return {
     type: "check",
@@ -43,8 +41,8 @@ export const uncheckAction = ({
   choice,
   variant,
 }: {
-  choice: Option;
-  variant: ITask["variant"];
+  choice: IOption;
+  variant: ITask["view"]["variant"];
 }): IUncheckAction => {
   return {
     type: "uncheck",
@@ -105,7 +103,7 @@ export const Task = forwardRef<
 
   useEffect(() => {
     if (answer) {
-      customDispatch(answerAction({ answer }));
+      dispatch(answerAction({ answer }));
     }
   }, [answer]);
 
@@ -126,15 +124,15 @@ export const Task = forwardRef<
     return true;
   };
 
-  const check = (choice: Option) => {
-    customDispatch(checkAction({ choice, variant: task.variant }));
+  const check = (choice: IOption) => {
+    customDispatch(checkAction({ choice, variant: task.view.variant }));
   };
 
-  const uncheck = (choice: Option) => {
-    customDispatch(uncheckAction({ choice, variant: task.variant }));
+  const uncheck = (choice: IOption) => {
+    customDispatch(uncheckAction({ choice, variant: task.view.variant }));
   };
 
-  const handleChange = (choice: Option) => (checked: boolean) => {
+  const handleChange = (choice: IOption) => (checked: boolean) => {
     if (checked) {
       check(choice);
     } else {
@@ -145,9 +143,9 @@ export const Task = forwardRef<
   return (
     <Box padding="standard">
       <AutoGrid gap="standard">
-        <Markdown markdown={task.instruction} />
-        <AutoGrid columns={[1, 2]} gap="standard">
-          {task.choices.map((choice, index) => (
+        <Markdown markdown={task.view.instruction} />
+        <AutoGrid columns={[1, 1, 2]} gap="standard">
+          {task.view.choices.map((choice, index) => (
             <Choice
               key={index}
               choice={choice?.markdown || ""}

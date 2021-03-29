@@ -1,11 +1,11 @@
-# @openpatch/bits-input-markdown
+# @bitflow/input-markdown
 
 A Quick description of the component
 
 ## Installation
 
 ```sh
-yarn add @openpatch/bits-input-markdown
+yarn add @bitflow/input-markdown
 # or
-npm i @openpatch/bits-input-markdown
+npm i @bitflow/input-markdown
 ```

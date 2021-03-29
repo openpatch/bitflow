@@ -1,9 +1,9 @@
+import { TaskAnswer, TaskResult } from "@bitflow/base";
 import produce from "immer";
-import { Answer, Result } from "@openpatch/bits-base/dist/types";
 import { ConfidenceLevelsProps } from "../ConfidenceLevels";
 import { IShellAction } from "./actions";
 
-export type IState<A extends Answer, R extends Result> = {
+export type IState<A extends TaskAnswer, R extends TaskResult> = {
   state:
     | "interact"
     | "evaluate"
@@ -19,11 +19,11 @@ export type IState<A extends Answer, R extends Result> = {
   nudge?: string;
 };
 
-export const initialState: IState<Answer, Result> = {
+export const initialState: IState<TaskAnswer, TaskResult> = {
   state: "interact",
 };
 
-export const createReducer = <A extends Answer, R extends Result>() =>
+export const createReducer = <A extends TaskAnswer, R extends TaskResult>() =>
   produce((draft: IState<A, R>, action: IShellAction<A, R>) => {
     switch (action.type) {
       case "next":

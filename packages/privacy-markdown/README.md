@@ -1,11 +1,11 @@
-# @openpatch/bits-privacy-markdown
+# @bitflow/privacy-markdown
 
 A Quick description of the component
 
 ## Installation
 
 ```sh
-yarn add @openpatch/bits-privacy-markdown
+yarn add @bitflow/privacy-markdown
 # or
-npm i @openpatch/bits-privacy-markdown
+npm i @bitflow/privacy-markdown
 ```

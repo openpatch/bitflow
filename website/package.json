@@ -1,0 +1,37 @@
+{
+  "name": "@bitflow/website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "locale": "vocab compile",
+    "locale:watch": "vocab compile --watch"
+  },
+  "dependencies": {
+    "@bitflow/flow": "0.0.1",
+    "@bitflow/provider": "0.0.1",
+    "@bitflow/bits": "0.0.1",
+    "@emotion/cache": "11.x",
+    "@emotion/react": "11.x",
+    "@emotion/styled": "11.x",
+    "@vocab/webpack": "^1.0.1",
+    "atob": "^2.1.2",
+    "next": "10.0.9",
+    "react-json-view": "^1.21.3",
+    "typeface-rubik": "1.1.13",
+    "typeface-ubuntu-mono": "1.1.13"
+  },
+  "devDependencies": {
+    "@babel/core": "7.13.13",
+    "@emotion/babel-preset-css-prop": "11.2.0",
+    "@openpatch/patches": "1.x",
+    "@types/atob": "^2.1.2",
+    "@types/node": "14.14.37",
+    "@types/react": "17.0.3",
+    "@vocab/react": "1.x",
+    "typescript": "4.2.3",
+    "typescript-styled-plugin": "0.15.0"
+  }
+}

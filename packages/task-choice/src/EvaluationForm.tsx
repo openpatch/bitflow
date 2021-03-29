@@ -1,29 +1,22 @@
-import { EvaluationFormProps as EvaluationFormPropsBase } from "@openpatch/bits-base";
-import { Box, AutoGrid, HookFormController } from "@openpatch/patches";
+import { TaskEvaluationFormProps } from "@bitflow/base";
+import { AutoGrid, Box, HookFormController } from "@openpatch/patches";
+import { useTranslations } from "@vocab/react";
 import { useFormContext } from "react-hook-form";
-import { IEvaluation, ITask, Option, options } from "./types";
 import { Choice } from "./Choice";
+import translations from "./locales.vocab";
+import { IOption, ITask, options } from "./schemas";
 
-export interface EvaluationFormProps extends EvaluationFormPropsBase<ITask> {
-  locales?: {
-    correctChoices?: string;
-  };
-}
-
-const defaultLocales: Required<EvaluationFormProps["locales"]> = {
-  correctChoices: "Correct Choices",
-};
-
-export const EvaluationForm = ({ locales, task }: EvaluationFormProps) => {
-  const { control } = useFormContext<IEvaluation>();
+export const EvaluationForm = ({ name }: TaskEvaluationFormProps) => {
+  const { control, watch } = useFormContext();
+  const view = watch(`${name}.view`) as Partial<ITask["view"]> | undefined;
+  const { t } = useTranslations(translations);
   return (
     <HookFormController
-      name="correct"
-      control={control}
+      name={`${name}.evaluation.correct`}
       defaultValue={[]}
-      label={locales?.correctChoices || defaultLocales.correctChoices}
+      label={t("correct-choices")}
       render={({ value, onChange }) => {
-        const handleChange = (o: Option) => (v: boolean) => {
+        const handleChange = (o: IOption) => (v: boolean) => {
           if (v) {
             onChange([...value, o]);
           } else {
@@ -34,11 +27,12 @@ export const EvaluationForm = ({ locales, task }: EvaluationFormProps) => {
         return (
           <Box mb="small">
             <AutoGrid gap="standard">
-              {task.choices.map((c, i) => {
+              {view?.choices?.map((c, i) => {
                 const option = options[i];
                 const checked = value.includes(option);
                 return (
                   <Choice
+                    key={option}
                     checked={checked}
                     onChange={handleChange(option)}
                     choice={c.markdown || ""}

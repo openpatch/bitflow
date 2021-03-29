@@ -8,10 +8,24 @@ describe("updateStatistic", () => {
         checked: { a: true },
       },
       task: {
-        title: "A task",
-        instruction: "An instruction",
-        variant: "single",
-        choices: [{ markdown: "Hallo" }],
+        subtype: "choice",
+        description: "desc",
+        name: "name",
+        view: {
+          instruction: "An instruction",
+          variant: "single",
+          choices: [{ markdown: "Hallo" }],
+        },
+        evaluation: {
+          correct: [],
+          enableRetry: false,
+          mode: "auto",
+          showFeedback: false,
+        },
+        feedback: {
+          choices: {},
+          patterns: {},
+        },
       },
     });
 
@@ -20,6 +34,7 @@ describe("updateStatistic", () => {
       patterns: {
         a: {
           count: 1,
+          correct: false,
         },
       },
     };
@@ -34,6 +49,7 @@ describe("updateStatistic", () => {
         patterns: {
           a: {
             count: 42,
+            correct: false,
           },
         },
       },
@@ -41,10 +57,24 @@ describe("updateStatistic", () => {
         checked: { a: true },
       },
       task: {
-        title: "A task",
-        instruction: "An instruction",
-        variant: "single",
-        choices: [{ markdown: "Hallo" }],
+        subtype: "choice",
+        description: "desc",
+        name: "name",
+        view: {
+          instruction: "An instruction",
+          variant: "single",
+          choices: [{ markdown: "Hallo" }],
+        },
+        evaluation: {
+          correct: [],
+          enableRetry: false,
+          mode: "auto",
+          showFeedback: false,
+        },
+        feedback: {
+          choices: {},
+          patterns: {},
+        },
       },
     });
 
@@ -52,6 +82,7 @@ describe("updateStatistic", () => {
       count: 44,
       patterns: {
         a: {
+          correct: false,
           count: 43,
         },
       },
@@ -85,14 +116,28 @@ describe("updateStatistic", () => {
           statistic: await statistic,
           answer,
           task: {
-            title: "A task",
-            instruction: "An instruction",
-            variant: "single",
-            choices: [
-              { markdown: "Hallo" },
-              { markdown: "Hu" },
-              { markdown: "Da" },
-            ],
+            subtype: "choice",
+            description: "desc",
+            name: "name",
+            view: {
+              instruction: "An instruction",
+              variant: "single",
+              choices: [
+                { markdown: "Hallo" },
+                { markdown: "Hu" },
+                { markdown: "Da" },
+              ],
+            },
+            evaluation: {
+              correct: ["a"],
+              enableRetry: false,
+              mode: "auto",
+              showFeedback: false,
+            },
+            feedback: {
+              choices: {},
+              patterns: {},
+            },
           },
         });
       },
@@ -103,12 +148,15 @@ describe("updateStatistic", () => {
       count: answers.length,
       patterns: {
         a: {
+          correct: true,
           count: 3,
         },
         ab: {
+          correct: false,
           count: 1,
         },
         ac: {
+          correct: false,
           count: 1,
         },
       },

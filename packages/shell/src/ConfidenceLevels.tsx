@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { css, Theme } from "@emotion/react";
 import { Box, BoxProps } from "@openpatch/patches";
-import { css } from "@emotion/react";
+import { FC } from "react";
 
 type Level = 1 | 2 | 3 | 4 | 5;
 
@@ -97,7 +97,7 @@ export const ConfidenceLevels: FC<ConfidenceLevelsProps> = ({
       maxWidth="small"
       marginX="auto"
       alignItems="center"
-      css={(theme) => css`
+      css={(theme: Theme) => css`
         > div {
           margin: ${theme.space.standard};
         }

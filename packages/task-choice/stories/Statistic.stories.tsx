@@ -12,16 +12,32 @@ export const Default = () => (
     statistic={{
       count: 5,
       patterns: {
-        ab: { count: 4 },
-        a: { count: 2 },
-        abc: { count: 7 },
+        ab: { count: 4, correct: true },
+        a: { count: 2, correct: false },
+        abc: { count: 7, correct: false },
       },
     }}
     task={{
-      title: "Title",
-      variant: "multiple",
-      instruction: "Select an answer",
-      choices: [{ markdown: "A" }, { markdown: "B" }, { markdown: "C" }],
+      id: "a-id",
+      type: "task",
+      subtype: "choice",
+      name: "Hallo",
+      description: "Desc",
+      view: {
+        variant: "multiple",
+        instruction: "Select an answer",
+        choices: [{ markdown: "A" }, { markdown: "B" }, { markdown: "C" }],
+      },
+      evaluation: {
+        correct: [],
+        enableRetry: false,
+        mode: "auto",
+        showFeedback: false,
+      },
+      feedback: {
+        choices: {},
+        patterns: {},
+      },
     }}
   />
 );

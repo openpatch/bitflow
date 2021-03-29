@@ -1,77 +1,73 @@
-import { Evaluate } from "@openpatch/bits-base";
-import {
-  IAnswer,
-  IEvaluation,
-  ITask,
-  IResult,
-  IFeedback,
-  options,
-} from "./types";
+import { Evaluate } from "@bitflow/base";
+import { ITask, options } from "./schemas";
+import { IAnswer, IResult } from "./types";
 
-export const evaluate: Evaluate<
-  IAnswer,
-  IEvaluation,
-  ITask,
-  IResult,
-  IFeedback
-> = ({ answer, evaluation, task, feedback }) =>
-  new Promise((resolve) => {
-    let state: IResult["state"] = "unknown";
-    const choices: IResult["choices"] = {};
-    let pattern = "";
-    let overallFeedback: IResult["feedback"] = undefined;
+export const evaluate: Evaluate<IAnswer, ITask, IResult> = async ({
+  answer,
+  task,
+}) => {
+  const { view, evaluation, feedback } = task;
+  let state: IResult["state"] = "unknown";
+  const choices: IResult["choices"] = {};
+  let pattern = "";
+  let overallFeedback: IResult["feedback"] = undefined;
 
-    if (evaluation && evaluation.mode === "auto") {
-      let correct = true;
-      state = "correct";
-      task.choices.forEach((_, i) => {
-        const c = options[i];
-        const choice: IResult["choices"]["a"] = { state: "neutral" };
+  if (evaluation && evaluation.mode === "auto") {
+    state = "correct";
+    view.choices.forEach((_, i) => {
+      const c = options[i];
+      const choice: IResult["choices"]["a"] = { state: "neutral" };
 
-        const checked = answer?.checked[c] || false;
-        const toBe = evaluation.correct.includes(c);
+      const checked = answer?.checked[c] || false;
+      const toBe = evaluation.correct.includes(c);
 
+      if (checked) {
+        pattern += c;
+      }
+
+      if (evaluation.showFeedback) {
         if (checked) {
-          pattern += c;
-        }
-
-        if (evaluation.showFeedback) {
-          if (checked) {
-            choice.feedback = feedback?.choices[c]?.checkedFeedback;
-          } else {
-            choice.feedback = feedback?.choices[c]?.checkedFeedback;
+          const checkedFeedback = feedback?.choices[c]?.checkedFeedback;
+          if (checkedFeedback?.message) {
+            choice.feedback = checkedFeedback;
+          }
+        } else {
+          const notCheckedFeedback = feedback?.choices[c]?.notCheckedFeedback;
+          if (notCheckedFeedback?.message) {
+            choice.feedback = notCheckedFeedback;
           }
         }
-
-        if (checked !== toBe) {
-          correct = false;
-        }
-
-        if (checked && !toBe) {
-          choice.state = "wrong";
-          state = "wrong";
-        } else if (checked && toBe) {
-          choice.state = "correct";
-        }
-
-        choices[c] = choice;
-      });
-      // sort pattern alphabetically
-      pattern = pattern.split("").sort().join("");
-
-      if (evaluation.showFeedback && feedback?.patterns[pattern]) {
-        overallFeedback = feedback?.patterns[pattern];
       }
-    }
 
-    if (evaluation?.mode === "manual") {
-      state = "manual";
-    }
+      if (checked !== toBe) {
+        choice.state = "wrong";
+        state = "wrong";
+      } else {
+        choice.state = "correct";
+      }
 
-    resolve({
-      state,
-      choices,
-      feedback: overallFeedback,
-      allowRetry: evaluation?.enableRetry,
+      choices[c] = choice;
     });
-  });
+    // sort pattern alphabetically
+    pattern = pattern.split("").sort().join("");
+
+    if (
+      evaluation.showFeedback &&
+      feedback?.patterns[pattern] &&
+      feedback?.patterns[pattern]?.message
+    ) {
+      overallFeedback = feedback?.patterns[pattern];
+    }
+  }
+
+  if (evaluation?.mode === "manual") {
+    state = "manual";
+  }
+
+  return {
+    state,
+    choices,
+    feedback: overallFeedback,
+    allowRetry: evaluation?.enableRetry,
+  };
+};

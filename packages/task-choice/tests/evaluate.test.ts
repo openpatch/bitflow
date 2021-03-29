@@ -1,5 +1,6 @@
 import { evaluate } from "../src/evaluate";
-import { IAnswer, IEvaluation, IFeedback, ITask } from "../src/types";
+import { ITask } from "../src/schemas";
+import { IAnswer } from "../src/types";
 
 const answer: IAnswer = {
   checked: {
@@ -9,66 +10,80 @@ const answer: IAnswer = {
   },
 };
 const task: ITask = {
-  title: "Title",
-  instruction: "Instruction",
-  variant: "multiple",
-  choices: [
-    {
-      markdown: "A",
+  subtype: "choice",
+  description: "desc",
+  name: "name",
+  view: {
+    instruction: "Instruction",
+    variant: "multiple",
+    choices: [
+      {
+        markdown: "A",
+      },
+      {
+        markdown: "B",
+      },
+      {
+        markdown: "C",
+      },
+      {
+        markdown: "D",
+      },
+    ],
+  },
+  evaluation: {
+    mode: "auto",
+    enableRetry: true,
+    showFeedback: false,
+    correct: ["a", "b"],
+  },
+  feedback: {
+    choices: {},
+    patterns: {
+      ab: { message: "Feedback AB", severity: "error" },
     },
-    {
-      markdown: "B",
-    },
-    {
-      markdown: "C",
-    },
-    {
-      markdown: "D",
-    },
-  ],
-};
-
-const evaluation: IEvaluation = {
-  correct: ["a", "b"],
-  enableRetry: false,
-  showFeedback: false,
-  mode: "auto",
-};
-const feedback: IFeedback = {
-  choices: {},
-  patterns: {
-    ab: { message: "Feedback AB", severity: "error" },
   },
 };
 
 describe("evaluate", () => {
   it("should succeed", async () => {
-    const result = await evaluate({ task, evaluation, answer });
+    const result = await evaluate({ task, answer });
 
     expect(result.state).toBe("correct");
   });
 
+  it("should fail with no answer", async () => {
+    const result = await evaluate({ task });
+    expect(result.state).toBe("wrong");
+  });
+
   it("should give feedback", async () => {
     const result = await evaluate({
-      task,
-      evaluation: {
-        mode: "auto",
-        correct: ["a"],
-        showFeedback: true,
-        enableRetry: false,
+      task: {
+        ...task,
+        evaluation: {
+          ...task.evaluation,
+          showFeedback: true,
+        },
       },
-      feedback,
       answer,
     });
 
-    expect(result?.feedback?.message).toBe(feedback.patterns.ab.message);
-    expect(result?.feedback?.severity).toBe(feedback.patterns.ab.severity);
+    expect(result?.feedback?.message).toBe(task.feedback.patterns.ab.message);
+    expect(result?.feedback?.severity).toBe(task.feedback.patterns.ab.severity);
   });
 
   it("should skip evaluation", async () => {
     const result = await evaluate({
-      task,
-      evaluation: { mode: "skip", enableRetry: false, showFeedback: false },
+      task: {
+        ...task,
+        evaluation: {
+          mode: "skip",
+          enableRetry: false,
+          showFeedback: false,
+          correct: [],
+        },
+      },
       answer,
     });
 
@@ -79,14 +94,15 @@ describe("evaluate", () => {
 
   it("should allow retry", async () => {
     const result = await evaluate({
-      task,
-      evaluation: {
-        mode: "auto",
-        enableRetry: true,
-        showFeedback: false,
-        correct: ["a"],
+      task: {
+        ...task,
+        evaluation: {
+          mode: "auto",
+          enableRetry: true,
+          showFeedback: false,
+          correct: ["a"],
+        },
       },
-      feedback,
       answer,
     });
 

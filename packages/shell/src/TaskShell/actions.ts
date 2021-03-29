@@ -1,7 +1,7 @@
-import { Action, Answer, Result } from "@openpatch/bits-base/dist/types";
+import { Action, TaskAnswer, TaskResult } from "@bitflow/base";
 import { ConfidenceLevelsProps } from "../ConfidenceLevels";
 
-export type ITaskAction<A extends Action> = A & {
+export type ITaskAction<A extends Action = any> = A & {
   scope: "task";
 };
 
@@ -11,14 +11,15 @@ export interface IShellActionBase {
   payload: any;
 }
 
-export interface IEvaluateAction<A extends Answer> extends IShellActionBase {
+export interface IEvaluateAction<A extends TaskAnswer>
+  extends IShellActionBase {
   type: "evaluate";
   payload: {
     answer?: A;
   };
 }
 
-export const evaluateAction = <A extends Answer>({
+export const evaluateAction = <A extends TaskAnswer>({
   answer,
 }: {
   answer?: A;
@@ -32,7 +33,7 @@ export const evaluateAction = <A extends Answer>({
   };
 };
 
-export interface IAnswerChangeAction<A extends Answer>
+export interface IAnswerChangeAction<A extends TaskAnswer>
   extends IShellActionBase {
   type: "answer-change";
   payload: {
@@ -40,7 +41,7 @@ export interface IAnswerChangeAction<A extends Answer>
   };
 }
 
-export const answerChangeAction = <A extends Answer>({
+export const answerChangeAction = <A extends TaskAnswer>({
   answer,
 }: {
   answer: A;
@@ -54,7 +55,7 @@ export const answerChangeAction = <A extends Answer>({
   };
 };
 
-export interface IResultReceiveAction<R extends Result>
+export interface IResultReceiveAction<R extends TaskResult>
   extends IShellActionBase {
   type: "result-receive";
   payload: {
@@ -62,7 +63,7 @@ export interface IResultReceiveAction<R extends Result>
   };
 }
 
-export const resultReceiveAction = <R extends Result>({
+export const resultReceiveAction = <R extends TaskResult>({
   result,
 }: {
   result: R;
@@ -317,7 +318,10 @@ export const resizeAction = ({
   };
 };
 
-export type IShellAction<A extends Answer, R extends Result> =
+export type IShellAction<
+  A extends TaskAnswer = any,
+  R extends TaskResult = any
+> =
   | IEvaluateAction<A>
   | IConfidenceLevelsChangeAction
   | IReasoningChangeAction

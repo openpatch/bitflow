@@ -1,11 +1,11 @@
-# @openpatch/bits-multiple-choice
+# @bitflow/task-choice
 
 A Quick description of the component
 
 ## Installation
 
 ```sh
-yarn add @openpatch/bits-multiple-choice
+yarn add @bitflow/task-choice
 # or
-npm i @openpatch/bits-multiple-choice
+npm i @bitflow/task-choice
 ```

@@ -1,47 +1,43 @@
-import { ButtonPrimary, Box } from "@openpatch/patches";
-import { Title, TitleProps } from "@openpatch/bits-base";
+import { Title, TitleProps } from "@bitflow/base";
+import { ButtonPrimary } from "@openpatch/patches";
+import { useTranslations } from "@vocab/react";
 import { FC } from "react";
+import translations from "./locales.vocab";
+import { Shell, ShellContent, ShellFooter, ShellHeader } from "./Shell";
 import { IShell } from "./types";
-import { css } from "@emotion/react";
 
 export type TitleShellProps<P extends Title> = {
   title: P;
   TitleComponent: FC<TitleProps<P>>;
-  locales?: {
-    start: string;
-    welcome: string;
-  };
 } & IShell;
 
 export const TitleShell = <P extends Title>({
   title,
   TitleComponent,
-  locales = {
-    start: "Start",
-    welcome: "Welcome",
-  },
   onNext,
+  onClose,
+  onPrevious,
+  progress,
 }: TitleShellProps<P>) => {
+  const { t } = useTranslations(translations);
+
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      height="100vh"
-    >
-      <TitleComponent title={title} />
-      <Box
-        padding="standard"
-        css={css`
-          button {
-            height: 40px;
-          }
-        `}
+    <Shell>
+      <ShellHeader
+        onClose={onClose}
+        onPrevious={onPrevious}
+        progress={progress}
       >
+        {" "}
+      </ShellHeader>
+      <ShellContent>
+        <TitleComponent title={title} />
+      </ShellContent>
+      <ShellFooter>
         <ButtonPrimary fullWidth onClick={onNext}>
-          {locales.start}
+          {t("next")}
         </ButtonPrimary>
-      </Box>
-    </Box>
+      </ShellFooter>
+    </Shell>
   );
 };

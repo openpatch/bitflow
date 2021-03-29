@@ -1,15 +1,12 @@
-import React, { useEffect } from "react";
-import { Story, StoryContext } from "@storybook/react";
-import { Global, css, Theme } from "@emotion/react";
-import { ThemeProvider } from "@openpatch/patches";
+import { css, Global, Theme } from "@emotion/react";
+import { Box, Card, CardContent, ThemeProvider } from "@openpatch/patches";
 import * as themes from "@openpatch/patches/dist/esm/themes";
-import { Box } from "@openpatch/patches";
-import { Card } from "@openpatch/patches";
-import { CardContent } from "@openpatch/patches";
+import { Story, StoryContext } from "@storybook/react";
+import React from "react";
 
 export default (Story: Story, context?: StoryContext) => {
-  const selectedTheme = themes[context.globals.theme] as Theme;
-  const background = context.globals.backgrounds;
+  const selectedTheme = themes[context?.globals.theme] as Theme;
+  const background = context?.globals.backgrounds;
 
   return (
     <ThemeProvider theme={selectedTheme}>

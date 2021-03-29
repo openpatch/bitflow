@@ -1,8 +1,9 @@
-import { TaskEvaluationFormShell } from "@openpatch/bits-shell";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ButtonPrimary, Form } from "@openpatch/patches";
 import { Meta, Story } from "@storybook/react/types-6-0";
+import { FormProvider, useForm } from "react-hook-form";
 import { EvaluationForm } from "../src/EvaluationForm";
-import { evaluationSchema } from "../src/schemas";
-import { IEvaluation, ITask } from "../src/types";
+import { ITask, TaskSchema } from "../src/schemas";
 
 export default {
   title: "Tasks/Multiple Choice/EvaluationForm",
@@ -11,30 +12,48 @@ export default {
     onSubmit: {
       action: "submit",
     },
+    onError: {
+      action: "error",
+    },
   },
 } as Meta;
 
-const task: ITask = {
-  title: "Title",
-  instruction: "Instruction",
-  variant: "single",
-  choices: [
-    {
-      markdown: "A",
-    },
-    {
-      markdown: "B",
-    },
-  ],
+const task: Partial<ITask> = {
+  id: "a-id",
+  type: "task",
+  subtype: "choice",
+  name: "Title",
+  description: "",
+  view: {
+    instruction: "Instruction",
+    variant: "single",
+    choices: [
+      {
+        markdown: "A",
+      },
+      {
+        markdown: "B",
+      },
+    ],
+  },
 };
 
-export const Shell: Story = (args) => {
+export const Default: Story = (args) => {
+  const methods = useForm<ITask>({
+    defaultValues: task,
+    resolver: zodResolver(TaskSchema),
+    shouldUnregister: false,
+    reValidateMode: "onBlur",
+    mode: "onBlur",
+  });
   return (
-    <TaskEvaluationFormShell<IEvaluation, ITask>
-      onSubmit={args.onSubmit}
-      EvaluationForm={EvaluationForm}
-      schema={evaluationSchema({ task })}
-      task={task}
-    />
+    <FormProvider {...methods}>
+      <Form onSubmit={methods.handleSubmit(args.onSubmit, args.onError)}>
+        <EvaluationForm name="" />
+        <ButtonPrimary fullWidth type="submit">
+          Submit
+        </ButtonPrimary>
+      </Form>
+    </FormProvider>
   );
 };

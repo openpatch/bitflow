@@ -1,57 +1,14 @@
 import {
-  Task as BaseTask,
-  Evaluation as BaseEvaluation,
-  Statistic as BaseStatistic,
-  Answer as BaseAnswer,
-  Result as BaseResult,
-  Feedback as BaseFeedback,
   Action as BaseAction,
-} from "@openpatch/bits-base";
-
-export type Option = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h";
-
-export const options: Option[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
-
-export interface ITask extends BaseTask {
-  variant: "multiple" | "single";
-  // each array entry represents an option
-  choices: Array<{
-    id?: string;
-    markdown?: string;
-  }>;
-}
+  FeedbackMessage,
+  TaskAnswer as BaseAnswer,
+  TaskResult as BaseResult,
+  TaskStatistic as BaseStatistic,
+} from "@bitflow/base";
+import { IOption, ITask } from "./schemas";
 
 export interface ITaskState {
-  checked: Partial<Record<Option, boolean>>;
-}
-
-export type IEvaluation =
-  | (BaseEvaluation & {
-      correct: Array<Option>;
-    })
-  | (BaseEvaluation & {
-      mode: "skip" | "manual";
-    });
-/**
- * For example, when someone answered a und b:
- * ab -> "You may have this misconception"
- */
-export interface IFeedback extends BaseFeedback {
-  patterns: Record<string, IFeedbackMessage>;
-  choices: Partial<
-    Record<
-      Option,
-      {
-        checkedFeedback: IFeedbackMessage;
-        notCheckedFeedback: IFeedbackMessage;
-      }
-    >
-  >;
-}
-
-export interface IFeedbackMessage {
-  message: string;
-  severity: "info" | "warning" | "error" | "success";
+  checked: Partial<Record<IOption, boolean>>;
 }
 
 export interface IStatistic extends BaseStatistic {
@@ -60,6 +17,7 @@ export interface IStatistic extends BaseStatistic {
       string,
       {
         count: number;
+        correct: boolean;
       }
     >
   >;
@@ -72,29 +30,29 @@ export interface IAnswer extends BaseAnswer {
 export interface IResult extends BaseResult {
   choices: Partial<
     Record<
-      Option,
+      IOption,
       {
         state: "neutral" | "wrong" | "correct";
-        feedback?: IFeedbackMessage;
+        feedback?: FeedbackMessage;
       }
     >
   >;
-  feedback?: IFeedbackMessage;
+  feedback?: FeedbackMessage;
 }
 
 export interface ICheckAction extends BaseAction {
   type: "check";
   payload: {
-    choice: Option;
-    variant: ITask["variant"];
+    choice: IOption;
+    variant: ITask["view"]["variant"];
   };
 }
 
 export interface IUncheckAction extends BaseAction {
   type: "uncheck";
   payload: {
-    choice: Option;
-    variant: ITask["variant"];
+    choice: IOption;
+    variant: ITask["view"]["variant"];
   };
 }
 
