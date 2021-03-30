@@ -8,7 +8,7 @@ export const simpleAnswerSplit: IFlow = {
       id: "deb8e3b9-28a4-47f9-902c-a729b9be5569",
       position: {
         x: 51,
-        y: 211,
+        y: 311,
       },
       type: "start",
       data: {

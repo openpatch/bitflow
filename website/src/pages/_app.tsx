@@ -7,11 +7,11 @@ import "typeface-ubuntu-mono";
 function MyApp({ Component, pageProps, router }: AppProps) {
   const locale = router.locale || "en";
   return (
-    <BitflowProvider locale={locale} config={{}}>
-      <ThemeProvider>
+    <ThemeProvider>
+      <BitflowProvider locale={locale} config={{}}>
         <Component {...pageProps} locale={locale} />
-      </ThemeProvider>
-    </BitflowProvider>
+      </BitflowProvider>
+    </ThemeProvider>
   );
 }
 

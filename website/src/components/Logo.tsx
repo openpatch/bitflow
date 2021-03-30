@@ -1,5 +1,4 @@
 import { Box, Text } from "@openpatch/patches";
-import * as React from "react";
 import { Link } from "./Link";
 
 export function Logo(props: React.SVGProps<SVGSVGElement>) {

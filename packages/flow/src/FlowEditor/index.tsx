@@ -17,7 +17,6 @@ import {
   isNode,
   OnLoadParams,
   ReactFlowProps,
-  ReactFlowProvider,
 } from "react-flow-renderer";
 import {
   FormProvider,
@@ -282,47 +281,45 @@ export const FlowEditor = forwardRef<FlowEditorRef, FlowEditorProps>(
       <Box position="relative" width="100%" height="100%" overflow="hidden">
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleSuccess, handleError)}>
-            <ReactFlowProvider>
-              <Box height={height} ref={reactFlowWrapper}>
-                <Box
-                  display={submitVariant === "intern" ? "block" : "none"}
-                  position="absolute"
-                  width="100px"
-                  top="0"
-                  left="0"
-                  zIndex="50"
-                  padding="standard"
+            <Box height={height} ref={reactFlowWrapper}>
+              <Box
+                display={submitVariant === "intern" ? "block" : "none"}
+                position="absolute"
+                width="100px"
+                top="0"
+                left="0"
+                zIndex="50"
+                padding="standard"
+              >
+                <ButtonPrimary
+                  loading={saving}
+                  type="submit"
+                  ref={submitButtonRef}
                 >
-                  <ButtonPrimary
-                    loading={saving}
-                    type="submit"
-                    ref={submitButtonRef}
-                  >
-                    {t("save")}
-                  </ButtonPrimary>
-                </Box>
-                <Flow
-                  onLoad={onLoad}
-                  elements={[...nodes, ...edges]}
-                  onNodeContextMenu={(e) => e.preventDefault()}
-                  onEdgeContextMenu={(e) => e.preventDefault()}
-                  onPaneContextMenu={(e) => e.preventDefault()}
-                  onElementsRemove={onElementsRemove}
-                  onSelectionChange={onSelectionChange}
-                  onNodeDragStop={onNodeDragStop}
-                  onConnect={onConnect}
-                  onDrop={onDrop}
-                  onDragOver={onDragOver}
-                  defaultZoom={zoom}
-                  defaultPosition={position}
-                />
+                  {t("save")}
+                </ButtonPrimary>
               </Box>
-              <Sidebar
-                node={selectedNode}
-                nodeIndex={nodes.findIndex((n) => n.id === selectedNode?.id)}
-                errors={methods.formState.errors}
+              <Flow
+                onLoad={onLoad}
+                elements={[...nodes, ...edges]}
+                onNodeContextMenu={(e) => e.preventDefault()}
+                onEdgeContextMenu={(e) => e.preventDefault()}
+                onPaneContextMenu={(e) => e.preventDefault()}
+                onElementsRemove={onElementsRemove}
+                onSelectionChange={onSelectionChange}
+                onNodeDragStop={onNodeDragStop}
+                onConnect={onConnect}
+                onDrop={onDrop}
+                onDragOver={onDragOver}
+                defaultZoom={zoom}
+                defaultPosition={position}
               />
-            </ReactFlowProvider>
+            </Box>
+            <Sidebar
+              node={selectedNode}
+              nodeIndex={nodes.findIndex((n) => n.id === selectedNode?.id)}
+              errors={methods.formState.errors}
+            />
           </form>
         </FormProvider>
       </Box>
