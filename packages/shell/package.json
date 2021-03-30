@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/shell",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -46,8 +46,8 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "@bitflow/base": "0.0.1",
-    "@bitflow/provider": "0.0.1"
+    "@bitflow/base": "0.0.0",
+    "@bitflow/provider": "0.0.0"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",

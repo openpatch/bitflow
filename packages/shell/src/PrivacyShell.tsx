@@ -7,13 +7,13 @@ import { Shell, ShellContent, ShellFooter, ShellHeader } from "./Shell";
 import { IShell } from "./types";
 
 export type PrivacyShellProps<P extends Privacy> = {
-  title: string;
+  header: string;
   privacy: P;
   PrivacyComponent: FC<PrivacyProps<P>>;
 } & IShell;
 
 export const PrivacyShell = <P extends Privacy>({
-  title,
+  header,
   onClose,
   onPrevious,
   progress,
@@ -29,7 +29,7 @@ export const PrivacyShell = <P extends Privacy>({
         progress={progress}
         onPrevious={onPrevious}
       >
-        {title}
+        {header}
       </ShellHeader>
       <ShellContent>
         <PrivacyComponent privacy={privacy} />

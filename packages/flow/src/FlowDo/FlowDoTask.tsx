@@ -1,7 +1,9 @@
 import { taskBits } from "@bitflow/bits";
 import { TaskShell } from "@bitflow/shell";
+import { useTranslations } from "@vocab/react";
 import { useEffect, useState } from "react";
 import { FlowConfig, FlowDoX } from ".";
+import translations from "../locales.vocab";
 
 export const FlowDoTask = ({
   onNext,
@@ -25,6 +27,7 @@ export const FlowDoTask = ({
 > & {
   node: { type: "task" };
 }) => {
+  const { t } = useTranslations(translations);
   const [config, setConfig] = useState<FlowConfig>({
     enableConfidence: false,
     enableReasoning: false,
@@ -40,7 +43,7 @@ export const FlowDoTask = ({
       onSkip={onSkip}
       onAction={onAction}
       TaskComponent={taskBit.Task as any}
-      title="Task"
+      header={t("task")}
       soundUrls={config.soundUrls}
       evaluate={evaluate}
       task={node.data}

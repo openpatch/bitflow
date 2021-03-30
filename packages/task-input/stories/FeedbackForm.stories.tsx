@@ -19,8 +19,6 @@ export default {
 } as Meta;
 
 const task: Partial<ITask> = {
-  id: "a-id",
-  type: "task",
   subtype: "input",
   name: "Title",
   description: "",

@@ -5,6 +5,7 @@ import { IFlowNode } from "../schemas";
 import { CenterSidebar } from "./CenterSidebar";
 import { EndPropertiesSidebar } from "./EndSidebar";
 import { FlowPropertiesSidebar } from "./FlowPropertiesSidebar";
+import { InputPropertiesSidebar } from "./InputPropertiesSidebar";
 import { SplitAnswerPropertiesSidebar } from "./SplitAnswerPropertiesSidebar";
 import { SplitPointsPropertiesSidebar } from "./SplitPointsPropertiesSidebar";
 import { SplitResultPropertiesSidebar } from "./SplitResultPropertiesSidebar";
@@ -34,6 +35,10 @@ export const PropertiesSidebar = ({
     }
     case "title": {
       content = <TitlePropertiesSidebar name={name} />;
+      break;
+    }
+    case "input": {
+      content = <InputPropertiesSidebar name={name} />;
       break;
     }
     case "start": {

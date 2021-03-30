@@ -10,7 +10,7 @@ export default {
 } as Meta;
 
 const props: PrivacyShellProps<IPrivacy> = {
-  title: "Privacy",
+  header: "Privacy",
   PrivacyComponent: Privacy,
   privacy: {
     description: "",

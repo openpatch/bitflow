@@ -67,7 +67,7 @@ const Preview = ({ name }: { name: string }) => {
           InputComponent={Input}
           input={result.data}
           onNext={onNext}
-          title={t("preview")}
+          header={t("preview")}
         />
       );
     } else {
@@ -91,7 +91,7 @@ export const InputPropertiesSidebar = ({ name }: { name: string }) => {
         <Tab active={activeTab === 1} onClick={() => setActiveTab(1)}>
           {t("view")}
         </Tab>
-        <Tab active={activeTab === 4} onClick={() => setActiveTab(4)}>
+        <Tab active={activeTab === 2} onClick={() => setActiveTab(2)}>
           {t("preview")}
         </Tab>
       </Tabs>

@@ -1,4 +1,4 @@
-import { FlowEditor, FlowEditorRef, IFlow } from "@bitflow/flow";
+import { FlowEditor, FlowEditorRef, FlowSchema, IFlow } from "@bitflow/flow";
 import {
   Box,
   ButtonGroup,
@@ -36,8 +36,21 @@ export default function Editor() {
 
   const handleSubmit = (flow: IFlow) => {
     setFlow(flow);
-    console.log(flow);
     const flowString = convertFromJsonToString(flow);
+    const myFlowsString = localStorage.getItem("flows");
+    if (!myFlowsString) {
+      const myFlows = { [flow.name]: flow };
+      localStorage.setItem("flows", JSON.stringify(myFlows));
+    } else {
+      const unsafeMyFlows = JSON.parse(myFlowsString);
+      const myFlows: Record<string, IFlow> = {};
+      Object.entries(unsafeMyFlows).forEach(([name, flow]) => {
+        unsafeMyFlows[name] = FlowSchema.parse(flow);
+      });
+      myFlows[flow.name] = flow;
+      localStorage.setItem("flows", JSON.stringify(myFlows));
+    }
+
     router.push({ query: { flow: flowString } });
   };
 

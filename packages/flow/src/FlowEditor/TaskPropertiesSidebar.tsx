@@ -149,7 +149,7 @@ const Preview = ({ name }: { name: string }) => {
       // TODO evaluate locally if possible
       return (
         <TaskShell
-          title="Preview"
+          header="Preview"
           mode="default"
           onNext={onNext}
           onSkip={onSkip}

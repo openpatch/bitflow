@@ -1,27 +1,38 @@
-import { FlowTeaser, FlowView } from "@bitflow/flow";
+import { FlowSchema, FlowView, IFlow } from "@bitflow/flow";
 import {
   AutoGrid,
   Box,
-  ButtonPrimary,
-  ButtonSecondary,
   Card,
   CardContent,
-  CardFooter,
-  CardHeader,
   Heading,
   Text,
 } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
-import { useRouter } from "next/router";
+import { Fragment, useEffect, useState } from "react";
+import { FlowCard } from "../components/FlowCard";
 import { NavLayout } from "../components/NavLayout";
 import { flows } from "../flows";
 import { simpleAnswerSplit } from "../flows/simpleAnswerSplit";
 import translations from "../locales.vocab";
-import { convertFromJsonToString } from "../utils/convertFlow";
 
 export default function Home() {
-  const router = useRouter();
   const { t } = useTranslations(translations);
+  const [myFlows, setMyFlows] = useState<Record<string, IFlow>>();
+
+  useEffect(() => {
+    const flowsString = localStorage.getItem("flows");
+    if (flowsString) {
+      try {
+        const unsafeFlows = JSON.parse(flowsString);
+        const flows: Record<string, IFlow> = {};
+        Object.entries(unsafeFlows).forEach(([name, flow]) => {
+          flows[name] = FlowSchema.parse(flow);
+        });
+        setMyFlows(flows);
+      } catch (e) {}
+    }
+  }, []);
+
   return (
     <NavLayout active="home">
       <Box height="400px" position="relative">
@@ -46,33 +57,19 @@ export default function Home() {
           <Heading>{t("demo-flows")}</Heading>
           <AutoGrid>
             {flows.map((flow, i) => (
-              <Card key={i}>
-                <CardHeader>{flow.name}</CardHeader>
-                <FlowTeaser height="300px" {...flow} />
-                <CardFooter>
-                  <ButtonPrimary
-                    fullWidth
-                    onClick={() =>
-                      router.push(`/do/${convertFromJsonToString(flow)}`)
-                    }
-                  >
-                    {t("do-flow")}
-                  </ButtonPrimary>
-                  <ButtonSecondary
-                    fullWidth
-                    onClick={() =>
-                      router.push({
-                        pathname: "/editor",
-                        query: { flow: convertFromJsonToString(flow) },
-                      })
-                    }
-                  >
-                    {t("edit-flow")}
-                  </ButtonSecondary>
-                </CardFooter>
-              </Card>
+              <FlowCard flow={flow} key={i} />
             ))}
           </AutoGrid>
+          {myFlows && (
+            <Fragment>
+              <Heading>{t("my-flows")}</Heading>
+              <AutoGrid>
+                {Object.entries(myFlows).map(([name, flow]) => (
+                  <FlowCard flow={flow} key={name} />
+                ))}
+              </AutoGrid>
+            </Fragment>
+          )}
         </AutoGrid>
       </Box>
     </NavLayout>

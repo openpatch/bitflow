@@ -70,7 +70,7 @@ export type TaskShellProps<
   TaskComponent: ForwardRefExoticComponent<
     TaskProps<T, R, A, Act> & RefAttributes<TaskRef<Act>>
   >;
-  title: string;
+  header: string;
   progress?: {
     value: number;
     max: number;
@@ -108,7 +108,7 @@ export const TaskShell = <
   task,
   TaskComponent,
   progress,
-  title,
+  header,
   enableConfidence,
   enableReasoning,
   onSkip,
@@ -303,7 +303,7 @@ export const TaskShell = <
         onPrevious={onPrevious ? handlePrevious : undefined}
         onClose={onClose ? handleClose : undefined}
       >
-        {title}
+        {header}
       </ShellHeader>
       <ShellContent>
         <TaskComponent

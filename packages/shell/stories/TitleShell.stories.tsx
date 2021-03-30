@@ -12,6 +12,7 @@ export default {
 
 const props: TitleShellProps<ITitle> = {
   TitleComponent: Title,
+  header: "Title",
   title: {
     description: "",
     name: "",

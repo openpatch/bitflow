@@ -28,6 +28,12 @@ export const Default = () => (
         id: "start",
         type: "start",
         position: { x: 0, y: 5 },
+        data: {
+          view: {
+            markdown: "",
+            title: "",
+          },
+        },
       },
       {
         id: "node-1",
@@ -48,34 +54,37 @@ export const Default = () => (
         id: "end",
         type: "end",
         position: { x: 400, y: 5 },
+        data: {
+          view: {
+            listResults: false,
+            markdown: "",
+            showPoints: true,
+          },
+        },
       },
       {
         id: "bit",
-        type: "bit",
+        type: "title",
         position: { x: 100, y: 0 },
         data: {
-          id: "id",
-          type: "title",
           subtype: "simple",
           description: "A description",
           name: "Name",
           view: {
-            title: "",
             message: "A title message",
+            title: "",
           },
         },
       },
       {
         id: "bit-2",
-        type: "bit",
+        type: "input",
         position: { x: 100, y: -10 },
         data: {
-          id: "id",
-          type: "input",
+          subtype: "markdown",
+          name: "Name",
           description:
             "A description. This is a super long description and other stuff. How is this handled by the flow?",
-          name: "Name",
-          subtype: "markdown",
           view: {
             markdown: "A title message",
           },

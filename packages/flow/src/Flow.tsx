@@ -30,6 +30,16 @@ export const Flow: FC<ReactFlowProps & { hideUI?: boolean }> = ({
           .react-flow__handle-left {
             left: -10px !important;
           }
+          .react-flow__node-input {
+            padding: 0;
+            border-radius: ${theme.radii.standard};
+            width: auto;
+            font-size: ${theme.fontSizes.standard};
+            color: #222;
+            text-align: center;
+            border-width: 0px;
+            border-style: solid;
+          }
           .react-flow__node.selected {
             box-shadow: ${theme.shadows.outline}!important;
             border-radius: ${theme.radii.standard}!important;

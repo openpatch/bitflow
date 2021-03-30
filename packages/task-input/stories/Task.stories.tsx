@@ -20,8 +20,6 @@ Default.args = {
   mode: "default",
   onChange: console.log,
   task: {
-    id: "a-id",
-    type: "task",
     subtype: "input",
     view: {
       instruction: "**This is an instruction**",
@@ -33,8 +31,6 @@ export const Result = Template.bind({});
 Result.args = {
   mode: "result",
   task: {
-    id: "a-id",
-    type: "task",
     subtype: "input",
     view: {
       instruction: "",

@@ -18,8 +18,6 @@ export const Default = () => (
       },
     }}
     task={{
-      id: "a-id",
-      type: "task",
       subtype: "choice",
       name: "Hallo",
       description: "Desc",

@@ -11,7 +11,7 @@ export default {
 } as Meta;
 
 const props: InputShellProps<IInput> = {
-  title: "Input",
+  header: "Input",
   InputComponent: Input,
   progress: {
     value: 5,

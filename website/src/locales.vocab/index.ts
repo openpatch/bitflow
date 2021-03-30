@@ -23,6 +23,7 @@ const translations = createTranslationFile<
     "flow-json": () => "Flow JSON";
     "flow-string": () => "Flow String";
     "getting-started": () => "Getting Started";
+    "my-flows": () => "My Flows";
     preview: () => "Preview";
     save: () => "Save";
     share: () => "Share";
@@ -45,6 +46,7 @@ const translations = createTranslationFile<
     "flow-json": "Flow JSON",
     "flow-string": "Flow String",
     "getting-started": "Getting Started",
+    "my-flows": "My Flows",
     preview: "Preview",
     save: "Save",
     share: "Share",
@@ -66,6 +68,7 @@ const translations = createTranslationFile<
     "flow-json": "Flow JSON",
     "flow-string": "Flow String",
     "getting-started": "Getting Started",
+    "my-flows": "My Flows",
     preview: "Preview",
     save: "Save",
     share: "Share",

@@ -8,10 +8,12 @@ import { IShell } from "./types";
 
 export type TitleShellProps<P extends Title> = {
   title: P;
+  header: string;
   TitleComponent: FC<TitleProps<P>>;
 } & IShell;
 
 export const TitleShell = <P extends Title>({
+  header,
   title,
   TitleComponent,
   onNext,
@@ -28,7 +30,7 @@ export const TitleShell = <P extends Title>({
         onPrevious={onPrevious}
         progress={progress}
       >
-        {" "}
+        {header}
       </ShellHeader>
       <ShellContent>
         <TitleComponent title={title} />

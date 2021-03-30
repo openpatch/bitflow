@@ -5,10 +5,10 @@ import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
   "en" | "de",
-  { title: () => "Title"; message: () => "Message" }
+  { message: () => "Message"; title: () => "Title" }
 >({
-  en: createLanguage({ title: "Title", message: "Message" }),
-  de: createLanguage({ title: "Title", message: "Message" }),
+  en: createLanguage({ message: "Message", title: "Title" }),
+  de: createLanguage({ message: "Message", title: "Title" }),
 });
 
 export default translations;

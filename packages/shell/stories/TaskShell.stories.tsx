@@ -75,7 +75,7 @@ const evaluateLocalMock = ({ task }: { task: ITask }) => (
 };
 
 const props: TaskShellProps<ITask, IResult, IAnswer, IAction> = {
-  title: "A Test",
+  header: "A Test",
   progress: {
     value: 2,
     max: 6,

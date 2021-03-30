@@ -46,9 +46,9 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "@hookform/resolvers": "^1.3.6",
     "@bitflow/base": "0.0.0",
     "@bitflow/provider": "0.0.0",
+    "@hookform/resolvers": "^1.3.7",
     "immer": "^8.0.1",
     "react-hook-form": "^6.15.5",
     "react-markdown": "^5.0.3",

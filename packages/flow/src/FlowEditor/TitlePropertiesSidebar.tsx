@@ -66,6 +66,7 @@ const Preview = ({ name }: { name: string }) => {
         <TitleShell
           TitleComponent={Title}
           title={props as any} // TODO proper types
+          header={t("title")}
           onNext={onNext}
         />
       );
@@ -90,7 +91,7 @@ export const TitlePropertiesSidebar = ({ name }: { name: string }) => {
         <Tab active={activeTab === 1} onClick={() => setActiveTab(1)}>
           {t("view")}
         </Tab>
-        <Tab active={activeTab === 4} onClick={() => setActiveTab(4)}>
+        <Tab active={activeTab === 2} onClick={() => setActiveTab(2)}>
           {t("preview")}
         </Tab>
       </Tabs>

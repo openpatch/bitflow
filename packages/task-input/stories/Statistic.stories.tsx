@@ -28,8 +28,6 @@ export const Default = () => (
       },
     }}
     task={{
-      id: "a-id",
-      type: "task",
       subtype: "input",
       name: "Hallo",
       description: "Desc",
