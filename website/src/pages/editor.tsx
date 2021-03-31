@@ -78,8 +78,10 @@ export default function Editor() {
 
   const handlePreview = () => {
     if (flow) {
-      const flowQuery = btoa(JSON.stringify(flow));
-      router.push(`do/${flowQuery}`);
+      const flowQuery = convertFromJsonToString(flow);
+      if (flowQuery) {
+        router.push(`do/${flowQuery}`);
+      }
     }
   };
 
