@@ -15,9 +15,9 @@ import {
 } from "@bitflow/flow";
 import { BitflowProvider, Locale } from "@bitflow/provider";
 import { Box, Card, PatternCenter } from "@openpatch/patches";
-import atob from "atob";
 import { GetServerSideProps } from "next";
 import { useRef } from "react";
+import { convertFromStringToJson } from "../../utils/convertFlow";
 
 type DoProps = {
   flow: IFlow;
@@ -208,7 +208,7 @@ export const getServerSideProps: GetServerSideProps<DoProps> = async ({
   locale,
 }) => {
   try {
-    const flowJson = JSON.parse(atob(params?.flow as string));
+    const flowJson = convertFromStringToJson(params?.flow as string);
     const flow = FlowSchema.parse(flowJson);
 
     let usedLocale: Locale = "en";
