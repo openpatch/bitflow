@@ -29,7 +29,9 @@ export default function Converter() {
   const handleConvertJsonToString = () => {
     const flowData = JSON.parse(json);
     const flowString = convertFromJsonToString(flowData);
-    setString(flowString);
+    if (flowString) {
+      setString(flowString);
+    }
   };
   return (
     <NavLayout active="converter">

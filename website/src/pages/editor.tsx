@@ -28,8 +28,10 @@ export default function Editor() {
     if (typeof router.query.flow === "string") {
       try {
         const flowData = convertFromStringToJson(router.query.flow);
-        setFlow(flowData);
-        setKey(router.query.flow);
+        if (flowData) {
+          setFlow(flowData);
+          setKey(router.query.flow);
+        }
       } catch (e) {}
     }
   }, [router.query]);
