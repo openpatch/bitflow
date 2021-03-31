@@ -31,13 +31,15 @@ export const Choice: FC<ChoiceProps> = ({
   }
 
   let backgroundColor: BoxProps["backgroundColor"] = "neutral.100";
-  switch (result?.state) {
-    case "correct":
-      backgroundColor = "success.200";
-      break;
-    case "wrong":
-      backgroundColor = "error.200";
-      break;
+  if (checked) {
+    switch (result?.state) {
+      case "correct":
+        backgroundColor = "success.200";
+        break;
+      case "wrong":
+        backgroundColor = "error.200";
+        break;
+    }
   }
 
   return (

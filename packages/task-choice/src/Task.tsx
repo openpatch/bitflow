@@ -144,7 +144,7 @@ export const Task = forwardRef<
     <Box padding="standard">
       <AutoGrid gap="standard">
         <Markdown markdown={task.view.instruction} />
-        <AutoGrid columns={[1, 1, 2]} gap="standard">
+        <AutoGrid gap="standard">
           {task.view.choices
             .filter((c) => c.markdown)
             .map((choice, index) => (
