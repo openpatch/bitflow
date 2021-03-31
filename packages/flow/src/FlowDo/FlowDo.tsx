@@ -76,6 +76,7 @@ export const FlowDo: FC<FlowDoProps> = ({
   if (currentNode.type === "task") {
     return (
       <FlowDoTask
+        key={currentNode.id}
         node={currentNode}
         evaluate={evaluate}
         onSkip={handleSkip}
@@ -89,6 +90,7 @@ export const FlowDo: FC<FlowDoProps> = ({
   } else if (currentNode.type === "input") {
     return (
       <FlowDoInput
+        key={currentNode.id}
         node={currentNode}
         onNext={handleNext}
         onPrevious={handlePrevious}
@@ -98,6 +100,7 @@ export const FlowDo: FC<FlowDoProps> = ({
   } else if (currentNode.type === "title") {
     return (
       <FlowDoTitle
+        key={currentNode.id}
         node={currentNode}
         onNext={handleNext}
         onPrevious={handlePrevious}
@@ -105,13 +108,31 @@ export const FlowDo: FC<FlowDoProps> = ({
       />
     );
   } else if (currentNode.type === "start") {
-    return <FlowDoStart onNext={handleNext} node={currentNode} />;
+    return (
+      <FlowDoStart
+        key={currentNode.id}
+        onNext={handleNext}
+        node={currentNode}
+      />
+    );
   } else if (currentNode.type === "end") {
-    return <FlowDoEnd getProgress={getProgress} node={currentNode} />;
+    return (
+      <FlowDoEnd
+        key={currentNode.id}
+        getProgress={getProgress}
+        node={currentNode}
+      />
+    );
   } else if (currentNode.type === "checkpoint") {
-    return <FlowDoCheckpoint onNext={handleNext} />;
+    return <FlowDoCheckpoint key={currentNode.id} onNext={handleNext} />;
   } else if (currentNode.type === "synchronize") {
-    return <FlowDoSynchronize getProgress={getProgress} onNext={handleNext} />;
+    return (
+      <FlowDoSynchronize
+        key={currentNode.id}
+        getProgress={getProgress}
+        onNext={handleNext}
+      />
+    );
   }
 
   return <div />;

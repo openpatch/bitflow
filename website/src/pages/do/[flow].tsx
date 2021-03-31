@@ -102,11 +102,11 @@ export default function Do({ flow, locale, startNode }: DoProps) {
     }
 
     progress.current.currentNode += 1;
-    return nextNode;
+    return { ...currentNode.current };
   };
 
   const getCurrent: FlowDoProps["getCurrent"] = async () => {
-    return currentNode.current;
+    return { ...currentNode.current };
   };
 
   const getPrevious: FlowDoProps["getPrevious"] = async () => {
@@ -121,11 +121,11 @@ export default function Do({ flow, locale, startNode }: DoProps) {
     }
 
     progress.current.currentNode -= 1;
-    return previousNode;
+    return { ...currentNode.current };
   };
 
   const getProgress: FlowDoProps["getProgress"] = async () => {
-    return progress.current;
+    return { ...progress.current };
   };
 
   const onEnd: FlowDoProps["onEnd"] = () => {};
