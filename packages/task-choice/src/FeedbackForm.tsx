@@ -88,74 +88,76 @@ export const FeedbackForm = ({ name }: TaskFeedbackFormProps) => {
 
   return (
     <Fragment>
-      {view?.choices?.map((choice, index) => {
-        const option = options[index];
-        return (
-          <Fragment key={index}>
-            <Heading as="h2" fontSize="large">
-              {t("choice", { option })}
-            </Heading>
-            <HookFormController
-              name={`${name}.feedback.choices.${option}.checkedFeedback.message`}
-              defaultValue=""
-              label={t("checked-feedback")}
-              render={({ value, onChange, onBlur }) => (
-                <MarkdownEditor
-                  value={value}
-                  variant="input"
-                  onChange={(_, v) => onChange(v)}
-                  onBlur={onBlur}
-                />
-              )}
-            />
-            <HookFormController
-              name={`${name}.feedback.choices.${option}.checkedFeedback.severity`}
-              defaultValue="error"
-              render={({ value, onChange, onBlur }) => (
-                <Fragment>
-                  <Select value={value} onChange={onChange} onBlur={onBlur}>
-                    <option value="error">{t("error")}</option>
-                    <option value="warning">{t("warning")}</option>
-                    <option value="info">{t("info")}</option>
-                    <option value="success">{t("success")}</option>
-                  </Select>
-                </Fragment>
-              )}
-            />
-            <HookFormController
-              name={`${name}.feedback.choices.${option}.notCheckedFeedback.message`}
-              defaultValue=""
-              label={t("not-checked-feedback")}
-              render={({ value, onChange, onBlur }) => (
-                <MarkdownEditor
-                  value={value}
-                  variant="input"
-                  onChange={(_, v) => onChange(v)}
-                  onBlur={onBlur}
-                />
-              )}
-            />
-            <HookFormController
-              name={`${name}.feedback.choices.${option}.notCheckedFeedback.severity`}
-              defaultValue="error"
-              render={({ value, onChange, onBlur }) => (
-                <Fragment>
-                  <Select value={value} onChange={onChange} onBlur={onBlur}>
-                    <option value="error">{t("error")}</option>
-                    <option value="warning">{t("warning")}</option>
-                    <option value="info">{t("info")}</option>
-                    <option value="success">{t("success")}</option>
-                  </Select>
-                </Fragment>
-              )}
-            />
+      {view?.choices
+        ?.filter((c) => c.markdown)
+        .map((choice, index) => {
+          const option = options[index];
+          return (
+            <Fragment key={index}>
+              <Heading as="h2" fontSize="large">
+                {t("choice", { option })}
+              </Heading>
+              <HookFormController
+                name={`${name}.feedback.choices.${option}.checkedFeedback.message`}
+                defaultValue=""
+                label={t("checked-feedback")}
+                render={({ value, onChange, onBlur }) => (
+                  <MarkdownEditor
+                    value={value}
+                    variant="input"
+                    onChange={(_, v) => onChange(v)}
+                    onBlur={onBlur}
+                  />
+                )}
+              />
+              <HookFormController
+                name={`${name}.feedback.choices.${option}.checkedFeedback.severity`}
+                defaultValue="error"
+                render={({ value, onChange, onBlur }) => (
+                  <Fragment>
+                    <Select value={value} onChange={onChange} onBlur={onBlur}>
+                      <option value="error">{t("error")}</option>
+                      <option value="warning">{t("warning")}</option>
+                      <option value="info">{t("info")}</option>
+                      <option value="success">{t("success")}</option>
+                    </Select>
+                  </Fragment>
+                )}
+              />
+              <HookFormController
+                name={`${name}.feedback.choices.${option}.notCheckedFeedback.message`}
+                defaultValue=""
+                label={t("not-checked-feedback")}
+                render={({ value, onChange, onBlur }) => (
+                  <MarkdownEditor
+                    value={value}
+                    variant="input"
+                    onChange={(_, v) => onChange(v)}
+                    onBlur={onBlur}
+                  />
+                )}
+              />
+              <HookFormController
+                name={`${name}.feedback.choices.${option}.notCheckedFeedback.severity`}
+                defaultValue="error"
+                render={({ value, onChange, onBlur }) => (
+                  <Fragment>
+                    <Select value={value} onChange={onChange} onBlur={onBlur}>
+                      <option value="error">{t("error")}</option>
+                      <option value="warning">{t("warning")}</option>
+                      <option value="info">{t("info")}</option>
+                      <option value="success">{t("success")}</option>
+                    </Select>
+                  </Fragment>
+                )}
+              />
 
-            <Box my="standard" height="1px">
-              <Divider />
-            </Box>
-          </Fragment>
-        );
-      })}
+              <Box my="standard" height="1px">
+                <Divider />
+              </Box>
+            </Fragment>
+          );
+        })}
 
       {Object.keys(patterns).map((p) => (
         <Box mb="standard">

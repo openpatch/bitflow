@@ -32,6 +32,9 @@ const task: Partial<ITask> = {
       {
         markdown: "B",
       },
+      {
+        markdown: "",
+      },
     ],
   },
 };

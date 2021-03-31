@@ -27,18 +27,20 @@ export const EvaluationForm = ({ name }: TaskEvaluationFormProps) => {
         return (
           <Box mb="small">
             <AutoGrid gap="standard">
-              {view?.choices?.map((c, i) => {
-                const option = options[i];
-                const checked = value.includes(option);
-                return (
-                  <Choice
-                    key={option}
-                    checked={checked}
-                    onChange={handleChange(option)}
-                    choice={c.markdown || ""}
-                  />
-                );
-              })}
+              {view?.choices
+                ?.filter((c) => c.markdown)
+                .map((c, i) => {
+                  const option = options[i];
+                  const checked = value.includes(option);
+                  return (
+                    <Choice
+                      key={option}
+                      checked={checked}
+                      onChange={handleChange(option)}
+                      choice={c.markdown || ""}
+                    />
+                  );
+                })}
             </AutoGrid>
           </Box>
         );

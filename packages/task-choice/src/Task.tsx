@@ -145,15 +145,17 @@ export const Task = forwardRef<
       <AutoGrid gap="standard">
         <Markdown markdown={task.view.instruction} />
         <AutoGrid columns={[1, 1, 2]} gap="standard">
-          {task.view.choices.map((choice, index) => (
-            <Choice
-              key={index}
-              choice={choice?.markdown || ""}
-              result={result?.choices[options[index]]}
-              checked={state.checked[options[index]] || false}
-              onChange={handleChange(options[index])}
-            />
-          ))}
+          {task.view.choices
+            .filter((c) => c.markdown)
+            .map((choice, index) => (
+              <Choice
+                key={index}
+                choice={choice?.markdown || ""}
+                result={result?.choices[options[index]]}
+                checked={state.checked[options[index]] || false}
+                onChange={handleChange(options[index])}
+              />
+            ))}
         </AutoGrid>
         {result?.feedback && <Feedback {...result.feedback} />}
       </AutoGrid>
