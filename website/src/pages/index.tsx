@@ -48,7 +48,7 @@ export default function Home() {
         </Box>
         <FlowView {...simpleAnswerSplit} />
       </Box>
-      <Box maxWidth="large" width="100%" mx="auto" my="xlarge">
+      <Box maxWidth="large" mx="auto" width="100%" px="standard" my="xlarge">
         <AutoGrid gap="xlarge">
           <Heading>{t("getting-started")}</Heading>
           <Card>
