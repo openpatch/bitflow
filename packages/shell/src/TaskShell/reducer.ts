@@ -1,5 +1,5 @@
 import { TaskAnswer, TaskResult } from "@bitflow/base";
-import produce from "immer";
+import produce, { castDraft, Draft } from "immer";
 import { ConfidenceLevelsProps } from "../ConfidenceLevels";
 import { IShellAction } from "./actions";
 
@@ -24,7 +24,7 @@ export const initialState: IState<TaskAnswer, TaskResult> = {
 };
 
 export const createReducer = <A extends TaskAnswer, R extends TaskResult>() =>
-  produce((draft: IState<A, R>, action: IShellAction<A, R>) => {
+  produce((draft: Draft<IState<A, R>>, action: IShellAction<A, R>) => {
     switch (action.type) {
       case "next":
       case "skip":
@@ -39,7 +39,7 @@ export const createReducer = <A extends TaskAnswer, R extends TaskResult>() =>
         draft.confidence = action.payload.level;
         break;
       case "result-receive":
-        draft.result = action.payload.result;
+        draft.result = castDraft(action.payload.result);
         break;
       case "result-empty":
         draft.state = "interact";
@@ -75,7 +75,8 @@ export const createReducer = <A extends TaskAnswer, R extends TaskResult>() =>
         break;
       case "answer-change":
         draft.state = "interact";
-        draft.answer = action.payload.answer;
+        draft.answer = castDraft(action.payload.answer);
         break;
     }
+    return draft;
   });

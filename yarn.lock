@@ -3051,22 +3051,7 @@
   dependencies:
     "@octokit/openapi-types" "^5.2.2"
 
-"@openpatch/patches@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-1.7.0.tgz#fb5d43b14379add00ae1bc8ee50ee72d9036876c"
-  integrity sha512-ldurGhI5yiqEfuurPnYwlyHGFgcylGb9t4en0f0/wn9rQH/ATKCo2q+I6vF1MaL4Wr7pjqncstfztPeARYg0+A==
-  dependencies:
-    codemirror "^5.60.0"
-    lodash "^4.17.21"
-    polished "^4.1.1"
-    react-codemirror2 "^7.2.1"
-    react-markdown "^5.0.3"
-    react-modal "^3.12.1"
-    react-syntax-highlighter "^15.4.3"
-    remark-gfm "^1.0.0"
-    styled-system "^5.1.5"
-
-"@openpatch/patches@^1.7.1":
+"@openpatch/patches@1.7.1", "@openpatch/patches@^1.7.1":
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-1.7.1.tgz#94093a15e1988fb478507c6bfb1b32a42d1f77a2"
   integrity sha512-8G/KGRpmcica/gHjmBQ0ueE23KMxlF637c22+lih8+uGlm012uuPSvXlKkbd1tFSP6j7Als+XWXNGxSUGRrLaQ==

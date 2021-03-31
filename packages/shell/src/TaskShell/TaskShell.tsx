@@ -57,7 +57,7 @@ import {
   unknownResultStateAction,
   wrongResultStateAction,
 } from "./actions";
-import { createReducer } from "./reducer";
+import { createReducer, IState } from "./reducer";
 
 export type TaskShellProps<
   T extends Task,
@@ -120,9 +120,13 @@ export const TaskShell = <
   shellRef,
 }: TaskShellProps<T, R, A, Act>) => {
   const { t } = useTranslations(translations);
-  const [reducerState, dispatch] = useReducer(createReducer<A, R>(), {
-    state: "interact",
-  });
+  const [reducerState, dispatch] = useReducer(
+    (createReducer<A, R>() as any) as (
+      state: IState<A, R>,
+      action: IShellAction<A, R>
+    ) => IState<A, R>,
+    { state: "interact" }
+  );
   const taskRef = useRef<TaskRef<Act>>(null);
 
   const nudge = reducerState.nudge;

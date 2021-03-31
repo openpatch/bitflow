@@ -1,5 +1,5 @@
 import { css, Global, useTheme } from "@emotion/react";
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import ReactFlow, {
   Background,
   BackgroundVariant,
@@ -23,6 +23,11 @@ export const Flow: FC<ReactFlowProps & { hideUI?: boolean }> = ({
   ...props
 }) => {
   const theme = useTheme();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
     <Fragment>
       <Global
@@ -90,7 +95,7 @@ export const Flow: FC<ReactFlowProps & { hideUI?: boolean }> = ({
           }}
         >
           <Background variant={BackgroundVariant.Dots} gap={16} size={0.5} />
-          {!hideUI && (
+          {!hideUI && isClient && (
             <Fragment>
               <Controls />
               {false && (
