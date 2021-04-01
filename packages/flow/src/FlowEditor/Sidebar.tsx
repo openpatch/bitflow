@@ -59,7 +59,7 @@ export type SidebarProps = PropertiesSidebarProps &
 export const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
   const { t } = useTranslations(translations);
   const [state, setState] = useState<SidebarState>("nodes");
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [width, setWidth] = useState(420);
   const resizeRef = useRef<HTMLDivElement>(null);
 
