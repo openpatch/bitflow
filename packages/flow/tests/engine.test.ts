@@ -4,11 +4,66 @@ import {
   next,
   previous,
   processLinear,
+  processPortalInput,
   processSplitResult,
 } from "../src/engine";
 import { IFlowEdge, IFlowNode } from "../src/schemas";
 
 describe("engine", () => {
+  describe("processPortalInput", () => {
+    it("should follow the portal", async () => {
+      const nodes: IFlowNode[] = [
+        {
+          id: "portal-input",
+          position: { x: 0, y: 0 },
+          type: "portal-input",
+          data: {
+            portal: "a",
+            description: "",
+          },
+        },
+        {
+          id: "portal-output1",
+          position: { x: 0, y: 0 },
+          type: "portal-output",
+          data: {
+            portal: "b",
+            description: "",
+          },
+        },
+        {
+          id: "title",
+          position: { x: 0, y: 0 },
+          type: "title",
+          data: {
+            description: "",
+            name: "",
+            subtype: "simple",
+            view: {
+              message: "",
+              title: "",
+            },
+          },
+        },
+        {
+          id: "portal-output2",
+          position: { x: 0, y: 0 },
+          type: "portal-output",
+          data: {
+            portal: "a",
+            description: "",
+          },
+        },
+      ];
+
+      const nextNode = await processPortalInput({
+        currentNode: nodes[0] as any,
+        nodes,
+      });
+
+      expect(nextNode.id).toBe("portal-output2");
+    });
+  });
   describe("processLinear", () => {
     it("should return the next node", async () => {
       const outgoers: IFlowNode[] = [
@@ -278,6 +333,24 @@ describe("engine", () => {
           },
         },
         {
+          id: "portal-input",
+          type: "portal-input",
+          position: { x: 0, y: 0 },
+          data: {
+            description: "",
+            portal: "a",
+          },
+        },
+        {
+          id: "portal-output",
+          type: "portal-output",
+          position: { x: 0, y: 0 },
+          data: {
+            description: "",
+            portal: "a",
+          },
+        },
+        {
           id: "node-random",
           type: "split-random",
           position: { x: 0, y: 0 },
@@ -321,9 +394,14 @@ describe("engine", () => {
         },
         {
           id: "edge-b",
-          source: "node-random",
+          source: "portal-output",
           sourceHandle: "b",
           target: "node-c",
+        },
+        {
+          id: "edge-d",
+          source: "node-random",
+          target: "portal-input",
         },
         {
           id: "edge-c",

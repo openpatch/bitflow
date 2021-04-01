@@ -21,7 +21,9 @@ export type FlowNodeProps = {
     | "mint"
     | "teal"
     | "blue"
-    | "grey";
+    | "grey"
+    | "portalOrange"
+    | "portalBlue";
   title: string;
   description?: string;
   footerRight?: string;
@@ -103,6 +105,20 @@ export const FlowNode: FC<FlowNodeProps> = ({
       secondaryTextColor = "#3e4c59";
       primaryBackgroundColor = "#f5f7fa";
       secondaryBackgroundColor = "#e4e7eb";
+      break;
+    }
+    case "portalBlue": {
+      primaryTextColor = "#034ABD";
+      secondaryTextColor = "#045EE0";
+      primaryBackgroundColor = "#E6FCFF";
+      secondaryBackgroundColor = "#CEF9FF";
+      break;
+    }
+    case "portalOrange": {
+      primaryTextColor = "#B15608";
+      secondaryTextColor = "#E97008";
+      primaryBackgroundColor = "#FFF9E6";
+      secondaryBackgroundColor = "#FFF4CD";
       break;
     }
   }

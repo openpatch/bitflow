@@ -37,6 +37,29 @@ export type Previous = ({
 }) => Promise<IFlowNode | null>;
 
 export const previous: Previous = async ({ nodes, currentId, edges }) => {
+  const currentNode = ensure(nodes.find((n) => n.id === currentId));
+
+  if (currentNode.type === "portal-output") {
+    const previousNode = nodes
+      .filter((n) => n.type === "portal-input")
+      .find((n) => {
+        if (
+          n.type === "portal-input" &&
+          n.data.portal === currentNode.data.portal
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+    if (!previousNode) {
+      return null;
+    }
+
+    return previous({ nodes, currentId: previousNode.id, edges });
+  }
+
   const connectedEdges = edges.filter((e) => e.target === currentId);
 
   if (connectedEdges.length === 0) {
@@ -47,7 +70,11 @@ export const previous: Previous = async ({ nodes, currentId, edges }) => {
     nodes.find((n) => n.id === connectedEdges[0].source)
   );
 
-  if (previousNode.type.includes("split-")) {
+  if (
+    previousNode.type.includes("split-") ||
+    previousNode.type === "portal-output" ||
+    previousNode.type === "portal-input"
+  ) {
     return previous({
       currentId: previousNode.id,
       nodes,
@@ -86,6 +113,10 @@ export const next: Next = async ({
   getPoints,
 }) => {
   const currentNode = ensure(nodes.find((n) => n.id === currentId));
+
+  if (currentNode.type === "portal-input") {
+    return await processPortalInput({ currentNode, nodes });
+  }
   // outgoers need to be sorted based on the source handle to ensure the same
   // result regardsless of position in the nodes array.
   const sourceEdges = edges
@@ -107,7 +138,7 @@ export const next: Next = async ({
   }
 
   let nextNode: IFlowNode;
-  switch (currentNode.type as IFlowNode["type"]) {
+  switch (currentNode.type) {
     case "task":
     case "input":
     case "title":
@@ -164,6 +195,23 @@ export const next: Next = async ({
   return nextNode;
 };
 
+export const processPortalInput = async ({
+  currentNode,
+  nodes,
+}: {
+  currentNode: IFlowNode & { type: "portal-input" };
+  nodes: IFlowNode[];
+}): Promise<IFlowNode> => {
+  const portalOutput = nodes.find(
+    (n) =>
+      n.type === "portal-output" && n.data.portal === currentNode.data.portal
+  );
+  if (portalOutput) {
+    return portalOutput;
+  }
+  throw new TypeError("invalid portal node data");
+};
+
 export const processLinear = async ({
   outgoers,
 }: {
@@ -174,7 +222,7 @@ export const processSplitRandom = async ({
   currentNode,
   outgoers,
 }: {
-  currentNode: IFlowNode;
+  currentNode: IFlowNode & { type: "split-random" };
   outgoers: IFlowNode[];
 }): Promise<IFlowNode> => {
   const nextNode = outgoers[Math.floor(Math.random() * outgoers.length)];
@@ -186,22 +234,18 @@ export const processSplitPoints = async ({
   outgoers,
   getPoints,
 }: {
-  currentNode: IFlowNode;
+  currentNode: IFlowNode & { type: "split-points" };
   outgoers: IFlowNode[];
   getPoints: GetPoints;
 }): Promise<IFlowNode> => {
-  if (currentNode.type === "split-points") {
-    const data = currentNode.data;
-    const points = await getPoints();
+  const data = currentNode.data;
+  const points = await getPoints();
 
-    if (outgoers.length > 1 && points > data.points) {
-      return outgoers[1];
-    }
-
-    return outgoers[0];
+  if (outgoers.length > 1 && points > data.points) {
+    return outgoers[1];
   }
 
-  throw new TypeError("invalid split points node data");
+  return outgoers[0];
 };
 
 export const processSplitAnswer = async ({
@@ -209,33 +253,29 @@ export const processSplitAnswer = async ({
   outgoers,
   getAnswers,
 }: {
-  currentNode: IFlowNode;
+  currentNode: IFlowNode & { type: "split-answer" };
   outgoers: IFlowNode[];
   getAnswers: GetAnswers;
 }): Promise<IFlowNode> => {
-  if (currentNode.type === "split-answer") {
-    const data = currentNode.data;
-    let nodeIds: Set<string> = new Set([]);
-    // collect nodeIds
-    if (data.condition.type === "and" || data.condition.type === "or") {
-      data.condition.conditions.forEach((c) => {
-        nodeIds.add(c.nodeId);
-      });
-    } else {
-      nodeIds.add(data.condition.nodeId);
-    }
-
-    const answers = await getAnswers(Array.from(nodeIds));
-    const check = checkCondition(data.condition as ICondition, answers);
-
-    if (check) {
-      return outgoers[0];
-    } else {
-      return outgoers[1];
-    }
+  const data = currentNode.data;
+  let nodeIds: Set<string> = new Set([]);
+  // collect nodeIds
+  if (data.condition.type === "and" || data.condition.type === "or") {
+    data.condition.conditions.forEach((c) => {
+      nodeIds.add(c.nodeId);
+    });
+  } else {
+    nodeIds.add(data.condition.nodeId);
   }
 
-  throw new TypeError("invalid split answer node data");
+  const answers = await getAnswers(Array.from(nodeIds));
+  const check = checkCondition(data.condition as ICondition, answers);
+
+  if (check) {
+    return outgoers[0];
+  } else {
+    return outgoers[1];
+  }
 };
 
 export const processSplitResult = async ({
@@ -243,33 +283,29 @@ export const processSplitResult = async ({
   outgoers,
   getResults,
 }: {
-  currentNode: IFlowNode;
+  currentNode: IFlowNode & { type: "split-result" };
   outgoers: IFlowNode[];
   getResults: GetResults;
 }): Promise<IFlowNode> => {
-  if (currentNode.type === "split-result") {
-    const data = currentNode.data;
-    let nodeIds: Set<string> = new Set([]);
-    // collect nodeIds
-    if (data.condition.type === "and" || data.condition.type === "or") {
-      data.condition.conditions.forEach((c) => {
-        nodeIds.add(c.nodeId);
-      });
-    } else {
-      nodeIds.add(data.condition.nodeId);
-    }
-
-    const results = await getResults(Array.from(nodeIds));
-    const check = checkCondition(data.condition as ICondition, results);
-
-    if (check) {
-      return outgoers[0];
-    } else {
-      return outgoers[1];
-    }
+  const data = currentNode.data;
+  let nodeIds: Set<string> = new Set([]);
+  // collect nodeIds
+  if (data.condition.type === "and" || data.condition.type === "or") {
+    data.condition.conditions.forEach((c) => {
+      nodeIds.add(c.nodeId);
+    });
+  } else {
+    nodeIds.add(data.condition.nodeId);
   }
 
-  throw new TypeError("invalid split result node data");
+  const results = await getResults(Array.from(nodeIds));
+  const check = checkCondition(data.condition as ICondition, results);
+
+  if (check) {
+    return outgoers[0];
+  } else {
+    return outgoers[1];
+  }
 };
 
 export const checkCondition = (

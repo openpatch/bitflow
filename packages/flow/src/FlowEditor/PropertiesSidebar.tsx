@@ -6,6 +6,8 @@ import { CenterSidebar } from "./CenterSidebar";
 import { EndPropertiesSidebar } from "./EndSidebar";
 import { FlowPropertiesSidebar } from "./FlowPropertiesSidebar";
 import { InputPropertiesSidebar } from "./InputPropertiesSidebar";
+import { PortalInputPropertiesSidebar } from "./PortalInputPropertiesSidebar";
+import { PortalOutputPropertiesSidebar } from "./PortalOutputPropertiesSidebar";
 import { SplitAnswerPropertiesSidebar } from "./SplitAnswerPropertiesSidebar";
 import { SplitPointsPropertiesSidebar } from "./SplitPointsPropertiesSidebar";
 import { SplitResultPropertiesSidebar } from "./SplitResultPropertiesSidebar";
@@ -39,6 +41,14 @@ export const PropertiesSidebar = ({
     }
     case "input": {
       content = <InputPropertiesSidebar name={name} />;
+      break;
+    }
+    case "portal-input": {
+      content = <PortalInputPropertiesSidebar name={name} />;
+      break;
+    }
+    case "portal-output": {
+      content = <PortalOutputPropertiesSidebar name={name} />;
       break;
     }
     case "start": {

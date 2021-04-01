@@ -122,6 +122,13 @@ export const SplitPointsSchema = z.object({
 
 export type ISplitPoints = z.infer<typeof SplitPointsSchema>;
 
+export const PortalSchema = z.object({
+  portal: z.string(),
+  description: z.string(),
+});
+
+export type IPortal = z.infer<typeof PortalSchema>;
+
 export const FlowNodeSchema = z.union([
   FlowNodeBaseSchema.merge(
     z.object({
@@ -174,6 +181,18 @@ export const FlowNodeSchema = z.union([
   FlowNodeBaseSchema.merge(
     z.object({
       type: z.literal("split-random"),
+    })
+  ),
+  FlowNodeBaseSchema.merge(
+    z.object({
+      type: z.literal("portal-input"),
+      data: PortalSchema,
+    })
+  ),
+  FlowNodeBaseSchema.merge(
+    z.object({
+      type: z.literal("portal-output"),
+      data: PortalSchema,
     })
   ),
   FlowNodeBaseSchema.merge(

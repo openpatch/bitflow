@@ -9,8 +9,11 @@ import { DragEvent } from "react";
 import { BitNode } from "../BitNode";
 import { CheckpointNode } from "../CheckpointNode";
 import translations from "../locales.vocab";
+import { PortalInputNode } from "../PortalInputNode";
+import { PortalOutputNode } from "../PortalOutputNode";
 import {
   IFlowNode,
+  IPortal,
   ISplitAnswer,
   ISplitPoints,
   ISplitResult,
@@ -261,6 +264,47 @@ export const NodesSidebar = ({}: NodesSidebarProps) => {
           draggable
         >
           <SplitResultNode maxWidth="100%" type="split-result" hideHandles />
+        </Box>
+        <Heading as="h2" fontSize="standard">
+          {t("utility")}
+        </Heading>
+        <Box
+          onDragStart={(e) =>
+            onDragStart<IPortal>(e, "portal-input", {
+              portal: "a",
+              description: "",
+            })
+          }
+          draggable
+        >
+          <PortalInputNode
+            maxWidth="100%"
+            type="portal-input"
+            hideHandles
+            data={{
+              description: t("portal-helper-text"),
+              portal: t("portal"),
+            }}
+          />
+        </Box>
+        <Box
+          onDragStart={(e) =>
+            onDragStart<IPortal>(e, "portal-output", {
+              portal: "a",
+              description: "",
+            })
+          }
+          draggable
+        >
+          <PortalOutputNode
+            maxWidth="100%"
+            type="portal-output"
+            hideHandles
+            data={{
+              description: t("portal-helper-text"),
+              portal: t("portal"),
+            }}
+          />
         </Box>
       </AutoGrid>
     </HeaderSidebar>

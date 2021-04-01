@@ -6,7 +6,8 @@ import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 const translations = createTranslationFile<
   "en" | "de",
   {
-    "add-bit-task-first": () => "You need to add a bit taks node first.";
+    "add-bit-task-first": () => "You need to add a task node first.";
+    "add-input-portal-first": () => "You need to add an input portal first.";
     bit: () => "Bit";
     "bit-type-properties-invalid": () => "The properties of this bit are invalid. Take a lot at the errors.";
     "bit-type-unsupported": () => "Configuration of this bit type is currently unsupported.";
@@ -43,6 +44,11 @@ const translations = createTranslationFile<
     "new-node-title": (values: { type: string }) => string;
     "node-no-properties": () => "Nothing to configure for this node";
     nodes: () => "Nodes";
+    portal: () => "Portal";
+    "portal-helper-text": () => "An input and an output portal are linked and act like a normal edge.";
+    "portal-input": () => "Portal Input";
+    "portal-output": () => "Portal Output";
+    "portal-properties": () => "Portal Properties";
     preview: () => "Preview";
     privacy: () => "Privacy";
     "privacy-markdown": () => "Markdown";
@@ -75,12 +81,14 @@ const translations = createTranslationFile<
     title: () => "Title";
     "title-simple": () => "Simple";
     type: () => "Type";
+    utility: () => "Utility";
     value: () => "Value";
     view: () => "View";
   }
 >({
   en: createLanguage({
-    "add-bit-task-first": "You need to add a bit taks node first.",
+    "add-bit-task-first": "You need to add a task node first.",
+    "add-input-portal-first": "You need to add an input portal first.",
     bit: "Bit",
     "bit-type-properties-invalid":
       "The properties of this bit are invalid. Take a lot at the errors.",
@@ -120,6 +128,12 @@ const translations = createTranslationFile<
     "new-node-title": "New {type}",
     "node-no-properties": "Nothing to configure for this node",
     nodes: "Nodes",
+    portal: "Portal",
+    "portal-helper-text":
+      "An input and an output portal are linked and act like a normal edge.",
+    "portal-input": "Portal Input",
+    "portal-output": "Portal Output",
+    "portal-properties": "Portal Properties",
     preview: "Preview",
     privacy: "Privacy",
     "privacy-markdown": "Markdown",
@@ -155,11 +169,13 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    utility: "Utility",
     value: "Value",
     view: "View",
   }),
   de: createLanguage({
-    "add-bit-task-first": "You need to add a bit taks node first.",
+    "add-bit-task-first": "You need to add a task node first.",
+    "add-input-portal-first": "You need to add an input portal first.",
     bit: "Bit",
     "bit-type-properties-invalid":
       "The properties of this bit are invalid. Take a lot at the errors.",
@@ -199,6 +215,12 @@ const translations = createTranslationFile<
     "new-node-title": "New {type}",
     "node-no-properties": "Nothing to configure for this node",
     nodes: "Nodes",
+    portal: "Portal",
+    "portal-helper-text":
+      "An input and an output portal are linked and act like a normal edge.",
+    "portal-input": "Portal Input",
+    "portal-output": "Portal Output",
+    "portal-properties": "Portal Properties",
     preview: "Preview",
     privacy: "Privacy",
     "privacy-markdown": "Markdown",
@@ -234,6 +256,7 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    utility: "Utility",
     value: "Value",
     view: "View",
   }),

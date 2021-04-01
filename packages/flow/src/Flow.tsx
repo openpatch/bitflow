@@ -11,6 +11,8 @@ import ReactFlow, {
 import { BitNode } from "./BitNode";
 import { CheckpointNode } from "./CheckpointNode";
 import { EndNode } from "./EndNode";
+import { PortalInputNode } from "./PortalInputNode";
+import { PortalOutputNode } from "./PortalOutputNode";
 import { SplitAnswerNode } from "./SplitAnswerNode";
 import { SplitPointsNode } from "./SplitPointsNode";
 import { SplitRandomNode } from "./SplitRandomNode";
@@ -87,6 +89,8 @@ export const Flow: FC<ReactFlowProps & { hideUI?: boolean }> = ({
             start: StartNode,
             end: EndNode,
             synchronize: SynchronizeNode,
+            "portal-input": PortalInputNode,
+            "portal-output": PortalOutputNode,
             checkpoint: CheckpointNode,
             "split-random": SplitRandomNode,
             "split-points": SplitPointsNode,

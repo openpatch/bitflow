@@ -1,6 +1,9 @@
 {
   "add-bit-task-first": {
-    "message": "You need to add a bit taks node first."
+    "message": "You need to add a task node first."
+  },
+  "add-input-portal-first": {
+    "message": "You need to add an input portal first."
   },
   "bit": {
     "message": "Bit"
@@ -110,6 +113,21 @@
   "nodes": {
     "message": "Nodes"
   },
+  "portal": {
+    "message": "Portal"
+  },
+  "portal-helper-text": {
+    "message": "An input and an output portal are linked and act like a normal edge."
+  },
+  "portal-input": {
+    "message": "Portal Input"
+  },
+  "portal-output": {
+    "message": "Portal Output"
+  },
+  "portal-properties": {
+    "message": "Portal Properties"
+  },
   "preview": {
     "message": "Preview"
   },
@@ -205,6 +223,9 @@
   },
   "type": {
     "message": "Type"
+  },
+  "utility": {
+    "message": "Utility"
   },
   "value": {
     "message": "Value"
