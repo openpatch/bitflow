@@ -741,8 +741,7 @@ export const proceduralC = FlowSchema.parse({
             d: {
               checkedFeedback: { message: "", severity: "error" },
               notCheckedFeedback: {
-                message:
-                  "Operators are: multiply, assignment and less than or equal",
+                message: "",
                 severity: "error",
               },
             },
@@ -799,27 +798,39 @@ export const proceduralC = FlowSchema.parse({
           patterns: {},
           choices: {
             c: {
-              checkedFeedback: { message: "", severity: "error" },
-              notCheckedFeedback: {
+              notCheckedFeedback: { message: "", severity: "error" },
+              checkedFeedback: {
                 message:
                   "A String is not a scalar/primitive data type. It can be thought of as an array of characters.",
-                severity: "error",
+                severity: "success",
               },
             },
             a: {
-              checkedFeedback: { message: "", severity: "error" },
+              checkedFeedback: {
+                message: "int is a scalar data type",
+                severity: "error",
+              },
               notCheckedFeedback: { message: "", severity: "error" },
             },
             b: {
-              checkedFeedback: { message: "", severity: "error" },
+              checkedFeedback: {
+                message: "float is a scalar data type",
+                severity: "error",
+              },
               notCheckedFeedback: { message: "", severity: "error" },
             },
             d: {
-              checkedFeedback: { message: "", severity: "error" },
+              checkedFeedback: {
+                message: "short is a scalar data type",
+                severity: "error",
+              },
               notCheckedFeedback: { message: "", severity: "error" },
             },
             e: {
-              checkedFeedback: { message: "", severity: "error" },
+              checkedFeedback: {
+                message: "char is a scalar data type",
+                severity: "error",
+              },
               notCheckedFeedback: { message: "", severity: "error" },
             },
           },
@@ -855,7 +866,64 @@ export const proceduralC = FlowSchema.parse({
           showFeedback: true,
           correct: ["c"],
         },
-        feedback: { patterns: {}, choices: {} },
+        feedback: {
+          patterns: {},
+          choices: {
+            a: {
+              checkedFeedback: {
+                message:
+                  "int is capable of containing values in the range of [-32,767, +32,767]",
+                severity: "error",
+              },
+              notCheckedFeedback: {
+                message: "",
+                severity: "error",
+              },
+            },
+            b: {
+              checkedFeedback: {
+                message: "float is capable of containing large numbers",
+                severity: "error",
+              },
+              notCheckedFeedback: {
+                message: "",
+                severity: "error",
+              },
+            },
+            c: {
+              checkedFeedback: {
+                message:
+                  "char is capable of containing values in the range of [-128, +127]",
+                severity: "success",
+              },
+              notCheckedFeedback: {
+                message: "",
+                severity: "error",
+              },
+            },
+            d: {
+              checkedFeedback: {
+                message:
+                  "short is capable of containing values in the range of [-32768, +32767]",
+                severity: "error",
+              },
+              notCheckedFeedback: {
+                message: "",
+                severity: "error",
+              },
+            },
+            e: {
+              checkedFeedback: {
+                message: "long is capable of containing large numbers",
+                severity: "error",
+              },
+              notCheckedFeedback: {
+                message: "",
+                severity: "error",
+              },
+            },
+          },
+        },
       },
     },
     {
@@ -896,23 +964,25 @@ export const proceduralC = FlowSchema.parse({
         feedback: {
           patterns: {},
           choices: {
-            b: {
-              checkedFeedback: { message: "", severity: "error" },
-              notCheckedFeedback: {
-                message: "Dynamic alloc goes on heap; static goes on stack.",
+            a: {
+              checkedFeedback: {
+                message: "Both need the same amount of memory.",
                 severity: "error",
               },
-            },
-            a: {
-              checkedFeedback: { message: "", severity: "error" },
               notCheckedFeedback: { message: "", severity: "error" },
             },
             c: {
-              checkedFeedback: { message: "", severity: "error" },
+              checkedFeedback: {
+                message: "Both are accessible in the same scope.",
+                severity: "error",
+              },
               notCheckedFeedback: { message: "", severity: "error" },
             },
             d: {
-              checkedFeedback: { message: "", severity: "error" },
+              checkedFeedback: {
+                message: "Dynamic alloc goes on heap; static goes on stack.",
+                severity: "error",
+              },
               notCheckedFeedback: { message: "", severity: "error" },
             },
           },
@@ -948,7 +1018,42 @@ export const proceduralC = FlowSchema.parse({
           showFeedback: true,
           correct: ["c"],
         },
-        feedback: { patterns: {}, choices: {} },
+        feedback: {
+          patterns: {},
+          choices: {
+            a: {
+              checkedFeedback: {
+                message: "&i will return the memory address of the variable i.",
+                severity: "error",
+              },
+              notCheckedFeedback: {
+                message: "",
+                severity: "error",
+              },
+            },
+            b: {
+              checkedFeedback: {
+                message: "p contains the memory address of the variable i.",
+                severity: "error",
+              },
+              notCheckedFeedback: {
+                message: "",
+                severity: "error",
+              },
+            },
+            d: {
+              checkedFeedback: {
+                message:
+                  "*i is an invalid expression, because the * operator does not work on int.",
+                severity: "error",
+              },
+              notCheckedFeedback: {
+                message: "",
+                severity: "error",
+              },
+            },
+          },
+        },
       },
     },
     {
