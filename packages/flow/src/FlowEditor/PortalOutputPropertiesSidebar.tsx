@@ -27,7 +27,7 @@ export const PortalOutputPropertiesSidebar = ({ name }: { name: string }) => {
                 {portalNodes.map((t) => {
                   if (t.type === "portal-input") {
                     return (
-                      <option key={t.id} value={t.id}>
+                      <option key={t.data.portal} value={t.data.portal}>
                         {t.data.portal}
                       </option>
                     );
