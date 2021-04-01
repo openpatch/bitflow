@@ -2,6 +2,7 @@ import { TaskAnswer, TaskResult } from "@bitflow/base";
 import { taskBits } from "@bitflow/bits";
 import { Box } from "@openpatch/patches";
 import { Meta } from "@storybook/react/types-6-0";
+import { proceduralC as flow } from "../../../website/src/flows/proceduralC";
 import {
   GetAnswers,
   GetPoints,
@@ -10,122 +11,12 @@ import {
   previous,
 } from "../src/engine";
 import { FlowConfig, FlowDo, FlowDoProps, FlowProgress } from "../src/FlowDo";
-import { IFlow, IFlowNode } from "../src/schemas";
+import { IFlowNode } from "../src/schemas";
 
 export default {
   title: "Flow/FlowDo",
   component: FlowDo,
 } as Meta;
-
-const flow: IFlow = {
-  draft: false,
-  name: "Test",
-  edges: [
-    {
-      id: "acfd47f0-322c-4008-9683-5ba693970faf",
-      source: "a65312cc-fbab-4450-b845-590c3544b423",
-      target: "26fbb5b5-d555-4ce2-9f12-d6e8a06cc5f3",
-    },
-    {
-      id: "3e3710de-5033-4675-a569-bdb1f330b365",
-      source: "26fbb5b5-d555-4ce2-9f12-d6e8a06cc5f3",
-      sourceHandle: "a",
-      target: "4ac5e850-e9df-47a3-9b81-76c019e09e3e",
-    },
-    {
-      id: "d732f0a6-d323-4bad-b941-26473994ec97",
-      source: "26fbb5b5-d555-4ce2-9f12-d6e8a06cc5f3",
-      sourceHandle: "a",
-      target: "80eaa994-c767-4d3e-8fe0-16e2754be8c7",
-    },
-    {
-      id: "d6fef093-30ba-44bd-9dfa-90c8882961b1",
-      source: "4ac5e850-e9df-47a3-9b81-76c019e09e3e",
-      target: "306b2114-560e-4f8f-ab8a-5c116d6e00ba",
-    },
-    {
-      id: "e5556f88-74f2-44ce-b66c-7dd9daa61f76",
-      source: "80eaa994-c767-4d3e-8fe0-16e2754be8c7",
-      target: "306b2114-560e-4f8f-ab8a-5c116d6e00ba",
-    },
-  ],
-  nodes: [
-    {
-      type: "start",
-      id: "a65312cc-fbab-4450-b845-590c3544b423",
-      position: { x: 0, y: 0 },
-      data: {
-        view: {
-          markdown: "Hi this is an assessment",
-          title: "My Assessment",
-        },
-      },
-    },
-    {
-      type: "end",
-      id: "306b2114-560e-4f8f-ab8a-5c116d6e00ba",
-      position: { x: 0, y: 0 },
-      data: {
-        view: {
-          markdown: "Thank you for participating",
-          listResults: false,
-          showPoints: true,
-        },
-      },
-    },
-    {
-      type: "split-random",
-      id: "26fbb5b5-d555-4ce2-9f12-d6e8a06cc5f3",
-      position: { x: 0, y: 0 },
-    },
-    {
-      type: "title",
-      id: "4ac5e850-e9df-47a3-9b81-76c019e09e3e",
-      position: { x: 0, y: 0 },
-      data: {
-        subtype: "simple",
-        description: "Title Description",
-        name: "Title Name",
-        view: {
-          title: "A title",
-          message: "**a** message",
-        },
-      },
-    },
-    {
-      type: "task",
-      id: "80eaa994-c767-4d3e-8fe0-16e2754be8c7",
-      position: { x: 0, y: 0 },
-      data: {
-        subtype: "choice",
-        description: "Description",
-        name: "Choice",
-        view: {
-          choices: [
-            {
-              markdown: "Choice A",
-            },
-            {
-              markdown: "ChoiceB",
-            },
-          ],
-          instruction: "Instructions",
-          variant: "single",
-        },
-        evaluation: {
-          correct: ["a"],
-          enableRetry: true,
-          mode: "auto",
-          showFeedback: true,
-        },
-        feedback: {
-          choices: {},
-          patterns: {},
-        },
-      },
-    },
-  ],
-};
 
 const config: FlowConfig = {
   soundUrls: {

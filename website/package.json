@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--max-http-header-size=32000' next dev",
     "build": "next build",
     "start": "next start",
     "locale": "vocab compile",

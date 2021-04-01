@@ -25,7 +25,12 @@ export const FlowCard = ({ flow }: FlowCardProps) => {
       <CardFooter>
         <ButtonPrimary
           fullWidth
-          onClick={() => router.push(`/do/${convertFromJsonToString(flow)}`)}
+          onClick={() =>
+            router.push({
+              pathname: "/do",
+              query: { flow: convertFromJsonToString(flow) },
+            })
+          }
         >
           {t("do-flow")}
         </ButtonPrimary>

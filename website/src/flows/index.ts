@@ -1,3 +1,2 @@
-import { simpleAnswerSplit } from "./simpleAnswerSplit";
-
-export const flows = [simpleAnswerSplit];
+export { proceduralC } from "./proceduralC";
+export { simpleAnswerSplit } from "./simpleAnswerSplit";

@@ -11,7 +11,7 @@ import { useTranslations } from "@vocab/react";
 import { Fragment, useEffect, useState } from "react";
 import { FlowCard } from "../components/FlowCard";
 import { NavLayout } from "../components/NavLayout";
-import { flows } from "../flows";
+import * as flows from "../flows";
 import { simpleAnswerSplit } from "../flows/simpleAnswerSplit";
 import translations from "../locales.vocab";
 
@@ -55,8 +55,8 @@ export default function Home() {
             <CardContent>Hallo</CardContent>
           </Card>
           <Heading>{t("demo-flows")}</Heading>
-          <AutoGrid>
-            {flows.map((flow, i) => (
+          <AutoGrid gap="standard" columns={[1, 1, 2]}>
+            {Object.values(flows).map((flow, i) => (
               <FlowCard flow={flow} key={i} />
             ))}
           </AutoGrid>

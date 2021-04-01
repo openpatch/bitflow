@@ -204,11 +204,11 @@ export default function Do({ flow, locale, startNode }: DoProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<DoProps> = async ({
-  params,
+  query,
   locale,
 }) => {
   try {
-    const flowJson = convertFromStringToJson(params?.flow as string);
+    const flowJson = convertFromStringToJson(query?.flow as string);
     const flow = FlowSchema.parse(flowJson);
 
     let usedLocale: Locale = "en";

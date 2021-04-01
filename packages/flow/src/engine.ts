@@ -112,15 +112,15 @@ export const next: Next = async ({
   getResults,
   getPoints,
 }) => {
-  const currentNode = ensure(nodes.find((n) => n.id === currentId));
+  let currentNode = ensure(nodes.find((n) => n.id === currentId));
 
   if (currentNode.type === "portal-input") {
-    return await processPortalInput({ currentNode, nodes });
+    currentNode = await processPortalInput({ currentNode, nodes });
   }
   // outgoers need to be sorted based on the source handle to ensure the same
   // result regardsless of position in the nodes array.
   const sourceEdges = edges
-    .filter((e) => e.source === currentId)
+    .filter((e) => e.source === currentNode.id)
     .sort((a, b) => {
       if (a?.sourceHandle && b?.sourceHandle) {
         return a.sourceHandle > b.sourceHandle ? 1 : -1;
@@ -145,6 +145,7 @@ export const next: Next = async ({
     case "start":
     case "checkpoint":
     case "synchronize":
+    case "portal-output":
       nextNode = await processLinear({ outgoers });
       break;
     case "split-answer": {
@@ -182,7 +183,7 @@ export const next: Next = async ({
       throw TypeError("node type not found");
     }
   }
-  if (nextNode.type?.includes("split-")) {
+  if (nextNode.type?.includes("split-") || nextNode.type === "portal-input") {
     return next({
       currentId: nextNode.id,
       nodes,
