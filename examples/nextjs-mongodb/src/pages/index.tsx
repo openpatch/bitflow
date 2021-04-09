@@ -26,6 +26,7 @@ export default function Home({
   isConnected,
 }: HomeProps) {
   const router = useRouter();
+  const [state, setState] = useState<"default" | "starting">("default");
   const [error, setError] = useState<string | null>(null);
   const [activityId, setActivityId] = useState(defaultActivityId);
 
@@ -37,11 +38,13 @@ export default function Home({
   const handleStart = async () => {
     // fetch session cookie, redirect to session
     if (activityId) {
+      setState("starting");
       await start(activityId)
         .then(() => {
           router.push("/do");
         })
         .catch((e) => {
+          setState("default");
           setError("Unknown Activity ID");
         });
     }
@@ -67,7 +70,7 @@ export default function Home({
                   <ButtonPrimary
                     fullWidth
                     onClick={handleStart}
-                    disabled={!activityId}
+                    disabled={!activityId || state === "starting"}
                   >
                     Start
                   </ButtonPrimary>

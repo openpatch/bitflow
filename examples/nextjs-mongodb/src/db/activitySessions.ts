@@ -272,6 +272,7 @@ export const makeEvaluateForSession = (
   }
 
   const submission = {
+    timestamp: new Date(),
     result: taskResult,
     answer,
   };

@@ -12,6 +12,7 @@ export const ActivitySessionSchema = z.object({
   submissions: z.record(
     z.array(
       z.object({
+        timestamp: z.date(),
         result: TaskResultSchema,
         answer: TaskAnswerSchema,
       })
