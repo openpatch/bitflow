@@ -11,7 +11,8 @@ import {
   previous,
 } from "@bitflow/flow";
 import { ActivitySessionDB } from "@schemas/activitySession";
-import { Db, ObjectId } from "mongodb";
+import { ObjectId } from "bson";
+import { Db } from "mongodb";
 import { findActivityById } from "./activities";
 
 export const getCollection = (db: Db) => {
@@ -46,7 +47,8 @@ export const startSession = async (
     throw new Error("Start node not found");
   }
 
-  return getCollection(db)
+  return db
+    .collection<Omit<ActivitySessionDB, "_id">>("activitySessions")
     .insertOne({
       activityId: new ObjectId(activityId),
       path: [startNode.id],

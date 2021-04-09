@@ -46,13 +46,14 @@ export const createUser = async (
   const passwordHash = await bcrypt.hash(user.password, 10);
 
   const newUser = {
+    _id: new ObjectId(),
     username: user.username,
     email: user.email,
     passwordHash,
   };
 
   return db
-    .collection<Omit<UserDB, "_id">>(collection)
+    .collection<UserDB>(collection)
     .insertOne(newUser)
     .then((r) => r.ops[0]);
 };
