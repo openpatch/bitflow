@@ -1,5 +1,5 @@
 import { connectToDatabase } from "@db";
-import { makeGetProgressForSession } from "db/activitySessions";
+import { makeOnRetryForSession } from "db/activitySessions";
 import { connect } from "middlewares/connect";
 
 const nc = connect();
@@ -7,12 +7,10 @@ const nc = connect();
 nc.get(async (req, res) => {
   const { db } = await connectToDatabase();
   const session = req.cookies.activitySession;
-  const getProgress = makeGetProgressForSession(db, session);
-  const progress = await getProgress();
+  const onRetry = makeOnRetryForSession(db, session);
+  await onRetry();
 
-  return res.json({
-    progress,
-  });
+  return res.json({});
 });
 
 export default nc;

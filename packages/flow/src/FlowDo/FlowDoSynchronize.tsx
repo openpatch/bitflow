@@ -6,7 +6,7 @@ import { FlowDoX, FlowProgress } from ".";
 export const FlowDoSynchronize = ({
   onNext,
   getProgress,
-}: Pick<FlowDoX, "onNext" | "getProgress">) => {
+}: Pick<FlowDoX, "onNext"> & { getProgress: () => Promise<FlowProgress> }) => {
   const [progress, setProgress] = useState<Pick<FlowProgress, "nextNodeState">>(
     {
       nextNodeState: "locked",

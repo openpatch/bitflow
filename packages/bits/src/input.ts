@@ -16,3 +16,9 @@ export const inputBits = asInputBit({
 });
 
 export const InputBitsSchema = markdown.InputSchema;
+
+export const InputBitsPublicSchema = markdown.InputSchema.pick({
+  name: true,
+  subtype: true,
+  view: true,
+});

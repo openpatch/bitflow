@@ -16,8 +16,6 @@ export default {
   title: "Shells/Task",
   argTypes: {
     onAction: { action: "action" },
-    onNext: { action: "next" },
-    onSkip: { action: "skip" },
     mode: {
       name: "Mode",
       defaultValue: "local",
@@ -90,8 +88,41 @@ const props: TaskShellProps<ITask, IResult, IAnswer, IAction> = {
     unknown: "/unknown.mp3",
     manual: "/manual.mp3",
   },
-  onSkip: console.log,
-  onNext: console.log,
+  onSkip: () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("skip");
+        resolve();
+      }, 1000);
+    }),
+  onRetry: () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("retry");
+        resolve();
+      }, 1000);
+    }),
+  onNext: () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("next");
+        resolve();
+      }, 1000);
+    }),
+  onClose: () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("close");
+        resolve();
+      }, 1000);
+    }),
+  onPrevious: () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("previous");
+        resolve();
+      }, 1000);
+    }),
 };
 
 export const Default: Story<

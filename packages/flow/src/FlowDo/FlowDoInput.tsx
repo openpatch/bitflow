@@ -9,7 +9,8 @@ export const FlowDoInput = ({
   node,
   onClose,
   onPrevious,
-}: Pick<FlowDoX, "onNext" | "node" | "onClose" | "onPrevious"> & {
+  progress,
+}: Pick<FlowDoX, "onNext" | "node" | "onClose" | "onPrevious" | "progress"> & {
   node: { type: "input" };
 }) => {
   const { t } = useTranslations(translations);
@@ -17,6 +18,10 @@ export const FlowDoInput = ({
   return (
     <InputShell<any>
       InputComponent={inputBit.Input}
+      progress={{
+        value: progress.currentNodeIndex,
+        max: progress.estimatedNodes,
+      }}
       header={t("input")}
       input={node.data}
       onNext={onNext}

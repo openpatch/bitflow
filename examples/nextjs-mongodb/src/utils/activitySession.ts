@@ -86,3 +86,7 @@ export const getResult: FlowDoProps["getResult"] = async () => {
   );
   return res.result;
 };
+
+export const onRetry: FlowDoProps["onRetry"] = async () => {
+  await get(makeUrl("retry"));
+};

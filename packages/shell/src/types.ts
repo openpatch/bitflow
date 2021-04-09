@@ -1,9 +1,9 @@
 export interface IShell {
-  onNext: () => void;
+  onNext: () => Promise<void>;
   progress?: {
     value: number;
     max: number;
   };
-  onClose?: () => void;
-  onPrevious?: () => void;
+  onClose?: () => Promise<void>;
+  onPrevious?: () => Promise<void>;
 }

@@ -1,7 +1,10 @@
 import { uuidv4 } from "@bitflow/base";
 import {
+  InputBitsPublicSchema,
   InputBitsSchema,
+  TaskBitsPublicSchema,
   TaskBitsSchema,
+  TitleBitsPublicSchema,
   TitleBitsSchema,
 } from "@bitflow/bits";
 import * as z from "zod";
@@ -80,6 +83,8 @@ const FlowNodeBaseSchema = z.object({
     y: z.number(),
   }),
 });
+
+const FlowNodeBasePublicSchema = FlowNodeBaseSchema.pick({ id: true });
 
 /**
  * TODO Extract into custom package and add a new shell for allowing subtypes
@@ -208,6 +213,88 @@ export const FlowNodeSchema = z.union([
 ]);
 
 export type IFlowNode = z.infer<typeof FlowNodeSchema>;
+
+export const FlowNodePublicSchema = z.union([
+  FlowNodeBasePublicSchema.merge(
+    z.object({
+      type: z.literal("start"),
+      data: StartSchema.pick({ view: true }),
+    })
+  ),
+  FlowNodeBasePublicSchema.merge(
+    z.object({
+      type: z.literal("end"),
+      data: EndSchema.pick({ view: true }),
+    })
+  ),
+  FlowNodeBasePublicSchema.merge(
+    z.object({
+      type: z.literal("title"),
+      data: TitleBitsPublicSchema,
+    })
+  ),
+  FlowNodeBasePublicSchema.merge(
+    z.object({
+      type: z.literal("task"),
+      data: TaskBitsPublicSchema,
+    })
+  ),
+  FlowNodeBasePublicSchema.merge(
+    z.object({
+      type: z.literal("input"),
+      data: InputBitsPublicSchema,
+    })
+  ),
+  FlowNodeBasePublicSchema.merge(
+    z.object({
+      type: z.literal("checkpoint"),
+    })
+  ),
+  FlowNodeBasePublicSchema.merge(
+    z.object({
+      type: z.literal("synchronize"),
+    })
+  ),
+]);
+
+export const extractPublicNode = (
+  node: IFlowNode & {
+    type:
+      | "start"
+      | "end"
+      | "task"
+      | "input"
+      | "title"
+      | "checkpoint"
+      | "synchronize";
+  }
+): IFlowNodePublic => {
+  if (node.type === "task" || node.type === "input" || node.type === "title") {
+    return {
+      type: node.type,
+      id: node.id,
+      data: {
+        name: node.data.name,
+        view: node.data.view as any,
+        subtype: node.data.subtype as any,
+      },
+    };
+  } else if (node.type === "start" || node.type === "end") {
+    return {
+      type: node.type,
+      id: node.id,
+      data: {
+        view: node.data.view as any,
+      },
+    };
+  }
+  return {
+    type: node.type,
+    id: node.id,
+  };
+};
+
+export type IFlowNodePublic = z.infer<typeof FlowNodePublicSchema>;
 
 export const FlowEdgeSchema = z.object({
   id: z.string().uuid().default(uuidv4()),

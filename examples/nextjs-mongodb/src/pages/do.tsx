@@ -10,6 +10,7 @@ import {
   getProgress,
   getResult,
   onEnd,
+  onRetry,
   onSkip,
 } from "@utils/activitySession";
 import { GetServerSideProps } from "next";
@@ -33,6 +34,7 @@ export default function Do({ locale }: DoProps) {
               getProgress={getProgress}
               getResult={getResult}
               onEnd={onEnd}
+              onRetry={onRetry}
               onSkip={onSkip}
             />
           </Box>

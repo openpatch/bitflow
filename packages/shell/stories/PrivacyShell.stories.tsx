@@ -4,9 +4,7 @@ import { PrivacyShell, PrivacyShellProps } from "../src/PrivacyShell";
 
 export default {
   title: "Shells/Privacy",
-  argTypes: {
-    onNext: { action: "next" },
-  },
+  argTypes: {},
 } as Meta;
 
 const props: PrivacyShellProps<IPrivacy> = {
@@ -39,7 +37,13 @@ cillum dolore eu fugiat nulla pariatur. ~~Excepteur sint occaecat~~ cupidatat no
 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
     },
   },
-  onNext: console.log,
+  onNext: () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("next");
+        resolve();
+      }, 1000);
+    }),
 };
 
 export const Default: Story<PrivacyShellProps<IPrivacy>> = (args) => (

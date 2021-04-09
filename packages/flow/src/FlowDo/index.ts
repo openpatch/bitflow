@@ -1,6 +1,6 @@
 import { Action, Evaluate, TaskAnswer, TaskResult } from "@bitflow/base";
 import { TaskShellProps } from "@bitflow/shell";
-import { IFlowNode } from "../schemas";
+import { IFlowNode, IFlowNodePublic } from "../schemas";
 
 export type FlowConfig = {
   enableConfidence?: boolean;
@@ -14,27 +14,42 @@ export type FlowProgress = {
   nextNodeState: "locked" | "unlocked";
 };
 
-export type FlowResult = {
-  points: number;
-  path: string[];
-  submissions: Record<
-    string,
-    {
+export type FlowResultPathEntry = {
+  status: string;
+  node: IFlowNodePublic;
+  startDate: Date;
+  try: number;
+} & (
+  | {
+      status: "started";
+    }
+  | {
+      status: "finished";
+      endDate: Date;
       answer: TaskAnswer;
       result: TaskResult;
-    }[]
-  >;
+    }
+  | {
+      status: "skipped";
+      endDate: Date;
+    }
+);
+
+export type FlowResult = {
+  points: number;
+  path: FlowResultPathEntry[];
 };
 
 export type FlowDoX = {
-  onNext: () => void;
+  onNext: () => Promise<void>;
   evaluate?: Evaluate<any, any, any>;
-  onSkip: () => void;
-  onClose?: () => void;
-  onPrevious?: () => void;
+  onSkip: () => Promise<void>;
+  onClose?: () => Promise<void>;
+  onPrevious?: () => Promise<void>;
+  onRetry: () => Promise<void>;
   onAction?: (action: Action) => void;
   getConfig: () => Promise<FlowConfig>;
-  getProgress: () => Promise<FlowProgress>;
+  progress: FlowProgress;
   getResult: () => Promise<FlowResult>;
   node: IFlowNode;
 };

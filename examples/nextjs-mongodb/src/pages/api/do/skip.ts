@@ -8,7 +8,7 @@ nc.get(async (req, res) => {
   const { db } = await connectToDatabase();
   const session = req.cookies.activitySession;
   const onSkip = makeOnSkipForSession(db, session);
-  onSkip();
+  await onSkip();
 
   return res.json({});
 });

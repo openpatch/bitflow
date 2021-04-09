@@ -140,8 +140,9 @@ const Preview = ({ name }: { name: string }) => {
   const { t } = useTranslations(translations);
 
   const props = getValues(`${name}`) as any;
-  const onNext = () => null;
-  const onSkip = () => null;
+  const onNext = async () => {};
+  const onSkip = async () => {};
+  const onRetry = async () => {};
   const subtype = props.subtype as keyof typeof taskBits;
 
   const { Task, TaskSchema } = taskBits[subtype];
@@ -156,6 +157,7 @@ const Preview = ({ name }: { name: string }) => {
           mode="default"
           onNext={onNext}
           onSkip={onSkip}
+          onRetry={onRetry}
           task={result.data}
           TaskComponent={Task as any}
         />

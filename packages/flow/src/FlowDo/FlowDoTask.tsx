@@ -12,6 +12,8 @@ export const FlowDoTask = ({
   onPrevious,
   onSkip,
   onAction,
+  onRetry,
+  progress,
   getConfig,
   evaluate,
 }: Pick<
@@ -19,10 +21,12 @@ export const FlowDoTask = ({
   | "onNext"
   | "node"
   | "onClose"
+  | "onRetry"
   | "onPrevious"
   | "evaluate"
   | "onSkip"
   | "onAction"
+  | "progress"
   | "getConfig"
 > & {
   node: { type: "task" };
@@ -34,14 +38,21 @@ export const FlowDoTask = ({
   });
 
   useEffect(() => {
-    getConfig().then((c) => setConfig(c));
+    getConfig()
+      .then((c) => setConfig(c))
+      .catch(() => {});
   }, [getConfig]);
+
   const taskBit = taskBits[node.data.subtype];
   return (
     <TaskShell<any, any, any, any>
       mode="default"
       onSkip={onSkip}
       onAction={onAction}
+      progress={{
+        max: progress.estimatedNodes,
+        value: progress.currentNodeIndex,
+      }}
       TaskComponent={taskBit.Task as any}
       header={t("task")}
       soundUrls={config.soundUrls}
@@ -50,6 +61,7 @@ export const FlowDoTask = ({
       enableConfidence={config.enableConfidence}
       enableReasoning={config.enableReasoning}
       onNext={onNext}
+      onRetry={onRetry}
       onClose={onClose}
       onPrevious={onPrevious}
     />

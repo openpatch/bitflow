@@ -64,7 +64,7 @@ const Preview = ({ name }: { name: string }) => {
   const { t } = useTranslations(translations);
 
   const props = getValues(`${name}`) as any;
-  const onNext = () => null;
+  const onNext = async () => {};
   const subtype = props.subtype as keyof typeof titleBits;
   const { Title, TitleSchema } = titleBits[subtype];
   if (Title) {

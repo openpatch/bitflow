@@ -1,3 +1,4 @@
+import { extractPublicNode } from "@bitflow/flow";
 import { connectToDatabase } from "@db";
 import { makeGetNextNodeForSession } from "db/activitySessions";
 import { connect } from "middlewares/connect";
@@ -11,7 +12,7 @@ nc.get(async (req, res) => {
   const nextNode = await getNextNode();
 
   return res.json({
-    node: nextNode,
+    node: extractPublicNode(nextNode as any),
   });
 });
 

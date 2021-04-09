@@ -1,4 +1,5 @@
 import { TaskAnswerSchema, TaskResultSchema } from "@bitflow/base";
+import { FlowNodePublicSchema } from "@bitflow/flow";
 import { ObjectId } from "bson";
 import * as z from "zod";
 
@@ -8,16 +9,33 @@ export const ActivitySessionSchema = z.object({
   startDate: z.date(),
   endDate: z.date().optional(),
   points: z.number(),
-  path: z.array(z.string()),
-  submissions: z.record(
-    z.array(
+  path: z.array(
+    z.union([
       z.object({
-        timestamp: z.date(),
-        result: TaskResultSchema,
+        status: z.literal("started"),
+        node: FlowNodePublicSchema,
+        startDate: z.date(),
+        try: z.number(),
+      }),
+      z.object({
+        status: z.literal("finished"),
+        node: FlowNodePublicSchema,
         answer: TaskAnswerSchema,
-      })
-    )
+        result: TaskResultSchema,
+        startDate: z.date(),
+        endDate: z.date(),
+        try: z.number(),
+      }),
+      z.object({
+        status: z.literal("skipped"),
+        node: FlowNodePublicSchema,
+        startDate: z.date(),
+        endDate: z.date(),
+        try: z.number(),
+      }),
+    ])
   ),
+  currentNodeIndex: z.number(),
 });
 
 export type ActivitySession = z.infer<typeof ActivitySessionSchema>;

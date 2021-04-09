@@ -6,6 +6,7 @@
     "dev": "NODE_OPTIONS='--max-http-header-size=32000' next dev",
     "build": "next build",
     "start": "next start",
+    "lint": "tsc",
     "locale": "vocab compile",
     "locale:watch": "vocab compile --watch"
   },

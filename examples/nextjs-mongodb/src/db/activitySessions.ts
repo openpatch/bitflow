@@ -1,14 +1,16 @@
-import { TaskAnswer, TaskResult } from "@bitflow/base";
+import { findLast, TaskAnswer, TaskResult } from "@bitflow/base";
 import { taskBits } from "@bitflow/bits";
 import {
+  extractPublicNode,
   FlowDoProps,
   FlowProgress,
   FlowResult,
+  FlowResultPathEntry,
   GetAnswers,
   GetPoints,
   GetResults,
+  IFlowNode,
   next,
-  previous,
 } from "@bitflow/flow";
 import { ActivitySessionDB } from "@schemas/activitySession";
 import { ObjectId } from "bson";
@@ -41,20 +43,30 @@ export const startSession = async (
     throw new Error("Activity not found");
   }
 
-  const startNode = activity.flow.nodes.find((n) => n.type === "start");
+  const startNode = activity.flow.nodes.find(
+    (n) => n.type === "start"
+  ) as IFlowNode & { type: "start" };
 
   if (!startNode) {
     throw new Error("Start node not found");
   }
 
   return db
-    .collection<Omit<ActivitySessionDB, "_id">>("activitySessions")
+    .collection<ActivitySessionDB>("activitySessions")
     .insertOne({
+      _id: new ObjectId(),
       activityId: new ObjectId(activityId),
-      path: [startNode.id],
+      path: [
+        {
+          status: "started",
+          try: 0,
+          node: extractPublicNode(startNode),
+          startDate: new Date(),
+        },
+      ],
+      currentNodeIndex: 0,
       startDate: new Date(),
       points: 0,
-      submissions: {},
     })
     .then((session) => session.insertedId.toHexString());
 };
@@ -66,9 +78,10 @@ export const makeGetAnswersForSession = (
   const session = await findSessionById(db, sessionId);
 
   const answers: Record<string, TaskAnswer> = {};
-  Object.entries(session.submissions).forEach(([nodeId, submission]) => {
-    if (nodeIds.includes(nodeId)) {
-      answers[nodeId] = submission[submission.length - 1].answer;
+
+  session.path.forEach((p) => {
+    if (p.status === "finished") {
+      answers[p.node.id] = p.answer;
     }
   });
 
@@ -82,9 +95,10 @@ export const makeGetResultsForSession = (
   const session = await findSessionById(db, sessionId);
 
   const results: Record<string, TaskResult> = {};
-  Object.entries(session.submissions).forEach(([nodeId, submission]) => {
-    if (nodeIds.includes(nodeId)) {
-      results[nodeId] = submission[submission.length - 1].result;
+
+  session.path.forEach((p) => {
+    if (p.status === "finished") {
+      results[p.node.id] = p.result;
     }
   });
 
@@ -111,8 +125,10 @@ export const makeGetCurrentNodeForSession = (
     throw new Error("Activity not found");
   }
 
-  const currentNodeId = session.path[session.path.length - 1];
-  const currentNode = activity.flow.nodes.find((n) => n.id === currentNodeId);
+  const currentPath = session.path[session.path.length - 1];
+  const currentNode = activity.flow.nodes.find(
+    (n) => n.id === currentPath.node.id
+  );
 
   if (!currentNode) {
     throw new Error("Current node not found");
@@ -132,13 +148,13 @@ export const makeGetNextNodeForSession = (
     throw new Error("Activity not found");
   }
 
-  const currentNodeId = session.path[session.path.length - 1];
+  const currentPath = session.path[session.path.length - 1];
   const getAnswers = makeGetAnswersForSession(db, sessionId);
   const getResults = makeGetResultsForSession(db, sessionId);
   const getPoints = makeGetPointsForSession(db, sessionId);
 
   const nextNode = await next({
-    currentId: currentNodeId,
+    currentId: currentPath.node.id,
     nodes: activity.flow.nodes,
     edges: activity.flow.edges,
     getAnswers,
@@ -146,11 +162,27 @@ export const makeGetNextNodeForSession = (
     getResults,
   });
 
-  if (nextNode !== null) {
+  if (
+    nextNode !== null &&
+    (nextNode.type === "task" ||
+      nextNode.type === "input" ||
+      nextNode.type === "end" ||
+      nextNode.type === "title" ||
+      nextNode.type === "checkpoint" ||
+      nextNode.type === "synchronize")
+  ) {
     await getCollection(db).updateOne(
       { _id: session._id },
       {
-        $push: { path: nextNode.id },
+        $push: {
+          path: {
+            status: "started",
+            try: 0,
+            startDate: new Date(),
+            node: extractPublicNode(nextNode),
+          },
+        },
+        $inc: { currentNodeIndex: 1 },
       }
     );
   }
@@ -161,7 +193,7 @@ export const makeGetNextNodeForSession = (
 export const makeGetPreviousNodeForSession = (
   db: Db,
   sessionId: string
-): FlowDoProps["getPrevious"] => async () => {
+): Required<FlowDoProps>["getPrevious"] => async () => {
   const session = await findSessionById(db, sessionId);
   const activity = await findActivityById(db, session.activityId);
 
@@ -169,18 +201,39 @@ export const makeGetPreviousNodeForSession = (
     throw new Error("Activity not found");
   }
 
-  const currentNodeId = session.path[session.path.length - 1];
+  const currentPath = session.path[session.path.length - 1];
+  const previousPath = findLast(
+    session.path,
+    (p) => p.node.id !== currentPath.node.id
+  );
+  if (!previousPath) {
+    return null;
+  }
+  const previousNode =
+    activity.flow.nodes.find((n) => n.id === previousPath.node.id) || null;
 
-  const previousNode = await previous({
-    currentId: currentNodeId,
-    nodes: activity.flow.nodes,
-    edges: activity.flow.edges,
-  });
-
-  if (previousNode !== null) {
+  if (
+    previousNode !== null &&
+    (previousNode.type === "start" ||
+      previousNode.type === "task" ||
+      previousNode.type === "input" ||
+      previousNode.type === "title" ||
+      previousNode.type === "checkpoint" ||
+      previousNode.type === "synchronize")
+  ) {
     await getCollection(db).updateOne(
       { _id: session._id },
-      { $push: { path: previousNode.id } }
+      {
+        $push: {
+          path: {
+            status: "started",
+            try: previousPath.try + 1,
+            node: extractPublicNode(previousNode),
+            startDate: new Date(),
+          },
+        },
+        $inc: { currentNodeIndex: -1 },
+      }
     );
   }
 
@@ -198,14 +251,14 @@ export const makeGetProgressForSession = (
     throw new Error("Activity not found");
   }
 
-  const currentNodeId = session.path[session.path.length - 1];
-  const currentNode = activity.flow.nodes.find((n) => n.id === currentNodeId);
+  const currentPath = session.path[session.path.length - 1];
+  const currentNode = currentPath.node;
 
   if (!currentNode) {
     throw new Error("Current node not found");
   }
 
-  const nodeConfig = activity.flowState.nodes[currentNodeId];
+  const nodeConfig = activity.flowState.nodes[currentNode.id];
 
   let nextNodeState: FlowProgress["nextNodeState"] = "unlocked";
 
@@ -214,8 +267,18 @@ export const makeGetProgressForSession = (
   }
 
   const progess: FlowProgress = {
-    currentNodeIndex: 0,
-    estimatedNodes: 0,
+    currentNodeIndex: session.currentNodeIndex,
+    estimatedNodes:
+      activity.flow.nodes.filter(
+        (n) =>
+          n.type === "task" ||
+          n.type === "input" ||
+          n.type === "start" ||
+          n.type === "checkpoint" ||
+          n.type === "synchronize" ||
+          n.type === "title" ||
+          n.type === "end"
+      ).length - 1,
     nextNodeState,
   };
 
@@ -231,7 +294,6 @@ export const makeGetResultForSession = (
   const result: FlowResult = {
     path: session.path,
     points: session.points,
-    submissions: session.submissions,
   };
 
   return result;
@@ -248,8 +310,10 @@ export const makeEvaluateForSession = (
     throw new Error("Activity not found");
   }
 
-  const currentNodeId = session.path[session.path.length - 1];
-  const currentNode = activity.flow.nodes.find((n) => n.id === currentNodeId);
+  const currentPath = session.path[session.path.length - 1];
+  const currentNode = activity.flow.nodes.find(
+    (n) => n.id === currentPath.node.id
+  );
 
   if (!currentNode) {
     throw new Error("Current node not found");
@@ -271,36 +335,33 @@ export const makeEvaluateForSession = (
     }
   }
 
-  const submission = {
-    timestamp: new Date(),
-    result: taskResult,
+  const lastFinishedPath = findLast<FlowResultPathEntry>(
+    session.path,
+    (e) => e.status === "finished" && e.node.id === currentNode.id
+  ) as FlowResultPathEntry & { status: "finished" };
+
+  session.path[session.path.length - 1] = {
+    ...currentPath,
+    status: "finished",
+    endDate: new Date(),
     answer,
+    result: taskResult,
   };
 
-  if (!session.submissions[currentNodeId]) {
-    session.submissions[currentNodeId] = [submission];
-
-    if (taskResult.state === "correct") {
-      session.points += 1;
-    }
-  } else {
-    const lastSubmission =
-      session.submissions[currentNodeId][
-        session.submissions[currentNodeId].length - 1
-      ];
-    session.submissions[currentNodeId].push(submission);
-
-    if (
-      lastSubmission.result.state === "correct" &&
-      taskResult.state !== "correct"
-    ) {
-      session.points -= 1;
-    } else if (
-      lastSubmission.result.state !== "correct" &&
-      taskResult.state === "correct"
-    ) {
-      session.points += 1;
-    }
+  if (!lastFinishedPath && taskResult.state === "correct") {
+    session.points += 1;
+  } else if (
+    lastFinishedPath &&
+    lastFinishedPath.result.state === "correct" &&
+    taskResult.state !== "correct"
+  ) {
+    session.points -= 1;
+  } else if (
+    lastFinishedPath &&
+    lastFinishedPath.result.state !== "correct" &&
+    taskResult.state === "correct"
+  ) {
+    session.points += 1;
   }
 
   await getCollection(db).replaceOne({ _id: session._id }, session);
@@ -325,4 +386,27 @@ export const makeOnSkipForSession = (
   sessionId: string
 ): FlowDoProps["onSkip"] => async () => {
   const session = await findSessionById(db, sessionId);
+  session.path[session.path.length - 1].status = "skipped";
+  await getCollection(db).replaceOne({ _id: new ObjectId(sessionId) }, session);
+};
+
+export const makeOnRetryForSession = (
+  db: Db,
+  sessionId: string
+): FlowDoProps["onSkip"] => async () => {
+  const session = await findSessionById(db, sessionId);
+  const lastPath = session.path[session.path.length - 1];
+  await getCollection(db).updateOne(
+    { _id: new ObjectId(sessionId) },
+    {
+      $push: {
+        path: {
+          status: "started",
+          try: lastPath.try + 1,
+          startDate: new Date(),
+          node: lastPath.node,
+        },
+      },
+    }
+  );
 };

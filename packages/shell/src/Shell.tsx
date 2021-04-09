@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { Box, BoxProps, Heading, Icon } from "@openpatch/patches";
+import { Box, BoxProps, Heading, Icon, LoadingDots } from "@openpatch/patches";
 import { Close } from "@openpatch/patches/dist/cjs/icons/shade";
 import { ChevronLeft } from "@openpatch/patches/dist/cjs/icons/solid";
 import { useTranslations } from "@vocab/react";
@@ -38,6 +38,9 @@ export const Shell: FC<ShellProps> = ({ children, noHeader }) => {
 };
 
 export type ShellHeaderProps = {
+  disabled?: boolean;
+  loadingPrevious?: boolean;
+  loadingClose?: boolean;
   onClose?: () => void;
   onPrevious?: () => void;
   children: ReactNode;
@@ -50,10 +53,14 @@ export type ShellHeaderProps = {
 export const ShellHeader: FC<ShellHeaderProps> = ({
   onClose,
   onPrevious,
+  loadingClose,
+  loadingPrevious,
   children,
+  disabled,
   progress,
 }) => {
   const { t } = useTranslations(translations);
+
   return (
     <Box
       zIndex="10"
@@ -70,17 +77,27 @@ export const ShellHeader: FC<ShellHeaderProps> = ({
           position="absolute"
           left="standard"
           role="button"
-          onClick={onPrevious}
+          onClick={disabled ? undefined : onPrevious}
           title={t("previous")}
           fontSize="xlarge"
           cursor="pointer"
           display="flex"
           alignItems="center"
           justifyContent="center"
+          css={
+            disabled &&
+            css`
+              opacity: 0.5;
+            `
+          }
         >
-          <Icon color="text" size="auto">
-            <ChevronLeft />
-          </Icon>
+          {!loadingPrevious ? (
+            <Icon color="currentColor" size="auto">
+              <ChevronLeft />
+            </Icon>
+          ) : (
+            <LoadingDots />
+          )}
         </Box>
       )}
       <Heading fontSize="small">{children}</Heading>
@@ -89,17 +106,27 @@ export const ShellHeader: FC<ShellHeaderProps> = ({
           position="absolute"
           right="standard"
           role="button"
-          onClick={onClose}
+          onClick={disabled ? undefined : onClose}
           title={t("close")}
           fontSize="xlarge"
           cursor="pointer"
           display="flex"
           alignItems="center"
           justifyContent="center"
+          css={
+            disabled &&
+            css`
+              opacity: 0.5;
+            `
+          }
         >
-          <Icon color="text" size="auto">
-            <Close />
-          </Icon>
+          {!loadingClose ? (
+            <Icon color="currentColor" size="auto">
+              <Close />
+            </Icon>
+          ) : (
+            <LoadingDots />
+          )}
         </Box>
       )}
       {progress && (

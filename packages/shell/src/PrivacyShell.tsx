@@ -1,7 +1,7 @@
 import { Privacy, PrivacyProps } from "@bitflow/base";
 import { ButtonPrimary } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
-import { FC } from "react";
+import { FC, useState } from "react";
 import translations from "./locales.vocab";
 import { Shell, ShellContent, ShellFooter, ShellHeader } from "./Shell";
 import { IShell } from "./types";
@@ -21,13 +21,42 @@ export const PrivacyShell = <P extends Privacy>({
   privacy,
   onNext,
 }: PrivacyShellProps<P>) => {
+  const [state, setState] = useState<"default" | "next" | "previous" | "close">(
+    "default"
+  );
   const { t } = useTranslations(translations);
+
+  const handleNext = () => {
+    setState("next");
+    onNext().catch(() => {
+      setState("default");
+    });
+  };
+
+  const handlePrevious = () => {
+    if (onPrevious) {
+      setState("previous");
+      onPrevious().catch(() => {
+        setState("default");
+      });
+    }
+  };
+
+  const handleClose = () => {
+    if (onClose) {
+      setState("close");
+      onClose().catch(() => {
+        setState("default");
+      });
+    }
+  };
+
   return (
     <Shell>
       <ShellHeader
-        onClose={onClose}
+        onClose={handleClose}
         progress={progress}
-        onPrevious={onPrevious}
+        onPrevious={handlePrevious}
       >
         {header}
       </ShellHeader>
@@ -35,7 +64,12 @@ export const PrivacyShell = <P extends Privacy>({
         <PrivacyComponent privacy={privacy} />
       </ShellContent>
       <ShellFooter>
-        <ButtonPrimary fullWidth onClick={onNext}>
+        <ButtonPrimary
+          fullWidth
+          onClick={handleNext}
+          disabled={state !== "default"}
+          loading={state !== "default"}
+        >
           {t("accept")}
         </ButtonPrimary>
       </ShellFooter>

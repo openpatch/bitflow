@@ -16,3 +16,9 @@ export const titleBits = asTitleBit({
 });
 
 export const TitleBitsSchema = simple.TitleSchema;
+
+export const TitleBitsPublicSchema = simple.TitleSchema.pick({
+  name: true,
+  subtype: true,
+  view: true,
+});

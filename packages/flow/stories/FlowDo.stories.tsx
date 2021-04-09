@@ -10,8 +10,15 @@ import {
   next,
   previous,
 } from "../src/engine";
-import { FlowConfig, FlowDo, FlowDoProps, FlowProgress } from "../src/FlowDo";
-import { IFlowNode } from "../src/schemas";
+import {
+  FlowConfig,
+  FlowDo,
+  FlowDoProps,
+  FlowProgress,
+  FlowResult,
+  FlowResultPathEntry,
+} from "../src/FlowDo";
+import { extractPublicNode, IFlowNode } from "../src/schemas";
 
 export default {
   title: "Flow/FlowDo",
@@ -28,31 +35,41 @@ const config: FlowConfig = {
 };
 
 const progress: FlowProgress = {
-  currentNode: 0,
-  nextNode: "unlocked",
-  estimatedNodes: flow.nodes.length,
-  results: [],
-  points: 0,
+  currentNodeIndex: 0,
+  nextNodeState: "unlocked",
+  estimatedNodes: flow.nodes.length - 1,
 };
 
-const submissions: Record<
-  string,
-  {
-    answers: TaskAnswer[];
-    results: TaskResult[];
+let points = 0;
+
+const path: FlowResult["path"] = [];
+
+function findLast<T>(
+  array: Array<T>,
+  predicate: (value: T, index: number, obj: T[]) => boolean
+): T | null {
+  let l = array.length;
+  while (l--) {
+    if (predicate(array[l], l, array)) return array[l];
   }
-> = {};
+  return null;
+}
 
 let currentNode: IFlowNode = flow.nodes.find(
   (n) => n.type === "start"
 ) as IFlowNode;
 
-const onEnd: FlowDoProps["onEnd"] = () => {
+const onEnd: FlowDoProps["onEnd"] = async () => {
   console.log("end");
 };
 
-const onSkip: FlowDoProps["onSkip"] = () => {
-  console.log("skip");
+const onSkip: FlowDoProps["onSkip"] = async () => {
+  const currentPathEntry = path[path.length - 1];
+  path[path.length - 1] = {
+    ...currentPathEntry,
+    status: "skipped",
+    endDate: new Date(),
+  };
 };
 
 const evaluate: FlowDoProps["evaluate"] = async (answer) => {
@@ -64,30 +81,33 @@ const evaluate: FlowDoProps["evaluate"] = async (answer) => {
       task: currentNode.data,
     })) as TaskResult;
 
-    progress.results.push({ ...result, nodeId: currentNode.id });
+    const lastFinishedPathEntry = findLast<FlowResultPathEntry>(
+      path,
+      (e) => e.status === "finished" && e.node.id === currentNode.id
+    ) as FlowResultPathEntry & { status: "finished" };
+    const currentPathEntry = path[path.length - 1];
 
-    if (!submissions[currentNode.id]) {
-      submissions[currentNode.id] = {
-        answers: [answer],
-        results: [result],
-      };
-
-      if (result.state === "correct") {
-        progress.points += 1;
-      }
-    } else {
-      const lastResult =
-        submissions[currentNode.id].results[
-          submissions[currentNode.id].results.length - 1
-        ];
-      submissions[currentNode.id].answers.push(answer);
-      submissions[currentNode.id].results.push(result);
-
-      if (lastResult.state === "correct" && result.state !== "correct") {
-        progress.points -= 1;
-      } else if (lastResult.state !== "correct" && result.state === "correct") {
-        progress.points += 1;
-      }
+    path[path.length - 1] = {
+      ...currentPathEntry,
+      status: "finished",
+      endDate: new Date(),
+      answer,
+      result,
+    };
+    if (!lastFinishedPathEntry && result.state === "correct") {
+      points += 1;
+    } else if (
+      lastFinishedPathEntry &&
+      lastFinishedPathEntry.result.state === "correct" &&
+      result.state !== "correct"
+    ) {
+      points -= 1;
+    } else if (
+      lastFinishedPathEntry &&
+      lastFinishedPathEntry.result.state !== "correct" &&
+      result.state === "correct"
+    ) {
+      points += 1;
     }
 
     return result;
@@ -114,10 +134,10 @@ const getCurrent: FlowDoProps["getCurrent"] = async () => {
 
 const getAnswers: GetAnswers = async (nodeIds) => {
   const answers: Record<string, TaskAnswer> = {};
-  nodeIds.forEach((nid) => {
-    if (nid in submissions && submissions[nid].answers.length > 0) {
-      answers[nid] =
-        submissions[nid].answers[submissions[nid].answers.length - 1];
+
+  path.forEach((e) => {
+    if (nodeIds.includes(e.node.id) && e.status === "finished") {
+      answers[e.node.id] = e.answer;
     }
   });
 
@@ -126,10 +146,10 @@ const getAnswers: GetAnswers = async (nodeIds) => {
 
 const getResults: GetResults = async (nodeIds) => {
   const results: Record<string, TaskResult> = {};
-  nodeIds.forEach((nid) => {
-    if (nid in submissions && submissions[nid].results.length > 0) {
-      results[nid] =
-        submissions[nid].results[submissions[nid].results.length - 1];
+
+  path.forEach((e) => {
+    if (nodeIds.includes(e.node.id) && e.status === "finished") {
+      results[e.node.id] = e.result;
     }
   });
 
@@ -137,7 +157,7 @@ const getResults: GetResults = async (nodeIds) => {
 };
 
 const getPoints: GetPoints = async () => {
-  return progress.points;
+  return points;
 };
 
 const getProgress: FlowDoProps["getProgress"] = async () => {
@@ -154,17 +174,39 @@ const getNext: FlowDoProps["getNext"] = async () => {
     getPoints,
   });
 
-  if (nextNode !== null) {
+  if (
+    nextNode !== null &&
+    (nextNode.type === "task" ||
+      nextNode.type === "input" ||
+      nextNode.type === "title" ||
+      nextNode.type === "checkpoint" ||
+      nextNode.type === "synchronize")
+  ) {
     currentNode = nextNode;
+
+    path.push({
+      status: "started",
+      try: 0,
+      startDate: new Date(),
+      node: extractPublicNode(nextNode),
+    });
   }
 
   if (nextNode?.type === "synchronize") {
-    progress.nextNode = "locked";
+    progress.nextNodeState = "locked";
   }
 
-  progress.currentNode += 1;
+  console.log(path);
+  progress.currentNodeIndex += 1;
 
   return nextNode;
+};
+
+const getResult: FlowDoProps["getResult"] = async () => {
+  return {
+    path,
+    points,
+  };
 };
 
 const getPrevious: FlowDoProps["getPrevious"] = async () => {
@@ -178,9 +220,28 @@ const getPrevious: FlowDoProps["getPrevious"] = async () => {
     currentNode = prevNode;
   }
 
-  progress.currentNode -= 1;
+  path.push({
+    status: "started",
+    node: extractPublicNode(prevNode as any),
+    startDate: new Date(),
+    try: 0,
+  });
+
+  progress.currentNodeIndex -= 1;
 
   return prevNode;
+};
+
+const onRetry: FlowDoProps["onRetry"] = async () => {
+  const lastPath = path[path.length - 1];
+  path.push({
+    status: "started",
+    try: lastPath.try + 1,
+    startDate: new Date(),
+    node: {
+      ...lastPath.node,
+    },
+  });
 };
 
 export const Default = () => {
@@ -189,12 +250,14 @@ export const Default = () => {
       <FlowDo
         onEnd={onEnd}
         onSkip={onSkip}
+        onRetry={onRetry}
         evaluate={evaluate}
         getConfig={getConfig}
         getCurrent={getCurrent}
         getNext={getNext}
         getPrevious={getPrevious}
         getProgress={getProgress}
+        getResult={getResult}
       />
     </Box>
   );

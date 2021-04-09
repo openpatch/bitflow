@@ -2,7 +2,7 @@ import { TaskAnswer, TaskResult } from "@bitflow/base";
 import { IShellAction, ITaskAction, Shell, ShellContent } from "@bitflow/shell";
 import { Box, LoadingDots } from "@openpatch/patches";
 import { FC, useEffect, useState } from "react";
-import { FlowDoX } from ".";
+import { FlowDoX, FlowProgress } from ".";
 import { IFlowNode } from "../schemas";
 import { FlowDoCheckpoint } from "./FlowDoCheckpoint";
 import { FlowDoEnd } from "./FlowDoEnd";
@@ -15,13 +15,14 @@ import { FlowDoTitle } from "./FlowDoTitle";
 export type FlowDoProps = {
   getCurrent: () => Promise<IFlowNode>;
   getNext: () => Promise<IFlowNode | null>;
-  getPrevious: () => Promise<IFlowNode | null>;
+  getPrevious?: () => Promise<IFlowNode | null>;
+  onRetry: FlowDoX["onRetry"];
   getConfig: FlowDoX["getConfig"];
-  getProgress: FlowDoX["getProgress"];
+  getProgress: () => Promise<FlowProgress>;
   getResult: FlowDoX["getResult"];
   onEnd: () => void;
-  onClose?: () => void;
-  onSkip: () => void;
+  onClose?: () => Promise<void>;
+  onSkip: () => Promise<void>;
   onAction?: (action: IShellAction | ITaskAction) => void;
   evaluate?: (answer: TaskAnswer) => Promise<TaskResult>;
 };
@@ -32,6 +33,7 @@ export const FlowDo: FC<FlowDoProps> = ({
   getPrevious,
   getConfig,
   onEnd,
+  onRetry,
   onClose,
   onAction,
   onSkip,
@@ -40,6 +42,21 @@ export const FlowDo: FC<FlowDoProps> = ({
   getResult,
 }) => {
   const [currentNode, setCurrentNode] = useState<IFlowNode>();
+  const [progress, setProgress] = useState<FlowProgress>({
+    currentNodeIndex: 0,
+    estimatedNodes: 1,
+    nextNodeState: "unlocked",
+  });
+
+  useEffect(() => {
+    getProgress()
+      .then((p) => {
+        if (p) {
+          setProgress(p);
+        }
+      })
+      .catch(() => {});
+  }, [getProgress, currentNode]);
 
   useEffect(() => {
     getCurrent().then((n) => setCurrentNode(n));
@@ -66,13 +83,13 @@ export const FlowDo: FC<FlowDoProps> = ({
     );
   }
 
-  const handleSkip = () => {
+  const handleSkip = async () => {
     onSkip();
-    handleNext();
+    return handleNext();
   };
 
-  const handleNext = () => {
-    getNext().then((n) => {
+  const handleNext = async () => {
+    return getNext().then((n) => {
       if (n) {
         setCurrentNode(n);
       } else {
@@ -81,12 +98,26 @@ export const FlowDo: FC<FlowDoProps> = ({
     });
   };
 
-  const handlePrevious = () => {
-    getPrevious().then((n) => {
-      if (n) {
-        setCurrentNode(n);
-      }
-    });
+  const handlePrevious = async () => {
+    if (getPrevious) {
+      return getPrevious().then((n) => {
+        if (n) {
+          setCurrentNode(n);
+        }
+      });
+    }
+  };
+
+  const handleClose = async () => {
+    if (onClose) {
+      return onClose();
+    }
+  };
+
+  const handleRetry = async () => {
+    if (onRetry) {
+      return onRetry();
+    }
   };
 
   if (currentNode.type === "task") {
@@ -97,10 +128,12 @@ export const FlowDo: FC<FlowDoProps> = ({
         evaluate={evaluate}
         onSkip={handleSkip}
         onNext={handleNext}
-        onPrevious={handlePrevious}
+        onRetry={handleRetry}
         onAction={onAction}
-        onClose={onClose}
+        onPrevious={getPrevious ? handlePrevious : undefined}
+        onClose={onClose ? handleClose : undefined}
         getConfig={getConfig}
+        progress={progress}
       />
     );
   } else if (currentNode.type === "input") {
@@ -109,8 +142,9 @@ export const FlowDo: FC<FlowDoProps> = ({
         key={currentNode.id}
         node={currentNode}
         onNext={handleNext}
-        onPrevious={handlePrevious}
-        onClose={onClose}
+        progress={progress}
+        onPrevious={getPrevious ? handlePrevious : undefined}
+        onClose={onClose ? handleClose : undefined}
       />
     );
   } else if (currentNode.type === "title") {
@@ -118,9 +152,10 @@ export const FlowDo: FC<FlowDoProps> = ({
       <FlowDoTitle
         key={currentNode.id}
         node={currentNode}
+        progress={progress}
         onNext={handleNext}
-        onPrevious={handlePrevious}
-        onClose={onClose}
+        onPrevious={getPrevious ? handlePrevious : undefined}
+        onClose={onClose ? handleClose : undefined}
       />
     );
   } else if (currentNode.type === "start") {

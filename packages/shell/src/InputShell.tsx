@@ -1,7 +1,7 @@
 import { Input, InputProps } from "@bitflow/base";
 import { ButtonPrimary } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
-import { FC } from "react";
+import { FC, useState } from "react";
 import translations from "./locales.vocab";
 import { Shell, ShellContent, ShellFooter, ShellHeader } from "./Shell";
 import { IShell } from "./types";
@@ -21,13 +21,45 @@ export const InputShell = <I extends Input>({
   input,
   onNext,
 }: InputShellProps<I>) => {
+  const [state, setState] = useState<"default" | "next" | "previous" | "close">(
+    "default"
+  );
   const { t } = useTranslations(translations);
+
+  const handleNext = () => {
+    setState("next");
+    onNext().catch(() => {
+      setState("default");
+    });
+  };
+
+  const handlePrevious = () => {
+    if (onPrevious) {
+      setState("previous");
+      onPrevious().catch(() => {
+        setState("default");
+      });
+    }
+  };
+
+  const handleClose = () => {
+    if (onClose) {
+      setState("close");
+      onClose().catch(() => {
+        setState("default");
+      });
+    }
+  };
+
   return (
     <Shell>
       <ShellHeader
         progress={progress}
-        onClose={onClose}
-        onPrevious={onPrevious}
+        loadingClose={state === "close"}
+        loadingPrevious={state === "previous"}
+        onClose={onClose ? handleClose : undefined}
+        onPrevious={onPrevious ? handlePrevious : undefined}
+        disabled={state !== "default"}
       >
         {header}
       </ShellHeader>
@@ -35,7 +67,12 @@ export const InputShell = <I extends Input>({
         <InputComponent input={input} />
       </ShellContent>
       <ShellFooter>
-        <ButtonPrimary fullWidth onClick={onNext}>
+        <ButtonPrimary
+          fullWidth
+          onClick={handleNext}
+          disabled={state !== "default"}
+          loading={state === "next"}
+        >
           {t("next")}
         </ButtonPrimary>
       </ShellFooter>

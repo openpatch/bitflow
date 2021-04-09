@@ -1,3 +1,5 @@
+export * from "./findLast";
+export * from "./groupBy";
 export * from "./lerpColor";
 export * from "./levenshtein";
 export * from "./schemas";

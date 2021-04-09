@@ -39,3 +39,9 @@ export const TaskBitsSchema = union([
   input.TaskSchema,
   fillInTheBlank.TaskSchema,
 ]);
+
+export const TaskBitsPublicSchema = union([
+  choice.TaskSchema.pick({ name: true, subtype: true, view: true }),
+  input.TaskSchema.pick({ name: true, subtype: true, view: true }),
+  fillInTheBlank.TaskSchema.pick({ name: true, subtype: true, view: true }),
+]);

@@ -5,9 +5,7 @@ import { InputShell, InputShellProps } from "../src/InputShell";
 
 export default {
   title: "Shells/Input",
-  argTypes: {
-    onNext: { action: "next" },
-  },
+  argTypes: {},
 } as Meta;
 
 const props: InputShellProps<IInput> = {
@@ -44,7 +42,27 @@ cillum dolore eu fugiat nulla pariatur. ~~Excepteur sint occaecat~~ cupidatat no
 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
     },
   },
-  onNext: console.log,
+  onNext: () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("next");
+        resolve();
+      }, 1000);
+    }),
+  onClose: () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("close");
+        resolve();
+      }, 1000);
+    }),
+  onPrevious: () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("previous");
+        resolve();
+      }, 1000);
+    }),
 };
 
 export const Default: Story<InputShellProps<IInput>> = (args) => (

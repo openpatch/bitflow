@@ -1,6 +1,7 @@
+import { groupBy } from "@bitflow/base";
 import { useEffect, useState } from "react";
-import { FlowDoX, FlowResult } from ".";
-import { EndShell } from "../EndShell";
+import { FlowDoX } from ".";
+import { EndShell, EndShellProps } from "../EndShell";
 
 export const FlowDoEnd = ({
   getResult,
@@ -8,13 +9,24 @@ export const FlowDoEnd = ({
 }: Pick<FlowDoX, "getResult" | "node"> & {
   node: { type: "end" };
 }) => {
-  const [result, setResult] = useState<Pick<FlowResult, "points">>({
+  const [result, setResult] = useState<{
+    points: EndShellProps["points"];
+    results: EndShellProps["results"];
+  }>({
     points: 0,
+    results: [],
   });
 
   useEffect(() => {
     if (getResult) {
-      getResult().then((p) => setResult(p));
+      getResult().then((r) => {
+        const results = groupBy(r.path, (p) => p.node.id);
+
+        setResult({
+          results,
+          points: r.points,
+        });
+      });
     }
   }, []);
 
@@ -22,6 +34,7 @@ export const FlowDoEnd = ({
     <EndShell
       end={node.data}
       points={node.data.view.showPoints ? result.points : undefined}
+      results={node.data.view.listResults ? result.results : undefined}
     />
   );
 };

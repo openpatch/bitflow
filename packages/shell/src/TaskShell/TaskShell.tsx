@@ -38,6 +38,8 @@ import { Shell, ShellContent, ShellFooter, ShellHeader } from "../Shell";
 import { IShell } from "../types";
 import {
   answerChangeAction,
+  closeAction,
+  closeErrorAction,
   confidenceLevelsChangeAction,
   correctResultStateAction,
   evaluateAction,
@@ -47,6 +49,9 @@ import {
   manualResultStateAction,
   mouseClickAction,
   nextAction,
+  nextErrorAction,
+  previousAction,
+  previousErrorAction,
   reasoningChangeAction,
   resizeAction,
   resultEmptyAction,
@@ -54,6 +59,7 @@ import {
   retryAction,
   retryResultStateAction,
   skipAction,
+  skipErrorAction,
   unknownResultStateAction,
   wrongResultStateAction,
 } from "./actions";
@@ -76,7 +82,8 @@ export type TaskShellProps<
     max: number;
   };
   evaluate?: (answer: A) => Promise<R>;
-  onSkip: () => void;
+  onSkip: () => Promise<void>;
+  onRetry: () => Promise<void>;
   onAction?: (action: IShellAction<A, R> | ITaskAction<Act>) => void;
   enableReasoning?: boolean;
   enableConfidence?: boolean;
@@ -114,6 +121,7 @@ export const TaskShell = <
   onSkip,
   onClose,
   onNext,
+  onRetry,
   onPrevious,
   onAction,
   soundUrls,
@@ -276,27 +284,42 @@ export const TaskShell = <
 
   function handleNext() {
     customDispatch(nextAction());
-    onNext();
+    onNext().catch(() => {
+      customDispatch(nextErrorAction());
+    });
   }
 
   function handleRetry() {
     customDispatch(retryAction());
+    onRetry().then(() => {
+      customDispatch(interactAction());
+    });
   }
 
   function handleSkip() {
-    customDispatch(skipAction());
-    onSkip();
+    if (onSkip) {
+      customDispatch(skipAction());
+      onSkip().catch(() => {
+        customDispatch(skipErrorAction());
+      });
+    }
   }
 
   function handleClose() {
+    customDispatch(closeAction());
     if (onClose) {
-      onClose();
+      onClose().catch(() => {
+        customDispatch(closeErrorAction());
+      });
     }
   }
 
   function handlePrevious() {
+    customDispatch(previousAction());
     if (onPrevious) {
-      onPrevious();
+      onPrevious().catch(() => {
+        customDispatch(previousErrorAction());
+      });
     }
   }
 
@@ -306,6 +329,14 @@ export const TaskShell = <
         progress={progress}
         onPrevious={onPrevious ? handlePrevious : undefined}
         onClose={onClose ? handleClose : undefined}
+        loadingClose={state === "close"}
+        loadingPrevious={state === "previous"}
+        disabled={
+          state === "skip" ||
+          state === "next" ||
+          state === "previous" ||
+          state === "close"
+        }
       >
         {header}
       </ShellHeader>
@@ -430,16 +461,26 @@ export const TaskShell = <
         )}
         {(state === "interact" ||
           state === "evaluate" ||
-          state === "retry") && (
+          state === "allow-retry" ||
+          state === "next" ||
+          state === "skip" ||
+          state === "close" ||
+          state === "previous") && (
           <Fragment>
             <Box flex="2" mr="standard">
-              {state !== "retry" ? (
+              {state !== "allow-retry" ? (
                 <ButtonPrimary
                   css={css`
                     height: 100%;
                   `}
                   tone="primary"
-                  disabled={state === "evaluate"}
+                  disabled={
+                    state === "evaluate" ||
+                    state === "skip" ||
+                    state === "next" ||
+                    state === "close" ||
+                    state === "previous"
+                  }
                   loading={state === "evaluate"}
                   onClick={handleSubmit}
                   fullWidth
@@ -464,6 +505,14 @@ export const TaskShell = <
                 css={css`
                   height: 100%;
                 `}
+                disabled={
+                  state === "evaluate" ||
+                  state === "skip" ||
+                  state === "next" ||
+                  state === "close" ||
+                  state === "previous"
+                }
+                loading={state === "skip"}
                 tone="accent"
                 onClick={handleSkip}
                 fullWidth

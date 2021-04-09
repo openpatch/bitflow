@@ -9,7 +9,8 @@ export const FlowDoTitle = ({
   node,
   onClose,
   onPrevious,
-}: Pick<FlowDoX, "onNext" | "node" | "onClose" | "onPrevious"> & {
+  progress,
+}: Pick<FlowDoX, "onNext" | "node" | "onClose" | "onPrevious" | "progress"> & {
   node: { type: "title" };
 }) => {
   const { t } = useTranslations(translations);
@@ -18,6 +19,10 @@ export const FlowDoTitle = ({
     <TitleShell<any>
       TitleComponent={titleBit.Title}
       title={node.data}
+      progress={{
+        max: progress.estimatedNodes,
+        value: progress.currentNodeIndex,
+      }}
       header={t("title")}
       onNext={onNext}
       onClose={onClose}

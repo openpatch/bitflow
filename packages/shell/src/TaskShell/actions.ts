@@ -194,6 +194,19 @@ export const nextAction = (): INextAction => {
   };
 };
 
+export interface INextErrorAction extends IShellActionBase {
+  type: "next-error";
+  payload: null;
+}
+
+export const nextErrorAction = (): INextErrorAction => {
+  return {
+    type: "next-error",
+    scope: "shell",
+    payload: null,
+  };
+};
+
 export interface IRetryAction extends IShellActionBase {
   type: "retry";
   payload: null;
@@ -215,6 +228,71 @@ export interface ISkipAction extends IShellActionBase {
 export const skipAction = (): ISkipAction => {
   return {
     type: "skip",
+    scope: "shell",
+    payload: null,
+  };
+};
+
+export interface ISkipErrorAction extends IShellActionBase {
+  type: "skip-error";
+  payload: null;
+}
+
+export const skipErrorAction = (): ISkipErrorAction => {
+  return {
+    type: "skip-error",
+    scope: "shell",
+    payload: null,
+  };
+};
+
+export interface IPreviousAction extends IShellActionBase {
+  type: "previous";
+  payload: null;
+}
+
+export const previousAction = (): IPreviousAction => {
+  return {
+    type: "previous",
+    scope: "shell",
+    payload: null,
+  };
+};
+
+export interface IPreviousErrorAction extends IShellActionBase {
+  type: "previous-error";
+  payload: null;
+}
+
+export const previousErrorAction = (): IPreviousErrorAction => {
+  return {
+    type: "previous-error",
+    scope: "shell",
+    payload: null,
+  };
+};
+
+export interface ICloseAction extends IShellActionBase {
+  type: "close";
+  payload: null;
+}
+
+export const closeAction = (): ICloseAction => {
+  return {
+    type: "close",
+    scope: "shell",
+    payload: null,
+  };
+};
+
+export interface ICloseErrorAction extends IShellActionBase {
+  type: "close-error";
+  payload: null;
+}
+
+export const closeErrorAction = (): ICloseErrorAction => {
+  return {
+    type: "close-error",
     scope: "shell",
     payload: null,
   };
@@ -334,8 +412,14 @@ export type IShellAction<
   | IResultEmptyAction
   | IInteractAction
   | INextAction
+  | INextErrorAction
   | IRetryAction
   | ISkipAction
+  | ISkipErrorAction
+  | ICloseAction
+  | ICloseErrorAction
+  | IPreviousAction
+  | IPreviousErrorAction
   | IAnswerChangeAction<A>
   | IMouseClickAction
   | IResizeAction;
