@@ -4,6 +4,7 @@ import {
   FlowDo,
   FlowDoProps,
   FlowProgress,
+  FlowResult,
   FlowSchema,
   GetAnswers,
   GetPoints,
@@ -28,11 +29,14 @@ type DoProps = {
 export default function Do({ flow, locale, startNode }: DoProps) {
   const currentNode = useRef<IFlowNode>(startNode);
   const progress = useRef<FlowProgress>({
-    currentNode: 0,
-    nextNode: "unlocked",
+    currentNodeIndex: 0,
+    nextNodeState: "unlocked",
     estimatedNodes: flow.nodes.length,
-    results: [],
+  });
+  const result = useRef<FlowResult>({
+    path: [],
     points: 0,
+    submissions: {},
   });
   const submissions = useRef<
     Record<string, { answers: TaskAnswer[]; results: TaskResult[] }>
@@ -84,7 +88,7 @@ export default function Do({ flow, locale, startNode }: DoProps) {
   };
 
   const getPoints: GetPoints = async () => {
-    return progress.current.points;
+    return result.current.points;
   };
 
   const getNext: FlowDoProps["getNext"] = async () => {
@@ -101,7 +105,7 @@ export default function Do({ flow, locale, startNode }: DoProps) {
       currentNode.current = nextNode;
     }
 
-    progress.current.currentNode += 1;
+    progress.current.currentNodeIndex += 1;
     return { ...currentNode.current };
   };
 
@@ -120,12 +124,16 @@ export default function Do({ flow, locale, startNode }: DoProps) {
       currentNode.current = previousNode;
     }
 
-    progress.current.currentNode -= 1;
+    progress.current.currentNodeIndex -= 1;
     return { ...currentNode.current };
   };
 
   const getProgress: FlowDoProps["getProgress"] = async () => {
     return { ...progress.current };
+  };
+
+  const getResult: FlowDoProps["getResult"] = async () => {
+    return { ...result.current };
   };
 
   const onEnd: FlowDoProps["onEnd"] = () => {};
@@ -136,24 +144,30 @@ export default function Do({ flow, locale, startNode }: DoProps) {
     if (currentNode.current.type === "task") {
       const taskBit = taskBits[currentNode.current.data.subtype];
 
-      const result: TaskResult = await taskBit.evaluate({
+      const taskResult: TaskResult = await taskBit.evaluate({
         answer,
         task: currentNode.current.data,
       });
 
-      progress.current.results.push({
-        ...result,
-        nodeId: currentNode.current.id,
-      });
+      const submission = {
+        answer,
+        result: taskResult,
+      };
+      // submissions could be used to calculate the results for getResult
+      if (!result.current.submissions[currentNode.current.id]) {
+        result.current.submissions[currentNode.current.id] = [submission];
+      } else {
+        result.current.submissions[currentNode.current.id].push(submission);
+      }
 
       if (!submissions.current[currentNode.current.id]) {
         submissions.current[currentNode.current.id] = {
           answers: [answer],
-          results: [result],
+          results: [taskResult],
         };
 
-        if (result.state === "correct") {
-          progress.current.points += 1;
+        if (taskResult.state === "correct") {
+          result.current.points += 1;
         }
       } else {
         const lastResult =
@@ -161,19 +175,19 @@ export default function Do({ flow, locale, startNode }: DoProps) {
             submissions.current[currentNode.current.id].results.length - 1
           ];
         submissions.current[currentNode.current.id].answers.push(answer);
-        submissions.current[currentNode.current.id].results.push(result);
+        submissions.current[currentNode.current.id].results.push(taskResult);
 
-        if (lastResult.state === "correct" && result.state !== "correct") {
-          progress.current.points -= 1;
+        if (lastResult.state === "correct" && taskResult.state !== "correct") {
+          result.current.points -= 1;
         } else if (
           lastResult.state !== "correct" &&
-          result.state === "correct"
+          taskResult.state === "correct"
         ) {
-          progress.current.points += 1;
+          result.current.points += 1;
         }
       }
 
-      return result;
+      return taskResult;
     }
 
     return {
@@ -193,6 +207,7 @@ export default function Do({ flow, locale, startNode }: DoProps) {
               getNext={getNext}
               getPrevious={getPrevious}
               getProgress={getProgress}
+              getResult={getResult}
               onEnd={onEnd}
               onSkip={onSkip}
             />
@@ -230,7 +245,7 @@ export const getServerSideProps: GetServerSideProps<DoProps> = async ({
       },
     };
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return {
       notFound: true,
     };

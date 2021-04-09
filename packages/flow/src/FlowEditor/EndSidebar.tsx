@@ -1,11 +1,18 @@
-import { HookFormController, MarkdownEditor } from "@openpatch/patches";
+import {
+  HookFormController,
+  MarkdownEditor,
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
+} from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
-import React, { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useFormContext } from "react-hook-form";
 import { EndShell } from "../EndShell";
 import translations from "../locales.vocab";
 import { EndSchema, IFlow } from "../schemas";
-import { Tab, TabPanel, Tabs } from "./Tabs";
+import { TabContainer } from "./TabContainer";
 
 const ViewForm = ({ name }: { name: string }) => {
   const { t } = useTranslations(translations);
@@ -48,25 +55,24 @@ const Preview = ({ name }: { name: string }) => {
 };
 
 export const EndPropertiesSidebar = ({ name }: { name: string }) => {
-  const [activeTab, setActiveTab] = useState(0);
   const { t } = useTranslations(translations);
 
   return (
     <Fragment>
       <Tabs>
-        <Tab active={activeTab === 0} onClick={() => setActiveTab(0)}>
-          {t("view")}
-        </Tab>
-        <Tab active={activeTab === 1} onClick={() => setActiveTab(1)}>
-          {t("preview")}
-        </Tab>
+        <TabList inverted tone="neutral">
+          <Tab>{t("view")}</Tab>
+          <Tab>{t("preview")}</Tab>
+        </TabList>
+        <TabContainer>
+          <TabPanel>
+            <ViewForm name={name} />
+          </TabPanel>
+          <TabPanel>
+            <Preview name={name} />
+          </TabPanel>
+        </TabContainer>
       </Tabs>
-      <TabPanel index={0} value={activeTab}>
-        <ViewForm name={name} />
-      </TabPanel>
-      <TabPanel index={1} value={activeTab}>
-        <Preview name={name} />
-      </TabPanel>
     </Fragment>
   );
 };

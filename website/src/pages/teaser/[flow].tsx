@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps<TeaserProps> = async ({
       },
     };
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return {
       notFound: true,
     };

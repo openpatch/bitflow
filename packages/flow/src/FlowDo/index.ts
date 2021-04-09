@@ -1,4 +1,4 @@
-import { Action, Evaluate, TaskResult } from "@bitflow/base";
+import { Action, Evaluate, TaskAnswer, TaskResult } from "@bitflow/base";
 import { TaskShellProps } from "@bitflow/shell";
 import { IFlowNode } from "../schemas";
 
@@ -10,10 +10,20 @@ export type FlowConfig = {
 
 export type FlowProgress = {
   estimatedNodes: number;
-  currentNode: number;
-  nextNode: "locked" | "unlocked";
-  results: (TaskResult & { nodeId: string })[];
+  currentNodeIndex: number;
+  nextNodeState: "locked" | "unlocked";
+};
+
+export type FlowResult = {
   points: number;
+  path: string[];
+  submissions: Record<
+    string,
+    {
+      answer: TaskAnswer;
+      result: TaskResult;
+    }[]
+  >;
 };
 
 export type FlowDoX = {
@@ -25,6 +35,7 @@ export type FlowDoX = {
   onAction?: (action: Action) => void;
   getConfig: () => Promise<FlowConfig>;
   getProgress: () => Promise<FlowProgress>;
+  getResult: () => Promise<FlowResult>;
   node: IFlowNode;
 };
 

@@ -7,9 +7,11 @@ export const FlowDoSynchronize = ({
   onNext,
   getProgress,
 }: Pick<FlowDoX, "onNext" | "getProgress">) => {
-  const [progress, setProgress] = useState<Pick<FlowProgress, "nextNode">>({
-    nextNode: "locked",
-  });
+  const [progress, setProgress] = useState<Pick<FlowProgress, "nextNodeState">>(
+    {
+      nextNodeState: "locked",
+    }
+  );
   const [refreshing, setRefreshing] = useState(false);
 
   const refresh = () => {
@@ -31,7 +33,7 @@ export const FlowDoSynchronize = ({
       <ShellFooter>
         <Box flex="2">
           <ButtonPrimary
-            disabled={progress.nextNode === "locked"}
+            disabled={progress.nextNodeState === "locked"}
             onClick={onNext}
           >
             Next

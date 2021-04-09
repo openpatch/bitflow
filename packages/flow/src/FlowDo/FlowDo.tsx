@@ -1,5 +1,6 @@
 import { TaskAnswer, TaskResult } from "@bitflow/base";
 import { IShellAction, ITaskAction, Shell, ShellContent } from "@bitflow/shell";
+import { Box, LoadingDots } from "@openpatch/patches";
 import { FC, useEffect, useState } from "react";
 import { FlowDoX } from ".";
 import { IFlowNode } from "../schemas";
@@ -17,6 +18,7 @@ export type FlowDoProps = {
   getPrevious: () => Promise<IFlowNode | null>;
   getConfig: FlowDoX["getConfig"];
   getProgress: FlowDoX["getProgress"];
+  getResult: FlowDoX["getResult"];
   onEnd: () => void;
   onClose?: () => void;
   onSkip: () => void;
@@ -35,6 +37,7 @@ export const FlowDo: FC<FlowDoProps> = ({
   onSkip,
   evaluate,
   getProgress,
+  getResult,
 }) => {
   const [currentNode, setCurrentNode] = useState<IFlowNode>();
 
@@ -45,7 +48,20 @@ export const FlowDo: FC<FlowDoProps> = ({
   if (!currentNode) {
     return (
       <Shell>
-        <ShellContent>Loading</ShellContent>
+        <ShellContent>
+          <Box
+            position="absolute"
+            top="0"
+            bottom="0"
+            left="0"
+            right="0"
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <LoadingDots size="large" />
+          </Box>
+        </ShellContent>
       </Shell>
     );
   }
@@ -119,7 +135,7 @@ export const FlowDo: FC<FlowDoProps> = ({
     return (
       <FlowDoEnd
         key={currentNode.id}
-        getProgress={getProgress}
+        getResult={getResult}
         node={currentNode}
       />
     );

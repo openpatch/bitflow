@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
-import { FlowDoX, FlowProgress } from ".";
+import { FlowDoX, FlowResult } from ".";
 import { EndShell } from "../EndShell";
 
 export const FlowDoEnd = ({
-  getProgress,
+  getResult,
   node,
-}: Pick<FlowDoX, "getProgress" | "node"> & {
+}: Pick<FlowDoX, "getResult" | "node"> & {
   node: { type: "end" };
 }) => {
-  const [progress, setProgress] = useState<Pick<FlowProgress, "points">>({
+  const [result, setResult] = useState<Pick<FlowResult, "points">>({
     points: 0,
   });
 
   useEffect(() => {
-    if (getProgress) {
-      getProgress().then((p) => setProgress(p));
+    if (getResult) {
+      getResult().then((p) => setResult(p));
     }
   }, []);
 
   return (
     <EndShell
       end={node.data}
-      points={node.data.view.showPoints ? progress.points : undefined}
+      points={node.data.view.showPoints ? result.points : undefined}
     />
   );
 };

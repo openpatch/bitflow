@@ -7,13 +7,17 @@ import {
   Input,
   MarkdownEditor,
   Select,
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
 } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useFormContext } from "react-hook-form";
 import translations from "../locales.vocab";
 import { IFlow } from "../schemas";
-import { Tab, TabPanel, Tabs } from "./Tabs";
+import { TabContainer } from "./TabContainer";
 
 const MetaForm = ({ name }: { name: string }) => {
   const { t } = useTranslations(translations);
@@ -48,7 +52,6 @@ const ViewForm = ({ name }: { name: string }) => {
   const { t } = useTranslations(translations);
 
   const subtype = getValues(`${name}.subtype`) as keyof typeof taskBits;
-  console.log(subtype);
 
   const { ViewForm } = taskBits[subtype];
 
@@ -166,43 +169,36 @@ const Preview = ({ name }: { name: string }) => {
 };
 
 export const TaskPropertiesSidebar = ({ name }: { name: string }) => {
-  const [activeTab, setActiveTab] = useState(0);
   const { t } = useTranslations(translations);
 
   return (
     <Fragment>
       <Tabs>
-        <Tab active={activeTab === 0} onClick={() => setActiveTab(0)}>
-          {t("meta")}
-        </Tab>
-        <Tab active={activeTab === 1} onClick={() => setActiveTab(1)}>
-          {t("view")}
-        </Tab>
-        <Tab active={activeTab === 2} onClick={() => setActiveTab(2)}>
-          {t("evaluation")}
-        </Tab>
-        <Tab active={activeTab === 3} onClick={() => setActiveTab(3)}>
-          {t("feedback")}
-        </Tab>
-        <Tab active={activeTab === 4} onClick={() => setActiveTab(4)}>
-          {t("preview")}
-        </Tab>
+        <TabList inverted tone="neutral">
+          <Tab>{t("meta")}</Tab>
+          <Tab>{t("view")}</Tab>
+          <Tab>{t("evaluation")}</Tab>
+          <Tab>{t("feedback")}</Tab>
+          <Tab>{t("preview")}</Tab>
+        </TabList>
+        <TabContainer>
+          <TabPanel>
+            <MetaForm name={name} />
+          </TabPanel>
+          <TabPanel>
+            <ViewForm name={name} />
+          </TabPanel>
+          <TabPanel>
+            <EvaluationForm name={name} />
+          </TabPanel>
+          <TabPanel>
+            <FeedbackForm name={name} />
+          </TabPanel>
+          <TabPanel>
+            <Preview name={name} />
+          </TabPanel>
+        </TabContainer>
       </Tabs>
-      <TabPanel index={0} value={activeTab}>
-        <MetaForm name={name} />
-      </TabPanel>
-      <TabPanel index={1} value={activeTab}>
-        <ViewForm name={name} />
-      </TabPanel>
-      <TabPanel index={2} value={activeTab}>
-        <EvaluationForm name={name} />
-      </TabPanel>
-      <TabPanel index={3} value={activeTab}>
-        <FeedbackForm name={name} />
-      </TabPanel>
-      <TabPanel index={4} value={activeTab}>
-        <Preview name={name} />
-      </TabPanel>
     </Fragment>
   );
 };

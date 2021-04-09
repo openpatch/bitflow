@@ -1,0 +1,4 @@
+{
+  "plugins": ["superjson-next"],
+  "presets": ["next/babel", "@emotion/babel-preset-css-prop"]
+}

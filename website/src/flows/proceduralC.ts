@@ -12,7 +12,7 @@ export const proceduralC = FlowSchema.parse({
         view: {
           title: "Start",
           markdown:
-            '# Welcome to this assessment\n\nThis assessment is meant to evaluate how much you already know about some topics of the course "Procedural Programming in C". \n\nYou do not need to answer anything right to be able to attent the course. You will learn about Programming and C in the course.\n\nThe results will help lectures to understand what previous knowledge you and other students have. This information can be used to adapt the course to your needs.\n\nThis assessment is part of a PhD Project. By doing the assessment you agree that your data can be used for this project. No personal data will be collected.\n\nIf you want to know more about the project you can write me an e-mail: [mike.barkmin@uni-due.de](mailto:mike.barkmin@uni-de.de)',
+            '# Welcome to this assessment\n\nThis assessment is meant to evaluate how much you already know about some topics of the course "Procedural Programming in C". \n\nYou do not need to answer anything correctly to be able to attent the course. You can attend the course no matter how many questions you answer right or wrong. You will learn something about Programming and C in the course.\n\nThe results will help lecturers to understand your and your fellow students\' previous knowledge. The gathered information can be used to adapt the course to your needs.\n\nThis assessment is part of a PhD Project. By doing the assessment you agree that your data can be used for this project. No personal data will be collected.\n\nIf you want to know more about the project you can write me an e-mail: [mike.barkmin@uni-due.de](mailto:mike.barkmin@uni-de.de)',
         },
       },
     },
@@ -23,7 +23,7 @@ export const proceduralC = FlowSchema.parse({
       data: {
         view: {
           markdown:
-            "# Thanks for your participation!\n\nI hope you got something out of the assessment.\n\nIf you are interested in doing more assessments like this you can write me an e-mail: [mike.barkmin@uni-due.de](mailto:mike.barkmin@uni-due.de)",
+            "# Thanks for your participation!\n\nI hope you got something out of the assessment.\n\nIf you are interested in doing more assessments like this or if you want to know more about the project you can write me an e-mail: [mike.barkmin@uni-due.de](mailto:mike.barkmin@uni-due.de)",
           showPoints: true,
           listResults: false,
         },
@@ -56,7 +56,7 @@ export const proceduralC = FlowSchema.parse({
             },
             {
               markdown:
-                "A collection of unambiguous and effectively computable operations that when executed produces a result and halts in a finite amount of time.",
+                "A well-ordered collection of unambiguous and effectively computable operations that when executed produces a result.",
             },
             {
               markdown:
@@ -84,7 +84,7 @@ export const proceduralC = FlowSchema.parse({
               checkedFeedback: { message: "", severity: "error" },
               notCheckedFeedback: {
                 message:
-                  "Option B provides the best definition.  A key component is that in order to be an algorithm, it must eventually halt.",
+                  "This provides the best definition. A key component is that in order to be an algorithm, it must eventually halt.",
                 severity: "error",
               },
             },
@@ -199,15 +199,14 @@ export const proceduralC = FlowSchema.parse({
             a: {
               checkedFeedback: { message: "", severity: "error" },
               notCheckedFeedback: {
-                message:
-                  "This is the correct answer; %d is used for reading in integers.",
+                message: "",
                 severity: "error",
               },
             },
             d: {
               checkedFeedback: {
                 message:
-                  "The \\n is unnecessary. Finally, scanf requires a pointer to a variable's address.",
+                  "The \\n is unnecessary. Also, scanf requires a pointer to a variable's address.",
                 severity: "error",
               },
               notCheckedFeedback: { message: "", severity: "error" },
@@ -267,7 +266,7 @@ export const proceduralC = FlowSchema.parse({
           choices: {
             a: {
               checkedFeedback: {
-                message: "A procedura can have zero parameters.",
+                message: "A procedure can have zero parameters.",
                 severity: "error",
               },
               notCheckedFeedback: { message: "", severity: "error" },
@@ -275,7 +274,7 @@ export const proceduralC = FlowSchema.parse({
             b: {
               checkedFeedback: {
                 message:
-                  "The parameter of a procedura can have different types.",
+                  "The parameter of a procedure can have different types.",
                 severity: "error",
               },
               notCheckedFeedback: { message: "", severity: "error" },
@@ -310,7 +309,7 @@ export const proceduralC = FlowSchema.parse({
         subtype: "choice",
         view: {
           instruction:
-            "Which of the following assertions about procedure is correct?",
+            "Which of the following assertions about procedures are correct?",
           variant: "multiple",
           choices: [
             {
@@ -360,7 +359,7 @@ export const proceduralC = FlowSchema.parse({
             c: {
               checkedFeedback: {
                 message:
-                  "A procedure in C must have as many arguments as the procedure has parameters.",
+                  "A procedure invocation/call in C must have as many arguments as the procedure has parameters.",
                 severity: "error",
               },
               notCheckedFeedback: { message: "", severity: "error" },
@@ -518,7 +517,7 @@ export const proceduralC = FlowSchema.parse({
         subtype: "choice",
         view: {
           instruction:
-            "Fill the gap in such a way that the odd number less than 10 and greater than zero is printed.\n```c\nfor (##MISSING_CODE##)\n    System.out.println(i+1);\n```",
+            "Fill the gap in such a way that all odd numbers less than 10 and greater than zero are printed out.\n```c\nfor (##MISSING_CODE##)\n    System.out.println(i+1);\n```",
           variant: "single",
           choices: [
             { markdown: "`int i = 0; i <= 10; i= i+2`" },
@@ -645,7 +644,7 @@ export const proceduralC = FlowSchema.parse({
         subtype: "choice",
         view: {
           instruction:
-            'What does this print when **x** is assigned to 1?\n```c\nif (x > 1) {\n  System.out.println("a")\n} else if (x > 0) {\n  System.out.println("b")\n} else if (x > -1) {\n  System.out.println("c")\n}\n```',
+            'What is printed out when **x** is assigned to 1?\n```c\nif (x > 1) {\n  printf("a");\n} else if (x > 0) {\n  printf("b");\n} else if (x > -1) {\n  printf("c");\n}\n```',
           variant: "single",
           choices: [
             { markdown: "a" },
@@ -776,7 +775,7 @@ export const proceduralC = FlowSchema.parse({
         view: {
           instruction:
             "Which of the following is **not** a scalar/primitive data type in C?",
-          variant: "multiple",
+          variant: "single",
           choices: [
             { markdown: "int" },
             { markdown: "float" },
@@ -847,7 +846,7 @@ export const proceduralC = FlowSchema.parse({
         subtype: "choice",
         view: {
           instruction:
-            "You see the expression `n = -250` in some C-code that successfully compiles. What type can `n` **not** be, if there is no overflow?",
+            "You see the expression `n = -250` in some C-code that successfully compiles. Of which type can `n` **not** be, if there is no overflow?",
           variant: "single",
           choices: [
             { markdown: "int" },
@@ -872,7 +871,7 @@ export const proceduralC = FlowSchema.parse({
             a: {
               checkedFeedback: {
                 message:
-                  "int is capable of containing values in the range of [-32,767, +32,767]",
+                  "int is capable of containing at least values in the range of [-32,767, +32,767]",
                 severity: "error",
               },
               notCheckedFeedback: {
@@ -893,7 +892,7 @@ export const proceduralC = FlowSchema.parse({
             c: {
               checkedFeedback: {
                 message:
-                  "char is capable of containing values in the range of [-128, +127]",
+                  "char is capable of containing at least values in the range of [-128, +127]",
                 severity: "success",
               },
               notCheckedFeedback: {
@@ -904,7 +903,7 @@ export const proceduralC = FlowSchema.parse({
             d: {
               checkedFeedback: {
                 message:
-                  "short is capable of containing values in the range of [-32768, +32767]",
+                  "short is capable of containing at least values in the range of [-32768, +32767]",
                 severity: "error",
               },
               notCheckedFeedback: {
@@ -1066,7 +1065,7 @@ export const proceduralC = FlowSchema.parse({
         subtype: "choice",
         view: {
           instruction:
-            "You don't know exactly how much data you need to store, but there's not much of it. You'd like to not allocate any memory that won't be used. You do not need to be able to search the collection quickly. What is the simplest data structure that best suits for your needs?",
+            "You do not know exactly how much data you need to store, but there's not much of it. You would like to not allocate any memory that won't be used. You do not need to be able to search the collection quickly. What is the simplest data structure best suited for your needs?",
           variant: "single",
           choices: [
             { markdown: "Unordered Array" },
@@ -1193,7 +1192,7 @@ export const proceduralC = FlowSchema.parse({
         subtype: "input",
         view: {
           instruction:
-            "If you have feedback for me regarding the assessment feel free to write it here.",
+            "Feel free to write me some feedback on the assessment over here.",
         },
         evaluation: {
           mode: "skip",

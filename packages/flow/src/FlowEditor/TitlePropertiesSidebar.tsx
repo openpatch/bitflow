@@ -1,12 +1,20 @@
 import { titleBits } from "@bitflow/bits";
 import { TitleShell } from "@bitflow/shell";
-import { HookFormController, Input, MarkdownEditor } from "@openpatch/patches";
+import {
+  HookFormController,
+  Input,
+  MarkdownEditor,
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
+} from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useFormContext } from "react-hook-form";
 import translations from "../locales.vocab";
 import { IFlow } from "../schemas";
-import { Tab, TabPanel, Tabs } from "./Tabs";
+import { TabContainer } from "./TabContainer";
 
 const MetaForm = ({ name }: { name: string }) => {
   const { t } = useTranslations(translations);
@@ -79,31 +87,28 @@ const Preview = ({ name }: { name: string }) => {
 };
 
 export const TitlePropertiesSidebar = ({ name }: { name: string }) => {
-  const [activeTab, setActiveTab] = useState(0);
   const { t } = useTranslations(translations);
 
   return (
     <Fragment>
       <Tabs>
-        <Tab active={activeTab === 0} onClick={() => setActiveTab(0)}>
-          {t("meta")}
-        </Tab>
-        <Tab active={activeTab === 1} onClick={() => setActiveTab(1)}>
-          {t("view")}
-        </Tab>
-        <Tab active={activeTab === 2} onClick={() => setActiveTab(2)}>
-          {t("preview")}
-        </Tab>
+        <TabList inverted tone="neutral">
+          <Tab>{t("meta")}</Tab>
+          <Tab>{t("view")}</Tab>
+          <Tab>{t("preview")}</Tab>
+        </TabList>
+        <TabContainer>
+          <TabPanel>
+            <MetaForm name={name} />
+          </TabPanel>
+          <TabPanel>
+            <ViewForm name={name} />
+          </TabPanel>
+          <TabPanel>
+            <Preview name={name} />
+          </TabPanel>
+        </TabContainer>
       </Tabs>
-      <TabPanel index={0} value={activeTab}>
-        <MetaForm name={name} />
-      </TabPanel>
-      <TabPanel index={1} value={activeTab}>
-        <ViewForm name={name} />
-      </TabPanel>
-      <TabPanel index={2} value={activeTab}>
-        <Preview name={name} />
-      </TabPanel>
     </Fragment>
   );
 };
