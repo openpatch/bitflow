@@ -20,6 +20,7 @@ import { useState } from "react";
 
 export default function Setup() {
   const router = useRouter();
+  const [state, setState] = useState<"default" | "creating">();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +28,7 @@ export default function Setup() {
 
   const createAdmin = () => {
     if (password === passwordCheck) {
+      setState("creating");
       post<{ username: string; email: string; password: string }, any>(
         "/api/auth/signup",
         {
@@ -36,13 +38,16 @@ export default function Setup() {
         }
       )
         .then(async (res) => {
+          console.log(res);
           if (res.status === 201) {
             router.push("/admin");
           } else {
+            setState("default");
             console.error(await res.json());
           }
         })
         .catch((e) => {
+          setState("default");
           console.error(e);
         });
     }
@@ -75,7 +80,12 @@ export default function Setup() {
               </Form>
             </CardContent>
             <CardFooter>
-              <ButtonPrimary fullWidth onClick={createAdmin}>
+              <ButtonPrimary
+                loading={state === "creating"}
+                disabled={state === "creating"}
+                fullWidth
+                onClick={createAdmin}
+              >
                 Create Admin
               </ButtonPrimary>
             </CardFooter>

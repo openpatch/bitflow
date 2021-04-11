@@ -34,10 +34,9 @@ export default function Editor() {
         }
       } catch (e) {}
     }
-  }, [router.query]);
+  }, []);
 
   const handleSubmit = (flow: IFlow) => {
-    setFlow(flow);
     const flowString = convertFromJsonToString(flow);
     const myFlowsString = localStorage.getItem("flows");
     if (!myFlowsString) {
@@ -57,7 +56,8 @@ export default function Editor() {
   };
 
   const handleDownload = () => {
-    if (flow) {
+    if (flowEditorRef.current) {
+      const flow = flowEditorRef.current?.getValues();
       var dataStr =
         "data:text/json;charset=utf-8," +
         encodeURIComponent(JSON.stringify(flow));

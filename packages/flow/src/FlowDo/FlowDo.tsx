@@ -84,8 +84,7 @@ export const FlowDo: FC<FlowDoProps> = ({
   }
 
   const handleSkip = async () => {
-    onSkip();
-    return handleNext();
+    return onSkip().then(() => handleNext());
   };
 
   const handleNext = async () => {

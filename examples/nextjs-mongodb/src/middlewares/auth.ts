@@ -1,5 +1,5 @@
 import nc from "next-connect";
-import passport from "passport";
+import { passport } from "../utils/passport";
 import { session } from "./session";
 
 const auth = nc();

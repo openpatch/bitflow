@@ -44,23 +44,22 @@ export const proceduralC = FlowSchema.parse({
           choices: [
             {
               markdown:
-                "A well-ordered collection of unambiguous and effectively computable operations that when executed produces a result and halts in a reasonably short amount of time.",
+                "A well-ordered collection of unambiguous statements that when executed produces a result and halts in a reasonably short amount of time.",
             },
             {
               markdown:
-                "A well-ordered collection of unambiguous and effectively computable operations that when executed produces a result and halts in a finite amount of time.",
+                "A well-ordered collection of unambiguous computable operations that when executed produces a result and halts in a finite amount of time.",
             },
             {
               markdown:
-                "A collection of unambiguous and effectively computable operations that when executed produces a result and halts in a finite amount of time.",
+                "A collection of unambiguous statements that when executed produces a result and halts in a finite amount of time.",
             },
             {
               markdown:
-                "A well-ordered collection of unambiguous and effectively computable operations that when executed produces a result.",
+                "A well-ordered collection of unambiguous statements that when executed produces a result.",
             },
             {
-              markdown:
-                "A well-ordered collection of unambiguous and effectively computable operations.",
+              markdown: "A well-ordered collection of unambiguous statements.",
             },
             { markdown: "" },
             { markdown: "" },
@@ -106,22 +105,28 @@ export const proceduralC = FlowSchema.parse({
     },
     {
       id: "12ca1039-e872-4eca-b227-e21018ee555d",
-      position: { x: 571, y: 132.1999969482422 },
+      position: { x: 575, y: 132.1999969482422 },
       type: "task",
       data: {
-        name: "Data Type Size in C",
-        description: "CQB 633236",
+        name: "Data Type Defautl Value in C",
+        description: "Custom",
         subtype: "choice",
         view: {
           instruction:
-            "This code fails to compile:\n```c\nchar current = 'a';\ncurrent = current + 1;\n```\nWhy?",
+            'What happens if the following programm gets compiled and executed?\n```c\nint main ()\n{\n\tint a, b, c;\n    int d = a + b + c;\n    printf("%d", d);\n}\n```',
           variant: "single",
           choices: [
-            { markdown: "We can't add ints and chars." },
-            { markdown: "We're trying to squeeze an int into a char." },
-            { markdown: "The character after 'a' is platform-dependent." },
-            { markdown: "We're trying to squeeze a String into a char." },
-            { markdown: "The assignment is infinitely recursive." },
+            {
+              markdown:
+                "It will not compile because `a`, `b` and `c` are not initialized.",
+            },
+            { markdown: "It will compile and output: `0`" },
+            { markdown: "It will compile and output a random integer." },
+            {
+              markdown:
+                "It will compile but give an error when trying to add `a` to `b` to `c`.",
+            },
+            { markdown: "" },
             { markdown: "" },
             { markdown: "" },
             { markdown: "" },
@@ -131,21 +136,25 @@ export const proceduralC = FlowSchema.parse({
           mode: "auto",
           enableRetry: true,
           showFeedback: true,
-          correct: ["b"],
+          correct: ["c"],
         },
         feedback: {
           patterns: {},
           choices: {
             b: {
-              checkedFeedback: { message: "", severity: "error" },
-              notCheckedFeedback: {
+              checkedFeedback: {
                 message:
-                  "The char is promoted to an int when an int is added to it. Thus, our right-hand side is an int while our left-hand side is a char. Assigning an int into a char may result in information less, which requires us to sign off on this risky operation with an explicit cast.",
+                  "If a variable of type `int` is declared but not initialized, it will hold an undefined value. Thus, we can not be sure what the output will be.",
                 severity: "error",
               },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
             a: {
-              checkedFeedback: { message: "", severity: "error" },
+              checkedFeedback: {
+                message:
+                  "If a variable of type `int` is declared but not initialized, it will hold an undefined value. But this will not lead to an error at compile time.",
+                severity: "error",
+              },
               notCheckedFeedback: { message: "", severity: "error" },
             },
             c: {
@@ -153,7 +162,11 @@ export const proceduralC = FlowSchema.parse({
               notCheckedFeedback: { message: "", severity: "error" },
             },
             d: {
-              checkedFeedback: { message: "", severity: "error" },
+              checkedFeedback: {
+                message:
+                  "If a variable of type `int` is declared but not initialized, it will hold an undefined value. Thus, the addition is valid and will not result in an error.",
+                severity: "error",
+              },
               notCheckedFeedback: { message: "", severity: "error" },
             },
             e: {
@@ -198,10 +211,7 @@ export const proceduralC = FlowSchema.parse({
           choices: {
             a: {
               checkedFeedback: { message: "", severity: "error" },
-              notCheckedFeedback: {
-                message: "",
-                severity: "error",
-              },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
             d: {
               checkedFeedback: {
@@ -438,7 +448,7 @@ export const proceduralC = FlowSchema.parse({
     },
     {
       id: "63d34862-476c-4f09-a4c1-e8469bd444ae",
-      position: { x: 745.2630242833707, y: 269.4285257324648 },
+      position: { x: 751.2630242833707, y: 265.4285257324648 },
       type: "task",
       data: {
         name: "Missing Parts of for-Loop",
@@ -517,7 +527,7 @@ export const proceduralC = FlowSchema.parse({
         subtype: "choice",
         view: {
           instruction:
-            "Fill the gap in such a way that all odd numbers less than 10 and greater than zero are printed out.\n```c\nfor (##MISSING_CODE##)\n    System.out.println(i+1);\n```",
+            "Fill the gap in such a way that all odd numbers less than 10 and greater than zero are printed out.\n```c\nfor (##MISSING_CODE##)\n    printf(i+1);\n```",
           variant: "single",
           choices: [
             { markdown: "`int i = 0; i <= 10; i= i+2`" },
@@ -572,7 +582,7 @@ export const proceduralC = FlowSchema.parse({
     },
     {
       id: "9bbb0330-4c95-455d-ac1a-20348b032752",
-      position: { x: 1050.2630242833707, y: 243.42852573246478 },
+      position: { x: 1048.2630242833707, y: 245.42852573246478 },
       type: "task",
       data: {
         name: "while-Loop Asterisks",
@@ -580,7 +590,7 @@ export const proceduralC = FlowSchema.parse({
         subtype: "choice",
         view: {
           instruction:
-            'How many asterisks will be printed as a result of executing this code?\n\n```c\nint counter = 0, N = 10;\n\nwhile (counter++ < N)\n{\n    if (counter%2 == 0)\n        continue;\n    System.out.print("*");\n}\n```',
+            'How many asterisks will be printed as a result of executing this code?\n\n```c\nint counter = 0, N = 10;\n\nwhile (counter++ < N)\n{\n    if (counter%2 == 0)\n        continue;\n    printf("*");\n}\n```',
           variant: "single",
           choices: [
             { markdown: "none, infinite loop" },
@@ -644,7 +654,7 @@ export const proceduralC = FlowSchema.parse({
         subtype: "choice",
         view: {
           instruction:
-            'What is printed out when **x** is assigned to 1?\n```c\nif (x > 1) {\n  printf("a");\n} else if (x > 0) {\n  printf("b");\n} else if (x > -1) {\n  printf("c");\n}\n```',
+            'What is printed out when the following code is executed?\n```c\nfloat x = 1;\nif (x > 1) {\n  printf("a");\n} else if (x > 0) {\n  printf("b");\n} else if (x > -1) {\n  printf("c");\n}\n```',
           variant: "single",
           choices: [
             { markdown: "a" },
@@ -739,10 +749,7 @@ export const proceduralC = FlowSchema.parse({
           choices: {
             d: {
               checkedFeedback: { message: "", severity: "error" },
-              notCheckedFeedback: {
-                message: "",
-                severity: "error",
-              },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
             a: {
               checkedFeedback: { message: "", severity: "error" },
@@ -766,7 +773,7 @@ export const proceduralC = FlowSchema.parse({
     },
     {
       id: "50bd2282-39cc-4d60-8cda-06585ee383d5",
-      position: { x: 990.2630242833706, y: 84.42852573246483 },
+      position: { x: 992.2630242833706, y: 84.42852573246483 },
       type: "task",
       data: {
         name: "Scalar Data Types in C",
@@ -797,12 +804,12 @@ export const proceduralC = FlowSchema.parse({
           patterns: {},
           choices: {
             c: {
-              notCheckedFeedback: { message: "", severity: "error" },
               checkedFeedback: {
                 message:
                   "A String is not a scalar/primitive data type. It can be thought of as an array of characters.",
                 severity: "success",
               },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
             a: {
               checkedFeedback: {
@@ -838,7 +845,7 @@ export const proceduralC = FlowSchema.parse({
     },
     {
       id: "59c7163b-f626-4e08-af43-0c62712071e2",
-      position: { x: 274.26302428337067, y: 123.42852573246478 },
+      position: { x: 274.26302428337067, y: 121.42852573246478 },
       type: "task",
       data: {
         name: "Data Type for Variable",
@@ -874,20 +881,14 @@ export const proceduralC = FlowSchema.parse({
                   "int is capable of containing at least values in the range of [-32,767, +32,767]",
                 severity: "error",
               },
-              notCheckedFeedback: {
-                message: "",
-                severity: "error",
-              },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
             b: {
               checkedFeedback: {
                 message: "float is capable of containing large numbers",
                 severity: "error",
               },
-              notCheckedFeedback: {
-                message: "",
-                severity: "error",
-              },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
             c: {
               checkedFeedback: {
@@ -895,10 +896,7 @@ export const proceduralC = FlowSchema.parse({
                   "char is capable of containing at least values in the range of [-128, +127]",
                 severity: "success",
               },
-              notCheckedFeedback: {
-                message: "",
-                severity: "error",
-              },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
             d: {
               checkedFeedback: {
@@ -906,20 +904,14 @@ export const proceduralC = FlowSchema.parse({
                   "short is capable of containing at least values in the range of [-32768, +32767]",
                 severity: "error",
               },
-              notCheckedFeedback: {
-                message: "",
-                severity: "error",
-              },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
             e: {
               checkedFeedback: {
                 message: "long is capable of containing large numbers",
                 severity: "error",
               },
-              notCheckedFeedback: {
-                message: "",
-                severity: "error",
-              },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
           },
         },
@@ -927,7 +919,7 @@ export const proceduralC = FlowSchema.parse({
     },
     {
       id: "8ef094f8-760f-4e8d-8374-896510f10f1f",
-      position: { x: 881.2630242833707, y: 693.4285257324648 },
+      position: { x: 885.2630242833707, y: 693.4285257324648 },
       type: "task",
       data: {
         name: "Pointer Memory Footprint in C",
@@ -1025,20 +1017,14 @@ export const proceduralC = FlowSchema.parse({
                 message: "&i will return the memory address of the variable i.",
                 severity: "error",
               },
-              notCheckedFeedback: {
-                message: "",
-                severity: "error",
-              },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
             b: {
               checkedFeedback: {
                 message: "p contains the memory address of the variable i.",
                 severity: "error",
               },
-              notCheckedFeedback: {
-                message: "",
-                severity: "error",
-              },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
             d: {
               checkedFeedback: {
@@ -1046,10 +1032,7 @@ export const proceduralC = FlowSchema.parse({
                   "*i is an invalid expression, because the * operator does not work on int.",
                 severity: "error",
               },
-              notCheckedFeedback: {
-                message: "",
-                severity: "error",
-              },
+              notCheckedFeedback: { message: "", severity: "error" },
             },
           },
         },
@@ -1124,7 +1107,7 @@ export const proceduralC = FlowSchema.parse({
     },
     {
       id: "ceb05fff-ee4e-4aaf-bfa2-dfd060f87fac",
-      position: { x: 252.26302428337067, y: 402.4285257324648 },
+      position: { x: 246.26302428337067, y: 402.4285257324648 },
       type: "task",
       data: {
         name: "Array Properties",
@@ -1447,5 +1430,5 @@ export const proceduralC = FlowSchema.parse({
     },
   ],
   zoom: 0.5215569806775638,
-  position: [22.649061695226692, 280.46897322607316],
+  position: [23.649061695226692, 280.46897322607316],
 } as IFlow);
