@@ -10,7 +10,7 @@ export const setCookie = (
   cookies: Array<{
     name: string;
     value: unknown;
-    options: CookieSerializeOptions;
+    options?: CookieSerializeOptions;
   }>
 ) => {
   const header = cookies.map(({ name, value, options = {} }) => {

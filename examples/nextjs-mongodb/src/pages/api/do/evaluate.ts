@@ -19,7 +19,17 @@ nc.post(async (req, res) => {
 
   const taskResult = await evaluate(body.answer);
 
-  setCookie(res, "session", session);
+  // refresh cookie
+  setCookie(res, [
+    {
+      name: "session",
+      value: session,
+      options: {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7, // one week
+      },
+    },
+  ]);
 
   return res.json({
     result: taskResult,
