@@ -5,8 +5,6 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 
 passport.serializeUser<string>(async (user, done) => {
-  console.log("serialize");
-  console.log(user);
   done(null, user._id.toHexString());
 });
 
