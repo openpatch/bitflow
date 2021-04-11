@@ -6,7 +6,6 @@ import {
   getConfig,
   getCurrent,
   getNext,
-  getPrevious,
   getProgress,
   getResult,
   onEnd,
@@ -30,7 +29,6 @@ export default function Do({ locale }: DoProps) {
               getConfig={getConfig}
               getCurrent={getCurrent}
               getNext={getNext}
-              getPrevious={getPrevious}
               getProgress={getProgress}
               getResult={getResult}
               onEnd={onEnd}

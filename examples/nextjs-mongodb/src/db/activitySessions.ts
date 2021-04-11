@@ -192,6 +192,7 @@ export const makeGetNextNodeForSession = (
   return nextNode;
 };
 
+// buggy. Does not work as intended.
 export const makeGetPreviousNodeForSession = (
   db: Db,
   sessionId: string
