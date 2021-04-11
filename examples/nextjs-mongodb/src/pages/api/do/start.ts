@@ -28,7 +28,7 @@ nc.post(async (req, res) => {
       value: sessionId,
       options: {
         httpOnly: true,
-        maxAge: 60 * 60 * 24 * 7, // one week
+        maxAge: 60 * 60 * 24 * 7 * 1000, // one week
       },
     },
     {
