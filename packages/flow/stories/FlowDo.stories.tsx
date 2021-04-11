@@ -206,6 +206,7 @@ const getResult: FlowDoProps["getResult"] = async () => {
   return {
     path,
     points,
+    maxPoints: path.filter((p) => p.node.type === "task" && p.try === 0).length,
   };
 };
 

@@ -37,6 +37,7 @@ export type FlowResultPathEntry = {
 
 export type FlowResult = {
   points: number;
+  maxPoints: number;
   path: FlowResultPathEntry[];
 };
 

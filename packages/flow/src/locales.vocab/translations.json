@@ -36,7 +36,7 @@
     "message": "Markdown"
   },
   "end-points": {
-    "message": "{points} {points, plural, =0 {Points} one {Point} other {Points}}"
+    "message": "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}"
   },
   "end-properties-invalid": {
     "message": "End Node Properties are invalid."

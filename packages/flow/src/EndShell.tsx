@@ -8,10 +8,16 @@ import { IEnd } from "./schemas";
 export type EndShellProps = {
   end: IEnd;
   points?: number;
+  maxPoints?: number;
   results?: FlowResultPathEntry[][];
 };
 
-export const EndShell = ({ points, results = [], end }: EndShellProps) => {
+export const EndShell = ({
+  points,
+  maxPoints,
+  results = [],
+  end,
+}: EndShellProps) => {
   const { t } = useTranslations(translations);
   return (
     <Shell>
@@ -19,9 +25,9 @@ export const EndShell = ({ points, results = [], end }: EndShellProps) => {
       <ShellContent>
         <Box padding="standard">
           <AutoGrid gap="standard">
-            {points !== undefined && (
+            {points !== undefined && maxPoints !== undefined && (
               <Text textAlign="center" textColor="primary.600" fontSize="large">
-                {t("end-points", { points })}
+                {t("end-points", { points, maxPoints })}
               </Text>
             )}
             <Markdown markdown={end.view.markdown} />

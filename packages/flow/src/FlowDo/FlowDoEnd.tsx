@@ -12,8 +12,10 @@ export const FlowDoEnd = ({
   const [result, setResult] = useState<{
     points: EndShellProps["points"];
     results: EndShellProps["results"];
+    maxPoints: EndShellProps["maxPoints"];
   }>({
     points: 0,
+    maxPoints: 0,
     results: [],
   });
 
@@ -24,6 +26,7 @@ export const FlowDoEnd = ({
 
         setResult({
           results,
+          maxPoints: r.maxPoints,
           points: r.points,
         });
       });
@@ -34,6 +37,7 @@ export const FlowDoEnd = ({
     <EndShell
       end={node.data}
       points={node.data.view.showPoints ? result.points : undefined}
+      maxPoints={node.data.view.showPoints ? result.maxPoints : undefined}
       results={node.data.view.listResults ? result.results : undefined}
     />
   );

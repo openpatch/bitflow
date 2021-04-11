@@ -11,6 +11,7 @@ import {
   GetResults,
   IFlowNode,
   next,
+  previous,
 } from "@bitflow/flow";
 import { ActivitySessionDB } from "@schemas/activitySession";
 import { ObjectId } from "bson";
@@ -205,17 +206,19 @@ export const makeGetPreviousNodeForSession = (
   }
 
   const currentPath = session.path[session.path.length - 1];
+
+  const previousNode = await previous({
+    currentId: currentPath.node.id,
+    edges: activity.flow.edges,
+    nodes: activity.flow.nodes,
+  });
   const previousPath = findLast(
     session.path,
-    (p) => p.node.id !== currentPath.node.id
+    (p) => p.node.id === previousNode?.id
   );
-  if (!previousPath) {
-    return null;
-  }
-  const previousNode =
-    activity.flow.nodes.find((n) => n.id === previousPath.node.id) || null;
 
   if (
+    previousPath &&
     previousNode !== null &&
     (previousNode.type === "start" ||
       previousNode.type === "task" ||
@@ -293,9 +296,15 @@ export const makeGetResultForSession = (
   sessionId: string
 ): FlowDoProps["getResult"] => async () => {
   const session = await findSessionById(db, sessionId);
+  const activity = await findActivityById(db, session.activityId);
+  const maxPoints =
+    activity?.flow.nodes.filter(
+      (n) => n.type === "task" && n.data.evaluation.mode !== "skip"
+    ).length || 0;
 
   const result: FlowResult = {
     path: session.path,
+    maxPoints,
     points: session.points,
   };
 

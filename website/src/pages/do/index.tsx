@@ -36,6 +36,7 @@ export default function Do({ flow, locale, startNode }: DoProps) {
   });
   const result = useRef<FlowResult>({
     path: [],
+    maxPoints: 0,
     points: 0,
   });
   const submissions = useRef<

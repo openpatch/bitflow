@@ -18,7 +18,7 @@ const translations = createTranslationFile<
     end: () => "End";
     "end-helper-text": () => "The last node in your flow";
     "end-markdown": () => "Markdown";
-    "end-points": (values: { points: number }) => string;
+    "end-points": (values: { points: number; maxPoints: number }) => string;
     "end-properties-invalid": () => "End Node Properties are invalid.";
     "end-show-points": () => "Show Points";
     "end-show-results": () => "Show Results";
@@ -102,7 +102,7 @@ const translations = createTranslationFile<
     "end-helper-text": "The last node in your flow",
     "end-markdown": "Markdown",
     "end-points":
-      "{points} {points, plural, =0 {Points} one {Point} other {Points}}",
+      "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}",
     "end-properties-invalid": "End Node Properties are invalid.",
     "end-show-points": "Show Points",
     "end-show-results": "Show Results",
@@ -189,7 +189,7 @@ const translations = createTranslationFile<
     "end-helper-text": "The last node in your flow",
     "end-markdown": "Markdown",
     "end-points":
-      "{points} {points, plural, =0 {Points} one {Point} other {Points}}",
+      "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}",
     "end-properties-invalid": "End Node Properties are invalid.",
     "end-show-points": "Show Points",
     "end-show-results": "Show Results",
