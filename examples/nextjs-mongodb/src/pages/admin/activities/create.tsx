@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { runAuth } from "@middlewares/auth";
 import {
   Box,
   ButtonPrimary,
@@ -13,7 +14,6 @@ import {
   PatternCenter,
 } from "@openpatch/patches";
 import { Activity, ActivitySchema } from "@schemas/activity";
-import { getAuth } from "@utils/auth";
 import { post } from "@utils/fetcher";
 import { FlowUploadField } from "components/FlowUploadField";
 import { useAuth } from "hooks/auth";
@@ -102,9 +102,9 @@ export default function Create() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const user = await getAuth(req);
-  if (!user) {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const user = await runAuth(req, res);
+  if (user === null) {
     return {
       redirect: {
         destination: "/admin/login",

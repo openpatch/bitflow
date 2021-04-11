@@ -1,4 +1,5 @@
 import { FlowTeaser } from "@bitflow/flow";
+import { runAuth } from "@middlewares/auth";
 import {
   AutoGrid,
   Box,
@@ -13,7 +14,6 @@ import {
   useConfirm,
 } from "@openpatch/patches";
 import { Activity } from "@schemas/activity";
-import { getAuth } from "@utils/auth";
 import { del } from "@utils/fetcher";
 import { useActivities } from "hooks/activity";
 import { GetServerSideProps } from "next";
@@ -86,9 +86,9 @@ export default function Admin() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const user = await getAuth(req);
-  if (!user) {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const user = await runAuth(req, res);
+  if (user === null) {
     return {
       redirect: {
         destination: "/admin/login",
