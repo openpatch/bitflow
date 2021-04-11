@@ -9,6 +9,7 @@ export const ActivitySessionSchema = z.object({
   startDate: z.date(),
   endDate: z.date().optional(),
   points: z.number(),
+  deviceId: z.string(),
   path: z.array(
     z.union([
       z.object({
@@ -43,6 +44,7 @@ export type ActivitySession = z.infer<typeof ActivitySessionSchema>;
 export const ActivitySessionDBSchema = ActivitySessionSchema.extend({
   _id: z.instanceof(ObjectId),
   activityId: z.instanceof(ObjectId),
+  deviceId: z.instanceof(ObjectId),
 });
 
 export type ActivitySessionDB = z.infer<typeof ActivitySessionDBSchema>;

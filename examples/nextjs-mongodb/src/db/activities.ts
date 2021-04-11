@@ -20,7 +20,7 @@ export const findActivityById = (
 export const updateActivity = (
   db: Db,
   id: ObjectId | string,
-  data: Partial<Omit<Activity, "_id">>
+  data: Partial<Omit<Activity, "_id" | "userId">>
 ) => {
   return db
     .collection<ActivityDB>(collection)
@@ -33,7 +33,7 @@ export const createActivity = async (
 ) => {
   return db
     .collection<Omit<ActivityDB, "_id">>(collection)
-    .insertOne(activity)
+    .insertOne({ ...activity, userId: new ObjectId(activity.userId) })
     .then((r) => r.ops[0]);
 };
 

@@ -35,7 +35,8 @@ export const findSessionById = async (db: Db, sessionId: string) => {
 
 export const startSession = async (
   db: Db,
-  activityId: ObjectId | string
+  activityId: ObjectId | string,
+  deviceId: ObjectId | string
 ): Promise<string> => {
   const activity = await findActivityById(db, new ObjectId(activityId));
 
@@ -56,6 +57,7 @@ export const startSession = async (
     .insertOne({
       _id: new ObjectId(),
       activityId: new ObjectId(activityId),
+      deviceId: new ObjectId(deviceId),
       path: [
         {
           status: "started",

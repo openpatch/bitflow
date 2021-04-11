@@ -23,6 +23,7 @@ export type Activity = z.infer<typeof ActivitySchema>;
 
 export const ActivityDBSchema = ActivitySchema.extend({
   _id: z.instanceof(ObjectId),
+  userId: z.instanceof(ObjectId),
 });
 
 export type ActivityDB = z.infer<typeof ActivityDBSchema>;
