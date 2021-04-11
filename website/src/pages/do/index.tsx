@@ -1,10 +1,11 @@
-import { TaskAnswer, TaskResult } from "@bitflow/base";
+import { findLast, TaskAnswer, TaskResult } from "@bitflow/base";
 import { taskBits } from "@bitflow/bits";
 import {
   FlowDo,
   FlowDoProps,
   FlowProgress,
   FlowResult,
+  FlowResultPathEntry,
   FlowSchema,
   GetAnswers,
   GetPoints,
@@ -36,7 +37,6 @@ export default function Do({ flow, locale, startNode }: DoProps) {
   const result = useRef<FlowResult>({
     path: [],
     points: 0,
-    submissions: {},
   });
   const submissions = useRef<
     Record<string, { answers: TaskAnswer[]; results: TaskResult[] }>
@@ -138,53 +138,53 @@ export default function Do({ flow, locale, startNode }: DoProps) {
 
   const onEnd: FlowDoProps["onEnd"] = () => {};
 
-  const onSkip: FlowDoProps["onSkip"] = () => {};
+  const onSkip: FlowDoProps["onSkip"] = async () => {
+    const currentPathEntry =
+      result.current.path[result.current.path.length - 1];
+    result.current.path[result.current.path.length - 1] = {
+      ...currentPathEntry,
+      status: "skipped",
+      endDate: new Date(),
+    };
+  };
 
   const evaluate: FlowDoProps["evaluate"] = async (answer) => {
     if (currentNode.current.type === "task") {
       const taskBit = taskBits[currentNode.current.data.subtype];
 
-      const taskResult: TaskResult = await taskBit.evaluate({
+      const taskResult = (await taskBit.evaluate({
         answer,
         task: currentNode.current.data,
-      });
+      })) as TaskResult;
 
-      const submission = {
+      const lastFinishedPathEntry = findLast<FlowResultPathEntry>(
+        result.current.path,
+        (e) => e.status === "finished" && e.node.id === currentNode.current.id
+      ) as FlowResultPathEntry & { status: "finished" };
+      const currentPathEntry =
+        result.current.path[result.current.path.length - 1];
+
+      result.current.path[result.current.path.length - 1] = {
+        ...currentPathEntry,
+        status: "finished",
+        endDate: new Date(),
         answer,
         result: taskResult,
       };
-      // submissions could be used to calculate the results for getResult
-      if (!result.current.submissions[currentNode.current.id]) {
-        result.current.submissions[currentNode.current.id] = [submission];
-      } else {
-        result.current.submissions[currentNode.current.id].push(submission);
-      }
-
-      if (!submissions.current[currentNode.current.id]) {
-        submissions.current[currentNode.current.id] = {
-          answers: [answer],
-          results: [taskResult],
-        };
-
-        if (taskResult.state === "correct") {
-          result.current.points += 1;
-        }
-      } else {
-        const lastResult =
-          submissions.current[currentNode.current.id].results[
-            submissions.current[currentNode.current.id].results.length - 1
-          ];
-        submissions.current[currentNode.current.id].answers.push(answer);
-        submissions.current[currentNode.current.id].results.push(taskResult);
-
-        if (lastResult.state === "correct" && taskResult.state !== "correct") {
-          result.current.points -= 1;
-        } else if (
-          lastResult.state !== "correct" &&
-          taskResult.state === "correct"
-        ) {
-          result.current.points += 1;
-        }
+      if (!lastFinishedPathEntry && taskResult.state === "correct") {
+        result.current.points += 1;
+      } else if (
+        lastFinishedPathEntry &&
+        lastFinishedPathEntry.result.state === "correct" &&
+        taskResult.state !== "correct"
+      ) {
+        result.current.points -= 1;
+      } else if (
+        lastFinishedPathEntry &&
+        lastFinishedPathEntry.result.state !== "correct" &&
+        taskResult.state === "correct"
+      ) {
+        result.current.points += 1;
       }
 
       return taskResult;
@@ -194,6 +194,17 @@ export default function Do({ flow, locale, startNode }: DoProps) {
       state: "unknown",
     };
   };
+  const onRetry: FlowDoProps["onRetry"] = async () => {
+    const lastPath = result.current.path[result.current.path.length - 1];
+    result.current.path.push({
+      status: "started",
+      try: lastPath.try + 1,
+      startDate: new Date(),
+      node: {
+        ...lastPath.node,
+      },
+    });
+  };
 
   return (
     <BitflowProvider config={{}} locale={locale}>
@@ -201,6 +212,7 @@ export default function Do({ flow, locale, startNode }: DoProps) {
         <Card>
           <Box position="relative" height="90vh" width="90vw">
             <FlowDo
+              onRetry={onRetry}
               evaluate={evaluate}
               getConfig={getConfig}
               getCurrent={getCurrent}
