@@ -7,20 +7,26 @@ import { NextApiResponse } from "next";
 
 export const setCookie = (
   res: NextApiResponse,
-  name: string,
-  value: unknown,
-  options: CookieSerializeOptions = {}
+  cookies: Array<{
+    name: string;
+    value: unknown;
+    options: CookieSerializeOptions;
+  }>
 ) => {
-  const stringValue =
-    typeof value === "object" ? "j:" + JSON.stringify(value) : String(value);
+  const header = cookies.map(({ name, value, options = {} }) => {
+    const stringValue =
+      typeof value === "object" ? "j:" + JSON.stringify(value) : String(value);
 
-  options.sameSite = "lax";
-  options.path = "/";
+    options.sameSite = "lax";
+    options.path = "/";
 
-  if (options?.maxAge) {
-    options.expires = new Date(Date.now() + options.maxAge);
-    options.maxAge /= 1000;
-  }
+    if (options?.maxAge) {
+      options.expires = new Date(Date.now() + options.maxAge);
+      options.maxAge /= 1000;
+    }
 
-  res.setHeader("Set-Cookie", serialize(name, String(stringValue), options));
+    return serialize(name, String(stringValue), options);
+  });
+
+  res.setHeader("Set-Cookie", header);
 };

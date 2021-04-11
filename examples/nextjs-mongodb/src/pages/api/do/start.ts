@@ -18,12 +18,30 @@ nc.post(async (req, res) => {
   let deviceId = req.cookies.deviceId;
   if (!deviceId) {
     deviceId = new ObjectId().toHexString();
-    setCookie(res, "deviceId", deviceId);
   }
 
   const sessionId = await startSession(db, body.activityId, deviceId);
 
-  setCookie(res, "activitySession", sessionId);
+  setCookie(res, [
+    {
+      name: "activitySession",
+      value: sessionId,
+      options: {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7, // one week
+      },
+    },
+    {
+      name: "deviceId",
+      value: deviceId,
+      options: {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 30 * 3 * 1000, // three month
+      },
+    },
+  ]);
+
+  console.log(res.getHeaders());
 
   return res.json({
     session: sessionId,
