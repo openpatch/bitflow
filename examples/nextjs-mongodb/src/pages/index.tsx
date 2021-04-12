@@ -71,6 +71,7 @@ export default function Home({
                     fullWidth
                     onClick={handleStart}
                     disabled={!activityId || state === "starting"}
+                    loading={state === "starting"}
                   >
                     Start
                   </ButtonPrimary>
