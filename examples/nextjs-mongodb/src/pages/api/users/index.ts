@@ -21,7 +21,9 @@ handler
       return null;
     }
     const { db } = await connectToDatabase();
-    const users = await findUsers(db);
+    const cursor = findUsers(db);
+    const users = await cursor.toArray();
+    await cursor.close();
     return res.json({
       users: users.map(extractPublicUser),
     });

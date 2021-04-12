@@ -16,7 +16,9 @@ handler
       return null;
     }
     const { db } = await connectToDatabase();
-    const activities = await findActivities(db);
+    const cursor = findActivities(db);
+    const activities = await cursor.toArray();
+    await cursor.close();
     return res.json({
       activities,
     });

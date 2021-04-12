@@ -1,7 +1,7 @@
 import { User, UserDB } from "@schemas/user";
 import bcrypt from "bcryptjs";
 import { ObjectId } from "bson";
-import { Db } from "mongodb";
+import { Cursor, Db } from "mongodb";
 
 const collection = "users";
 
@@ -9,8 +9,8 @@ export const countUsers = (db: Db): Promise<number> => {
   return db.collection<User>(collection).count();
 };
 
-export const findUsers = (db: Db): Promise<User[]> => {
-  return db.collection<User>(collection).find().toArray();
+export const findUsers = (db: Db): Cursor<User> => {
+  return db.collection<User>(collection).find();
 };
 
 export const findUserById = (

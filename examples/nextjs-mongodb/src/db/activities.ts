@@ -1,11 +1,11 @@
 import { Activity, ActivityDB } from "@schemas/activity";
 import { ObjectId } from "bson";
-import { Db } from "mongodb";
+import { Cursor, Db } from "mongodb";
 
 const collection = "activities";
 
-export const findActivities = (db: Db): Promise<Activity[]> => {
-  return db.collection<Activity>(collection).find().toArray();
+export const findActivities = (db: Db): Cursor<Activity> => {
+  return db.collection<Activity>(collection).find();
 };
 
 export const findActivityById = (
