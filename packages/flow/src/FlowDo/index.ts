@@ -17,7 +17,7 @@ export type FlowProgress = {
 export type FlowResultPathEntry = {
   status: string;
   node: IFlowNodePublic;
-  startDate: Date;
+  startDate: Date | string;
   try: number;
 } & (
   | {
@@ -25,13 +25,13 @@ export type FlowResultPathEntry = {
     }
   | {
       status: "finished";
-      endDate: Date;
+      endDate: Date | string;
       answer: TaskAnswer;
-      result: TaskResult;
+      result: TaskResult & Record<string, any>;
     }
   | {
       status: "skipped";
-      endDate: Date;
+      endDate: Date | string;
     }
 );
 

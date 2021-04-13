@@ -25,7 +25,7 @@ export const proceduralC = FlowSchema.parse({
           markdown:
             "# Thanks for your participation!\n\nI hope you got something out of the assessment.\n\nIf you are interested in doing more assessments like this or if you want to know more about the project you can write me an e-mail: [mike.barkmin@uni-due.de](mailto:mike.barkmin@uni-due.de)",
           showPoints: true,
-          listResults: false,
+          listResults: true,
         },
       },
     },

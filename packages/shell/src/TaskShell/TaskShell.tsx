@@ -71,7 +71,7 @@ export type TaskShellProps<
   A extends TaskAnswer,
   Act extends Action
 > = {
-  mode: "default" | "recording";
+  mode: "default" | "recording" | "result";
   task: Pick<T, "view" | "subtype">;
   TaskComponent: ForwardRefExoticComponent<
     TaskProps<T, R, A, Act> & RefAttributes<TaskRef<Act>>
@@ -87,6 +87,8 @@ export type TaskShellProps<
   onAction?: (action: IShellAction<A, R> | ITaskAction<Act>) => void;
   enableReasoning?: boolean;
   enableConfidence?: boolean;
+  result?: R;
+  answer?: A;
   soundUrls?: {
     correct: string;
     wrong: string;
@@ -118,6 +120,8 @@ export const TaskShell = <
   header,
   enableConfidence,
   enableReasoning,
+  answer: initialAnswer,
+  result: initialResult,
   onSkip,
   onClose,
   onNext,
@@ -148,7 +152,7 @@ export const TaskShell = <
   const result = reducerState.result as R;
 
   const customDispatch = (action: IShellAction<A, R>) => {
-    if (mode === "recording") return;
+    if (mode === "recording" || mode === "result") return;
     // we do not need answer change, because we are submitting all individual
     // actions. We could submit snapshots after some time or after a few
     // actions.
@@ -163,6 +167,18 @@ export const TaskShell = <
       onAction({ ...action, scope: "task" });
     }
   }
+
+  useEffect(() => {
+    if (initialAnswer) {
+      dispatch(answerChangeAction({ answer: initialAnswer }));
+    }
+  }, [initialAnswer]);
+
+  useEffect(() => {
+    if (initialResult) {
+      dispatch(resultReceiveAction({ result: initialResult }));
+    }
+  }, [initialResult]);
 
   useEffect(() => {
     const mouseDown = (e: MouseEvent) => {
