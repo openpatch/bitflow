@@ -59,7 +59,6 @@ type ResultCardProps = {
 };
 
 const ResultCard = ({ result, onClick }: ResultCardProps) => {
-  console.log(result);
   if (!result?.[0].node) {
     return null;
   }
