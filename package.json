@@ -65,7 +65,7 @@
     "@types/jest": "26.0.23",
     "@types/lodash.get": "4.4.6",
     "@types/react": "17.0.9",
-    "@types/react-dom": "17.0.3",
+    "@types/react-dom": "17.0.6",
     "@vocab/cli": "1.0.0",
     "@vocab/react": "1.0.1",
     "auto": "10.24.3",
