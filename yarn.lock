@@ -3257,6 +3257,22 @@
     remark-gfm "^1.0.0"
     styled-system "^5.1.5"
 
+"@openpatch/patches@1.8.4":
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-1.8.4.tgz#f18edea3181de3918b7f877e0a1e27ce04fa7858"
+  integrity sha512-GlDUz3owFnQSj7vUDW7XJzL+be6LpNBFfEv4iXfWcRE8OqKahn3ZapqVc1oooXw3+VBovOPrLhLzl6pVMliz3g==
+  dependencies:
+    codemirror "^5.60.0"
+    lodash "^4.17.21"
+    polished "^4.1.1"
+    react-codemirror2 "^7.2.1"
+    react-markdown "^5.0.3"
+    react-modal "^3.12.1"
+    react-syntax-highlighter "^15.4.3"
+    react-tabs "^3.2.1"
+    remark-gfm "^1.0.0"
+    styled-system "^5.1.5"
+
 "@opentelemetry/api@0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-0.14.0.tgz#4e17d8d2f1da72b19374efa7b6526aa001267cae"
