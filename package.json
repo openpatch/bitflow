@@ -59,7 +59,7 @@
     "@storybook/addon-viewport": "6.2.9",
     "@storybook/cli": "6.2.9",
     "@storybook/react": "6.2.9",
-    "@testing-library/dom": "7.30.3",
+    "@testing-library/dom": "7.31.2",
     "@testing-library/jest-dom": "5.13.0",
     "@testing-library/react": "11.2.7",
     "@types/jest": "26.0.23",
