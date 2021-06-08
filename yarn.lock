@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"@auto-it/all-contributors@10.29.2":
-  version "10.29.2"
-  resolved "https://registry.yarnpkg.com/@auto-it/all-contributors/-/all-contributors-10.29.2.tgz#ae3adab190e0e56942df1d0ba6688d597337240c"
-  integrity sha512-8uX4k18OFI7dbO1N8MqNgBc15taskheJY5z0/aJkk0C7qMAjvIXkKs10Zyzpy7cwgCzc/TWZT9I7E9s+jS917Q==
+"@auto-it/all-contributors@10.29.3":
+  version "10.29.3"
+  resolved "https://registry.yarnpkg.com/@auto-it/all-contributors/-/all-contributors-10.29.3.tgz#9a1266f25c59761ad1a9196bcab27c951883cef7"
+  integrity sha512-ikxkitn7ExayiPf42zZZQqSYRwtlvN0liQSqksBv1Boh0bYokRyltJPEfSelcvjN2JAHAG4BR4TaevYwMRLb/w==
   dependencies:
-    "@auto-it/bot-list" "10.29.2"
-    "@auto-it/core" "10.29.2"
+    "@auto-it/bot-list" "10.29.3"
+    "@auto-it/core" "10.29.3"
     "@octokit/rest" "^18.0.0"
     all-contributors-cli "6.19.0"
     anymatch "^3.1.1"
@@ -29,6 +29,11 @@
   version "10.29.2"
   resolved "https://registry.yarnpkg.com/@auto-it/bot-list/-/bot-list-10.29.2.tgz#a47c5ce59c2eff8edc3ce05859a400aee11d0694"
   integrity sha512-dkrzfeIxN1QBXHmV93DfMEMu2dXG9Op0fjUqKKWSgDp7JYCRHvC6Qp0GpDf5OQfS6JC50ClLq7+1feYlzVtbqg==
+
+"@auto-it/bot-list@10.29.3":
+  version "10.29.3"
+  resolved "https://registry.yarnpkg.com/@auto-it/bot-list/-/bot-list-10.29.3.tgz#cd4e1fa003a0f07496ea0b944d6b0ade75248e1b"
+  integrity sha512-A0sFwq0teyW+mkYiu8RQLR1DMiTdDsj9+Q8jQsKa+IiWjgOKcr/A1Qqwce6p60u1zGG/JGrlCHpqxu52U7cgMw==
 
 "@auto-it/conventional-commits@10.29.2":
   version "10.29.2"
@@ -96,6 +101,51 @@
   integrity sha512-yVgG14CkDnKtNTa4/TK8wT/PORls12e/75ckZ8QIWhcC9+GAshSRusYcBuKbpxcwJ7lumgpPahRisUlhh+asDg==
   dependencies:
     "@auto-it/bot-list" "10.29.2"
+    "@endemolshinegroup/cosmiconfig-typescript-loader" "^3.0.2"
+    "@octokit/plugin-enterprise-compatibility" "^1.2.2"
+    "@octokit/plugin-retry" "^3.0.1"
+    "@octokit/plugin-throttling" "^3.2.0"
+    "@octokit/rest" "^18.0.0"
+    await-to-js "^3.0.0"
+    chalk "^4.0.0"
+    cosmiconfig "7.0.0"
+    deepmerge "^4.0.0"
+    dotenv "^8.0.0"
+    endent "^2.0.1"
+    enquirer "^2.3.4"
+    env-ci "^5.0.1"
+    fast-glob "^3.1.1"
+    fp-ts "^2.5.3"
+    fromentries "^1.2.0"
+    gitlog "^4.0.3"
+    https-proxy-agent "^5.0.0"
+    import-cwd "^3.0.0"
+    import-from "^3.0.0"
+    io-ts "^2.1.2"
+    lodash.chunk "^4.2.0"
+    log-symbols "^4.0.0"
+    node-fetch "2.6.1"
+    parse-author "^2.0.0"
+    parse-github-url "1.0.2"
+    pretty-ms "^7.0.0"
+    requireg "^0.2.2"
+    semver "^7.0.0"
+    signale "^1.4.0"
+    tapable "^2.2.0"
+    terminal-link "^2.1.1"
+    tinycolor2 "^1.4.1"
+    ts-node "^9.1.1"
+    tslib "2.1.0"
+    type-fest "^0.21.1"
+    typescript-memoize "^1.0.0-alpha.3"
+    url-join "^4.0.0"
+
+"@auto-it/core@10.29.3":
+  version "10.29.3"
+  resolved "https://registry.yarnpkg.com/@auto-it/core/-/core-10.29.3.tgz#4ebe8f650a38e6a480a7856275e30a2b50b96dd7"
+  integrity sha512-4sl0nKJrc2j0wT/9sWVWCHXm8wmxde777ankESsI2TC08eNqwad/wcDXQPE6LGs4E6V0m7V51xfhU40qZHU3Rw==
+  dependencies:
+    "@auto-it/bot-list" "10.29.3"
     "@endemolshinegroup/cosmiconfig-typescript-loader" "^3.0.2"
     "@octokit/plugin-enterprise-compatibility" "^1.2.2"
     "@octokit/plugin-retry" "^3.0.1"
@@ -4542,17 +4592,17 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@testing-library/dom@7.30.3":
-  version "7.30.3"
-  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.30.3.tgz#779ea9bbb92d63302461800a388a5a890ac22519"
-  integrity sha512-7JhIg2MW6WPwyikH2iL3o7z+FTVgSOd2jqCwTAHqK7Qal2gRRYiUQyURAxtbK9VXm/UTyG9bRihv8C5Tznr2zw==
+"@testing-library/dom@7.31.2":
+  version "7.31.2"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.31.2.tgz#df361db38f5212b88555068ab8119f5d841a8c4a"
+  integrity sha512-3UqjCpey6HiTZT92vODYLPxTBWlM8ZOOjr3LX5F37/VRipW2M1kX6I/Cm4VXzteZqfGfagg8yXywpcOgQBlNsQ==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/runtime" "^7.12.5"
     "@types/aria-query" "^4.2.0"
     aria-query "^4.2.2"
     chalk "^4.1.0"
-    dom-accessibility-api "^0.5.4"
+    dom-accessibility-api "^0.5.6"
     lz-string "^1.4.4"
     pretty-format "^26.6.2"
 
@@ -8580,6 +8630,11 @@ dom-accessibility-api@^0.5.4:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/dom-accessibility-api/-/dom-accessibility-api-0.5.4.tgz#b06d059cdd4a4ad9a79275f9d414a5c126241166"
   integrity sha512-TvrjBckDy2c6v6RLxPv5QXOnU+SmF9nBII5621Ve5fu6Z/BDrENurBEvlC1f44lKEUVqOpK4w9E5Idc5/EgkLQ==
+
+dom-accessibility-api@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/dom-accessibility-api/-/dom-accessibility-api-0.5.6.tgz#3f5d43b52c7a3bd68b5fb63fa47b4e4c1fdf65a9"
+  integrity sha512-DplGLZd8L1lN64jlT27N9TVSESFR5STaEJvX+thCby7fuCHonfPpAlodYc3vuUYbDuDec5w8AMP7oCM5TWFsqw==
 
 dom-converter@^0.2:
   version "0.2.0"
