@@ -31,7 +31,7 @@
     "storybook:build:docs": "build-storybook -s .storybook/public --docs"
   },
   "dependencies": {
-    "@auto-it/all-contributors": "10.29.2",
+    "@auto-it/all-contributors": "10.29.3",
     "@auto-it/conventional-commits": "10.29.2",
     "@auto-it/first-time-contributor": "10.29.2",
     "@auto-it/magic-zero": "10.29.2",
