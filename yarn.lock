@@ -147,12 +147,12 @@
     tslib "2.1.0"
     url-join "^4.0.0"
 
-"@auto-it/magic-zero@10.24.3":
-  version "10.24.3"
-  resolved "https://registry.yarnpkg.com/@auto-it/magic-zero/-/magic-zero-10.24.3.tgz#6e91626cdf9138c78d46eda1d7c46010bacd016b"
-  integrity sha512-uuQqj/r+NmeRYal3SRxw1SWRjljBs96E5NCpIezzAgyvRpHLWWL/Stf/vbNROEdfnfil9RXy81GuEv+FN3WmdQ==
+"@auto-it/magic-zero@10.29.2":
+  version "10.29.2"
+  resolved "https://registry.yarnpkg.com/@auto-it/magic-zero/-/magic-zero-10.29.2.tgz#e5b650aa4de91feec9a479bc1ed1eab6b1e4ccf9"
+  integrity sha512-l7kTy0Qy0YPJFs5lLKTSRBnv1srOVvFqY2Ch75hc0SJ+/ADxINZgnvBIvuyDWiKfjJVxeh2qtj/65qD3AKR3uw==
   dependencies:
-    "@auto-it/core" "10.24.3"
+    "@auto-it/core" "10.29.2"
     fp-ts "^2.5.3"
     io-ts "^2.1.2"
     semver "^7.0.0"
