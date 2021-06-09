@@ -1237,6 +1237,7 @@ export default {
 
 const getResult = async () => {
   return {
+    startDate: new Date(),
     points: 4,
     maxPoints: 8,
     path,

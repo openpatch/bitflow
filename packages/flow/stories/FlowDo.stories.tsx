@@ -204,6 +204,7 @@ const getNext: FlowDoProps["getNext"] = async () => {
 
 const getResult: FlowDoProps["getResult"] = async () => {
   return {
+    startDate: new Date(),
     path,
     points,
     maxPoints: path.filter((p) => p.node.type === "task" && p.try === 0).length,
