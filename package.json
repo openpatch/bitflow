@@ -34,7 +34,7 @@
     "@auto-it/all-contributors": "10.29.3",
     "@auto-it/conventional-commits": "10.29.3",
     "@auto-it/first-time-contributor": "10.29.3",
-    "@auto-it/magic-zero": "10.29.2",
+    "@auto-it/magic-zero": "10.29.3",
     "@babel/core": "7.14.3",
     "@babel/plugin-transform-runtime": "7.14.3",
     "@babel/preset-env": "7.14.4",
