@@ -1,9 +1,9 @@
 import { Box } from "@openpatch/patches";
 import { Meta } from "@storybook/react/types-6-0";
-import { FlowResult } from "../src/FlowDo";
+import { FlowDoResult } from "../src/FlowDo";
 import { FlowDoEnd } from "../src/FlowDo/FlowDoEnd";
 
-const path: FlowResult["path"] = [
+const path: FlowDoResult["path"] = [
   {
     status: "finished",
     try: 0,

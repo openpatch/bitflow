@@ -11,12 +11,12 @@ import {
   previous,
 } from "../src/engine";
 import {
-  FlowConfig,
   FlowDo,
+  FlowDoConfig,
+  FlowDoProgress,
   FlowDoProps,
-  FlowProgress,
-  FlowResult,
-  FlowResultPathEntry,
+  FlowDoResult,
+  FlowDoResultPathEntry,
 } from "../src/FlowDo";
 import { extractPublicNode, IFlowNode } from "../src/schemas";
 
@@ -25,7 +25,7 @@ export default {
   component: FlowDo,
 } as Meta;
 
-const config: FlowConfig = {
+const config: FlowDoConfig = {
   soundUrls: {
     correct: "/correct.mp3",
     wrong: "/wrong.mp3",
@@ -34,7 +34,7 @@ const config: FlowConfig = {
   },
 };
 
-const progress: FlowProgress = {
+const progress: FlowDoProgress = {
   currentNodeIndex: 0,
   nextNodeState: "unlocked",
   estimatedNodes: flow.nodes.length - 1,
@@ -42,7 +42,7 @@ const progress: FlowProgress = {
 
 let points = 0;
 
-const path: FlowResult["path"] = [];
+const path: FlowDoResult["path"] = [];
 
 function findLast<T>(
   array: Array<T>,
@@ -81,10 +81,10 @@ const evaluate: FlowDoProps["evaluate"] = async (answer) => {
       task: currentNode.data,
     })) as TaskResult;
 
-    const lastFinishedPathEntry = findLast<FlowResultPathEntry>(
+    const lastFinishedPathEntry = findLast<FlowDoResultPathEntry>(
       path,
       (e) => e.status === "finished" && e.node.id === currentNode.id
-    ) as FlowResultPathEntry & { status: "finished" };
+    ) as FlowDoResultPathEntry & { status: "finished" };
     const currentPathEntry = path[path.length - 1];
 
     path[path.length - 1] = {

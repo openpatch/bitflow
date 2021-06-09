@@ -38,7 +38,6 @@ export default function Setup() {
         }
       )
         .then(async (res) => {
-          console.log(res);
           if (res.status === 201) {
             router.push("/admin");
           } else {

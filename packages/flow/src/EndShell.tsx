@@ -11,7 +11,7 @@ import {
 } from "@openpatch/patches/dist/cjs/icons/shade";
 import { useTranslations } from "@vocab/react";
 import { useState } from "react";
-import { FlowResultPathEntry } from "./FlowDo";
+import { FlowDoResultPathEntry } from "./FlowDo";
 import translations from "./locales.vocab";
 import { IEnd, IFlowNodePublic } from "./schemas";
 
@@ -46,7 +46,7 @@ const UnknownIcon = () => (
 );
 
 type ResultCardProps = {
-  result: FlowResultPathEntry[];
+  result: FlowDoResultPathEntry[];
   onClick: ({
     node,
     result,
@@ -131,7 +131,7 @@ export type EndShellProps = {
   end: IEnd;
   points?: number;
   maxPoints?: number;
-  results?: FlowResultPathEntry[][];
+  results?: FlowDoResultPathEntry[][];
 };
 
 export const EndShell = ({
@@ -141,11 +141,12 @@ export const EndShell = ({
   end,
 }: EndShellProps) => {
   const { t } = useTranslations(translations);
-  const [selectedResult, setSelectedResult] = useState<{
-    node: IFlowNodePublic;
-    result?: TaskResult;
-    answer?: TaskAnswer;
-  }>();
+  const [selectedResult, setSelectedResult] =
+    useState<{
+      node: IFlowNodePublic;
+      result?: TaskResult;
+      answer?: TaskAnswer;
+    }>();
 
   if (selectedResult && selectedResult.node.type === "task") {
     const TaskComponent = taskBits[selectedResult.node.data.subtype].Task;

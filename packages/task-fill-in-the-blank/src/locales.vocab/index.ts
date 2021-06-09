@@ -4,7 +4,7 @@
 import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
-  "en" | "de",
+  "en-GB" | "en" | "en-US" | "de",
   {
     "add-pattern": () => "Add Pattern";
     answers: () => "Answers";
@@ -30,7 +30,57 @@ const translations = createTranslationFile<
     warning: () => "Warning";
   }
 >({
+  "en-GB": createLanguage({
+    "add-pattern": "Add Pattern",
+    answers: "Answers",
+    "delete-pattern": "Delete",
+    error: "Error",
+    "feedback-for-blank": "Feedback for {blank}",
+    info: "Info",
+    instruction: "Instruction",
+    message: "Message",
+    pattern: "Pattern {pattern}",
+    "pattern-error-duplicate": "A pattern can not contain duplicates",
+    "pattern-error-exists": "This pattern already exists",
+    "pattern-error-invalid": "Not a valid pattern",
+    "pattern-for-blank": "Pattern for {blank}",
+    "pattern-regex": "Pattern",
+    "pattern-regex-helper-text": "You can use a regular expression",
+    patterns: "Patterns",
+    severity: "Severity",
+    success: "Success",
+    "text-with-blanks": "Text with blanks",
+    "text-with-blanks-helper-text":
+      "A blank can be defined like so: ~~ID~~. Markdown is supported, but blanks do not work in advanced sections like code blocks.",
+    up: "Up",
+    warning: "Warning",
+  }),
   en: createLanguage({
+    "add-pattern": "Add Pattern",
+    answers: "Answers",
+    "delete-pattern": "Delete",
+    error: "Error",
+    "feedback-for-blank": "Feedback for {blank}",
+    info: "Info",
+    instruction: "Instruction",
+    message: "Message",
+    pattern: "Pattern {pattern}",
+    "pattern-error-duplicate": "A pattern can not contain duplicates",
+    "pattern-error-exists": "This pattern already exists",
+    "pattern-error-invalid": "Not a valid pattern",
+    "pattern-for-blank": "Pattern for {blank}",
+    "pattern-regex": "Pattern",
+    "pattern-regex-helper-text": "You can use a regular expression",
+    patterns: "Patterns",
+    severity: "Severity",
+    success: "Success",
+    "text-with-blanks": "Text with blanks",
+    "text-with-blanks-helper-text":
+      "A blank can be defined like so: ~~ID~~. Markdown is supported, but blanks do not work in advanced sections like code blocks.",
+    up: "Up",
+    warning: "Warning",
+  }),
+  "en-US": createLanguage({
     "add-pattern": "Add Pattern",
     answers: "Answers",
     "delete-pattern": "Delete",

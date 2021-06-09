@@ -5,4 +5,5 @@ export * from "./schemas";
 export * from "./Statistic";
 export * from "./Task";
 export * from "./types";
+export * from "./updateStatistic";
 export * from "./ViewForm";

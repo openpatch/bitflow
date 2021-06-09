@@ -7,6 +7,36 @@ export const ActivitySchema = z.object({
   name: z.string(),
   description: z.string().optional(),
   userId: z.string(),
+  model: z.object({
+    latentVariables: z.array(
+      z.object({
+        id: z.string(),
+        data: z.object({
+          title: z.string(),
+        }),
+        position: z.object({
+          x: z.number(),
+          y: z.number(),
+        }),
+        type: z.literal("latent-variable"),
+      })
+    ),
+    nodes: z.record(
+      z.object({
+        position: z.object({
+          x: z.number(),
+          y: z.number(),
+        }),
+      })
+    ),
+    edges: z.array(
+      z.object({
+        id: z.string(),
+        source: z.string(),
+        target: z.string(),
+      })
+    ),
+  }),
   flow: FlowSchema,
   flowState: z.object({
     nodes: z.record(

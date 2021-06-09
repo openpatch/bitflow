@@ -12,14 +12,19 @@ export const BitflowProvider: FC<BitflowProviderProps> = ({
   config = {},
 }) => {
   const [currentLocale, setCurrentLocale] = useState<ContextProps["locale"]>(
-    "en"
+    "en-GB"
   );
+
+  const handleSetCurrentLocale = (locale: Locale) => {
+    (window as any).__localeId__ = locale;
+    setCurrentLocale(locale);
+  };
 
   useEffect(() => {
     if (locales.includes(locale as any)) {
       setCurrentLocale(locale as Locale);
     } else {
-      setCurrentLocale("en");
+      setCurrentLocale("en-GB");
     }
   }, [locale]);
 
@@ -27,7 +32,7 @@ export const BitflowProvider: FC<BitflowProviderProps> = ({
     <context.Provider
       value={{
         locale: currentLocale,
-        setLocale: setCurrentLocale,
+        setLocale: handleSetCurrentLocale,
         config,
       }}
     >

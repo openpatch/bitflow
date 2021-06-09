@@ -1,5 +1,10 @@
 module.exports = {
-  devLanguage: "en",
+  devLanguage: "en-GB",
   projectRoot: "./src",
-  languages: [{ name: "en" }, { name: "de" }],
+  languages: [
+    { name: "en" },
+    { name: "en-US", extends: "en" },
+    { name: "en-GB", extends: "en" },
+    { name: "de" },
+  ],
 };

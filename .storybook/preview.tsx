@@ -67,8 +67,12 @@ export const globalTypes = {
       icon: "globe",
       items: [
         {
-          value: "en",
-          title: "english",
+          value: "en-GB",
+          title: "english (GB)",
+        },
+        {
+          value: "en-US",
+          title: "english (US)",
         },
         {
           value: "de",

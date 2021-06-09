@@ -41,8 +41,6 @@ nc.post(async (req, res) => {
     },
   ]);
 
-  console.log(res.getHeaders());
-
   return res.json({
     session: sessionId,
   });

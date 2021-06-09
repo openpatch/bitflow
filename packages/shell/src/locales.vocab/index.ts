@@ -4,7 +4,7 @@
 import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
-  "en" | "de",
+  "en-GB" | "en" | "en-US" | "de",
   {
     accept: () => "Accept" | "Akzeptieren";
     answer: () => "Answer" | "Antworten";
@@ -21,7 +21,45 @@ const translations = createTranslationFile<
     wrongNudges: (values: { index: number }) => string;
   }
 >({
+  "en-GB": createLanguage({
+    accept: "Accept",
+    answer: "Answer",
+    close: "Close",
+    confidence: "Confidence",
+    correctNudges:
+      "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}",
+    manualNudges:
+      "{index, plural, other {Your answer will be check manually!}}",
+    next: "Next",
+    previous: "Previous",
+    reasoning: "Reasoning",
+    retry: "Retry",
+    skip: "Skip",
+    unknownNudges:
+      "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}",
+    wrongNudges:
+      "{index, plural, =0 {Maybe next time} =1 {No worries!} other {Every wrong answer is a learning opportunity!}}",
+  }),
   en: createLanguage({
+    accept: "Accept",
+    answer: "Answer",
+    close: "Close",
+    confidence: "Confidence",
+    correctNudges:
+      "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}",
+    manualNudges:
+      "{index, plural, other {Your answer will be check manually!}}",
+    next: "Next",
+    previous: "Previous",
+    reasoning: "Reasoning",
+    retry: "Retry",
+    skip: "Skip",
+    unknownNudges:
+      "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}",
+    wrongNudges:
+      "{index, plural, =0 {Maybe next time} =1 {No worries!} other {Every wrong answer is a learning opportunity!}}",
+  }),
+  "en-US": createLanguage({
     accept: "Accept",
     answer: "Answer",
     close: "Close",

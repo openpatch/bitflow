@@ -2,7 +2,7 @@ import { TaskAnswer, TaskResult } from "@bitflow/base";
 import { IShellAction, ITaskAction, Shell, ShellContent } from "@bitflow/shell";
 import { Box, LoadingDots } from "@openpatch/patches";
 import { FC, useEffect, useState } from "react";
-import { FlowDoX, FlowProgress } from ".";
+import { FlowDoProgress, FlowDoX } from ".";
 import { IFlowNode } from "../schemas";
 import { FlowDoCheckpoint } from "./FlowDoCheckpoint";
 import { FlowDoEnd } from "./FlowDoEnd";
@@ -18,7 +18,7 @@ export type FlowDoProps = {
   getPrevious?: () => Promise<IFlowNode | null>;
   onRetry: FlowDoX["onRetry"];
   getConfig: FlowDoX["getConfig"];
-  getProgress: () => Promise<FlowProgress>;
+  getProgress: () => Promise<FlowDoProgress>;
   getResult: FlowDoX["getResult"];
   onEnd: () => void;
   onClose?: () => Promise<void>;
@@ -42,7 +42,7 @@ export const FlowDo: FC<FlowDoProps> = ({
   getResult,
 }) => {
   const [currentNode, setCurrentNode] = useState<IFlowNode>();
-  const [progress, setProgress] = useState<FlowProgress>({
+  const [progress, setProgress] = useState<FlowDoProgress>({
     currentNodeIndex: 0,
     estimatedNodes: 1,
     nextNodeState: "unlocked",

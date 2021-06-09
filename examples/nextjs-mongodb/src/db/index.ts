@@ -38,10 +38,12 @@ export async function connectToDatabase() {
     };
 
     cached.promise = MongoClient.connect(MONGODB_URI as string, opts).then(
-      (client) => ({
-        client,
-        db: client.db(MONGODB_DB as string),
-      })
+      async (client) => {
+        return {
+          client,
+          db: client.db(MONGODB_DB as string),
+        };
+      }
     );
   }
   cached.conn = await cached.promise;

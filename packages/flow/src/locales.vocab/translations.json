@@ -107,8 +107,17 @@
   "new-node-title": {
     "message": "New {type}"
   },
+  "node-finished": {
+    "message": "Finished"
+  },
   "node-no-properties": {
     "message": "Nothing to configure for this node"
+  },
+  "node-skipped": {
+    "message": "Skipped"
+  },
+  "node-started": {
+    "message": "Started"
   },
   "nodes": {
     "message": "Nodes"

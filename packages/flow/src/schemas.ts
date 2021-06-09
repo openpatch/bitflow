@@ -9,6 +9,15 @@ import {
 } from "@bitflow/bits";
 import * as z from "zod";
 
+export type InteractiveFlowNodeType =
+  | "task"
+  | "title"
+  | "start"
+  | "end"
+  | "input"
+  | "checkpoint"
+  | "synchronize";
+
 const EqualSchema = z.object({
   type: z.literal("equal"),
   not: z.boolean().default(false),
@@ -259,14 +268,7 @@ export const FlowNodePublicSchema = z.union([
 
 export const extractPublicNode = (
   node: IFlowNode & {
-    type:
-      | "start"
-      | "end"
-      | "task"
-      | "input"
-      | "title"
-      | "checkpoint"
-      | "synchronize";
+    type: InteractiveFlowNodeType;
   }
 ): IFlowNodePublic => {
   if (node.type === "task" || node.type === "input" || node.type === "title") {

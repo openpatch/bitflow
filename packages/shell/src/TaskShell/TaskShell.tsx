@@ -133,7 +133,7 @@ export const TaskShell = <
 }: TaskShellProps<T, R, A, Act>) => {
   const { t } = useTranslations(translations);
   const [reducerState, dispatch] = useReducer(
-    (createReducer<A, R>() as any) as (
+    createReducer<A, R>() as any as (
       state: IState<A, R>,
       action: IShellAction<A, R>
     ) => IState<A, R>,
@@ -235,9 +235,7 @@ export const TaskShell = <
   }
 
   async function handleSubmit() {
-    customDispatch(
-      evaluateAction<A>({ answer })
-    );
+    customDispatch(evaluateAction<A>({ answer }));
     let result: R | null = null;
     if (evaluate) {
       result = await evaluate(answer);

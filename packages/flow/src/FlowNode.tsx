@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { Box, Text } from "@openpatch/patches";
-import { CSSProperties, FC, ReactElement } from "react";
+import { CSSProperties, FC, Fragment, ReactElement, ReactNode } from "react";
 import { Handle, Position } from "react-flow-renderer";
 
 const handleIds = ["a", "b", "c", "d"];
@@ -22,13 +22,17 @@ export type FlowNodeProps = {
     | "teal"
     | "blue"
     | "grey"
+    | "green"
     | "portalOrange"
+    | "amber"
     | "portalBlue";
   title: string;
-  description?: string;
-  footerRight?: string;
-  footerLeft?: string;
+  description?: string | ReactNode;
+  footerRight?: string | ReactNode;
+  footerLeft?: string | ReactNode;
+  footerCenter?: string | ReactNode;
   targetHandles?: number;
+  disabled?: boolean;
   maxWidth?: CSSProperties["maxWidth"];
   sourceHandles?: number;
   hideHandles?: boolean;
@@ -40,6 +44,8 @@ export const FlowNode: FC<FlowNodeProps> = ({
   description,
   footerLeft,
   footerRight,
+  disabled,
+  footerCenter,
   targetHandles = 0,
   sourceHandles = 0,
   maxWidth,
@@ -72,6 +78,13 @@ export const FlowNode: FC<FlowNodeProps> = ({
       secondaryBackgroundColor = "#c6f7e2";
       break;
     }
+    case "green": {
+      primaryTextColor = "#14532d";
+      secondaryTextColor = "#15803d";
+      primaryBackgroundColor = "#f0fdf4";
+      secondaryBackgroundColor = "#dcfce7";
+      break;
+    }
     case "pink": {
       primaryTextColor = "#620042";
       secondaryTextColor = "#a30664";
@@ -98,6 +111,13 @@ export const FlowNode: FC<FlowNodeProps> = ({
       secondaryTextColor = "#a27c1a";
       primaryBackgroundColor = "#fffaeb";
       secondaryBackgroundColor = "#fcefc7";
+      break;
+    }
+    case "amber": {
+      primaryTextColor = "#78350f";
+      secondaryTextColor = "#d97706";
+      primaryBackgroundColor = "#fffbeb";
+      secondaryBackgroundColor = "#fef3c7";
       break;
     }
     case "grey": {
@@ -164,6 +184,7 @@ export const FlowNode: FC<FlowNodeProps> = ({
       borderWidth="light"
       padding="xsmall"
       css={css`
+        opacity: ${disabled ? 0.5 : 1};
         cursor: grab;
         user-select: none;
         max-width: ${maxWidth};
@@ -176,7 +197,7 @@ export const FlowNode: FC<FlowNodeProps> = ({
         {title}
       </Text>
       {handles}
-      {description && (
+      {typeof description === "string" && (
         <Text
           fontSize="small"
           css={css`
@@ -186,7 +207,8 @@ export const FlowNode: FC<FlowNodeProps> = ({
           {description}
         </Text>
       )}
-      {(footerLeft || footerRight) && (
+      {typeof description === "object" && <Fragment>{description}</Fragment>}
+      {(footerLeft || footerRight || footerCenter) && (
         <Box
           css={css`
             margin-left: -8px;
@@ -207,6 +229,9 @@ export const FlowNode: FC<FlowNodeProps> = ({
         >
           <Text fontSize="small" mr="xsmall">
             {footerLeft}
+          </Text>
+          <Text fontSize="small" mr="xsmall">
+            {footerCenter}
           </Text>
           <Text fontSize="small">{footerRight}</Text>
         </Box>

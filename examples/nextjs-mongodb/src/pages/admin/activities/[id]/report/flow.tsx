@@ -1,0 +1,213 @@
+import { useDate } from "@bitflow/date";
+import { FlowDoResults, FlowDoResultsProps } from "@bitflow/flow";
+import { round } from "@bitflow/stats";
+import {
+  AutoGrid,
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+} from "@openpatch/patches";
+import { ActivityReport } from "@schemas/activityReport";
+import { Ranking } from "components/Ranking";
+import { ReportLayout, ReportLayoutProps } from "components/ReportLayout";
+import { addSeconds } from "date-fns";
+import { useActivity } from "hooks/activity";
+import { useActivityReport } from "hooks/activityReport";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
+const isTryTask = (
+  v: FlowDoResultsProps["nodes"][0]
+): v is FlowDoResultsProps["nodes"][0] & { type: "task" } =>
+  v.type === "task" && v.data.evaluation.mode !== "skip";
+
+export default function FlowReport() {
+  const router = useRouter();
+  const { format } = useDate();
+  const id = router.query.id as string;
+  const [mode, setMode] = useState<ReportLayoutProps["mode"]>("first");
+  const [activity] = useActivity(id);
+  const [report] = useActivityReport(id);
+  const [tryReport, setTryReport] =
+    useState<ActivityReport["tries"]["first"]>();
+  const [edges, setEdges] = useState<FlowDoResultsProps["edges"]>([]);
+  const [nodes, setNodes] = useState<FlowDoResultsProps["nodes"]>([]);
+
+  const handleModeChange = (value: ReportLayoutProps["mode"]) => {
+    router.push({ query: { mode: value, id } });
+  };
+
+  useEffect(() => {
+    const mode = router.query.mode;
+    if (mode === "first" || mode === "last" || mode === "partial") {
+      setMode(mode);
+    }
+  }, [router.query]);
+
+  useEffect(() => {
+    const tryReport = report?.tries?.[mode];
+    setTryReport(tryReport);
+
+    const nodes: FlowDoResultsProps["nodes"] = [];
+
+    if (activity && tryReport) {
+      for (const node of activity?.flow.nodes) {
+        const tryNode = tryReport.nodes[node.id];
+        const tryTask = tryReport.tasks[node.id];
+
+        const tries = Object.values(tryNode?.rawStatus || {}).reduce(
+          (acc, s) => s.tries + acc,
+          0
+        );
+        const tried = Object.values(tryNode?.rawStatus || {}).length;
+
+        if (
+          node.type === "task" ||
+          node.type === "start" ||
+          node.type === "end" ||
+          node.type === "synchronize" ||
+          node.type === "input" ||
+          node.type === "title" ||
+          node.type === "checkpoint"
+        ) {
+          nodes.push({
+            ...node,
+            data: {
+              ...(node as any).data,
+              result: {
+                ...tryTask,
+                count: tryNode?.n || 0,
+                status: tryNode?.status || {},
+                avgTries: tries / tried || 0,
+                avgTime: tryNode?.time / tryNode?.n || 0,
+              },
+            } as any,
+          });
+        } else {
+          nodes.push({ ...node } as any);
+        }
+      }
+
+      setNodes(nodes);
+      setEdges(activity.flow.edges as any);
+    }
+  }, [report, mode]);
+
+  return (
+    <ReportLayout
+      active="flow"
+      mode={mode}
+      onModeChange={handleModeChange}
+      activity={{
+        id,
+        name: activity?.name,
+      }}
+      report={report}
+    >
+      <Card>
+        <Box height="600px">
+          <FlowDoResults edges={edges} nodes={nodes} />
+        </Box>
+      </Card>
+      <AutoGrid columns={[1, 2, 2]} gap="standard">
+        <Card>
+          <CardHeader>Lowest Difficulty (in %)</CardHeader>
+          <CardContent>
+            <Ranking
+              limit={5}
+              entries={nodes.filter(isTryTask).map((t) => ({
+                label: t.data.name,
+                value: t.data.result?.difficulty || 0,
+              }))}
+              sort="desc"
+              compareFn={(a, b) => a - b}
+              formatFn={(a) => round(a * 100)}
+            />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>Highest Difficulty (in %)</CardHeader>
+          <CardContent>
+            <Ranking
+              limit={5}
+              entries={nodes.filter(isTryTask).map((t) => ({
+                label: t.data.name,
+                value: t.data.result?.difficulty || 0,
+              }))}
+              sort="asc"
+              compareFn={(a, b) => a - b}
+              formatFn={(a) => round(a * 100)}
+            />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>Shortest Avg. Duration (in minutes)</CardHeader>
+          <CardContent>
+            <Ranking
+              limit={5}
+              entries={nodes.filter(isTryTask).map((t) => ({
+                label: t.data.name,
+                value: t.data.result?.avgTime || 0,
+              }))}
+              sort="asc"
+              compareFn={(a, b) => a - b}
+              formatFn={(a) => {
+                const date = addSeconds(new Date(0), a);
+                return format(date, "mm:ss");
+              }}
+            />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>Longest Avg. Duration (in minutes)</CardHeader>
+          <CardContent>
+            <Ranking
+              limit={5}
+              entries={nodes.filter(isTryTask).map((t) => ({
+                label: t.data.name,
+                value: t.data.result?.avgTime || 0,
+              }))}
+              sort="desc"
+              compareFn={(a, b) => a - b}
+              formatFn={(a) => {
+                const date = addSeconds(new Date(0), a);
+                return format(date, "mm:ss");
+              }}
+            />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>Least Avg. Tries</CardHeader>
+          <CardContent>
+            <Ranking
+              limit={5}
+              entries={nodes.filter(isTryTask).map((t) => ({
+                label: t.data.name,
+                value: t.data.result?.avgTries || 0,
+              }))}
+              sort="asc"
+              compareFn={(a, b) => a - b}
+              formatFn={(a) => round(a)}
+            />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>Most Avg. Tries</CardHeader>
+          <CardContent>
+            <Ranking
+              limit={5}
+              entries={nodes.filter(isTryTask).map((t) => ({
+                label: t.data.name,
+                value: t.data.result?.avgTries || 0,
+              }))}
+              sort="desc"
+              compareFn={(a, b) => a - b}
+              formatFn={(a) => round(a)}
+            />
+          </CardContent>
+        </Card>
+      </AutoGrid>
+    </ReportLayout>
+  );
+}

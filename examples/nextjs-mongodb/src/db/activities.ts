@@ -24,7 +24,7 @@ export const updateActivity = (
 ) => {
   return db
     .collection<ActivityDB>(collection)
-    .updateOne({ _id: new ObjectId(id) }, data);
+    .updateOne({ _id: new ObjectId(id) }, { $set: data });
 };
 
 export const createActivity = async (

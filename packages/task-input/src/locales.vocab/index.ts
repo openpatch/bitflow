@@ -4,7 +4,7 @@
 import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
-  "en" | "de",
+  "en-GB" | "en" | "en-US" | "de",
   {
     "add-pattern": () => "Add Pattern";
     "delete-pattern": () => "Delete";
@@ -25,7 +25,45 @@ const translations = createTranslationFile<
     warning: () => "Warning";
   }
 >({
+  "en-GB": createLanguage({
+    "add-pattern": "Add Pattern",
+    "delete-pattern": "Delete",
+    error: "Error",
+    info: "Info",
+    instruction: "Instruction",
+    message: "Message",
+    pattern: "Pattern",
+    "pattern-error-duplicate": "A pattern can not contain duplicates",
+    "pattern-error-exists": "This pattern already exists",
+    "pattern-error-invalid": "Not a valid pattern",
+    "pattern-regex": "You can input a RegEx",
+    "pattern-title": "Pattern {pattern}",
+    patterns: "Patterns",
+    severity: "Severity",
+    success: "Success",
+    up: "Up",
+    warning: "Warning",
+  }),
   en: createLanguage({
+    "add-pattern": "Add Pattern",
+    "delete-pattern": "Delete",
+    error: "Error",
+    info: "Info",
+    instruction: "Instruction",
+    message: "Message",
+    pattern: "Pattern",
+    "pattern-error-duplicate": "A pattern can not contain duplicates",
+    "pattern-error-exists": "This pattern already exists",
+    "pattern-error-invalid": "Not a valid pattern",
+    "pattern-regex": "You can input a RegEx",
+    "pattern-title": "Pattern {pattern}",
+    patterns: "Patterns",
+    severity: "Severity",
+    success: "Success",
+    up: "Up",
+    warning: "Warning",
+  }),
+  "en-US": createLanguage({
     "add-pattern": "Add Pattern",
     "delete-pattern": "Delete",
     error: "Error",

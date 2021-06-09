@@ -1,9 +1,9 @@
 import { TaskAnswer, TaskResult } from "@bitflow/base";
 import {
-  FlowConfig,
+  FlowDoConfig,
+  FlowDoProgress,
   FlowDoProps,
-  FlowProgress,
-  FlowResult,
+  FlowDoResult,
   IFlowNode,
 } from "@bitflow/flow";
 import { get, post } from "@utils/fetcher";
@@ -23,7 +23,7 @@ export const start = async (activityId: string) => {
 };
 
 export const getConfig: FlowDoProps["getConfig"] = async () => {
-  const res = await get<{ config: FlowConfig }>(makeUrl("config")).then((r) =>
+  const res = await get<{ config: FlowDoConfig }>(makeUrl("config")).then((r) =>
     r.json()
   );
   if (!res) {
@@ -74,14 +74,14 @@ export const getPrevious: FlowDoProps["getPrevious"] = async () => {
 };
 
 export const getProgress: FlowDoProps["getProgress"] = async () => {
-  const res = await get<{ progress: FlowProgress }>(
-    makeUrl("progress")
-  ).then((r) => r.json());
+  const res = await get<{ progress: FlowDoProgress }>(makeUrl("progress")).then(
+    (r) => r.json()
+  );
   return res.progress;
 };
 
 export const getResult: FlowDoProps["getResult"] = async () => {
-  const res = await get<{ result: FlowResult }>(makeUrl("result")).then((r) =>
+  const res = await get<{ result: FlowDoResult }>(makeUrl("result")).then((r) =>
     r.json()
   );
   return res.result;

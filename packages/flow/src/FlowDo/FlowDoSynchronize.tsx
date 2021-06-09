@@ -1,17 +1,19 @@
 import { Shell, ShellContent, ShellFooter, ShellHeader } from "@bitflow/shell";
 import { Box, ButtonPrimary, ButtonSecondary } from "@openpatch/patches";
 import { useEffect, useState } from "react";
-import { FlowDoX, FlowProgress } from ".";
+import { FlowDoProgress, FlowDoX } from ".";
 
 export const FlowDoSynchronize = ({
   onNext,
   getProgress,
-}: Pick<FlowDoX, "onNext"> & { getProgress: () => Promise<FlowProgress> }) => {
-  const [progress, setProgress] = useState<Pick<FlowProgress, "nextNodeState">>(
-    {
-      nextNodeState: "locked",
-    }
-  );
+}: Pick<FlowDoX, "onNext"> & {
+  getProgress: () => Promise<FlowDoProgress>;
+}) => {
+  const [progress, setProgress] = useState<
+    Pick<FlowDoProgress, "nextNodeState">
+  >({
+    nextNodeState: "locked",
+  });
   const [refreshing, setRefreshing] = useState(false);
 
   const refresh = () => {

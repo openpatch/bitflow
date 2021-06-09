@@ -27,6 +27,7 @@ export const Statistic = ({
         <Heading as="h2">{t("patterns")}</Heading>
         {patterns.map((p, i) => (
           <Box
+            key={p.pattern}
             display="flex"
             borderRadius="standard"
             css={css`

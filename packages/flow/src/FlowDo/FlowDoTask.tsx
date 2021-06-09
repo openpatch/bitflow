@@ -2,7 +2,7 @@ import { taskBits } from "@bitflow/bits";
 import { TaskShell } from "@bitflow/shell";
 import { useTranslations } from "@vocab/react";
 import { useEffect, useState } from "react";
-import { FlowConfig, FlowDoX } from ".";
+import { FlowDoConfig, FlowDoX } from ".";
 import translations from "../locales.vocab";
 
 export const FlowDoTask = ({
@@ -32,7 +32,7 @@ export const FlowDoTask = ({
   node: { type: "task" };
 }) => {
   const { t } = useTranslations(translations);
-  const [config, setConfig] = useState<FlowConfig>({
+  const [config, setConfig] = useState<FlowDoConfig>({
     enableConfidence: false,
     enableReasoning: false,
   });
