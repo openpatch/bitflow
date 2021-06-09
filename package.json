@@ -68,7 +68,7 @@
     "@types/react-dom": "17.0.6",
     "@vocab/cli": "1.0.0",
     "@vocab/react": "1.0.1",
-    "auto": "10.24.3",
+    "auto": "10.29.3",
     "babel-jest": "26.6.3",
     "babel-loader": "8.2.2",
     "concurrently": "6.0.1",
