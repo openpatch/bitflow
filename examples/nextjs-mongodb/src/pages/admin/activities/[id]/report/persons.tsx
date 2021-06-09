@@ -2,6 +2,7 @@ import { taskBits } from "@bitflow/bits";
 import { FlowDoResultPathEntry } from "@bitflow/flow";
 import { round } from "@bitflow/stats";
 import { css } from "@emotion/react";
+import { runAuth } from "@middlewares/auth";
 import {
   AutoGrid,
   Box,
@@ -32,6 +33,7 @@ import { WrongIcon } from "components/WrongIcon";
 import { useActivity } from "hooks/activity";
 import { useActivityReport } from "hooks/activityReport";
 import { useActivitySessionPathForNode } from "hooks/activitySessionPath";
+import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { ReactNode, useEffect, useState } from "react";
@@ -525,3 +527,23 @@ export default function PersonsReport() {
     </ReportLayout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  resolvedUrl,
+}) => {
+  const user = await runAuth(req, res);
+  if (user === null) {
+    return {
+      redirect: {
+        destination: "/admin/login?redirect=" + encodeURIComponent(resolvedUrl),
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

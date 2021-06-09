@@ -1,4 +1,5 @@
 import { FlowView } from "@bitflow/flow";
+import { runAuth } from "@middlewares/auth";
 import {
   AutoGrid,
   Box,
@@ -9,6 +10,7 @@ import {
   PatternCenter,
 } from "@openpatch/patches";
 import { useActivity } from "hooks/activity";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
 export default function Activity() {
@@ -28,7 +30,7 @@ export default function Activity() {
                 <CardContent>{activity.description}</CardContent>
               )}
             </Card>
-            <AutoGrid columns={2}>
+            <AutoGrid columns={1}>
               <Card>
                 <CardContent>
                   <ButtonPrimaryLink
@@ -46,3 +48,23 @@ export default function Activity() {
     </PatternCenter>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  resolvedUrl,
+}) => {
+  const user = await runAuth(req, res);
+  if (user === null) {
+    return {
+      redirect: {
+        destination: "/admin/login?redirect=" + encodeURIComponent(resolvedUrl),
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

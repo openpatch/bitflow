@@ -1,3 +1,4 @@
+import { runAuth } from "@middlewares/auth";
 import {
   AutoGrid,
   Box,
@@ -13,6 +14,7 @@ import {
 import { User } from "@schemas/user";
 import { del } from "@utils/fetcher";
 import { useUsers } from "hooks/user";
+import { GetServerSideProps } from "next";
 import { useState } from "react";
 
 export default function Users() {
@@ -69,3 +71,23 @@ export default function Users() {
     </PatternCenter>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  resolvedUrl,
+}) => {
+  const user = await runAuth(req, res);
+  if (user === null) {
+    return {
+      redirect: {
+        destination: "/admin/login?redirect=" + encodeURIComponent(resolvedUrl),
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

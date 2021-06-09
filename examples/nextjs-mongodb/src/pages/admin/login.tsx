@@ -18,6 +18,7 @@ import { FormEvent, useState } from "react";
 
 export default function Login() {
   const router = useRouter();
+  const redirect = router.query.redirect as string;
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,7 +31,11 @@ export default function Login() {
     })
       .then((res) => {
         if (res.status === 200) {
-          router.push("/admin");
+          if (redirect) {
+            router.push(redirect);
+          } else {
+            router.push("/admin");
+          }
         } else if (res.status === 401) {
           setError("Invalid username/e-mail or password.");
         }

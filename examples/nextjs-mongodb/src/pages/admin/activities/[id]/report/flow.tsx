@@ -1,6 +1,7 @@
 import { useDate } from "@bitflow/date";
 import { FlowDoResults, FlowDoResultsProps } from "@bitflow/flow";
 import { round } from "@bitflow/stats";
+import { runAuth } from "@middlewares/auth";
 import {
   AutoGrid,
   Box,
@@ -14,6 +15,7 @@ import { ReportLayout, ReportLayoutProps } from "components/ReportLayout";
 import { addSeconds } from "date-fns";
 import { useActivity } from "hooks/activity";
 import { useActivityReport } from "hooks/activityReport";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -211,3 +213,23 @@ export default function FlowReport() {
     </ReportLayout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  resolvedUrl,
+}) => {
+  const user = await runAuth(req, res);
+  if (user === null) {
+    return {
+      redirect: {
+        destination: "/admin/login?redirect=" + encodeURIComponent(resolvedUrl),
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

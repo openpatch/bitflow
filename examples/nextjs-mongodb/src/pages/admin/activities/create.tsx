@@ -102,12 +102,16 @@ export default function Create() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  resolvedUrl,
+}) => {
   const user = await runAuth(req, res);
   if (user === null) {
     return {
       redirect: {
-        destination: "/admin/login",
+        destination: "/admin/login?redirect=" + encodeURIComponent(resolvedUrl),
         permanent: false,
       },
     };
