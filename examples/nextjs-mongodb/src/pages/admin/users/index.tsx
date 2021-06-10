@@ -8,11 +8,16 @@ import {
   CardFooter,
   CardHeader,
   Container,
+  Form,
+  FormLabel,
+  Input,
+  PasswordInput,
   PatternCenter,
   useConfirm,
 } from "@openpatch/patches";
 import { User } from "@schemas/user";
 import { del } from "@utils/fetcher";
+import { postUser } from "@utils/user";
 import { useUsers } from "hooks/user";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
@@ -20,6 +25,12 @@ import { useState } from "react";
 export default function Users() {
   const [users, { mutate }] = useUsers();
   const [selectedUser, setSelectedUser] = useState<User>();
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+    submitting: false,
+  });
   const onDelete = () => {
     if (selectedUser) {
       del("/api/users/" + selectedUser._id).then(() => {
@@ -46,8 +57,29 @@ export default function Users() {
     requestDelete();
   };
 
+  const handleCreate = () => {
+    setForm((f) => ({ ...f, submitting: true }));
+    postUser(form)
+      .then((r) => r.json())
+      .then((user) => {
+        mutate({
+          users: [...users, user],
+        });
+        setForm((f) => ({
+          username: "",
+          email: "",
+          password: "",
+          submitting: false,
+        }));
+      })
+      .catch(() => {
+        setForm((f) => ({ ...f, submitting: false }));
+      });
+  };
+
   return (
     <PatternCenter>
+      {deleteModal}
       <Box p="standard" width="100%">
         <Container maxWidth="small">
           <AutoGrid gap="standard">
@@ -65,6 +97,37 @@ export default function Users() {
                 </CardFooter>
               </Card>
             ))}
+            <Card>
+              <CardHeader>Create User</CardHeader>
+              <Form onSubmit={handleCreate}>
+                <CardContent>
+                  <FormLabel htmlFor="username">Username</FormLabel>
+                  <Input
+                    id="username"
+                    value={form.username}
+                    onChange={(v) => setForm((f) => ({ ...f, username: v }))}
+                  />
+                  <FormLabel htmlFor="email">E-Mail</FormLabel>
+                  <Input
+                    id="email"
+                    value={form.email}
+                    onChange={(v) => setForm((f) => ({ ...f, email: v }))}
+                  />
+                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <PasswordInput
+                    id="password"
+                    value={form.password}
+                    error={form.password.length < 8}
+                    onChange={(v) => setForm((f) => ({ ...f, password: v }))}
+                  />
+                </CardContent>
+                <CardFooter>
+                  <ButtonSecondary type="submit" loading={form.submitting}>
+                    Create
+                  </ButtonSecondary>
+                </CardFooter>
+              </Form>
+            </Card>
           </AutoGrid>
         </Container>
       </Box>

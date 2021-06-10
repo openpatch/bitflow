@@ -1,5 +1,5 @@
 import { User, UserDB } from "@schemas/user";
-import { get } from "./fetcher";
+import { get, post } from "./fetcher";
 
 export const getUser = async (id: string) => {
   return get<{ user: Pick<User, "username" | "email" | "_id"> | null }>(
@@ -21,6 +21,21 @@ export const getUsers = async () => {
     .catch((e) => {
       return null;
     });
+};
+
+export const postUser = async (user: {
+  username: string;
+  email: string;
+  password: string;
+}) => {
+  return post<
+    {
+      username: string;
+      email: string;
+      password: string;
+    },
+    User
+  >("/api/users", user);
 };
 
 export const extractPublicUser = (

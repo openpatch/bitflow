@@ -44,6 +44,7 @@ handler
 
     return res.json({
       user: {
+        _id: newUser._id,
         username: newUser.username,
         email: newUser.email,
       },
