@@ -1,12 +1,14 @@
 import { useDate } from "@bitflow/date";
-import { FlowDoResults, FlowDoResultsProps } from "@bitflow/flow";
+import { FlowDoResults, FlowDoResultsProps, FlowNode } from "@bitflow/flow";
 import { round } from "@bitflow/stats";
+import { css } from "@emotion/react";
 import { runAuth } from "@middlewares/auth";
 import {
   AutoGrid,
   Box,
   Card,
   CardContent,
+  CardFooter,
   CardHeader,
 } from "@openpatch/patches";
 import { ActivityReport } from "@schemas/activityReport";
@@ -109,8 +111,72 @@ export default function FlowReport() {
     >
       <Card>
         <Box height="600px">
-          <FlowDoResults edges={edges} nodes={nodes} />
+          {nodes.length > 0 && <FlowDoResults edges={edges} nodes={nodes} />}
         </Box>
+        <CardFooter>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexDirection="column"
+          >
+            Difficulty
+            <Box display="flex">
+              <Box
+                borderRadius="full"
+                paddingX="xsmall"
+                height="24px"
+                css={css`
+                  background-color: #f0fdf4;
+                  color: #14532d;
+                  border-color: #14532d;
+                  border-style: solid;
+                  border-width: 2px;
+                `}
+              >{`> 80%`}</Box>
+              <Box
+                borderRadius="full"
+                paddingX="xsmall"
+                height="24px"
+                css={css`
+                  background-color: #eaffea;
+                  color: #3d663d;
+                  border-color: #3d663d;
+                  border-style: solid;
+                  border-width: 2px;
+                `}
+              >{`> 60%`}</Box>
+              <Box
+                borderRadius="full"
+                paddingX="xsmall"
+                height="24px"
+                css={css`
+                  background-color: #fffaeb;
+                  color: #513c06;
+                  border-color: #513c06;
+                  border-style: solid;
+                  border-width: 2px;
+                `}
+              >{`> 30%`}</Box>
+              <Box
+                borderRadius="full"
+                paddingX="xsmall"
+                height="24px"
+                css={css`
+                  background-color: #ffeeee;
+                  color: #620042;
+                  border-color: #620042;
+                  border-style: solid;
+                  border-width: 2px;
+                `}
+              >{`<= 30%`}</Box>
+            </Box>
+          </Box>
+          <FlowNode
+            title="Name (Difficulty in %)"
+            footerCenter="Started | Finished | Skipped"
+          ></FlowNode>
+        </CardFooter>
       </Card>
       <AutoGrid columns={[1, 2, 2]} gap="standard">
         <Card>

@@ -250,6 +250,12 @@ export default function PersonsReport() {
                       },
                     },
                   },
+                  plotOptions: {
+                    bar: {
+                      columnWidth: "95%",
+                      borderRadius: 8,
+                    },
+                  },
                   annotations: {
                     xaxis: [
                       {

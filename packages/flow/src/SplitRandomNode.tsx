@@ -8,6 +8,7 @@ export const SplitRandomNode = (
     type: "split-random";
     hideHandles?: boolean;
     maxWidth?: FlowNodeProps["maxWidth"];
+    data?: FlowNodeProps;
   }
 ) => {
   const { t } = useTranslations(translations);
@@ -20,6 +21,7 @@ export const SplitRandomNode = (
       targetHandles={1}
       hideHandles={node.hideHandles}
       maxWidth={node.maxWidth}
+      {...node.data}
     />
   );
 };

@@ -6,7 +6,7 @@ import { IFlowNode, IPortal } from "./schemas";
 export const PortalOutputNode = (
   node: Pick<IFlowNode, "type"> & {
     type: "portal-output";
-    data: IPortal;
+    data: IPortal & Partial<FlowNodeProps>;
     hideHandles?: boolean;
     maxWidth?: FlowNodeProps["maxWidth"];
   }
@@ -15,6 +15,7 @@ export const PortalOutputNode = (
 
   return (
     <FlowNode
+      {...node.data}
       tone="portalOrange"
       title={node.data.portal}
       description={node.data.description}

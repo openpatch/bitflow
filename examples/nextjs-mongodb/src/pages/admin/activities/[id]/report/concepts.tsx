@@ -64,26 +64,28 @@ export default function ConceptsReport() {
     >
       <Card>
         <Box height="600px">
-          <FlowModel
-            edges={activity?.model.edges || []}
-            latentVariables={
-              activity?.model.latentVariables.map((lv) => ({
-                ...lv,
-                data: {
-                  ...lv.data,
-                  alpha: tryReport?.model.latentVariables[lv.id]?.alpha,
-                  mean: tryReport?.model.latentVariables[lv.id]?.mean,
-                },
-              })) as any
-            }
-            nodes={
-              (activity?.flow.nodes.filter(isTask).map((n) => ({
-                ...n,
-                type: "manifest-task",
-                position: activity.model.nodes[n.id].position || n.position,
-              })) as any) || []
-            }
-          />
+          {activity && (
+            <FlowModel
+              edges={activity?.model.edges || []}
+              latentVariables={
+                activity?.model.latentVariables.map((lv) => ({
+                  ...lv,
+                  data: {
+                    ...lv.data,
+                    alpha: tryReport?.model.latentVariables[lv.id]?.alpha,
+                    mean: tryReport?.model.latentVariables[lv.id]?.mean,
+                  },
+                })) as any
+              }
+              nodes={
+                (activity?.flow.nodes.filter(isTask).map((n) => ({
+                  ...n,
+                  type: "manifest-task",
+                  position: activity.model.nodes[n.id].position || n.position,
+                })) as any) || []
+              }
+            />
+          )}
         </Box>
       </Card>
       <Card>

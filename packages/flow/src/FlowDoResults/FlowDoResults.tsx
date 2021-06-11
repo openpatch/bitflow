@@ -93,7 +93,13 @@ export const FlowDoResults = ({
           onLoad={handleLoad}
           elements={
             [
-              ...nodes,
+              ...nodes.map((n) =>
+                n.type === "portal-input" ||
+                n.type === "portal-output" ||
+                n.type.includes("split-")
+                  ? { ...n, data: { ...(n as any).data, disabled: true } }
+                  : n
+              ),
               ...edges.map((e) => ({
                 ...e,
               })),

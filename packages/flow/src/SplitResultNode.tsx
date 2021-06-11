@@ -8,11 +8,13 @@ export const SplitResultNode = (
     type: "split-result";
     hideHandles?: boolean;
     maxWidth?: FlowNodeProps["maxWidth"];
+    data?: FlowNodeProps;
   }
 ) => {
   const { t } = useTranslations(translations);
   return (
     <FlowNode
+      {...node.data}
       tone="yellow"
       title={t("split-result")}
       description={t("split-result-helper-text")}

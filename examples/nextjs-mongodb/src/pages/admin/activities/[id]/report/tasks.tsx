@@ -96,6 +96,12 @@ export default function TasksReport() {
     { key: "standardDeviation", label: "Standard Deviation" },
   ] as const;
 
+  const difficulties = new Array(10).fill(0);
+  Object.values(tryReport?.tasks || {}).forEach((t) => {
+    const bucket = Math.floor(t.difficulty * 10);
+    difficulties[bucket] += 1;
+  });
+
   return (
     <ReportLayout
       active="tasks"
@@ -104,6 +110,74 @@ export default function TasksReport() {
       activity={{ id, name: activity?.name }}
       report={report}
     >
+      <Card>
+        <CardContent>
+          <Box height="350px">
+            {tryReport && difficulties.length > 0 && (
+              <Chart
+                series={[
+                  {
+                    name: "Difficulty of Tasks",
+                    data: difficulties,
+                  },
+                ]}
+                options={{
+                  chart: {
+                    toolbar: {
+                      tools: {
+                        download: true,
+                        selection: false,
+                        zoom: false,
+                        zoomin: false,
+                        zoomout: false,
+                        pan: false,
+                        reset: false,
+                      },
+                    },
+                  },
+                  plotOptions: {
+                    bar: {
+                      columnWidth: "95%",
+                      borderRadius: 8,
+                    },
+                  },
+                  annotations: {
+                    xaxis: [
+                      {
+                        x: tryReport.tasks[selectedTask || ""]?.difficulty * 10,
+                        borderColor: theme.colors.accent["500"],
+                        label: {
+                          borderColor: theme.colors.accent["500"],
+                          orientation: "horizontal",
+                          text: `Selected Task ${round(
+                            tryReport.tasks[selectedTask || ""]?.difficulty *
+                              100
+                          )}%`,
+                        },
+                      },
+                    ],
+                  },
+                  yaxis: {
+                    title: { text: "#Tasks" },
+                  },
+                  xaxis: {
+                    labels: {
+                      formatter: (value) => Number(value) * 10 + "%",
+                    },
+                    title: { text: "Difficulty in %" },
+                    max: 10,
+                    min: 0,
+                    tickAmount: 10,
+                    type: "numeric",
+                  },
+                }}
+                height="350px"
+                type="bar"
+              />
+            )}
+          </Box>
+        </CardContent>
+      </Card>
       <Card>
         <Box>
           <AutoSizer disableHeight>

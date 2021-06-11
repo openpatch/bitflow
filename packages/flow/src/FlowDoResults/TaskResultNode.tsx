@@ -26,10 +26,9 @@ export const TaskResultNode = ({ type, data }: TaskResultNodeProps) => {
   let tone: FlowNodeProps["tone"] = "red";
   let title = data.name;
   const difficulty = Math.round(data.result.difficulty * 10000) / 100;
-  if (Number.isNaN(difficulty)) {
+  if (Number.isNaN(difficulty) || data.evaluation?.mode === "skip") {
     tone = "blue";
-  }
-  if (difficulty > 80) {
+  } else if (difficulty > 80) {
     tone = "green";
   } else if (difficulty > 60) {
     tone = "mint";
@@ -38,7 +37,7 @@ export const TaskResultNode = ({ type, data }: TaskResultNodeProps) => {
   } else {
     tone = "red";
   }
-  if (!Number.isNaN(difficulty)) {
+  if (!Number.isNaN(difficulty) && data.evaluation?.mode !== "skip") {
     title += ` (${difficulty}%)`;
   }
 

@@ -5,6 +5,7 @@ export * from "./FlowDoResults";
 export * from "./FlowEditor";
 export * from "./FlowModel";
 export * from "./FlowModelEditor";
+export * from "./FlowNode";
 export * from "./FlowTeaser";
 export * from "./FlowView";
 export * from "./schemas";

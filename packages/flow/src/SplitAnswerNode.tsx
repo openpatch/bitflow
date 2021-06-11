@@ -8,11 +8,13 @@ export const SplitAnswerNode = (
     type: "split-answer";
     hideHandles?: boolean;
     maxWidth?: FlowNodeProps["maxWidth"];
+    data?: FlowNodeProps;
   }
 ) => {
   const { t } = useTranslations(translations);
   return (
     <FlowNode
+      {...node.data}
       tone="yellow"
       title={t("split-answer")}
       description={t("split-answer-helper-text")}
