@@ -2,10 +2,10 @@ import { findLast, TaskAnswer, TaskResult } from "@bitflow/base";
 import { taskBits } from "@bitflow/bits";
 import {
   FlowDo,
+  FlowDoProgress,
   FlowDoProps,
-  FlowProgress,
-  FlowResult,
-  FlowResultPathEntry,
+  FlowDoResult,
+  FlowDoResultPathEntry,
   FlowSchema,
   GetAnswers,
   GetPoints,
@@ -29,13 +29,14 @@ type DoProps = {
 
 export default function Do({ flow, locale, startNode }: DoProps) {
   const currentNode = useRef<IFlowNode>(startNode);
-  const progress = useRef<FlowProgress>({
+  const progress = useRef<FlowDoProgress>({
     currentNodeIndex: 0,
     nextNodeState: "unlocked",
     estimatedNodes: flow.nodes.length,
   });
-  const result = useRef<FlowResult>({
+  const result = useRef<FlowDoResult>({
     path: [],
+    startDate: new Date(),
     maxPoints: 0,
     points: 0,
   });
@@ -158,10 +159,10 @@ export default function Do({ flow, locale, startNode }: DoProps) {
         task: currentNode.current.data,
       })) as TaskResult;
 
-      const lastFinishedPathEntry = findLast<FlowResultPathEntry>(
+      const lastFinishedPathEntry = findLast<FlowDoResultPathEntry>(
         result.current.path,
         (e) => e.status === "finished" && e.node.id === currentNode.current.id
-      ) as FlowResultPathEntry & { status: "finished" };
+      ) as FlowDoResultPathEntry & { status: "finished" };
       const currentPathEntry =
         result.current.path[result.current.path.length - 1];
 
@@ -239,7 +240,7 @@ export const getServerSideProps: GetServerSideProps<DoProps> = async ({
     const flowJson = convertFromStringToJson(query?.flow as string);
     const flow = FlowSchema.parse(flowJson);
 
-    let usedLocale: Locale = "en";
+    let usedLocale: Locale = "en-GB";
     if (locale === "de") {
       usedLocale = "de";
     }

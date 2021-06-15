@@ -4,7 +4,7 @@
 import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
-  "en" | "de",
+  "en-GB" | "en" | "en-US" | "de",
   {
     bitflow: () => "Bitflow";
     "bitflow-description": () =>
@@ -29,7 +29,51 @@ const translations = createTranslationFile<
     share: () => "Share";
   }
 >({
+  "en-GB": createLanguage({
+    bitflow: "Bitflow",
+    "bitflow-description":
+      "A library for creating and conducting dynamic flow-based assessments.",
+    contact: "Contact",
+    "convert-flow-json-to-string": "Convert JSON to String",
+    "convert-flow-string-to-json": "Convert String to JSON",
+    converter: "Converter",
+    "demo-flows": "Demo Flows",
+    "do-flow": "Do",
+    documentation: "Documentation",
+    download: "Download",
+    "edit-flow": "Edit",
+    editor: "Editor",
+    "flow-json": "Flow JSON",
+    "flow-string": "Flow String",
+    "getting-started": "Getting Started",
+    "my-flows": "My Flows",
+    preview: "Preview",
+    save: "Save",
+    share: "Share",
+  }),
   en: createLanguage({
+    bitflow: "Bitflow",
+    "bitflow-description":
+      "A library for creating and conducting dynamic flow-based assessments.",
+    contact: "Contact",
+    "convert-flow-json-to-string": "Convert JSON to String",
+    "convert-flow-string-to-json": "Convert String to JSON",
+    converter: "Converter",
+    "demo-flows": "Demo Flows",
+    "do-flow": "Do",
+    documentation: "Documentation",
+    download: "Download",
+    "edit-flow": "Edit",
+    editor: "Editor",
+    "flow-json": "Flow JSON",
+    "flow-string": "Flow String",
+    "getting-started": "Getting Started",
+    "my-flows": "My Flows",
+    preview: "Preview",
+    save: "Save",
+    share: "Share",
+  }),
+  "en-US": createLanguage({
     bitflow: "Bitflow",
     "bitflow-description":
       "A library for creating and conducting dynamic flow-based assessments.",
