@@ -257,7 +257,10 @@ const My = () => (
             which follows this JSON schema.
             <Code language="json">
               {JSON.stringify(
-                zodToJsonSchema(bitflowTask.TaskSchema, "bitflow/task-choice"),
+                zodToJsonSchema(
+                  bitflowTask.TaskSchema as any,
+                  "bitflow/task-choice"
+                ),
                 null,
                 2
               )}
