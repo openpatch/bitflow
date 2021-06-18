@@ -11,21 +11,23 @@ export const TaskSchema = TaskSchemaBase.merge(
       instruction: z.string(),
       textWithBlanks: z.string(),
     }),
-    evaluation: z.object({
-      blanks: z.record(
-        z.string().refine(
-          (pattern) => {
-            try {
-              new RegExp(pattern);
-              return true;
-            } catch (e) {
-              return false;
-            }
-          },
-          { message: "Pattern must be a valid regular expression" }
-        )
-      ),
-    }),
+    evaluation: TaskSchemaBase.shape.evaluation.merge(
+      z.object({
+        blanks: z.record(
+          z.string().refine(
+            (pattern) => {
+              try {
+                new RegExp(pattern);
+                return true;
+              } catch (e) {
+                return false;
+              }
+            },
+            { message: "Pattern must be a valid regular expression" }
+          )
+        ),
+      })
+    ),
     feedback: z.object({
       blanks: z.record(
         z.object({

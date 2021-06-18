@@ -16,7 +16,7 @@ import * as input from "@bitflow/task-input";
 import { ReactElement } from "react";
 import { union, ZodSchema } from "zod";
 
-type TaskBit<
+export type TaskBit<
   T extends Task = any,
   A extends TaskAnswer = any,
   R extends TaskResult = any,

@@ -10,6 +10,7 @@ const translations = createTranslationFile<
     "bitflow-description": () =>
       | "A library for creating and conducting dynamic flow-based assessments."
       | "Eine Bibliothek zum Erstellen und Durchführen von dynamischen flow-basierten Assessments.";
+    changelog: () => "Changelog";
     contact: () => "Contact";
     "convert-flow-json-to-string": () => "Convert JSON to String";
     "convert-flow-string-to-json": () => "Convert String to JSON";
@@ -25,6 +26,7 @@ const translations = createTranslationFile<
     "getting-started": () => "Getting Started";
     "my-flows": () => "My Flows";
     preview: () => "Preview";
+    roadmap: () => "Roadmap";
     save: () => "Save";
     share: () => "Share";
   }
@@ -33,6 +35,7 @@ const translations = createTranslationFile<
     bitflow: "Bitflow",
     "bitflow-description":
       "A library for creating and conducting dynamic flow-based assessments.",
+    changelog: "Changelog",
     contact: "Contact",
     "convert-flow-json-to-string": "Convert JSON to String",
     "convert-flow-string-to-json": "Convert String to JSON",
@@ -48,6 +51,7 @@ const translations = createTranslationFile<
     "getting-started": "Getting Started",
     "my-flows": "My Flows",
     preview: "Preview",
+    roadmap: "Roadmap",
     save: "Save",
     share: "Share",
   }),
@@ -55,6 +59,7 @@ const translations = createTranslationFile<
     bitflow: "Bitflow",
     "bitflow-description":
       "A library for creating and conducting dynamic flow-based assessments.",
+    changelog: "Changelog",
     contact: "Contact",
     "convert-flow-json-to-string": "Convert JSON to String",
     "convert-flow-string-to-json": "Convert String to JSON",
@@ -70,6 +75,7 @@ const translations = createTranslationFile<
     "getting-started": "Getting Started",
     "my-flows": "My Flows",
     preview: "Preview",
+    roadmap: "Roadmap",
     save: "Save",
     share: "Share",
   }),
@@ -77,6 +83,7 @@ const translations = createTranslationFile<
     bitflow: "Bitflow",
     "bitflow-description":
       "A library for creating and conducting dynamic flow-based assessments.",
+    changelog: "Changelog",
     contact: "Contact",
     "convert-flow-json-to-string": "Convert JSON to String",
     "convert-flow-string-to-json": "Convert String to JSON",
@@ -92,6 +99,7 @@ const translations = createTranslationFile<
     "getting-started": "Getting Started",
     "my-flows": "My Flows",
     preview: "Preview",
+    roadmap: "Roadmap",
     save: "Save",
     share: "Share",
   }),
@@ -99,6 +107,7 @@ const translations = createTranslationFile<
     bitflow: "Bitflow",
     "bitflow-description":
       "Eine Bibliothek zum Erstellen und Durchführen von dynamischen flow-basierten Assessments.",
+    changelog: "Changelog",
     contact: "Contact",
     "convert-flow-json-to-string": "Convert JSON to String",
     "convert-flow-string-to-json": "Convert String to JSON",
@@ -114,6 +123,7 @@ const translations = createTranslationFile<
     "getting-started": "Getting Started",
     "my-flows": "My Flows",
     preview: "Preview",
+    roadmap: "Roadmap",
     save: "Save",
     share: "Share",
   }),

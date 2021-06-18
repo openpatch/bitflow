@@ -5,6 +5,9 @@
   "bitflow-description": {
     "message": "A library for creating and conducting dynamic flow-based assessments."
   },
+  "changelog": {
+    "message": "Changelog"
+  },
   "contact": {
     "message": "Contact"
   },
@@ -49,6 +52,9 @@
   },
   "preview": {
     "message": "Preview"
+  },
+  "roadmap": {
+    "message": "Roadmap"
   },
   "save": {
     "message": "Save"

@@ -3,7 +3,7 @@ import * as markdown from "@bitflow/input-markdown";
 import { ReactElement } from "react";
 import { ZodSchema } from "zod";
 
-type InputBit = {
+export type InputBit = {
   ViewForm: (props: InputViewFormProps) => ReactElement | null;
   Input: (props: any) => ReactElement | null;
   InputSchema: ZodSchema<any>;

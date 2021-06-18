@@ -8,7 +8,7 @@ import { IOption, ITask, options } from "./schemas";
 
 export const EvaluationForm = ({ name }: TaskEvaluationFormProps) => {
   const { control, watch } = useFormContext();
-  const view = watch(`${name}.view`) as Partial<ITask["view"]> | undefined;
+  const view = watch(`${name}.view`) as Partial<ITask["view"]>;
   const { t } = useTranslations(translations);
   return (
     <HookFormController

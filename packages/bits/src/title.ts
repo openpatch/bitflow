@@ -3,7 +3,7 @@ import * as simple from "@bitflow/title-simple";
 import { ReactElement } from "react";
 import { ZodSchema } from "zod";
 
-type TitleBit = {
+export type TitleBit = {
   ViewForm: (props: TitleViewFormProps) => ReactElement | null;
   Title: (props: any) => ReactElement | null;
   TitleSchema: ZodSchema<any>;

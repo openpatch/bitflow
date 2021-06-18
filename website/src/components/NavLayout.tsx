@@ -24,8 +24,12 @@ export const NavLayout: FC<NavLayoutProps> = ({ children }) => {
             href: "/editor",
           },
           {
-            label: t("converter"),
-            href: "/converter",
+            label: t("changelog"),
+            href: "/changelog",
+          },
+          {
+            label: t("roadmap"),
+            href: "/roadap",
           },
           {
             label: "GitHub",

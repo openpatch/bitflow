@@ -76,14 +76,14 @@ export type TaskShellProps<
   TaskComponent: ForwardRefExoticComponent<
     TaskProps<T, R, A, Act> & RefAttributes<TaskRef<Act>>
   >;
-  header: string;
+  header?: string;
   progress?: {
     value: number;
     max: number;
   };
   evaluate?: (answer: A) => Promise<R>;
-  onSkip: () => Promise<void>;
-  onRetry: () => Promise<void>;
+  onSkip?: () => Promise<void>;
+  onRetry?: () => Promise<void>;
   onAction?: (action: IShellAction<A, R> | ITaskAction<Act>) => void;
   enableReasoning?: boolean;
   enableConfidence?: boolean;
@@ -304,10 +304,12 @@ export const TaskShell = <
   }
 
   function handleRetry() {
-    customDispatch(retryAction());
-    onRetry().then(() => {
-      customDispatch(interactAction());
-    });
+    if (onRetry) {
+      customDispatch(retryAction());
+      onRetry().then(() => {
+        customDispatch(interactAction());
+      });
+    }
   }
 
   function handleSkip() {
@@ -338,22 +340,24 @@ export const TaskShell = <
   }
 
   return (
-    <Shell>
-      <ShellHeader
-        progress={progress}
-        onPrevious={onPrevious ? handlePrevious : undefined}
-        onClose={onClose ? handleClose : undefined}
-        loadingClose={state === "close"}
-        loadingPrevious={state === "previous"}
-        disabled={
-          state === "skip" ||
-          state === "next" ||
-          state === "previous" ||
-          state === "close"
-        }
-      >
-        {header}
-      </ShellHeader>
+    <Shell noHeader={!header}>
+      {header && (
+        <ShellHeader
+          progress={progress}
+          onPrevious={onPrevious ? handlePrevious : undefined}
+          onClose={onClose ? handleClose : undefined}
+          loadingClose={state === "close"}
+          loadingPrevious={state === "previous"}
+          disabled={
+            state === "skip" ||
+            state === "next" ||
+            state === "previous" ||
+            state === "close"
+          }
+        >
+          {header}
+        </ShellHeader>
+      )}
       <ShellContent>
         <TaskComponent
           ref={taskRef}
@@ -502,38 +506,42 @@ export const TaskShell = <
                   {t("answer")}
                 </ButtonPrimary>
               ) : (
+                onRetry && (
+                  <ButtonPrimary
+                    tone="primary"
+                    css={css`
+                      height: 100%;
+                    `}
+                    onClick={handleRetry}
+                    fullWidth
+                  >
+                    {t("retry")}
+                  </ButtonPrimary>
+                )
+              )}
+            </Box>
+            {onSkip && (
+              <Box flex="1">
                 <ButtonPrimary
-                  tone="primary"
                   css={css`
                     height: 100%;
                   `}
-                  onClick={handleRetry}
+                  disabled={
+                    state === "evaluate" ||
+                    state === "skip" ||
+                    state === "next" ||
+                    state === "close" ||
+                    state === "previous"
+                  }
+                  loading={state === "skip"}
+                  tone="accent"
+                  onClick={handleSkip}
                   fullWidth
                 >
-                  {t("retry")}
+                  {t("skip")}
                 </ButtonPrimary>
-              )}
-            </Box>
-            <Box flex="1">
-              <ButtonPrimary
-                css={css`
-                  height: 100%;
-                `}
-                disabled={
-                  state === "evaluate" ||
-                  state === "skip" ||
-                  state === "next" ||
-                  state === "close" ||
-                  state === "previous"
-                }
-                loading={state === "skip"}
-                tone="accent"
-                onClick={handleSkip}
-                fullWidth
-              >
-                {t("skip")}
-              </ButtonPrimary>
-            </Box>
+              </Box>
+            )}
           </Fragment>
         )}
       </ShellFooter>
