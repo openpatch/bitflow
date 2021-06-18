@@ -90,7 +90,7 @@
     "typescript": "4.3.4",
     "typescript-styled-plugin": "0.18.0",
     "webpack": "5.39.1",
-    "zod": "2.0.0-beta.30"
+    "zod": "3.2.0"
   },
   "browserslist": {
     "production": [
