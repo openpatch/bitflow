@@ -19,7 +19,7 @@
     "@emotion/styled": "11.3.0",
     "@mdx-js/loader": "1.6.22",
     "@mdx-js/react": "1.6.22",
-    "@next/mdx": "11.0.0",
+    "@next/mdx": "11.0.1",
     "@vocab/webpack": "1.0.1",
     "atob": "2.1.2",
     "lz-string": "1.4.4",
