@@ -35,6 +35,10 @@ export const NavLayout: FC<NavLayoutProps> = ({ children }) => {
             label: "GitHub",
             href: "https://github.com/openpatch/bitflow",
           },
+          {
+            label: "Discord",
+            href: "https://discord.gg/dCMM4kV",
+          },
         ]}
       ></Nav>
       {children}

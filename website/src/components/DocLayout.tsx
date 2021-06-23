@@ -1,4 +1,5 @@
 import {
+  Box,
   Grid,
   Main,
   PageHeader,
@@ -115,19 +116,21 @@ export const DocLayout: FC<DocLayoutProps> = ({
       <PageHeader variant="overlap">{title}</PageHeader>
       <Main variant="overlap">
         <Grid gridGap="standard" gridTemplateColumns={["1fr", "240px 1fr"]}>
-          <Sidenav
-            position={["initial", "sticky"]}
-            sections={nav.map((n) => ({
-              ...n,
-              active: router.pathname.includes(n.href),
-              links: router.pathname.includes(n.href)
-                ? n.links?.map((l) => ({
-                    ...l,
-                    active: l.href === router.pathname,
-                  }))
-                : [],
-            }))}
-          />
+          <Box>
+            <Sidenav
+              position={["initial", "sticky"]}
+              sections={nav.map((n) => ({
+                ...n,
+                active: router.pathname.includes(n.href),
+                links: router.pathname.includes(n.href)
+                  ? n.links?.map((l) => ({
+                      ...l,
+                      active: l.href === router.pathname,
+                    }))
+                  : [],
+              }))}
+            />
+          </Box>
           {children}
         </Grid>
       </Main>

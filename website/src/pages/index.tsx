@@ -1,12 +1,5 @@
 import { FlowSchema, FlowView, IFlow } from "@bitflow/flow";
-import {
-  AutoGrid,
-  Box,
-  Card,
-  CardContent,
-  Heading,
-  Text,
-} from "@openpatch/patches";
+import { AutoGrid, Box, Heading, Text } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import { Fragment, useEffect, useState } from "react";
 import { FlowCard } from "../components/FlowCard";
@@ -50,10 +43,6 @@ export default function Home() {
       </Box>
       <Box maxWidth="large" mx="auto" width="100%" px="standard" my="xlarge">
         <AutoGrid gap="xlarge">
-          <Heading>{t("getting-started")}</Heading>
-          <Card>
-            <CardContent>Hallo</CardContent>
-          </Card>
           <Heading>{t("demo-flows")}</Heading>
           <AutoGrid gap="standard" columns={[1, 1, 2]}>
             {Object.values(flows).map((flow, i) => (

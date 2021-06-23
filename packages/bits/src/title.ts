@@ -9,7 +9,7 @@ export type TitleBit = {
   TitleSchema: ZodSchema<any>;
 };
 
-const asTitleBit = <T>(et: { [K in keyof T]: TitleBit }) => et;
+export const asTitleBit = <T>(et: { [K in keyof T]: TitleBit }) => et;
 
 export const titleBits = asTitleBit({
   simple,

@@ -9,7 +9,7 @@ export type InputBit = {
   InputSchema: ZodSchema<any>;
 };
 
-const asInputBit = <T>(et: { [K in keyof T]: InputBit }) => et;
+export const asInputBit = <T>(et: { [K in keyof T]: InputBit }) => et;
 
 export const inputBits = asInputBit({
   markdown,

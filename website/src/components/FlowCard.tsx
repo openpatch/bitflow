@@ -18,6 +18,7 @@ export type FlowCardProps = {
 export const FlowCard = ({ flow }: FlowCardProps) => {
   const { t } = useTranslations(translations);
   const router = useRouter();
+
   return (
     <Card>
       <CardHeader>{flow.name}</CardHeader>

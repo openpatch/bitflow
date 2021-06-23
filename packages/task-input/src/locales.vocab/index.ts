@@ -10,6 +10,7 @@ const translations = createTranslationFile<
     "delete-pattern": () => "Delete";
     error: () => "Error";
     info: () => "Info";
+    inputs: () => "Inputs";
     instruction: () => "Instruction";
     message: () => "Message";
     pattern: () => "Pattern";
@@ -30,6 +31,7 @@ const translations = createTranslationFile<
     "delete-pattern": "Delete",
     error: "Error",
     info: "Info",
+    inputs: "Inputs",
     instruction: "Instruction",
     message: "Message",
     pattern: "Pattern",
@@ -49,6 +51,7 @@ const translations = createTranslationFile<
     "delete-pattern": "Delete",
     error: "Error",
     info: "Info",
+    inputs: "Inputs",
     instruction: "Instruction",
     message: "Message",
     pattern: "Pattern",
@@ -68,6 +71,7 @@ const translations = createTranslationFile<
     "delete-pattern": "Delete",
     error: "Error",
     info: "Info",
+    inputs: "Inputs",
     instruction: "Instruction",
     message: "Message",
     pattern: "Pattern",
@@ -87,6 +91,7 @@ const translations = createTranslationFile<
     "delete-pattern": "Delete",
     error: "Error",
     info: "Info",
+    inputs: "Inputs",
     instruction: "Instruction",
     message: "Message",
     pattern: "Pattern",

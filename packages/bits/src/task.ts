@@ -32,7 +32,7 @@ export type TaskBit<
   evaluate: Evaluate<A, T, R>;
 };
 
-const asTaskBit = <T>(et: { [K in keyof T]: TaskBit }) => et;
+export const asTaskBit = <T>(et: { [K in keyof T]: TaskBit }) => et;
 
 export const taskBits = asTaskBit({
   "fill-in-the-blank": fillInTheBlank,

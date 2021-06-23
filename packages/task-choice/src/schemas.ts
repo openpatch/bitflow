@@ -20,7 +20,7 @@ export type IOption = z.infer<typeof OptionsSchema>;
 
 export const TaskSchema = TaskSchemaBase.merge(
   z.object({
-    subtype: z.enum(["choice"]).default("choice"),
+    subtype: z.literal("choice"),
     view: z.object({
       instruction: z.string(),
       variant: z.enum(["multiple", "single"]),
@@ -34,19 +34,17 @@ export const TaskSchema = TaskSchemaBase.merge(
     }),
     evaluation: TaskSchemaBase.shape.evaluation.merge(
       z.object({
-        correct: z.array(OptionsSchema).default([]),
+        correct: z.array(OptionsSchema),
       })
     ),
     feedback: z.object({
-      patterns: z.record(FeedbackMessageSchema).default({}),
-      choices: z
-        .record(
-          z.object({
-            checkedFeedback: FeedbackMessageSchema,
-            notCheckedFeedback: FeedbackMessageSchema,
-          })
-        )
-        .default({}),
+      patterns: z.record(FeedbackMessageSchema),
+      choices: z.record(
+        z.object({
+          checkedFeedback: FeedbackMessageSchema,
+          notCheckedFeedback: FeedbackMessageSchema,
+        })
+      ),
     }),
   })
 );

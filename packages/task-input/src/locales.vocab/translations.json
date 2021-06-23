@@ -11,6 +11,9 @@
   "info": {
     "message": "Info"
   },
+  "inputs": {
+    "message": "Inputs"
+  },
   "instruction": {
     "message": "Instruction"
   },

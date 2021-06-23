@@ -1,9 +1,78 @@
+import { Card, CardContent } from "@openpatch/patches";
 import { DocLayout } from "../../../components/DocLayout";
 
 export const meta = {
   title: "Bits",
 };
 
-Hallo
+A bit is a special node, which provides a mean of interaction to the user.
+Currently, here are three kinds of bits. Input bits, title bits and task bits.
 
-export default ({ children }) => <DocLayout meta={meta}>{children}</DocLayout>;
+## Input Bits
+
+The main purpose of an input bit is to show a user some kind of content. It
+could be a visualization, a video, a picture or a text. This is especially
+useful for learning scenarios. For example, you want to show an explanation on
+how a for-loop works. Afterwards you would probably use a task bit to check
+whether the content was understood or not.
+
+These input bits are currently implemented:
+
+- [Markdown](/docs/bits/input-markdown)
+
+If you like to contribute a new input bit, you can go to the [contribution guide](/docs/contribution/new-input-bit)
+
+If you like to suggest a new input bit, you can open an issue in the [GitHub repository](https://github.com/openpatch/bitflow/issues).
+
+If you like to discuss a new idea for an input bit or you need help, you can visit the [Discord server](https://discord.gg/dCMM4kV).
+
+## Task Bits
+
+The main purpose of a task bit is to assess the capabilities of a user. The
+answer of a user for a given task can be automatically be evaluated. But if your
+purpose is not to assess a user or the assessment more advanced, so that it can
+not be evaluated automatically, you can disable the automatic evaluation or set
+it to manual.
+
+Additionally, to the automatic evaluation of answers, you can also set up
+feedback which will be shown to the user when certain criteria are met. These
+criteria depend on the task bit.
+
+After an assessment you can also visualize the answer of all users.
+
+You can also capture and replay all interactions of a user with a task (see [capture and replay](/docs/bits/capture-and-replay)).
+
+These task bits are currently implemented:
+
+- [Choice](/docs/bits/task-choice)
+- [Fill in the blank](/docs/bits/task-fill-in-the-blank)
+- [Input](/docs/bits/task-input)
+
+If you like to contribute a new task bit, you can go to the [contribution guide](/docs/contribution/new-task-bit)
+
+If you like to suggest a new task bit, you can open an issue in the [GitHub repository](https://github.com/openpatch/bitflow/issues).
+
+If you like to discuss a new idea for an task bit or you need help, you can visit the [Discord server](https://discord.gg/dCMM4kV).
+
+## Title Bits
+
+The main purpose of a title bit is to show information about the flow. For
+example the name of the flow or the section which is about to begin.
+
+These title bits are currently implemented:
+
+- [Simple](/docs/bits/title-simple)
+
+If you like to contribute a new title bit, you can go to the [contribution guide](/docs/contribution/new-title-bit)
+
+If you like to suggest a new title bit, you can open an issue in the [GitHub repository](https://github.com/openpatch/bitflow/issues).
+
+If you like to discuss a new idea for an title bit or you need help, you can visit the [Discord server](https://discord.gg/dCMM4kV).
+
+export default ({ children }) => (
+  <DocLayout meta={meta}>
+    <Card>
+      <CardContent>{children}</CardContent>
+    </Card>
+  </DocLayout>
+);

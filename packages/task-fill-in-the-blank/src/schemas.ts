@@ -6,7 +6,7 @@ import * as z from "zod";
 
 export const TaskSchema = TaskSchemaBase.merge(
   z.object({
-    subtype: z.enum(["fill-in-the-blank"]).default("fill-in-the-blank"),
+    subtype: z.literal("fill-in-the-blank"),
     view: z.object({
       instruction: z.string(),
       textWithBlanks: z.string(),
