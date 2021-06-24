@@ -7,7 +7,7 @@ import { Shell, ShellContent, ShellFooter, ShellHeader } from "./Shell";
 import { IShell } from "./types";
 
 export type InputShellProps<I extends Input> = {
-  header: string;
+  header?: string;
   input: I;
   InputComponent: FC<InputProps<I>>;
 } & IShell;
@@ -52,17 +52,19 @@ export const InputShell = <I extends Input>({
   };
 
   return (
-    <Shell>
-      <ShellHeader
-        progress={progress}
-        loadingClose={state === "close"}
-        loadingPrevious={state === "previous"}
-        onClose={onClose ? handleClose : undefined}
-        onPrevious={onPrevious ? handlePrevious : undefined}
-        disabled={state !== "default"}
-      >
-        {header}
-      </ShellHeader>
+    <Shell noHeader={!header}>
+      {header && (
+        <ShellHeader
+          progress={progress}
+          loadingClose={state === "close"}
+          loadingPrevious={state === "previous"}
+          onClose={onClose ? handleClose : undefined}
+          onPrevious={onPrevious ? handlePrevious : undefined}
+          disabled={state !== "default"}
+        >
+          {header}
+        </ShellHeader>
+      )}
       <ShellContent>
         <InputComponent input={input} />
       </ShellContent>

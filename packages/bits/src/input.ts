@@ -1,11 +1,11 @@
-import { InputViewFormProps } from "@bitflow/base";
+import { Input, InputProps, InputViewFormProps } from "@bitflow/base";
 import * as markdown from "@bitflow/input-markdown";
 import { ReactElement } from "react";
 import { ZodSchema } from "zod";
 
-export type InputBit = {
+export type InputBit<I extends Input = any> = {
   ViewForm: (props: InputViewFormProps) => ReactElement | null;
-  Input: (props: any) => ReactElement | null;
+  Input: (props: InputProps<I>) => ReactElement | null;
   InputSchema: ZodSchema<any>;
 };
 

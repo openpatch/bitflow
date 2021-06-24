@@ -19709,22 +19709,10 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod-to-json-schema@0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-0.6.2.tgz#2b952f070caf63f6bd34fdd365540fd098f5e735"
-  integrity sha512-bxoTiouVPX/9UdO7PZ1TrOHjHPjX3O2jxlUS+Xw6+DCUKd0lvBNvokngyi5LLTPWW3ASX31r5TB15WueyA4fdQ==
-  dependencies:
-    zod "^1.11.11"
-
 zod@3.2.0, zod@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.2.0.tgz#4f06fac3c74e56902eae43a47a1687bf49c9b70b"
   integrity sha512-yvcO3FZ8URR+LliMGqaW7tlVOOTzmup3vzKEe9Ds7twyJtdhvYa7dIYr0FbD1wVfWC1OuS83vZfHtCKslPuRhA==
-
-zod@^1.11.11:
-  version "1.11.17"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-1.11.17.tgz#2aae9e91fc66128116ae9844e8f416a95f453f8e"
-  integrity sha512-UzIwO92D0dSFwIRyyqAfRXICITLjF0IP8tRbEK/un7adirMssWZx8xF/1hZNE7t61knWZ+lhEuUvxlu2MO8qqA==
 
 zwitch@^1.0.0:
   version "1.0.5"

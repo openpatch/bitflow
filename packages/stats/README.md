@@ -1,11 +1,11 @@
-# @openpatch/bits-stats
+# @bitflow/stats
 
 A Quick description of the package
 
 ## Installation
 
 ```sh
-yarn add @openpatch/bits-stats
+yarn add @bitflow/stats
 # or
-npm i @openpatch/bits-stats
+npm i @bitflow/stats
 ```

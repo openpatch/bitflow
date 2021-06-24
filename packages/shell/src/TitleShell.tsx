@@ -8,7 +8,7 @@ import { IShell } from "./types";
 
 export type TitleShellProps<P extends Title> = {
   title: P;
-  header: string;
+  header?: string;
   TitleComponent: FC<TitleProps<P>>;
 } & IShell;
 
@@ -52,17 +52,19 @@ export const TitleShell = <P extends Title>({
   };
 
   return (
-    <Shell>
-      <ShellHeader
-        loadingClose={state === "close"}
-        loadingPrevious={state === "previous"}
-        onClose={onClose ? handleClose : undefined}
-        onPrevious={onPrevious ? handlePrevious : undefined}
-        progress={progress}
-        disabled={state !== "default"}
-      >
-        {header}
-      </ShellHeader>
+    <Shell noHeader={!header}>
+      {header && (
+        <ShellHeader
+          loadingClose={state === "close"}
+          loadingPrevious={state === "previous"}
+          onClose={onClose ? handleClose : undefined}
+          onPrevious={onPrevious ? handlePrevious : undefined}
+          progress={progress}
+          disabled={state !== "default"}
+        >
+          {header}
+        </ShellHeader>
+      )}
       <ShellContent>
         <TitleComponent title={title} />
       </ShellContent>

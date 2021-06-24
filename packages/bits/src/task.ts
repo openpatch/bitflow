@@ -4,6 +4,7 @@ import {
   TaskAnswer,
   TaskEvaluationFormProps,
   TaskFeedbackFormProps,
+  TaskProps,
   TaskResult,
   TaskStatistic,
   TaskStatisticProps,
@@ -25,7 +26,7 @@ export type TaskBit<
   ViewForm: (props: TaskViewFormProps) => ReactElement | null;
   EvaluationForm: (props: TaskEvaluationFormProps) => ReactElement | null;
   FeedbackForm: (props: TaskFeedbackFormProps) => ReactElement | null;
-  Task: (props: any) => ReactElement | null;
+  Task: (props: TaskProps<T, R, A, any>) => ReactElement | null;
   Statistic: (props: TaskStatisticProps<S, T>) => ReactElement | null;
   updateStatistic: UpdateTaskStatistic<S, A, T, R>;
   TaskSchema: ZodSchema<T>;

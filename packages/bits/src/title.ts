@@ -1,11 +1,11 @@
-import { TitleViewFormProps } from "@bitflow/base";
+import { Title, TitleProps, TitleViewFormProps } from "@bitflow/base";
 import * as simple from "@bitflow/title-simple";
 import { ReactElement } from "react";
 import { ZodSchema } from "zod";
 
-export type TitleBit = {
+export type TitleBit<T extends Title = any> = {
   ViewForm: (props: TitleViewFormProps) => ReactElement | null;
-  Title: (props: any) => ReactElement | null;
+  Title: (props: TitleProps<T>) => ReactElement | null;
   TitleSchema: ZodSchema<any>;
 };
 
