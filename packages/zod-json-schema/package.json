@@ -1,0 +1,46 @@
+{
+  "name": "@bitflow/zod-json-schema",
+  "version": "0.0.0",
+  "author": "Mike Barkmin",
+  "homepage": "https://github.com/openpatch/bitflow#readme",
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "typings": "dist/types/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openpatch/bitflow.git",
+    "directory": "packages/zod-json-schema"
+  },
+  "bugs": {
+    "url": "https://github.com/openpatch/bitflow/issues"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "start": "tsc --build --watch",
+    "build": "concurrently yarn:build:*",
+    "clean": "tsc --build --clean",
+    "test": "jest --env=jsdom --passWithNoTests",
+    "test:coverage": "yarn test --coverage",
+    "version": "yarn build",
+    "build:esm": "tsc --project tsconfig.json --declaration --declarationDir dist/esm --module esnext --target es2015 --outDir dist/esm",
+    "build:cjs": "tsc --project tsconfig.json --declaration --declarationDir dist/cjs --module commonjs --target es5 --outDir dist/cjs",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types"
+  },
+  "dependencies": {},
+  "peerDependencies": {}
+}
