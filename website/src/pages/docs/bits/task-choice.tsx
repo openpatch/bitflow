@@ -4,7 +4,6 @@ import { TaskBitDoc } from "../../../components/TaskBitDoc";
 export default function TaskChoice() {
   return (
     <TaskBitDoc<taskBit.ITask>
-      name="choice"
       description=""
       taskBit={taskBit}
       actions={[

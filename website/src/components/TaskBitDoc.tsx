@@ -1,6 +1,7 @@
 import { Task, TaskAnswer, TaskResult, TaskStatistic } from "@bitflow/base";
 import { TaskBit } from "@bitflow/bits";
 import { TaskShell } from "@bitflow/shell";
+import { zodToJsonSchema } from "@bitflow/zod-json-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -22,11 +23,10 @@ import {
 } from "@openpatch/patches";
 import { Fragment, useState } from "react";
 import { DefaultValues, FormProvider, useForm } from "react-hook-form";
-import zodToJsonSchema from "zod-to-json-schema";
+import { toSentence } from "../utils/case";
 import { DocLayout } from "./DocLayout";
 
 export type TaskBitDocProps<T extends Task> = {
-  name: string;
   taskBit: TaskBit<T>;
   defaultValues: T;
   actions: string[];
@@ -34,7 +34,6 @@ export type TaskBitDocProps<T extends Task> = {
 };
 
 export function TaskBitDoc<T extends Task>({
-  name,
   defaultValues,
   taskBit,
   description,
@@ -51,6 +50,7 @@ export function TaskBitDoc<T extends Task>({
     mode: "onBlur",
   });
   const task = methods.watch() as any;
+  const name = defaultValues.subtype;
 
   const handleEvaluate = async (answer: TaskAnswer): Promise<TaskResult> => {
     const result = taskBit.evaluate({ answer, task });
@@ -67,7 +67,7 @@ export function TaskBitDoc<T extends Task>({
   return (
     <DocLayout
       meta={{
-        title: `Taskbit - ${name}`,
+        title: `Taskbit - ${toSentence(name)}`,
       }}
     >
       <Grid gridGap="standard">
@@ -96,9 +96,9 @@ export function TaskBitDoc<T extends Task>({
         <Card>
           <CardHeader>Example</CardHeader>
           <CardContent>
-            This is an interactive example of the {name} task. You can submit
-            new answers, show a statistic based on thoses answers or modify the
-            task by using the different forms.
+            This is an interactive example of the {toSentence(name)} task. You
+            can submit new answers, show a statistic based on thoses answers or
+            modify the task by using the different forms.
           </CardContent>
           <FormProvider {...methods}>
             <Tabs>
@@ -226,7 +226,8 @@ const My = () => (
           <CardContent>
             Each task emits different actions, which can be used for{" "}
             <Link href="/docs/bits/capute-and-replay">capture and replay</Link>{" "}
-            the solving process. The {name} task emits the following:
+            the solving process. The {toSentence(name)} task emits the
+            following:
             {actions.map((a, i) => (
               <Code key={i} language="json">
                 {a}
@@ -242,10 +243,7 @@ const My = () => (
             which follows this JSON schema.
             <Code language="json">
               {JSON.stringify(
-                zodToJsonSchema(
-                  taskBit.TaskSchema as any,
-                  `bitflow/task-${name}`
-                ),
+                zodToJsonSchema(taskBit.TaskSchema as any),
                 null,
                 2
               )}

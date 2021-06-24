@@ -1,33 +1,39 @@
-import * as taskBit from "@bitflow/task-input";
+import * as taskBit from "@bitflow/task-fill-in-the-blank";
 import { TaskBitDoc } from "../../../components/TaskBitDoc";
 
-export default function TaskInput() {
+export default function TaskFillInTheBlank() {
   return (
     <TaskBitDoc<taskBit.ITask>
       description=""
       taskBit={taskBit}
       actions={[
         `
-"type": "change",
+"type": "change-blank",
 "payload": {
-  "input": "string"
+  "blank": "string",
+  "value": "string"
 }
 `,
       ]}
       defaultValues={{
         description: "",
-        subtype: "input",
+        subtype: "fill-in-the-blank",
         view: {
-          instruction: "You may input abc",
+          instruction: "**This is an instruction**",
+          textWithBlanks: `
+~~A~~ a test ~~B~~
+`,
         },
         evaluation: {
           mode: "auto",
-          pattern: "abc",
+          blanks: {
+            a: "[hH]allo",
+          },
           enableRetry: false,
           showFeedback: true,
         },
         feedback: {
-          patterns: [],
+          blanks: {},
         },
         name: "Example",
       }}
