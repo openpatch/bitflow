@@ -1,6 +1,6 @@
-import { FlowSchema, IFlow } from "@bitflow/flow";
+import { Flow } from "@bitflow/core";
 
-export const proceduralC = FlowSchema.parse({
+export const proceduralC: Flow = {
   name: "Procedural Programming in C",
   draft: false,
   nodes: [
@@ -9,6 +9,9 @@ export const proceduralC = FlowSchema.parse({
       position: { x: -45.00000000000001, y: -104 },
       type: "start",
       data: {
+        name: "Start",
+        description: "",
+        subtype: "simple",
         view: {
           title: "Start",
           markdown:
@@ -21,11 +24,12 @@ export const proceduralC = FlowSchema.parse({
       position: { x: 2271, y: 191 },
       type: "end",
       data: {
+        name: "End",
+        description: "",
+        subtype: "tries",
         view: {
           markdown:
             "# Thanks for your participation!\n\nI hope you got something out of the assessment.\n\nIf you are interested in doing more assessments like this or if you want to know more about the project you can write me an e-mail: [mike.barkmin@uni-due.de](mailto:mike.barkmin@uni-due.de)",
-          showPoints: true,
-          listResults: true,
         },
       },
     },
@@ -1431,4 +1435,4 @@ export const proceduralC = FlowSchema.parse({
   ],
   zoom: 0.5215569806775638,
   position: [23.649061695226692, 280.46897322607316],
-} as IFlow);
+};

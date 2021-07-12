@@ -1,14 +1,13 @@
-import { TaskEvaluationFormProps } from "@bitflow/base";
 import { HookFormController, Input } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import { Fragment } from "react";
 import { useFormContext } from "react-hook-form";
-import { ITask } from ".";
 import translations from "./locales.vocab";
+import { ITask, TaskBit } from "./types";
 
 const blankRegex = /~~[A-z]+~~/g;
 
-export const EvaluationForm = ({ name }: TaskEvaluationFormProps) => {
+export const EvaluationForm: TaskBit["EvaluationForm"] = ({ name }) => {
   const { t } = useTranslations(translations);
   const { getValues } = useFormContext();
   const textWithBlanks = getValues(

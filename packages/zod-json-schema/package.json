@@ -41,6 +41,8 @@
     "build:cjs": "tsc --project tsconfig.json --declaration --declarationDir dist/cjs --module commonjs --target es5 --outDir dist/cjs",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types"
   },
-  "dependencies": {},
+  "dependencies": {
+    "zod": "^3.2.0"
+  },
   "peerDependencies": {}
 }

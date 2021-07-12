@@ -1,4 +1,6 @@
-import { FlowSchema, FlowView, IFlow } from "@bitflow/flow";
+import { Flow as IFlow } from "@bitflow/core";
+import { Flow } from "@bitflow/flow";
+import { useFlow } from "@bitflow/provider";
 import { AutoGrid, Box, Heading, Text } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import { Fragment, useEffect, useState } from "react";
@@ -10,6 +12,7 @@ import translations from "../locales.vocab";
 
 export default function Home() {
   const { t } = useTranslations(translations);
+  const { FlowSchema } = useFlow();
   const [myFlows, setMyFlows] = useState<Record<string, IFlow>>();
 
   useEffect(() => {
@@ -39,7 +42,7 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
-        <FlowView {...simpleAnswerSplit} />
+        <Flow autoFitView {...simpleAnswerSplit} />
       </Box>
       <Box maxWidth="large" mx="auto" width="100%" px="standard" my="xlarge">
         <AutoGrid gap="xlarge">

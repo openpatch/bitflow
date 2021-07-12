@@ -1,18 +1,18 @@
-import { TaskProps, TaskRef } from "@bitflow/base";
 import { AutoGrid, Box, Markdown } from "@openpatch/patches";
 import produce, { Draft } from "immer";
 import { forwardRef, useEffect, useImperativeHandle, useReducer } from "react";
 import { Choice } from "./Choice";
 import { Feedback } from "./Feedback";
-import { IOption, ITask, options } from "./schemas";
+import { IOption, options } from "./schemas";
 import {
   IAction,
   IAnswer,
   IAnswerAction,
   ICheckAction,
-  IResult,
+  ITask,
   ITaskState,
   IUncheckAction,
+  TaskBit,
 } from "./types";
 
 // Initial State
@@ -87,78 +87,77 @@ export const reducer = produce((draft: Draft<ITaskState>, action: IAction) => {
 });
 
 // Task Component
-export const Task = forwardRef<
-  TaskRef<IAction>,
-  TaskProps<ITask, IResult, IAnswer, IAction>
->(({ task, mode, result, answer, onChange, onAction }, ref) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export const Task: TaskBit["Task"] = forwardRef(
+  ({ task, mode, result, answer, onChange, onAction }, ref) => {
+    const [state, dispatch] = useReducer(reducer, initialState);
 
-  const customDispatch = (action: IAction) => {
-    if (!shouldDispatch()) return;
-    if (onAction) {
-      onAction(action);
-    }
-    dispatch(action);
-  };
+    const customDispatch = (action: IAction) => {
+      if (!shouldDispatch()) return;
+      if (onAction) {
+        onAction(action);
+      }
+      dispatch(action);
+    };
 
-  useEffect(() => {
-    if (answer) {
-      dispatch(answerAction({ answer }));
-    }
-  }, [answer]);
+    useEffect(() => {
+      if (answer) {
+        dispatch(answerAction({ answer }));
+      }
+    }, [answer]);
 
-  useEffect(() => {
-    if (onChange) {
-      onChange({ checked: state.checked });
-    }
-  }, [state]);
+    useEffect(() => {
+      if (onChange) {
+        onChange({ subtype: "choice", checked: state.checked });
+      }
+    }, [state]);
 
-  useImperativeHandle(ref, () => ({
-    dispatch,
-  }));
+    useImperativeHandle(ref, () => ({
+      dispatch,
+    }));
 
-  const shouldDispatch = () => {
-    if (mode === "recording" || mode === "result") {
-      return false;
-    }
-    return true;
-  };
+    const shouldDispatch = () => {
+      if (mode === "recording" || mode === "result") {
+        return false;
+      }
+      return true;
+    };
 
-  const check = (choice: IOption) => {
-    customDispatch(checkAction({ choice, variant: task.view.variant }));
-  };
+    const check = (choice: IOption) => {
+      customDispatch(checkAction({ choice, variant: task.view.variant }));
+    };
 
-  const uncheck = (choice: IOption) => {
-    customDispatch(uncheckAction({ choice, variant: task.view.variant }));
-  };
+    const uncheck = (choice: IOption) => {
+      customDispatch(uncheckAction({ choice, variant: task.view.variant }));
+    };
 
-  const handleChange = (choice: IOption) => (checked: boolean) => {
-    if (checked) {
-      check(choice);
-    } else {
-      uncheck(choice);
-    }
-  };
+    const handleChange = (choice: IOption) => (checked: boolean) => {
+      if (checked) {
+        check(choice);
+      } else {
+        uncheck(choice);
+      }
+    };
 
-  return (
-    <Box padding="standard">
-      <AutoGrid gap="standard">
-        <Markdown markdown={task.view.instruction} />
+    return (
+      <Box padding="standard">
         <AutoGrid gap="standard">
-          {task.view.choices
-            .filter((c) => c.markdown)
-            .map((choice, index) => (
-              <Choice
-                key={index}
-                choice={choice?.markdown || ""}
-                result={result?.choices[options[index]]}
-                checked={state.checked[options[index]] || false}
-                onChange={handleChange(options[index])}
-              />
-            ))}
+          <Markdown markdown={task.view.instruction} />
+          <AutoGrid gap="standard">
+            {task.view.choices
+              .filter((c) => c.markdown)
+              .map((choice, index) => (
+                <Choice
+                  key={index}
+                  choice={choice?.markdown || ""}
+                  result={result?.choices[options[index]]}
+                  checked={state.checked[options[index]] || false}
+                  onChange={handleChange(options[index])}
+                />
+              ))}
+          </AutoGrid>
+          {result?.feedback && <Feedback {...result.feedback} />}
         </AutoGrid>
-        {result?.feedback && <Feedback {...result.feedback} />}
-      </AutoGrid>
-    </Box>
-  );
-});
+      </Box>
+    );
+  }
+);

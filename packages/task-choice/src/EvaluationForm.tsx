@@ -1,12 +1,12 @@
-import { TaskEvaluationFormProps } from "@bitflow/base";
 import { AutoGrid, Box, HookFormController } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import { useFormContext } from "react-hook-form";
 import { Choice } from "./Choice";
 import translations from "./locales.vocab";
-import { IOption, ITask, options } from "./schemas";
+import { IOption, options } from "./schemas";
+import { ITask, TaskBit } from "./types";
 
-export const EvaluationForm = ({ name }: TaskEvaluationFormProps) => {
+export const EvaluationForm: TaskBit["EvaluationForm"] = ({ name }) => {
   const { control, watch } = useFormContext();
   const view = watch(`${name}.view`) as Partial<ITask["view"]>;
   const { t } = useTranslations(translations);

@@ -1,7 +1,10 @@
 import {
   FeedbackMessageSchema,
+  TaskAnswerSchema,
+  TaskResultSchema,
   TaskSchema as TaskSchemaBase,
-} from "@bitflow/base";
+  TaskStatisticSchema,
+} from "@bitflow/core";
 import * as z from "zod";
 
 export const TaskSchema = TaskSchemaBase.merge(
@@ -46,4 +49,33 @@ export const TaskSchema = TaskSchemaBase.merge(
   })
 );
 
-export type ITask = z.infer<typeof TaskSchema>;
+export const StatisticSchema = TaskStatisticSchema.merge(
+  z.object({
+    subtype: z.literal("input"),
+    patterns: z.record(
+      z.object({
+        count: z.number(),
+      })
+    ),
+    inputs: z.record(
+      z.object({
+        correct: z.boolean(),
+        count: z.number(),
+      })
+    ),
+  })
+);
+
+export const AnswerSchema = TaskAnswerSchema.merge(
+  z.object({
+    subtype: z.literal("input"),
+    input: z.string(),
+  })
+);
+
+export const ResultSchema = TaskResultSchema.merge(
+  z.object({
+    subtype: z.literal("input"),
+    feedback: z.array(FeedbackMessageSchema),
+  })
+);

@@ -9,12 +9,13 @@ export const withBitflowProvider = <T extends object>(
   const Wrapper = ({
     locale,
     config,
+    bits,
     ...props
   }: BitflowProviderProps &
     T &
     WithConditionalCSSProp<PropsWithChildren<T>>) => {
     return (
-      <BitflowProvider locale={locale} config={config}>
+      <BitflowProvider locale={locale} config={config} bits={bits}>
         <WrappedComponent
           {...(props as T & WithConditionalCSSProp<PropsWithChildren<T>>)}
         />

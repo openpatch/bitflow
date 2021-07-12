@@ -1,11 +1,4 @@
-import {
-  Action,
-  Task,
-  TaskAnswer,
-  TaskProps,
-  TaskRef,
-  TaskResult,
-} from "@bitflow/base";
+import { Action, TaskProps, TaskRef } from "@bitflow/core";
 import { css } from "@emotion/react";
 import {
   Box,
@@ -20,7 +13,7 @@ import {
   MoodHappy,
   ThumbsDown,
   ThumbsUp,
-} from "@openpatch/patches/dist/cjs/icons/shade";
+} from "@openpatch/patches/icons/shade";
 import { useTranslations } from "@vocab/react";
 import {
   ForwardRefExoticComponent,
@@ -66,13 +59,13 @@ import {
 import { createReducer, IState } from "./reducer";
 
 export type TaskShellProps<
-  T extends Task,
-  R extends TaskResult,
-  A extends TaskAnswer,
+  T extends Bitflow.Task,
+  R extends Bitflow.TaskResult,
+  A extends Bitflow.TaskAnswer,
   Act extends Action
 > = {
   mode: "default" | "recording" | "result";
-  task: Pick<T, "view" | "subtype">;
+  task: T | Pick<T, "view" | "subtype">;
   TaskComponent: ForwardRefExoticComponent<
     TaskProps<T, R, A, Act> & RefAttributes<TaskRef<Act>>
   >;
@@ -99,17 +92,17 @@ export type TaskShellProps<
 } & IShell;
 
 export type TaskShellRef<
-  A extends TaskAnswer,
-  R extends TaskResult,
+  A extends Bitflow.TaskAnswer,
+  R extends Bitflow.TaskResult,
   Act extends Action
 > = {
   dispatch: (action: IShellAction<A, R> | ITaskAction<Act>) => void;
 };
 
 export const TaskShell = <
-  T extends Task,
-  R extends TaskResult,
-  A extends TaskAnswer,
+  T extends Bitflow.Task,
+  R extends Bitflow.TaskResult,
+  A extends Bitflow.TaskAnswer,
   Act extends Action
 >({
   mode,
@@ -237,7 +230,7 @@ export const TaskShell = <
   async function handleSubmit() {
     customDispatch(evaluateAction<A>({ answer }));
     let result: R | null = null;
-    if (evaluate) {
+    if (evaluate && (task as T).evaluation) {
       result = await evaluate(answer);
     }
 

@@ -1,5 +1,5 @@
-import { Title } from "@bitflow/base";
-import { TitleBit } from "@bitflow/bits";
+import { TitleBit } from "@bitflow/core";
+import { TitleShell } from "@bitflow/shell";
 import { zodToJsonSchema } from "@bitflow/zod-json-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -22,13 +22,13 @@ import { DefaultValues, FormProvider, useForm } from "react-hook-form";
 import { toSentence } from "../utils/case";
 import { DocLayout } from "./DocLayout";
 
-export type TitleBitDocProps<T extends Title> = {
+export type TitleBitDocProps<T extends Bitflow.Title> = {
   titleBit: TitleBit;
   defaultValues: T;
   description: string;
 };
 
-export function TitleBitDoc<T extends Title>({
+export function TitleBitDoc<T extends Bitflow.Title>({
   titleBit,
   defaultValues,
   description,
@@ -45,9 +45,10 @@ export function TitleBitDoc<T extends Title>({
   const name = defaultValues.subtype;
 
   return (
-    <DocLayout meta={{ title: `Titlebit - ${toSentence(name)}` }}>
+    <DocLayout meta={{ title: `Title - ${toSentence(name)}` }}>
       <Grid gridGap="standard">
         <Card>
+          <CardHeader>Description</CardHeader>
           <CardContent>{description}</CardContent>
           <CardFooter>
             <ButtonGroup space="standard">
@@ -72,19 +73,21 @@ export function TitleBitDoc<T extends Title>({
         <Card>
           <CardHeader>Example</CardHeader>
           <CardContent>
-            This is an interactive example of the {toSentence(name)} title. You
-            can submit new answers, show a statistic based on thoses answers or
-            modify the title by using the different forms.
+            This is an interactive example of the {toSentence(name)} title.
           </CardContent>
           <FormProvider {...methods}>
             <Tabs>
               <TabList inverted>
-                <Tab>Task</Tab>
+                <Tab>Title</Tab>
                 <Tab>View Form</Tab>
               </TabList>
               <TabPanel p="none">
-                <Box position="relative" height="600px">
-                  <titleBit.Title title={title} />
+                <Box position="relative" height="600px" overflowY="auto">
+                  <TitleShell
+                    TitleComponent={titleBit.Title}
+                    title={{ ...title }}
+                    onNext={async () => {}}
+                  />
                 </Box>
               </TabPanel>
               <TabPanel>

@@ -1,16 +1,12 @@
-import {
-  InputProps,
-  InputSchema as InputSchemaBase,
-  InputViewFormProps,
-} from "@bitflow/base";
+import { InputBit, InputSchema as InputSchemaBase } from "@bitflow/core";
 import {
   Box,
   HookFormController,
   Markdown,
   MarkdownEditor,
 } from "@openpatch/patches";
-import { useTranslations } from "@vocab/react";
-import { FC, Fragment } from "react";
+import { useTranslations as useVocabTranslations } from "@vocab/react";
+import { Fragment } from "react";
 import * as z from "zod";
 import translations from "./locales.vocab";
 
@@ -25,7 +21,23 @@ export const InputSchema = InputSchemaBase.merge(
 
 export type IInput = z.infer<typeof InputSchema>;
 
-export const Input: FC<InputProps<IInput>> = ({ input }) => {
+export const useInformation: InputBit<IInput>["useInformation"] = () => {
+  const { t } = useVocabTranslations(translations);
+  return {
+    name: t("name"),
+    description: t("description"),
+    example: {
+      description: t("description"),
+      name: t("name"),
+      subtype: "markdown",
+      view: {
+        markdown: "# Information",
+      },
+    },
+  };
+};
+
+export const Input: InputBit<IInput>["Input"] = ({ input }) => {
   return (
     <Box px="standard">
       <Markdown markdown={input.view.markdown} />
@@ -33,8 +45,8 @@ export const Input: FC<InputProps<IInput>> = ({ input }) => {
   );
 };
 
-export const ViewForm = ({ name }: InputViewFormProps) => {
-  const { t } = useTranslations(translations);
+export const ViewForm: InputBit<IInput>["ViewForm"] = ({ name }) => {
+  const { t } = useVocabTranslations(translations);
   return (
     <Fragment>
       <HookFormController

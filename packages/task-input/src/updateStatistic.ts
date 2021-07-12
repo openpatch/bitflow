@@ -1,13 +1,10 @@
-import { UpdateTaskStatistic } from "@bitflow/base";
-import { ITask } from "./schemas";
-import { IAnswer, IResult, IStatistic } from "./types";
+import { TaskBit } from "./types";
 
-export const updateStatistic: UpdateTaskStatistic<
-  IStatistic,
-  IAnswer,
-  ITask,
-  IResult
-> = async ({ answer, statistic, task }) => {
+export const updateStatistic: TaskBit["updateStatistic"] = async ({
+  answer,
+  statistic,
+  task,
+}) => {
   const { feedback, evaluation } = task;
   const patterns = statistic?.patterns || {};
   const { pattern } = evaluation;
@@ -37,6 +34,7 @@ export const updateStatistic: UpdateTaskStatistic<
   } catch (e) {}
 
   return {
+    subtype: "input",
     count: (statistic?.count || 0) + 1,
     patterns,
     inputs: {

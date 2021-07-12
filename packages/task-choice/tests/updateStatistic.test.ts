@@ -5,6 +5,7 @@ describe("updateStatistic", () => {
   it("should work with empty statistic", async () => {
     const statistic = await updateStatistic({
       answer: {
+        subtype: "choice",
         checked: { a: true },
       },
       task: {
@@ -30,6 +31,7 @@ describe("updateStatistic", () => {
     });
 
     const expected: IStatistic = {
+      subtype: "choice",
       count: 1,
       patterns: {
         a: {
@@ -45,6 +47,7 @@ describe("updateStatistic", () => {
   it("should work with precalculated statistic", async () => {
     const statistic = await updateStatistic({
       statistic: {
+        subtype: "choice",
         count: 43,
         patterns: {
           a: {
@@ -54,6 +57,7 @@ describe("updateStatistic", () => {
         },
       },
       answer: {
+        subtype: "choice",
         checked: { a: true },
       },
       task: {
@@ -79,6 +83,7 @@ describe("updateStatistic", () => {
     });
 
     const expected: IStatistic = {
+      subtype: "choice",
       count: 44,
       patterns: {
         a: {
@@ -94,18 +99,23 @@ describe("updateStatistic", () => {
   it("should work with multiple answers", async () => {
     const answers: IAnswer[] = [
       {
+        subtype: "choice",
         checked: { a: true },
       },
       {
+        subtype: "choice",
         checked: { a: true },
       },
       {
+        subtype: "choice",
         checked: { a: true },
       },
       {
+        subtype: "choice",
         checked: { a: true, b: true, c: false },
       },
       {
+        subtype: "choice",
         checked: { a: true, b: false, c: true },
       },
     ];
@@ -145,6 +155,7 @@ describe("updateStatistic", () => {
     );
 
     const expected: IStatistic = {
+      subtype: "choice",
       count: answers.length,
       patterns: {
         a: {

@@ -1,4 +1,3 @@
-import { TaskFeedbackFormProps } from "@bitflow/base";
 import {
   Box,
   ButtonSecondary,
@@ -13,8 +12,9 @@ import { useTranslations } from "@vocab/react";
 import { Fragment } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import translations from "./locales.vocab";
+import { TaskBit } from "./types";
 
-export const FeedbackForm = ({ name }: TaskFeedbackFormProps) => {
+export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
   const { t } = useTranslations(translations);
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({

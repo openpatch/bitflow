@@ -4,7 +4,11 @@ import { TaskBitDoc } from "../../../components/TaskBitDoc";
 export default function TaskInput() {
   return (
     <TaskBitDoc<taskBit.ITask>
-      description=""
+      description={`
+A task bit for creating single line response questions. The answer of a user can
+be automatically evaluated by providing a regular expression. You can also give
+feedback by using regular expression, as well.
+`}
       taskBit={taskBit}
       actions={[
         `

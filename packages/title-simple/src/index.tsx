@@ -1,8 +1,7 @@
 import {
-  TitleProps,
+  TitleBit as TitleBitBase,
   TitleSchema as TitleSchemaBase,
-  TitleViewFormProps,
-} from "@bitflow/base";
+} from "@bitflow/core";
 import {
   Box,
   Heading,
@@ -11,8 +10,8 @@ import {
   Markdown,
   MarkdownEditor,
 } from "@openpatch/patches";
-import { useTranslations } from "@vocab/react";
-import { FC, Fragment } from "react";
+import { useTranslations as useVocabTranslations } from "@vocab/react";
+import { Fragment } from "react";
 import * as z from "zod";
 import translations from "./locales.vocab";
 
@@ -28,7 +27,26 @@ export const TitleSchema = TitleSchemaBase.merge(
 
 export type ITitle = z.infer<typeof TitleSchema>;
 
-export const Title: FC<TitleProps<ITitle>> = ({ title }) => {
+type TitleBit = TitleBitBase<ITitle>;
+
+export const useInformation: TitleBit["useInformation"] = () => {
+  const { t } = useVocabTranslations(translations);
+  return {
+    name: t("name"),
+    description: t("description"),
+    example: {
+      description: t("description"),
+      name: t("name"),
+      subtype: "simple",
+      view: {
+        message: "",
+        title: "",
+      },
+    },
+  };
+};
+
+export const Title: TitleBit["Title"] = ({ title }) => {
   return (
     <Box px="standard">
       <Heading as="h1" textAlign="center">
@@ -39,8 +57,8 @@ export const Title: FC<TitleProps<ITitle>> = ({ title }) => {
   );
 };
 
-export const ViewForm = ({ name }: TitleViewFormProps) => {
-  const { t } = useTranslations(translations);
+export const ViewForm: TitleBit["ViewForm"] = ({ name }) => {
+  const { t } = useVocabTranslations(translations);
   return (
     <Fragment>
       <HookFormController

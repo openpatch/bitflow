@@ -1,12 +1,10 @@
+import { FlowPortalInputNode } from "@bitflow/core";
+import { FlowNode, FlowNodeProps } from "@bitflow/flow-node";
 import { useTranslations } from "@vocab/react";
-import { FlowNode, FlowNodeProps } from "./FlowNode";
 import translations from "./locales.vocab";
-import { IFlowNode, IPortal } from "./schemas";
 
 export const PortalInputNode = (
-  node: Pick<IFlowNode, "type"> & {
-    type: "portal-input";
-    data: IPortal & Partial<FlowNodeProps>;
+  node: Pick<FlowPortalInputNode, "data"> & {
     hideHandles?: boolean;
     maxWidth?: FlowNodeProps["maxWidth"];
   }

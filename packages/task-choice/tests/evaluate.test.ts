@@ -1,8 +1,8 @@
 import { evaluate } from "../src/evaluate";
-import { ITask } from "../src/schemas";
-import { IAnswer } from "../src/types";
+import { IAnswer, ITask } from "../src/types";
 
 const answer: IAnswer = {
+  subtype: "choice",
   checked: {
     a: true,
     b: true,

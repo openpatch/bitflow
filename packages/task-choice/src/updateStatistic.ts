@@ -1,13 +1,11 @@
-import { UpdateTaskStatistic } from "@bitflow/base";
-import { ITask, options } from "./schemas";
-import { IAnswer, IResult, IStatistic } from "./types";
+import { options } from "./schemas";
+import { TaskBit } from "./types";
 
-export const updateStatistic: UpdateTaskStatistic<
-  IStatistic,
-  IAnswer,
-  ITask,
-  IResult
-> = ({ answer, statistic, task }) =>
+export const updateStatistic: TaskBit["updateStatistic"] = ({
+  answer,
+  statistic,
+  task,
+}) =>
   new Promise((resolve) => {
     let pattern: string = "";
 
@@ -24,6 +22,7 @@ export const updateStatistic: UpdateTaskStatistic<
     pattern = pattern.split("").sort().join("");
 
     resolve({
+      subtype: "choice",
       count: (statistic?.count || 0) + 1,
       patterns: {
         ...statistic?.patterns,

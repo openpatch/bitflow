@@ -5,12 +5,28 @@ import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
   "en-GB" | "en" | "en-US" | "de",
-  { markdown: () => "Markdown" }
+  { description: () => " "; markdown: () => "Markdown"; name: () => "Markdown" }
 >({
-  "en-GB": createLanguage({ markdown: "Markdown" }),
-  en: createLanguage({ markdown: "Markdown" }),
-  "en-US": createLanguage({ markdown: "Markdown" }),
-  de: createLanguage({ markdown: "Markdown" }),
+  "en-GB": createLanguage({
+    description: " ",
+    markdown: "Markdown",
+    name: "Markdown",
+  }),
+  en: createLanguage({
+    description: " ",
+    markdown: "Markdown",
+    name: "Markdown",
+  }),
+  "en-US": createLanguage({
+    description: " ",
+    markdown: "Markdown",
+    name: "Markdown",
+  }),
+  de: createLanguage({
+    description: " ",
+    markdown: "Markdown",
+    name: "Markdown",
+  }),
 });
 
 export default translations;

@@ -43,7 +43,7 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "@bitflow/base": "0.0.0",
+    "@bitflow/core": "0.0.0",
     "lodash.get": "^4.4.2"
   },
   "peerDependencies": {

@@ -1,8 +1,9 @@
 import { evaluate } from "../src/evaluate";
-import { ITask } from "../src/schemas";
-import { IAnswer } from "../src/types";
+import {} from "../src/schemas";
+import { IAnswer, ITask } from "../src/types";
 
 const answer: IAnswer = {
+  subtype: "fill-in-the-blank",
   blanks: {
     a: "Hallo",
   },

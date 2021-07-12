@@ -1,5 +1,7 @@
-import { FlowTeaser, IFlow } from "@bitflow/flow";
+import { Flow as IFlow } from "@bitflow/core";
+import { Flow } from "@bitflow/flow";
 import {
+  Box,
   ButtonPrimary,
   ButtonSecondary,
   Card,
@@ -22,7 +24,9 @@ export const FlowCard = ({ flow }: FlowCardProps) => {
   return (
     <Card>
       <CardHeader>{flow.name}</CardHeader>
-      <FlowTeaser height="300px" {...flow} />
+      <Box height="300px">
+        <Flow {...flow} autoFitView interactive={false} />
+      </Box>
       <CardFooter>
         <ButtonPrimary
           fullWidth

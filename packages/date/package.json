@@ -42,7 +42,6 @@
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "@bitflow/base": "0.0.0",
     "@bitflow/provider": "0.0.0",
     "date-fns": "^2.22.1"
   },

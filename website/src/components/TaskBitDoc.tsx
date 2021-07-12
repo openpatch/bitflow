@@ -1,5 +1,4 @@
-import { Task, TaskAnswer, TaskResult, TaskStatistic } from "@bitflow/base";
-import { TaskBit } from "@bitflow/bits";
+import { TaskBit } from "@bitflow/core";
 import { TaskShell } from "@bitflow/shell";
 import { zodToJsonSchema } from "@bitflow/zod-json-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,20 +25,20 @@ import { DefaultValues, FormProvider, useForm } from "react-hook-form";
 import { toSentence } from "../utils/case";
 import { DocLayout } from "./DocLayout";
 
-export type TaskBitDocProps<T extends Task> = {
+export type TaskBitDocProps<T extends Bitflow.Task> = {
   taskBit: TaskBit<T>;
   defaultValues: T;
   actions: string[];
   description: string;
 };
 
-export function TaskBitDoc<T extends Task>({
+export function TaskBitDoc<T extends Bitflow.Task>({
   defaultValues,
   taskBit,
   description,
   actions,
 }: TaskBitDocProps<T>) {
-  const [statistic, setStatistic] = useState<TaskStatistic>();
+  const [statistic, setStatistic] = useState<Bitflow.TaskStatistic>();
   const [nextKey, setNextKey] = useState(new Date());
   const formDefaultValues = defaultValues as DefaultValues<T>;
   const methods = useForm<T>({
@@ -52,7 +51,9 @@ export function TaskBitDoc<T extends Task>({
   const task = methods.watch() as any;
   const name = defaultValues.subtype;
 
-  const handleEvaluate = async (answer: TaskAnswer): Promise<TaskResult> => {
+  const handleEvaluate = async (
+    answer: Bitflow.TaskAnswer
+  ): Promise<Bitflow.TaskResult> => {
     const result = taskBit.evaluate({ answer, task });
     const updateStatistic = await taskBit.updateStatistic({
       statistic,
@@ -67,11 +68,12 @@ export function TaskBitDoc<T extends Task>({
   return (
     <DocLayout
       meta={{
-        title: `Taskbit - ${toSentence(name)}`,
+        title: `Task - ${toSentence(name)}`,
       }}
     >
       <Grid gridGap="standard">
         <Card>
+          <CardHeader>Description</CardHeader>
           <CardContent>{description}</CardContent>
           <CardFooter>
             <ButtonGroup space="standard">
@@ -110,14 +112,14 @@ export function TaskBitDoc<T extends Task>({
                 <Tab>Statistic</Tab>
               </TabList>
               <TabPanel p="none">
-                <Box position="relative" height="600px">
+                <Box position="relative" height="600px" overflowY="auto">
                   <TaskShell
                     key={nextKey.toISOString()}
                     onNext={async () => setNextKey(new Date())}
                     evaluate={handleEvaluate}
                     TaskComponent={taskBit.Task as any}
                     mode="default"
-                    task={task}
+                    task={{ ...task }}
                   />
                 </Box>
               </TabPanel>
@@ -133,7 +135,10 @@ export function TaskBitDoc<T extends Task>({
               <TabPanel>
                 {statistic ? (
                   <Fragment>
-                    <taskBit.Statistic statistic={statistic} task={task} />
+                    <taskBit.Statistic
+                      statistic={{ ...statistic }}
+                      task={{ ...task }}
+                    />
                     <ButtonPrimary
                       fullWidth
                       onClick={() => setStatistic(undefined)}

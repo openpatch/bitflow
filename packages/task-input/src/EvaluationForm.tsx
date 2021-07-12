@@ -1,9 +1,9 @@
-import { TaskEvaluationFormProps } from "@bitflow/base";
 import { HookFormController, Input } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import translations from "./locales.vocab";
+import { TaskBit } from "./types";
 
-export const EvaluationForm = ({ name }: TaskEvaluationFormProps) => {
+export const EvaluationForm: TaskBit["EvaluationForm"] = ({ name }) => {
   const { t } = useTranslations(translations);
   return (
     <HookFormController

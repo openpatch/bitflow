@@ -11,12 +11,14 @@ const translations = createTranslationFile<
     close: () => "Close" | "Schließen";
     confidence: () => "Confidence";
     correctNudges: (values: { index: number }) => string;
+    end: () => "End";
     manualNudges: (values: { index: number }) => string;
     next: () => "Next" | "Weiter";
     previous: () => "Previous" | "Zurück";
     reasoning: () => "Reasoning" | "Begründung";
     retry: () => "Retry" | "Erneut versuchen";
     skip: () => "Skip" | "Überspringen";
+    start: () => "Start";
     unknownNudges: (values: { index: number }) => string;
     wrongNudges: (values: { index: number }) => string;
   }
@@ -28,6 +30,7 @@ const translations = createTranslationFile<
     confidence: "Confidence",
     correctNudges:
       "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}",
+    end: "End",
     manualNudges:
       "{index, plural, other {Your answer will be check manually!}}",
     next: "Next",
@@ -35,6 +38,7 @@ const translations = createTranslationFile<
     reasoning: "Reasoning",
     retry: "Retry",
     skip: "Skip",
+    start: "Start",
     unknownNudges:
       "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}",
     wrongNudges:
@@ -47,6 +51,7 @@ const translations = createTranslationFile<
     confidence: "Confidence",
     correctNudges:
       "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}",
+    end: "End",
     manualNudges:
       "{index, plural, other {Your answer will be check manually!}}",
     next: "Next",
@@ -54,6 +59,7 @@ const translations = createTranslationFile<
     reasoning: "Reasoning",
     retry: "Retry",
     skip: "Skip",
+    start: "Start",
     unknownNudges:
       "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}",
     wrongNudges:
@@ -66,6 +72,7 @@ const translations = createTranslationFile<
     confidence: "Confidence",
     correctNudges:
       "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}",
+    end: "End",
     manualNudges:
       "{index, plural, other {Your answer will be check manually!}}",
     next: "Next",
@@ -73,6 +80,7 @@ const translations = createTranslationFile<
     reasoning: "Reasoning",
     retry: "Retry",
     skip: "Skip",
+    start: "Start",
     unknownNudges:
       "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}",
     wrongNudges:
@@ -85,6 +93,7 @@ const translations = createTranslationFile<
     confidence: "Confidence",
     correctNudges:
       "{index, plural, =0 {Sehr gut!} =1 {Super!} other {Weiter so!}}",
+    end: "End",
     manualNudges:
       "{index, plural, other {Deine Antwort wird manuell überprüft!}}",
     next: "Weiter",
@@ -92,6 +101,7 @@ const translations = createTranslationFile<
     reasoning: "Begründung",
     retry: "Erneut versuchen",
     skip: "Überspringen",
+    start: "Start",
     unknownNudges:
       "{index, plural, =0 {Danke für deine Antwort!} other {Danke!}}",
     wrongNudges:

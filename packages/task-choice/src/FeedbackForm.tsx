@@ -1,4 +1,3 @@
-import { TaskFeedbackFormProps } from "@bitflow/base";
 import {
   Box,
   ButtonSecondary,
@@ -14,9 +13,10 @@ import { useTranslations } from "@vocab/react";
 import { Fragment, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import translations from "./locales.vocab";
-import { IOption, ITask, options } from "./schemas";
+import { IOption, options } from "./schemas";
+import { ITask, TaskBit } from "./types";
 
-export const FeedbackForm = ({ name }: TaskFeedbackFormProps) => {
+export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
   const { t } = useTranslations(translations);
   const { control, watch, getValues, setValue } = useFormContext();
   const defaultPatterns = getValues(

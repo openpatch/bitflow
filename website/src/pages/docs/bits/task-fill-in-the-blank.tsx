@@ -4,7 +4,12 @@ import { TaskBitDoc } from "../../../components/TaskBitDoc";
 export default function TaskFillInTheBlank() {
   return (
     <TaskBitDoc<taskBit.ITask>
-      description=""
+      description={`
+A task bit allowing to create fill in the blank texts. The text can be written
+in Markdown. The strike-through syntax will create a blank. The answers of a user
+can be automatically evaluated, if you provide regular expressions for the
+blanks. You can also provide feedback by using regular expression, as well.
+`}
       taskBit={taskBit}
       actions={[
         `

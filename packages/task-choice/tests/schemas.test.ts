@@ -1,5 +1,6 @@
-import { uuidv4 } from "@bitflow/base";
-import { ITask, TaskSchema } from "../src/schemas";
+import { uuidv4 } from "@bitflow/core";
+import { TaskSchema } from "../src/schemas";
+import { ITask } from "../src/types";
 
 describe("task schema", () => {
   it("should succeed validating", () => {
@@ -83,59 +84,5 @@ describe("evaluation schema", () => {
     const result = TaskSchema.safeParse(task);
 
     expect(result.success).toBeTruthy();
-  });
-
-  it("should fail validating for single variant with more than one correct", () => {
-    const task: ITask = {
-      subtype: "choice",
-      description: "desc",
-      name: "name",
-      view: {
-        instruction: "Instruction",
-        choices: [{ markdown: "A" }, { markdown: "B" }],
-        variant: "single",
-      },
-      evaluation: {
-        mode: "auto",
-        correct: ["a", "b"],
-        showFeedback: false,
-        enableRetry: false,
-      },
-      feedback: {
-        choices: {},
-        patterns: {},
-      },
-    };
-
-    const result = TaskSchema.safeParse(task);
-
-    expect(result.success).toBeFalsy();
-  });
-
-  it("should fail validating when correct option not in task", () => {
-    const task: ITask = {
-      subtype: "choice",
-      description: "desc",
-      name: "name",
-      view: {
-        instruction: "Instruction",
-        choices: [{ markdown: "A" }, { markdown: "B" }],
-        variant: "single",
-      },
-      evaluation: {
-        mode: "auto",
-        correct: ["c"],
-        showFeedback: false,
-        enableRetry: false,
-      },
-      feedback: {
-        choices: {},
-        patterns: {},
-      },
-    };
-
-    const result = TaskSchema.safeParse(task);
-
-    expect(result.success).toBeFalsy();
   });
 });

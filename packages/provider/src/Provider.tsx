@@ -4,16 +4,16 @@ import { context, ContextProps, Locale, locales } from "./context";
 
 export type BitflowProviderProps = {
   locale?: string;
-} & Pick<ContextProps, "config">;
+} & Pick<ContextProps, "config" | "bits">;
 
 export const BitflowProvider: FC<BitflowProviderProps> = ({
   children,
   locale,
+  bits,
   config = {},
 }) => {
-  const [currentLocale, setCurrentLocale] = useState<ContextProps["locale"]>(
-    "en-GB"
-  );
+  const [currentLocale, setCurrentLocale] =
+    useState<ContextProps["locale"]>("en-GB");
 
   const handleSetCurrentLocale = (locale: Locale) => {
     (window as any).__localeId__ = locale;
@@ -31,6 +31,7 @@ export const BitflowProvider: FC<BitflowProviderProps> = ({
   return (
     <context.Provider
       value={{
+        bits,
         locale: currentLocale,
         setLocale: handleSetCurrentLocale,
         config,

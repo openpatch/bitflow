@@ -1,16 +1,13 @@
-import { lerpColor, TaskStatisticProps } from "@bitflow/base";
+import { lerpColor } from "@bitflow/core";
 import { css } from "@emotion/react";
 import { AutoGrid, Box, Heading, Text, useTheme } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import { Fragment } from "react";
 import { TagCloud } from "react-tagcloud";
 import translations from "./locales.vocab";
-import { ITask } from "./schemas";
-import { IStatistic } from "./types";
+import { TaskBit } from "./types";
 
-export const Statistic = ({
-  statistic,
-}: TaskStatisticProps<IStatistic, ITask>) => {
+export const Statistic: TaskBit["Statistic"] = ({ statistic }) => {
   const { t } = useTranslations(translations);
   const [theme] = useTheme();
   const patterns = Object.keys(statistic.patterns)

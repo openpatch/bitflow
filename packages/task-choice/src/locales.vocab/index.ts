@@ -13,10 +13,12 @@ const translations = createTranslationFile<
     "correct-choices": () => "Correct Choices";
     delete: () => "Delete";
     "delete-pattern": () => "Delete";
+    description: () => " ";
     down: () => "Down";
     error: () => "Error";
     info: () => "Info";
     instruction: () => "Instruction";
+    name: () => "Choice";
     "not-checked-feedback": () => "Not Checked Feedback";
     "one-choice-required": () => "At least one choice is required!";
     pattern: (values: { pattern: string }) => string;
@@ -40,10 +42,12 @@ const translations = createTranslationFile<
     "correct-choices": "Correct Choices",
     delete: "Delete",
     "delete-pattern": "Delete",
+    description: " ",
     down: "Down",
     error: "Error",
     info: "Info",
     instruction: "Instruction",
+    name: "Choice",
     "not-checked-feedback": "Not Checked Feedback",
     "one-choice-required": "At least one choice is required!",
     pattern: "Pattern {pattern}",
@@ -66,10 +70,12 @@ const translations = createTranslationFile<
     "correct-choices": "Correct Choices",
     delete: "Delete",
     "delete-pattern": "Delete",
+    description: " ",
     down: "Down",
     error: "Error",
     info: "Info",
     instruction: "Instruction",
+    name: "Choice",
     "not-checked-feedback": "Not Checked Feedback",
     "one-choice-required": "At least one choice is required!",
     pattern: "Pattern {pattern}",
@@ -92,10 +98,12 @@ const translations = createTranslationFile<
     "correct-choices": "Correct Choices",
     delete: "Delete",
     "delete-pattern": "Delete",
+    description: " ",
     down: "Down",
     error: "Error",
     info: "Info",
     instruction: "Instruction",
+    name: "Choice",
     "not-checked-feedback": "Not Checked Feedback",
     "one-choice-required": "At least one choice is required!",
     pattern: "Pattern {pattern}",
@@ -118,10 +126,12 @@ const translations = createTranslationFile<
     "correct-choices": "Correct Choices",
     delete: "Delete",
     "delete-pattern": "Delete",
+    description: " ",
     down: "Down",
     error: "Error",
     info: "Info",
     instruction: "Instruction",
+    name: "Choice",
     "not-checked-feedback": "Not Checked Feedback",
     "one-choice-required": "At least one choice is required!",
     pattern: "Pattern {pattern}",

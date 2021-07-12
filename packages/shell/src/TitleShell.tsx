@@ -1,4 +1,4 @@
-import { Title, TitleProps } from "@bitflow/base";
+import { TitleProps } from "@bitflow/core";
 import { ButtonPrimary } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import { FC, useState } from "react";
@@ -6,13 +6,13 @@ import translations from "./locales.vocab";
 import { Shell, ShellContent, ShellFooter, ShellHeader } from "./Shell";
 import { IShell } from "./types";
 
-export type TitleShellProps<P extends Title> = {
+export type TitleShellProps<P extends Bitflow.Title> = {
   title: P;
   header?: string;
   TitleComponent: FC<TitleProps<P>>;
 } & IShell;
 
-export const TitleShell = <P extends Title>({
+export const TitleShell = <P extends Bitflow.Title>({
   header,
   title,
   TitleComponent,

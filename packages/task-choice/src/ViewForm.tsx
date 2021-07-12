@@ -1,4 +1,3 @@
-import { TaskViewFormProps } from "@bitflow/base";
 import {
   AutoGrid,
   Box,
@@ -11,13 +10,12 @@ import { useTranslations } from "@vocab/react";
 import { Fragment } from "react";
 import { FieldError, get, useFormContext } from "react-hook-form";
 import translations from "./locales.vocab";
-import { ITask, options } from "./schemas";
+import { options } from "./schemas";
+import { ITask, TaskBit } from "./types";
 
-export const ViewForm = ({ name }: TaskViewFormProps) => {
+export const ViewForm: TaskBit["ViewForm"] = ({ name }) => {
   const { t } = useTranslations(translations);
-  const { formState, getValues } = useFormContext<ITask>();
-
-  const numberOptions = options.length;
+  const { formState } = useFormContext<ITask>();
 
   const error: FieldError = get(formState.errors, `${name}.choices`);
 

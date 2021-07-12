@@ -1,6 +1,12 @@
 {
+  "description": {
+    "message": " "
+  },
   "message": {
     "message": "Message"
+  },
+  "name": {
+    "message": "Simple"
   },
   "title": {
     "message": "Title"

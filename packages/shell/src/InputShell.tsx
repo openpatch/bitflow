@@ -1,4 +1,4 @@
-import { Input, InputProps } from "@bitflow/base";
+import { InputProps } from "@bitflow/core";
 import { ButtonPrimary } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import { FC, useState } from "react";
@@ -6,13 +6,13 @@ import translations from "./locales.vocab";
 import { Shell, ShellContent, ShellFooter, ShellHeader } from "./Shell";
 import { IShell } from "./types";
 
-export type InputShellProps<I extends Input> = {
+export type InputShellProps<I extends Bitflow.Input> = {
   header?: string;
   input: I;
   InputComponent: FC<InputProps<I>>;
 } & IShell;
 
-export const InputShell = <I extends Input>({
+export const InputShell = <I extends Bitflow.Input>({
   header,
   onClose,
   onPrevious,

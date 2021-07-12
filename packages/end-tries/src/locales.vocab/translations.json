@@ -1,0 +1,14 @@
+{
+  "description": {
+    "message": " "
+  },
+  "markdown": {
+    "message": "Markdown"
+  },
+  "name": {
+    "message": "Tries"
+  },
+  "points": {
+    "message": "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}"
+  }
+}

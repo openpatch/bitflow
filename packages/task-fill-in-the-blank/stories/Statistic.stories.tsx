@@ -2,7 +2,7 @@ import { Meta } from "@storybook/react/types-6-0";
 import { Statistic } from "../src/Statistic";
 
 export default {
-  title: "Tasks/Fill in the blank/Statistic",
+  title: "Bits/Task/Fill in the blank/Statistic",
   component: Statistic,
   argTypes: {},
 } as Meta;
@@ -10,6 +10,7 @@ export default {
 export const Default = () => (
   <Statistic
     statistic={{
+      subtype: "fill-in-the-blank",
       count: 5,
       blanks: {
         a: {

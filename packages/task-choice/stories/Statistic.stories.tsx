@@ -2,7 +2,7 @@ import { Meta } from "@storybook/react/types-6-0";
 import { Statistic } from "../src/Statistic";
 
 export default {
-  title: "Tasks/Multiple Choice/Statistic",
+  title: "Bits/Task/Multiple Choice/Statistic",
   component: Statistic,
   argTypes: {},
 } as Meta;
@@ -10,6 +10,7 @@ export default {
 export const Default = () => (
   <Statistic
     statistic={{
+      subtype: "choice",
       count: 5,
       patterns: {
         ab: { count: 4, correct: true },

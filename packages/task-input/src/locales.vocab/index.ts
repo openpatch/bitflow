@@ -8,11 +8,13 @@ const translations = createTranslationFile<
   {
     "add-pattern": () => "Add Pattern";
     "delete-pattern": () => "Delete";
+    description: () => " ";
     error: () => "Error";
     info: () => "Info";
     inputs: () => "Inputs";
     instruction: () => "Instruction";
     message: () => "Message";
+    name: () => "Input";
     pattern: () => "Pattern";
     "pattern-error-duplicate": () => "A pattern can not contain duplicates";
     "pattern-error-exists": () => "This pattern already exists";
@@ -29,11 +31,13 @@ const translations = createTranslationFile<
   "en-GB": createLanguage({
     "add-pattern": "Add Pattern",
     "delete-pattern": "Delete",
+    description: " ",
     error: "Error",
     info: "Info",
     inputs: "Inputs",
     instruction: "Instruction",
     message: "Message",
+    name: "Input",
     pattern: "Pattern",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
     "pattern-error-exists": "This pattern already exists",
@@ -49,11 +53,13 @@ const translations = createTranslationFile<
   en: createLanguage({
     "add-pattern": "Add Pattern",
     "delete-pattern": "Delete",
+    description: " ",
     error: "Error",
     info: "Info",
     inputs: "Inputs",
     instruction: "Instruction",
     message: "Message",
+    name: "Input",
     pattern: "Pattern",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
     "pattern-error-exists": "This pattern already exists",
@@ -69,11 +75,13 @@ const translations = createTranslationFile<
   "en-US": createLanguage({
     "add-pattern": "Add Pattern",
     "delete-pattern": "Delete",
+    description: " ",
     error: "Error",
     info: "Info",
     inputs: "Inputs",
     instruction: "Instruction",
     message: "Message",
+    name: "Input",
     pattern: "Pattern",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
     "pattern-error-exists": "This pattern already exists",
@@ -89,11 +97,13 @@ const translations = createTranslationFile<
   de: createLanguage({
     "add-pattern": "Add Pattern",
     "delete-pattern": "Delete",
+    description: " ",
     error: "Error",
     info: "Info",
     inputs: "Inputs",
     instruction: "Instruction",
     message: "Message",
+    name: "Input",
     pattern: "Pattern",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
     "pattern-error-exists": "This pattern already exists",

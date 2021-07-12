@@ -20,6 +20,9 @@
   "delete-pattern": {
     "message": "Delete"
   },
+  "description": {
+    "message": " "
+  },
   "down": {
     "message": "Down"
   },
@@ -31,6 +34,9 @@
   },
   "instruction": {
     "message": "Instruction"
+  },
+  "name": {
+    "message": "Choice"
   },
   "not-checked-feedback": {
     "message": "Not Checked Feedback"

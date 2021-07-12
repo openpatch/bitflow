@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { Box, BoxProps, Heading, Icon, LoadingDots } from "@openpatch/patches";
-import { Close } from "@openpatch/patches/dist/cjs/icons/shade";
-import { ChevronLeft } from "@openpatch/patches/dist/cjs/icons/solid";
+import { Close } from "@openpatch/patches/icons/shade";
+import { ChevronLeft } from "@openpatch/patches/icons/solid";
 import { useTranslations } from "@vocab/react";
 import { FC, ReactNode } from "react";
 import translations from "./locales.vocab";
@@ -10,9 +10,14 @@ import { Progress } from "./Progress";
 export type ShellProps = {
   children: ReactNode;
   noHeader?: boolean;
+  position?: "absolute" | "unset";
 };
 
-export const Shell: FC<ShellProps> = ({ children, noHeader }) => {
+export const Shell: FC<ShellProps> = ({
+  children,
+  noHeader,
+  position = "absolute",
+}) => {
   return (
     <Box
       css={[
@@ -24,13 +29,15 @@ export const Shell: FC<ShellProps> = ({ children, noHeader }) => {
           css`
             grid-template-rows: 1fr auto;
           `,
+        position === "absolute" &&
+          css`
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: absolute;
+          `,
       ]}
-      top="0"
-      bottom="0"
-      left="0"
-      right="0"
-      position="absolute"
-      overflow="hidden"
     >
       {children}
     </Box>

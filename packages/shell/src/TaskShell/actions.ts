@@ -1,4 +1,4 @@
-import { Action, TaskAnswer, TaskResult } from "@bitflow/base";
+import { Action } from "@bitflow/core";
 import { ConfidenceLevelsProps } from "../ConfidenceLevels";
 
 export type ITaskAction<A extends Action = any> = A & {
@@ -11,7 +11,7 @@ export interface IShellActionBase {
   payload: any;
 }
 
-export interface IEvaluateAction<A extends TaskAnswer>
+export interface IEvaluateAction<A extends Bitflow.TaskAnswer>
   extends IShellActionBase {
   type: "evaluate";
   payload: {
@@ -19,7 +19,7 @@ export interface IEvaluateAction<A extends TaskAnswer>
   };
 }
 
-export const evaluateAction = <A extends TaskAnswer>({
+export const evaluateAction = <A extends Bitflow.TaskAnswer>({
   answer,
 }: {
   answer?: A;
@@ -33,7 +33,7 @@ export const evaluateAction = <A extends TaskAnswer>({
   };
 };
 
-export interface IAnswerChangeAction<A extends TaskAnswer>
+export interface IAnswerChangeAction<A extends Bitflow.TaskAnswer>
   extends IShellActionBase {
   type: "answer-change";
   payload: {
@@ -41,7 +41,7 @@ export interface IAnswerChangeAction<A extends TaskAnswer>
   };
 }
 
-export const answerChangeAction = <A extends TaskAnswer>({
+export const answerChangeAction = <A extends Bitflow.TaskAnswer>({
   answer,
 }: {
   answer: A;
@@ -55,7 +55,7 @@ export const answerChangeAction = <A extends TaskAnswer>({
   };
 };
 
-export interface IResultReceiveAction<R extends TaskResult>
+export interface IResultReceiveAction<R extends Bitflow.TaskResult>
   extends IShellActionBase {
   type: "result-receive";
   payload: {
@@ -63,7 +63,7 @@ export interface IResultReceiveAction<R extends TaskResult>
   };
 }
 
-export const resultReceiveAction = <R extends TaskResult>({
+export const resultReceiveAction = <R extends Bitflow.TaskResult>({
   result,
 }: {
   result: R;
@@ -397,8 +397,8 @@ export const resizeAction = ({
 };
 
 export type IShellAction<
-  A extends TaskAnswer = any,
-  R extends TaskResult = any
+  A extends Bitflow.TaskAnswer,
+  R extends Bitflow.TaskResult
 > =
   | IEvaluateAction<A>
   | IConfidenceLevelsChangeAction

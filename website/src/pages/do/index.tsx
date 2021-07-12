@@ -1,50 +1,59 @@
-import { findLast, TaskAnswer, TaskResult } from "@bitflow/base";
-import { taskBits } from "@bitflow/bits";
 import {
-  FlowDo,
-  FlowDoProgress,
-  FlowDoProps,
-  FlowDoResult,
-  FlowDoResultPathEntry,
-  FlowSchema,
+  DoResult,
+  DoTry,
+  findLast,
+  Flow,
+  Flow as IFlow,
+  FlowStartNode,
+  InteractiveFlowNode,
+  isFlowStartNode,
+  isFlowTaskNode,
+  isInteractiveFlowNode,
+} from "@bitflow/core";
+import { Do, DoProgress, DoProps } from "@bitflow/do";
+import {} from "@bitflow/flow";
+import {
   GetAnswers,
   GetPoints,
   GetResults,
-  IFlow,
-  IFlowNode,
   next,
   previous,
-} from "@bitflow/flow";
-import { BitflowProvider, Locale } from "@bitflow/provider";
+} from "@bitflow/flow-engine";
+import { evaluate as taskChoice } from "@bitflow/task-choice";
+import { evaluate as taskFillInTheBlank } from "@bitflow/task-fill-in-the-blank";
+import { evaluate as taskInput } from "@bitflow/task-input";
 import { Box, Card, PatternCenter } from "@openpatch/patches";
 import { GetServerSideProps } from "next";
 import { useRef } from "react";
 import { convertFromStringToJson } from "../../utils/convertFlow";
 
-type DoProps = {
+type DoPageProps = {
   flow: IFlow;
-  startNode: IFlowNode;
-  locale: Locale;
+  startNode: FlowStartNode;
 };
 
-export default function Do({ flow, locale, startNode }: DoProps) {
-  const currentNode = useRef<IFlowNode>(startNode);
-  const progress = useRef<FlowDoProgress>({
+export default function DoPage({ flow, startNode }: DoPageProps) {
+  const currentNode = useRef<InteractiveFlowNode>(startNode);
+  const progress = useRef<DoProgress>({
     currentNodeIndex: 0,
     nextNodeState: "unlocked",
     estimatedNodes: flow.nodes.length,
   });
-  const result = useRef<FlowDoResult>({
-    path: [],
+  const result = useRef<DoResult>({
+    tries: [],
+    endDate: new Date(),
     startDate: new Date(),
     maxPoints: 0,
     points: 0,
   });
   const submissions = useRef<
-    Record<string, { answers: TaskAnswer[]; results: TaskResult[] }>
+    Record<
+      string,
+      { answers: Bitflow.TaskAnswer[]; results: Bitflow.TaskResult[] }
+    >
   >({});
 
-  const getConfig: FlowDoProps["getConfig"] = async () => {
+  const getConfig: DoProps["getConfig"] = async () => {
     return {
       soundUrls: {
         correct: "/correct.mp3",
@@ -56,7 +65,7 @@ export default function Do({ flow, locale, startNode }: DoProps) {
   };
 
   const getAnswers: GetAnswers = async (nodeIds) => {
-    const answers: Record<string, TaskAnswer> = {};
+    const answers: Record<string, Bitflow.TaskAnswer> = {};
     nodeIds.forEach((nid) => {
       if (
         nid in submissions.current &&
@@ -73,7 +82,7 @@ export default function Do({ flow, locale, startNode }: DoProps) {
   };
 
   const getResults: GetResults = async (nodeIds) => {
-    const results: Record<string, TaskResult> = {};
+    const results: Record<string, Bitflow.TaskResult> = {};
     nodeIds.forEach((nid) => {
       if (
         nid in submissions.current &&
@@ -93,7 +102,7 @@ export default function Do({ flow, locale, startNode }: DoProps) {
     return result.current.points;
   };
 
-  const getNext: FlowDoProps["getNext"] = async () => {
+  const getNext: DoProps["getNext"] = async () => {
     const nextNode = await next({
       currentId: currentNode.current.id,
       nodes: flow.nodes,
@@ -103,102 +112,109 @@ export default function Do({ flow, locale, startNode }: DoProps) {
       getResults,
     });
 
-    if (nextNode !== null) {
+    if (nextNode !== null && isInteractiveFlowNode(nextNode)) {
       currentNode.current = nextNode;
+
+      progress.current.currentNodeIndex += 1;
+      return { ...currentNode.current };
     }
+    return null;
+  };
 
-    progress.current.currentNodeIndex += 1;
+  const getCurrent: DoProps["getCurrent"] = async () => {
     return { ...currentNode.current };
   };
 
-  const getCurrent: FlowDoProps["getCurrent"] = async () => {
-    return { ...currentNode.current };
-  };
-
-  const getPrevious: FlowDoProps["getPrevious"] = async () => {
+  const getPrevious: DoProps["getPrevious"] = async () => {
     const previousNode = await previous({
       currentId: currentNode.current.id,
       nodes: flow.nodes,
       edges: flow.edges,
     });
 
-    if (previousNode !== null) {
+    if (previousNode !== null && isInteractiveFlowNode(previousNode)) {
       currentNode.current = previousNode;
+
+      progress.current.currentNodeIndex -= 1;
+      return { ...currentNode.current };
     }
 
-    progress.current.currentNodeIndex -= 1;
-    return { ...currentNode.current };
+    return null;
   };
 
-  const getProgress: FlowDoProps["getProgress"] = async () => {
+  const getProgress: DoProps["getProgress"] = async () => {
     return { ...progress.current };
   };
 
-  const getResult: FlowDoProps["getResult"] = async () => {
+  const getResult: DoProps["getResult"] = async () => {
     return { ...result.current };
   };
 
-  const onEnd: FlowDoProps["onEnd"] = () => {};
+  const onEnd: DoProps["onEnd"] = () => {};
 
-  const onSkip: FlowDoProps["onSkip"] = async () => {
+  const onSkip: DoProps["onSkip"] = async () => {
     const currentPathEntry =
-      result.current.path[result.current.path.length - 1];
-    result.current.path[result.current.path.length - 1] = {
+      result.current.tries[result.current.tries.length - 1];
+    result.current.tries[result.current.tries.length - 1] = {
       ...currentPathEntry,
       status: "skipped",
       endDate: new Date(),
     };
   };
 
-  const evaluate: FlowDoProps["evaluate"] = async (answer) => {
-    if (currentNode.current.type === "task") {
-      const taskBit = taskBits[currentNode.current.data.subtype];
+  const evaluate: DoProps["evaluate"] = async (answer: Bitflow.TaskAnswer) => {
+    const taskBits = {
+      choice: taskChoice,
+      "fill-in-the-blank": taskFillInTheBlank,
+      input: taskInput,
+    } as const;
 
-      const taskResult = (await taskBit.evaluate({
-        answer,
-        task: currentNode.current.data,
-      })) as TaskResult;
-
-      const lastFinishedPathEntry = findLast<FlowDoResultPathEntry>(
-        result.current.path,
-        (e) => e.status === "finished" && e.node.id === currentNode.current.id
-      ) as FlowDoResultPathEntry & { status: "finished" };
-      const currentPathEntry =
-        result.current.path[result.current.path.length - 1];
-
-      result.current.path[result.current.path.length - 1] = {
-        ...currentPathEntry,
-        status: "finished",
-        endDate: new Date(),
-        answer,
-        result: taskResult,
-      };
-      if (!lastFinishedPathEntry && taskResult.state === "correct") {
-        result.current.points += 1;
-      } else if (
-        lastFinishedPathEntry &&
-        lastFinishedPathEntry.result.state === "correct" &&
-        taskResult.state !== "correct"
-      ) {
-        result.current.points -= 1;
-      } else if (
-        lastFinishedPathEntry &&
-        lastFinishedPathEntry.result.state !== "correct" &&
-        taskResult.state === "correct"
-      ) {
-        result.current.points += 1;
-      }
-
-      return taskResult;
+    const taskBit = taskBits[answer.subtype as keyof typeof taskBits];
+    if (!taskBit || !isFlowTaskNode(currentNode.current)) {
+      throw new Error("subtype not supported. See your provider config.");
     }
 
-    return {
-      state: "unknown",
+    const taskResult = await taskBit({
+      answer,
+      task: currentNode.current.data,
+    } as any);
+
+    const lastFinishedPathEntry = findLast<DoTry>(
+      result.current.tries,
+      (e) => e.status === "finished" && e.node.id === currentNode.current.id
+    ) as DoTry & { status: "finished" };
+    const currentPathEntry =
+      result.current.tries[result.current.tries.length - 1];
+
+    result.current.tries[result.current.tries.length - 1] = {
+      ...currentPathEntry,
+      status: "finished",
+      endDate: new Date(),
+      answer: answer as any,
+      result: taskResult,
     };
+    if (!lastFinishedPathEntry && taskResult.state === "correct") {
+      result.current.points += 1;
+    } else if (
+      lastFinishedPathEntry &&
+      lastFinishedPathEntry.result?.state === "correct" &&
+      taskResult.state !== "correct"
+    ) {
+      result.current.points -= 1;
+    } else if (
+      lastFinishedPathEntry &&
+      lastFinishedPathEntry.result?.state !== "correct" &&
+      taskResult.state === "correct"
+    ) {
+      result.current.points += 1;
+    }
+
+    return taskResult;
   };
-  const onRetry: FlowDoProps["onRetry"] = async () => {
-    const lastPath = result.current.path[result.current.path.length - 1];
-    result.current.path.push({
+
+  const onRetry: DoProps["onRetry"] = async () => {
+    const lastPath = result.current.tries[result.current.tries.length - 1];
+    result.current.tries.push({
       status: "started",
       try: lastPath.try + 1,
       startDate: new Date(),
@@ -209,43 +225,34 @@ export default function Do({ flow, locale, startNode }: DoProps) {
   };
 
   return (
-    <BitflowProvider config={{}} locale={locale}>
-      <PatternCenter>
-        <Card>
-          <Box position="relative" height="90vh" width="90vw">
-            <FlowDo
-              onRetry={onRetry}
-              evaluate={evaluate}
-              getConfig={getConfig}
-              getCurrent={getCurrent}
-              getNext={getNext}
-              getPrevious={getPrevious}
-              getProgress={getProgress}
-              getResult={getResult}
-              onEnd={onEnd}
-              onSkip={onSkip}
-            />
-          </Box>
-        </Card>
-      </PatternCenter>
-    </BitflowProvider>
+    <PatternCenter>
+      <Card>
+        <Box position="relative" height="90vh" width="90vw">
+          <Do
+            onRetry={onRetry}
+            evaluate={evaluate}
+            getConfig={getConfig}
+            getCurrent={getCurrent}
+            getNext={getNext}
+            getPrevious={getPrevious}
+            getProgress={getProgress}
+            getResult={getResult}
+            onEnd={onEnd}
+            onSkip={onSkip}
+          />
+        </Box>
+      </Card>
+    </PatternCenter>
   );
 }
 
-export const getServerSideProps: GetServerSideProps<DoProps> = async ({
+export const getServerSideProps: GetServerSideProps<DoPageProps> = async ({
   query,
-  locale,
 }) => {
   try {
-    const flowJson = convertFromStringToJson(query?.flow as string);
-    const flow = FlowSchema.parse(flowJson);
+    const flow = convertFromStringToJson(query?.flow as string) as Flow;
 
-    let usedLocale: Locale = "en-GB";
-    if (locale === "de") {
-      usedLocale = "de";
-    }
-
-    const startNode = flow.nodes.find((n) => n.type === "start");
+    const startNode = flow.nodes.find(isFlowStartNode);
 
     if (!startNode) {
       throw new Error("no start node");
@@ -254,7 +261,6 @@ export const getServerSideProps: GetServerSideProps<DoProps> = async ({
     return {
       props: {
         flow,
-        locale: usedLocale,
         startNode,
       },
     };

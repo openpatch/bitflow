@@ -1,12 +1,11 @@
-import { TaskProps, TaskRef } from "@bitflow/base";
+import { TaskProps, TaskRef } from "@bitflow/core";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import { useEffect, useRef } from "react";
-import { ITask } from "../src/schemas";
 import { Task } from "../src/Task";
-import { IAction, IAnswer, IResult } from "../src/types";
+import { IAction, IAnswer, IResult, ITask } from "../src/types";
 
 export default {
-  title: "Tasks/Input/Task",
+  title: "Bits/Task/Input/Task",
   component: Task,
   argTypes: {},
 } as Meta;

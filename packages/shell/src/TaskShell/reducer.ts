@@ -1,9 +1,11 @@
-import { TaskAnswer, TaskResult } from "@bitflow/base";
 import produce, { castDraft, Draft } from "immer";
 import { ConfidenceLevelsProps } from "../ConfidenceLevels";
 import { IShellAction } from "./actions";
 
-export type IState<A extends TaskAnswer, R extends TaskResult> = {
+export type IState<
+  A extends Bitflow.TaskAnswer,
+  R extends Bitflow.TaskResult
+> = {
   state:
     | "interact"
     | "evaluate"
@@ -24,11 +26,14 @@ export type IState<A extends TaskAnswer, R extends TaskResult> = {
   nudge?: string;
 };
 
-export const initialState: IState<TaskAnswer, TaskResult> = {
+export const initialState: IState<Bitflow.TaskAnswer, Bitflow.TaskResult> = {
   state: "interact",
 };
 
-export const createReducer = <A extends TaskAnswer, R extends TaskResult>() =>
+export const createReducer = <
+  A extends Bitflow.TaskAnswer,
+  R extends Bitflow.TaskResult
+>() =>
   produce((draft: Draft<IState<A, R>>, action: IShellAction<A, R>) => {
     switch (action.type) {
       case "next":

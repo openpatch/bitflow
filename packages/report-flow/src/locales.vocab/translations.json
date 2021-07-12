@@ -1,0 +1,35 @@
+{
+  "checkpoint": {
+    "message": "Checkpoint"
+  },
+  "checkpoint-helper-text": {
+    "message": "Stop students from going backwards"
+  },
+  "end": {
+    "message": "End"
+  },
+  "end-helper-text": {
+    "message": "The last node in your flow"
+  },
+  "node-finished": {
+    "message": "Finished"
+  },
+  "node-skipped": {
+    "message": "Skipped"
+  },
+  "node-started": {
+    "message": "Started"
+  },
+  "start": {
+    "message": "Start"
+  },
+  "start-helper-text": {
+    "message": "The first node in your flow"
+  },
+  "synchronize": {
+    "message": "Synchronize"
+  },
+  "synchronize-helper-text": {
+    "message": "Force students to wait on your signal"
+  }
+}

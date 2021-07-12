@@ -8,6 +8,9 @@
   "delete-pattern": {
     "message": "Delete"
   },
+  "description": {
+    "message": " "
+  },
   "error": {
     "message": "Error"
   },
@@ -22,6 +25,9 @@
   },
   "message": {
     "message": "Message"
+  },
+  "name": {
+    "message": "Fill in the blank"
   },
   "pattern": {
     "message": "Pattern {pattern}"

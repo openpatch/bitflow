@@ -1,93 +1,63 @@
-import { css, Global, useTheme } from "@emotion/react";
-import { FC, Fragment, useEffect, useState } from "react";
+import { Flow as IFlow } from "@bitflow/core";
+import { FC, Fragment } from "react";
 import ReactFlow, {
   Background,
   BackgroundVariant,
   Controls,
-  MiniMap,
   ReactFlowProps,
   ReactFlowProvider,
 } from "react-flow-renderer";
 import { BitNode } from "./BitNode";
 import { CheckpointNode } from "./CheckpointNode";
-import { EndNode } from "./EndNode";
 import { PortalInputNode } from "./PortalInputNode";
 import { PortalOutputNode } from "./PortalOutputNode";
 import { SplitAnswerNode } from "./SplitAnswerNode";
 import { SplitPointsNode } from "./SplitPointsNode";
 import { SplitRandomNode } from "./SplitRandomNode";
 import { SplitResultNode } from "./SplitResultNode";
-import { StartNode } from "./StartNode";
+import { Styles } from "./Styles";
 import { SynchronizeNode } from "./SynchronizeNode";
 
-export const Flow: FC<ReactFlowProps & { hideUI?: boolean }> = ({
-  hideUI,
+export type FlowProps = Pick<IFlow, "nodes" | "edges" | "zoom" | "position"> &
+  Omit<ReactFlowProps, "elements" | "zoom" | "posititon"> & {
+    autoFitView?: boolean;
+    interactive?: boolean;
+  };
+
+export const Flow: FC<FlowProps> = ({
+  interactive = true,
+  autoFitView = false,
+  nodes,
+  edges,
+  zoom,
+  position,
+  nodeTypes,
+  onLoad,
   ...props
 }) => {
-  const theme = useTheme();
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const handleLoad: ReactFlowProps["onLoad"] = (reactFlowInstance) => {
+    if (autoFitView) {
+      reactFlowInstance.fitView({ padding: 0.25, includeHiddenNodes: true });
+    }
+    if (onLoad) {
+      onLoad(reactFlowInstance);
+    }
+  };
   return (
     <Fragment>
-      <Global
-        styles={(theme) => css`
-          .react-flow__handle-left {
-            left: -10px !important;
-          }
-          .react-flow__node-input {
-            padding: 0;
-            border-radius: ${theme.radii.standard};
-            width: auto;
-            font-size: ${theme.fontSizes.standard};
-            color: #222;
-            text-align: center;
-            border-width: 0px;
-            border-style: solid;
-          }
-          .react-flow__node.selected {
-            box-shadow: ${theme.shadows.outline}!important;
-            border-radius: ${theme.radii.standard}!important;
-          }
-          .react-flow__edge-path,
-          .react-flow__connection-path {
-            stroke-width: 4 !important;
-            stroke: ${theme.colors.neutral[300]}!important;
-          }
-          .react-flow__edge.selected .react-flow__edge-path {
-            stroke: ${theme.colors.neutral[900]}!important;
-          }
-          .react-flow__handle-right {
-            right: -10px !important;
-          }
-          .react-flow__handle {
-            width: 12px !important;
-            height: 12px !important;
-            background-color: ${theme.colors.neutral[100]}!important;
-            border: 2px solid ${theme.colors.neutral[900]}!important;
-            border-radius: ${theme.radii.small}!important;
-          }
-          .react-flow__minimap {
-            border: 2px solid ${theme.colors.neutral[400]}!important;
-            border-radius: ${theme.radii.small}!important;
-            box-shadow: ${theme.shadows.standard}!important;
-          }
-        `}
-      ></Global>
+      <Styles />
       <ReactFlowProvider>
         <ReactFlow
-          {...props}
-          minZoom={0.1}
+          minZoom={0.5}
+          onLoad={handleLoad}
           deleteKeyCode={46} /* 'delete'-key */
           onlyRenderVisibleElements={false} /* might be an performace issue */
           nodeTypes={{
             title: BitNode,
             input: BitNode,
             task: BitNode,
-            start: StartNode,
-            end: EndNode,
+            start: BitNode,
+            end: BitNode,
             synchronize: SynchronizeNode,
             "portal-input": PortalInputNode,
             "portal-output": PortalOutputNode,
@@ -96,35 +66,19 @@ export const Flow: FC<ReactFlowProps & { hideUI?: boolean }> = ({
             "split-points": SplitPointsNode,
             "split-answer": SplitAnswerNode,
             "split-result": SplitResultNode,
+            ...nodeTypes,
           }}
+          paneMoveable={interactive}
+          nodesDraggable={interactive}
+          nodesConnectable={interactive}
+          zoomOnScroll={interactive}
+          elements={[...nodes, ...edges]}
+          defaultZoom={zoom}
+          defaultPosition={position}
+          {...props}
         >
           <Background variant={BackgroundVariant.Dots} gap={16} size={0.5} />
-          {!hideUI && isClient && (
-            <Fragment>
-              <Controls />
-              {false && (
-                <MiniMap
-                  nodeStrokeWidth={0}
-                  nodeBorderRadius={16}
-                  nodeColor={(node) => {
-                    switch (node.type) {
-                      case "bit":
-                        return theme.colors.info["200"];
-                      case "start":
-                        return theme.colors.success["200"];
-                      case "end":
-                        return theme.colors.error["200"];
-                      case "synchronize":
-                      case "checkpoint":
-                        return theme.colors.accent["200"];
-                      default:
-                        return theme.colors.warning["200"];
-                    }
-                  }}
-                />
-              )}
-            </Fragment>
-          )}
+          {interactive && <Controls />}
         </ReactFlow>
       </ReactFlowProvider>
     </Fragment>

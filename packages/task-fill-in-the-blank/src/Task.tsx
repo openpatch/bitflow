@@ -1,4 +1,3 @@
-import { TaskProps, TaskRef } from "@bitflow/base";
 import { css, Theme } from "@emotion/react";
 import { AutoGrid, Box, Code, Markdown, useTheme } from "@openpatch/patches";
 import produce, { Draft } from "immer";
@@ -15,7 +14,6 @@ import {
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import { Feedback } from "./Feedback";
-import { ITask } from "./schemas";
 import {
   IAction,
   IAnswer,
@@ -23,6 +21,7 @@ import {
   IChangeBlankAction,
   IResult,
   ITaskState,
+  TaskBit,
 } from "./types";
 
 // Initial State
@@ -157,71 +156,70 @@ const renderers = {
 };
 
 // Task Component
-export const Task = forwardRef<
-  TaskRef<IAction>,
-  TaskProps<ITask, IResult, IAnswer, IAction>
->(({ task, mode, result, answer, onChange, onAction }, ref) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export const Task: TaskBit["Task"] = forwardRef(
+  ({ task, mode, result, answer, onChange, onAction }, ref) => {
+    const [state, dispatch] = useReducer(reducer, initialState);
 
-  const customDispatch = (action: IAction) => {
-    if (!shouldDispatch()) return;
-    if (onAction) {
-      onAction(action);
-    }
-    dispatch(action);
-  };
-
-  useEffect(() => {
-    if (answer) {
-      dispatch(answerAction({ answer }));
-    }
-  }, [answer]);
-
-  useEffect(() => {
-    if (onChange) {
-      onChange({ blanks: state.blanks });
-    }
-  }, [state]);
-
-  useImperativeHandle(ref, () => ({
-    dispatch,
-  }));
-
-  const shouldDispatch = () => {
-    if (mode === "recording" || mode === "result") {
-      return false;
-    }
-    return true;
-  };
-
-  const blanks = {};
-  Object.entries(state.blanks).map(([k, b]) => {
-    blanks[k] = {
-      value: b,
+    const customDispatch = (action: IAction) => {
+      if (!shouldDispatch()) return;
+      if (onAction) {
+        onAction(action);
+      }
+      dispatch(action);
     };
-  });
 
-  return (
-    <Box padding="standard">
-      <AutoGrid gap="standard">
-        <Markdown markdown={task.view.instruction} />
-        <blanksContext.Provider
-          value={{
-            dispatch: customDispatch,
-            state,
-            result,
-          }}
-        >
-          <ReactMarkdown
-            plugins={[gfm]}
-            renderers={renderers}
-            children={task.view.textWithBlanks}
-          />
-        </blanksContext.Provider>
-        {result?.feedback?.map((f, i) => (
-          <Feedback key={i} {...f} />
-        ))}
-      </AutoGrid>
-    </Box>
-  );
-});
+    useEffect(() => {
+      if (answer) {
+        dispatch(answerAction({ answer }));
+      }
+    }, [answer]);
+
+    useEffect(() => {
+      if (onChange) {
+        onChange({ subtype: "fill-in-the-blank", blanks: state.blanks });
+      }
+    }, [state]);
+
+    useImperativeHandle(ref, () => ({
+      dispatch,
+    }));
+
+    const shouldDispatch = () => {
+      if (mode === "recording" || mode === "result") {
+        return false;
+      }
+      return true;
+    };
+
+    const blanks = {};
+    Object.entries(state.blanks).map(([k, b]) => {
+      blanks[k] = {
+        value: b,
+      };
+    });
+
+    return (
+      <Box padding="standard">
+        <AutoGrid gap="standard">
+          <Markdown markdown={task.view.instruction} />
+          <blanksContext.Provider
+            value={{
+              dispatch: customDispatch,
+              state,
+              result,
+            }}
+          >
+            <ReactMarkdown
+              plugins={[gfm]}
+              renderers={renderers}
+              children={task.view.textWithBlanks}
+            />
+          </blanksContext.Provider>
+          {result?.feedback?.map((f, i) => (
+            <Feedback key={i} {...f} />
+          ))}
+        </AutoGrid>
+      </Box>
+    );
+  }
+);

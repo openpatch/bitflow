@@ -1,4 +1,3 @@
-import { TaskFeedbackFormProps } from "@bitflow/base";
 import {
   Box,
   ButtonSecondary,
@@ -12,8 +11,8 @@ import {
 import { useTranslations } from "@vocab/react";
 import { Fragment } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { ITask } from ".";
 import translations from "./locales.vocab";
+import { ITask, TaskBit } from "./types";
 
 const blankRegex = /~~[A-z]+~~/g;
 
@@ -107,7 +106,7 @@ export const BlankFeedbackForm = ({
   );
 };
 
-export const FeedbackForm = ({ name }: TaskFeedbackFormProps) => {
+export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
   const { getValues } = useFormContext();
   const textWithBlanks =
     (getValues(

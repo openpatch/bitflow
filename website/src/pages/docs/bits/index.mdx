@@ -6,7 +6,37 @@ export const meta = {
 };
 
 A bit is a special node, which provides a mean of interaction to the user.
-Currently, here are three kinds of bits. Input bits, title bits and task bits.
+Currently, here are five kinds of bits. Start bits, end bits, input bits, title bits and task bits.
+
+## Start Bits
+
+The main purpose of a start bit is to be the first bit, which a user interacts
+with. There should only be one start bit per flow.
+
+These start bits are currently implemented:
+
+- [Simple](/docs/bits/start-simple)
+
+If you like to contribute a new start bit, you can go to the [contribution guide](/docs/contribution/new-start-bit)
+
+If you like to suggest a new start bit, you can open an issue in the [GitHub repository](https://github.com/openpatch/bitflow/issues).
+
+If you like to discuss a new idea for a start bit or you need help, you can visit the [Discord server](https://discord.gg/dCMM4kV).
+
+## End Bits
+
+The main purpose of a end bit is to be the last bit, which a user interacts
+with. It could show a score or just a goodbye message.
+
+These end bits are currently implemented:
+
+- [Tries](/docs/bits/end-tries)
+
+If you like to contribute a new end bit, you can go to the [contribution guide](/docs/contribution/new-end-bit)
+
+If you like to suggest a new end bit, you can open an issue in the [GitHub repository](https://github.com/openpatch/bitflow/issues).
+
+If you like to discuss a new idea for an end bit or you need help, you can visit the [Discord server](https://discord.gg/dCMM4kV).
 
 ## Input Bits
 
@@ -52,7 +82,7 @@ If you like to contribute a new task bit, you can go to the [contribution guide]
 
 If you like to suggest a new task bit, you can open an issue in the [GitHub repository](https://github.com/openpatch/bitflow/issues).
 
-If you like to discuss a new idea for an task bit or you need help, you can visit the [Discord server](https://discord.gg/dCMM4kV).
+If you like to discuss a new idea for a task bit or you need help, you can visit the [Discord server](https://discord.gg/dCMM4kV).
 
 ## Title Bits
 
@@ -67,7 +97,7 @@ If you like to contribute a new title bit, you can go to the [contribution guide
 
 If you like to suggest a new title bit, you can open an issue in the [GitHub repository](https://github.com/openpatch/bitflow/issues).
 
-If you like to discuss a new idea for an title bit or you need help, you can visit the [Discord server](https://discord.gg/dCMM4kV).
+If you like to discuss a new idea for a title bit or you need help, you can visit the [Discord server](https://discord.gg/dCMM4kV).
 
 export default ({ children }) => (
   <DocLayout meta={meta}>

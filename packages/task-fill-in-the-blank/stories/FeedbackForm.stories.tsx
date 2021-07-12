@@ -3,10 +3,11 @@ import { ButtonPrimary, Form } from "@openpatch/patches";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import { FormProvider, useForm } from "react-hook-form";
 import { FeedbackForm } from "../src/FeedbackForm";
-import { ITask, TaskSchema } from "../src/schemas";
+import { TaskSchema } from "../src/schemas";
+import { ITask } from "../src/types";
 
 export default {
-  title: "Tasks/Fill in the blank/FeedbackForm",
+  title: "Bits/Task/Fill in the blank/FeedbackForm",
   component: FeedbackForm,
   argTypes: {
     onSubmit: {

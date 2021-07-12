@@ -1,12 +1,11 @@
-import { TaskProps, TaskRef } from "@bitflow/base";
+import { TaskProps, TaskRef } from "@bitflow/core";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import { useEffect, useRef } from "react";
-import { ITask } from "../src/schemas";
 import { Task } from "../src/Task";
-import { IAction, IAnswer, IResult } from "../src/types";
+import { IAction, IAnswer, IResult, ITask } from "../src/types";
 
 export default {
-  title: "Tasks/Fill in the blank/Task",
+  title: "Bits/Task/Fill in the blank/Task",
   component: Task,
   argTypes: {},
 } as Meta;
@@ -54,6 +53,7 @@ public ~~B~~ static void main {
   },
   onChange: console.log,
   result: {
+    subtype: "fill-in-the-blank",
     blanks: {
       A: {
         state: "wrong",
@@ -68,6 +68,7 @@ public ~~B~~ static void main {
     ],
   },
   answer: {
+    subtype: "fill-in-the-blank",
     blanks: {
       A: "Hallo",
     },

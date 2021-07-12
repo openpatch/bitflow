@@ -30,8 +30,16 @@ const nav: SidenavProps["sections"] = [
     label: "Bits",
     links: [
       {
+        href: "/docs/bits/end-tries",
+        label: "End - Tries",
+      },
+      {
         href: "/docs/bits/input-markdown",
         label: "Input - Markdown",
+      },
+      {
+        href: "/docs/bits/start-simple",
+        label: "Start - Simple",
       },
       {
         href: "/docs/bits/task-choice",

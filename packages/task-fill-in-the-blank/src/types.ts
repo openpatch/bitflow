@@ -1,42 +1,23 @@
+import { Action as BaseAction, TaskBit as TaskBitBase } from "@bitflow/core";
+import { z } from "zod";
 import {
-  Action as BaseAction,
-  FeedbackMessage,
-  TaskAnswer as BaseAnswer,
-  TaskResult as BaseResult,
-  TaskStatistic as BaseStatistic,
-} from "@bitflow/base";
+  AnswerSchema,
+  ResultSchema,
+  StatisticSchema,
+  TaskSchema,
+} from "./schemas";
 
 export interface ITaskState {
   blanks: Record<string, string>;
 }
 
-export interface IStatistic extends BaseStatistic {
-  blanks: Record<
-    string,
-    Record<
-      string,
-      {
-        correct: boolean;
-        count: number;
-      }
-    >
-  >;
-}
+export type ITask = z.infer<typeof TaskSchema>;
 
-export interface IAnswer extends BaseAnswer {
-  blanks: ITaskState["blanks"];
-}
+export type IAnswer = z.infer<typeof AnswerSchema>;
 
-export interface IResult extends BaseResult {
-  blanks: Record<
-    string,
-    {
-      state: "neutral" | "wrong" | "correct";
-      feedback?: FeedbackMessage;
-    }
-  >;
-  feedback?: FeedbackMessage[];
-}
+export type IResult = z.infer<typeof ResultSchema>;
+
+export type IStatistic = z.infer<typeof StatisticSchema>;
 
 export interface IChangeBlankAction extends BaseAction {
   type: "change-blank";
@@ -54,3 +35,5 @@ export interface IAnswerAction extends BaseAction {
 }
 
 export type IAction = IChangeBlankAction | IAnswerAction;
+
+export type TaskBit = TaskBitBase<ITask, IAnswer, IResult, IStatistic, IAction>;

@@ -4,7 +4,11 @@ import { TaskBitDoc } from "../../../components/TaskBitDoc";
 export default function TaskChoice() {
   return (
     <TaskBitDoc<taskBit.ITask>
-      description=""
+      description={`
+A task bit allowing to create single or multiple choice questions. The answers
+of users can be automatically evaluated. Also feedback can be given based on the
+answer pattern.
+`}
       taskBit={taskBit}
       actions={[
         `

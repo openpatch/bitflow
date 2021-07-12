@@ -1,14 +1,11 @@
-import { lerpColor, TaskStatisticProps } from "@bitflow/base";
+import { lerpColor } from "@bitflow/core";
 import { css } from "@emotion/react";
 import { AutoGrid, Box, Heading, Text } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import translations from "./locales.vocab";
-import { ITask } from "./schemas";
-import { IStatistic } from "./types";
+import { TaskBit } from "./types";
 
-export const Statistic = ({
-  statistic,
-}: TaskStatisticProps<IStatistic, ITask>) => {
+export const Statistic: TaskBit["Statistic"] = ({ statistic }) => {
   const { t } = useTranslations(translations);
   const patterns = Object.keys(statistic.patterns)
     .map((c) => {

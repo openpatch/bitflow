@@ -2,11 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ButtonPrimary, Form } from "@openpatch/patches";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import { FormProvider, useForm } from "react-hook-form";
-import { ITask, TaskSchema } from "../src/schemas";
+import { TaskSchema } from "../src/schemas";
+import { ITask } from "../src/types";
 import { ViewForm } from "../src/ViewForm";
 
 export default {
-  title: "Tasks/Input/ViewForm",
+  title: "Bits/Task/Input/ViewForm",
   component: ViewForm,
   argTypes: {
     onSubmit: {

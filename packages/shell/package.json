@@ -46,8 +46,11 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "@bitflow/base": "0.0.0",
-    "@bitflow/provider": "0.0.0"
+    "@bitflow/core": "0.0.0"
+  },
+  "devDependencies": {
+    "@bitflow/input-markdown": "0.0.0",
+    "@bitflow/task-choice": "0.0.0"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",

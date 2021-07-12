@@ -1,4 +1,4 @@
-import { FeedbackMessage } from "@bitflow/base";
+import { FeedbackMessage } from "@bitflow/core";
 import { Alert } from "@openpatch/patches";
 import { FC } from "react";
 

@@ -1,38 +1,23 @@
+import { Action as BaseAction, TaskBit as BaseTaskBit } from "@bitflow/core";
+import { z } from "zod";
 import {
-  Action as BaseAction,
-  FeedbackMessage,
-  TaskAnswer as BaseAnswer,
-  TaskResult as BaseResult,
-  TaskStatistic as BaseStatistic,
-} from "@bitflow/base";
+  AnswerSchema,
+  ResultSchema,
+  StatisticSchema,
+  TaskSchema,
+} from "./schemas";
 
 export interface ITaskState {
   input: string;
 }
 
-export interface IStatistic extends BaseStatistic {
-  patterns: Record<
-    string,
-    {
-      count: number;
-    }
-  >;
-  inputs: Record<
-    string,
-    {
-      correct: boolean;
-      count: number;
-    }
-  >;
-}
+export type ITask = z.infer<typeof TaskSchema>;
 
-export interface IAnswer extends BaseAnswer {
-  input: ITaskState["input"];
-}
+export type IAnswer = z.infer<typeof AnswerSchema>;
 
-export interface IResult extends BaseResult {
-  feedback?: FeedbackMessage[];
-}
+export type IResult = z.infer<typeof ResultSchema>;
+
+export type IStatistic = z.infer<typeof StatisticSchema>;
 
 export interface IChangeAction extends BaseAction {
   type: "change";
@@ -49,3 +34,5 @@ export interface IAnswerAction extends BaseAction {
 }
 
 export type IAction = IChangeAction | IAnswerAction;
+
+export type TaskBit = BaseTaskBit<ITask, IAnswer, IResult, IStatistic, IAction>;

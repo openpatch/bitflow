@@ -1,6 +1,6 @@
-import { IFlow } from "@bitflow/flow";
+import { Flow } from "@bitflow/core";
 
-export const simpleAnswerSplit: IFlow = {
+export const simpleAnswerSplit: Flow = {
   name: "New Flow",
   draft: false,
   nodes: [
@@ -12,6 +12,9 @@ export const simpleAnswerSplit: IFlow = {
       },
       type: "start",
       data: {
+        name: "Start",
+        description: "",
+        subtype: "simple",
         view: {
           title: "Start",
           markdown: "",
@@ -26,10 +29,11 @@ export const simpleAnswerSplit: IFlow = {
       },
       type: "end",
       data: {
+        name: "End",
+        description: "",
+        subtype: "tries",
         view: {
           markdown: "",
-          showPoints: true,
-          listResults: false,
         },
       },
     },

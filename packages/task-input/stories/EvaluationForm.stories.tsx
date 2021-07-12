@@ -3,10 +3,11 @@ import { ButtonPrimary, Form } from "@openpatch/patches";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import { FormProvider, useForm } from "react-hook-form";
 import { EvaluationForm } from "../src/EvaluationForm";
-import { ITask, TaskSchema } from "../src/schemas";
+import { TaskSchema } from "../src/schemas";
+import { ITask } from "../src/types";
 
 export default {
-  title: "Tasks/Input/EvaluationForm",
+  title: "Bits/Task/Input/EvaluationForm",
   component: EvaluationForm,
   argTypes: {
     onSubmit: {

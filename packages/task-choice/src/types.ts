@@ -1,45 +1,26 @@
+import { Action as BaseAction, TaskBit as TaskBitBase } from "@bitflow/core";
+import { z } from "zod";
 import {
-  Action as BaseAction,
-  FeedbackMessage,
-  TaskAnswer as BaseAnswer,
-  TaskResult as BaseResult,
-  TaskStatistic as BaseStatistic,
-} from "@bitflow/base";
-import { IOption, ITask } from "./schemas";
+  AnswerSchema,
+  IOption,
+  ResultSchema,
+  StatisticSchema,
+  TaskSchema,
+} from "./schemas";
 
 export interface ITaskState {
   checked: Partial<Record<IOption, boolean>>;
 }
 
-export interface IStatistic extends BaseStatistic {
-  patterns: Partial<
-    Record<
-      string,
-      {
-        count: number;
-        correct: boolean;
-      }
-    >
-  >;
-}
+export type ITask = z.infer<typeof TaskSchema>;
 
-export interface IAnswer extends BaseAnswer {
-  checked: ITaskState["checked"];
-}
+export type IStatistic = z.infer<typeof StatisticSchema>;
 
-export interface IResult extends BaseResult {
-  choices: Partial<
-    Record<
-      IOption,
-      {
-        state: "neutral" | "wrong" | "correct";
-        feedback?: FeedbackMessage;
-      }
-    >
-  >;
-  feedback?: FeedbackMessage;
-}
+export type IResult = z.infer<typeof ResultSchema>;
 
+export type IAnswer = z.infer<typeof AnswerSchema>;
+
+export type TaskBit = TaskBitBase<ITask, IAnswer, IResult, IStatistic, IAction>;
 export interface ICheckAction extends BaseAction {
   type: "check";
   payload: {

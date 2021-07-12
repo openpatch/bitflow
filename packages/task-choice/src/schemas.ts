@@ -1,7 +1,10 @@
 import {
   FeedbackMessageSchema,
+  TaskAnswerSchema,
+  TaskResultSchema as TaskResultSchemaBase,
   TaskSchema as TaskSchemaBase,
-} from "@bitflow/base";
+  TaskStatisticSchema,
+} from "@bitflow/core";
 import { z } from "zod";
 
 export const options: ["a", "b", "c", "d", "e", "f", "g", "h"] = [
@@ -40,13 +43,45 @@ export const TaskSchema = TaskSchemaBase.merge(
     feedback: z.object({
       patterns: z.record(FeedbackMessageSchema),
       choices: z.record(
-        z.object({
-          checkedFeedback: FeedbackMessageSchema,
-          notCheckedFeedback: FeedbackMessageSchema,
-        })
+        z
+          .object({
+            checkedFeedback: FeedbackMessageSchema,
+            notCheckedFeedback: FeedbackMessageSchema,
+          })
+          .partial()
       ),
     }),
   })
 );
 
-export type ITask = z.infer<typeof TaskSchema>;
+export const ResultSchema = TaskResultSchemaBase.merge(
+  z.object({
+    subtype: z.literal("choice"),
+    choices: z.record(
+      z.object({
+        state: z.enum(["wrong", "correct", "neutral"]),
+        feedback: FeedbackMessageSchema.optional(),
+      })
+    ),
+    feedback: FeedbackMessageSchema.optional(),
+  })
+);
+
+export const AnswerSchema = TaskAnswerSchema.merge(
+  z.object({
+    subtype: z.literal("choice"),
+    checked: z.record(z.boolean()),
+  })
+);
+
+export const StatisticSchema = TaskStatisticSchema.merge(
+  z.object({
+    subtype: z.literal("choice"),
+    patterns: z.record(
+      z.object({
+        count: z.number().positive(),
+        correct: z.boolean(),
+      })
+    ),
+  })
+);

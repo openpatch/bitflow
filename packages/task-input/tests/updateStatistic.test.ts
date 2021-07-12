@@ -5,6 +5,7 @@ describe("updateStatistic", () => {
   it("should work with empty statistic", async () => {
     const statistic = await updateStatistic({
       answer: {
+        subtype: "input",
         input: "answer",
       },
       task: {
@@ -27,6 +28,7 @@ describe("updateStatistic", () => {
     });
 
     const expected: IStatistic = {
+      subtype: "input",
       count: 1,
       inputs: {
         answer: {
@@ -43,6 +45,7 @@ describe("updateStatistic", () => {
   it("should work with precalculated statistic", async () => {
     const statistic = await updateStatistic({
       statistic: {
+        subtype: "input",
         count: 43,
         inputs: {
           hallo: {
@@ -54,6 +57,7 @@ describe("updateStatistic", () => {
         patterns: {},
       },
       answer: {
+        subtype: "input",
         input: "hallo",
       },
       task: {
@@ -76,6 +80,7 @@ describe("updateStatistic", () => {
     });
 
     const expected: IStatistic = {
+      subtype: "input",
       count: 44,
       inputs: {
         hallo: {

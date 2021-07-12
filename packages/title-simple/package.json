@@ -46,8 +46,7 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "@bitflow/base": "0.0.0",
-    "@bitflow/provider": "0.0.0"
+    "@bitflow/core": "0.0.0"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
@@ -56,6 +55,7 @@
     "@openpatch/patches": "1.x",
     "@vocab/react": "1.x",
     "react": "17.x",
-    "react-dom": "17.x"
+    "react-dom": "17.x",
+    "zod": "3.x"
   }
 }

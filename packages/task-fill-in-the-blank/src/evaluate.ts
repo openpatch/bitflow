@@ -1,12 +1,7 @@
-import { Evaluate } from "@bitflow/base";
-import { ITask } from "./schemas";
-import { IAnswer, IResult } from "./types";
+import { IResult, TaskBit } from "./types";
 
-export const evaluate: Evaluate<IAnswer, ITask, IResult> = async ({
-  answer,
-  task,
-}) => {
-  const { view, evaluation, feedback } = task;
+export const evaluate: TaskBit["evaluate"] = async ({ answer, task }) => {
+  const { evaluation, feedback } = task;
   let state: IResult["state"] = "unknown";
   let overallFeedback: IResult["feedback"] = [];
 
@@ -46,6 +41,7 @@ export const evaluate: Evaluate<IAnswer, ITask, IResult> = async ({
   }
 
   return {
+    subtype: "fill-in-the-blank",
     state,
     blanks: blankResults,
     feedback: overallFeedback,

@@ -1,4 +1,6 @@
-import { FlowEditor, FlowEditorRef, FlowSchema, IFlow } from "@bitflow/flow";
+import { Flow } from "@bitflow/core";
+import { FlowEditor, FlowEditorRef } from "@bitflow/flow-editor";
+import { useFlow } from "@bitflow/provider";
 import {
   Box,
   ButtonGroup,
@@ -21,8 +23,9 @@ export default function Editor() {
   const router = useRouter();
   const { t } = useTranslations(translations);
   const flowEditorRef = useRef<FlowEditorRef>(null);
-  const [flow, setFlow] = useState<IFlow>();
+  const [flow, setFlow] = useState<Flow>();
   const [key, setKey] = useState<string>();
+  const { FlowSchema } = useFlow();
 
   useEffect(() => {
     if (typeof router.query.flow === "string") {
@@ -36,7 +39,7 @@ export default function Editor() {
     }
   }, []);
 
-  const handleSubmit = (flow: IFlow) => {
+  const handleSubmit = (flow: Flow) => {
     const flowString = convertFromJsonToString(flow);
     const myFlowsString = localStorage.getItem("flows");
     if (!myFlowsString) {
@@ -44,7 +47,7 @@ export default function Editor() {
       localStorage.setItem("flows", JSON.stringify(myFlows));
     } else {
       const unsafeMyFlows = JSON.parse(myFlowsString);
-      const myFlows: Record<string, IFlow> = {};
+      const myFlows: Record<string, Flow> = {};
       Object.entries(unsafeMyFlows).forEach(([name, flow]) => {
         unsafeMyFlows[name] = FlowSchema.parse(flow);
       });

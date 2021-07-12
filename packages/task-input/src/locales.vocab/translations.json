@@ -5,6 +5,9 @@
   "delete-pattern": {
     "message": "Delete"
   },
+  "description": {
+    "message": " "
+  },
   "error": {
     "message": "Error"
   },
@@ -19,6 +22,9 @@
   },
   "message": {
     "message": "Message"
+  },
+  "name": {
+    "message": "Input"
   },
   "pattern": {
     "message": "Pattern"

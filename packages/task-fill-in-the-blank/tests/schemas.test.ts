@@ -1,4 +1,5 @@
-import { ITask, TaskSchema } from "../src/schemas";
+import { TaskSchema } from "../src/schemas";
+import { ITask } from "../src/types";
 
 describe("task schema", () => {
   it("should succeed validating", () => {

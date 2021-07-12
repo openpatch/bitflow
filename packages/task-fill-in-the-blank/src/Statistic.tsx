@@ -1,4 +1,4 @@
-import { lerpColor, TaskStatisticProps } from "@bitflow/base";
+import { lerpColor } from "@bitflow/core";
 import { css } from "@emotion/react";
 import { AutoGrid, Box, Heading, Text } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
@@ -6,8 +6,7 @@ import { createContext, useContext, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import translations from "./locales.vocab";
-import { ITask } from "./schemas";
-import { IStatistic } from "./types";
+import { IStatistic, TaskBit } from "./types";
 
 const blanksContext = createContext<{
   select: (id: string) => void;
@@ -109,10 +108,7 @@ const renderers = {
   delete: Blank,
 };
 
-export const Statistic = ({
-  statistic,
-  task,
-}: TaskStatisticProps<IStatistic, ITask>) => {
+export const Statistic: TaskBit["Statistic"] = ({ statistic, task }) => {
   const [selectedBlank, setSelectedBlank] = useState<string>();
   return (
     <Box padding="standard">

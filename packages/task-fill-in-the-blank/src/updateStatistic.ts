@@ -1,13 +1,10 @@
-import { UpdateTaskStatistic } from "@bitflow/base";
-import { ITask } from "./schemas";
-import { IAnswer, IResult, IStatistic } from "./types";
+import { TaskBit } from "./types";
 
-export const updateStatistic: UpdateTaskStatistic<
-  IStatistic,
-  IAnswer,
-  ITask,
-  IResult
-> = async ({ answer, statistic, task, result }) => {
+export const updateStatistic: TaskBit["updateStatistic"] = async ({
+  answer,
+  statistic,
+  result,
+}) => {
   const blanks = statistic?.blanks || {};
 
   Object.entries(answer.blanks).forEach(([id, value]) => {
@@ -24,6 +21,7 @@ export const updateStatistic: UpdateTaskStatistic<
   });
 
   return {
+    subtype: "fill-in-the-blank",
     count: (statistic?.count || 0) + 1,
     blanks,
   };

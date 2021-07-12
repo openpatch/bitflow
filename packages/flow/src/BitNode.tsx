@@ -1,13 +1,54 @@
-import { FlowNode, FlowNodeProps } from "./FlowNode";
-import { IFlowNode } from "./schemas";
+import {
+  FlowEndNode,
+  FlowInputNode,
+  FlowStartNode,
+  FlowTaskNode,
+  FlowTitleNode,
+} from "@bitflow/core";
+import { FlowNode, FlowNodeProps } from "@bitflow/flow-node";
 
 export const BitNode = (
-  node: Pick<IFlowNode, "type"> & {
-    data?: any;
+  node: {
     hideHandles?: boolean;
     maxWidth?: FlowNodeProps["maxWidth"];
-  }
+  } & Pick<
+    FlowStartNode | FlowEndNode | FlowInputNode | FlowTaskNode | FlowTitleNode,
+    "type"
+  > & {
+      data: {
+        name: string;
+        description: string;
+        subtype: string;
+      };
+    }
 ) => {
+  if (node.type === "start") {
+    return (
+      <FlowNode
+        tone="teal"
+        title={node.data?.name}
+        description={node.data?.description}
+        sourceHandles={1}
+        footerLeft={node.type || ""}
+        footerRight={node.data?.subtype || ""}
+        hideHandles={node.hideHandles}
+        maxWidth={node.maxWidth}
+      />
+    );
+  } else if (node.type === "end") {
+    return (
+      <FlowNode
+        tone="red"
+        title={node.data?.name}
+        description={node.data?.description}
+        footerLeft={node.type || ""}
+        footerRight={node.data?.subtype || ""}
+        targetHandles={1}
+        hideHandles={node.hideHandles}
+        maxWidth={node.maxWidth}
+      />
+    );
+  }
   return (
     <FlowNode
       tone="blue"

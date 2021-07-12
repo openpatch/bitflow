@@ -9,11 +9,13 @@ const translations = createTranslationFile<
     "add-pattern": () => "Add Pattern";
     answers: () => "Answers";
     "delete-pattern": () => "Delete";
+    description: () => " ";
     error: () => "Error";
     "feedback-for-blank": (values: { blank: string }) => string;
     info: () => "Info";
     instruction: () => "Instruction";
     message: () => "Message";
+    name: () => "Fill in the blank";
     pattern: (values: { pattern: string }) => string;
     "pattern-error-duplicate": () => "A pattern can not contain duplicates";
     "pattern-error-exists": () => "This pattern already exists";
@@ -34,11 +36,13 @@ const translations = createTranslationFile<
     "add-pattern": "Add Pattern",
     answers: "Answers",
     "delete-pattern": "Delete",
+    description: " ",
     error: "Error",
     "feedback-for-blank": "Feedback for {blank}",
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
     "pattern-error-exists": "This pattern already exists",
@@ -59,11 +63,13 @@ const translations = createTranslationFile<
     "add-pattern": "Add Pattern",
     answers: "Answers",
     "delete-pattern": "Delete",
+    description: " ",
     error: "Error",
     "feedback-for-blank": "Feedback for {blank}",
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
     "pattern-error-exists": "This pattern already exists",
@@ -84,11 +90,13 @@ const translations = createTranslationFile<
     "add-pattern": "Add Pattern",
     answers: "Answers",
     "delete-pattern": "Delete",
+    description: " ",
     error: "Error",
     "feedback-for-blank": "Feedback for {blank}",
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
     "pattern-error-exists": "This pattern already exists",
@@ -109,11 +117,13 @@ const translations = createTranslationFile<
     "add-pattern": "Add Pattern",
     answers: "Answers",
     "delete-pattern": "Delete",
+    description: " ",
     error: "Error",
     "feedback-for-blank": "Feedback for {blank}",
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
     "pattern-error-exists": "This pattern already exists",

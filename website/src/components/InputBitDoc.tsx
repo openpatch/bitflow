@@ -1,5 +1,5 @@
-import { Input } from "@bitflow/base";
-import { InputBit } from "@bitflow/bits";
+import { InputBit } from "@bitflow/core";
+import { InputShell } from "@bitflow/shell";
 import { zodToJsonSchema } from "@bitflow/zod-json-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -22,13 +22,13 @@ import { DefaultValues, FormProvider, useForm } from "react-hook-form";
 import { toSentence } from "../utils/case";
 import { DocLayout } from "./DocLayout";
 
-export type InputBitDocProps<T extends Input> = {
+export type InputBitDocProps<T extends Bitflow.Input> = {
   inputBit: InputBit;
   defaultValues: T;
   description: string;
 };
 
-export function InputBitDoc<T extends Input>({
+export function InputBitDoc<T extends Bitflow.Input>({
   inputBit,
   defaultValues,
   description,
@@ -45,9 +45,10 @@ export function InputBitDoc<T extends Input>({
   const name = defaultValues.subtype;
 
   return (
-    <DocLayout meta={{ title: `Inputbit - ${toSentence(name)}` }}>
+    <DocLayout meta={{ title: `Input - ${toSentence(name)}` }}>
       <Grid gridGap="standard">
         <Card>
+          <CardHeader>Description</CardHeader>
           <CardContent>{description}</CardContent>
           <CardFooter>
             <ButtonGroup space="standard">
@@ -72,19 +73,21 @@ export function InputBitDoc<T extends Input>({
         <Card>
           <CardHeader>Example</CardHeader>
           <CardContent>
-            This is an interactive example of the {toSentence(name)} input. You
-            can submit new answers, show a statistic based on thoses answers or
-            modify the input by using the different forms.
+            This is an interactive example of the {toSentence(name)} input.
           </CardContent>
           <FormProvider {...methods}>
             <Tabs>
               <TabList inverted>
-                <Tab>Task</Tab>
+                <Tab>Input</Tab>
                 <Tab>View Form</Tab>
               </TabList>
               <TabPanel p="none">
-                <Box position="relative" height="600px">
-                  <inputBit.Input input={input} />
+                <Box position="relative" height="600px" overflowY="auto">
+                  <InputShell
+                    InputComponent={inputBit.Input}
+                    input={{ ...input }}
+                    onNext={async () => {}}
+                  />
                 </Box>
               </TabPanel>
               <TabPanel>

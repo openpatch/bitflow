@@ -1,10 +1,9 @@
 import { css, Theme } from "@emotion/react";
 import { Box, BoxProps, Markdown } from "@openpatch/patches";
-import { Check } from "@openpatch/patches/dist/cjs/icons/shade";
+import { Check } from "@openpatch/patches/icons/shade";
 import { FC, KeyboardEvent } from "react";
 import { Feedback } from "./Feedback";
 import { IResult } from "./types";
-
 export type ChoiceProps = {
   choice: string;
   checked: boolean;

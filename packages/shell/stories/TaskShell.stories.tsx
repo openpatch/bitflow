@@ -56,21 +56,21 @@ const data: {
   },
 };
 
-const evaluateRemoteMock = ({ task }: { task: ITask }) => (
-  answer?: IAnswer
-): Promise<IResult> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(evaluate({ answer, task }));
-    }, 2000);
-  });
-};
+const evaluateRemoteMock =
+  ({ task }: { task: ITask }) =>
+  (answer?: IAnswer): Promise<IResult> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(evaluate({ answer, task }));
+      }, 2000);
+    });
+  };
 
-const evaluateLocalMock = ({ task }: { task: ITask }) => (
-  answer?: IAnswer
-): Promise<IResult> => {
-  return evaluate({ answer, task });
-};
+const evaluateLocalMock =
+  ({ task }: { task: ITask }) =>
+  (answer?: IAnswer): Promise<IResult> => {
+    return evaluate({ answer, task });
+  };
 
 const props: TaskShellProps<ITask, IResult, IAnswer, IAction> = {
   header: "A Test",
@@ -125,13 +125,12 @@ const props: TaskShellProps<ITask, IResult, IAnswer, IAction> = {
     }),
 };
 
-export const Default: Story<
-  TaskShellProps<ITask, IResult, IAnswer, IAction>
-> = (args) => (
-  <Box height="100vh" width="100wv">
-    <TaskShell<ITask, IResult, IAnswer, IAction> {...props} {...args} />
-  </Box>
-);
+export const Default: Story<TaskShellProps<ITask, IResult, IAnswer, IAction>> =
+  (args) => (
+    <Box height="100vh" width="100wv">
+      <TaskShell<ITask, IResult, IAnswer, IAction> {...props} {...args} />
+    </Box>
+  );
 
 export const WithReasoningAndConfidence: Story<
   TaskShellProps<ITask, IResult, IAnswer, IAction>
@@ -224,25 +223,24 @@ export const NoFeedback: Story<
   </Box>
 );
 
-export const NoRetry: Story<
-  TaskShellProps<ITask, IResult, IAnswer, IAction>
-> = (args) => (
-  <Box height="100vh" width="100wv">
-    <TaskShell<ITask, IResult, IAnswer, IAction>
-      {...props}
-      {...args}
-      evaluate={evaluateLocalMock({
-        task: {
-          ...data.task,
-          evaluation: {
-            ...data.task.evaluation,
-            enableRetry: false,
+export const NoRetry: Story<TaskShellProps<ITask, IResult, IAnswer, IAction>> =
+  (args) => (
+    <Box height="100vh" width="100wv">
+      <TaskShell<ITask, IResult, IAnswer, IAction>
+        {...props}
+        {...args}
+        evaluate={evaluateLocalMock({
+          task: {
+            ...data.task,
+            evaluation: {
+              ...data.task.evaluation,
+              enableRetry: false,
+            },
           },
-        },
-      })}
-    />
-  </Box>
-);
+        })}
+      />
+    </Box>
+  );
 
 export const Recording: Story<
   TaskShellProps<ITask, IResult, IAnswer, IAction>
@@ -256,6 +254,7 @@ export const Recording: Story<
       type: "result-receive",
       payload: {
         result: {
+          subtype: "choice",
           state: "correct",
           choices: {
             a: {
@@ -275,7 +274,7 @@ export const Recording: Story<
     {
       scope: "shell",
       type: "evaluate",
-      payload: { answer: { checked: {} } },
+      payload: { answer: { checked: {}, subtype: "choice" } },
     },
     {
       type: "check",

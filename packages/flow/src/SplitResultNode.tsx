@@ -1,20 +1,14 @@
+import { FlowNode, FlowNodeProps } from "@bitflow/flow-node";
 import { useTranslations } from "@vocab/react";
-import { FlowNode, FlowNodeProps } from "./FlowNode";
 import translations from "./locales.vocab";
-import { IFlowNode } from "./schemas";
 
-export const SplitResultNode = (
-  node: Pick<IFlowNode, "type"> & {
-    type: "split-result";
-    hideHandles?: boolean;
-    maxWidth?: FlowNodeProps["maxWidth"];
-    data?: FlowNodeProps;
-  }
-) => {
+export const SplitResultNode = (node: {
+  hideHandles?: boolean;
+  maxWidth?: FlowNodeProps["maxWidth"];
+}) => {
   const { t } = useTranslations(translations);
   return (
     <FlowNode
-      {...node.data}
       tone="yellow"
       title={t("split-result")}
       description={t("split-result-helper-text")}
