@@ -1,0 +1,11 @@
+import { TitleSchema as TitleSchemaBase } from "@bitflow/core";
+import { z } from "zod";
+
+export const TitleSchema = TitleSchemaBase.merge(
+  z.object({
+    subtype: z.literal("{{ dashCase name }}"),
+    view: z.object({
+      example: z.string(),
+    }),
+  })
+);

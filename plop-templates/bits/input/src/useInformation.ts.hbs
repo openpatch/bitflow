@@ -1,0 +1,20 @@
+import { useTranslations } from "@vocab/react";
+import translations from "./locales.vocab";
+import { InputBit } from "./types";
+
+export const useInformation: InputBit["useInformation"] = () => {
+  const { t } = useTranslations(translations);
+
+  return {
+    name: t("name"),
+    description: t("description"),
+    example: {
+      subtype: "{{ dashCase name }}",
+      description: "",
+      name: t("name"),
+      view: {
+        example: t("example"),
+      },
+    },
+  };
+};

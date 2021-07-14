@@ -1,0 +1,11 @@
+import { InputSchema as InputSchemaBase } from "@bitflow/core";
+import { z } from "zod";
+
+export const InputSchema = InputSchemaBase.merge(
+  z.object({
+    subtype: z.literal("{{ dashCase name }}"),
+    view: z.object({
+      example: z.string(),
+    }),
+  })
+);

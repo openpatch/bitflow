@@ -1,6 +1,5 @@
-
 {
-  "name": "@bitflow/{{dashCase packageName}}",
+  "name": "@bitflow/start-{{ dashCase name }}",
   "version": "0.0.0",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
@@ -25,26 +24,38 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openpatch/bitflow.git",
-    "directory": "packages/{{dashCase packageName}}"
+    "directory": "packages/start-{{ dashCase name }}"
   },
   "bugs": {
-    "url": "https://github.com/openpatch/bits/issues"
+    "url": "https://github.com/openpatch/bitflow/issues"
   },
   "scripts": {
     "prebuild": "rimraf dist",
     "start": "concurrently yarn:start:*",
     "start:build": "tsc --build --watch",
+    "start:locale": "vocab compile --watch",
     "build": "concurrently yarn:build:*",
     "clean": "tsc --build --clean",
     "test": "jest --env=jsdom --passWithNoTests",
     "test:coverage": "yarn test --coverage",
     "version": "yarn build",
     "lint": "tsc",
+    "build:locale": "vocab compile",
     "build:esm": "tsc --project tsconfig.build.json --declaration --declarationDir dist/esm --module esnext --target es2015 --outDir dist/esm",
     "build:cjs": "tsc --project tsconfig.build.json --declaration --declarationDir dist/cjs --module commonjs --target es5 --outDir dist/cjs",
     "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
     "@bitflow/core": "0.0.0"
+  },
+  "peerDependencies": {
+    "@emotion/cache": "11.x",
+    "@emotion/react": "11.x",
+    "@emotion/styled": "11.x",
+    "@openpatch/patches": "1.x",
+    "@vocab/react": "1.x",
+    "react": "17.x",
+    "react-dom": "17.x",
+    "zod": "3.x"
   }
 }
