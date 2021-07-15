@@ -2,7 +2,7 @@ import { Meta } from "@storybook/react/types-6-0";
 import { Start, useInformation } from "../src";
 
 export default {
-  title: "Bits/Start/Tries/Start",
+  title: "Bits/Start/Simple/Start",
   component: Start,
   argTypes: {},
 } as Meta;

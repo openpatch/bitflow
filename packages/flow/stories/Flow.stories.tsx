@@ -1,4 +1,4 @@
-import { Box } from "@openpatch/patches/.";
+import { Box } from "@openpatch/patches";
 import { Meta } from "@storybook/react/types-6-0";
 import { Flow } from "../src/Flow";
 
