@@ -1,11 +1,9 @@
-# @bitflow/end-result-path
-
-A Quick description of the component
+# @bitflow/end-tries
 
 ## Installation
 
 ```sh
-yarn add @bitflow/end-result-path
+yarn add @bitflow/end-tries
 # or
-npm i @bitflow/end-result-path
+npm i @bitflow/end-tries
 ```

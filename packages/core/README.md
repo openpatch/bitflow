@@ -1,7 +1,5 @@
 # @bitflow/core
 
-A Quick description of the component
-
 ## Installation
 
 ```sh

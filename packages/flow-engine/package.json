@@ -46,14 +46,5 @@
   "dependencies": {
     "@bitflow/core": "0.0.0",
     "lodash.get": "^4.4.2"
-  },
-  "peerDependencies": {
-    "@emotion/cache": "11.x",
-    "@emotion/react": "11.x",
-    "@emotion/styled": "11.x",
-    "@openpatch/patches": "1.x",
-    "@vocab/react": "1.x",
-    "react": "17.x",
-    "react-dom": "17.x"
   }
 }

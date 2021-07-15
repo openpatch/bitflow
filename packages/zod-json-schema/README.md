@@ -1,4 +1,4 @@
-# @openpatch/bits-stats
+# @bitflow/zod-json-schema
 
 Does what it says on the tin! Supports all relevant schema types as well as basic string, number and array length validations.
 
@@ -17,7 +17,7 @@ npm i @bitflow/zod-json-schema
 
 ```typescript
 import * as z from 'zod';
-import zodToJsonSchema from 'zod-to-json-schema';
+import zodToJsonSchema from '@bitflow/zod-json-schema';
 
 const mySchema = z.object({
   myString: z.string().min(5),

@@ -1,11 +1,10 @@
-# @bitflow/concept-model
+# @bitflow/concept-model-editor
 
-A Quick description of the package
 
 ## Installation
 
 ```sh
-yarn add @bitflow/concept-model
+yarn add @bitflow/concept-model-editor
 # or
-npm i @bitflow/concept-model
+npm i @bitflow/concept-model-editor
 ```

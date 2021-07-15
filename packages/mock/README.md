@@ -1,11 +1,9 @@
-# @bitflow/do
-
-A Quick description of the package
+# @bitflow/mock
 
 ## Installation
 
 ```sh
-yarn add @bitflow/do
+yarn add @bitflow/mock
 # or
-npm i @bitflow/do
+npm i @bitflow/mock
 ```

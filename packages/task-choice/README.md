@@ -1,7 +1,5 @@
 # @bitflow/task-choice
 
-A Quick description of the component
-
 ## Installation
 
 ```sh

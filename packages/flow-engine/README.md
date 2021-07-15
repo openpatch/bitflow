@@ -1,7 +1,5 @@
 # @bitflow/flow-engine
 
-A Quick description of the package
-
 ## Installation
 
 ```sh

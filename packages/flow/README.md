@@ -1,7 +1,5 @@
 # @bitflow/flow
 
-A Quick description of the package
-
 ## Installation
 
 ```sh

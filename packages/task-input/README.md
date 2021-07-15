@@ -1,7 +1,5 @@
 # @bitflow/task-input
 
-A Quick description of the component
-
 ## Installation
 
 ```sh

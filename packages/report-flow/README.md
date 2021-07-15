@@ -1,11 +1,9 @@
-# @bitflow/concept-model
-
-A Quick description of the package
+# @bitflow/report-flow
 
 ## Installation
 
 ```sh
-yarn add @bitflow/concept-model
+yarn add @bitflow/report-flow
 # or
-npm i @bitflow/concept-model
+npm i @bitflow/report-flow
 ```

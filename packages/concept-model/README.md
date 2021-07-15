@@ -1,6 +1,5 @@
 # @bitflow/concept-model
 
-A Quick description of the package
 
 ## Installation
 

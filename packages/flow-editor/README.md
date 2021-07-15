@@ -1,11 +1,9 @@
-# @bitflow/flow
-
-A Quick description of the package
+# @bitflow/flow-editor
 
 ## Installation
 
 ```sh
-yarn add @bitflow/flow
+yarn add @bitflow/flow-editor
 # or
-npm i @bitflow/flow
+npm i @bitflow/flow-editor
 ```

@@ -1,11 +1,9 @@
-# @openpatch/bits-date
-
-A Quick description of the package
+# @bitflow/date
 
 ## Installation
 
 ```sh
-yarn add @openpatch/bits-date
+yarn add @bitflow/date
 # or
-npm i @openpatch/bits-date
+npm i @bitflow/date
 ```
