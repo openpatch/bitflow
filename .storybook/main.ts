@@ -2,9 +2,8 @@ const path = require("path");
 const toPath = (_path) => path.join(process.cwd(), _path);
 
 module.exports = {
-  reactOptions: {
-    fastRefresh: true,
-    strictMode: true,
+  core: {
+    builder: "webpack5",
   },
   stories: ["../packages/**/*.stories.@(ts|tsx|mdx)"],
   addons: [

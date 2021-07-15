@@ -1,4 +1,4 @@
-import * as themes from "@openpatch/patches/dist/esm/themes";
+import * as themes from "@openpatch/patches/themes";
 import withBitProvider from "./utils/provider-decorator";
 import withTheme from "./utils/theme-decorator";
 

@@ -1,6 +1,6 @@
 import { css, Global, Theme } from "@emotion/react";
 import { Box, Card, CardContent, ThemeProvider } from "@openpatch/patches";
-import * as themes from "@openpatch/patches/dist/esm/themes";
+import * as themes from "@openpatch/patches/themes";
 import { Story, StoryContext } from "@storybook/react";
 import React from "react";
 

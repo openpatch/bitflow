@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { baseTheme } from "@openpatch/patches/themes";
 import { create } from "@storybook/theming/create";
-import { baseTheme } from "@openpatch/patches/dist/esm/themes";
 
 export const theme = create({
   base: "light",
