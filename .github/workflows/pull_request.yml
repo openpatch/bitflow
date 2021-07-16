@@ -2,6 +2,8 @@ name: Release Pull Request
 
 on:
   push:
+    paths:
+      - ".changeset/**"
     branches:
       - main
 
