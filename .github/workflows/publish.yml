@@ -2,6 +2,10 @@ name: Publish Packages
 
 on:
   push:
+    paths:
+      - ".changeset/**"
+      - "packages/**"
+      - "types/**"
     branches:
       - main
 
