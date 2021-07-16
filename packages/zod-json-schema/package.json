@@ -41,8 +41,11 @@
     "build:cjs": "tsc --project tsconfig.json --declaration --declarationDir dist/cjs --module commonjs --target es5 --outDir dist/cjs",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types"
   },
-  "dependencies": {
-    "zod": "^3.2.0"
+  "devDependencies": {
+    "@bitflow/title-simple": "0.0.0",
+    "zod": "^3.5.1"
   },
-  "peerDependencies": {}
+  "peerDependencies": {
+    "zod": "3.x"
+  }
 }

@@ -1,3 +1,4 @@
+import { TitleSchema } from "@bitflow/title-simple";
 import { z } from "zod";
 import { zodToJsonSchema } from "../src/zodToJsonSchema";
 
@@ -15,5 +16,11 @@ describe("Root schema result after parsing", () => {
         MySchema: {},
       },
     });
+  });
+});
+
+describe("Bitflow schema", () => {
+  it("shoudl return the schema", () => {
+    expect(zodToJsonSchema(TitleSchema)).toMatchSnapshot();
   });
 });
