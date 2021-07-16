@@ -7,6 +7,7 @@ const translations = createTranslationFile<
   "en-GB" | "en" | "en-US" | "de",
   {
     description: () => " ";
+    "example.markdown": () => "# Your Results!";
     markdown: () => "Markdown";
     name: () => "Tries";
     points: (values: { points: number; maxPoints: number }) => string;
@@ -14,6 +15,7 @@ const translations = createTranslationFile<
 >({
   "en-GB": createLanguage({
     description: " ",
+    "example.markdown": "# Your Results!",
     markdown: "Markdown",
     name: "Tries",
     points:
@@ -21,6 +23,7 @@ const translations = createTranslationFile<
   }),
   en: createLanguage({
     description: " ",
+    "example.markdown": "# Your Results!",
     markdown: "Markdown",
     name: "Tries",
     points:
@@ -28,6 +31,7 @@ const translations = createTranslationFile<
   }),
   "en-US": createLanguage({
     description: " ",
+    "example.markdown": "# Your Results!",
     markdown: "Markdown",
     name: "Tries",
     points:
@@ -35,6 +39,7 @@ const translations = createTranslationFile<
   }),
   de: createLanguage({
     description: " ",
+    "example.markdown": "# Your Results!",
     markdown: "Markdown",
     name: "Tries",
     points:

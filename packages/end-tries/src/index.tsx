@@ -50,7 +50,7 @@ export const useInformation: EndBit<IEnd>["useInformation"] = () => {
       description: t("description"),
       subtype: "tries",
       view: {
-        markdown: "# Your Results!",
+        markdown: t("example.markdown"),
       },
     },
   };

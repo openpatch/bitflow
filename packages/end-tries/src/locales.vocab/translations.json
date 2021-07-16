@@ -2,6 +2,9 @@
   "description": {
     "message": " "
   },
+  "example.markdown": {
+    "message": "# Your Results!"
+  },
   "markdown": {
     "message": "Markdown"
   },
