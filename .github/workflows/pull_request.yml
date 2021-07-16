@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn boot
+      - run: yarn --frozen-lockfile --silent boot
       - run: yarn test
 
   release:
@@ -56,7 +56,7 @@ jobs:
           node-version: 12
 
       - name: Install Dependencies
-        run: yarn boot
+        run: yarn --frozen-lockfile --silent boot
 
       - name: Create Release Pull Request
         uses: changesets/action@master
