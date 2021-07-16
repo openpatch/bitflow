@@ -10,19 +10,34 @@ export const useInformation: TaskBit["useInformation"] = () => {
     example: {
       description: t("description"),
       evaluation: {
-        blanks: {},
-        enableRetry: false,
+        blanks: {
+          a: t("example.blank.a"),
+          b: t("example.blank.b"),
+        },
+        enableRetry: true,
         mode: "auto",
-        showFeedback: false,
+        showFeedback: true,
       },
       feedback: {
-        blanks: {},
+        blanks: {
+          a: {
+            patterns: [
+              {
+                pattern: t("example.blank.a.feedback.pattern"),
+                feedback: {
+                  message: t("example.blank.a.feedback.message"),
+                  severity: "error",
+                },
+              },
+            ],
+          },
+        },
       },
       name: t("name"),
       subtype: "fill-in-the-blank",
       view: {
-        instruction: "",
-        textWithBlanks: "",
+        instruction: t("example.instruction"),
+        textWithBlanks: t("example.textWithBlanks"),
       },
     },
   };

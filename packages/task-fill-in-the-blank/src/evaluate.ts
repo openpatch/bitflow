@@ -16,7 +16,9 @@ export const evaluate: TaskBit["evaluate"] = async ({ answer, task }) => {
       try {
         const regex = new RegExp(pattern);
         if (regex.test(answerValue)) {
-          state = "correct";
+          if (state === "unknown") {
+            state = "correct";
+          }
           blankResults[id].state = "correct";
         } else {
           state = "wrong";

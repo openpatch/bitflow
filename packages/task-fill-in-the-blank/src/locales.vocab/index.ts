@@ -9,8 +9,14 @@ const translations = createTranslationFile<
     "add-pattern": () => "Add Pattern";
     answers: () => "Answers";
     "delete-pattern": () => "Delete";
-    description: () => " ";
+    description: () => "A task bit allowing to create fill in the blank texts. The text can be written in Markdown. The strike-through syntax will create a blank. The answers of a user can be automatically evaluated, if you provide regular expressions for the blanks. You can also provide feedback by using regular expression, as well.";
     error: () => "Error";
+    "example.blank.a": () => "[Bb]itflow";
+    "example.blank.a.feedback.message": () => "How is this library called?";
+    "example.blank.a.feedback.pattern": () => "^(?![Bb]itflow).*$";
+    "example.blank.b": () => "[Aa]ssessments|[Tt]ests";
+    "example.instruction": () => "Complete the sentence!";
+    "example.textWithBlanks": () => "~~a~~ is a library for creating and conducting flow-based ~~b~~.";
     "feedback-for-blank": (values: { blank: string }) => string;
     info: () => "Info";
     instruction: () => "Instruction";
@@ -36,8 +42,16 @@ const translations = createTranslationFile<
     "add-pattern": "Add Pattern",
     answers: "Answers",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit allowing to create fill in the blank texts. The text can be written in Markdown. The strike-through syntax will create a blank. The answers of a user can be automatically evaluated, if you provide regular expressions for the blanks. You can also provide feedback by using regular expression, as well.",
     error: "Error",
+    "example.blank.a": "[Bb]itflow",
+    "example.blank.a.feedback.message": "How is this library called?",
+    "example.blank.a.feedback.pattern": "^(?![Bb]itflow).*$",
+    "example.blank.b": "[Aa]ssessments|[Tt]ests",
+    "example.instruction": "Complete the sentence!",
+    "example.textWithBlanks":
+      "~~a~~ is a library for creating and conducting flow-based ~~b~~.",
     "feedback-for-blank": "Feedback for {blank}",
     info: "Info",
     instruction: "Instruction",
@@ -63,8 +77,16 @@ const translations = createTranslationFile<
     "add-pattern": "Add Pattern",
     answers: "Answers",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit allowing to create fill in the blank texts. The text can be written in Markdown. The strike-through syntax will create a blank. The answers of a user can be automatically evaluated, if you provide regular expressions for the blanks. You can also provide feedback by using regular expression, as well.",
     error: "Error",
+    "example.blank.a": "[Bb]itflow",
+    "example.blank.a.feedback.message": "How is this library called?",
+    "example.blank.a.feedback.pattern": "^(?![Bb]itflow).*$",
+    "example.blank.b": "[Aa]ssessments|[Tt]ests",
+    "example.instruction": "Complete the sentence!",
+    "example.textWithBlanks":
+      "~~a~~ is a library for creating and conducting flow-based ~~b~~.",
     "feedback-for-blank": "Feedback for {blank}",
     info: "Info",
     instruction: "Instruction",
@@ -90,8 +112,16 @@ const translations = createTranslationFile<
     "add-pattern": "Add Pattern",
     answers: "Answers",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit allowing to create fill in the blank texts. The text can be written in Markdown. The strike-through syntax will create a blank. The answers of a user can be automatically evaluated, if you provide regular expressions for the blanks. You can also provide feedback by using regular expression, as well.",
     error: "Error",
+    "example.blank.a": "[Bb]itflow",
+    "example.blank.a.feedback.message": "How is this library called?",
+    "example.blank.a.feedback.pattern": "^(?![Bb]itflow).*$",
+    "example.blank.b": "[Aa]ssessments|[Tt]ests",
+    "example.instruction": "Complete the sentence!",
+    "example.textWithBlanks":
+      "~~a~~ is a library for creating and conducting flow-based ~~b~~.",
     "feedback-for-blank": "Feedback for {blank}",
     info: "Info",
     instruction: "Instruction",
@@ -117,8 +147,16 @@ const translations = createTranslationFile<
     "add-pattern": "Add Pattern",
     answers: "Answers",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit allowing to create fill in the blank texts. The text can be written in Markdown. The strike-through syntax will create a blank. The answers of a user can be automatically evaluated, if you provide regular expressions for the blanks. You can also provide feedback by using regular expression, as well.",
     error: "Error",
+    "example.blank.a": "[Bb]itflow",
+    "example.blank.a.feedback.message": "How is this library called?",
+    "example.blank.a.feedback.pattern": "^(?![Bb]itflow).*$",
+    "example.blank.b": "[Aa]ssessments|[Tt]ests",
+    "example.instruction": "Complete the sentence!",
+    "example.textWithBlanks":
+      "~~a~~ is a library for creating and conducting flow-based ~~b~~.",
     "feedback-for-blank": "Feedback for {blank}",
     info: "Info",
     instruction: "Instruction",

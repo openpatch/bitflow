@@ -9,10 +9,28 @@
     "message": "Delete"
   },
   "description": {
-    "message": " "
+    "message": "A task bit allowing to create fill in the blank texts. The text can be written in Markdown. The strike-through syntax will create a blank. The answers of a user can be automatically evaluated, if you provide regular expressions for the blanks. You can also provide feedback by using regular expression, as well."
   },
   "error": {
     "message": "Error"
+  },
+  "example.blank.a": {
+    "message": "[Bb]itflow"
+  },
+  "example.blank.a.feedback.message": {
+    "message": "How is this library called?"
+  },
+  "example.blank.a.feedback.pattern": {
+    "message": "^(?![Bb]itflow).*$"
+  },
+  "example.blank.b": {
+    "message": "[Aa]ssessments|[Tt]ests"
+  },
+  "example.instruction": {
+    "message": "Complete the sentence!"
+  },
+  "example.textWithBlanks": {
+    "message": "~~a~~ is a library for creating and conducting flow-based ~~b~~."
   },
   "feedback-for-blank": {
     "message": "Feedback for {blank}"

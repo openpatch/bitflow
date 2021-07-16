@@ -138,10 +138,14 @@ const Blank = ({ node }: { node: any }) => {
         css`
           display: inline-block;
           width: ${width}px;
+          border-radius: ${theme.radii.small};
+          border-style: solid;
+          border-width: ${theme.borderWidths.standard};
         `,
         result?.state === "wrong" &&
           css`
-            background-color: ${theme.colors.error["500"]};
+            border-color: ${theme.colors.error["500"]};
+            color: ${theme.colors.error[700]};
           `,
       ]}
       value={state}
