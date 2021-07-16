@@ -5,6 +5,7 @@ import * as startSimple from "@bitflow/start-simple";
 import * as taskChoice from "@bitflow/task-choice";
 import * as taskFillInTheBlank from "@bitflow/task-fill-in-the-blank";
 import * as taskInput from "@bitflow/task-input";
+import * as taskYesNo from "@bitflow/task-input";
 import * as titleSimple from "@bitflow/title-simple";
 import { MDXProvider } from "@mdx-js/react";
 import { Code, ThemeProvider } from "@openpatch/patches";
@@ -37,6 +38,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
             choice: taskChoice,
             "fill-in-the-blank": taskFillInTheBlank,
             input: taskInput,
+            "yes-no": taskYesNo,
           },
           input: {
             markdown: inputMarkdown,

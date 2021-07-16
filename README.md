@@ -1,10 +1,9 @@
 # Bitflow
 
-Bitflow is a library for building flow-based assessment systems. Feel free to check out the [examples](https://github.com/openpatch/bitflow/tree/alpha/examples/) to get started.
+Bitflow is a library for building flow-based assessment systems. Feel free to check out the [examples](https://github.com/openpatch/bitflow/tree/main/examples/) to get started.
 
 - **Website:** https://bitflow.openpatch.org
 - **Documentation:** https://bitflow.openpatch.org/docs
-- **Examples:** https://reactflow.dev/examples
 - **Website/Docs Repository:** https://github.com/openpatch/bitflow
 - **Community:** https://discord.gg/dCMM4kV
 
@@ -22,6 +21,17 @@ or you can start the examples via:
 
 ```
 yarn workspace example-nextjs-client-side-assessment dev
+```
+
+You can use plop templates for common task by running:
+
+```
+yarn plop
+```
+
+If you want to work on the documentation, start the dev server by running:
+```
+yarn workspace website dev
 ```
 
 ## Testing

@@ -54,6 +54,10 @@ const nav: SidenavProps["sections"] = [
         label: "Task - Input",
       },
       {
+        href: "/docs/bits/task-yes-no",
+        label: "Task - Yes No",
+      },
+      {
         href: "/docs/bits/title-simple",
         label: "Title - Simple",
       },
@@ -68,8 +72,16 @@ const nav: SidenavProps["sections"] = [
     label: "Shells",
     links: [
       {
+        href: "/docs/shells/end",
+        label: "End",
+      },
+      {
         href: "/docs/shells/input",
         label: "Input",
+      },
+      {
+        href: "/docs/shells/start",
+        label: "Start",
       },
       {
         href: "/docs/shells/task",
@@ -86,28 +98,48 @@ const nav: SidenavProps["sections"] = [
     label: "Report",
   },
   {
+    href: "/docs/examples",
+    label: "Examples",
+  },
+  {
     href: "/docs/contributing",
     label: "Contributing",
     links: [
       {
-        href: "/docs/contributing/new-bit",
-        label: "New Bit",
-      },
-      {
-        href: "/docs/contributing/new-flow-node",
-        label: "New Flow Node",
+        href: "/docs/contributing/bug-report",
+        label: "Bug Report",
       },
       {
         href: "/docs/contributing/update-translations",
         label: "Update Translations",
       },
       {
-        href: "/docs/contributing/new-language",
-        label: "New Language",
+        href: "/docs/contributing/new-end-bit",
+        label: "New End Bit",
       },
       {
-        href: "/docs/contributing/bug-report",
-        label: "Bug Report",
+        href: "/docs/contributing/new-input-bit",
+        label: "New Input Bit",
+      },
+      {
+        href: "/docs/contributing/new-task-bit",
+        label: "New Task Bit",
+      },
+      {
+        href: "/docs/contributing/new-start-bit",
+        label: "New Start Bit",
+      },
+      {
+        href: "/docs/contributing/new-title-bit",
+        label: "New Title Bit",
+      },
+      {
+        href: "/docs/contributing/new-flow-node",
+        label: "New Flow Node",
+      },
+      {
+        href: "/docs/contributing/new-language",
+        label: "New Language",
       },
     ],
   },
@@ -139,7 +171,7 @@ export const DocLayout: FC<DocLayoutProps> = ({
               }))}
             />
           </Box>
-          {children}
+          <Box>{children}</Box>
         </Grid>
       </Main>
     </NavLayout>

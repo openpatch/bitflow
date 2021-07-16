@@ -19,21 +19,23 @@ import {
   Tabs,
 } from "@openpatch/patches";
 import { DefaultValues, FormProvider, useForm } from "react-hook-form";
-import { toSentence } from "../utils/case";
+import { toKebab, toSentence } from "../utils/case";
 import { DocLayout } from "./DocLayout";
 
 export type InputBitDocProps<T extends Bitflow.Input> = {
   inputBit: InputBit;
-  defaultValues: T;
+  example: T;
+  name: string;
   description: string;
 };
 
 export function InputBitDoc<T extends Bitflow.Input>({
   inputBit,
-  defaultValues,
+  example,
+  name,
   description,
 }: InputBitDocProps<T>) {
-  const formDefaultValues = defaultValues as DefaultValues<T>;
+  const formDefaultValues = example as DefaultValues<T>;
   const methods = useForm<T>({
     resolver: zodResolver(inputBit.InputSchema),
     reValidateMode: "onBlur",
@@ -42,7 +44,6 @@ export function InputBitDoc<T extends Bitflow.Input>({
     mode: "onBlur",
   });
   const input = methods.watch() as any;
-  const name = defaultValues.subtype;
 
   return (
     <DocLayout meta={{ title: `Input - ${toSentence(name)}` }}>
@@ -53,17 +54,16 @@ export function InputBitDoc<T extends Bitflow.Input>({
           <CardFooter>
             <ButtonGroup space="standard">
               <ButtonSecondaryLink
-                href={`https://github.com/openpatch/bitflow/tree/main/packages/input-${name}`}
+                href={`https://github.com/openpatch/bitflow/tree/main/packages/input-${toKebab(
+                  name
+                )}`}
               >
                 View Repository
               </ButtonSecondaryLink>
               <ButtonSecondaryLink
-                href={`https://github.com/openpatch/bitflow/tree/main/website/src/pages/docs/bits/input-${name}`}
-              >
-                View Example Source
-              </ButtonSecondaryLink>
-              <ButtonSecondaryLink
-                href={`https://www.npmjs.com/package/@bitflow/input-${name}`}
+                href={`https://www.npmjs.com/package/@bitflow/input-${toKebab(
+                  name
+                )}`}
               >
                 View on NPM
               </ButtonSecondaryLink>
@@ -104,7 +104,7 @@ export function InputBitDoc<T extends Bitflow.Input>({
             <Code language="javascript">{`import { 
   Input, InputSchema, 
   ViewForm 
-} from "@bitflow/input-${name}"`}</Code>
+} from "@bitflow/input-${toKebab(name)}"`}</Code>
             <ul>
               <li>
                 <b>Input</b>: The component displays the input.
@@ -130,7 +130,7 @@ export function InputBitDoc<T extends Bitflow.Input>({
             <Link href="/docs/shells/input">InputShell component</Link> like so,
             if you want to use the component on its own.
             <Code language="typescript">{`import { InputShell } from "@bitflow/shell";
-import { evaluate, Input } from "@bitflow/input-${name}";
+import { evaluate, Input } from "@bitflow/input-${toKebab(name)}";
  
 const My = () => (
   <InputShell
@@ -151,11 +151,7 @@ const My = () => (
             object, you can build something yourself which produces a object,
             which follows this JSON schema.
             <Code language="json">
-              {JSON.stringify(
-                zodToJsonSchema(inputBit.InputSchema as any),
-                null,
-                2
-              )}
+              {JSON.stringify(zodToJsonSchema(inputBit.InputSchema), null, 2)}
             </Code>
           </CardContent>
         </Card>

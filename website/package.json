@@ -23,6 +23,7 @@
     "@bitflow/task-choice": "0.0.0",
     "@bitflow/task-fill-in-the-blank": "0.0.0",
     "@bitflow/task-input": "0.0.0",
+    "@bitflow/task-yes-no": "0.0.0",
     "@bitflow/title-simple": "0.0.0",
     "@bitflow/zod-json-schema": "0.0.0",
     "@emotion/cache": "11.4.0",

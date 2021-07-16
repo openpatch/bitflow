@@ -1,0 +1,29 @@
+import { Card, CardContent } from "@openpatch/patches";
+import { DocLayout } from "../../../components/DocLayout";
+
+export const meta = {
+  title: "Contributing",
+};
+
+You can contribute to Bitflow in many ways. Some do not even require programming skills. Here is a list of what you can do.
+
+- [You can report a bug](/docs/contributing/bug-report)
+- [You can update/fix translations](/docs/contributing/update-translations)
+- [You can add a new end bit](/docs/contributing/new-end-bit)
+- [You can add a new input bit](/docs/contributing/new-input-bit)
+- [You can add a new task bit](/docs/contributing/new-task-bit)
+- [You can add a new start bit](/docs/contributing/new-start-bit)
+- [You can add a new title bit](/docs/contributing/new-title-bit)
+- [You can add a new flow node](/docs/contributing/new-flow-node)
+- [You can add a new language](/docs/contributing/new-language)
+
+You can also just promote Bitflow, write blog posts about it, use it in your
+projects, provide suggestions for future features, give feedback and much more. Feel free to join our [Discord Server](https://discord.gg/dCMM4kV) and share what you have done and your ideas.
+
+export default ({ children }) => (
+  <DocLayout meta={meta}>
+    <Card>
+      <CardContent>{children}</CardContent>
+    </Card>
+  </DocLayout>
+);

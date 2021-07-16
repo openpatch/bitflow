@@ -17,19 +17,11 @@ export const NavLayout: FC<NavLayoutProps> = ({ children }) => {
         links={[
           {
             label: t("documentation"),
-            href: "/docs",
-          },
-          {
-            label: t("editor"),
-            href: "/editor",
+            href: "/docs/getting-started",
           },
           {
             label: t("changelog"),
             href: "/changelog",
-          },
-          {
-            label: t("roadmap"),
-            href: "/roadap",
           },
           {
             label: "GitHub",

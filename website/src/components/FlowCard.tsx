@@ -11,13 +11,13 @@ import {
 import { useTranslations } from "@vocab/react";
 import { useRouter } from "next/router";
 import translations from "../locales.vocab";
-import { convertFromJsonToString } from "../utils/convertFlow";
 
 export type FlowCardProps = {
   flow: IFlow;
+  id: string;
 };
 
-export const FlowCard = ({ flow }: FlowCardProps) => {
+export const FlowCard = ({ flow, id }: FlowCardProps) => {
   const { t } = useTranslations(translations);
   const router = useRouter();
 
@@ -28,26 +28,10 @@ export const FlowCard = ({ flow }: FlowCardProps) => {
         <Flow {...flow} autoFitView interactive={false} />
       </Box>
       <CardFooter>
-        <ButtonPrimary
-          fullWidth
-          onClick={() =>
-            router.push({
-              pathname: "/do",
-              query: { flow: convertFromJsonToString(flow) },
-            })
-          }
-        >
+        <ButtonPrimary fullWidth onClick={() => router.push(`/do/${id}`)}>
           {t("do-flow")}
         </ButtonPrimary>
-        <ButtonSecondary
-          fullWidth
-          onClick={() =>
-            router.push({
-              pathname: "/editor",
-              query: { flow: convertFromJsonToString(flow) },
-            })
-          }
-        >
+        <ButtonSecondary fullWidth onClick={() => router.push(`/editor/${id}`)}>
           {t("edit-flow")}
         </ButtonSecondary>
       </CardFooter>

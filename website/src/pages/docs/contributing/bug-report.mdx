@@ -1,0 +1,23 @@
+import { Card, CardContent } from "@openpatch/patches";
+import { DocLayout } from "../../../components/DocLayout";
+
+export const meta = {
+  title: "Bug Report",
+};
+
+For bug reporting you can go to https://github.com/openpatch/bitflow/issues/new
+and describe that you have encountered. It is easier to fix the bug, you also
+provide information on what did you expect to happen. If this bug is present in an
+open source project, please leave a link to the source code. Pictures, Gifs or
+videos are also welcome.
+
+If you are not sure about reporting, feel free to discuss it at our [Discord
+Server](https://discord.gg/dCMM4kV).
+
+export default ({ children }) => (
+  <DocLayout meta={meta}>
+    <Card>
+      <CardContent>{children}</CardContent>
+    </Card>
+  </DocLayout>
+);

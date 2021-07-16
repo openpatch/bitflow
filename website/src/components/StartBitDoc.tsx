@@ -19,21 +19,23 @@ import {
   Tabs,
 } from "@openpatch/patches";
 import { DefaultValues, FormProvider, useForm } from "react-hook-form";
-import { toSentence } from "../utils/case";
+import { toKebab, toSentence } from "../utils/case";
 import { DocLayout } from "./DocLayout";
 
 export type StartBitDocProps<T extends Bitflow.Start> = {
   startBit: StartBit;
-  defaultValues: T;
+  example: T;
+  name: string;
   description: string;
 };
 
 export function StartBitDoc<T extends Bitflow.Start>({
   startBit,
-  defaultValues,
+  example,
+  name,
   description,
 }: StartBitDocProps<T>) {
-  const formDefaultValues = defaultValues as DefaultValues<T>;
+  const formDefaultValues = example as DefaultValues<T>;
   const methods = useForm<T>({
     resolver: zodResolver(startBit.StartSchema),
     reValidateMode: "onBlur",
@@ -42,7 +44,6 @@ export function StartBitDoc<T extends Bitflow.Start>({
     mode: "onBlur",
   });
   const start = methods.watch() as any;
-  const name = defaultValues.subtype;
 
   return (
     <DocLayout meta={{ title: `Start - ${toSentence(name)}` }}>
@@ -53,17 +54,16 @@ export function StartBitDoc<T extends Bitflow.Start>({
           <CardFooter>
             <ButtonGroup space="standard">
               <ButtonSecondaryLink
-                href={`https://github.com/openpatch/bitflow/tree/main/packages/start-${name}`}
+                href={`https://github.com/openpatch/bitflow/tree/main/packages/start-${toKebab(
+                  name
+                )}`}
               >
                 View Repository
               </ButtonSecondaryLink>
               <ButtonSecondaryLink
-                href={`https://github.com/openpatch/bitflow/tree/main/website/src/pages/docs/bits/start-${name}`}
-              >
-                View Example Source
-              </ButtonSecondaryLink>
-              <ButtonSecondaryLink
-                href={`https://www.npmjs.com/package/@bitflow/start-${name}`}
+                href={`https://www.npmjs.com/package/@bitflow/start-${toKebab(
+                  name
+                )}`}
               >
                 View on NPM
               </ButtonSecondaryLink>
@@ -104,7 +104,7 @@ export function StartBitDoc<T extends Bitflow.Start>({
             <Code language="javascript">{`import { 
   Start, StartSchema, 
   ViewForm 
-} from "@bitflow/start-${name}"`}</Code>
+} from "@bitflow/start-${toKebab(name)}"`}</Code>
             <ul>
               <li>
                 <b>Start</b>: The component displays the start.
@@ -130,7 +130,7 @@ export function StartBitDoc<T extends Bitflow.Start>({
             <Link href="/docs/shells/start">StartShell component</Link> like so,
             if you want to use the component on its own.
             <Code language="typescript">{`import { StartShell } from "@bitflow/shell";
-import { evaluate, Start } from "@bitflow/start-${name}";
+import { evaluate, Start } from "@bitflow/start-${toKebab(name)}";
  
 const My = () => (
   <StartShell
@@ -151,11 +151,7 @@ const My = () => (
             object, you can build something yourself which produces a object,
             which follows this JSON schema.
             <Code language="json">
-              {JSON.stringify(
-                zodToJsonSchema(startBit.StartSchema as any),
-                null,
-                2
-              )}
+              {JSON.stringify(zodToJsonSchema(startBit.StartSchema), null, 2)}
             </Code>
           </CardContent>
         </Card>

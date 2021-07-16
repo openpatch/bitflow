@@ -1,0 +1,20 @@
+import { Card, CardContent } from "@openpatch/patches";
+import { DocLayout } from "../../../components/DocLayout";
+
+export const meta = {
+  title: "Update Translations",
+};
+
+If you want to update or fix translations, you need to update the
+`translations.json` file or `[code].translations.json` file in the
+`locales.vocab` folder of a given package. The simples way to do that is to
+visit the [GitHub repository](https://github.com/openpatch/bitflow), navigate to
+the file, click the little pencil icon, do your editing and propose the changes.
+
+export default ({ children }) => (
+  <DocLayout meta={meta}>
+    <Card>
+      <CardContent>{children}</CardContent>
+    </Card>
+  </DocLayout>
+);

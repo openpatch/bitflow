@@ -7,9 +7,7 @@ const translations = createTranslationFile<
   "en-GB" | "en" | "en-US" | "de",
   {
     bitflow: () => "Bitflow";
-    "bitflow-description": () =>
-      | "A library for creating and conducting dynamic flow-based assessments."
-      | "Eine Bibliothek zum Erstellen und Durchführen von dynamischen flow-basierten Assessments.";
+    "bitflow-description": () => "A library for creating and conducting dynamic flow-based assessments.";
     changelog: () => "Changelog";
     contact: () => "Contact";
     "convert-flow-json-to-string": () => "Convert JSON to String";
@@ -17,7 +15,7 @@ const translations = createTranslationFile<
     converter: () => "Converter";
     "demo-flows": () => "Demo Flows";
     "do-flow": () => "Do";
-    documentation: () => "Documentation";
+    documentation: () => "Docs";
     download: () => "Download";
     "edit-flow": () => "Edit";
     editor: () => "Editor";
@@ -42,7 +40,7 @@ const translations = createTranslationFile<
     converter: "Converter",
     "demo-flows": "Demo Flows",
     "do-flow": "Do",
-    documentation: "Documentation",
+    documentation: "Docs",
     download: "Download",
     "edit-flow": "Edit",
     editor: "Editor",
@@ -66,7 +64,7 @@ const translations = createTranslationFile<
     converter: "Converter",
     "demo-flows": "Demo Flows",
     "do-flow": "Do",
-    documentation: "Documentation",
+    documentation: "Docs",
     download: "Download",
     "edit-flow": "Edit",
     editor: "Editor",
@@ -90,7 +88,7 @@ const translations = createTranslationFile<
     converter: "Converter",
     "demo-flows": "Demo Flows",
     "do-flow": "Do",
-    documentation: "Documentation",
+    documentation: "Docs",
     download: "Download",
     "edit-flow": "Edit",
     editor: "Editor",
@@ -106,7 +104,7 @@ const translations = createTranslationFile<
   de: createLanguage({
     bitflow: "Bitflow",
     "bitflow-description":
-      "Eine Bibliothek zum Erstellen und Durchführen von dynamischen flow-basierten Assessments.",
+      "A library for creating and conducting dynamic flow-based assessments.",
     changelog: "Changelog",
     contact: "Contact",
     "convert-flow-json-to-string": "Convert JSON to String",
@@ -114,7 +112,7 @@ const translations = createTranslationFile<
     converter: "Converter",
     "demo-flows": "Demo Flows",
     "do-flow": "Do",
-    documentation: "Documentation",
+    documentation: "Docs",
     download: "Download",
     "edit-flow": "Edit",
     editor: "Editor",

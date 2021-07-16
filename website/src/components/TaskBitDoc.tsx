@@ -22,34 +22,33 @@ import {
 } from "@openpatch/patches";
 import { Fragment, useState } from "react";
 import { DefaultValues, FormProvider, useForm } from "react-hook-form";
-import { toSentence } from "../utils/case";
+import { toKebab, toSentence } from "../utils/case";
 import { DocLayout } from "./DocLayout";
 
 export type TaskBitDocProps<T extends Bitflow.Task> = {
+  name: string;
   taskBit: TaskBit<T>;
-  defaultValues: T;
-  actions: string[];
+  example: T;
   description: string;
 };
 
 export function TaskBitDoc<T extends Bitflow.Task>({
-  defaultValues,
+  name,
+  example,
   taskBit,
   description,
-  actions,
 }: TaskBitDocProps<T>) {
   const [statistic, setStatistic] = useState<Bitflow.TaskStatistic>();
   const [nextKey, setNextKey] = useState(new Date());
-  const formDefaultValues = defaultValues as DefaultValues<T>;
   const methods = useForm<T>({
     resolver: zodResolver(taskBit.TaskSchema),
     reValidateMode: "onBlur",
     shouldUnregister: false,
-    defaultValues: formDefaultValues,
     mode: "onBlur",
+    defaultValues: example as DefaultValues<T>,
   });
+
   const task = methods.watch() as any;
-  const name = defaultValues.subtype;
 
   const handleEvaluate = async (
     answer: Bitflow.TaskAnswer
@@ -78,17 +77,16 @@ export function TaskBitDoc<T extends Bitflow.Task>({
           <CardFooter>
             <ButtonGroup space="standard">
               <ButtonSecondaryLink
-                href={`https://github.com/openpatch/bitflow/tree/main/packages/task-${name}`}
+                href={`https://github.com/openpatch/bitflow/tree/main/packages/task-${toKebab(
+                  name
+                )}`}
               >
                 View Repository
               </ButtonSecondaryLink>
               <ButtonSecondaryLink
-                href={`https://github.com/openpatch/bitflow/tree/main/website/src/pages/docs/bits/task-${name}`}
-              >
-                View Example Source
-              </ButtonSecondaryLink>
-              <ButtonSecondaryLink
-                href={`https://www.npmjs.com/package/@bitflow/task-${name}`}
+                href={`https://www.npmjs.com/package/@bitflow/task-${toKebab(
+                  name
+                )}`}
               >
                 View on NPM
               </ButtonSecondaryLink>
@@ -164,7 +162,7 @@ export function TaskBitDoc<T extends Bitflow.Task>({
   Task, TaskSchema, 
   ViewForm, EvaluationForm, FeedbackForm, 
   evaluate, updateStatistic, Statistic 
-} from "@bitflow/task-${name}"`}</Code>
+} from "@bitflow/task-${toKebab(name)}"`}</Code>
             <ul>
               <li>
                 <b>Task</b>: The task component displays the task.
@@ -210,7 +208,7 @@ export function TaskBitDoc<T extends Bitflow.Task>({
             <Link href="/docs/shells/task">TaskShell component</Link> like so,
             if you want to use the component on its own.
             <Code language="typescript">{`import { TaskShell } from "@bitflow/shell";
-import { evaluate, Task } from "@bitflow/task-${name}";
+import { evaluate, Task } from "@bitflow/task-${toKebab(name)}";
  
 const My = () => (
   <TaskShell
@@ -231,13 +229,7 @@ const My = () => (
           <CardContent>
             Each task emits different actions, which can be used for{" "}
             <Link href="/docs/bits/capute-and-replay">capture and replay</Link>{" "}
-            the solving process. The {toSentence(name)} task emits the
-            following:
-            {actions.map((a, i) => (
-              <Code key={i} language="json">
-                {a}
-              </Code>
-            ))}
+            the solving process. These are defined by the IAction type.
           </CardContent>
         </Card>
         <Card>
@@ -247,11 +239,7 @@ const My = () => (
             object, you can build something yourself which produces a object,
             which follows this JSON schema.
             <Code language="json">
-              {JSON.stringify(
-                zodToJsonSchema(taskBit.TaskSchema as any),
-                null,
-                2
-              )}
+              {JSON.stringify(zodToJsonSchema(taskBit.TaskSchema), null, 2)}
             </Code>
           </CardContent>
         </Card>

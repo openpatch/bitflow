@@ -19,21 +19,23 @@ import {
   Tabs,
 } from "@openpatch/patches";
 import { DefaultValues, FormProvider, useForm } from "react-hook-form";
-import { toSentence } from "../utils/case";
+import { toKebab, toSentence } from "../utils/case";
 import { DocLayout } from "./DocLayout";
 
 export type TitleBitDocProps<T extends Bitflow.Title> = {
-  titleBit: TitleBit;
-  defaultValues: T;
+  titleBit: TitleBit<T>;
+  example: T;
+  name: string;
   description: string;
 };
 
 export function TitleBitDoc<T extends Bitflow.Title>({
   titleBit,
-  defaultValues,
+  example,
+  name,
   description,
 }: TitleBitDocProps<T>) {
-  const formDefaultValues = defaultValues as DefaultValues<T>;
+  const formDefaultValues = example as DefaultValues<T>;
   const methods = useForm<T>({
     resolver: zodResolver(titleBit.TitleSchema),
     reValidateMode: "onBlur",
@@ -42,7 +44,6 @@ export function TitleBitDoc<T extends Bitflow.Title>({
     mode: "onBlur",
   });
   const title = methods.watch() as any;
-  const name = defaultValues.subtype;
 
   return (
     <DocLayout meta={{ title: `Title - ${toSentence(name)}` }}>
@@ -53,17 +54,16 @@ export function TitleBitDoc<T extends Bitflow.Title>({
           <CardFooter>
             <ButtonGroup space="standard">
               <ButtonSecondaryLink
-                href={`https://github.com/openpatch/bitflow/tree/main/packages/title-${name}`}
+                href={`https://github.com/openpatch/bitflow/tree/main/packages/title-${toKebab(
+                  name
+                )}`}
               >
                 View Repository
               </ButtonSecondaryLink>
               <ButtonSecondaryLink
-                href={`https://github.com/openpatch/bitflow/tree/main/website/src/pages/docs/bits/title-${name}`}
-              >
-                View Example Source
-              </ButtonSecondaryLink>
-              <ButtonSecondaryLink
-                href={`https://www.npmjs.com/package/@bitflow/title-${name}`}
+                href={`https://www.npmjs.com/package/@bitflow/title-${toKebab(
+                  name
+                )}`}
               >
                 View on NPM
               </ButtonSecondaryLink>
@@ -104,7 +104,7 @@ export function TitleBitDoc<T extends Bitflow.Title>({
             <Code language="javascript">{`import { 
   Title, TitleSchema, 
   ViewForm 
-} from "@bitflow/title-${name}"`}</Code>
+} from "@bitflow/title-${toKebab(name)}"`}</Code>
             <ul>
               <li>
                 <b>Title</b>: The component displays the title.
@@ -130,7 +130,7 @@ export function TitleBitDoc<T extends Bitflow.Title>({
             <Link href="/docs/shells/title">TitleShell component</Link> like so,
             if you want to use the component on its own.
             <Code language="typescript">{`import { TitleShell } from "@bitflow/shell";
-import { evaluate, Title } from "@bitflow/title-${name}";
+import { evaluate, Title } from "@bitflow/title-${toKebab(name)}";
  
 const My = () => (
   <TitleShell
@@ -151,11 +151,7 @@ const My = () => (
             object, you can build something yourself which produces a object,
             which follows this JSON schema.
             <Code language="json">
-              {JSON.stringify(
-                zodToJsonSchema(titleBit.TitleSchema as any),
-                null,
-                2
-              )}
+              {JSON.stringify(zodToJsonSchema(titleBit.TitleSchema), null, 2)}
             </Code>
           </CardContent>
         </Card>

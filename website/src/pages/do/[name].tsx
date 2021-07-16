@@ -2,7 +2,6 @@ import {
   DoResult,
   DoTry,
   findLast,
-  Flow,
   Flow as IFlow,
   FlowStartNode,
   InteractiveFlowNode,
@@ -11,7 +10,6 @@ import {
   isInteractiveFlowNode,
 } from "@bitflow/core";
 import { Do, DoProgress, DoProps } from "@bitflow/do";
-import {} from "@bitflow/flow";
 import {
   GetAnswers,
   GetPoints,
@@ -25,7 +23,7 @@ import { evaluate as taskInput } from "@bitflow/task-input";
 import { Box, Card, PatternCenter } from "@openpatch/patches";
 import { GetServerSideProps } from "next";
 import { useRef } from "react";
-import { convertFromStringToJson } from "../../utils/convertFlow";
+import * as flows from "../../flows";
 
 type DoPageProps = {
   flow: IFlow;
@@ -246,12 +244,15 @@ export default function DoPage({ flow, startNode }: DoPageProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<DoPageProps> = async ({
-  query,
-}) => {
+export const getServerSideProps: GetServerSideProps<
+  DoPageProps,
+  {
+    name: string;
+  }
+> = async ({ params }) => {
+  const name = params?.name as keyof typeof flows;
   try {
-    const flow = convertFromStringToJson(query?.flow as string) as Flow;
-
+    const flow = flows[name];
     const startNode = flow.nodes.find(isFlowStartNode);
 
     if (!startNode) {

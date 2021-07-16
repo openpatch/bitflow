@@ -19,23 +19,32 @@ import {
   IStatistic as TaskInputStatistic,
   ITask as TaskInput,
 } from "@bitflow/task-input";
+import {
+  IAnswer as TaskYesNoAnswer,
+  IResult as TaskYesNoResult,
+  IStatistic as TaskYesNoStatistic,
+  ITask as TaskYesNo,
+} from "@bitflow/task-yes-no";
 import { ITitle as TitleSimple } from "@bitflow/title-simple";
 
 declare global {
   namespace Bitflow {
-    export type Task = TaskChoice | TaskFITB | TaskInput;
+    export type Task = TaskChoice | TaskFITB | TaskInput | TaskYesNo;
     export type TaskAnswer =
       | TaskChoiceAnswer
       | TaskFITBAnswer
-      | TaskInputAnswer;
+      | TaskInputAnswer
+      | TaskYesNoAnswer;
     export type TaskResult =
       | TaskChoiceResult
       | TaskFITBResult
-      | TaskInputResult;
+      | TaskInputResult
+      | TaskYesNoResult;
     export type TaskStatistic =
       | TaskChoiceStatistic
       | TaskFITBStatistic
-      | TaskInputStatistic;
+      | TaskInputStatistic
+      | TaskYesNoStatistic;
     export type Input = InputMarkdown;
     export type Title = TitleSimple;
     export type Start = StartSimple;

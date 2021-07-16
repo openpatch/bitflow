@@ -1,11 +1,21 @@
 import { Flow as IFlow } from "@bitflow/core";
 import { Flow } from "@bitflow/flow";
 import { useFlow } from "@bitflow/provider";
-import { AutoGrid, Box, Heading, Text } from "@openpatch/patches";
+import {
+  AutoGrid,
+  Box,
+  Card,
+  CardContent,
+  Heading,
+  Text,
+  TextLink,
+} from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FlowCard } from "../components/FlowCard";
 import { NavLayout } from "../components/NavLayout";
+import { Supporters } from "../components/Supporters";
+import { Users } from "../components/Users";
 import * as flows from "../flows";
 import { simpleAnswerSplit } from "../flows/simpleAnswerSplit";
 import translations from "../locales.vocab";
@@ -45,23 +55,32 @@ export default function Home() {
         <Flow autoFitView {...simpleAnswerSplit} />
       </Box>
       <Box maxWidth="large" mx="auto" width="100%" px="standard" my="xlarge">
-        <AutoGrid gap="xlarge">
-          <Heading>{t("demo-flows")}</Heading>
-          <AutoGrid gap="standard" columns={[1, 1, 2]}>
-            {Object.values(flows).map((flow, i) => (
-              <FlowCard flow={flow} key={i} />
-            ))}
-          </AutoGrid>
-          {myFlows && (
-            <Fragment>
-              <Heading>{t("my-flows")}</Heading>
-              <AutoGrid>
-                {Object.entries(myFlows).map(([name, flow]) => (
-                  <FlowCard flow={flow} key={name} />
-                ))}
-              </AutoGrid>
-            </Fragment>
-          )}
+        <Heading>{t("demo-flows")}</Heading>
+        <AutoGrid gap="standard" columns={[1, 1, 2]}>
+          {Object.entries(flows).map(([key, flow]) => (
+            <FlowCard flow={flow} id={key} key={key} />
+          ))}
+        </AutoGrid>
+      </Box>
+      <Box maxWidth="large" mx="auto" width="100%" px="standard" my="xlarge">
+        <AutoGrid gapY="standard">
+          <Supporters />
+          <Users />
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center">
+                <Text pr="xxsmall">
+                  This libary is based on the awesome work of
+                </Text>
+                <TextLink href="https://webkid.io/">webkid</TextLink>
+                <Text p="xxsmall">and their</Text>
+                <TextLink href="https://github.com/wbkd/react-flow/">
+                  React Flow library
+                </TextLink>
+                .
+              </Box>
+            </CardContent>
+          </Card>
         </AutoGrid>
       </Box>
     </NavLayout>
