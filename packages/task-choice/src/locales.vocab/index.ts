@@ -13,9 +13,17 @@ const translations = createTranslationFile<
     "correct-choices": () => "Correct Choices";
     delete: () => "Delete";
     "delete-pattern": () => "Delete";
-    description: () => " ";
+    description: () => "A task bit allowing to create single or multiple choice questions. The answers of users can be automatically evaluated. Also feedback can be given based on the answer pattern.";
     down: () => "Down";
     error: () => "Error";
+    "example.choice.a": () => "Sumatra";
+    "example.choice.b": () => "Java";
+    "example.choice.c": () => "Cobra";
+    "example.choice.d": () => "Python";
+    "example.feedback.a.checked": () => "This is only an island.";
+    "example.feedback.b.notChecked": () => "This is not only an island, but also a programming language.";
+    "example.feedback.pattern.ac": () => "It is a trap.";
+    "example.instruction": () => "Which of the following are programming languages?";
     info: () => "Info";
     instruction: () => "Instruction";
     name: () => "Choice";
@@ -42,9 +50,19 @@ const translations = createTranslationFile<
     "correct-choices": "Correct Choices",
     delete: "Delete",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit allowing to create single or multiple choice questions. The answers of users can be automatically evaluated. Also feedback can be given based on the answer pattern.",
     down: "Down",
     error: "Error",
+    "example.choice.a": "Sumatra",
+    "example.choice.b": "Java",
+    "example.choice.c": "Cobra",
+    "example.choice.d": "Python",
+    "example.feedback.a.checked": "This is only an island.",
+    "example.feedback.b.notChecked":
+      "This is not only an island, but also a programming language.",
+    "example.feedback.pattern.ac": "It is a trap.",
+    "example.instruction": "Which of the following are programming languages?",
     info: "Info",
     instruction: "Instruction",
     name: "Choice",
@@ -70,9 +88,19 @@ const translations = createTranslationFile<
     "correct-choices": "Correct Choices",
     delete: "Delete",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit allowing to create single or multiple choice questions. The answers of users can be automatically evaluated. Also feedback can be given based on the answer pattern.",
     down: "Down",
     error: "Error",
+    "example.choice.a": "Sumatra",
+    "example.choice.b": "Java",
+    "example.choice.c": "Cobra",
+    "example.choice.d": "Python",
+    "example.feedback.a.checked": "This is only an island.",
+    "example.feedback.b.notChecked":
+      "This is not only an island, but also a programming language.",
+    "example.feedback.pattern.ac": "It is a trap.",
+    "example.instruction": "Which of the following are programming languages?",
     info: "Info",
     instruction: "Instruction",
     name: "Choice",
@@ -98,9 +126,19 @@ const translations = createTranslationFile<
     "correct-choices": "Correct Choices",
     delete: "Delete",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit allowing to create single or multiple choice questions. The answers of users can be automatically evaluated. Also feedback can be given based on the answer pattern.",
     down: "Down",
     error: "Error",
+    "example.choice.a": "Sumatra",
+    "example.choice.b": "Java",
+    "example.choice.c": "Cobra",
+    "example.choice.d": "Python",
+    "example.feedback.a.checked": "This is only an island.",
+    "example.feedback.b.notChecked":
+      "This is not only an island, but also a programming language.",
+    "example.feedback.pattern.ac": "It is a trap.",
+    "example.instruction": "Which of the following are programming languages?",
     info: "Info",
     instruction: "Instruction",
     name: "Choice",
@@ -126,9 +164,19 @@ const translations = createTranslationFile<
     "correct-choices": "Correct Choices",
     delete: "Delete",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit allowing to create single or multiple choice questions. The answers of users can be automatically evaluated. Also feedback can be given based on the answer pattern.",
     down: "Down",
     error: "Error",
+    "example.choice.a": "Sumatra",
+    "example.choice.b": "Java",
+    "example.choice.c": "Cobra",
+    "example.choice.d": "Python",
+    "example.feedback.a.checked": "This is only an island.",
+    "example.feedback.b.notChecked":
+      "This is not only an island, but also a programming language.",
+    "example.feedback.pattern.ac": "It is a trap.",
+    "example.instruction": "Which of the following are programming languages?",
     info: "Info",
     instruction: "Instruction",
     name: "Choice",

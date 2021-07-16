@@ -18,18 +18,45 @@ export const useInformation: TaskBit["useInformation"] = () => {
         showFeedback: false,
       },
       feedback: {
-        choices: {},
-        patterns: {},
+        choices: {
+          a: {
+            checkedFeedback: {
+              message: t("example.feedback.a.checked"),
+              severity: "error",
+            },
+          },
+          b: {
+            notCheckedFeedback: {
+              message: t("example.feedback.b.notChecked"),
+              severity: "error",
+            },
+          },
+        },
+        patterns: {
+          ac: {
+            message: t("example.feedback.pattern.ac"),
+            severity: "error",
+          },
+        },
       },
-      name: "",
+      name: t("name"),
       view: {
         choices: [
           {
-            markdown: "",
+            markdown: t("example.choice.a"),
+          },
+          {
+            markdown: t("example.choice.b"),
+          },
+          {
+            markdown: t("example.choice.c"),
+          },
+          {
+            markdown: t("example.choice.d"),
           },
         ],
-        instruction: "",
-        variant: "single",
+        instruction: t("example.instruction"),
+        variant: "multiple",
       },
     },
   };

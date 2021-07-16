@@ -21,13 +21,37 @@
     "message": "Delete"
   },
   "description": {
-    "message": " "
+    "message": "A task bit allowing to create single or multiple choice questions. The answers of users can be automatically evaluated. Also feedback can be given based on the answer pattern."
   },
   "down": {
     "message": "Down"
   },
   "error": {
     "message": "Error"
+  },
+  "example.choice.a": {
+    "message": "Sumatra"
+  },
+  "example.choice.b": {
+    "message": "Java"
+  },
+  "example.choice.c": {
+    "message": "Cobra"
+  },
+  "example.choice.d": {
+    "message": "Python"
+  },
+  "example.feedback.a.checked": {
+    "message": "This is only an island."
+  },
+  "example.feedback.b.notChecked": {
+    "message": "This is not only an island, but also a programming language."
+  },
+  "example.feedback.pattern.ac": {
+    "message": "It is a trap."
+  },
+  "example.instruction": {
+    "message": "Which of the following are programming languages?"
   },
   "info": {
     "message": "Info"

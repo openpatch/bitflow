@@ -3,102 +3,92 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import { useEffect, useRef } from "react";
 import { Task } from "../src/Task";
 import { IAction, IAnswer, IResult, ITask } from "../src/types";
+import { useInformation } from "../src/useInformation";
 
 export default {
   title: "Bits/Task/Multiple Choice/Task",
   component: Task,
-  argTypes: {},
+  argTypes: {
+    onChange: {
+      action: "change",
+    },
+    onAction: {
+      action: "action",
+    },
+  },
 } as Meta;
 
-const Template: Story<TaskProps<ITask, IResult, IAnswer, IAction>> = (args) => (
-  <Task {...args} />
-);
+export const Example: Story = (args) => {
+  const { example } = useInformation();
 
-export const Default = Template.bind({});
-Default.args = {
-  mode: "default",
-  onChange: console.log,
-  task: {
-    subtype: "choice",
-    view: {
-      instruction: "**This is an instruction**",
-      variant: "single",
-      choices: [
-        { markdown: "Answer A" },
-        { markdown: "Answer B" },
-        { markdown: "Answer C" },
-        { markdown: "Answer D" },
-      ],
-    },
-  },
+  return (
+    <Task
+      mode="default"
+      task={example}
+      onChange={args.onChange}
+      onAction={args.onAction}
+    />
+  );
 };
 
-export const Result = Template.bind({});
-Result.args = {
-  mode: "result",
-  task: {
-    subtype: "choice",
-    view: {
-      instruction: "",
-      variant: "single",
-      choices: [
-        { markdown: "Answer A" },
-        { markdown: "Answer B" },
-        { markdown: "Answer C" },
-        { markdown: "Answer D" },
-        {
-          markdown:
-            "This is a **super** long answer, which might not be used in production but is here for testing the layout on various platforms.",
+export const Answer: Story = (args) => {
+  const { example } = useInformation();
+  return (
+    <Task
+      task={example}
+      mode="result"
+      onChange={args.onChange}
+      answer={{
+        subtype: "choice",
+        checked: {
+          a: true,
         },
-        {
-          markdown:
-            "![Image](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/SIPI_Jelly_Beans_4.1.07.tiff/lossy-page1-256px-SIPI_Jelly_Beans_4.1.07.tiff.jpg)",
+      }}
+    />
+  );
+};
+
+export const Result: Story = (args) => {
+  const { example } = useInformation();
+  return (
+    <Task
+      task={example}
+      mode="result"
+      onChange={args.onChange}
+      answer={{
+        subtype: "choice",
+        checked: {
+          a: true,
         },
-        {
-          markdown: `
-\`\`\`javascript
-function add(a, b) {
-  return a + b;
-}
-\`\`\`
-      `,
+      }}
+      result={{
+        subtype: "choice",
+        state: "correct",
+        choices: {
+          a: {
+            state: "wrong",
+            feedback: {
+              message: "A feedback for a choice",
+              severity: "info",
+            },
+          },
+          b: {
+            state: "neutral",
+          },
+          c: {
+            state: "correct",
+          },
+          d: {
+            state: "correct",
+          },
         },
-      ],
-    },
-  },
-  onChange: console.log,
-  result: {
-    subtype: "choice",
-    state: "correct",
-    choices: {
-      a: {
-        state: "wrong",
         feedback: {
-          message: "A feedback for a choice",
-          severity: "info",
+          message: "This is a feedback",
+          severity: "error",
         },
-      },
-      b: {
-        state: "neutral",
-      },
-      c: {
-        state: "correct",
-      },
-      d: {
-        state: "correct",
-      },
-    },
-    feedback: {
-      message: "This is a feedback",
-      severity: "error",
-    },
-  },
-  answer: {
-    subtype: "choice",
-    checked: {
-      a: true,
-    },
-  },
+      }}
+    />
+  );
 };
 
 export const Recording: Story<TaskProps<ITask, IResult, IAnswer, IAction>> = (
