@@ -1,0 +1,35 @@
+{
+  "description": {
+    "message": " "
+  },
+  "example.feedback.no": {
+    "message": "Nein ist nicht korrekt"
+  },
+  "example.feedback.yes": {
+    "message": "Ja ist korrekt"
+  },
+  "name": {
+    "message": "Ja Nein"
+  },
+  "no": {
+    "message": "Nein"
+  },
+  "question": {
+    "message": "Frage"
+  },
+  "severity.error": {
+    "message": "Fehler"
+  },
+  "severity.info": {
+    "message": "Info"
+  },
+  "severity.success": {
+    "message": "Erfolgreich"
+  },
+  "severity.warning": {
+    "message": "Warnung"
+  },
+  "yes": {
+    "message": "Ja"
+  }
+}
