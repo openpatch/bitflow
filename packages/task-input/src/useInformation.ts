@@ -14,15 +14,31 @@ export const useInformation: TaskBit["useInformation"] = () => {
         enableRetry: false,
         mode: "auto",
         showFeedback: false,
-        pattern: "",
+        pattern: "[tT]ype[sS]cript",
       },
       feedback: {
-        patterns: [],
+        patterns: [
+          {
+            pattern: "[Jj]ava[Ss]cript",
+            feedback: {
+              message: "Close. Now add types.",
+              severity: "warning",
+            },
+          },
+          {
+            pattern: "[Jj]ava",
+            feedback: {
+              message: "No thanks.",
+              severity: "error",
+            },
+          },
+        ],
       },
       name: t("name"),
       subtype: "input",
       view: {
-        instruction: "",
+        instruction:
+          "Name the *programming lanuage* which is primarly used for implementing **Bitflow**.",
       },
     },
   };

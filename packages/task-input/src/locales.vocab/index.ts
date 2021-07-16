@@ -8,7 +8,7 @@ const translations = createTranslationFile<
   {
     "add-pattern": () => "Add Pattern";
     "delete-pattern": () => "Delete";
-    description: () => " ";
+    description: () => "A task bit for creating single line response questions. The answer of a user can be automatically evaluated by providing a regular expression. You can also give feedback by using regular expression, as well.";
     error: () => "Error";
     info: () => "Info";
     inputs: () => "Inputs";
@@ -31,7 +31,8 @@ const translations = createTranslationFile<
   "en-GB": createLanguage({
     "add-pattern": "Add Pattern",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit for creating single line response questions. The answer of a user can be automatically evaluated by providing a regular expression. You can also give feedback by using regular expression, as well.",
     error: "Error",
     info: "Info",
     inputs: "Inputs",
@@ -53,7 +54,8 @@ const translations = createTranslationFile<
   en: createLanguage({
     "add-pattern": "Add Pattern",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit for creating single line response questions. The answer of a user can be automatically evaluated by providing a regular expression. You can also give feedback by using regular expression, as well.",
     error: "Error",
     info: "Info",
     inputs: "Inputs",
@@ -75,7 +77,8 @@ const translations = createTranslationFile<
   "en-US": createLanguage({
     "add-pattern": "Add Pattern",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit for creating single line response questions. The answer of a user can be automatically evaluated by providing a regular expression. You can also give feedback by using regular expression, as well.",
     error: "Error",
     info: "Info",
     inputs: "Inputs",
@@ -97,7 +100,8 @@ const translations = createTranslationFile<
   de: createLanguage({
     "add-pattern": "Add Pattern",
     "delete-pattern": "Delete",
-    description: " ",
+    description:
+      "A task bit for creating single line response questions. The answer of a user can be automatically evaluated by providing a regular expression. You can also give feedback by using regular expression, as well.",
     error: "Error",
     info: "Info",
     inputs: "Inputs",

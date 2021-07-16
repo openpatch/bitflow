@@ -1,58 +1,78 @@
-import { TaskProps, TaskRef } from "@bitflow/core";
+import { TaskRef } from "@bitflow/core";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import { useEffect, useRef } from "react";
 import { Task } from "../src/Task";
-import { IAction, IAnswer, IResult, ITask } from "../src/types";
+import { IAction } from "../src/types";
+import { useInformation } from "../src/useInformation";
 
 export default {
   title: "Bits/Task/Input/Task",
   component: Task,
-  argTypes: {},
+  argTypes: {
+    onChange: {
+      action: "change",
+    },
+    onAction: {
+      action: "action",
+    },
+  },
 } as Meta;
 
-type TTaskProps = TaskProps<ITask, IResult, IAnswer, IAction>;
+export const Example: Story = (args) => {
+  const { example } = useInformation();
 
-const Template: Story<TTaskProps> = (args) => <Task {...args} />;
+  return (
+    <Task
+      mode="default"
+      task={example}
+      onChange={args.onChange}
+      onAction={args.onAction}
+    />
+  );
+};
 
-export const Default = Template.bind({});
-Default.args = {
-  mode: "default",
-  onChange: console.log,
-  task: {
-    subtype: "input",
-    view: {
-      instruction: "**This is an instruction**",
-    },
-  },
-} as TTaskProps;
+export const Answer: Story = (args) => {
+  const { example } = useInformation();
+  return (
+    <Task
+      task={example}
+      mode="result"
+      onChange={args.onChange}
+      answer={{
+        subtype: "input",
+        input: "TypeScript",
+      }}
+    />
+  );
+};
 
-export const Result = Template.bind({});
-Result.args = {
-  mode: "result",
-  task: {
-    subtype: "input",
-    view: {
-      instruction: "",
-    },
-  },
-  onChange: console.log,
-  result: {
-    state: "wrong",
-    feedback: [
-      {
-        message: "You should have selected bar",
-        severity: "error",
-      },
-    ],
-  },
-  answer: {
-    input: "foo",
-  },
-} as TTaskProps;
+export const Result: Story = (args) => {
+  const { example } = useInformation();
+  return (
+    <Task
+      task={example}
+      mode="result"
+      onChange={args.onChange}
+      answer={{
+        subtype: "input",
+        input: "Java",
+      }}
+      result={{
+        subtype: "input",
+        state: "wrong",
+        feedback: [
+          {
+            message: "No thanks.",
+            severity: "error",
+          },
+        ],
+      }}
+    />
+  );
+};
 
-export const Recording: Story<TaskProps<ITask, IResult, IAnswer, IAction>> = (
-  args
-) => {
+export const Recording: Story = (args) => {
+  const { example } = useInformation();
   const ref = useRef<TaskRef<IAction>>(null);
   const actions = useRef<IAction[]>([
     {
@@ -86,16 +106,6 @@ export const Recording: Story<TaskProps<ITask, IResult, IAnswer, IAction>> = (
   }, []);
 
   return (
-    <Task
-      mode="recording"
-      task={{
-        subtype: "input",
-        view: {
-          instruction: "Input an answers which works",
-        },
-      }}
-      onChange={console.log}
-      ref={ref}
-    />
+    <Task mode="recording" task={example} onChange={args.onChange} ref={ref} />
   );
 };

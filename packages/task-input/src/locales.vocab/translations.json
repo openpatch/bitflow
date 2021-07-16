@@ -6,7 +6,7 @@
     "message": "Delete"
   },
   "description": {
-    "message": " "
+    "message": "A task bit for creating single line response questions. The answer of a user can be automatically evaluated by providing a regular expression. You can also give feedback by using regular expression, as well."
   },
   "error": {
     "message": "Error"
