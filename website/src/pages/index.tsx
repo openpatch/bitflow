@@ -68,17 +68,14 @@ export default function Home() {
           <Users />
           <Card>
             <CardContent>
-              <Box display="flex" alignItems="center">
-                <Text pr="xxsmall">
-                  This libary is based on the awesome work of
-                </Text>
-                <TextLink href="https://webkid.io/">webkid</TextLink>
-                <Text p="xxsmall">and their</Text>
+              <Text textAlign="center">
+                This libary is based on the awesome work of{" "}
+                <TextLink href="https://webkid.io/">webkid</TextLink> and their{" "}
                 <TextLink href="https://github.com/wbkd/react-flow/">
                   React Flow library
                 </TextLink>
                 .
-              </Box>
+              </Text>
             </CardContent>
           </Card>
         </AutoGrid>

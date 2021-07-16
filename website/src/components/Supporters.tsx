@@ -41,8 +41,10 @@ export const Supporters = () => {
         </AutoGrid>
       </CardContent>
       <CardFooter noSpacing>
-        <Text pr="xxsmall">Do you want to support Bitflow? Feel free to</Text>
-        <TextLink href="mailto:contact@openpatch.org">contact us</TextLink>.
+        <Text>
+          Do you want to support Bitflow? Feel free to{" "}
+          <TextLink href="mailto:contact@openpatch.org">contact us</TextLink>.
+        </Text>
       </CardFooter>
     </Card>
   );

@@ -20,10 +20,6 @@ export const NavLayout: FC<NavLayoutProps> = ({ children }) => {
             href: "/docs/getting-started",
           },
           {
-            label: t("changelog"),
-            href: "/changelog",
-          },
-          {
             label: "GitHub",
             href: "https://github.com/openpatch/bitflow",
           },

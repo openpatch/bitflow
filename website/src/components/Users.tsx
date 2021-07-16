@@ -41,9 +41,11 @@ export const Users = () => {
         </AutoGrid>
       </CardContent>
       <CardFooter noSpacing>
-        <Text pr="xxsmall">Do you use Bitflow in one of your project?</Text>
-        <TextLink href="mailto:contact@openpatch.org">Contact us</TextLink>
-        <Text pl="xxsmall">to be incluced here.</Text>
+        <Text>
+          Do you use Bitflow in one of your project?{" "}
+          <TextLink href="mailto:contact@openpatch.org">Contact us</TextLink> to
+          be incluced here.
+        </Text>
       </CardFooter>
     </Card>
   );
