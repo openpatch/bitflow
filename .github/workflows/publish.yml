@@ -89,7 +89,7 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: yarn --frozen-lockfile --silent boot
-      - run: yarn publish:ci
+      - run: yarn publish:ci:npm
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -115,8 +115,8 @@ jobs:
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
-          scope: "@christopherbiscardi"
+          scope: "@bitflow"
       - run: yarn --frozen-lockfile --silent boot
-      - run: yarn publish:ci
+      - run: yarn publish:ci:gpr
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
