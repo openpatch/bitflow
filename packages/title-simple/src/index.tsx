@@ -39,8 +39,8 @@ export const useInformation: TitleBit["useInformation"] = () => {
       name: t("name"),
       subtype: "simple",
       view: {
-        message: "",
-        title: "",
+        message: t("example.message"),
+        title: t("example.title"),
       },
     },
   };
