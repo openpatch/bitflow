@@ -3,6 +3,8 @@ import { IEnd as EndTries } from "@bitflow/end-tries";
 import { IInput as InputMarkdown } from "@bitflow/input-markdown";
 import { IStart as StartSimple } from "@bitflow/start-simple";
 import { ITitle as TitleSimple } from "@bitflow/title-simple";
+import { ITask as TaskChoice, IAnwer as TaskChoiceAnswer, IResult as TaskChoiceResult } from "@bitflow/task-choice";
+
 
 declare global {
   namespace Bitflow {
