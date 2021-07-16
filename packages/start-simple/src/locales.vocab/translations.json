@@ -2,6 +2,12 @@
   "description": {
     "message": " "
   },
+  "example.markdown": {
+    "message": "This is an example. Feel free to use it as a template."
+  },
+  "example.title": {
+    "message": "Welcome"
+  },
   "markdown": {
     "message": "Markdown"
   },

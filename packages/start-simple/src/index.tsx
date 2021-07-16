@@ -35,8 +35,8 @@ export const useInformation: StartBit<IStart>["useInformation"] = () => {
       name: t("name"),
       description: t("description"),
       view: {
-        markdown: "This is an example. Feel free to use it as a template.",
-        title: "Welcome",
+        markdown: t("example.markdown"),
+        title: t("example.title"),
       },
     },
   };

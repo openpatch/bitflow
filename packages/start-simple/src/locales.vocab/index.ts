@@ -7,6 +7,8 @@ const translations = createTranslationFile<
   "en-GB" | "en" | "en-US" | "de",
   {
     description: () => " ";
+    "example.markdown": () => "This is an example. Feel free to use it as a template.";
+    "example.title": () => "Welcome";
     markdown: () => "Markdown";
     name: () => "Simple";
     title: () => "Title";
@@ -14,24 +16,36 @@ const translations = createTranslationFile<
 >({
   "en-GB": createLanguage({
     description: " ",
+    "example.markdown":
+      "This is an example. Feel free to use it as a template.",
+    "example.title": "Welcome",
     markdown: "Markdown",
     name: "Simple",
     title: "Title",
   }),
   en: createLanguage({
     description: " ",
+    "example.markdown":
+      "This is an example. Feel free to use it as a template.",
+    "example.title": "Welcome",
     markdown: "Markdown",
     name: "Simple",
     title: "Title",
   }),
   "en-US": createLanguage({
     description: " ",
+    "example.markdown":
+      "This is an example. Feel free to use it as a template.",
+    "example.title": "Welcome",
     markdown: "Markdown",
     name: "Simple",
     title: "Title",
   }),
   de: createLanguage({
     description: " ",
+    "example.markdown":
+      "This is an example. Feel free to use it as a template.",
+    "example.title": "Welcome",
     markdown: "Markdown",
     name: "Simple",
     title: "Title",
