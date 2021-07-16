@@ -2334,7 +2334,7 @@
     "@manypkg/get-packages" "^1.0.1"
     semver "^5.4.1"
 
-"@changesets/cli@^2.16.0":
+"@changesets/cli@2.16.0":
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/@changesets/cli/-/cli-2.16.0.tgz#9f794005d0503efba5e348b929821a1732fd0f0d"
   integrity sha512-VFkXSyyk/WRjjUoBI7g7cDy09qBjPbBQOloPMEshTzMo/NY9muWHl2yB/FSSkV/6PxGimPtJ7aEJPYfk8HCfXw==
@@ -12314,7 +12314,7 @@ jest-mock@^27.0.6:
     "@jest/types" "^27.0.6"
     "@types/node" "*"
 
-jest-node-exports-resolver@^1.0.3:
+jest-node-exports-resolver@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/jest-node-exports-resolver/-/jest-node-exports-resolver-1.0.3.tgz#fcca3746bc8a031e47be1111cecfc6a220209b5f"
   integrity sha512-eKKaaesLoW28BwU8vasXcAfR9xzdlX7cyYHcQ3i+d65b0TW3/gU9pCXRPV4SEucFpTtKQ8/fc05gBVItwa2DoA==
@@ -18181,7 +18181,7 @@ ts-jest@27.0.3:
     semver "7.x"
     yargs-parser "20.x"
 
-ts-node@^10.1.0:
+ts-node@10.1.0:
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.1.0.tgz#e656d8ad3b61106938a867f69c39a8ba6efc966e"
   integrity sha512-6szn3+J9WyG2hE+5W8e0ruZrzyk1uFLYye6IGMBadnOzDh8aP7t8CbFpsfCiEx2+wMixAhjFt7lOZC4+l+WbEA==
@@ -19443,7 +19443,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod@3.5.1, zod@^3.5.1:
+zod@3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.5.1.tgz#e93ce58e182bb76f7d29ccd24feee72611f9a129"
   integrity sha512-Gg9GTai0iDHowuYM9VNhdFMmesgt44ufzqaE5CPHshpuK5fCzbibdqCnrWuYH6ZmOn/N+BlGmwZtVSijhKmhKw==
