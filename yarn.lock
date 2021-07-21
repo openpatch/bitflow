@@ -4125,6 +4125,22 @@
     remark-gfm "^1.0.0"
     styled-system "^5.1.5"
 
+"@openpatch/patches@1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-1.9.0.tgz#504295a8d9e342888b7bce064be19572c921c300"
+  integrity sha512-aVtT+fx71Fx2RvQib81fxNeqKxnGPhSaTWUoL4cJWU5y6cUzhZkttvr4x80jpm6FhnP87EY0ePrY8zVQq/Ykbg==
+  dependencies:
+    codemirror "^5.60.0"
+    lodash "^4.17.21"
+    polished "^4.1.1"
+    react-codemirror2 "^7.2.1"
+    react-markdown "^5.0.3"
+    react-modal "^3.12.1"
+    react-syntax-highlighter "^15.4.3"
+    react-tabs "^3.2.1"
+    remark-gfm "^1.0.0"
+    styled-system "^5.1.5"
+
 "@pmmmwh/react-refresh-webpack-plugin@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.3.tgz#1eec460596d200c0236bf195b078a5d1df89b766"
