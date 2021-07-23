@@ -4109,10 +4109,10 @@
   dependencies:
     "@octokit/openapi-types" "^7.3.2"
 
-"@openpatch/patches@1.8.4":
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-1.8.4.tgz#f18edea3181de3918b7f877e0a1e27ce04fa7858"
-  integrity sha512-GlDUz3owFnQSj7vUDW7XJzL+be6LpNBFfEv4iXfWcRE8OqKahn3ZapqVc1oooXw3+VBovOPrLhLzl6pVMliz3g==
+"@openpatch/patches@1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-1.10.0.tgz#cb539538957e726a91a62847997ec5207fd0e5e6"
+  integrity sha512-6skeTWLPG+qtNbEeGB8teoXOalyZjm7YdneAfArrclZv9ElD8wxghxPHU4Bbq+zz4GUgrJhemUO24ysfcGCLJg==
   dependencies:
     codemirror "^5.60.0"
     lodash "^4.17.21"
@@ -4125,10 +4125,10 @@
     remark-gfm "^1.0.0"
     styled-system "^5.1.5"
 
-"@openpatch/patches@1.9.2":
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-1.9.2.tgz#c229b8267135970d1fdbbd0f0bbdc5fad3e8b676"
-  integrity sha512-LIqqI2oaA9UC2lGCd+EnjlCA+31LMRUBwLuBlgHbQ+7WLyIaHvxeRz4jnghNVz7mwkPFMNxjqyZsioOtjfWxHQ==
+"@openpatch/patches@1.8.4":
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-1.8.4.tgz#f18edea3181de3918b7f877e0a1e27ce04fa7858"
+  integrity sha512-GlDUz3owFnQSj7vUDW7XJzL+be6LpNBFfEv4iXfWcRE8OqKahn3ZapqVc1oooXw3+VBovOPrLhLzl6pVMliz3g==
   dependencies:
     codemirror "^5.60.0"
     lodash "^4.17.21"
