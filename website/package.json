@@ -27,7 +27,7 @@
     "@bitflow/title-simple": "0.1.0",
     "@bitflow/zod-json-schema": "0.1.0",
     "@emotion/cache": "11.4.0",
-    "@emotion/react": "11.4.0",
+    "@emotion/react": "11.4.1",
     "@emotion/styled": "11.3.0",
     "@mdx-js/loader": "1.6.22",
     "@mdx-js/react": "1.6.22",
