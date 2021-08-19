@@ -4288,10 +4288,10 @@
   dependencies:
     "@octokit/openapi-types" "^7.3.2"
 
-"@openpatch/patches@1.12.0":
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-1.12.0.tgz#3293623774093e9a901d28db49f6e077afca018f"
-  integrity sha512-rT4zqFRgL5bIkPSk+qzk6MmwRSRgETNJ5RnJ49U9hOIaLIKOMe8u0PE9aNw11U5mLAhHc+Zl7qMVu0ML6sWMQA==
+"@openpatch/patches@1.12.2":
+  version "1.12.2"
+  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-1.12.2.tgz#8eab84ae9b2caecdddd09b7ee8c570b8534d48bd"
+  integrity sha512-EdLyIIOibWXyO2Dmu8A40fiIGSLCgLK5LClIpLFbM+lJDBwoZFrr/iCPEHfgbU72b90vrrU41TSws2L9ims8FA==
   dependencies:
     codemirror "^5.62.2"
     lodash "^4.17.21"
