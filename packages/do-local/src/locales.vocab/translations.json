@@ -1,0 +1,11 @@
+{
+  "description": {
+    "message": " "
+  },
+  "example": {
+    "message": "Example"
+  },
+  "name": {
+    "message": "Do Local"
+  }
+}
