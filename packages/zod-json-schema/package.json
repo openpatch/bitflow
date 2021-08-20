@@ -42,7 +42,7 @@
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types"
   },
   "devDependencies": {
-    "@bitflow/title-simple": "0.1.0",
+    "@bitflow/title-simple": "0.2.0",
     "zod": "3.6.1"
   },
   "peerDependencies": {
