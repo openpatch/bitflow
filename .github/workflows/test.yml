@@ -23,5 +23,4 @@ jobs:
         with:
           node-version: 12
       - run: yarn --frozen-lockfile --silent boot
-      - run: yarn build
       - run: yarn test
