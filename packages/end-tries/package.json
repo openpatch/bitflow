@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/end-tries",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -46,13 +46,13 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "@bitflow/core": "0.1.0",
-    "@bitflow/provider": "0.1.0",
-    "@bitflow/icons": "0.1.0",
-    "@bitflow/shell": "0.1.0"
+    "@bitflow/core": "0.2.0",
+    "@bitflow/provider": "0.2.0",
+    "@bitflow/icons": "0.2.0",
+    "@bitflow/shell": "0.2.0"
   },
   "devDependencies": {
-    "@bitflow/mock": "0.1.0"
+    "@bitflow/mock": "0.2.0"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
