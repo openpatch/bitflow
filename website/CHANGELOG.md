@@ -1,5 +1,12 @@
 # website
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [2cff3a6]
+  - @bitflow/flow-editor@0.2.1
+
 ## 0.2.1
 
 ### Patch Changes
