@@ -260,6 +260,9 @@ export type FlowEdge = {
 
 export type Flow = {
   name: string;
+  description: string;
+  language: "en" | "de" | "fr" | "es" | "nl" | "pt" | "tr" | "it";
+  visibility: "public" | "private" | "unlisted";
   draft: boolean;
   nodes: FlowNode[];
   edges: FlowEdge[];

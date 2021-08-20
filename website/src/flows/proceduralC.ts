@@ -2,6 +2,9 @@ import { Flow } from "@bitflow/core";
 
 export const proceduralC: Flow = {
   name: "Procedural Programming in C",
+  description: "",
+  language: "en",
+  visibility: "public",
   draft: false,
   nodes: [
     {

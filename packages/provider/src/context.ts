@@ -1,8 +1,29 @@
 import { EndBit, InputBit, StartBit, TaskBit, TitleBit } from "@bitflow/core";
 import { createContext } from "react";
 
-export type Locale = "en-GB" | "en-US" | "de";
-export const locales: Locale[] = ["en-GB", "en-US", "de"];
+export type Locale =
+  | "en"
+  | "en-GB"
+  | "en-US"
+  | "de"
+  | "fr"
+  | "it"
+  | "nl"
+  | "tr"
+  | "es"
+  | "pt";
+export const locales: Locale[] = [
+  "en",
+  "en-GB",
+  "en-US",
+  "de",
+  "fr",
+  "it",
+  "nl",
+  "tr",
+  "es",
+  "pt",
+];
 export type Config = {
   defaultLocale?: Locale;
 };

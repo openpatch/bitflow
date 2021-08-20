@@ -8,9 +8,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@openpatch/patches";
-import { useTranslations } from "@vocab/react";
 import { useRouter } from "next/router";
-import translations from "../locales.vocab";
 
 export type FlowCardProps = {
   flow: IFlow;
@@ -18,7 +16,6 @@ export type FlowCardProps = {
 };
 
 export const FlowCard = ({ flow, id }: FlowCardProps) => {
-  const { t } = useTranslations(translations);
   const router = useRouter();
 
   return (
@@ -29,10 +26,10 @@ export const FlowCard = ({ flow, id }: FlowCardProps) => {
       </Box>
       <CardFooter>
         <ButtonPrimary fullWidth onClick={() => router.push(`/do/${id}`)}>
-          {t("do-flow")}
+          Do
         </ButtonPrimary>
         <ButtonSecondary fullWidth onClick={() => router.push(`/editor/${id}`)}>
-          {t("edit-flow")}
+          Edit
         </ButtonSecondary>
       </CardFooter>
     </Card>

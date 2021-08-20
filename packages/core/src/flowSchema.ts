@@ -288,6 +288,9 @@ export const makeFlowSchema = ({
   z
     .object({
       name: z.string(),
+      description: z.string(),
+      language: z.enum(["en", "de", "fr", "es", "nl", "pt", "tr", "it"]),
+      visibility: z.enum(["public", "private", "unlisted"]),
       draft: z.boolean(),
       nodes: z.array(makeFlowNodeSchema({ start, end, input, title, task })),
       edges: z.array(FlowEdgeSchema),

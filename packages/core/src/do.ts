@@ -28,6 +28,9 @@ export const isDoFinishedTry = (d: DoTry): d is DoFinishedTry => {
 
 export interface DoSkippedTry extends DoBaseTry {
   status: "skipped";
+  evaluation: {
+    mode: "auto" | "manual" | "skip";
+  };
   endDate: Date;
 }
 
@@ -36,6 +39,37 @@ export const isDoSkippedTry = (d: DoTry): d is DoSkippedTry => {
 };
 
 export type DoTry = DoStartedTry | DoSkippedTry | DoFinishedTry;
+
+export const skipDoTry = (
+  doResult: DoResult,
+  evaluation: DoSkippedTry["evaluation"] = { mode: "skip" }
+): DoResult => {
+  const { tries } = doResult;
+  let { maxPoints } = doResult;
+  const currentTry = tries[tries.length - 1];
+
+  const hasTry = tries.find(
+    (doTry) =>
+      doTry.node.id === currentTry.node.id && doTry.status !== "started"
+  );
+
+  if (!hasTry && evaluation?.mode !== "skip") {
+    maxPoints += 1;
+  }
+
+  tries[tries.length - 1] = {
+    ...currentTry,
+    evaluation,
+    status: "skipped",
+    endDate: new Date(),
+  };
+
+  return {
+    ...doResult,
+    maxPoints,
+    tries,
+  };
+};
 
 export interface DoResult {
   points: number;
@@ -52,7 +86,17 @@ export const finishDoTry = (
 ): DoResult => {
   const { tries } = doResult;
   let { points, maxPoints } = doResult;
-  const currentTry = tries[tries.length - 1];
+  const currentTry = tries[tries.length - 1] as any;
+
+  const hasTry = tries.find(
+    (doTry) =>
+      doTry.node.id === currentTry.node.id && doTry.status !== "started"
+  );
+
+  if (!hasTry && result?.state !== "unknown") {
+    maxPoints += 1;
+  }
+
   tries[tries.length - 1] = {
     ...currentTry,
     status: "finished",
@@ -68,9 +112,6 @@ export const finishDoTry = (
         doTry.node.id === currentTry.node.id && currentTry.try - 1 === doTry.try
     );
 
-  if (!lastTry) {
-    maxPoints += 1;
-  }
   if (!lastTry && result?.state === "correct") {
     points += 1;
   } else if (
@@ -91,4 +132,19 @@ export const finishDoTry = (
     points,
     tries,
   };
+};
+
+export const retryDoTry = (doResult: DoResult): DoResult => {
+  const { tries } = doResult;
+  const lastTry = tries[tries.length - 1];
+  tries.push({
+    status: "started",
+    try: lastTry.try + 1,
+    startDate: new Date(),
+    node: {
+      ...lastTry.node,
+    },
+  });
+
+  return { ...doResult, tries };
 };

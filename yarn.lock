@@ -2482,6 +2482,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@bitflow/core@0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@bitflow/core/-/core-0.0.0.tgz#18a8a52827f0bbe2f9b60196899e1b95e1c7b73e"
+  integrity sha512-U+pvfrY/x5tOXZq+McJ1nLUxxeEgiE+ZBCTaSnoh+yuxIAa18N7sRHE4+fEGKboSaO07eaIMR1W5PSKmaUdMNg==
+
 "@changesets/apply-release-plan@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@changesets/apply-release-plan/-/apply-release-plan-5.0.0.tgz#11bf168acecbf4cfa2b0e6425160bac5ceeec1c3"
@@ -2674,6 +2679,7 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+<<<<<<< HEAD
 "@cspotcode/source-map-consumer@0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-consumer/-/source-map-consumer-0.8.0.tgz#33bf4b7b39c178821606f669bbc447a6a629786b"
@@ -2699,6 +2705,22 @@
   integrity sha512-qk9L60Y+uRtM5CPbB0y+QNl/1XKE09mSO+AhhSauIfr2YOx/ta3NJw2d8RtCFxgzHeRqFRr8jgyzThbu+MZ4Uw==
   dependencies:
     "@emmetio/scanner" "^1.0.0"
+=======
+"@cypress/mount-utils@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@cypress/mount-utils/-/mount-utils-1.0.2.tgz#afbc4f8c350b7cd86edc5ad0db0cbe1e0181edc8"
+  integrity sha512-Fn3fdTiyayHoy8Ol0RSu4MlBH2maQ2ZEXeEVKl/zHHXEQpld5HX3vdNLhK5YLij8cLynA4DxOT/nO9iEnIiOXw==
+
+"@cypress/react@^5.9.4":
+  version "5.9.4"
+  resolved "https://registry.yarnpkg.com/@cypress/react/-/react-5.9.4.tgz#0f4b0a893271270ffc805d03bc2ccb3d4d87c3b2"
+  integrity sha512-uw5/vJZ9IMBRzSalkHIw9eY0G+v1rpadMFQZcXUGDaeZOKvkvGVDJ0OHBa5TCONHEQfyMyKsf5VhkBMBATnj6w==
+  dependencies:
+    "@cypress/mount-utils" "1.0.2"
+    debug "4.3.2"
+    find-webpack "2.2.1"
+    find-yarn-workspace-root "2.0.0"
+>>>>>>> bc8d840 (feat: set up possible translations)
 
 "@emmetio/extract-abbreviation@0.1.6":
   version "0.1.6"
@@ -5357,6 +5379,11 @@
     lodash "^4.17.20"
     prettier "~2.2.1"
     regenerator-runtime "^0.13.7"
+
+"@storybook/testing-react@^0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@storybook/testing-react/-/testing-react-0.0.22.tgz#65d3defefbac0183eded0dafb601241d8f135c66"
+  integrity sha512-XBJpH1cROXkwwKwD89kIcyhyMPEN5zfSyOUanrN+/Tx4nB5IwzVc/Om+7mtSFvh4UTSNOk5G42Y12KE/HbH7VA==
 
 "@storybook/theming@6.3.4":
   version "6.3.4"
@@ -8103,6 +8130,11 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
+check-more-types@2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/check-more-types/-/check-more-types-2.24.0.tgz#1420ffb10fd444dcfc79b43891bbfffd32a84600"
+  integrity sha1-FCD/sQ/URNz8ebQ4kbv//TKoRgA=
+
 chokidar@3.5.1, chokidar@^3.4.1, chokidar@^3.4.2, chokidar@^3.4.3:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.1.tgz#ee9ce7bbebd2b79f49f304799d5468e31e14e68a"
@@ -9180,6 +9212,20 @@ debug@4, debug@^4.0.0, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.1.tgz#f0d229c505e0c6d8c49ac553d1b13dc183f6b2ee"
   integrity sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==
+  dependencies:
+    ms "2.1.2"
+
+debug@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
+  dependencies:
+    ms "^2.1.1"
+
+debug@4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
+  integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
   dependencies:
     ms "2.1.2"
 
@@ -10524,6 +10570,15 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
+find-webpack@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/find-webpack/-/find-webpack-2.2.1.tgz#96e7b701a2d37c3500cae30d4dc59e14923ba460"
+  integrity sha512-OdDtn2AzQvu3l9U1TS5ALc7uTVcLK/yv3fhjo+Pz7yuv4hG3ANKnbkKnPIPZ5ofd9mpYe6wRf5g5H4X9Lx48vQ==
+  dependencies:
+    debug "4.1.1"
+    find-yarn-workspace-root "1.2.1"
+    mocked-env "1.3.2"
+
 find-yarn-workspace-root2@1.2.16:
   version "1.2.16"
   resolved "https://registry.yarnpkg.com/find-yarn-workspace-root2/-/find-yarn-workspace-root2-1.2.16.tgz#60287009dd2f324f59646bdb4b7610a6b301c2a9"
@@ -10531,6 +10586,21 @@ find-yarn-workspace-root2@1.2.16:
   dependencies:
     micromatch "^4.0.2"
     pkg-dir "^4.2.0"
+
+find-yarn-workspace-root@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/find-yarn-workspace-root/-/find-yarn-workspace-root-1.2.1.tgz#40eb8e6e7c2502ddfaa2577c176f221422f860db"
+  integrity sha512-dVtfb0WuQG+8Ag2uWkbG79hOUzEsRrhBzgfn86g2sJPkzmcpGdghbNTfUKGTxymFrY/tLIodDzLoW9nOJ4FY8Q==
+  dependencies:
+    fs-extra "^4.0.3"
+    micromatch "^3.1.4"
+
+find-yarn-workspace-root@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/find-yarn-workspace-root/-/find-yarn-workspace-root-2.0.0.tgz#f47fb8d239c900eb78179aa81b66673eac88f7bd"
+  integrity sha512-1IMnbjt4KzsQfnhnzNd8wUEgXZ44IzZaZmnLYx7D5FZlaHt2gW20Cri8Q+E/t5tIj4+epTBub+2Zxu/vNILzqQ==
+  dependencies:
+    micromatch "^4.0.2"
 
 findup-sync@^2.0.0:
   version "2.0.0"
@@ -10703,6 +10773,15 @@ fs-extra@^0.30.0:
     klaw "^1.0.0"
     path-is-absolute "^1.0.0"
     rimraf "^2.2.8"
+
+fs-extra@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-4.0.3.tgz#0d852122e5bc5beb453fb028e9c0c9bf36340c94"
+  integrity sha512-q6rbdDd1o2mAnQreO7YADIxf/Whx4AHBiRf6d+/cVT8h44ss+lHgxf1FemcqDnQt9X3ct4McHr+JMGlYSsK7Cg==
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
 
 fs-extra@^7.0.1:
   version "7.0.1"
@@ -13298,6 +13377,11 @@ latest-version@^5.1.0:
   dependencies:
     package-json "^6.3.0"
 
+lazy-ass@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/lazy-ass/-/lazy-ass-1.6.0.tgz#7999655e8646c17f089fdd187d150d3324d54513"
+  integrity sha1-eZllXoZGwX8In90YfRUNMyTVRRM=
+
 lazy-universal-dotenv@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/lazy-universal-dotenv/-/lazy-universal-dotenv-3.0.1.tgz#a6c8938414bca426ab8c9463940da451a911db38"
@@ -14350,10 +14434,22 @@ mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.4:
   dependencies:
     minimist "^1.2.5"
 
+<<<<<<< HEAD
 mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
+=======
+mocked-env@1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/mocked-env/-/mocked-env-1.3.2.tgz#548eb2fde141d083de70dc6b231cd9f3210d8731"
+  integrity sha512-jwm3ziowCjpbLNhUNYwn2G0tawV/ZGRuWeEGt6PItrkQT74Nk3pDldL2pmwm9sQZw6a/x+ZBGeBVYq54acTauQ==
+  dependencies:
+    check-more-types "2.24.0"
+    debug "4.1.1"
+    lazy-ass "1.6.0"
+    ramda "0.26.1"
+>>>>>>> bc8d840 (feat: set up possible translations)
 
 modify-values@^1.0.0:
   version "1.0.1"
@@ -16268,6 +16364,11 @@ quick-lru@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
+
+ramda@0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
 ramda@^0.21.0:
   version "0.21.0"

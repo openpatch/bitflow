@@ -6,5 +6,10 @@ module.exports = {
     { name: "en-US", extends: "en" },
     { name: "en-GB", extends: "en" },
     { name: "de" },
+    { name: "fr" },
+    { name: "es" },
+    { name: "nl" },
+    { name: "pt" },
+    { name: "tr" },
   ],
 };

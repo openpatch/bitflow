@@ -4,7 +4,7 @@
 import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
-  "en-GB" | "en" | "en-US" | "de",
+  "en-GB" | "en" | "en-US" | "de" | "fr" | "es" | "nl" | "pt" | "tr",
   {
     description: () => " ";
     "example.markdown": () => "This is an example. Feel free to use it as a template.";
@@ -42,6 +42,51 @@ const translations = createTranslationFile<
     title: "Title",
   }),
   de: createLanguage({
+    description: " ",
+    "example.markdown":
+      "This is an example. Feel free to use it as a template.",
+    "example.title": "Welcome",
+    markdown: "Markdown",
+    name: "Simple",
+    title: "Title",
+  }),
+  fr: createLanguage({
+    description: " ",
+    "example.markdown":
+      "This is an example. Feel free to use it as a template.",
+    "example.title": "Welcome",
+    markdown: "Markdown",
+    name: "Simple",
+    title: "Title",
+  }),
+  es: createLanguage({
+    description: " ",
+    "example.markdown":
+      "This is an example. Feel free to use it as a template.",
+    "example.title": "Welcome",
+    markdown: "Markdown",
+    name: "Simple",
+    title: "Title",
+  }),
+  nl: createLanguage({
+    description: " ",
+    "example.markdown":
+      "This is an example. Feel free to use it as a template.",
+    "example.title": "Welcome",
+    markdown: "Markdown",
+    name: "Simple",
+    title: "Title",
+  }),
+  pt: createLanguage({
+    description: " ",
+    "example.markdown":
+      "This is an example. Feel free to use it as a template.",
+    "example.title": "Welcome",
+    markdown: "Markdown",
+    name: "Simple",
+    title: "Title",
+  }),
+  tr: createLanguage({
     description: " ",
     "example.markdown":
       "This is an example. Feel free to use it as a template.",

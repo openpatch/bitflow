@@ -9,8 +9,8 @@ import {
 import { locales } from "./locales";
 
 export const format: typeof dFormat = (date, formatString, options = {}) => {
-  const locale = (window as any).__localeId__;
   if (!options?.locale) {
+    const locale = (window as any).__localeId__;
     options.locale = locales[locale];
   }
 
@@ -22,8 +22,8 @@ export const formatDistance: typeof dFormatDistance = (
   baseDate,
   options = {}
 ) => {
-  const locale = (window as any).__localeId__;
   if (!options.locale) {
+    const locale = (window as any).__localeId__;
     options.locale = locales[locale];
   }
   return dFormatDistance(date, baseDate, options);
@@ -33,8 +33,8 @@ export const formatDistanceToNow: typeof dFormatDistanceToNow = (
   date,
   options = {}
 ) => {
-  const locale = (window as any).__localeId__;
   if (!options.locale) {
+    const locale = (window as any).__localeId__;
     options.locale = locales[locale];
   }
   return dFormatDistanceToNow(date, options);
@@ -44,8 +44,8 @@ export const formatDuration: typeof dFormatDuration = (
   duration,
   options = {}
 ) => {
-  const locale = (window as any).__localeId__;
   if (!options.locale) {
+    const locale = (window as any).__localeId__;
     options.locale = locales[locale];
   }
   return dFormatDuration(duration, options);
@@ -56,8 +56,8 @@ export const formatDistanceStrict: typeof dFormatDistanceStrict = (
   baseDate,
   options = {}
 ) => {
-  const locale = (window as any).__localeId__;
   if (!options.locale) {
+    const locale = (window as any).__localeId__;
     options.locale = locales[locale];
   }
 
@@ -68,8 +68,8 @@ export const formatDistanceToNowStrict: typeof dFormatDistanceToNowStrict = (
   date,
   options = {}
 ) => {
-  const locale = (window as any).__localeId__;
   if (!options.locale) {
+    const locale = (window as any).__localeId__;
     options.locale = locales[locale];
   }
 
