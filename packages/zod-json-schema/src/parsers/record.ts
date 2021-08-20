@@ -1,20 +1,19 @@
-import { ZodRecordDef, ZodTypeDef } from 'zod';
-
-import { JsonSchema7Type, parseDef } from '../parseDef';
+import { ZodRecordDef } from "zod";
+import { JsonSchema7Type, parseDef, Visited } from "../parseDef";
 
 export type JsonSchema7RecordType = {
-  type: 'object';
+  type: "object";
   additionalProperties: JsonSchema7Type;
 };
 
 export function parseRecordDef(
   def: ZodRecordDef,
   path: string[],
-  visited: { def: ZodTypeDef; path: string[] }[]
+  visited: Visited
 ): JsonSchema7RecordType {
   return {
-    type: 'object',
+    type: "object",
     additionalProperties:
-      parseDef(def.valueType, [...path, 'additionalProperties'], visited) || {},
+      parseDef(def.valueType, [...path, "additionalProperties"], visited) || {},
   };
 }

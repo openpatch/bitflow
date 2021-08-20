@@ -1,52 +1,23 @@
-import { ZodArrayDef, ZodNonEmptyArrayDef, ZodTypeDef } from 'zod';
-// import { ZodArrayDef } from 'zod/lib/src/types/array';
-import { JsonSchema7Type, parseDef } from '../parseDef';
+import { ZodArrayDef } from "zod";
+import { JsonSchema7Type, parseDef, Visited } from "../parseDef";
 
 export type JsonSchema7ArrayType = {
-  type: 'array';
+  type: "array";
   items?: JsonSchema7Type;
   minItems?: number;
   maxItems?: number;
 };
 
 export function parseArrayDef(
-  def: ZodArrayDef | ZodNonEmptyArrayDef,
+  def: ZodArrayDef,
   path: string[],
-  visited: { def: ZodTypeDef; path: string[] }[]
+  visited: Visited
 ) {
   {
     const res: JsonSchema7ArrayType = {
-      type: 'array',
-      items: parseDef(def.type, [...path, 'array'], visited),
+      type: "array",
+      items: parseDef(def.type, [...path, "items"], visited),
     };
-
-    // if(def.type._def)
-
-    if (def.minLength) {
-      res.minItems = def.minLength.value;
-    }
-    if (def.maxLength) {
-      res.maxItems = def.maxLength.value;
-    }
-
-    return res;
-  }
-}
-
-export function parseNonEmptyArrayDef(
-  def: ZodArrayDef | ZodNonEmptyArrayDef,
-  path: string[],
-  visited: { def: ZodTypeDef; path: string[] }[]
-) {
-  {
-    const res: JsonSchema7ArrayType = {
-      type: 'array',
-      items: parseDef(def.type, [...path, 'items'], visited),
-      minItems: 1,
-    };
-
-    // if(def.type._def)
-
     if (def.minLength) {
       res.minItems = def.minLength.value;
     }

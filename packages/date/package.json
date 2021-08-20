@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@bitflow/provider": "0.2.0",
-    "date-fns": "^2.22.1"
+    "date-fns": "^2.23.0"
   },
   "peerDependencies": {
     "react": "17.x",

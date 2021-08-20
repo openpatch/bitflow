@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@bitflow/concept-model": "0.2.0",
-    "react-flow-renderer": "^9.6.1"
+    "react-flow-renderer": "^9.6.6"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
