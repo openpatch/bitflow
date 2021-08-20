@@ -1,6 +1,6 @@
 {
   "name": "website",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -23,7 +23,7 @@
     "@bitflow/task-input": "0.2.0",
     "@bitflow/task-yes-no": "0.2.0",
     "@bitflow/title-simple": "0.2.0",
-    "@bitflow/zod-json-schema": "0.1.0",
+    "@bitflow/zod-json-schema": "0.1.1",
     "@emotion/cache": "11.4.0",
     "@emotion/react": "11.4.1",
     "@emotion/styled": "11.3.0",
