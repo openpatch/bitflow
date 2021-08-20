@@ -9,7 +9,7 @@ import * as taskYesNo from "@bitflow/task-input";
 import * as titleSimple from "@bitflow/title-simple";
 import { MDXProvider } from "@mdx-js/react";
 import { Code, ThemeProvider } from "@openpatch/patches";
-import { AppProps } from "next/dist/next-server/lib/router/router";
+import { AppProps } from "next/app";
 import "typeface-rubik";
 import "typeface-ubuntu-mono";
 
