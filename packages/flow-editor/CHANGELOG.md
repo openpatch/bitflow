@@ -1,5 +1,11 @@
 # @bitflow/flow-editor
 
+## 0.2.1
+
+### Patch Changes
+
+- 2cff3a6: Fix bug ignoring same properties of a flow in the editor.
+
 ## 0.2.0
 
 ### Minor Changes
