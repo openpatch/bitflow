@@ -19,6 +19,9 @@ describe("FlowSchema", () => {
   it("should return true", () => {
     const flow: Flow = {
       draft: false,
+      description: "",
+      language: "en",
+      visibility: "public",
       name: "flow",
       nodes: [
         {

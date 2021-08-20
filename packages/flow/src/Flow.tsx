@@ -22,12 +22,14 @@ export type FlowProps = Pick<IFlow, "nodes" | "edges" | "zoom" | "position"> &
   Omit<ReactFlowProps, "elements" | "zoom" | "posititon"> & {
     autoFitView?: boolean;
     interactive?: boolean;
+    draft?: boolean;
   };
 
 export const Flow: FC<FlowProps> = ({
   interactive = true,
   autoFitView = false,
   nodes,
+  draft,
   edges,
   zoom,
   position,
@@ -75,7 +77,6 @@ export const Flow: FC<FlowProps> = ({
           elements={[...nodes, ...edges]}
           defaultZoom={zoom}
           defaultPosition={position}
-          {...props}
         >
           <Background variant={BackgroundVariant.Dots} gap={16} size={0.5} />
           {interactive && <Controls />}

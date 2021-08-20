@@ -1,7 +1,5 @@
 import { Footer, Grid, Nav } from "@openpatch/patches";
-import { useTranslations } from "@vocab/react";
 import { FC } from "react";
-import translations from "../locales.vocab";
 import { Logo } from "./Logo";
 
 export type NavLayoutProps = {
@@ -9,14 +7,13 @@ export type NavLayoutProps = {
 };
 
 export const NavLayout: FC<NavLayoutProps> = ({ children }) => {
-  const { t } = useTranslations(translations);
   return (
     <Grid gridRow={`auto 1fr auto`}>
       <Nav
         logo={<Logo />}
         links={[
           {
-            label: t("documentation"),
+            label: "Documentation",
             href: "/docs/getting-started",
           },
           {
@@ -33,8 +30,8 @@ export const NavLayout: FC<NavLayoutProps> = ({ children }) => {
       <Footer
         links={[
           {
-            href: "/contact",
-            label: t("contact"),
+            href: "mailto:contact@openpatch.org",
+            label: "Contact",
           },
         ]}
       ></Footer>

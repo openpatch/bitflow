@@ -23,12 +23,14 @@ export const useFlow = () => {
   const FlowSchema = useRef<ZodSchema<Flow>>();
   const FlowNodeSchema = useRef<ZodSchema<FlowNode>>();
 
-  const evaluateMap: Partial<
-    Record<
-      Bitflow.Task["subtype"],
-      Evaluate<Bitflow.TaskAnswer, Bitflow.Task, Bitflow.TaskResult>
+  const evaluateMap = useRef<
+    Partial<
+      Record<
+        Bitflow.Task["subtype"],
+        Evaluate<Bitflow.TaskAnswer, Bitflow.Task, Bitflow.TaskResult>
+      >
     >
-  > = {};
+  >({});
 
   if (!FlowSchema.current || !FlowNodeSchema.current) {
     let titleBitsSchema: TitleBit["TitleSchema"] | null = null;
@@ -74,7 +76,7 @@ export const useFlow = () => {
     let taskBitsSchema: TaskBit["TaskSchema"] | null = null;
     for (const key in taskBits) {
       const b: TaskBit = taskBits[key];
-      evaluateMap[key] = b.evaluate;
+      evaluateMap.current[key] = b.evaluate;
       if (!taskBitsSchema) {
         taskBitsSchema = b.TaskSchema;
       } else {
@@ -103,13 +105,14 @@ export const useFlow = () => {
     Bitflow.Task,
     Bitflow.TaskResult
   > = async ({ task, answer }) => {
-    const result = evaluateMap[task.subtype]?.({ answer, task });
-    if (!result) {
+    console.log(evaluateMap.current);
+    const evaluateTask = evaluateMap.current[task.subtype];
+    if (!evaluateTask) {
       throw new Error(
-        "subtype not supported. Please see your provider config."
+        `subtype ${task.subtype} not supported. Please see your provider config.`
       );
     }
-    return result;
+    return evaluateTask({ answer, task });
   };
 
   return {

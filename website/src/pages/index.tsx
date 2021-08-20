@@ -10,7 +10,6 @@ import {
   Text,
   TextLink,
 } from "@openpatch/patches";
-import { useTranslations } from "@vocab/react";
 import { useEffect, useState } from "react";
 import { FlowCard } from "../components/FlowCard";
 import { NavLayout } from "../components/NavLayout";
@@ -18,10 +17,8 @@ import { Supporters } from "../components/Supporters";
 import { Users } from "../components/Users";
 import * as flows from "../flows";
 import { simpleAnswerSplit } from "../flows/simpleAnswerSplit";
-import translations from "../locales.vocab";
 
 export default function Home() {
-  const { t } = useTranslations(translations);
   const { FlowSchema } = useFlow();
   const [myFlows, setMyFlows] = useState<Record<string, IFlow>>();
 
@@ -46,16 +43,19 @@ export default function Home() {
           <Box maxWidth="large" mx="auto" px={["small", "medium", "medium"]}>
             <Box width="400px">
               <Heading as="h1" fontSize="xxlarge">
-                {t("bitflow")}
+                Bitflow
               </Heading>
-              <Text>{t("bitflow-description")}</Text>
+              <Text>
+                A library for creating and conducting dynamic flow-based
+                assessments.
+              </Text>
             </Box>
           </Box>
         </Box>
         <Flow autoFitView {...simpleAnswerSplit} />
       </Box>
       <Box maxWidth="large" mx="auto" width="100%" px="standard" my="xlarge">
-        <Heading>{t("demo-flows")}</Heading>
+        <Heading>Demo Flows</Heading>
         <AutoGrid gap="standard" columns={[1, 1, 2]}>
           {Object.entries(flows).map(([key, flow]) => (
             <FlowCard flow={flow} id={key} key={key} />

@@ -4,7 +4,7 @@
 import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
-  "en-GB" | "en" | "en-US" | "de",
+  "en-GB" | "en" | "en-US" | "de" | "fr" | "es" | "nl" | "pt" | "tr",
   {
     checkpoint: () => "Checkpoint";
     "checkpoint-text": () => "You reached a checkpoint and can not go back to a previous task.";
@@ -58,6 +58,71 @@ const translations = createTranslationFile<
     title: "Title",
   }),
   de: createLanguage({
+    checkpoint: "Checkpoint",
+    "checkpoint-text":
+      "You reached a checkpoint and can not go back to a previous task.",
+    continue: "Continue",
+    input: "Input",
+    next: "Next",
+    refresh: "Refresh",
+    synchronize: "Synchronize",
+    "synchronize-text": "Wait until the next node is unlocked.",
+    task: "Task",
+    title: "Title",
+  }),
+  fr: createLanguage({
+    checkpoint: "Checkpoint",
+    "checkpoint-text":
+      "You reached a checkpoint and can not go back to a previous task.",
+    continue: "Continue",
+    input: "Input",
+    next: "Next",
+    refresh: "Refresh",
+    synchronize: "Synchronize",
+    "synchronize-text": "Wait until the next node is unlocked.",
+    task: "Task",
+    title: "Title",
+  }),
+  es: createLanguage({
+    checkpoint: "Checkpoint",
+    "checkpoint-text":
+      "You reached a checkpoint and can not go back to a previous task.",
+    continue: "Continue",
+    input: "Input",
+    next: "Next",
+    refresh: "Refresh",
+    synchronize: "Synchronize",
+    "synchronize-text": "Wait until the next node is unlocked.",
+    task: "Task",
+    title: "Title",
+  }),
+  nl: createLanguage({
+    checkpoint: "Checkpoint",
+    "checkpoint-text":
+      "You reached a checkpoint and can not go back to a previous task.",
+    continue: "Continue",
+    input: "Input",
+    next: "Next",
+    refresh: "Refresh",
+    synchronize: "Synchronize",
+    "synchronize-text": "Wait until the next node is unlocked.",
+    task: "Task",
+    title: "Title",
+  }),
+  pt: createLanguage({
+    checkpoint: "Checkpoint",
+    "checkpoint-text":
+      "You reached a checkpoint and can not go back to a previous task.",
+    continue: "Continue",
+    input: "Input",
+    next: "Next",
+    refresh: "Refresh",
+    synchronize: "Synchronize",
+    "synchronize-text": "Wait until the next node is unlocked.",
+    task: "Task",
+    title: "Title",
+  }),
+  tr: createLanguage({
     checkpoint: "Checkpoint",
     "checkpoint-text":
       "You reached a checkpoint and can not go back to a previous task.",

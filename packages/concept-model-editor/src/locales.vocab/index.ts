@@ -4,13 +4,18 @@
 import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
-  "en-GB" | "en" | "en-US" | "de",
+  "en-GB" | "en" | "en-US" | "de" | "fr" | "es" | "nl" | "pt" | "tr",
   { nodes: () => "Nodes"; properties: () => "Properties" }
 >({
   "en-GB": createLanguage({ nodes: "Nodes", properties: "Properties" }),
   en: createLanguage({ nodes: "Nodes", properties: "Properties" }),
   "en-US": createLanguage({ nodes: "Nodes", properties: "Properties" }),
   de: createLanguage({ nodes: "Nodes", properties: "Properties" }),
+  fr: createLanguage({ nodes: "Nodes", properties: "Properties" }),
+  es: createLanguage({ nodes: "Nodes", properties: "Properties" }),
+  nl: createLanguage({ nodes: "Nodes", properties: "Properties" }),
+  pt: createLanguage({ nodes: "Nodes", properties: "Properties" }),
+  tr: createLanguage({ nodes: "Nodes", properties: "Properties" }),
 });
 
 export default translations;

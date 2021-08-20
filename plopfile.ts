@@ -24,6 +24,24 @@ export default function (plop: NodePlopAPI) {
       },
     ],
   });
+  plop.setGenerator("component package", {
+    description: "Creates a component TypeScript package.",
+    prompts: [
+      {
+        type: "input",
+        name: "name",
+        message: "component name please",
+      },
+    ],
+    actions: [
+      {
+        type: "addMany",
+        templateFiles: "plop-templates/component/**/*",
+        destination: "packages/{{ dashCase name }}/",
+        base: "plop-templates/component/",
+      },
+    ],
+  });
   plop.setGenerator("plain package", {
     description: "Creates a plain TypeScript package.",
     prompts: [

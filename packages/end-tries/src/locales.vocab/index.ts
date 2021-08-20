@@ -4,7 +4,7 @@
 import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
-  "en-GB" | "en" | "en-US" | "de",
+  "en-GB" | "en" | "en-US" | "de" | "fr" | "es" | "nl" | "pt" | "tr",
   {
     description: () => " ";
     "example.markdown": () => "# Your Results!";
@@ -38,6 +38,46 @@ const translations = createTranslationFile<
       "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}",
   }),
   de: createLanguage({
+    description: " ",
+    "example.markdown": "# Your Results!",
+    markdown: "Markdown",
+    name: "Tries",
+    points:
+      "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}",
+  }),
+  fr: createLanguage({
+    description: " ",
+    "example.markdown": "# Your Results!",
+    markdown: "Markdown",
+    name: "Tries",
+    points:
+      "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}",
+  }),
+  es: createLanguage({
+    description: " ",
+    "example.markdown": "# Your Results!",
+    markdown: "Markdown",
+    name: "Tries",
+    points:
+      "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}",
+  }),
+  nl: createLanguage({
+    description: " ",
+    "example.markdown": "# Your Results!",
+    markdown: "Markdown",
+    name: "Tries",
+    points:
+      "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}",
+  }),
+  pt: createLanguage({
+    description: " ",
+    "example.markdown": "# Your Results!",
+    markdown: "Markdown",
+    name: "Tries",
+    points:
+      "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}",
+  }),
+  tr: createLanguage({
     description: " ",
     "example.markdown": "# Your Results!",
     markdown: "Markdown",

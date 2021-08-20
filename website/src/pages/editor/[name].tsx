@@ -8,18 +8,15 @@ import {
   Heading,
   PatternCenter,
 } from "@openpatch/patches";
-import { useTranslations } from "@vocab/react";
 import { GetServerSideProps } from "next";
 import { useRef } from "react";
 import * as flows from "../../flows";
-import translations from "../../locales.vocab";
 
 type EditorProps = {
   flow: Flow;
 };
 
 export default function Editor({ flow }: EditorProps) {
-  const { t } = useTranslations(translations);
   const flowEditorRef = useRef<FlowEditorRef>(null);
 
   const handleDownload = () => {
@@ -55,7 +52,7 @@ export default function Editor({ flow }: EditorProps) {
           <ButtonGroup attached space="standard">
             {flow && (
               <ButtonSecondary onClick={handleDownload}>
-                {t("download")}
+                Download
               </ButtonSecondary>
             )}
           </ButtonGroup>

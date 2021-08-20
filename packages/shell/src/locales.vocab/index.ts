@@ -4,7 +4,7 @@
 import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
-  "en-GB" | "en" | "en-US" | "de",
+  "en-GB" | "en" | "en-US" | "de" | "fr" | "es" | "nl" | "pt" | "tr",
   {
     accept: () => "Accept" | "Akzeptieren";
     answer: () => "Answer" | "Antworten";
@@ -106,6 +106,111 @@ const translations = createTranslationFile<
       "{index, plural, =0 {Danke für deine Antwort!} other {Danke!}}",
     wrongNudges:
       "{index, plural, =0 {Vielleicht nächstes Mal} =1 {Keine Sorge!} other {Jede falsche Antwort ist eine Chance was zu lernen!}}",
+  }),
+  fr: createLanguage({
+    accept: "Accept",
+    answer: "Answer",
+    close: "Close",
+    confidence: "Confidence",
+    correctNudges:
+      "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}",
+    end: "End",
+    manualNudges:
+      "{index, plural, other {Your answer will be check manually!}}",
+    next: "Next",
+    previous: "Previous",
+    reasoning: "Reasoning",
+    retry: "Retry",
+    skip: "Skip",
+    start: "Start",
+    unknownNudges:
+      "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}",
+    wrongNudges:
+      "{index, plural, =0 {Maybe next time} =1 {No worries!} other {Every wrong answer is a learning opportunity!}}",
+  }),
+  es: createLanguage({
+    accept: "Accept",
+    answer: "Answer",
+    close: "Close",
+    confidence: "Confidence",
+    correctNudges:
+      "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}",
+    end: "End",
+    manualNudges:
+      "{index, plural, other {Your answer will be check manually!}}",
+    next: "Next",
+    previous: "Previous",
+    reasoning: "Reasoning",
+    retry: "Retry",
+    skip: "Skip",
+    start: "Start",
+    unknownNudges:
+      "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}",
+    wrongNudges:
+      "{index, plural, =0 {Maybe next time} =1 {No worries!} other {Every wrong answer is a learning opportunity!}}",
+  }),
+  nl: createLanguage({
+    accept: "Accept",
+    answer: "Answer",
+    close: "Close",
+    confidence: "Confidence",
+    correctNudges:
+      "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}",
+    end: "End",
+    manualNudges:
+      "{index, plural, other {Your answer will be check manually!}}",
+    next: "Next",
+    previous: "Previous",
+    reasoning: "Reasoning",
+    retry: "Retry",
+    skip: "Skip",
+    start: "Start",
+    unknownNudges:
+      "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}",
+    wrongNudges:
+      "{index, plural, =0 {Maybe next time} =1 {No worries!} other {Every wrong answer is a learning opportunity!}}",
+  }),
+  pt: createLanguage({
+    accept: "Accept",
+    answer: "Answer",
+    close: "Close",
+    confidence: "Confidence",
+    correctNudges:
+      "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}",
+    end: "End",
+    manualNudges:
+      "{index, plural, other {Your answer will be check manually!}}",
+    next: "Next",
+    previous: "Previous",
+    reasoning: "Reasoning",
+    retry: "Retry",
+    skip: "Skip",
+    start: "Start",
+    unknownNudges:
+      "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}",
+    wrongNudges:
+      "{index, plural, =0 {Maybe next time} =1 {No worries!} other {Every wrong answer is a learning opportunity!}}",
+  }),
+  tr: createLanguage({
+    accept: "Accept",
+    answer: "Answer",
+    close: "Close",
+    confidence: "Confidence",
+    correctNudges:
+      "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}",
+    end: "End",
+    manualNudges:
+      "{index, plural, other {Your answer will be check manually!}}",
+    next: "Next",
+    previous: "Previous",
+    reasoning: "Reasoning",
+    retry: "Retry",
+    skip: "Skip",
+    start: "Start",
+    unknownNudges:
+      "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}",
+    wrongNudges:
+      "{index, plural, =0 {Maybe next time} =1 {No worries!} other {Every wrong answer is a learning opportunity!}}",
   }),
 });
 

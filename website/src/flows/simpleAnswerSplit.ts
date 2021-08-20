@@ -2,6 +2,9 @@ import { Flow } from "@bitflow/core";
 
 export const simpleAnswerSplit: Flow = {
   name: "New Flow",
+  description: "",
+  language: "en",
+  visibility: "public",
   draft: false,
   nodes: [
     {

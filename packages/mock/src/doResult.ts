@@ -593,6 +593,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
       status: "skipped",
       try: 0,
       startDate: new Date("2021-04-13T07:35:54.721Z"),
+      evaluation: {
+        mode: "auto",
+      },
       node: {
         type: "task",
         id: "59c7163b-f626-4e08-af43-0c62712071e2",
@@ -637,6 +640,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:55.460Z"),
       node: {
         type: "task",
@@ -684,6 +690,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:55.650Z"),
       node: {
         type: "task",
@@ -730,6 +739,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
       status: "skipped",
       try: 0,
       startDate: new Date("2021-04-13T07:35:55.871Z"),
+      evaluation: {
+        mode: "auto",
+      },
       node: {
         type: "task",
         id: "c5420a72-3959-491a-88de-2dafd3ed8e80",
@@ -775,6 +787,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
       status: "skipped",
       try: 0,
       startDate: new Date("2021-04-13T07:35:56.205Z"),
+      evaluation: {
+        mode: "auto",
+      },
       node: {
         type: "task",
         id: "bbd56c39-d515-4f6f-9ec8-e2a761d7552a",
@@ -819,6 +834,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:56.417Z"),
       node: {
         type: "task",
@@ -864,6 +882,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:56.693Z"),
       node: {
         type: "task",
@@ -909,6 +930,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:56.907Z"),
       node: {
         type: "task",
@@ -954,6 +978,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:57.048Z"),
       node: {
         type: "task",
@@ -999,6 +1026,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:57.198Z"),
       node: {
         type: "task",
@@ -1045,6 +1075,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:57.329Z"),
       node: {
         type: "task",
@@ -1093,6 +1126,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:57.560Z"),
       node: {
         type: "task",
@@ -1138,6 +1174,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:57.740Z"),
       node: {
         type: "task",
@@ -1183,6 +1222,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "auto",
+      },
       startDate: new Date("2021-04-13T07:35:57.969Z"),
       node: {
         type: "task",
@@ -1230,6 +1272,9 @@ export const generateDoResult = async (): Promise<DoResult> => ({
     {
       status: "skipped",
       try: 0,
+      evaluation: {
+        mode: "skip",
+      },
       startDate: new Date("2021-04-13T07:35:58.204Z"),
       node: {
         type: "task",

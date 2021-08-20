@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@bitflow/core": "0.1.0",
-    "@bitflow/do": "0.1.0",
+    "@bitflow/do-local": "0.0.0",
     "@bitflow/end-tries": "0.1.0",
     "@bitflow/flow-engine": "0.1.0",
     "@bitflow/provider": "0.1.0",

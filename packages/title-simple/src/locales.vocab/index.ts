@@ -4,7 +4,7 @@
 import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
-  "en-GB" | "en" | "en-US" | "de",
+  "en-GB" | "en" | "en-US" | "de" | "fr" | "es" | "nl" | "pt" | "tr",
   {
     description: () => " ";
     "example.message": () => "In this section you will be asked questions about **control structures**.";
@@ -42,6 +42,51 @@ const translations = createTranslationFile<
     title: "Title",
   }),
   de: createLanguage({
+    description: " ",
+    "example.message":
+      "In this section you will be asked questions about **control structures**.",
+    "example.title": "Section One",
+    message: "Message",
+    name: "Simple",
+    title: "Title",
+  }),
+  fr: createLanguage({
+    description: " ",
+    "example.message":
+      "In this section you will be asked questions about **control structures**.",
+    "example.title": "Section One",
+    message: "Message",
+    name: "Simple",
+    title: "Title",
+  }),
+  es: createLanguage({
+    description: " ",
+    "example.message":
+      "In this section you will be asked questions about **control structures**.",
+    "example.title": "Section One",
+    message: "Message",
+    name: "Simple",
+    title: "Title",
+  }),
+  nl: createLanguage({
+    description: " ",
+    "example.message":
+      "In this section you will be asked questions about **control structures**.",
+    "example.title": "Section One",
+    message: "Message",
+    name: "Simple",
+    title: "Title",
+  }),
+  pt: createLanguage({
+    description: " ",
+    "example.message":
+      "In this section you will be asked questions about **control structures**.",
+    "example.title": "Section One",
+    message: "Message",
+    name: "Simple",
+    title: "Title",
+  }),
+  tr: createLanguage({
     description: " ",
     "example.message":
       "In this section you will be asked questions about **control structures**.",

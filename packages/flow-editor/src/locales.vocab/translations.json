@@ -26,6 +26,9 @@
   "description": {
     "message": "Description"
   },
+  "draft": {
+    "message": "Draft"
+  },
   "end": {
     "message": "End"
   },
@@ -95,6 +98,33 @@
   "key": {
     "message": "Key"
   },
+  "lang-de": {
+    "message": "German"
+  },
+  "lang-en": {
+    "message": "English"
+  },
+  "lang-es": {
+    "message": "Spanish"
+  },
+  "lang-fr": {
+    "message": "French"
+  },
+  "lang-it": {
+    "message": "Italian"
+  },
+  "lang-nl": {
+    "message": "Dutch"
+  },
+  "lang-pt": {
+    "message": "Portuguese"
+  },
+  "lang-tr": {
+    "message": "Turkish"
+  },
+  "language": {
+    "message": "Language"
+  },
   "meta": {
     "message": "Meta"
   },
@@ -140,8 +170,14 @@
   "preview": {
     "message": "Preview"
   },
+  "private": {
+    "message": "Private"
+  },
   "properties": {
     "message": "Properties"
+  },
+  "public": {
+    "message": "Public"
   },
   "save": {
     "message": "Save"
@@ -227,6 +263,9 @@
   "type": {
     "message": "Type"
   },
+  "unlisted": {
+    "message": "Unlisted"
+  },
   "utility": {
     "message": "Utility"
   },
@@ -235,5 +274,8 @@
   },
   "view": {
     "message": "View"
+  },
+  "visibility": {
+    "message": "Visibility"
   }
 }
