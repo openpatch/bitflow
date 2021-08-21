@@ -12657,10 +12657,10 @@ jest-mock@^27.0.6:
     "@jest/types" "^27.0.6"
     "@types/node" "*"
 
-jest-node-exports-resolver@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/jest-node-exports-resolver/-/jest-node-exports-resolver-1.0.3.tgz#fcca3746bc8a031e47be1111cecfc6a220209b5f"
-  integrity sha512-eKKaaesLoW28BwU8vasXcAfR9xzdlX7cyYHcQ3i+d65b0TW3/gU9pCXRPV4SEucFpTtKQ8/fc05gBVItwa2DoA==
+jest-node-exports-resolver@1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/jest-node-exports-resolver/-/jest-node-exports-resolver-1.0.5.tgz#d77ee9061653aa6ed3a271b46e845efd7ce67d4a"
+  integrity sha512-Hi8utvTCHvgSiY0teMM58BKYgWaNvqOcvqSAoWUmATkAvPehNNAUwZraHQpI8YGRqZVZS0b02tPcGK/CaGLspg==
 
 jest-pnp-resolver@^1.2.2:
   version "1.2.2"
