@@ -71,7 +71,7 @@
     "babel-loader": "8.2.2",
     "concurrently": "6.2.1",
     "cross-env": "7.0.3",
-    "husky": "7.0.1",
+    "husky": "7.0.2",
     "jest": "27.0.6",
     "jest-cli": "27.0.6",
     "jest-node-exports-resolver": "1.0.5",
