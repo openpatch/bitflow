@@ -95,6 +95,9 @@
   "key": {
     "message": "Key"
   },
+  "locked": {
+    "message": "Locked"
+  },
   "meta": {
     "message": "Meta"
   },
@@ -206,6 +209,9 @@
   "synchronize-helper-text": {
     "message": "Force students to wait on your signal"
   },
+  "synchronize-lock-toggle": {
+    "message": "Toggle Lock"
+  },
   "task": {
     "message": "Task"
   },
@@ -226,6 +232,9 @@
   },
   "type": {
     "message": "Type"
+  },
+  "unlocked": {
+    "message": "Unlocked"
   },
   "utility": {
     "message": "Utility"

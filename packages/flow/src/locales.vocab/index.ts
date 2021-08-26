@@ -38,6 +38,7 @@ const translations = createTranslationFile<
     input: () => "Input";
     "input-markdown": () => "Markdown";
     key: () => "Key";
+    locked: () => "Locked";
     meta: () => "Meta";
     name: () => "Name";
     "new-flow-title": () => "New Flow";
@@ -75,6 +76,7 @@ const translations = createTranslationFile<
     subtype: () => "Subtype";
     synchronize: () => "Synchronize";
     "synchronize-helper-text": () => "Force students to wait on your signal";
+    "synchronize-lock-toggle": () => "Toggle Lock";
     task: () => "Task";
     "task-choice": () => "Choice";
     "task-fill-in-the-blank": () => "Fill in the blank";
@@ -82,6 +84,7 @@ const translations = createTranslationFile<
     title: () => "Title";
     "title-simple": () => "Simple";
     type: () => "Type";
+    unlocked: () => "Unlocked";
     utility: () => "Utility";
     value: () => "Value";
     view: () => "View";
@@ -123,6 +126,7 @@ const translations = createTranslationFile<
     input: "Input",
     "input-markdown": "Markdown",
     key: "Key",
+    locked: "Locked",
     meta: "Meta",
     name: "Name",
     "new-flow-title": "New Flow",
@@ -164,6 +168,7 @@ const translations = createTranslationFile<
     subtype: "Subtype",
     synchronize: "Synchronize",
     "synchronize-helper-text": "Force students to wait on your signal",
+    "synchronize-lock-toggle": "Toggle Lock",
     task: "Task",
     "task-choice": "Choice",
     "task-fill-in-the-blank": "Fill in the blank",
@@ -171,6 +176,7 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    unlocked: "Unlocked",
     utility: "Utility",
     value: "Value",
     view: "View",
@@ -211,6 +217,7 @@ const translations = createTranslationFile<
     input: "Input",
     "input-markdown": "Markdown",
     key: "Key",
+    locked: "Locked",
     meta: "Meta",
     name: "Name",
     "new-flow-title": "New Flow",
@@ -252,6 +259,7 @@ const translations = createTranslationFile<
     subtype: "Subtype",
     synchronize: "Synchronize",
     "synchronize-helper-text": "Force students to wait on your signal",
+    "synchronize-lock-toggle": "Toggle Lock",
     task: "Task",
     "task-choice": "Choice",
     "task-fill-in-the-blank": "Fill in the blank",
@@ -259,6 +267,7 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    unlocked: "Unlocked",
     utility: "Utility",
     value: "Value",
     view: "View",
@@ -299,6 +308,7 @@ const translations = createTranslationFile<
     input: "Input",
     "input-markdown": "Markdown",
     key: "Key",
+    locked: "Locked",
     meta: "Meta",
     name: "Name",
     "new-flow-title": "New Flow",
@@ -340,6 +350,7 @@ const translations = createTranslationFile<
     subtype: "Subtype",
     synchronize: "Synchronize",
     "synchronize-helper-text": "Force students to wait on your signal",
+    "synchronize-lock-toggle": "Toggle Lock",
     task: "Task",
     "task-choice": "Choice",
     "task-fill-in-the-blank": "Fill in the blank",
@@ -347,6 +358,7 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    unlocked: "Unlocked",
     utility: "Utility",
     value: "Value",
     view: "View",
@@ -387,6 +399,7 @@ const translations = createTranslationFile<
     input: "Input",
     "input-markdown": "Markdown",
     key: "Key",
+    locked: "Locked",
     meta: "Meta",
     name: "Name",
     "new-flow-title": "New Flow",
@@ -428,6 +441,7 @@ const translations = createTranslationFile<
     subtype: "Subtype",
     synchronize: "Synchronize",
     "synchronize-helper-text": "Force students to wait on your signal",
+    "synchronize-lock-toggle": "Toggle Lock",
     task: "Task",
     "task-choice": "Choice",
     "task-fill-in-the-blank": "Fill in the blank",
@@ -435,6 +449,7 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    unlocked: "Unlocked",
     utility: "Utility",
     value: "Value",
     view: "View",
@@ -475,6 +490,7 @@ const translations = createTranslationFile<
     input: "Input",
     "input-markdown": "Markdown",
     key: "Key",
+    locked: "Locked",
     meta: "Meta",
     name: "Name",
     "new-flow-title": "New Flow",
@@ -516,6 +532,7 @@ const translations = createTranslationFile<
     subtype: "Subtype",
     synchronize: "Synchronize",
     "synchronize-helper-text": "Force students to wait on your signal",
+    "synchronize-lock-toggle": "Toggle Lock",
     task: "Task",
     "task-choice": "Choice",
     "task-fill-in-the-blank": "Fill in the blank",
@@ -523,6 +540,7 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    unlocked: "Unlocked",
     utility: "Utility",
     value: "Value",
     view: "View",
@@ -563,6 +581,7 @@ const translations = createTranslationFile<
     input: "Input",
     "input-markdown": "Markdown",
     key: "Key",
+    locked: "Locked",
     meta: "Meta",
     name: "Name",
     "new-flow-title": "New Flow",
@@ -604,6 +623,7 @@ const translations = createTranslationFile<
     subtype: "Subtype",
     synchronize: "Synchronize",
     "synchronize-helper-text": "Force students to wait on your signal",
+    "synchronize-lock-toggle": "Toggle Lock",
     task: "Task",
     "task-choice": "Choice",
     "task-fill-in-the-blank": "Fill in the blank",
@@ -611,6 +631,7 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    unlocked: "Unlocked",
     utility: "Utility",
     value: "Value",
     view: "View",
@@ -651,6 +672,7 @@ const translations = createTranslationFile<
     input: "Input",
     "input-markdown": "Markdown",
     key: "Key",
+    locked: "Locked",
     meta: "Meta",
     name: "Name",
     "new-flow-title": "New Flow",
@@ -692,6 +714,7 @@ const translations = createTranslationFile<
     subtype: "Subtype",
     synchronize: "Synchronize",
     "synchronize-helper-text": "Force students to wait on your signal",
+    "synchronize-lock-toggle": "Toggle Lock",
     task: "Task",
     "task-choice": "Choice",
     "task-fill-in-the-blank": "Fill in the blank",
@@ -699,6 +722,7 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    unlocked: "Unlocked",
     utility: "Utility",
     value: "Value",
     view: "View",
@@ -739,6 +763,7 @@ const translations = createTranslationFile<
     input: "Input",
     "input-markdown": "Markdown",
     key: "Key",
+    locked: "Locked",
     meta: "Meta",
     name: "Name",
     "new-flow-title": "New Flow",
@@ -780,6 +805,7 @@ const translations = createTranslationFile<
     subtype: "Subtype",
     synchronize: "Synchronize",
     "synchronize-helper-text": "Force students to wait on your signal",
+    "synchronize-lock-toggle": "Toggle Lock",
     task: "Task",
     "task-choice": "Choice",
     "task-fill-in-the-blank": "Fill in the blank",
@@ -787,6 +813,7 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    unlocked: "Unlocked",
     utility: "Utility",
     value: "Value",
     view: "View",
@@ -827,6 +854,7 @@ const translations = createTranslationFile<
     input: "Input",
     "input-markdown": "Markdown",
     key: "Key",
+    locked: "Locked",
     meta: "Meta",
     name: "Name",
     "new-flow-title": "New Flow",
@@ -868,6 +896,7 @@ const translations = createTranslationFile<
     subtype: "Subtype",
     synchronize: "Synchronize",
     "synchronize-helper-text": "Force students to wait on your signal",
+    "synchronize-lock-toggle": "Toggle Lock",
     task: "Task",
     "task-choice": "Choice",
     "task-fill-in-the-blank": "Fill in the blank",
@@ -875,6 +904,7 @@ const translations = createTranslationFile<
     title: "Title",
     "title-simple": "Simple",
     type: "Type",
+    unlocked: "Unlocked",
     utility: "Utility",
     value: "Value",
     view: "View",

@@ -12,6 +12,10 @@ export type FlowCheckpointPublicNode = Pick<FlowCheckpointNode, "id" | "type">;
 
 export type FlowSynchronizeNode = NodeBase & {
   type: "synchronize";
+  data?: {
+    toggle: (id: string) => void;
+    unlocked: boolean;
+  };
 };
 
 export type FlowSynchronizePublicNode = Pick<

@@ -1,8 +1,14 @@
+import { FlowSynchronizeNode } from "@bitflow/core";
 import { FlowNode, FlowNodeProps } from "@bitflow/flow-node";
+import { css } from "@emotion/core";
+import { Box, Icon, Text } from "@openpatch/patches";
+import { Lock, LockOpen } from "@openpatch/patches/icons";
 import { useTranslations } from "@vocab/react";
 import translations from "./locales.vocab";
 
 export const SynchronizeNode = (node: {
+  id: string;
+  data?: FlowSynchronizeNode["data"];
   hideHandles?: boolean;
   maxWidth?: FlowNodeProps["maxWidth"];
 }) => {
@@ -11,7 +17,39 @@ export const SynchronizeNode = (node: {
     <FlowNode
       tone="purple"
       title={t("synchronize")}
-      description={t("synchronize-helper-text")}
+      description={
+        <Text
+          fontSize="small"
+          css={css`
+            color: #421987;
+          `}
+        >
+          {t("synchronize-helper-text")}
+          <Box textAlign="center">
+            <Box
+              display="inline"
+              onClick={(e) => {
+                e.preventDefault();
+                node.data?.toggle(node.id);
+              }}
+              title={t("synchronize-lock-toggle")}
+              cursor="pointer"
+              css={css`
+                :hover {
+                  opacity: 0.7;
+                }
+              `}
+            >
+              <Icon color="neutral" size="large">
+                {node.data?.unlocked ? <LockOpen /> : <Lock />}
+              </Icon>
+            </Box>
+          </Box>
+          <Text textAlign="center">
+            {node.data?.unlocked ? t("unlocked") : t("locked")}
+          </Text>
+        </Text>
+      }
       sourceHandles={1}
       targetHandles={1}
       hideHandles={node.hideHandles}
