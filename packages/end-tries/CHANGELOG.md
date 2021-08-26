@@ -1,5 +1,14 @@
 # @bitflow/end-tries
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [dea5cca]
+  - @bitflow/core@0.3.0
+  - @bitflow/provider@0.2.1
+  - @bitflow/shell@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

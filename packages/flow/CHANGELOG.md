@@ -1,5 +1,16 @@
 # @bitflow/flow
 
+## 0.3.0
+
+### Minor Changes
+
+- dea5cca: add toggle lock to synchronize node
+
+### Patch Changes
+
+- Updated dependencies [dea5cca]
+  - @bitflow/core@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,5 +1,15 @@
 # @bitflow/flow-editor
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [dea5cca]
+  - @bitflow/core@0.3.0
+  - @bitflow/flow@0.3.0
+  - @bitflow/provider@0.2.1
+  - @bitflow/shell@0.2.1
+
 ## 0.2.1
 
 ### Patch Changes

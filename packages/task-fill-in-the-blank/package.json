@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/task-fill-in-the-blank",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -46,7 +46,7 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "@bitflow/core": "0.2.0",
+    "@bitflow/core": "0.3.0",
     "@hookform/resolvers": "^1.3.7",
     "immer": "^9.0.3",
     "react-hook-form": "^6.15.5",
