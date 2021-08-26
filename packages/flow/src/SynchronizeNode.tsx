@@ -7,7 +7,7 @@ import { useTranslations } from "@vocab/react";
 import translations from "./locales.vocab";
 
 export const SynchronizeNode = (node: {
-  id: string;
+  id?: string;
   data?: FlowSynchronizeNode["data"];
   hideHandles?: boolean;
   maxWidth?: FlowNodeProps["maxWidth"];
@@ -30,7 +30,9 @@ export const SynchronizeNode = (node: {
               display="inline"
               onClick={(e) => {
                 e.preventDefault();
-                node.data?.toggle(node.id);
+                if (node?.id) {
+                  node.data?.toggle(node.id);
+                }
               }}
               title={t("synchronize-lock-toggle")}
               cursor="pointer"
