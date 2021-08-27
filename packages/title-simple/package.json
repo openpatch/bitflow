@@ -34,7 +34,7 @@
     "start": "concurrently yarn:start:*",
     "start:build": "tsc --build --watch",
     "start:locale": "vocab compile --watch",
-    "build": "concurrently yarn:build:*",
+    "build": "yarn build:locale && concurrently 'yarn build:esm' 'yarn build:cjs' 'yarn build:types'",
     "clean": "tsc --build --clean",
     "test": "jest --env=jsdom --passWithNoTests",
     "lint": "tsc",
