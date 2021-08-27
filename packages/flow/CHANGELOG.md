@@ -1,5 +1,16 @@
 # @bitflow/flow
 
+## 0.4.0
+
+### Minor Changes
+
+- 5a8cbe6: Add count to flow node for displaying the number of persons at the current node.
+
+### Patch Changes
+
+- Updated dependencies [5a8cbe6]
+  - @bitflow/flow-node@0.3.0
+
 ## 0.3.0
 
 ### Minor Changes

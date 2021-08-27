@@ -1,5 +1,11 @@
 # @bitflow/concept-model-editor
 
+## 0.2.2
+
+### Patch Changes
+
+- @bitflow/concept-model@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes
