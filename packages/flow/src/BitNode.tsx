@@ -16,6 +16,7 @@ export const BitNode = (
     "type"
   > & {
       data: {
+        count?: number;
         name: string;
         description: string;
         subtype: string;
@@ -27,6 +28,7 @@ export const BitNode = (
       <FlowNode
         tone="teal"
         title={node.data?.name}
+        count={node.data?.count}
         description={node.data?.description}
         sourceHandles={1}
         footerLeft={node.type || ""}
@@ -40,6 +42,7 @@ export const BitNode = (
       <FlowNode
         tone="red"
         title={node.data?.name}
+        count={node.data?.count}
         description={node.data?.description}
         footerLeft={node.type || ""}
         footerRight={node.data?.subtype || ""}
@@ -53,6 +56,7 @@ export const BitNode = (
     <FlowNode
       tone="blue"
       title={node.data?.name || ""}
+      count={node.data?.count}
       description={node.data?.description || ""}
       footerLeft={node.type || ""}
       footerRight={node.data?.subtype || ""}

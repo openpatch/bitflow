@@ -3,6 +3,9 @@ import { useTranslations } from "@vocab/react";
 import translations from "./locales.vocab";
 
 export const CheckpointNode = (node: {
+  data?: {
+    count?: number;
+  };
   hideHandles?: boolean;
   maxWidth?: FlowNodeProps["maxWidth"];
 }) => {
@@ -10,6 +13,7 @@ export const CheckpointNode = (node: {
   return (
     <FlowNode
       tone="purple"
+      count={node.data?.count}
       title={t("checkpoint")}
       description={t("checkpoint-helper-text")}
       sourceHandles={1}

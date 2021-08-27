@@ -5,17 +5,17 @@ import { createLanguage, createTranslationFile } from "@vocab/core/runtime";
 
 const translations = createTranslationFile<
   "en-GB" | "en" | "en-US" | "de" | "fr" | "es" | "nl" | "pt" | "tr",
-  {}
+  { "number-of-persons": () => "Number of persons" }
 >({
-  "en-GB": createLanguage({}),
-  en: createLanguage({}),
-  "en-US": createLanguage({}),
-  de: createLanguage({}),
-  fr: createLanguage({}),
-  es: createLanguage({}),
-  nl: createLanguage({}),
-  pt: createLanguage({}),
-  tr: createLanguage({}),
+  "en-GB": createLanguage({ "number-of-persons": "Number of persons" }),
+  en: createLanguage({ "number-of-persons": "Number of persons" }),
+  "en-US": createLanguage({ "number-of-persons": "Number of persons" }),
+  de: createLanguage({ "number-of-persons": "Number of persons" }),
+  fr: createLanguage({ "number-of-persons": "Number of persons" }),
+  es: createLanguage({ "number-of-persons": "Number of persons" }),
+  nl: createLanguage({ "number-of-persons": "Number of persons" }),
+  pt: createLanguage({ "number-of-persons": "Number of persons" }),
+  tr: createLanguage({ "number-of-persons": "Number of persons" }),
 });
 
 export default translations;

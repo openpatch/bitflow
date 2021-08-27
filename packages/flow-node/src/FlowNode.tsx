@@ -1,7 +1,9 @@
 import { css } from "@emotion/react";
 import { Box, Text } from "@openpatch/patches";
+import { useTranslations } from "@vocab/react";
 import { CSSProperties, FC, Fragment, ReactElement, ReactNode } from "react";
 import { Handle, Position } from "react-flow-renderer";
+import translations from "./locales.vocab";
 
 const handleIds = ["a", "b", "c", "d"];
 
@@ -32,6 +34,7 @@ export type FlowNodeProps = {
   footerLeft?: string | ReactNode;
   footerCenter?: string | ReactNode;
   targetHandles?: number;
+  count?: number;
   disabled?: boolean;
   maxWidth?: CSSProperties["maxWidth"];
   sourceHandles?: number;
@@ -49,8 +52,10 @@ export const FlowNode: FC<FlowNodeProps> = ({
   targetHandles = 0,
   sourceHandles = 0,
   maxWidth,
+  count,
   hideHandles,
 }) => {
+  const { t } = useTranslations(translations);
   let primaryTextColor: CSSProperties["color"];
   let secondaryTextColor: CSSProperties["color"];
   let primaryBackgroundColor: CSSProperties["backgroundColor"];
@@ -182,6 +187,7 @@ export const FlowNode: FC<FlowNodeProps> = ({
       borderRadius="standard"
       borderStyle="solid"
       borderWidth="light"
+      position="relative"
       padding="xsmall"
       css={css`
         opacity: ${disabled ? 0.5 : 1};
@@ -193,6 +199,35 @@ export const FlowNode: FC<FlowNodeProps> = ({
         color: ${primaryTextColor};
       `}
     >
+      {count !== undefined && (
+        <Box
+          position="absolute"
+          left="0"
+          right="0"
+          bottom="-12px"
+          height="20px"
+          textAlign="center"
+        >
+          <Box
+            title={t("number-of-persons")}
+            display="inline-flex"
+            borderRadius="standard"
+            height="24px"
+            px="xxsmall"
+            justifyContent="center"
+            alignItems="center"
+            borderStyle="solid"
+            borderWidth="light"
+            css={css`
+              border-color: #1f2933;
+              background-color: #f5f7fa;
+              color: #1f2933;
+            `}
+          >
+            {count}
+          </Box>
+        </Box>
+      )}
       <Text textAlign="center" fontWeight="bold">
         {title}
       </Text>

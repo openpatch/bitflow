@@ -8,7 +8,9 @@ import translations from "./locales.vocab";
 
 export const SynchronizeNode = (node: {
   id?: string;
-  data?: FlowSynchronizeNode["data"];
+  data?: FlowSynchronizeNode["data"] & {
+    count?: number;
+  };
   hideHandles?: boolean;
   maxWidth?: FlowNodeProps["maxWidth"];
 }) => {
@@ -17,6 +19,7 @@ export const SynchronizeNode = (node: {
     <FlowNode
       tone="purple"
       title={t("synchronize")}
+      count={node.data?.count}
       description={
         <Text
           fontSize="small"
