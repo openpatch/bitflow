@@ -1,6 +1,6 @@
 import { FlowSynchronizeNode } from "@bitflow/core";
 import { FlowNode, FlowNodeProps } from "@bitflow/flow-node";
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import { Box, Icon, Text } from "@openpatch/patches";
 import { Lock, LockOpen } from "@openpatch/patches/icons";
 import { useTranslations } from "@vocab/react";
