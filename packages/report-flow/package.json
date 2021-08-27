@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/report-flow",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -47,8 +47,8 @@
   },
   "dependencies": {
     "@bitflow/core": "0.3.0",
-    "@bitflow/flow": "0.3.0",
-    "@bitflow/flow-node": "0.2.0",
+    "@bitflow/flow": "0.4.0",
+    "@bitflow/flow-node": "0.3.0",
     "@bitflow/icons": "0.2.0",
     "react-flow-renderer": "^9.6.6"
   },
