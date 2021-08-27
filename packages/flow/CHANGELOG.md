@@ -1,5 +1,11 @@
 # @bitflow/flow
 
+## 0.4.1
+
+### Patch Changes
+
+- f46ca6e: Fix package import. Use emotion/react instead of emotion/core
+
 ## 0.4.0
 
 ### Minor Changes

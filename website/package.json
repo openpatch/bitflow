@@ -1,6 +1,6 @@
 {
   "name": "website",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,8 +12,8 @@
     "@bitflow/core": "0.3.0",
     "@bitflow/do-local": "0.1.1",
     "@bitflow/end-tries": "0.2.1",
-    "@bitflow/flow": "0.4.0",
-    "@bitflow/flow-editor": "0.2.3",
+    "@bitflow/flow": "0.4.1",
+    "@bitflow/flow-editor": "0.2.4",
     "@bitflow/flow-engine": "0.2.1",
     "@bitflow/input-markdown": "0.2.1",
     "@bitflow/provider": "0.2.1",
