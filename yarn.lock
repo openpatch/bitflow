@@ -6362,10 +6362,10 @@
     form-data "^3.0.0"
     node-fetch "^2.6.1"
 
-"@vocab/react@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@vocab/react/-/react-1.0.2.tgz#e265bd2259b635ce0aa26332c2714d00b83f3175"
-  integrity sha512-fnRz6e5oLg06Wdvv7mI450PBR7usy240pcr2tkwkacs/l/mnKPWMzaomb3lxAfs9WGRTUX9XhgtSoX7jgMFpgA==
+"@vocab/react@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@vocab/react/-/react-1.1.0.tgz#5166878df10beafe14a92eb64f802cf7e62e44b6"
+  integrity sha512-dke37b0WYvaS0W0KL+dQnwO0wVBYVyH0Tce+oR/dlJ3SEhkLTUvNqJARTPP/Bm05Kh5mWaDHLK6hmmHF7VLRBg==
   dependencies:
     "@vocab/types" "^1.0.1"
     intl-messageformat "^9.9.0"
