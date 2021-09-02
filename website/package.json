@@ -39,7 +39,7 @@
     "zod": "3.8.1"
   },
   "devDependencies": {
-    "@babel/core": "7.15.0",
+    "@babel/core": "7.15.4",
     "@emotion/babel-preset-css-prop": "11.2.0",
     "@openpatch/patches": "1.12.2",
     "@types/atob": "2.1.2",
