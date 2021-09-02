@@ -50,6 +50,7 @@ export const Flow: FC<FlowProps> = ({
       <Styles />
       <ReactFlowProvider>
         <ReactFlow
+          {...props}
           minZoom={0.5}
           onLoad={handleLoad}
           deleteKeyCode={46} /* 'delete'-key */
