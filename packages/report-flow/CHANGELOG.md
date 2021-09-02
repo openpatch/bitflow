@@ -1,5 +1,12 @@
 # @bitflow/report-flow
 
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies [cd6c562]
+  - @bitflow/flow@0.4.2
+
 ## 0.2.3
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @bitflow/flow
 
+## 0.4.2
+
+### Patch Changes
+
+- cd6c562: Fix: rest props not spread to ReactFlow.
+
 ## 0.4.1
 
 ### Patch Changes
