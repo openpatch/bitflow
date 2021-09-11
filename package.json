@@ -89,7 +89,7 @@
     "ts-node": "10.2.1",
     "typescript": "4.4.3",
     "typescript-styled-plugin": "0.18.1",
-    "webpack": "5.52.0",
+    "webpack": "5.52.1",
     "zod": "3.8.2"
   },
   "browserslist": {
