@@ -8,9 +8,8 @@ export type DoConfig = {
 };
 
 export type DoProgress = {
-  estimatedNodes: number;
-  currentNodeIndex: number;
-  nextNodeState: "locked" | "unlocked";
+  progress: number;
+  next: "locked" | "unlocked";
 };
 
 export type DoPropsBase = {

@@ -11,8 +11,8 @@ export const DoSynchronize = ({
 }: Pick<DoPropsBase, "onNext" | "getProgress">) => {
   const { t } = useTranslations(translations);
   const timer = useRef<NodeJS.Timeout>();
-  const [progress, setProgress] = useState<Pick<DoProgress, "nextNodeState">>({
-    nextNodeState: "locked",
+  const [progress, setProgress] = useState<Pick<DoProgress, "next">>({
+    next: "locked",
   });
   const [refreshing, setRefreshing] = useState(false);
 
@@ -46,10 +46,7 @@ export const DoSynchronize = ({
       <ShellContent>{t("synchronize-text")}</ShellContent>
       <ShellFooter>
         <Box flex="2">
-          <ButtonPrimary
-            disabled={progress.nextNodeState === "locked"}
-            onClick={onNext}
-          >
+          <ButtonPrimary disabled={progress.next === "locked"} onClick={onNext}>
             {t("next")}
           </ButtonPrimary>
         </Box>

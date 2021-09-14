@@ -11,6 +11,7 @@ import {
 } from "@bitflow/core";
 import { Do, DoConfig, DoProgress, DoProps } from "@bitflow/do";
 import {
+  calculateProgress,
   collectAnswers,
   collectResults,
   next,
@@ -39,9 +40,8 @@ export const DoLocal = ({ flow, config: configOverwrite }: DoLocalProps) => {
     flow.nodes.find(isFlowStartNode) as InteractiveFlowNode
   );
   const progress = useRef<DoProgress>({
-    currentNodeIndex: 0,
-    nextNodeState: "unlocked",
-    estimatedNodes: flow.nodes.filter(isInteractiveFlowNode).length - 1,
+    progress: 0,
+    next: "unlocked",
   });
   const result = useRef<DoResult>({
     points: 0,
@@ -52,6 +52,11 @@ export const DoLocal = ({ flow, config: configOverwrite }: DoLocalProps) => {
   });
 
   const getProgress: DoProps["getProgress"] = async () => {
+    progress.current.progress = await calculateProgress({
+      nodes: flow.nodes,
+      edges: flow.edges,
+      currentId: currentNode.current.id,
+    });
     return progress.current;
   };
 
@@ -95,12 +100,11 @@ export const DoLocal = ({ flow, config: configOverwrite }: DoLocalProps) => {
         });
 
         if (nextNode.type === "synchronize") {
-          progress.current.nextNodeState = "locked";
+          progress.current.next = "locked";
           // simulate a synchronize node with a 1sec timeout
-          setTimeout(() => (progress.current.nextNodeState = "unlocked"), 1000);
+          setTimeout(() => (progress.current.next = "unlocked"), 1000);
         }
 
-        progress.current.currentNodeIndex += 1;
         return nextNode;
       }
     }
@@ -129,7 +133,6 @@ export const DoLocal = ({ flow, config: configOverwrite }: DoLocalProps) => {
           try: lastTry + 1,
         });
 
-        progress.current.currentNodeIndex -= 1;
         return prevNode;
       }
     }

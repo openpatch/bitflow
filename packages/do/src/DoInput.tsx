@@ -28,8 +28,8 @@ export const DoInput = ({
     <InputShell
       InputComponent={inputBit.Input}
       progress={{
-        value: progress.currentNodeIndex,
-        max: progress.estimatedNodes,
+        value: progress.progress,
+        max: 100,
       }}
       header={t("input")}
       input={node.data}

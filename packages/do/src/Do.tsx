@@ -44,9 +44,8 @@ export const Do: FC<DoProps> = ({
 }) => {
   const [currentNode, setCurrentNode] = useState<InteractiveFlowNode>();
   const [progress, setProgress] = useState<DoProgress>({
-    currentNodeIndex: 0,
-    estimatedNodes: 1,
-    nextNodeState: "unlocked",
+    progress: 0,
+    next: "unlocked",
   });
 
   useEffect(() => {
