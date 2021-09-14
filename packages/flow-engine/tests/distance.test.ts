@@ -1,7 +1,7 @@
 import { FlowEdge, FlowNode } from "@bitflow/core";
-import { calculateProgress } from "../src/calculateProgress";
+import { distanceBetween } from "../src/distance";
 
-describe("calculateProgress", () => {
+describe("distance", () => {
   const nodes: FlowNode[] = [
     {
       id: "node-a",
@@ -162,36 +162,60 @@ describe("calculateProgress", () => {
     },
   ];
   it("it should work with portals", async () => {
-    const progress = await calculateProgress({
+    const progress = await distanceBetween({
       nodes,
       edges,
-      currentId: "node-a",
+      from: "node-a",
+      to: "end",
       mode: "optimistic",
     });
     expect(progress).toBe(3);
   });
 
   it("should take longer in pessimistic mode", async () => {
-    const progressP = await calculateProgress({
+    const progressP = await distanceBetween({
       nodes,
       edges,
-      currentId: "node-c",
+      from: "node-c",
+      to: "end",
       mode: "optimistic",
     });
-    const progressO = await calculateProgress({
+    const progressO = await distanceBetween({
       nodes,
       edges,
-      currentId: "node-c",
+      from: "node-c",
+      to: "end",
       mode: "pessimistic",
     });
     expect(progressO).toBeGreaterThan(progressP);
   });
   it("should do when finding a loop", async () => {
-    const progress = await calculateProgress({
+    const progress = await distanceBetween({
       nodes,
       edges,
-      currentId: "node-loop",
+      from: "node-loop",
+      to: "end",
     });
     expect(progress).toBe(Number.NEGATIVE_INFINITY);
+  });
+
+  it("not find a distance", async () => {
+    const d = await distanceBetween({
+      nodes,
+      edges,
+      from: "node-c",
+      to: "node-random",
+    });
+    expect(d).toBe(Number.NEGATIVE_INFINITY);
+  });
+
+  it("should work with an to array", async () => {
+    const d = await distanceBetween({
+      nodes,
+      edges,
+      from: "node-a",
+      to: ["end", "node-c"],
+    });
+    expect(d).toBe(3);
   });
 });

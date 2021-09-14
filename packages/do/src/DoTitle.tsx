@@ -29,8 +29,8 @@ export const DoTitle = ({
       TitleComponent={titleBit.Title}
       title={node.data}
       progress={{
-        max: progress.progress,
-        value: 100,
+        max: 100,
+        value: progress.progress,
       }}
       header={t("title")}
       onNext={onNext}

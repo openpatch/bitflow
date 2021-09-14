@@ -1,14 +1,16 @@
 import { FlowEdge, FlowNode } from "@bitflow/core";
 
-export type CalculateProgress = ({
+export type DistanceBetween = ({
   nodes,
   edges,
-  currentId,
+  from,
+  to,
   mode,
 }: {
   nodes: FlowNode[];
   edges: FlowEdge[];
-  currentId: string;
+  from: string;
+  to: string | string[];
   mode?: "pessimistic" | "optimistic";
 }) => Promise<number>;
 
@@ -19,15 +21,16 @@ export type CalculateProgress = ({
  * no way to the end infinity is returned.
  *
  */
-export const calculateProgress: CalculateProgress = async ({
+export const distanceBetween: DistanceBetween = async ({
   nodes,
   edges,
-  currentId,
+  from,
+  to,
   mode = "pessimistic",
 }) => {
-  const currentNode = nodes.find((n) => n.id === currentId);
+  const currentNode = nodes.find((n) => n.id === from);
   if (!currentNode) {
-    return 100;
+    return 0;
   }
   const visited: Record<string, boolean> = {};
 
@@ -36,7 +39,10 @@ export const calculateProgress: CalculateProgress = async ({
    * points.
    */
   function calculateDistance(currentNode: FlowNode, distance: number): number {
-    if (currentNode.type === "end") {
+    if (typeof to === "string" && currentNode.id === to) {
+      // this is what we are looking for. A path to the end
+      return distance;
+    } else if (Array.isArray(to) && to.includes(currentNode.id)) {
       // this is what we are looking for. A path to the end
       return distance;
     } else if (visited[currentNode.id] === true) {

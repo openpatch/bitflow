@@ -11,9 +11,9 @@ import {
 } from "@bitflow/core";
 import { Do, DoConfig, DoProgress, DoProps } from "@bitflow/do";
 import {
-  calculateProgress,
   collectAnswers,
   collectResults,
+  distanceBetween,
   next,
   previous,
 } from "@bitflow/flow-engine";
@@ -39,10 +39,12 @@ export const DoLocal = ({ flow, config: configOverwrite }: DoLocalProps) => {
   const currentNode = useRef<InteractiveFlowNode>(
     flow.nodes.find(isFlowStartNode) as InteractiveFlowNode
   );
+
   const progress = useRef<DoProgress>({
     progress: 0,
     next: "unlocked",
   });
+
   const result = useRef<DoResult>({
     points: 0,
     maxPoints: 0,
@@ -52,11 +54,22 @@ export const DoLocal = ({ flow, config: configOverwrite }: DoLocalProps) => {
   });
 
   const getProgress: DoProps["getProgress"] = async () => {
-    progress.current.progress = await calculateProgress({
+    const inital = await distanceBetween({
       nodes: flow.nodes,
       edges: flow.edges,
-      currentId: currentNode.current.id,
+      from: flow.nodes.find((n) => n.type === "start")?.id || "",
+      to: flow.nodes.filter((n) => n.type === "end").map((n) => n.id),
     });
+    const toGo = await distanceBetween({
+      nodes: flow.nodes,
+      edges: flow.edges,
+      from: currentNode.current.id,
+      to: flow.nodes.filter((n) => n.type === "end").map((n) => n.id),
+    });
+
+    progress.current.progress = (1 - toGo / inital) * 100;
+    console.log(progress.current);
+
     return progress.current;
   };
 

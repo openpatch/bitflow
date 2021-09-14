@@ -60,8 +60,8 @@ export const DoTask = ({
       onSkip={onSkip}
       onAction={onAction}
       progress={{
-        max: progress.progress,
-        value: 100,
+        max: 100,
+        value: progress.progress,
       }}
       TaskComponent={taskBit.Task}
       header={t("task")}
