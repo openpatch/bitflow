@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@bitflow/core": "0.3.0",
-    "immer": "^9.0.3"
+    "immer": "^9.0.6"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",

@@ -46,7 +46,7 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "react-flow-renderer": "^9.6.6"
+    "react-flow-renderer": "^9.6.7"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
