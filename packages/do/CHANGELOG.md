@@ -1,5 +1,11 @@
 # @bitflow/do
 
+## 0.3.0
+
+### Minor Changes
+
+- d2f86d3: Add distance between to nodes. This makes calculating the progress better.
+
 ## 0.2.1
 
 ### Patch Changes

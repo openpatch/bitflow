@@ -1,5 +1,13 @@
 # website
 
+## 0.2.7
+
+### Patch Changes
+
+- Updated dependencies [d2f86d3]
+  - @bitflow/do-local@0.2.0
+  - @bitflow/flow-engine@0.3.0
+
 ## 0.2.6
 
 ### Patch Changes

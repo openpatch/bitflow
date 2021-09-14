@@ -1,5 +1,17 @@
 # @bitflow/do-local
 
+## 0.2.0
+
+### Minor Changes
+
+- d2f86d3: Add distance between to nodes. This makes calculating the progress better.
+
+### Patch Changes
+
+- Updated dependencies [d2f86d3]
+  - @bitflow/do@0.3.0
+  - @bitflow/flow-engine@0.3.0
+
 ## 0.1.1
 
 ### Patch Changes
