@@ -3112,7 +3112,7 @@
   dependencies:
     tslib "^2.1.0"
 
-"@formatjs/icu-messageformat-parser@2.0.11":
+"@formatjs/icu-messageformat-parser@2.0.11", "@formatjs/icu-messageformat-parser@^2.0.10":
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.0.11.tgz#e4ba40b9a8aefc8bccfc96be5906d3bca305b4b3"
   integrity sha512-5mWb8U8aulYGwnDZWrr+vdgn5PilvtrqQYQ1pvpgzQes/osi85TwmL2GqTGLlKIvBKD2XNA61kAqXYY95w4LWg==
@@ -6515,18 +6515,17 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@vocab/cli@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@vocab/cli/-/cli-1.0.0.tgz#eb3c0cc92f7073565381070450e92e325bcd4499"
-  integrity sha512-lRezRzXWSwjvCcGm5YwjDACO8CRvGZ5tOaaEnh3/JoajiDnlh+3JbsrEMfINcTe0qdrUP86XkwiWwdFaOSp8Gw==
+"@vocab/cli@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@vocab/cli/-/cli-1.0.1.tgz#4409ca7ad71d084838750a0092b140237fd41174"
+  integrity sha512-X3HiW3plEupXuiMcuA+kVOvTgEXwcKq8NlITg9hTMlvg7Zm2wf+85BhWn4CHv0MERkPg5dHT+cffGuqpNBkkrA==
   dependencies:
     "@types/env-ci" "^3.1.0"
-    "@vocab/core" "^1.0.0"
+    "@vocab/core" "^1.0.2"
     "@vocab/phrase" "^1.0.0"
     env-ci "^5.0.2"
     fast-glob "^3.2.4"
     form-data "^3.0.0"
-    intl-messageformat-parser "^6.0.16"
     node-fetch "^2.6.1"
     prettier "^2.1.2"
     yargs "^16.1.0"
@@ -6545,6 +6544,22 @@
     find-up "^5.0.0"
     intl-messageformat "^9.3.18"
     intl-messageformat-parser "^6.0.16"
+    prettier "^2.1.2"
+
+"@vocab/core@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@vocab/core/-/core-1.0.2.tgz#d09433fead334b6064a9c5998ec5e5fb15a01a7a"
+  integrity sha512-5tUrniLYZtw54bGkTMdsfscboDq8pprft5J2VUJjFEM9WfrU8DlQFdqvVRzgkQdo3LIJw2K1RSiylL4+WTJl8w==
+  dependencies:
+    "@formatjs/icu-messageformat-parser" "^2.0.10"
+    "@vocab/types" "^1.0.1"
+    chalk "^4.1.0"
+    chokidar "^3.4.3"
+    debug "^4.3.1"
+    fast-glob "^3.2.4"
+    fastest-validator "^1.9.0"
+    find-up "^5.0.0"
+    intl-messageformat "^9.9.0"
     prettier "^2.1.2"
 
 "@vocab/phrase@^1.0.0":
