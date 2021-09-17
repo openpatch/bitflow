@@ -46,13 +46,18 @@ export const DoSynchronize = ({
       <ShellContent>{t("synchronize-text")}</ShellContent>
       <ShellFooter>
         <Box flex="2">
-          <ButtonPrimary disabled={progress.next === "locked"} onClick={onNext}>
+          <ButtonPrimary
+            fullWidth
+            disabled={progress.next === "locked"}
+            onClick={onNext}
+          >
             {t("next")}
           </ButtonPrimary>
         </Box>
         <Box flex="1">
           <ButtonSecondary
             tone="accent"
+            fullWidth
             loading={refreshing}
             onClick={forceRefresh}
           >
