@@ -11,7 +11,9 @@ export const DoCheckpoint = ({ onNext }: Pick<DoPropsBase, "onNext">) => {
       <ShellHeader>{t("checkpoint")}</ShellHeader>
       <ShellContent>{t("checkpoint-text")}</ShellContent>
       <ShellFooter>
-        <ButtonPrimary onClick={onNext}>{t("continue")}</ButtonPrimary>
+        <ButtonPrimary fullWidth onClick={onNext}>
+          {t("continue")}
+        </ButtonPrimary>
       </ShellFooter>
     </Shell>
   );
