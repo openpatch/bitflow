@@ -15,6 +15,7 @@ export const SynchronizeNode = (node: {
   maxWidth?: FlowNodeProps["maxWidth"];
 }) => {
   const { t } = useTranslations(translations);
+  const toggle = node.data?.toggle;
   return (
     <FlowNode
       tone="purple"
@@ -34,16 +35,19 @@ export const SynchronizeNode = (node: {
               onClick={(e) => {
                 e.preventDefault();
                 if (node?.id) {
-                  node.data?.toggle(node.id);
+                  toggle?.(node.id);
                 }
               }}
               title={t("synchronize-lock-toggle")}
-              cursor="pointer"
-              css={css`
-                :hover {
-                  opacity: 0.7;
-                }
-              `}
+              cursor={toggle ? "pointer" : undefined}
+              css={
+                toggle &&
+                css`
+                  :hover {
+                    opacity: 0.7;
+                  }
+                `
+              }
             >
               <Icon color="neutral" size="large">
                 {node.data?.unlocked ? <LockOpen /> : <Lock />}
