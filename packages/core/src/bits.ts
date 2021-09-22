@@ -164,11 +164,11 @@ export type UpdateTaskStatistic<
 }: UpdateTaskStatisticParams<S, A, T, R>) => Promise<S>;
 
 export interface TaskBit<
-  T extends Bitflow.Task = Bitflow.Task,
-  A extends Bitflow.TaskAnswer = Bitflow.TaskAnswer,
-  R extends Bitflow.TaskResult = Bitflow.TaskResult,
-  S extends Bitflow.TaskStatistic = Bitflow.TaskStatistic,
-  Act extends Action = Action
+  T extends Bitflow.Task = any,
+  A extends Bitflow.TaskAnswer = any,
+  R extends Bitflow.TaskResult = any,
+  S extends Bitflow.TaskStatistic = any,
+  Act extends Action = any
 > {
   ViewForm: (props: TaskViewFormProps) => ReactElement | null;
   EvaluationForm: (props: TaskEvaluationFormProps) => ReactElement | null;
