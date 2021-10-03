@@ -51,7 +51,7 @@
     "immer": "^9.0.6",
     "react-hook-form": "^6.15.5",
     "react-markdown": "^5.0.3",
-    "remark-gfm": "^1.0.0"
+    "remark-gfm": "^3.0.0"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
