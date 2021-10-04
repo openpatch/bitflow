@@ -1,4 +1,4 @@
-import { FlowNode } from "@bitflow/core";
+import { Evaluate, FlowNode } from "@bitflow/core";
 import { useTranslations } from "@vocab/react";
 import { Fragment, ReactElement } from "react";
 import { CenterSidebar } from "./CenterSidebar";
@@ -15,11 +15,16 @@ import { StartPropertiesSidebar } from "./StartPropertiesSidebar";
 import { TaskPropertiesSidebar } from "./TaskPropertiesSidebar";
 import { TitlePropertiesSidebar } from "./TitlePropertiesSidebar";
 
-export type PropertiesSidebarProps = { node?: FlowNode; nodeIndex?: number };
+export type PropertiesSidebarProps = {
+  node?: FlowNode;
+  nodeIndex?: number;
+  onEvaluate?: Evaluate;
+};
 
 export const PropertiesSidebar = ({
   node,
   nodeIndex,
+  onEvaluate,
 }: PropertiesSidebarProps) => {
   const { t } = useTranslations(translations);
   if (!node || nodeIndex === undefined) {
@@ -32,7 +37,7 @@ export const PropertiesSidebar = ({
   const name = `nodes.[${nodeIndex}].data`;
   switch (node.type) {
     case "task": {
-      content = <TaskPropertiesSidebar name={name} />;
+      content = <TaskPropertiesSidebar name={name} onEvaluate={onEvaluate} />;
       break;
     }
     case "title": {

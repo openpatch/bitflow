@@ -1,5 +1,6 @@
 import { Flow } from "@bitflow/core";
 import { FlowEditor, FlowEditorRef } from "@bitflow/flow-editor";
+import { useFlow } from "@bitflow/provider";
 import {
   Box,
   ButtonGroup,
@@ -18,6 +19,7 @@ type EditorProps = {
 
 export default function Editor({ flow }: EditorProps) {
   const flowEditorRef = useRef<FlowEditorRef>(null);
+  const { evaluate } = useFlow();
 
   const handleDownload = () => {
     if (flowEditorRef.current) {
@@ -63,6 +65,7 @@ export default function Editor({ flow }: EditorProps) {
           <FlowEditor
             height="85vh"
             {...flow}
+            onEvaluate={evaluate}
             ref={flowEditorRef}
             submitVariant="extern"
           />

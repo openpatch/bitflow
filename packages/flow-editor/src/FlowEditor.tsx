@@ -1,4 +1,10 @@
-import { Flow as IFlow, FlowEdge, FlowNode, uuidv4 } from "@bitflow/core";
+import {
+  Evaluate,
+  Flow as IFlow,
+  FlowEdge,
+  FlowNode,
+  uuidv4,
+} from "@bitflow/core";
 import { Flow } from "@bitflow/flow";
 import { useFlow } from "@bitflow/provider";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,6 +39,7 @@ export type FlowEditorProps = Partial<IFlow> & {
   height?: BoxProps["height"];
   onSubmit?: SubmitHandler<IFlow>;
   onError?: SubmitErrorHandler<IFlow>;
+  onEvaluate?: Evaluate;
   allowDraft?: boolean;
   saving?: boolean;
   submitVariant?: "extern" | "intern";
@@ -95,6 +102,7 @@ export const FlowEditor = forwardRef<FlowEditorRef, FlowEditorProps>(
       visibility = "private",
       onSubmit,
       onError,
+      onEvaluate,
       allowDraft = false,
       saving = false,
       submitVariant = "intern",
@@ -321,6 +329,7 @@ export const FlowEditor = forwardRef<FlowEditorRef, FlowEditorProps>(
             </Box>
             <Sidebar
               node={selectedNode}
+              onEvaluate={onEvaluate}
               nodeIndex={nodes.findIndex((n) => n.id === selectedNode?.id)}
               errors={methods.formState.errors}
             />

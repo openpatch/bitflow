@@ -1,4 +1,4 @@
-import { Flow } from "@bitflow/core";
+import { Evaluate, Flow } from "@bitflow/core";
 import { useBitTask } from "@bitflow/provider";
 import { TaskShell } from "@bitflow/shell";
 import {
@@ -129,7 +129,13 @@ const FeedbackForm = ({ name }: { name: string }) => {
   return <div>{t("bit-type-unsupported")}</div>;
 };
 
-const Preview = ({ name }: { name: string }) => {
+const Preview = ({
+  name,
+  onEvaluate,
+}: {
+  name: string;
+  onEvaluate?: Evaluate;
+}) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
 
@@ -140,6 +146,14 @@ const Preview = ({ name }: { name: string }) => {
   const subtype = props.subtype as any;
   const taskBit = useBitTask(subtype);
 
+  const evaluate = async (answer: Bitflow.TaskAnswer) => {
+    if (!onEvaluate) {
+      throw new Error("missing evaluate");
+    }
+    const r = await onEvaluate({ answer, task: props });
+    return r;
+  };
+
   if (taskBit) {
     const result = taskBit.TaskSchema.safeParse(props);
     if (result.success) {
@@ -148,6 +162,7 @@ const Preview = ({ name }: { name: string }) => {
         <TaskShell
           header="Preview"
           mode="default"
+          evaluate={onEvaluate ? evaluate : undefined}
           onNext={onNext}
           onSkip={onSkip}
           onRetry={onRetry}
@@ -163,7 +178,13 @@ const Preview = ({ name }: { name: string }) => {
   return <div>{t("bit-type-unsupported")}</div>;
 };
 
-export const TaskPropertiesSidebar = ({ name }: { name: string }) => {
+export const TaskPropertiesSidebar = ({
+  name,
+  onEvaluate,
+}: {
+  name: string;
+  onEvaluate?: Evaluate;
+}) => {
   const { t } = useTranslations(translations);
 
   return (
@@ -190,7 +211,7 @@ export const TaskPropertiesSidebar = ({ name }: { name: string }) => {
             <FeedbackForm name={name} />
           </TabPanel>
           <TabPanel>
-            <Preview name={name} />
+            <Preview name={name} onEvaluate={onEvaluate} />
           </TabPanel>
         </TabContainer>
       </Tabs>
