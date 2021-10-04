@@ -55,7 +55,7 @@
     "@storybook/cli": "6.3.8",
     "@storybook/manager-webpack5": "6.3.8",
     "@storybook/react": "6.3.8",
-    "@testing-library/dom": "8.7.1",
+    "@testing-library/dom": "8.7.2",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "12.1.2",
     "@types/jest": "27.0.2",
