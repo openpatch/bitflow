@@ -84,7 +84,7 @@
     "pretty-quick": "3.1.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-hook-form": "7.16.2",
+    "react-hook-form": "7.17.0",
     "rimraf": "3.0.2",
     "ts-jest": "27.0.5",
     "ts-node": "10.2.1",
