@@ -1,5 +1,11 @@
 # @bitflow/flow-editor
 
+## 0.3.1
+
+### Patch Changes
+
+- 9852540: Add option to evaluate the answer in the preview tab
+
 ## 0.3.0
 
 ### Minor Changes
