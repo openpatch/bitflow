@@ -1,8 +1,9 @@
+import { Flow } from "@bitflow/core/dist/types";
 import { FC } from "react";
-import { UseFormMethods } from "react-hook-form";
+import { FormState } from "react-hook-form";
 
 export type ErrorsSidebarProps = {
-  errors?: UseFormMethods["errors"];
+  errors?: FormState<Flow>["errors"];
 };
 
 export const ErrorsSidebar: FC<ErrorsSidebarProps> = ({ errors }) => {

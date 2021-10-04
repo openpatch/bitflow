@@ -47,7 +47,7 @@ const MetaForm = ({ name }: { name: string }) => {
 const ViewForm = ({ name }: { name: string }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const subtype = getValues(`${name}.subtype`) as any;
+  const subtype = getValues(`${name}.subtype` as any);
   const startBit = useBitStart(subtype);
 
   if (startBit) {
@@ -60,7 +60,7 @@ const ViewForm = ({ name }: { name: string }) => {
 const Preview = ({ name }: { name: string }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const props = getValues(`${name}`) as any;
+  const props = getValues(`${name}` as any);
   const subtype = props.subtype;
   const startBit = useBitStart(subtype);
 

@@ -50,7 +50,7 @@ const MetaForm = ({ name }: { name: string }) => {
 const ViewForm = ({ name }: { name: string }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const subtype = getValues(`${name}.subtype`) as any;
+  const subtype = getValues(`${name}.subtype` as any);
   const taskBit = useBitTask(subtype);
 
   if (taskBit) {
@@ -63,8 +63,8 @@ const ViewForm = ({ name }: { name: string }) => {
 const EvaluationForm = ({ name }: { name: string }) => {
   const { getValues, watch } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const mode = watch(`${name}.evaluation.mode`);
-  const subtype = getValues(`${name}.subtype`) as any;
+  const mode = watch(`${name}.evaluation.mode` as any);
+  const subtype = getValues(`${name}.subtype` as any);
   const taskBit = useBitTask(subtype);
 
   if (taskBit) {
@@ -119,7 +119,7 @@ const EvaluationForm = ({ name }: { name: string }) => {
 const FeedbackForm = ({ name }: { name: string }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const subtype = getValues(`${name}.subtype`) as any;
+  const subtype = getValues(`${name}.subtype` as any);
   const taskBit = useBitTask(subtype);
 
   if (taskBit) {
@@ -133,7 +133,7 @@ const Preview = ({ name }: { name: string }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
 
-  const props = getValues(`${name}`) as any;
+  const props = getValues(`${name}` as any);
   const onNext = async () => {};
   const onSkip = async () => {};
   const onRetry = async () => {};

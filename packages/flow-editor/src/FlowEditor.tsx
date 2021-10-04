@@ -52,7 +52,7 @@ export const FlowEditor = forwardRef<FlowEditorRef, FlowEditorProps>(
       name,
       nodes: defaultNodes = [
         {
-          id: uuidv4(),
+          id: startUUID,
           type: "start",
           position: { x: 100, y: 200 },
           data: {
@@ -66,7 +66,7 @@ export const FlowEditor = forwardRef<FlowEditorRef, FlowEditorProps>(
           },
         },
         {
-          id: uuidv4(),
+          id: endUUID,
           type: "end",
           position: { x: 400, y: 200 },
           data: {
@@ -253,7 +253,7 @@ export const FlowEditor = forwardRef<FlowEditorRef, FlowEditorProps>(
       if (allowDraft && onSubmit) {
         const flow = methods.getValues();
         flow.draft = true;
-        onSubmit(flow);
+        handleSuccess(flow);
       } else if (onError) {
         onError(error, event);
       }
