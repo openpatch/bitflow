@@ -1,5 +1,24 @@
 # @bitflow/flow
 
+## 0.5.0
+
+### Minor Changes
+
+- 7bf6650: Upgrade to Patches v4.0.0
+
+### Patch Changes
+
+- 3dca220: Add default for TaskBit type
+- 12a73a4: Use any as default types.
+- 54b52d0: Improve visual appearance for DoCheckpoint and DoSynchronize. Make buttons fullwidth.
+- 3a9fc4a: Improve types and fix a bug when no toggle function is supplied to a SynchronizeNode
+- Updated dependencies [7bf6650]
+- Updated dependencies [3dca220]
+- Updated dependencies [54b52d0]
+- Updated dependencies [3a9fc4a]
+  - @bitflow/core@0.4.0
+  - @bitflow/flow-node@0.4.0
+
 ## 0.4.2
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "example-nextjs-client-side-assessment",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,13 +9,13 @@
     "lint": "tsc"
   },
   "dependencies": {
-    "@bitflow/core": "0.3.0",
-    "@bitflow/do-local": "0.2.0",
-    "@bitflow/end-tries": "0.2.1",
-    "@bitflow/flow-engine": "0.3.0",
-    "@bitflow/provider": "0.2.1",
-    "@bitflow/start-simple": "0.2.1",
-    "@bitflow/task-choice": "0.2.1",
+    "@bitflow/core": "0.4.0",
+    "@bitflow/do-local": "0.3.0",
+    "@bitflow/end-tries": "0.3.0",
+    "@bitflow/flow-engine": "0.3.1",
+    "@bitflow/provider": "0.3.0",
+    "@bitflow/start-simple": "0.3.0",
+    "@bitflow/task-choice": "0.3.0",
     "@emotion/cache": "11.4.0",
     "@emotion/react": "11.4.1",
     "@emotion/styled": "11.3.0",
