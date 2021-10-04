@@ -1,5 +1,22 @@
 # @bitflow/end-tries
 
+## 0.3.0
+
+### Minor Changes
+
+- 7bf6650: Upgrade to Patches v4.0.0
+
+### Patch Changes
+
+- Updated dependencies [7bf6650]
+- Updated dependencies [3dca220]
+- Updated dependencies [54b52d0]
+- Updated dependencies [3a9fc4a]
+  - @bitflow/core@0.4.0
+  - @bitflow/icons@0.3.0
+  - @bitflow/provider@0.3.0
+  - @bitflow/shell@0.3.0
+
 ## 0.2.1
 
 ### Patch Changes

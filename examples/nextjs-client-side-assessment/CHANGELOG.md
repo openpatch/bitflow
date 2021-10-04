@@ -1,5 +1,25 @@
 # example-nextjs-client-side-assessment
 
+## 0.3.0
+
+### Minor Changes
+
+- 7bf6650: Upgrade to Patches v4.0.0
+
+### Patch Changes
+
+- Updated dependencies [7bf6650]
+- Updated dependencies [3dca220]
+- Updated dependencies [54b52d0]
+- Updated dependencies [3a9fc4a]
+  - @bitflow/core@0.4.0
+  - @bitflow/do-local@0.3.0
+  - @bitflow/end-tries@0.3.0
+  - @bitflow/provider@0.3.0
+  - @bitflow/start-simple@0.3.0
+  - @bitflow/task-choice@0.3.0
+  - @bitflow/flow-engine@0.3.1
+
 ## 0.2.2
 
 ### Patch Changes

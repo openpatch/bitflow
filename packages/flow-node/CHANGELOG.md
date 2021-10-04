@@ -1,5 +1,11 @@
 # @bitflow/flow-node
 
+## 0.4.0
+
+### Minor Changes
+
+- 7bf6650: Upgrade to Patches v4.0.0
+
 ## 0.3.0
 
 ### Minor Changes
