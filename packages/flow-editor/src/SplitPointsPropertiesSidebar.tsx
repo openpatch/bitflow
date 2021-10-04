@@ -12,7 +12,6 @@ export const SplitPointsPropertiesSidebar = ({ name }: { name: string }) => {
         name={`${name}.points`}
         label={t("split-points")}
         helperText={t("split-points-helper-text")}
-        min={0}
         render={NumberInput}
       />
     </HeaderSidebar>

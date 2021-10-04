@@ -56,7 +56,9 @@ export const FlowPropertiesSidebar = () => {
         render={({ value, onChange, onBlur }) => (
           <Select value={value} onChange={onChange} onBlur={onBlur}>
             {translatedLanguages.map((tl) => (
-              <option value={tl[0]}>{tl[1]}</option>
+              <option key={tl[0]} value={tl[0]}>
+                {tl[1]}
+              </option>
             ))}
           </Select>
         )}

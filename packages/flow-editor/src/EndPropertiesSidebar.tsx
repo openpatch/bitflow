@@ -48,7 +48,7 @@ const ViewForm = ({ name }: { name: string }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
 
-  const subtype = getValues(`${name}.subtype`) as any;
+  const subtype = getValues(`${name}.subtype` as any);
 
   const endBit = useBitEnd(subtype);
 
@@ -63,7 +63,7 @@ const Preview = ({ name }: { name: string }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
 
-  const props = getValues(`${name}` as any) as any;
+  const props = getValues(`${name}` as any);
   const subtype = props.subtype;
 
   const endBit = useBitEnd(subtype);
