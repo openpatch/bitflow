@@ -1,5 +1,13 @@
 # website
 
+## 0.3.2
+
+### Patch Changes
+
+- @bitflow/end-tries@0.3.1
+- @bitflow/flow-editor@0.3.2
+- @bitflow/do-local@0.3.1
+
 ## 0.3.1
 
 ### Patch Changes
