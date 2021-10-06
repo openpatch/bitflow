@@ -230,7 +230,7 @@ export const TaskShell = <
   async function handleSubmit() {
     customDispatch(evaluateAction<A>({ answer }));
     let result: R | null = null;
-    if (evaluate && (task as T).evaluation) {
+    if (evaluate) {
       result = await evaluate(answer);
     }
 
