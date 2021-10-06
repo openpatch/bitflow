@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@bitflow/title-simple": "0.3.0",
-    "zod": "3.9.5"
+    "zod": "3.9.8"
   },
   "peerDependencies": {
     "zod": "3.x"
