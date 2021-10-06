@@ -1,5 +1,12 @@
 # example-nextjs-client-side-assessment
 
+## 0.3.1
+
+### Patch Changes
+
+- @bitflow/end-tries@0.3.1
+- @bitflow/do-local@0.3.1
+
 ## 0.3.0
 
 ### Minor Changes

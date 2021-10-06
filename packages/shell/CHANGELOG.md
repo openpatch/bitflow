@@ -1,5 +1,11 @@
 # @bitflow/shell
 
+## 0.4.0
+
+### Minor Changes
+
+- a7d8f8f: fix: evaluate task shell answer
+
 ## 0.3.0
 
 ### Minor Changes
