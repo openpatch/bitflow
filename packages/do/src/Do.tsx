@@ -91,6 +91,9 @@ export const Do: FC<DoProps> = ({
     return getNext().then((n) => {
       if (n) {
         setCurrentNode(n);
+        if (n.type === "end") {
+          onEnd();
+        }
       } else {
         onEnd();
       }
