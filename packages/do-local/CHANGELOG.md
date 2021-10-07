@@ -1,5 +1,12 @@
 # @bitflow/do-local
 
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [e4240b1]
+  - @bitflow/do@0.4.2
+
 ## 0.3.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @bitflow/do
 
+## 0.4.2
+
+### Patch Changes
+
+- e4240b1: Call onEnd when a node of type end is reached or if no new node is returned
+
 ## 0.4.1
 
 ### Patch Changes
