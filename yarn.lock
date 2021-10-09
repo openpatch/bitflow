@@ -4480,10 +4480,10 @@
     remark-gfm "^1.0.0"
     styled-system "^5.1.5"
 
-"@openpatch/patches@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-4.0.1.tgz#1d90f417f7c3e7b1c26b42065a2a3b39ea5f5cfb"
-  integrity sha512-Z6fmefjAVtwEZLCPqZd6pH+K4bnKgiTyZ1FBQ4o/5jLLIhHdNFLRs5Qc512jOirw6u6AqnOTPzraPAHOEwAg6w==
+"@openpatch/patches@4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-4.1.1.tgz#18c3d67be2b6cc273466b84ab16d3d4cb42e0dd0"
+  integrity sha512-jAruxjb/xpOjAuwkFokmNCd2MGbxGAuyI/rAd6VEV8t6a7eH+aYoXIXYZORNBt5oJwoyXSypnLPAGLmU8tbplw==
   dependencies:
     codemirror "^5.62.2"
     lodash "^4.17.21"
@@ -4493,6 +4493,7 @@
     react-modal "^3.12.1"
     react-syntax-highlighter "^15.4.4"
     react-tabs "^3.2.1"
+    react-toastify "^8.0.3"
     remark-gfm "^1.0.0"
     styled-system "^5.1.5"
 
@@ -16948,6 +16949,13 @@ react-textarea-autosize@^8.3.0, react-textarea-autosize@^8.3.2:
     "@babel/runtime" "^7.10.2"
     use-composed-ref "^1.0.0"
     use-latest "^1.0.0"
+
+react-toastify@^8.0.3:
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-8.0.3.tgz#7fbf65f69ec357aab8dd03c1496f9177aa92409a"
+  integrity sha512-rv3koC7f9lKKSkdpYgo/TGzgWlrB/aaiUInF1DyV7BpiM4kyTs+uhu6/r8XDMtBY2FOIHK+FlK3Iv7OzpA/tCA==
+  dependencies:
+    clsx "^1.1.1"
 
 react@17.0.2:
   version "17.0.2"
