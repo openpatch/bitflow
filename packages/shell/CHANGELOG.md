@@ -1,5 +1,11 @@
 # @bitflow/shell
 
+## 0.4.2
+
+### Patch Changes
+
+- 33d14be: Show next instead of skip on retry, which makes more sense.
+
 ## 0.4.1
 
 ### Patch Changes
