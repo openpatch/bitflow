@@ -508,10 +508,10 @@ export const TaskShell = <
                   <ButtonPrimary
                     disabled={state === "retry"}
                     tone="accent"
-                    onClick={handleSkip}
+                    onClick={handleNext}
                     fullWidth
                   >
-                    {t("skip")}
+                    {t("next")}
                   </ButtonPrimary>
                 </Box>
               )}
