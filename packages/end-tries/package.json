@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/end-tries",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -49,7 +49,7 @@
     "@bitflow/core": "0.4.0",
     "@bitflow/provider": "0.3.0",
     "@bitflow/icons": "0.3.0",
-    "@bitflow/shell": "0.4.0"
+    "@bitflow/shell": "0.4.1"
   },
   "devDependencies": {
     "@bitflow/mock": "0.3.0"
