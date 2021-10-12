@@ -36,7 +36,6 @@ export const createReducer = <
 >() =>
   produce((draft: Draft<IState<A, R>>, action: IShellAction<A, R>) => {
     switch (action.type) {
-      case "next":
       case "mouse-click":
       case "resize":
         // noop actions just for logging the interactions of a user
@@ -105,6 +104,7 @@ export const createReducer = <
         break;
       case "retry-result-state":
         draft.state = "allow-retry";
+        draft.nudge = action.payload.nudge;
         break;
       case "answer-change":
         draft.state = "interact";

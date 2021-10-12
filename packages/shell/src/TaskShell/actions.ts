@@ -134,14 +134,18 @@ export const manualResultStateAction = ({
 
 export interface IRetryResultStateAction extends IShellActionBase {
   type: "retry-result-state";
-  payload: null;
+  payload: { nudge: string };
 }
 
-export const retryResultStateAction = (): IRetryResultStateAction => {
+export const retryResultStateAction = ({
+  nudge,
+}: {
+  nudge: string;
+}): IRetryResultStateAction => {
   return {
     type: "retry-result-state",
     scope: "shell",
-    payload: null,
+    payload: { nudge },
   };
 };
 

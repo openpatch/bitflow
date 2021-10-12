@@ -251,7 +251,10 @@ export const TaskShell = <
             new Audio(soundUrls.wrong).play();
           } catch (e) {}
         }
-        customDispatch(retryResultStateAction());
+        const nudge = t("wrongNudges", {
+          index: Math.floor(Math.random() * 3),
+        });
+        customDispatch(retryResultStateAction({ nudge }));
       } else if (result.state === "wrong") {
         if (soundUrls) {
           try {
@@ -470,48 +473,80 @@ export const TaskShell = <
             </ButtonPrimary>
           </Box>
         )}
-        {(state === "interact" ||
-          state === "evaluate" ||
-          state === "allow-retry" ||
-          state === "next" ||
-          state === "skip" ||
-          state === "close" ||
-          state === "previous") && (
-          <Fragment>
-            <Box flex="2" mr="standard">
-              {state !== "allow-retry" ? (
-                <ButtonPrimary
-                  css={css`
-                    height: 100%;
-                  `}
-                  tone="primary"
-                  disabled={
-                    state === "evaluate" ||
-                    state === "skip" ||
-                    state === "next" ||
-                    state === "close" ||
-                    state === "previous"
-                  }
-                  loading={state === "evaluate"}
-                  onClick={handleSubmit}
-                  fullWidth
-                >
-                  {t("answer")}
-                </ButtonPrimary>
-              ) : (
-                onRetry && (
+        {(state === "allow-retry" || state === "retry") && (
+          <Box
+            display="flex"
+            flexDirection="column"
+            width="100%"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Box mb="xxsmall">
+              <Icon color="error" size="small">
+                <ThumbsDown />
+              </Icon>
+            </Box>
+            <Text textColor="error.800" mb="standard">
+              {nudge}
+            </Text>
+            <Box display="flex" width="100%" flexDirection="row">
+              {onRetry && (
+                <Box flex="2" mr="standard">
                   <ButtonPrimary
+                    disabled={state === "retry"}
+                    loading={state === "retry"}
                     tone="primary"
-                    css={css`
-                      height: 100%;
-                    `}
                     onClick={handleRetry}
                     fullWidth
                   >
                     {t("retry")}
                   </ButtonPrimary>
-                )
+                </Box>
               )}
+              {onSkip && (
+                <Box flex="1">
+                  <ButtonPrimary
+                    disabled={state === "retry"}
+                    tone="accent"
+                    onClick={handleSkip}
+                    fullWidth
+                  >
+                    {t("skip")}
+                  </ButtonPrimary>
+                </Box>
+              )}
+            </Box>
+          </Box>
+        )}
+        {state === "next" && (
+          <ButtonPrimary disabled loading fullWidth>
+            {t("next")}
+          </ButtonPrimary>
+        )}
+        {(state === "interact" ||
+          state === "evaluate" ||
+          state === "skip" ||
+          state === "close" ||
+          state === "previous") && (
+          <Fragment>
+            <Box flex="2" mr="standard">
+              <ButtonPrimary
+                css={css`
+                  height: 100%;
+                `}
+                tone="primary"
+                disabled={
+                  state === "evaluate" ||
+                  state === "skip" ||
+                  state === "close" ||
+                  state === "previous"
+                }
+                loading={state === "evaluate"}
+                onClick={handleSubmit}
+                fullWidth
+              >
+                {t("answer")}
+              </ButtonPrimary>
             </Box>
             {onSkip && (
               <Box flex="1">
@@ -522,7 +557,6 @@ export const TaskShell = <
                   disabled={
                     state === "evaluate" ||
                     state === "skip" ||
-                    state === "next" ||
                     state === "close" ||
                     state === "previous"
                   }
