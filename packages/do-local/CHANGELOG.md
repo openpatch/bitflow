@@ -1,5 +1,11 @@
 # @bitflow/do-local
 
+## 0.3.4
+
+### Patch Changes
+
+- @bitflow/do@0.4.4
+
 ## 0.3.3
 
 ### Patch Changes
