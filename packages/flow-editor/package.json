@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/flow-editor",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -49,7 +49,7 @@
     "@bitflow/core": "0.4.0",
     "@bitflow/flow": "0.5.0",
     "@bitflow/provider": "0.3.0",
-    "@bitflow/shell": "0.4.0",
+    "@bitflow/shell": "0.4.1",
     "@hookform/resolvers": "^2.8.1",
     "react-flow-renderer": "^9.6.7"
   },

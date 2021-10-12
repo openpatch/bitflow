@@ -1,5 +1,11 @@
 # @bitflow/shell
 
+## 0.4.1
+
+### Patch Changes
+
+- 897f2af: Add loading state to retry and show wrong nudge on retry
+
 ## 0.4.0
 
 ### Minor Changes

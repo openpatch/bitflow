@@ -1,5 +1,12 @@
 # @bitflow/do
 
+## 0.4.3
+
+### Patch Changes
+
+- Updated dependencies [897f2af]
+  - @bitflow/shell@0.4.1
+
 ## 0.4.2
 
 ### Patch Changes
