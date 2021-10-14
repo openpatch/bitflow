@@ -4480,10 +4480,10 @@
     remark-gfm "^1.0.0"
     styled-system "^5.1.5"
 
-"@openpatch/patches@4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-4.2.0.tgz#a7ee861a761b327457dc200c82580802acdf0655"
-  integrity sha512-bqkmZtzpIB0OTlqJtKb8n2USZlOU0wKTocSWoDe0LaZGelyUKOtYBBjoBqxiEztY3c7gGQ54oLpX5++Z60yoHg==
+"@openpatch/patches@4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-4.2.1.tgz#0640efd4ce9fb5703eab85df3b8b9826ac1d3399"
+  integrity sha512-l+EPKh5iLx0vKliCEZolyBzaX9iz6ohEL2uFDtWsM0JOQBONNIEGLoSPzeUEblQAXPzAjKSaGysyStK8NHsQpA==
   dependencies:
     codemirror "^5.62.2"
     lodash "^4.17.21"
