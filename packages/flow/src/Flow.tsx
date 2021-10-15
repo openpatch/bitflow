@@ -19,7 +19,7 @@ import { Styles } from "./Styles";
 import { SynchronizeNode } from "./SynchronizeNode";
 
 export type FlowProps = Pick<IFlow, "nodes" | "edges" | "zoom" | "position"> &
-  Omit<ReactFlowProps, "elements" | "zoom" | "posititon"> & {
+  Omit<ReactFlowProps, "elements" | "zoom" | "posititon" | "css"> & {
     autoFitView?: boolean;
     interactive?: boolean;
     draft?: boolean;

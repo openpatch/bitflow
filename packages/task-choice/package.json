@@ -48,7 +48,7 @@
   "dependencies": {
     "@bitflow/core": "0.4.0",
     "@bitflow/provider": "0.3.0",
-    "@hookform/resolvers": "^2.8.1",
+    "@hookform/resolvers": "^2.8.2",
     "immer": "^9.0.6"
   },
   "peerDependencies": {

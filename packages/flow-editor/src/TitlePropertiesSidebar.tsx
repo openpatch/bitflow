@@ -16,20 +16,20 @@ import { useFormContext } from "react-hook-form";
 import translations from "./locales.vocab";
 import { TabContainer } from "./TabContainer";
 
-const MetaForm = ({ name }: { name: string }) => {
+const MetaForm = ({ name }: { name: `nodes.${number}` }) => {
   const { t } = useTranslations(translations);
 
   return (
     <Fragment>
       <HookFormController
         label={t("name")}
-        name={`${name}.name`}
+        name={`${name}.data.name`}
         defaultValue=""
         render={Input}
       />
       <HookFormController
         label={t("description")}
-        name={`${name}.description`}
+        name={`${name}.data.description`}
         defaultValue=""
         render={({ value, onChange, onBlur }) => (
           <MarkdownEditor
@@ -44,47 +44,55 @@ const MetaForm = ({ name }: { name: string }) => {
   );
 };
 
-const ViewForm = ({ name }: { name: string }) => {
+const ViewForm = ({ name }: { name: `nodes.${number}` }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const subtype = getValues(`${name}.subtype` as any);
-  const titleBit = useBitTitle(subtype);
+  const node = getValues(`${name}`);
+
+  if (node.type !== "title") {
+    return <div>{t("bit-type-unsupported")}</div>;
+  }
+
+  const titleBit = useBitTitle(node.data.subtype);
 
   if (titleBit) {
-    return <titleBit.ViewForm name={name} />;
+    return <titleBit.ViewForm name={`${name}.data`} />;
   }
 
   return <div>{t("bit-type-unsupported")}</div>;
 };
 
-const Preview = ({ name }: { name: string }) => {
+const Preview = ({ name }: { name: `nodes.${number}` }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const props = getValues(`${name}` as any);
+  const node = getValues(`${name}`);
+  if (node.type !== "title") {
+    return <div>{t("bit-type-unsupported")}</div>;
+  }
+
   const onNext = async () => {};
-  const subtype = props.subtype;
+  const subtype = node.data.subtype;
   const titleBit = useBitTitle(subtype);
 
   if (titleBit) {
-    const test = titleBit.TitleSchema.safeParse(props);
-    if (test.success) {
-      return (
-        <TitleShell
-          TitleComponent={titleBit.Title}
-          title={props as any} // TODO proper types
-          header={t("title")}
-          onNext={onNext}
-        />
-      );
-    } else {
-      return <div>{t("bit-type-properties-invalid")}</div>;
-    }
+    return (
+      <TitleShell
+        TitleComponent={titleBit.Title}
+        title={node.data}
+        header={t("title")}
+        onNext={onNext}
+      />
+    );
+  } else {
+    return <div>{t("bit-type-unsupported")}</div>;
   }
-
-  return <div>{t("bit-type-unsupported")}</div>;
 };
 
-export const TitlePropertiesSidebar = ({ name }: { name: string }) => {
+export const TitlePropertiesSidebar = ({
+  name,
+}: {
+  name: `nodes.${number}`;
+}) => {
   const { t } = useTranslations(translations);
 
   return (

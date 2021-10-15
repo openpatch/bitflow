@@ -28,6 +28,9 @@ export const FlowCheckpointNodeSchema = NodeBaseSchema.merge(
 export const FlowSynchronizeNodeSchema = NodeBaseSchema.merge(
   z.object({
     type: z.literal("synchronize"),
+    data: z.object({
+      unlocked: z.boolean(),
+    }),
   })
 );
 
@@ -222,11 +225,13 @@ export const makeInteractiveFlowNodeSchema = ({
   task: ZodSchema<Bitflow.Task>;
 }) =>
   z.union([
-    makeFlowStartNodeSchema(start || z.record(z.any())),
-    makeFlowEndNodeSchema(end || z.record(z.any())),
+    makeFlowStartNodeSchema(start),
+    makeFlowEndNodeSchema(end),
     makeFlowInputNodeSchema(input),
     makeFlowTaskNodeSchema(task),
     makeFlowTitleNodeSchema(title),
+    FlowSynchronizeNodeSchema,
+    FlowCheckpointNodeSchema,
   ]);
 
 export const FlowEdgeSchema = z.object({
@@ -265,6 +270,8 @@ export const makeFlowNodeSchema = ({
     FlowSplitRandomNodeSchema,
     FlowPortalInputNodeSchema,
     FlowPortalOutputNodeSchema,
+    FlowSynchronizeNodeSchema,
+    FlowCheckpointNodeSchema,
     makeFlowEndNodeSchema(end),
     makeFlowInputNodeSchema(input),
     makeFlowStartNodeSchema(start),

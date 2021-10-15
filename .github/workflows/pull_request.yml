@@ -30,6 +30,7 @@ jobs:
         with:
           node-version: 12
       - run: yarn --frozen-lockfile --silent boot
+      - run: yarn lint
       - run: yarn test
 
   release:

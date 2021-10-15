@@ -165,7 +165,7 @@ export const FlowEditor = forwardRef<FlowEditorRef, FlowEditorProps>(
 
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const [reactFlowInstance, setReactFlowInstance] =
-      useState<OnLoadParams<any>>();
+      useState<OnLoadParams<IFlow>>();
 
     const [selectedNode, setSelectedNode] = useState<FlowNode>();
 
@@ -180,15 +180,15 @@ export const FlowEditor = forwardRef<FlowEditorRef, FlowEditorProps>(
       setNodes(newNodes);
     };
 
-    const onConnect = (params: Edge<any> | Connection) => {
-      let edge: Edge;
+    const onConnect = (params: Edge | Connection) => {
+      let edge: FlowEdge;
       if (isEdge(params)) {
-        edge = { ...params };
+        edge = { ...params } as FlowEdge;
       } else {
         edge = {
           ...params,
           id: uuidv4(),
-        } as Edge;
+        } as FlowEdge;
       }
 
       if (
@@ -201,8 +201,7 @@ export const FlowEditor = forwardRef<FlowEditorRef, FlowEditorProps>(
               (!el.sourceHandle && !edge.sourceHandle))
         )
       ) {
-        // TODO assumes wrong type
-        const newEdges = [...edges, edge] as IFlow["edges"];
+        const newEdges = [...edges, edge];
         setEdges(newEdges);
       }
     };

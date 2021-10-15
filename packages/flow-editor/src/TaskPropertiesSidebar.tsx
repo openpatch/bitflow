@@ -19,20 +19,20 @@ import { useFormContext } from "react-hook-form";
 import translations from "./locales.vocab";
 import { TabContainer } from "./TabContainer";
 
-const MetaForm = ({ name }: { name: string }) => {
+const MetaForm = ({ name }: { name: `nodes.${number}` }) => {
   const { t } = useTranslations(translations);
 
   return (
     <Fragment>
       <HookFormController
         label={t("name")}
-        name={`${name}.name`}
+        name={`${name}.data.name`}
         defaultValue=""
         render={Input}
       />
       <HookFormController
         label={t("description")}
-        name={`${name}.description`}
+        name={`${name}.data.description`}
         defaultValue=""
         render={({ value, onChange, onBlur }) => (
           <MarkdownEditor
@@ -47,31 +47,40 @@ const MetaForm = ({ name }: { name: string }) => {
   );
 };
 
-const ViewForm = ({ name }: { name: string }) => {
+const ViewForm = ({ name }: { name: `nodes.${number}` }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const subtype = getValues(`${name}.subtype` as any);
-  const taskBit = useBitTask(subtype);
+  const node = getValues(name);
+
+  if (node.type !== "task") {
+    return <div>{t("bit-type-unsupported")}</div>;
+  }
+
+  const taskBit = useBitTask(node.data.subtype);
 
   if (taskBit) {
-    return <taskBit.ViewForm name={name} />;
+    return <taskBit.ViewForm name={`${name}.data`} />;
   }
 
   return <div>{t("bit-type-unsupported")}</div>;
 };
 
-const EvaluationForm = ({ name }: { name: string }) => {
+const EvaluationForm = ({ name }: { name: `nodes.${number}` }) => {
   const { getValues, watch } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const mode = watch(`${name}.evaluation.mode` as any);
-  const subtype = getValues(`${name}.subtype` as any);
-  const taskBit = useBitTask(subtype);
+  const node = getValues(name);
+  if (node.type !== "task") {
+    return <div>{t("bit-type-unsupported")}</div>;
+  }
+
+  const mode = watch(`${name}.data.evaluation.mode`);
+  const taskBit = useBitTask(node.data.subtype);
 
   if (taskBit) {
     return (
       <Fragment>
         <HookFormController
-          name={`${name}.evaluation.mode`}
+          name={`${name}.data.evaluation.mode`}
           label={t("evaluation-mode")}
           defaultValue="auto"
           render={({ value, onChange, onBlur }) => (
@@ -85,7 +94,7 @@ const EvaluationForm = ({ name }: { name: string }) => {
         {mode !== "skip" && (
           <Fragment>
             <HookFormController
-              name={`${name}.evaluation.enableRetry`}
+              name={`${name}.data.evaluation.enableRetry`}
               defaultValue={false}
               render={({ value, onChange, onBlur }) => (
                 <Box mt="standard">
@@ -96,7 +105,7 @@ const EvaluationForm = ({ name }: { name: string }) => {
               )}
             />
             <HookFormController
-              name={`${name}.evaluation.showFeedback`}
+              name={`${name}.data.evaluation.showFeedback`}
               defaultValue={false}
               render={({ value, onChange, onBlur }) => (
                 <Box mt="standard">
@@ -106,7 +115,7 @@ const EvaluationForm = ({ name }: { name: string }) => {
                 </Box>
               )}
             />
-            <taskBit.EvaluationForm name={name} />
+            <taskBit.EvaluationForm name={`${name}.data`} />
           </Fragment>
         )}
       </Fragment>
@@ -116,14 +125,19 @@ const EvaluationForm = ({ name }: { name: string }) => {
   return <div>{t("bit-type-unsupported")}</div>;
 };
 
-const FeedbackForm = ({ name }: { name: string }) => {
+const FeedbackForm = ({ name }: { name: `nodes.${number}` }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const subtype = getValues(`${name}.subtype` as any);
-  const taskBit = useBitTask(subtype);
+  const node = getValues(name);
+
+  if (node.type !== "task") {
+    return <div>{t("bit-type-unsupported")}</div>;
+  }
+
+  const taskBit = useBitTask(node.data.subtype);
 
   if (taskBit) {
-    return <taskBit.FeedbackForm name={name} />;
+    return <taskBit.FeedbackForm name={`${name}.data`} />;
   }
 
   return <div>{t("bit-type-unsupported")}</div>;
@@ -133,56 +147,54 @@ const Preview = ({
   name,
   onEvaluate,
 }: {
-  name: string;
+  name: `nodes.${number}`;
   onEvaluate?: Evaluate;
 }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
 
-  const props = getValues(`${name}` as any);
+  const node = getValues(name);
+
+  if (node.type !== "task") {
+    return <div>{t("bit-type-unsupported")}</div>;
+  }
   const onNext = async () => {};
   const onSkip = async () => {};
   const onRetry = async () => {};
-  const subtype = props.subtype as any;
+  const subtype = node.data.subtype;
   const taskBit = useBitTask(subtype);
 
   const evaluate = async (answer: Bitflow.TaskAnswer) => {
     if (!onEvaluate) {
       throw new Error("missing evaluate");
     }
-    const r = await onEvaluate({ answer, task: props });
+    const r = await onEvaluate({ answer, task: node.data });
     return r;
   };
 
   if (taskBit) {
-    const result = taskBit.TaskSchema.safeParse(props);
-    if (result.success) {
-      // TODO evaluate locally if possible
-      return (
-        <TaskShell
-          header="Preview"
-          mode="default"
-          evaluate={onEvaluate ? evaluate : undefined}
-          onNext={onNext}
-          onSkip={onSkip}
-          onRetry={onRetry}
-          task={result.data}
-          TaskComponent={taskBit.Task}
-        />
-      );
-    } else {
-      return <div>{t("bit-type-properties-invalid")}</div>;
-    }
+    return (
+      <TaskShell
+        header="Preview"
+        mode="default"
+        evaluate={onEvaluate ? evaluate : undefined}
+        onNext={onNext}
+        onSkip={onSkip}
+        onRetry={onRetry}
+        task={node.data}
+        TaskComponent={taskBit.Task}
+      />
+    );
+  } else {
+    return <div>{t("bit-type-unsupported")}</div>;
   }
-
-  return <div>{t("bit-type-unsupported")}</div>;
 };
 
 export const TaskPropertiesSidebar = ({
   name,
   onEvaluate,
 }: {
-  name: string;
+  name: `nodes.${number}`;
   onEvaluate?: Evaluate;
 }) => {
   const { t } = useTranslations(translations);

@@ -46,6 +46,7 @@ describe("do", () => {
     const newDoResult = finishDoTry(doResult, undefined, {
       state: "wrong",
       subtype: "choice",
+      choices: {},
     });
 
     expect(newDoResult.points).toEqual(doResult.points - 1);

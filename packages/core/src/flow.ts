@@ -13,7 +13,6 @@ export type FlowCheckpointPublicNode = Pick<FlowCheckpointNode, "id" | "type">;
 export type FlowSynchronizeNode = NodeBase & {
   type: "synchronize";
   data?: {
-    toggle: (id: string) => void;
     unlocked: boolean;
   };
 };
@@ -185,6 +184,12 @@ export type FlowSplitAnswerNode = NodeBase & {
   data: SplitAnswer;
 };
 
+export const isFlowSplitAnswerNode = (
+  n: FlowNode
+): n is FlowSplitAnswerNode => {
+  return n.type === "split-answer";
+};
+
 export type SplitResult = {
   condition: Condition;
 };
@@ -194,6 +199,12 @@ export type FlowSplitResultNode = NodeBase & {
   data: SplitResult;
 };
 
+export const isFlowSplitResultNode = (
+  n: FlowNode
+): n is FlowSplitResultNode => {
+  return n.type === "split-result";
+};
+
 export type SplitPoints = {
   points: number;
 };
@@ -201,6 +212,12 @@ export type SplitPoints = {
 export type FlowSplitPointsNode = NodeBase & {
   type: "split-points";
   data: SplitPoints;
+};
+
+export const isFlowSplitPointsNode = (
+  n: FlowNode
+): n is FlowSplitPointsNode => {
+  return n.type === "split-points";
 };
 
 export type PortalInput = {
@@ -218,13 +235,31 @@ export type FlowPortalInputNode = NodeBase & {
   data: PortalInput;
 };
 
+export const isFlowPortalInputNode = (
+  n: FlowNode
+): n is FlowPortalInputNode => {
+  return n.type === "portal-input";
+};
+
 export type FlowPortalOutputNode = NodeBase & {
   type: "portal-output";
   data: PortalOutput;
 };
 
+export const isFlowPortalOutputNode = (
+  n: FlowNode
+): n is FlowPortalOutputNode => {
+  return n.type === "portal-output";
+};
+
 export type FlowSplitRandomNode = NodeBase & {
   type: "split-random";
+};
+
+export const isFlowSplitRandomNode = (
+  n: FlowNode
+): n is FlowSplitRandomNode => {
+  return n.type === "split-random";
 };
 
 export type ControlFlowNode =
@@ -234,6 +269,17 @@ export type ControlFlowNode =
   | FlowSplitRandomNode
   | FlowPortalInputNode
   | FlowPortalOutputNode;
+
+export const isControlFlowNode = (n: FlowNode): n is ControlFlowNode => {
+  return (
+    n.type === "portal-input" ||
+    n.type === "portal-output" ||
+    n.type === "split-answer" ||
+    n.type === "split-points" ||
+    n.type === "split-random" ||
+    n.type === "split-result"
+  );
+};
 
 export type FlowNode = InteractiveFlowNode | ControlFlowNode;
 

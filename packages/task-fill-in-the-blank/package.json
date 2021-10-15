@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@bitflow/core": "0.4.0",
-    "@hookform/resolvers": "^2.8.1",
+    "@hookform/resolvers": "^2.8.2",
     "immer": "^9.0.6",
     "react-markdown": "^5.0.3",
     "remark-gfm": "^1.0.0"
@@ -56,11 +56,11 @@
     "@emotion/cache": "11.x",
     "@emotion/react": "11.x",
     "@emotion/styled": "11.x",
-    "react-hook-form": "7.x",
     "@openpatch/patches": "4.x",
     "@vocab/react": "1.x",
     "react": "17.x",
     "react-dom": "17.x",
+    "react-hook-form": "7.x",
     "zod": "3.x"
   }
 }

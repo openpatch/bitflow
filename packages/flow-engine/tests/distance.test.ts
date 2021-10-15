@@ -103,10 +103,9 @@ describe("distance", () => {
       data: {
         name: "",
         description: "",
-        subtype: "simple",
+        subtype: "tries",
         view: {
-          title: "",
-          message: "",
+          markdown: "",
         },
       },
     },

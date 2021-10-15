@@ -16,20 +16,20 @@ import { useFormContext } from "react-hook-form";
 import translations from "./locales.vocab";
 import { TabContainer } from "./TabContainer";
 
-const MetaForm = ({ name }: { name: string }) => {
+const MetaForm = ({ name }: { name: `nodes.${number}` }) => {
   const { t } = useTranslations(translations);
 
   return (
     <Fragment>
       <HookFormController
         label={t("name")}
-        name={`${name}.name`}
+        name={`${name}.data.name`}
         defaultValue=""
         render={Input}
       />
       <HookFormController
         label={t("description")}
-        name={`${name}.description`}
+        name={`${name}.data.description`}
         defaultValue=""
         render={({ value, onChange, onBlur }) => (
           <MarkdownEditor
@@ -44,11 +44,16 @@ const MetaForm = ({ name }: { name: string }) => {
   );
 };
 
-const ViewForm = ({ name }: { name: string }) => {
+const ViewForm = ({ name }: { name: `nodes.${number}` }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const subtype = getValues(`${name}.subtype` as any);
-  const startBit = useBitStart(subtype);
+  const node = getValues(name);
+
+  if (node.type !== "start") {
+    return <div>{t("bit-type-unsupported")}</div>;
+  }
+
+  const startBit = useBitStart(node.data.subtype);
 
   if (startBit) {
     return <startBit.ViewForm name={name} />;
@@ -57,32 +62,36 @@ const ViewForm = ({ name }: { name: string }) => {
   return <div>{t("bit-type-unsupported")}</div>;
 };
 
-const Preview = ({ name }: { name: string }) => {
+const Preview = ({ name }: { name: `nodes.${number}` }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
-  const props = getValues(`${name}` as any);
-  const subtype = props.subtype;
-  const startBit = useBitStart(subtype);
+
+  const node = getValues(name);
+
+  if (node.type !== "start") {
+    return <div>{t("bit-type-unsupported")}</div>;
+  }
+
+  const startBit = useBitStart(node.data.subtype);
 
   if (startBit) {
-    const result = startBit.StartSchema.safeParse(props);
-    if (result.success) {
-      return (
-        <StartShell
-          header="Preview"
-          onNext={async () => {}}
-          start={result.data}
-          StartComponent={startBit.Start}
-        />
-      );
-    } else {
-      return <div>{t("bit-type-properties-invalid")}</div>;
-    }
+    return (
+      <StartShell
+        header="Preview"
+        onNext={async () => {}}
+        start={node.data}
+        StartComponent={startBit.Start}
+      />
+    );
   }
   return <div>{t("bit-type-unsupported")}</div>;
 };
 
-export const StartPropertiesSidebar = ({ name }: { name: string }) => {
+export const StartPropertiesSidebar = ({
+  name,
+}: {
+  name: `nodes.${number}`;
+}) => {
   const { t } = useTranslations(translations);
 
   return (

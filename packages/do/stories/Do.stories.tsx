@@ -35,9 +35,8 @@ const config: DoConfig = {
 };
 
 const progress: DoProgress = {
-  currentNodeIndex: 0,
-  nextNodeState: "unlocked",
-  estimatedNodes: flow.nodes.length - 1,
+  next: "unlocked",
+  progress: 0,
 };
 
 let points = 0;
@@ -67,6 +66,9 @@ const onSkip: DoProps["onSkip"] = async () => {
     ...currentPathEntry,
     status: "skipped",
     endDate: new Date(),
+    evaluation: {
+      mode: "auto",
+    },
   };
 };
 
@@ -183,10 +185,8 @@ const getNext: DoProps["getNext"] = async () => {
     });
 
     if (nextNode.type === "synchronize") {
-      progress.nextNodeState = "locked";
+      progress.next = "locked";
     }
-
-    progress.currentNodeIndex += 1;
 
     return nextNode;
   }
@@ -226,8 +226,6 @@ const getPrevious: DoProps["getPrevious"] = async () => {
     startDate: new Date(),
     try: 0,
   });
-
-  progress.currentNodeIndex -= 1;
 
   return prevNode;
 };

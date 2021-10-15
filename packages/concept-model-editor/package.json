@@ -47,16 +47,16 @@
   },
   "dependencies": {
     "@bitflow/concept-model": "0.3.0",
-    "react-flow-renderer": "^9.6.7"
+    "react-flow-renderer": "^9.6.9"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
     "@emotion/react": "11.x",
     "@emotion/styled": "11.x",
     "@openpatch/patches": "4.x",
-    "react-hook-form": "7.x",
     "@vocab/react": "1.x",
     "react": "17.x",
-    "react-dom": "17.x"
+    "react-dom": "17.x",
+    "react-hook-form": "7.x"
   }
 }

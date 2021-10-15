@@ -50,7 +50,7 @@
     "@bitflow/flow": "0.5.0",
     "@bitflow/flow-node": "0.4.0",
     "@bitflow/icons": "0.3.0",
-    "react-flow-renderer": "^9.6.7"
+    "react-flow-renderer": "^9.6.9"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",

@@ -11,25 +11,25 @@ import {
   Tabs,
 } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useFormContext } from "react-hook-form";
 import translations from "./locales.vocab";
 import { TabContainer } from "./TabContainer";
 
-const MetaForm = ({ name }: { name: string }) => {
+const MetaForm = ({ name }: { name: `nodes.${number}` }) => {
   const { t } = useTranslations(translations);
 
   return (
     <Fragment>
       <HookFormController
         label={t("name")}
-        name={`${name}.name`}
+        name={`${name}.data.name`}
         defaultValue=""
         render={Input}
       />
       <HookFormController
         label={t("description")}
-        name={`${name}.description`}
+        name={`${name}.data.description`}
         defaultValue=""
         render={({ value, onChange, onBlur }) => (
           <MarkdownEditor
@@ -44,50 +44,57 @@ const MetaForm = ({ name }: { name: string }) => {
   );
 };
 
-const ViewForm = ({ name }: { name: string }) => {
+const ViewForm = ({ name }: { name: `nodes.${number}` }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
 
-  const subtype = getValues(`${name}.subtype` as any);
+  const node = getValues(name);
 
-  const inputBit = useBitInput(subtype);
+  if (node.type !== "input") {
+    return <div>{t("bit-type-unsupported")}</div>;
+  }
+
+  const inputBit = useBitInput(node.data.subtype);
 
   if (inputBit) {
-    return <inputBit.ViewForm name={name} />;
+    return <inputBit.ViewForm name={`${name}.data`} />;
   }
 
   return <div>{t("bit-type-unsupported")}</div>;
 };
 
-const Preview = ({ name }: { name: string }) => {
+const Preview = ({ name }: { name: `nodes.${number}` }) => {
   const { getValues } = useFormContext<Flow>();
   const { t } = useTranslations(translations);
 
-  const props = getValues(`${name}` as any);
+  const node = getValues(name);
+
+  if (node.type !== "input") {
+    return <div>{t("bit-type-unsupported")}</div>;
+  }
+
   const onNext = async () => {};
-  const subtype = props.subtype as any;
-  const inputBit = useBitInput(subtype);
+
+  const inputBit = useBitInput(node.data.subtype);
   if (inputBit) {
-    const result = inputBit.InputSchema.safeParse(props);
-    if (result.success) {
-      return (
-        <InputShell
-          InputComponent={inputBit.Input}
-          input={result.data}
-          onNext={onNext}
-          header={t("preview")}
-        />
-      );
-    } else {
-      return <div>{t("bit-type-properties-invalid")}</div>;
-    }
+    return (
+      <InputShell
+        InputComponent={inputBit.Input}
+        input={node.data}
+        onNext={onNext}
+        header={t("preview")}
+      />
+    );
   }
 
   return <div>{t("bit-type-unsupported")}</div>;
 };
 
-export const InputPropertiesSidebar = ({ name }: { name: string }) => {
-  const [activeTab, setActiveTab] = useState(0);
+export const InputPropertiesSidebar = ({
+  name,
+}: {
+  name: `nodes.${number}`;
+}) => {
   const { t } = useTranslations(translations);
 
   return (

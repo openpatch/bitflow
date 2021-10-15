@@ -1,5 +1,5 @@
 import { Action, DoResult, InteractiveFlowNode } from "@bitflow/core";
-import { TaskShellProps } from "@bitflow/shell";
+import { IShellAction, ITaskAction, TaskShellProps } from "@bitflow/shell";
 
 export type DoConfig = {
   enableConfidence?: boolean;
@@ -19,7 +19,11 @@ export type DoPropsBase = {
   onClose?: () => Promise<void>;
   onPrevious?: () => Promise<void>;
   onRetry: () => Promise<void>;
-  onAction?: (action: Action) => void;
+  onAction?: (
+    action:
+      | ITaskAction<Action>
+      | IShellAction<Bitflow.TaskAnswer, Bitflow.TaskResult>
+  ) => void;
   getConfig: () => Promise<DoConfig>;
   progress: DoProgress;
   getProgress: () => Promise<DoProgress>;

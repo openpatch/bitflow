@@ -9,6 +9,7 @@ import translations from "./locales.vocab";
 export const SynchronizeNode = (node: {
   id?: string;
   data?: FlowSynchronizeNode["data"] & {
+    toggle?: (id: string) => void;
     count?: number;
   };
   hideHandles?: boolean;

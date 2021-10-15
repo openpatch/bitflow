@@ -31,12 +31,12 @@ type BitNodesProps = {
   onDragStart: (
     e: DragEvent<HTMLDivElement>,
     type: BitNodesProps["type"],
-    node: any
+    node: unknown
   ) => void;
 };
 const BitNodes = ({ onDragStart, type }: BitNodesProps) => {
   const { t } = useTranslations(translations);
-  const bits = useBits(type as any);
+  const bits = useBits(type as "task");
 
   return (
     <Fragment>

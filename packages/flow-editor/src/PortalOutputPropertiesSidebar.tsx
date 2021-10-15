@@ -1,4 +1,4 @@
-import { Flow } from "@bitflow/core";
+import { Flow, isFlowPortalInputNode } from "@bitflow/core";
 import { HookFormController, MarkdownEditor, Select } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import { Fragment } from "react";
@@ -6,12 +6,16 @@ import { useFormContext } from "react-hook-form";
 import { HeaderSidebar } from "./HeaderSidebar";
 import translations from "./locales.vocab";
 
-export const PortalOutputPropertiesSidebar = ({ name }: { name: string }) => {
+export const PortalOutputPropertiesSidebar = ({
+  name,
+}: {
+  name: `nodes.${number}`;
+}) => {
   const { t } = useTranslations(translations);
   const { watch } = useFormContext<Flow>();
   const nodes = watch("nodes", []);
 
-  const portalNodes = nodes.filter((n) => n.type === "portal-input");
+  const portalNodes = nodes.filter(isFlowPortalInputNode);
 
   return (
     <HeaderSidebar header={t("portal-properties")}>
@@ -20,7 +24,7 @@ export const PortalOutputPropertiesSidebar = ({ name }: { name: string }) => {
       ) : (
         <Fragment>
           <HookFormController
-            name={`${name}.portal`}
+            name={`${name}.data.portal`}
             label={t("portal")}
             render={({ value, onChange, onBlur }) => (
               <Select value={value} onChange={onChange} onBlur={onBlur}>
@@ -38,7 +42,7 @@ export const PortalOutputPropertiesSidebar = ({ name }: { name: string }) => {
             )}
           />
           <HookFormController
-            name={`${name}.description`}
+            name={`${name}.data.description`}
             label={t("description")}
             render={({ value, onChange, onBlur }) => (
               <MarkdownEditor

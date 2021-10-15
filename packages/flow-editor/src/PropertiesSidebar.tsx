@@ -34,7 +34,7 @@ export const PropertiesSidebar = ({
     <CenterSidebar>{t("node-no-properties")}</CenterSidebar>
   );
 
-  const name = `nodes.[${nodeIndex}].data`;
+  const name: `nodes.${number}` = `nodes.${nodeIndex}`;
   switch (node.type) {
     case "task": {
       content = <TaskPropertiesSidebar name={name} onEvaluate={onEvaluate} />;

@@ -3,18 +3,22 @@ import { useTranslations } from "@vocab/react";
 import { HeaderSidebar } from "./HeaderSidebar";
 import translations from "./locales.vocab";
 
-export const PortalInputPropertiesSidebar = ({ name }: { name: string }) => {
+export const PortalInputPropertiesSidebar = ({
+  name,
+}: {
+  name: `nodes.${number}`;
+}) => {
   const { t } = useTranslations(translations);
 
   return (
     <HeaderSidebar header={t("portal-properties")}>
       <HookFormController
-        name={`${name}.portal`}
+        name={`${name}.data.portal`}
         label={t("portal")}
         render={Input}
       />
       <HookFormController
-        name={`${name}.description`}
+        name={`${name}.data.description`}
         label={t("description")}
         render={({ value, onChange, onBlur }) => (
           <MarkdownEditor

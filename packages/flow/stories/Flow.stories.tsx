@@ -47,10 +47,9 @@ export const Default = () => {
             type: "synchronize",
             position: { x: 250, y: 25 },
             data: {
-              count: 812345,
               toggle: () => setSynchronizeState((s) => !s),
               unlocked: synchronizeState,
-            },
+            } as any,
           },
           {
             id: "node-2",
