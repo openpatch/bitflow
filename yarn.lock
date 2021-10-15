@@ -3108,7 +3108,7 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.2.0.tgz#f3933a44e365864f4dad5db94158106d511e8131"
   integrity sha512-sqKVVVOe5ivCaXDWivIJYVSaEgdQK9ul7a4Kity5Iw7u9+wBAPbX1RMSnLLmp7O4Vzj0WOWwMAJsTL00xwaNug==
 
-"@hookform/resolvers@2.8.2", "@hookform/resolvers@^2.8.2":
+"@hookform/resolvers@2.8.2", "@hookform/resolvers@^2.8.1", "@hookform/resolvers@^2.8.2":
   version "2.8.2"
   resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.8.2.tgz#590dcc23212a659bad08212138261c3950ef09f1"
   integrity sha512-oDTGrm7yHxT4VIv4kJcfjvWvozCbdcL0/jrpbAkeo39FYn78XnKOrrGTNmrXdfu+EQVkNIdZ47IYRFManZ4jUA==
@@ -4417,25 +4417,6 @@
   dependencies:
     "@octokit/openapi-types" "^7.3.2"
 
-<<<<<<< HEAD
-"@openpatch/patches@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-4.0.0.tgz#ed58af1ded3adbb75961c764881538ed9cdbc13f"
-  integrity sha512-wrLu0XTvrRgEHjSdyb/zvqZsbpQzF5x0hkTo8BYPj+WvaSKRWf4l+GPjARk9EaBijtGHj/EoYRL5MStAK1epJw==
-  dependencies:
-    codemirror "^5.62.2"
-    lodash "^4.17.21"
-    polished "^4.1.1"
-    react-codemirror2 "^7.2.1"
-    react-markdown "^5.0.3"
-    react-modal "^3.12.1"
-    react-syntax-highlighter "^15.4.4"
-    react-tabs "^3.2.1"
-    remark-gfm "^1.0.0"
-    styled-system "^5.1.5"
-
-=======
->>>>>>> b999bb4 (improve types)
 "@openpatch/patches@4.2.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-4.2.1.tgz#0640efd4ce9fb5703eab85df3b8b9826ac1d3399"
@@ -6250,10 +6231,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.6.2.tgz#331b7b9f8621c638284787c5559423822fdffc50"
   integrity sha512-LSw8TZt12ZudbpHc6EkIyDM3nHVWKYrAvGy6EAJfNfjusbwnThqjqxUKKRwuV3iWYeW/LYMzNgaq3MaLffQ2xA==
 
-"@types/node@16.11.0":
-  version "16.11.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.0.tgz#4b95f2327bacd1ef8f08d8ceda193039c5d7f52e"
-  integrity sha512-8MLkBIYQMuhRBQzGN9875bYsOhPnf/0rgXGo66S2FemHkhbn9qtsz9ywV1iCG+vbjigE4WUNVvw37Dx+L0qsPg==
+"@types/node@16.9.1":
+  version "16.9.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.9.1.tgz#0611b37db4246c937feef529ddcc018cf8e35708"
+  integrity sha512-QpLcX9ZSsq3YYUUnD3nFDY8H7wctAhQj/TFKL8Ya8v5fMm3CFXxo8zStsLAl780ltoYoo1WvKUVGBQK+1ifr7g==
 
 "@types/node@^12.7.1":
   version "12.20.16"
@@ -6372,18 +6353,6 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-<<<<<<< HEAD
-"@types/react@17.0.20":
-  version "17.0.20"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.20.tgz#a4284b184d47975c71658cd69e759b6bd37c3b8c"
-  integrity sha512-wWZrPlihslrPpcKyCSlmIlruakxr57/buQN1RjlIeaaTWDLtJkTtRW429MoQJergvVKc4IWBpRhWw7YNh/7GVA==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
-
-=======
->>>>>>> b999bb4 (improve types)
 "@types/react@17.0.30":
   version "17.0.30"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.30.tgz#2f8e6f5ab6415c091cc5e571942ee9064b17609e"
@@ -16746,7 +16715,7 @@ react-fast-compare@^3.0.1, react-fast-compare@^3.2.0:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
-react-flow-renderer@^9.6.9:
+react-flow-renderer@^9.6.7, react-flow-renderer@^9.6.9:
   version "9.6.9"
   resolved "https://registry.yarnpkg.com/react-flow-renderer/-/react-flow-renderer-9.6.9.tgz#a6d73c7350ad4489f87f5a7242f4f1f8ab8c5eab"
   integrity sha512-L40sW5IOQrFBNyl7E3fLjQ6a1GTvJ2daLIsm7ezl41b6iw97Kra17zse0z/CzvW3uqwFYHNWS8mgB5oVdoJu9w==
@@ -19218,14 +19187,6 @@ typescript-template-language-service-decorator@^2.2.0:
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-2.2.0.tgz#4ee6d580f307fb9239978e69626f2775b8a59b2a"
   integrity sha512-xiolqt1i7e22rpqMaprPgSFVgU64u3b9n6EJlAaUYE61jumipKAdI1+O5khPlWslpTUj80YzjUKjJ2jxT0D74w==
 
-<<<<<<< HEAD
-typescript@4.3.5:
-  version "4.3.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
-  integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
-
-=======
->>>>>>> b999bb4 (improve types)
 typescript@4.4.4:
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
