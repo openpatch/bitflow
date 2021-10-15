@@ -3,4 +3,4 @@
 "@bitflow/flow-editor": minor
 ---
 
-improve types
+Improve types
