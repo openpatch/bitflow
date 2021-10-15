@@ -1,6 +1,5 @@
 import { TaskBit } from "@bitflow/core";
 import { TaskShell } from "@bitflow/shell";
-import { zodToJsonSchema } from "@bitflow/zod-json-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -22,6 +21,7 @@ import {
 } from "@openpatch/patches";
 import { Fragment, useState } from "react";
 import { DefaultValues, FormProvider, useForm } from "react-hook-form";
+import { zodToJsonSchema } from "zod-to-json-schema";
 import { toKebab, toSentence } from "../utils/case";
 import { DocLayout } from "./DocLayout";
 

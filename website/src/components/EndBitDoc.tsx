@@ -1,7 +1,6 @@
 import { EndBit } from "@bitflow/core";
 import { generateDoResult } from "@bitflow/mock";
 import { EndShell } from "@bitflow/shell";
-import { zodToJsonSchema } from "@bitflow/zod-json-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -20,6 +19,7 @@ import {
   Tabs,
 } from "@openpatch/patches";
 import { DefaultValues, FormProvider, useForm } from "react-hook-form";
+import { zodToJsonSchema } from "zod-to-json-schema";
 import { toKebab, toSentence } from "../utils/case";
 import { DocLayout } from "./DocLayout";
 

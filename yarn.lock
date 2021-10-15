@@ -2580,6 +2580,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@bitflow/zod-json-schema@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@bitflow/zod-json-schema/-/zod-json-schema-0.1.1.tgz#dd05c8f5e3609e715271a6cf18e829aaee041922"
+  integrity sha512-DlkTYGoWpWG/eTKC8RAhiaeAnwZEs7i3L48iUqkzvtxrNuvDlugnH2b19+a2s8eQhXcw36PAFoldyUKtYO3D6Q==
+
 "@changesets/apply-release-plan@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@changesets/apply-release-plan/-/apply-release-plan-5.0.1.tgz#ed3e30550f787ef1b72f0a51e29a54d244123109"
@@ -20322,7 +20327,14 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod@3.9.8:
+zod-to-json-schema@^3.9.5:
+  version "3.9.5"
+  resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-3.9.5.tgz#dcb64b28851f841a010273685323ddafadbeb49c"
+  integrity sha512-4bS7EJ3YbcRpu/FlKpVQmdY1ePEBsBxFSe7K+t+kbsqjkrI8vl5EU5cIZ20wYMK++TgmxC6E5zEtxHghgdZuuQ==
+  dependencies:
+    zod "^3.9.5"
+
+zod@3.9.8, zod@^3.9.5:
   version "3.9.8"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.9.8.tgz#562eda33925203542dea70100ce0d3766d04b0ab"
   integrity sha512-pTNhdJd45PPOBpdxO8x00Tv+HhknYGx3WdgFQndazp+G1Gd2Cxf81L5yMfCIIcd/SA3VqrcTv/G4bFcr+DsZhA==
