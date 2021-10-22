@@ -64,6 +64,6 @@
     "zod": "3.x"
   },
   "devDependencies": {
-    "@types/react-tagcloud": "1.1.6"
+    "@types/react-tagcloud": "1.1.7"
   }
 }
