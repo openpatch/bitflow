@@ -73,7 +73,7 @@
     "husky": "7.0.4",
     "jest": "27.3.1",
     "jest-cli": "27.3.1",
-    "jest-node-exports-resolver": "1.1.1",
+    "jest-node-exports-resolver": "1.1.2",
     "lerna": "4.0.0",
     "lodash.get": "4.4.2",
     "plop": "2.7.6",
