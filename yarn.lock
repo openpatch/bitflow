@@ -4583,10 +4583,10 @@
     remark-gfm "^1.0.0"
     styled-system "^5.1.5"
 
-"@openpatch/patches@4.2.2":
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-4.2.2.tgz#1f1cba48916af4b3da36d89c58a294b91369aa70"
-  integrity sha512-4rzpQKZ1muLyHylNcLiyXP8dwugFoL5a3qncee8K7/+OycHhpmYbovvr4/ow+XEbvi3tQny4V7mermBRF2lV1g==
+"@openpatch/patches@4.2.3":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-4.2.3.tgz#91c3cba09e8cf57d203f238fcd3321becbafb543"
+  integrity sha512-RdOVktZRIR0Trazgpwhe0s/Ds6Sk8SIvPn25WiQXGBvH3KsOLJSWizi1tFiRMxpTbDCamTTQ1aKCrtl0rCYtlw==
   dependencies:
     codemirror "^5.62.2"
     lodash "^4.17.21"
