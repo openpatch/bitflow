@@ -1,5 +1,16 @@
 # @bitflow/concept-model-editor
 
+## 0.4.0
+
+### Minor Changes
+
+- d17afd2: upgrade to patches v5
+
+### Patch Changes
+
+- Updated dependencies [d17afd2]
+  - @bitflow/concept-model@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes

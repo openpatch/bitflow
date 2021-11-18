@@ -1,5 +1,30 @@
 # website
 
+## 0.4.0
+
+### Minor Changes
+
+- d17afd2: upgrade to patches v5
+
+### Patch Changes
+
+- Updated dependencies [d17afd2]
+- Updated dependencies [58e8086]
+  - @bitflow/do-local@0.4.0
+  - @bitflow/end-tries@0.4.0
+  - @bitflow/flow@0.6.0
+  - @bitflow/flow-editor@0.4.0
+  - @bitflow/flow-engine@0.4.0
+  - @bitflow/input-markdown@0.4.0
+  - @bitflow/provider@0.4.0
+  - @bitflow/start-simple@0.4.0
+  - @bitflow/task-choice@0.4.0
+  - @bitflow/task-fill-in-the-blank@0.4.0
+  - @bitflow/task-input@0.4.0
+  - @bitflow/task-yes-no@0.4.0
+  - @bitflow/title-simple@0.4.0
+  - @bitflow/core@0.5.0
+
 ## 0.3.5
 
 ### Patch Changes

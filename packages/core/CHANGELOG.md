@@ -1,5 +1,11 @@
 # @bitflow/core
 
+## 0.5.0
+
+### Minor Changes
+
+- 58e8086: Improve types
+
 ## 0.4.0
 
 ### Minor Changes
