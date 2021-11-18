@@ -1,5 +1,12 @@
 # @bitflow/date
 
+## 0.2.3
+
+### Patch Changes
+
+- Updated dependencies [d17afd2]
+  - @bitflow/provider@0.4.0
+
 ## 0.2.2
 
 ### Patch Changes

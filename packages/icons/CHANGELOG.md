@@ -1,5 +1,11 @@
 # @bitflow/icons
 
+## 0.4.0
+
+### Minor Changes
+
+- d17afd2: upgrade to patches v5
+
 ## 0.3.0
 
 ### Minor Changes

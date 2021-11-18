@@ -1,5 +1,18 @@
 # @bitflow/flow
 
+## 0.6.0
+
+### Minor Changes
+
+- d17afd2: upgrade to patches v5
+
+### Patch Changes
+
+- Updated dependencies [d17afd2]
+- Updated dependencies [58e8086]
+  - @bitflow/flow-node@0.5.0
+  - @bitflow/core@0.5.0
+
 ## 0.5.0
 
 ### Minor Changes

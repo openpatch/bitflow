@@ -1,5 +1,18 @@
 # @bitflow/task-choice
 
+## 0.4.0
+
+### Minor Changes
+
+- d17afd2: upgrade to patches v5
+
+### Patch Changes
+
+- Updated dependencies [d17afd2]
+- Updated dependencies [58e8086]
+  - @bitflow/provider@0.4.0
+  - @bitflow/core@0.5.0
+
 ## 0.3.0
 
 ### Minor Changes
