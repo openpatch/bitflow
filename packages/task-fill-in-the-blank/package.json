@@ -49,8 +49,8 @@
     "@bitflow/core": "0.5.0",
     "@hookform/resolvers": "^2.8.2",
     "immer": "^9.0.6",
-    "react-markdown": "^7.1.0",
-    "remark-gfm": "^3.0.1"
+    "react-markdown": "^6.0.3",
+    "remark-gfm": "^1.0.0"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
