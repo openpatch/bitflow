@@ -21,7 +21,7 @@ export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
             <MarkdownEditor
               value={value}
               variant="input"
-              onChange={(_, v) => onChange(v)}
+              onChange={(v) => onChange(v)}
               onBlur={onBlur}
             />
           )}
@@ -47,7 +47,7 @@ export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
             <MarkdownEditor
               value={value}
               variant="input"
-              onChange={(_, v) => onChange(v)}
+              onChange={(v) => onChange(v)}
               onBlur={onBlur}
             />
           )}

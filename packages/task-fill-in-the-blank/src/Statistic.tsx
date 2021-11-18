@@ -105,7 +105,7 @@ const BlankStatistic = ({ id }: BlankStatisticProps) => {
 };
 
 const renderers = {
-  delete: Blank,
+  del: Blank,
 };
 
 export const Statistic: TaskBit["Statistic"] = ({ statistic, task }) => {
@@ -119,8 +119,8 @@ export const Statistic: TaskBit["Statistic"] = ({ statistic, task }) => {
         }}
       >
         <ReactMarkdown
-          plugins={[gfm]}
-          renderers={renderers}
+          remarkPlugins={[gfm]}
+          components={renderers}
           children={task.view.textWithBlanks}
         />
         {selectedBlank && <BlankStatistic id={selectedBlank} />}

@@ -71,12 +71,11 @@ export const ViewForm: TitleBit["ViewForm"] = ({ name }) => {
         name={`${name}.view.message`}
         label={t("message")}
         defaultValue=""
-        render={({ value, onChange, onBlur }) => (
+        render={({ value, onChange }) => (
           <MarkdownEditor
             value={value}
             variant="input"
-            onChange={(_, value) => onChange(value)}
-            onBlur={onBlur}
+            onChange={(value) => onChange(value)}
           />
         )}
       />

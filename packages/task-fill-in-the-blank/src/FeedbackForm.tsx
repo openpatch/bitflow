@@ -61,8 +61,7 @@ export const BlankFeedbackForm = ({
               <MarkdownEditor
                 value={value}
                 variant="input"
-                onChange={(_, value) => onChange(value)}
-                onBlur={onBlur}
+                onChange={(value) => onChange(value)}
               />
             )}
           />

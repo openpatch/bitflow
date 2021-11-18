@@ -44,12 +44,11 @@ export const PortalOutputPropertiesSidebar = ({
           <HookFormController
             name={`${name}.data.description`}
             label={t("description")}
-            render={({ value, onChange, onBlur }) => (
+            render={({ value, onChange }) => (
               <MarkdownEditor
                 value={value}
                 variant="input"
-                onChange={(_, v) => onChange(v)}
-                onBlur={onBlur}
+                onChange={(v) => onChange(v)}
               />
             )}
           />

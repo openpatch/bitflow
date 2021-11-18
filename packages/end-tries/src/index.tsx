@@ -76,24 +76,18 @@ const DoTries = ({ tries, onClick }: DoTriesProps) => {
       <Box display="flex" flexWrap="wrap" justifyContent="start">
         {tries.map((t) => {
           let icon = null;
-          let title = "";
 
           if (t.status === "skipped") {
             icon = <SkippedIcon />;
-            title = "skipped";
           } else if (t.status === "finished") {
             if (t.result?.state === "correct") {
               icon = <CorrectIcon />;
-              title = "correct";
             } else if (t.result?.state === "wrong") {
               icon = <WrongIcon />;
-              title = "wrong";
             } else if (t.result?.state === "manual") {
               icon = <ManualIcon />;
-              title = "manual";
             } else if (t.result?.state === "unknown") {
               icon = <UnknownIcon />;
-              title = "unknown";
             }
           }
 
@@ -198,12 +192,11 @@ export const ViewForm: EndBit<IEnd>["ViewForm"] = ({ name }) => {
         name={`${name}.view.markdown`}
         label={t("markdown")}
         defaultValue=""
-        render={({ value, onChange, onBlur }) => (
+        render={({ value, onChange }) => (
           <MarkdownEditor
             value={value}
             variant="input"
-            onChange={(_, v) => onChange(v)}
-            onBlur={onBlur}
+            onChange={(v) => onChange(v)}
           />
         )}
       />

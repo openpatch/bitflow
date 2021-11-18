@@ -1,5 +1,5 @@
 import { Footer, Grid, Nav } from "@openpatch/patches";
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { Logo } from "./Logo";
 
 export type NavLayoutProps = {
@@ -8,7 +8,7 @@ export type NavLayoutProps = {
 
 export const NavLayout: FC<NavLayoutProps> = ({ children }) => {
   return (
-    <Grid gridRow={`auto 1fr auto`}>
+    <Fragment>
       <Nav
         logo={<Logo />}
         links={[
@@ -35,6 +35,6 @@ export const NavLayout: FC<NavLayoutProps> = ({ children }) => {
           },
         ]}
       ></Footer>
-    </Grid>
+    </Fragment>
   );
 };

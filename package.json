@@ -41,7 +41,7 @@
     "@emotion/styled": "11.6.0",
     "@hookform/resolvers": "2.8.3",
     "@octokit/core": "3.5.1",
-    "@openpatch/patches": "4.2.3",
+    "@openpatch/patches": "5.0.0",
     "@storybook/addon-a11y": "6.3.12",
     "@storybook/addon-actions": "6.3.12",
     "@storybook/addon-controls": "6.3.12",

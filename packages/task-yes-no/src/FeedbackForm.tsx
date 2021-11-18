@@ -17,12 +17,11 @@ export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
         <HookFormController
           name={`${name}.feedback.yes.message`}
           label={t("yes")}
-          render={({ value, onChange, onBlur }) => (
+          render={({ value, onChange }) => (
             <MarkdownEditor
               value={value}
               variant="input"
-              onChange={(_, v) => onChange(v)}
-              onBlur={onBlur}
+              onChange={(v) => onChange(v)}
             />
           )}
         />
@@ -43,12 +42,11 @@ export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
         <HookFormController
           name={`${name}.feedback.no.message`}
           label={t("no")}
-          render={({ value, onChange, onBlur }) => (
+          render={({ value, onChange }) => (
             <MarkdownEditor
               value={value}
               variant="input"
-              onChange={(_, v) => onChange(v)}
-              onBlur={onBlur}
+              onChange={(v) => onChange(v)}
             />
           )}
         />

@@ -18,7 +18,7 @@ import { ITask, TaskBit } from "./types";
 
 export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
   const { t } = useTranslations(translations);
-  const { control, watch, getValues, setValue } = useFormContext();
+  const {  watch, getValues, setValue } = useFormContext();
   const defaultPatterns = getValues(
     `${name}.feedback.patterns`
   ) as ITask["feedback"]["patterns"];
@@ -90,7 +90,7 @@ export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
     <Fragment>
       {view?.choices
         ?.filter((c) => c.markdown)
-        .map((choice, index) => {
+        .map((_, index) => {
           const option = options[index];
           return (
             <Fragment key={index}>
@@ -101,12 +101,11 @@ export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
                 name={`${name}.feedback.choices.${option}.checkedFeedback.message`}
                 defaultValue=""
                 label={t("checked-feedback")}
-                render={({ value, onChange, onBlur }) => (
+                render={({ value, onChange }) => (
                   <MarkdownEditor
                     value={value}
                     variant="input"
-                    onChange={(_, v) => onChange(v)}
-                    onBlur={onBlur}
+                    onChange={(v) => onChange(v)}
                   />
                 )}
               />
@@ -128,12 +127,11 @@ export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
                 name={`${name}.feedback.choices.${option}.notCheckedFeedback.message`}
                 defaultValue=""
                 label={t("not-checked-feedback")}
-                render={({ value, onChange, onBlur }) => (
+                render={({ value, onChange }) => (
                   <MarkdownEditor
                     value={value}
                     variant="input"
-                    onChange={(_, v) => onChange(v)}
-                    onBlur={onBlur}
+                    onChange={(v) => onChange(v)}
                   />
                 )}
               />
@@ -174,12 +172,11 @@ export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
           <HookFormController
             name={`${name}.feedback.patterns.${p}.message`}
             defaultValue=""
-            render={({ value, onChange, onBlur }) => (
+            render={({ value, onChange }) => (
               <MarkdownEditor
                 value={value}
                 variant="input"
-                onChange={(_, v) => onChange(v)}
-                onBlur={onBlur}
+                onChange={(v) => onChange(v)}
               />
             )}
           />

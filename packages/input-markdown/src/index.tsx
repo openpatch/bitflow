@@ -53,12 +53,11 @@ export const ViewForm: InputBit<IInput>["ViewForm"] = ({ name }) => {
         name={`${name}.view.markdown`}
         label={t("markdown")}
         defaultValue=""
-        render={({ value, onChange, onBlur }) => (
+        render={({ value, onChange }) => (
           <MarkdownEditor
             value={value}
             variant="input"
-            onChange={(_, value) => onChange(value)}
-            onBlur={onBlur}
+            onChange={(value) => onChange(value)}
           />
         )}
       />

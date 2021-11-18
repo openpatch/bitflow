@@ -13,12 +13,11 @@ export const ViewForm: TaskBit["ViewForm"] = ({ name }) => {
         name={`${name}.view.instruction`}
         label={t("instruction")}
         defaultValue=""
-        render={({ value, onChange, onBlur }) => (
+        render={({ value, onChange }) => (
           <MarkdownEditor
             value={value}
             variant="input"
-            onChange={(_, value) => onChange(value)}
-            onBlur={onBlur}
+            onChange={(value) => onChange(value)}
           />
         )}
       />
@@ -27,12 +26,11 @@ export const ViewForm: TaskBit["ViewForm"] = ({ name }) => {
         label={t("text-with-blanks")}
         helperText={t("text-with-blanks-helper-text")}
         defaultValue=""
-        render={({ value, onChange, onBlur }) => (
+        render={({ value, onChange }) => (
           <MarkdownEditor
             value={value}
             variant="input"
-            onChange={(_, value) => onChange(value)}
-            onBlur={onBlur}
+            onChange={(value) => onChange(value)}
           />
         )}
       />

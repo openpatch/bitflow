@@ -1,5 +1,12 @@
 import { css, Theme } from "@emotion/react";
-import { AutoGrid, Box, Code, Markdown, useTheme } from "@openpatch/patches";
+import {
+  AutoGrid,
+  Box,
+  Code,
+  CodeProps,
+  Markdown,
+  useTheme,
+} from "@openpatch/patches";
 import produce, { Draft } from "immer";
 import {
   createContext,
@@ -12,6 +19,7 @@ import {
   useState,
 } from "react";
 import ReactMarkdown from "react-markdown";
+import { CodeComponent } from "react-markdown/lib/ast-to-react";
 import gfm from "remark-gfm";
 import { Feedback } from "./Feedback";
 import {
@@ -94,14 +102,9 @@ const useBlank = (id: string) => {
   };
 };
 
-const CodeWithBlanks = ({
-  value,
-  language,
-}: {
-  value: string;
-  language: string;
-}) => {
-  return <Code language={language}>{value}</Code>;
+const CodeWithBlanks: CodeComponent = ({ className, children }) => {
+  const language = className?.split("language-")?.[1];
+  return <Code language={language}>{children}</Code>;
 };
 
 const Blank = ({ node }: { node: any }) => {
@@ -155,7 +158,7 @@ const Blank = ({ node }: { node: any }) => {
 };
 
 const renderers = {
-  delete: Blank,
+  del: Blank,
   code: CodeWithBlanks,
 };
 
@@ -214,8 +217,8 @@ export const Task: TaskBit["Task"] = forwardRef(
             }}
           >
             <ReactMarkdown
-              plugins={[gfm]}
-              renderers={renderers}
+              remarkPlugins={[gfm]}
+              components={renderers}
               children={task.view.textWithBlanks}
             />
           </blanksContext.Provider>

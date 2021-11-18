@@ -63,12 +63,11 @@ export const ViewForm: StartBit<IStart>["ViewForm"] = ({ name }) => {
         name={`${name}.view.markdown`}
         label={t("markdown")}
         defaultValue=""
-        render={({ value, onChange, onBlur }) => (
+        render={({ value, onChange }) => (
           <MarkdownEditor
             value={value}
             variant="input"
-            onChange={(_, v) => onChange(v)}
-            onBlur={onBlur}
+            onChange={(v) => onChange(v)}
           />
         )}
       />

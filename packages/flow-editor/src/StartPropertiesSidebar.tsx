@@ -31,12 +31,11 @@ const MetaForm = ({ name }: { name: `nodes.${number}` }) => {
         label={t("description")}
         name={`${name}.data.description`}
         defaultValue=""
-        render={({ value, onChange, onBlur }) => (
+        render={({ value, onChange }) => (
           <MarkdownEditor
             value={value}
             variant="input"
-            onChange={(_, v) => onChange(v)}
-            onBlur={onBlur}
+            onChange={(v) => onChange(v)}
           />
         )}
       />

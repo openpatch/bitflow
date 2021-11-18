@@ -46,12 +46,11 @@ export const FeedbackForm: TaskBit["FeedbackForm"] = ({ name }) => {
             name={`${name}.feedback.patterns[${index}].feedback.message`}
             defaultValue=""
             label={t("message")}
-            render={({ value, onChange, onBlur }) => (
+            render={({ value, onChange }) => (
               <MarkdownEditor
                 value={value}
                 variant="input"
-                onChange={(_, value) => onChange(value)}
-                onBlur={onBlur}
+                onChange={(value) => onChange(value)}
               />
             )}
           />
