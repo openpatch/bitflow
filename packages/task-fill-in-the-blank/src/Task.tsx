@@ -19,7 +19,6 @@ import {
   useState,
 } from "react";
 import ReactMarkdown from "react-markdown";
-import { CodeComponent } from "react-markdown/lib/ast-to-react";
 import gfm from "remark-gfm";
 import { Feedback } from "./Feedback";
 import {
@@ -102,7 +101,7 @@ const useBlank = (id: string) => {
   };
 };
 
-const CodeWithBlanks: CodeComponent = ({ className, children }) => {
+const CodeWithBlanks = ({ className, children }: any) => {
   const language = className?.split("language-")?.[1];
   return <Code language={language}>{children}</Code>;
 };
