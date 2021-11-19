@@ -37,7 +37,7 @@
     "typeface-rubik": "1.1.13",
     "typeface-ubuntu-mono": "1.1.13",
     "zod": "3.9.8",
-    "zod-to-json-schema": "3.9.5"
+    "zod-to-json-schema": "3.11.2"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",
