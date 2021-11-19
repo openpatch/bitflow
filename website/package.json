@@ -1,6 +1,6 @@
 {
   "name": "website",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,7 +19,7 @@
     "@bitflow/provider": "0.4.0",
     "@bitflow/start-simple": "0.4.0",
     "@bitflow/task-choice": "0.4.0",
-    "@bitflow/task-fill-in-the-blank": "0.4.0",
+    "@bitflow/task-fill-in-the-blank": "0.4.1",
     "@bitflow/task-input": "0.4.0",
     "@bitflow/task-yes-no": "0.4.0",
     "@bitflow/title-simple": "0.4.0",

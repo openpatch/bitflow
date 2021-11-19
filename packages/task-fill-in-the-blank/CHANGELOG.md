@@ -1,5 +1,11 @@
 # @bitflow/task-fill-in-the-blank
 
+## 0.4.1
+
+### Patch Changes
+
+- 6e3bc0d: downgrade react-markdown version 7 use esm only which is coursing trouble with nextjs. Therefore, we are downgrading to version 6.
+
 ## 0.4.0
 
 ### Minor Changes
