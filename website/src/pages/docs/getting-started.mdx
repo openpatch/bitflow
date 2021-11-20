@@ -5,7 +5,65 @@ export const meta = {
   title: "Documentation",
 };
 
+## Terminology
+
+Flow-based assessments with Bitflow consits of a [Flow](/docs/flow). A [Flow](/docs/flow) definies the logic of your
+assessment. A Flow is defined by nodes and edges. A edge just connects two nodes. A node can either be an interactive
+one or a control one. Interactive meaning requiring interaction by the user and control meaning working in the
+background without the user knowing that they are there. You can read more about [Flows here](/docs/flow).
+
+You can use the [Do](/docs/do) component for executing a [Flow](/docs/flow) and the [Report](/docs/report) components
+for showing the results.
+
+
+## Installation
+
+At minimum you need to install `@biflow/provider`, one start bit e.g. `@bitflow/start-simple`, one end bit e.g.
+`@bitflow/end-tries`. Of course you also want to have some tasks bits e.g. `@bitflow/task-choice`. See
+[Bits](/docs/bits) for more details on the different bits you can install.
+
 ## Usage
+
+A minimal example using the [DoLocal](/docs/do-local) would look like this:
+
+```tsx
+import { PatchesProvider } from "@openpatch/patches";
+import { BitflowProvider } from "@bitflow/provider";
+import * as startSimple from "@bitflow/start-simple";
+import * as endTries from "@bitflow/end-tries";
+import * taskChoice from "@bitflow/task-choice";
+import { DoLocal } from "@bitflow/do-local";
+
+export default () => {
+  return (
+    <PatchesProvider>
+      <BitflowProvider
+        config={{}}
+        bits={{
+          end: {
+            tries: endTries
+          },
+          start: {
+            simple: startSimple
+          },
+          input: {},
+          task: {
+            choice: taskChoice
+          },
+          title: {}
+        }}
+      >
+        <DoLocal flow={...} />
+      </BitflowProvider>
+    </PatchesProvider>
+  )
+}
+```
+
+If you want to evaluate and store the answers on your server you need to do a little more by using the [Do](/docs/do)
+component.
+
+## Example
 
 You can find a minimal example in the [example
 folder](https://github.com/openpatch/bitflow/tree/main/examples/nextjs-client-side-assessment)
