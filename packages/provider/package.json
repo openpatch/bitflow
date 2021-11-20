@@ -32,7 +32,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "start": "tsc --build --watch",
-    "build": "concurrently yarn:build:* && ../../fixup",
+    "build": "concurrently yarn:build:*",
     "clean": "tsc --build --clean",
     "test": "jest --env=jsdom --passWithNoTests",
     "test:coverage": "yarn test --coverage",

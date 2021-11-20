@@ -33,7 +33,7 @@
     "prebuild": "rimraf dist",
     "start": "concurrently yarn:start:*",
     "start:build": "tsc --build --watch",
-    "build": "concurrently yarn:build:* && ../../fixup",
+    "build": "concurrently yarn:build:*",
     "clean": "tsc --build --clean",
     "test": "jest --env=jsdom --passWithNoTests",
     "test:coverage": "yarn test --coverage",
