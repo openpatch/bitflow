@@ -1,5 +1,6 @@
 import {
   FlowNode,
+  FlowSynchronizeNode,
   PortalInput,
   PortalOutput,
   SplitAnswer,
@@ -101,7 +102,7 @@ export const NodesSidebar = ({}: NodesSidebarProps) => {
           <CheckpointNode maxWidth="100%" hideHandles />
         </Box>
         <Box
-          onDragStart={(e) => onDragStart<null>(e, "synchronize", null)}
+          onDragStart={(e) => onDragStart<FlowSynchronizeNode["data"]>(e, "synchronize", { unlocked: false })}
           draggable
         >
           <SynchronizeNode maxWidth="100%" hideHandles />
