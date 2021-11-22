@@ -1,5 +1,18 @@
 # example-nextjs-client-side-assessment
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [fae5a2b]
+  - @bitflow/core@0.5.1
+  - @bitflow/do-local@0.4.1
+  - @bitflow/end-tries@0.4.1
+  - @bitflow/provider@0.4.1
+  - @bitflow/start-simple@0.4.1
+  - @bitflow/task-choice@0.4.1
+  - @bitflow/flow-engine@0.4.1
+
 ## 0.4.0
 
 ### Minor Changes
