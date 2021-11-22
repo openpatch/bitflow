@@ -4692,35 +4692,6 @@
     rodemirror "^1.6.5"
     styled-system "^5.1.5"
 
-"@openpatch/patches@5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@openpatch/patches/-/patches-5.1.1.tgz#ca506df8f2083fd4539882a2fb749ed4e4a9fe37"
-  integrity sha512-fbQs+987b/4pL6XDNObQixSLspudqrbxYkYbTD1jknne0NcRiuqLp8SHq/8HGmjOr+BqPTddJgnFZMkPu91JeQ==
-  dependencies:
-    "@codemirror/closebrackets" "^0.19.0"
-    "@codemirror/comment" "^0.19.0"
-    "@codemirror/gutter" "^0.19.5"
-    "@codemirror/highlight" "^0.19.6"
-    "@codemirror/lang-java" "^0.19.1"
-    "@codemirror/lang-javascript" "^0.19.3"
-    "@codemirror/lang-markdown" "^0.19.2"
-    "@codemirror/lang-python" "^0.19.2"
-    "@codemirror/lang-sql" "^0.19.4"
-    "@codemirror/language" "^0.19.5"
-    "@codemirror/matchbrackets" "^0.19.3"
-    "@codemirror/state" "^0.19.5"
-    "@codemirror/view" "^0.19.19"
-    lodash "^4.17.21"
-    polished "^4.1.1"
-    react-markdown "^5.0.3"
-    react-modal "^3.12.1"
-    react-syntax-highlighter "^15.4.4"
-    react-tabs "^3.2.1"
-    react-toastify "^8.0.3"
-    remark-gfm "^1.0.0"
-    rodemirror "^1.6.5"
-    styled-system "^5.1.5"
-
 "@pmmmwh/react-refresh-webpack-plugin@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.3.tgz#1eec460596d200c0236bf195b078a5d1df89b766"
@@ -6634,6 +6605,15 @@
   version "17.0.35"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.35.tgz#217164cf830267d56cd1aec09dcf25a541eedd4c"
   integrity sha512-r3C8/TJuri/SLZiiwwxQoLAoavaczARfT9up9b4Jr65+ErAUX3MIkU0oMOQnrpfgHme8zIqZLX7O5nnjm5Wayw==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@17.0.36":
+  version "17.0.36"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.36.tgz#0d81e0e2419e6a8e9ba6af5e3a0608e70835d7d1"
+  integrity sha512-CUFUp01OdfbpN/76v4koqgcpcRGT3sYOq3U3N6q0ZVGcyeP40NUdVU+EWe3hs34RNaTefiYyBzOpxBBidCc5zw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
