@@ -19,6 +19,7 @@ import {
   SynchronizeNode,
 } from "@bitflow/flow";
 import { useBits } from "@bitflow/provider";
+import { css } from "@emotion/react";
 import { AutoGrid, Box, Heading } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
 import { DragEvent, Fragment } from "react";
@@ -29,13 +30,14 @@ export type NodesSidebarProps = {};
 
 type BitNodesProps = {
   type: "start" | "end" | "input" | "task" | "title";
+  disabled?: boolean;
   onDragStart: (
     e: DragEvent<HTMLDivElement>,
     type: BitNodesProps["type"],
     node: unknown
   ) => void;
 };
-const BitNodes = ({ onDragStart, type }: BitNodesProps) => {
+const BitNodes = ({ disabled, onDragStart, type }: BitNodesProps) => {
   const { t } = useTranslations(translations);
   const bits = useBits(type as "task");
 
@@ -50,8 +52,17 @@ const BitNodes = ({ onDragStart, type }: BitNodesProps) => {
         return (
           <Box
             key={`${type}-${subtype}`}
-            onDragStart={(e) => onDragStart(e, type, example)}
-            draggable
+            css={[
+              disabled &&
+                css`
+                  opacity: 0.5;
+                  cursor: disallowed;
+                `,
+            ]}
+            onDragStart={
+              !disabled ? (e) => onDragStart(e, type, example) : undefined
+            }
+            draggable={!disabled}
           >
             <BitNode
               type={type}
@@ -102,7 +113,11 @@ export const NodesSidebar = ({}: NodesSidebarProps) => {
           <CheckpointNode maxWidth="100%" hideHandles />
         </Box>
         <Box
-          onDragStart={(e) => onDragStart<FlowSynchronizeNode["data"]>(e, "synchronize", { unlocked: false })}
+          onDragStart={(e) =>
+            onDragStart<FlowSynchronizeNode["data"]>(e, "synchronize", {
+              unlocked: false,
+            })
+          }
           draggable
         >
           <SynchronizeNode maxWidth="100%" hideHandles />

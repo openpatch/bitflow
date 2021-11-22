@@ -11,6 +11,7 @@ export const BitNode = (
   node: {
     hideHandles?: boolean;
     maxWidth?: FlowNodeProps["maxWidth"];
+    disabled?: boolean;
   } & Pick<
     FlowStartNode | FlowEndNode | FlowInputNode | FlowTaskNode | FlowTitleNode,
     "type"
@@ -31,6 +32,7 @@ export const BitNode = (
         count={node.data?.count}
         description={node.data?.description}
         sourceHandles={1}
+        disabled={node?.disabled}
         footerLeft={node.type || ""}
         footerRight={node.data?.subtype || ""}
         hideHandles={node.hideHandles}
@@ -42,6 +44,7 @@ export const BitNode = (
       <FlowNode
         tone="red"
         title={node.data?.name}
+        disabled={node?.disabled}
         count={node.data?.count}
         description={node.data?.description}
         footerLeft={node.type || ""}
@@ -58,6 +61,7 @@ export const BitNode = (
       title={node.data?.name || ""}
       count={node.data?.count}
       description={node.data?.description || ""}
+      disabled={node?.disabled}
       footerLeft={node.type || ""}
       footerRight={node.data?.subtype || ""}
       targetHandles={1}

@@ -191,7 +191,7 @@ export const FlowNode: FC<FlowNodeProps> = ({
       padding="xsmall"
       css={css`
         opacity: ${disabled ? 0.5 : 1};
-        cursor: grab;
+        cursor: ${disabled ? "not-allowed" : "grab"};
         user-select: none;
         max-width: ${maxWidth};
         border-color: ${primaryTextColor};
