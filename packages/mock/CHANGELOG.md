@@ -1,5 +1,12 @@
 # @bitflow/mock
 
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [fae5a2b]
+  - @bitflow/core@0.5.1
+
 ## 0.3.1
 
 ### Patch Changes

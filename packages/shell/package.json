@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/shell",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -46,11 +46,11 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
   },
   "dependencies": {
-    "@bitflow/core": "0.5.0"
+    "@bitflow/core": "0.5.1"
   },
   "devDependencies": {
-    "@bitflow/input-markdown": "0.4.0",
-    "@bitflow/task-choice": "0.4.0"
+    "@bitflow/input-markdown": "0.4.1",
+    "@bitflow/task-choice": "0.4.1"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",

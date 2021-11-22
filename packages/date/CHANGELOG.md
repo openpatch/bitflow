@@ -1,5 +1,12 @@
 # @bitflow/date
 
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies [fae5a2b]
+  - @bitflow/provider@0.4.1
+
 ## 0.2.3
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @bitflow/core
 
+## 0.5.1
+
+### Patch Changes
+
+- fae5a2b: Upgrade dependencies, add disabled state to BitNode and fix default value of SynchronizeNode when dnd.
+
 ## 0.5.0
 
 ### Minor Changes

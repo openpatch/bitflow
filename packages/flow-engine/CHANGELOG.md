@@ -1,5 +1,12 @@
 # @bitflow/flow-engine
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [fae5a2b]
+  - @bitflow/core@0.5.1
+
 ## 0.4.0
 
 ### Minor Changes

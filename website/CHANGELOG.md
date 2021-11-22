@@ -1,5 +1,25 @@
 # website
 
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [fae5a2b]
+  - @bitflow/core@0.5.1
+  - @bitflow/do-local@0.4.1
+  - @bitflow/end-tries@0.4.1
+  - @bitflow/flow@0.6.1
+  - @bitflow/flow-editor@0.4.1
+  - @bitflow/input-markdown@0.4.1
+  - @bitflow/provider@0.4.1
+  - @bitflow/start-simple@0.4.1
+  - @bitflow/task-choice@0.4.1
+  - @bitflow/task-fill-in-the-blank@0.4.2
+  - @bitflow/task-input@0.4.1
+  - @bitflow/task-yes-no@0.4.1
+  - @bitflow/title-simple@0.4.1
+  - @bitflow/flow-engine@0.4.1
+
 ## 0.4.1
 
 ### Patch Changes
