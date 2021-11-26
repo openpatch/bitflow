@@ -1,5 +1,12 @@
 # website
 
+## 0.4.3
+
+### Patch Changes
+
+- Updated dependencies [77d67c9]
+  - @bitflow/task-input@0.4.2
+
 ## 0.4.2
 
 ### Patch Changes
