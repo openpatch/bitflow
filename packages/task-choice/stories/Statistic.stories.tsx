@@ -16,6 +16,7 @@ export const Default = () => (
         ab: { count: 4, correct: true },
         a: { count: 2, correct: false },
         abc: { count: 7, correct: false },
+        cb: { count: 7, correct: false },
       },
     }}
     task={{
@@ -25,7 +26,7 @@ export const Default = () => (
       view: {
         variant: "multiple",
         instruction: "Select an answer",
-        choices: [{ markdown: "A" }, { markdown: "B" }, { markdown: "C" }],
+        choices: [{ markdown: "#A yo" }, { markdown: "!B **test**" }, { markdown: "C" }],
       },
       evaluation: {
         correct: [],

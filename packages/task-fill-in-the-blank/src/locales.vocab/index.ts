@@ -21,6 +21,8 @@ const translations = createTranslationFile<
     info: () => "Info";
     instruction: () => "Instruction";
     message: () => "Message";
+    "statistic-most-frequent-answers": () => "Most frequent answers";
+    "statistic-most-frequent-answers-description": () => "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank.";
     name: () => "Fill in the blank";
     pattern: (values: { pattern: string }) => string;
     "pattern-error-duplicate": () => "A pattern can not contain duplicates";
@@ -56,6 +58,9 @@ const translations = createTranslationFile<
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    "statistic-most-frequent-answers": "Most frequent answers",
+    "statistic-most-frequent-answers-description":
+      "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank.",
     name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
@@ -91,6 +96,9 @@ const translations = createTranslationFile<
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    "statistic-most-frequent-answers": "Most frequent answers",
+    "statistic-most-frequent-answers-description":
+      "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank.",
     name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
@@ -126,6 +134,9 @@ const translations = createTranslationFile<
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    "statistic-most-frequent-answers": "Most frequent answers",
+    "statistic-most-frequent-answers-description":
+      "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank.",
     name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
@@ -161,6 +172,9 @@ const translations = createTranslationFile<
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    "statistic-most-frequent-answers": "Most frequent answers",
+    "statistic-most-frequent-answers-description":
+      "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank.",
     name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
@@ -196,6 +210,9 @@ const translations = createTranslationFile<
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    "statistic-most-frequent-answers": "Most frequent answers",
+    "statistic-most-frequent-answers-description":
+      "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank.",
     name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
@@ -231,6 +248,9 @@ const translations = createTranslationFile<
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    "statistic-most-frequent-answers": "Most frequent answers",
+    "statistic-most-frequent-answers-description":
+      "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank.",
     name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
@@ -266,6 +286,9 @@ const translations = createTranslationFile<
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    "statistic-most-frequent-answers": "Most frequent answers",
+    "statistic-most-frequent-answers-description":
+      "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank.",
     name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
@@ -301,6 +324,9 @@ const translations = createTranslationFile<
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    "statistic-most-frequent-answers": "Most frequent answers",
+    "statistic-most-frequent-answers-description":
+      "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank.",
     name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",
@@ -336,6 +362,9 @@ const translations = createTranslationFile<
     info: "Info",
     instruction: "Instruction",
     message: "Message",
+    "statistic-most-frequent-answers": "Most frequent answers",
+    "statistic-most-frequent-answers-description":
+      "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank.",
     name: "Fill in the blank",
     pattern: "Pattern {pattern}",
     "pattern-error-duplicate": "A pattern can not contain duplicates",

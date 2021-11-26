@@ -83,6 +83,9 @@
   "patterns": {
     "message": "Patterns"
   },
+  "statistic-patterns-description": {
+    "message": "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices."
+  },
   "success": {
     "message": "Success"
   },

@@ -34,6 +34,7 @@ const translations = createTranslationFile<
     "pattern-error-exists": () => "This pattern already exists";
     "pattern-error-invalid": () => "Not a valid pattern";
     patterns: () => "Patterns";
+    "statistic-patterns-description": () => "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.";
     success: () => "Success";
     up: () => "Up";
     variant: () => "Variant";
@@ -73,6 +74,8 @@ const translations = createTranslationFile<
     "pattern-error-exists": "This pattern already exists",
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -111,6 +114,8 @@ const translations = createTranslationFile<
     "pattern-error-exists": "This pattern already exists",
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -149,6 +154,8 @@ const translations = createTranslationFile<
     "pattern-error-exists": "This pattern already exists",
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -187,6 +194,8 @@ const translations = createTranslationFile<
     "pattern-error-exists": "This pattern already exists",
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -225,6 +234,8 @@ const translations = createTranslationFile<
     "pattern-error-exists": "This pattern already exists",
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -263,6 +274,8 @@ const translations = createTranslationFile<
     "pattern-error-exists": "This pattern already exists",
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -301,6 +314,8 @@ const translations = createTranslationFile<
     "pattern-error-exists": "This pattern already exists",
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -339,6 +354,8 @@ const translations = createTranslationFile<
     "pattern-error-exists": "This pattern already exists",
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -377,6 +394,8 @@ const translations = createTranslationFile<
     "pattern-error-exists": "This pattern already exists",
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     success: "Success",
     up: "Up",
     variant: "Variant",

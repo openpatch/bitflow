@@ -44,6 +44,12 @@
   "message": {
     "message": "Message"
   },
+  "statistic-most-frequent-answers": {
+    "message": "Most frequent answers"
+  },
+  "statistic-most-frequent-answers-description": {
+    "message": "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank."
+  },
   "name": {
     "message": "Fill in the blank"
   },
