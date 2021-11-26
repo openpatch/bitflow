@@ -63,6 +63,27 @@ export const Statistic: TaskBit["Statistic"] = ({ statistic }) => {
               tags={inputs}
               minSize={12}
               maxSize={35}
+              shuffle={false}
+              renderer={(tag: {value: string, key: string, count: number }, size: number, color: string) => {
+                return (
+                  <Box
+                    key={tag.key || tag.value}
+                    display="inline-block"
+                    padding="xxsmall"
+                    title={`${tag.count}`}
+                    borderRadius="small"
+                    borderWidth="light"
+                    css={css`
+                      border-style: solid;
+                      border-color: ${color};
+                      color: ${color};
+                      font-size: ${size}px;
+                    `}
+                  >
+                    {tag.value}
+                  </Box>
+                );
+              }}
               colorOptions={{
                 luminosity: "dark",
                 hue: theme.colors.warning["500"],
