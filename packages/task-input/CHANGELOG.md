@@ -1,5 +1,11 @@
 # @bitflow/task-input
 
+## 0.4.2
+
+### Patch Changes
+
+- 77d67c9: Improve readability of input statistic by using a colored box around entries.
+
 ## 0.4.1
 
 ### Patch Changes
