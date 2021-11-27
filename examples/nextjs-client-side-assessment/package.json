@@ -1,6 +1,6 @@
 {
   "name": "example-nextjs-client-side-assessment",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -15,7 +15,7 @@
     "@bitflow/flow-engine": "0.4.1",
     "@bitflow/provider": "0.4.1",
     "@bitflow/start-simple": "0.4.1",
-    "@bitflow/task-choice": "0.4.1",
+    "@bitflow/task-choice": "0.4.2",
     "@emotion/cache": "11.6.0",
     "@emotion/react": "11.6.0",
     "@emotion/styled": "11.6.0",

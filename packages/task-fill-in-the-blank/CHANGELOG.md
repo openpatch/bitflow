@@ -1,5 +1,11 @@
 # @bitflow/task-fill-in-the-blank
 
+## 0.4.3
+
+### Patch Changes
+
+- da09019: Improve ui for statistic component by adding tooltips and color.
+
 ## 0.4.2
 
 ### Patch Changes

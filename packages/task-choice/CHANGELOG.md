@@ -1,5 +1,11 @@
 # @bitflow/task-choice
 
+## 0.4.2
+
+### Patch Changes
+
+- da09019: Improve ui of statistic component by adding explaining tooltips and reducing colors.
+
 ## 0.4.1
 
 ### Patch Changes
