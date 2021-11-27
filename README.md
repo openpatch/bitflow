@@ -11,10 +11,11 @@ Bitflow is a library for building flow-based assessment systems. Feel free to ch
 
 Before you start you need to install the Biflow dependencies and set up the monorepo via `yarn boot`.
 
-If you want to contribute or develop custom features the easiest way is to start the storybook:
+If you want to contribute or develop custom features the easiest way is to start the storybook and to put the desired package in dev mode:
 
 ```
 yarn storybook
+yarn workspace @bitflow/task-choice dev
 ```
 
 or you can start the examples via:

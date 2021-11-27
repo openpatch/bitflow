@@ -31,7 +31,8 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "start": "tsc --build --watch",
+    "start": "concurrently yarn:start:*",
+    "start:build": "tsc --build --watch",
     "build": "concurrently yarn:build:*",
     "clean": "tsc --build --clean",
     "test": "jest --env=jsdom --passWithNoTests",

@@ -31,9 +31,9 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "start": "concurrently yarn:start:*",
-    "start:build": "tsc --build --watch",
-    "start:locale": "vocab compile --watch",
+    "task": "concurrently yarn:task:*",
+    "task:build": "tsc --build --watch",
+    "task:locale": "vocab compile --watch",
     "build": "yarn build:locale && concurrently 'yarn build:esm' 'yarn build:cjs' 'yarn build:types'",
     "clean": "tsc --build --clean",
     "test": "jest --env=jsdom --passWithNoTests",
