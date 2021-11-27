@@ -15,6 +15,7 @@
     "lint": "lerna run lint --no-private --stream",
     "clean": "lerna run clean --no-private --stream",
     "build": "lerna run build --no-private --stream",
+    "build:locale": "lerna run build:locale --no-private --stream",
     "prestart": "yarn && yarn bootstrap",
     "publish:ci:npm": "lerna publish from-package -y --no-verify-access",
     "publish:ci:gpr": "lerna publish from-package -y --no-verify-access --registry https://npm.pkg.github.com/",

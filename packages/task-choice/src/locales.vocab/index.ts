@@ -34,7 +34,7 @@ const translations = createTranslationFile<
     "pattern-error-exists": () => "This pattern already exists";
     "pattern-error-invalid": () => "Not a valid pattern";
     patterns: () => "Patterns";
-    "statistic-patterns-description": () => "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.";
+    "statistic-patterns-description": () => "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices.";
     success: () => "Success";
     up: () => "Up";
     variant: () => "Variant";
@@ -75,7 +75,7 @@ const translations = createTranslationFile<
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -115,7 +115,7 @@ const translations = createTranslationFile<
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -155,7 +155,7 @@ const translations = createTranslationFile<
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -195,7 +195,7 @@ const translations = createTranslationFile<
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -235,7 +235,7 @@ const translations = createTranslationFile<
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -275,7 +275,7 @@ const translations = createTranslationFile<
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -315,7 +315,7 @@ const translations = createTranslationFile<
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -355,7 +355,7 @@ const translations = createTranslationFile<
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices.",
     success: "Success",
     up: "Up",
     variant: "Variant",
@@ -395,7 +395,7 @@ const translations = createTranslationFile<
     "pattern-error-invalid": "Not a valid pattern",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices.",
     success: "Success",
     up: "Up",
     variant: "Variant",

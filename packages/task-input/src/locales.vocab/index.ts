@@ -23,7 +23,7 @@ const translations = createTranslationFile<
     "pattern-regex": () => "You can input a RegEx";
     "pattern-title": (values: { pattern: string }) => string;
     patterns: () => "Patterns";
-    "statistic-patterns-description": () => "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.";
+    "statistic-patterns-description": () => "Here you can see the frequency of the found feedback patterns.";
     severity: () => "Severity";
     success: () => "Success";
     up: () => "Up";
@@ -51,7 +51,7 @@ const translations = createTranslationFile<
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the found feedback patterns.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -78,7 +78,7 @@ const translations = createTranslationFile<
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the found feedback patterns.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -105,7 +105,7 @@ const translations = createTranslationFile<
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the found feedback patterns.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -132,7 +132,7 @@ const translations = createTranslationFile<
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the found feedback patterns.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -159,7 +159,7 @@ const translations = createTranslationFile<
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the found feedback patterns.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -186,7 +186,7 @@ const translations = createTranslationFile<
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the found feedback patterns.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -213,7 +213,7 @@ const translations = createTranslationFile<
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the found feedback patterns.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -240,7 +240,7 @@ const translations = createTranslationFile<
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the found feedback patterns.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -267,7 +267,7 @@ const translations = createTranslationFile<
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
     "statistic-patterns-description":
-      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
+      "Here you can see the frequency of the found feedback patterns.",
     severity: "Severity",
     success: "Success",
     up: "Up",
