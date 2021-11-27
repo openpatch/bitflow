@@ -1,5 +1,12 @@
 # example-nextjs-client-side-assessment
 
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [da09019]
+  - @bitflow/task-choice@0.4.2
+
 ## 0.4.1
 
 ### Patch Changes

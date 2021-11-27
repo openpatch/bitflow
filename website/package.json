@@ -1,6 +1,6 @@
 {
   "name": "website",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -18,9 +18,9 @@
     "@bitflow/input-markdown": "0.4.1",
     "@bitflow/provider": "0.4.1",
     "@bitflow/start-simple": "0.4.1",
-    "@bitflow/task-choice": "0.4.1",
-    "@bitflow/task-fill-in-the-blank": "0.4.2",
-    "@bitflow/task-input": "0.4.2",
+    "@bitflow/task-choice": "0.4.2",
+    "@bitflow/task-fill-in-the-blank": "0.4.3",
+    "@bitflow/task-input": "0.4.3",
     "@bitflow/task-yes-no": "0.4.1",
     "@bitflow/title-simple": "0.4.1",
     "@bitflow/zod-json-schema": "0.1.1",

@@ -1,5 +1,12 @@
 # @bitflow/task-input
 
+## 0.4.3
+
+### Patch Changes
+
+- b684aef: Improve ui of statistic component by adding tooltips.
+- da09019: Improve readability of input statistic by using a colored box around entries.
+
 ## 0.4.2
 
 ### Patch Changes

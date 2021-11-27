@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@bitflow/input-markdown": "0.4.1",
-    "@bitflow/task-choice": "0.4.1"
+    "@bitflow/task-choice": "0.4.2"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",

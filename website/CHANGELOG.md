@@ -1,5 +1,17 @@
 # website
 
+## 0.4.4
+
+### Patch Changes
+
+- Updated dependencies [da09019]
+- Updated dependencies [b684aef]
+- Updated dependencies [da09019]
+- Updated dependencies [da09019]
+  - @bitflow/task-fill-in-the-blank@0.4.3
+  - @bitflow/task-input@0.4.3
+  - @bitflow/task-choice@0.4.2
+
 ## 0.4.3
 
 ### Patch Changes
