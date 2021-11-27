@@ -61,6 +61,13 @@ jobs:
       - name: Install Dependencies
         run: yarn --frozen-lockfile --silent boot
 
+      - name: Commit locales update
+        run: |
+          git config --global user.name 'patcher'
+          git config --global user.email 'git@openpatch.org'
+          git add packages/**/src/locales.vocab
+          git commit -m "automated locales update"
+
       - name: Create Release Pull Request
         uses: changesets/action@master
         env:
