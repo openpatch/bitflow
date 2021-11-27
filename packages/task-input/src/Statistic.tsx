@@ -1,6 +1,7 @@
 import { lerpColor } from "@bitflow/core";
 import { css } from "@emotion/react";
-import { AutoGrid, Box, Heading, Text, useTheme } from "@openpatch/patches";
+import { AutoGrid, Box, Heading, Icon, Text, useTheme } from "@openpatch/patches";
+import { Help } from "@openpatch/patches/icons"
 import { useTranslations } from "@vocab/react";
 import { Fragment } from "react";
 import { TagCloud } from "react-tagcloud";
@@ -34,13 +35,15 @@ export const Statistic: TaskBit["Statistic"] = ({ statistic }) => {
       <AutoGrid gap="standard">
         {patterns.length > 0 && (
           <Fragment>
-            <Heading as="h2">{t("patterns")}</Heading>
+            <Heading as="h2" title={t("statistic-patterns-description")}>{t("patterns")} <Icon size="small" color="info"><Help /></Icon></Heading>
             {patterns.map((p, i) => (
               <Box
                 display="flex"
                 borderRadius="standard"
+                borderWidth="light"
+                borderStyle="solid"
                 css={css`
-                  background-color: ${lerpColor(
+                  border-color: ${lerpColor(
                     "#84C5F4",
                     "#DCEEFB",
                     i / patterns.length
@@ -58,7 +61,7 @@ export const Statistic: TaskBit["Statistic"] = ({ statistic }) => {
         )}
         {inputs.length > 0 && (
           <Fragment>
-            <Heading as="h2">{t("inputs")}</Heading>
+            <Heading as="h2" title={t("statistic-inputs-description")}>{t("inputs")} <Icon size="small" color="info"><Help /></Icon></Heading>
             <TagCloud
               tags={inputs}
               minSize={12}
@@ -70,6 +73,7 @@ export const Statistic: TaskBit["Statistic"] = ({ statistic }) => {
                     key={tag.key || tag.value}
                     display="inline-block"
                     padding="xxsmall"
+                    margin="xsmall"
                     title={`${tag.count}`}
                     borderRadius="small"
                     borderWidth="light"

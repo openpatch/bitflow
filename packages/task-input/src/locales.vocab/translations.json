@@ -17,6 +17,9 @@
   "inputs": {
     "message": "Inputs"
   },
+  "statistic-inputs-description": {
+    "message": "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones."
+  },
   "instruction": {
     "message": "Instruction"
   },
@@ -46,6 +49,9 @@
   },
   "patterns": {
     "message": "Patterns"
+  },
+  "statistic-patterns-description": {
+    "message": "Here you can see the frequency of the found feedback patterns."
   },
   "severity": {
     "message": "Severity"

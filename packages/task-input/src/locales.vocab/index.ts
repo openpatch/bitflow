@@ -12,6 +12,7 @@ const translations = createTranslationFile<
     error: () => "Error";
     info: () => "Info";
     inputs: () => "Inputs";
+    "statistic-inputs-description": () => "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones.";
     instruction: () => "Instruction";
     message: () => "Message";
     name: () => "Input";
@@ -22,6 +23,7 @@ const translations = createTranslationFile<
     "pattern-regex": () => "You can input a RegEx";
     "pattern-title": (values: { pattern: string }) => string;
     patterns: () => "Patterns";
+    "statistic-patterns-description": () => "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.";
     severity: () => "Severity";
     success: () => "Success";
     up: () => "Up";
@@ -36,6 +38,8 @@ const translations = createTranslationFile<
     error: "Error",
     info: "Info",
     inputs: "Inputs",
+    "statistic-inputs-description":
+      "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones.",
     instruction: "Instruction",
     message: "Message",
     name: "Input",
@@ -46,6 +50,8 @@ const translations = createTranslationFile<
     "pattern-regex": "You can input a RegEx",
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -59,6 +65,8 @@ const translations = createTranslationFile<
     error: "Error",
     info: "Info",
     inputs: "Inputs",
+    "statistic-inputs-description":
+      "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones.",
     instruction: "Instruction",
     message: "Message",
     name: "Input",
@@ -69,6 +77,8 @@ const translations = createTranslationFile<
     "pattern-regex": "You can input a RegEx",
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -82,6 +92,8 @@ const translations = createTranslationFile<
     error: "Error",
     info: "Info",
     inputs: "Inputs",
+    "statistic-inputs-description":
+      "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones.",
     instruction: "Instruction",
     message: "Message",
     name: "Input",
@@ -92,6 +104,8 @@ const translations = createTranslationFile<
     "pattern-regex": "You can input a RegEx",
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -105,6 +119,8 @@ const translations = createTranslationFile<
     error: "Error",
     info: "Info",
     inputs: "Inputs",
+    "statistic-inputs-description":
+      "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones.",
     instruction: "Instruction",
     message: "Message",
     name: "Input",
@@ -115,6 +131,8 @@ const translations = createTranslationFile<
     "pattern-regex": "You can input a RegEx",
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -128,6 +146,8 @@ const translations = createTranslationFile<
     error: "Error",
     info: "Info",
     inputs: "Inputs",
+    "statistic-inputs-description":
+      "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones.",
     instruction: "Instruction",
     message: "Message",
     name: "Input",
@@ -138,6 +158,8 @@ const translations = createTranslationFile<
     "pattern-regex": "You can input a RegEx",
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -151,6 +173,8 @@ const translations = createTranslationFile<
     error: "Error",
     info: "Info",
     inputs: "Inputs",
+    "statistic-inputs-description":
+      "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones.",
     instruction: "Instruction",
     message: "Message",
     name: "Input",
@@ -161,6 +185,8 @@ const translations = createTranslationFile<
     "pattern-regex": "You can input a RegEx",
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -174,6 +200,8 @@ const translations = createTranslationFile<
     error: "Error",
     info: "Info",
     inputs: "Inputs",
+    "statistic-inputs-description":
+      "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones.",
     instruction: "Instruction",
     message: "Message",
     name: "Input",
@@ -184,6 +212,8 @@ const translations = createTranslationFile<
     "pattern-regex": "You can input a RegEx",
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -197,6 +227,8 @@ const translations = createTranslationFile<
     error: "Error",
     info: "Info",
     inputs: "Inputs",
+    "statistic-inputs-description":
+      "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones.",
     instruction: "Instruction",
     message: "Message",
     name: "Input",
@@ -207,6 +239,8 @@ const translations = createTranslationFile<
     "pattern-regex": "You can input a RegEx",
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     severity: "Severity",
     success: "Success",
     up: "Up",
@@ -220,6 +254,8 @@ const translations = createTranslationFile<
     error: "Error",
     info: "Info",
     inputs: "Inputs",
+    "statistic-inputs-description":
+      "Here you can see the frequency of all answers represented in a cloud. Hovering over an answer will show you the frequency. Green highlighted answers are correct ones.",
     instruction: "Instruction",
     message: "Message",
     name: "Input",
@@ -230,6 +266,8 @@ const translations = createTranslationFile<
     "pattern-regex": "You can input a RegEx",
     "pattern-title": "Pattern {pattern}",
     patterns: "Patterns",
+    "statistic-patterns-description":
+      "Here you can see the frequency of the found feedback and evaluation patterns. Green highlighted patterns are correct ones, which match the evaluation pattern.",
     severity: "Severity",
     success: "Success",
     up: "Up",

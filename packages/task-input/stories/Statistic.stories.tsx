@@ -14,13 +14,41 @@ export const Default = () => (
       count: 5,
       inputs: {
         foo: {
-          count: 1,
+          count: 5,
           correct: true,
         },
         bar: {
+          count: 10,
+          correct: false,
+        },
+        class: {
+          count: 12,
+          correct: false,
+        },
+        public: {
+          count: 4,
+          correct: false,
+        },
+        test: {
           count: 1,
           correct: false,
         },
+        private: {
+          count: 8,
+          correct: false,
+        },
+        "this is a longer sentence which could happen": {
+          count: 1,
+          correct: false
+        },
+        "and another long sentence": {
+          count: 1,
+          correct: false
+        },
+        "another long sentence": {
+          count: 1,
+          correct: false
+        }
       },
       patterns: {
         foo: {
