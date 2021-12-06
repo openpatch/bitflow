@@ -88,7 +88,7 @@
     "ts-jest": "27.1.0",
     "ts-node": "10.4.0",
     "typescript": "4.5.2",
-    "typescript-styled-plugin": "0.18.1",
+    "typescript-styled-plugin": "0.18.2",
     "webpack": "5.64.4",
     "zod": "3.11.6"
   },
