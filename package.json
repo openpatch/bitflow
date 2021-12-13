@@ -87,7 +87,7 @@
     "rimraf": "3.0.2",
     "ts-jest": "27.1.1",
     "ts-node": "10.4.0",
-    "typescript": "4.5.3",
+    "typescript": "4.5.4",
     "typescript-styled-plugin": "0.18.2",
     "webpack": "5.65.0",
     "zod": "3.11.6"
