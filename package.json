@@ -30,11 +30,11 @@
     "storybook:build:docs": "build-storybook -s .storybook/public --docs"
   },
   "dependencies": {
-    "@babel/core": "7.16.0",
-    "@babel/plugin-transform-runtime": "7.16.4",
-    "@babel/preset-env": "7.16.4",
-    "@babel/preset-react": "7.16.0",
-    "@babel/preset-typescript": "7.16.0",
+    "@babel/core": "7.16.5",
+    "@babel/plugin-transform-runtime": "7.16.5",
+    "@babel/preset-env": "7.16.5",
+    "@babel/preset-react": "7.16.5",
+    "@babel/preset-typescript": "7.16.5",
     "@changesets/cli": "2.18.1",
     "@emotion/babel-preset-css-prop": "11.2.0",
     "@emotion/cache": "11.7.1",
