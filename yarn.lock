@@ -20924,10 +20924,10 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod-to-json-schema@3.11.2:
-  version "3.11.2"
-  resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-3.11.2.tgz#abdd682d90bcf1aa955f158b2dcdecb8192fcb12"
-  integrity sha512-bm1aGX1HdNxddRftVFxB2S0IgShnfzqZ6EL2Xu/y6W02RI8JAQV0jitp3S4OsLDZCGFrbVRe1ldVfMPH7o0rEA==
+zod-to-json-schema@3.11.3:
+  version "3.11.3"
+  resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-3.11.3.tgz#769b9f5da1f7bad821e7cac18e29bef6b9c46d6e"
+  integrity sha512-K5n/Ri8RHzxkmWXnCHoWqaZgSJ6VYnUGhKXnRbgQKCWGkOR3niJb2tXEqFuQTO9wdCp5d06VhYz6FixGiEettA==
   dependencies:
     zod "^3.11.6"
 
