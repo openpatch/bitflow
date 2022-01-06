@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/do",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -41,7 +41,7 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@bitflow/flow-engine": "0.4.1",
+    "@bitflow/flow-engine": "0.4.2",
     "@emotion/cache": "11.7.1",
     "@emotion/react": "11.7.1",
     "@emotion/styled": "11.6.0",
@@ -52,9 +52,9 @@
     "react-dom": "17.0.2"
   },
   "dependencies": {
-    "@bitflow/core": "0.5.1",
-    "@bitflow/provider": "0.4.1",
-    "@bitflow/shell": "0.5.1"
+    "@bitflow/core": "0.5.2",
+    "@bitflow/provider": "0.4.2",
+    "@bitflow/shell": "0.5.2"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",

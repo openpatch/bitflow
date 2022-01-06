@@ -1,5 +1,27 @@
 # website
 
+## 0.4.5
+
+### Patch Changes
+
+- [#372](https://github.com/openpatch/bitflow/pull/372) [`658b51a`](https://github.com/openpatch/bitflow/commit/658b51a367ea74bdcf36c6766988512fa2324d78) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Fix esm builds
+
+- Updated dependencies [[`658b51a`](https://github.com/openpatch/bitflow/commit/658b51a367ea74bdcf36c6766988512fa2324d78)]:
+  - @bitflow/core@0.5.2
+  - @bitflow/do-local@0.4.2
+  - @bitflow/end-tries@0.4.2
+  - @bitflow/flow@0.6.2
+  - @bitflow/flow-editor@0.4.2
+  - @bitflow/flow-engine@0.4.2
+  - @bitflow/input-markdown@0.4.2
+  - @bitflow/provider@0.4.2
+  - @bitflow/start-simple@0.4.2
+  - @bitflow/task-choice@0.4.3
+  - @bitflow/task-fill-in-the-blank@0.4.4
+  - @bitflow/task-input@0.4.4
+  - @bitflow/task-yes-no@0.4.2
+  - @bitflow/title-simple@0.4.2
+
 ## 0.4.4
 
 ### Patch Changes

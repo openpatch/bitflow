@@ -1,5 +1,14 @@
 # @bitflow/date
 
+## 0.2.5
+
+### Patch Changes
+
+- [#372](https://github.com/openpatch/bitflow/pull/372) [`658b51a`](https://github.com/openpatch/bitflow/commit/658b51a367ea74bdcf36c6766988512fa2324d78) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Fix esm builds
+
+- Updated dependencies [[`658b51a`](https://github.com/openpatch/bitflow/commit/658b51a367ea74bdcf36c6766988512fa2324d78)]:
+  - @bitflow/provider@0.4.2
+
 ## 0.2.4
 
 ### Patch Changes
