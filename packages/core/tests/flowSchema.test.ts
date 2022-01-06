@@ -1,17 +1,33 @@
 import { uuidv4 } from "../src/uuid";
-import { EndSchema as EndTriesSchema } from "@bitflow/end-tries";
-import { StartSchema as StartSimpleSchema } from "@bitflow/start-simple";
-import { TaskSchema as TaskChoiceSchema } from "@bitflow/task-choice";
-import { TaskSchema as TaskInputSchema } from "@bitflow/task-input";
 import { z } from "zod";
 import { Flow } from "../src/flow";
 import { makeFlowSchema } from "../src/flowSchema";
+import { StartSchema, EndSchema } from "../src/bitsSchema"
+
+const StartSimpleSchema = StartSchema.merge(
+  z.object({
+    subtype: z.literal("simple"),
+    view: z.object({
+      title: z.string(),
+      markdown: z.string(),
+    }),
+  })
+);
+
+const EndTriesSchema = EndSchema.merge(
+  z.object({
+    subtype: z.literal("tries"),
+    view: z.object({
+      markdown: z.string(),
+    }),
+  })
+)
 
 describe("FlowSchema", () => {
   const FlowSchema = makeFlowSchema({
     start: StartSimpleSchema,
     end: EndTriesSchema,
-    task: z.union([TaskChoiceSchema, TaskInputSchema]),
+    task: z.never(),
     title: z.never(),
     input: z.never(),
   });

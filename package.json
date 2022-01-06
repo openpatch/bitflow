@@ -7,7 +7,7 @@
     "preinstall": "npx only-allow pnpm",
     "dev": "node scripts/watcher.mjs",
     "build": "pnpm -r build:locales && pnpm -r build:pkg && pnpm -r build:types",
-    "test": "pnpm -r test",
+    "test": "jest",
     "lint": "pnpm -r lint",
     "version-packages": "changeset version",
     "release": "changeset publish",

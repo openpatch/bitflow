@@ -39,10 +39,6 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@bitflow/end-tries": "workspace:*",
-    "@bitflow/start-simple": "workspace:*",
-    "@bitflow/task-choice": "workspace:*",
-    "@bitflow/task-input": "workspace:*"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
