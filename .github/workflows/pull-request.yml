@@ -24,7 +24,7 @@ jobs:
             ${{ runner.os }}-
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 16
       - run: yarn --frozen-lockfile --silent bootstrap
       - run: yarn lint
       - run: yarn test
