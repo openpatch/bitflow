@@ -37,6 +37,12 @@ Testing is done with jest. You can find the tests in each package in the `tests`
 yarn test
 ```
 
+For running tests on an individual package run:
+
+```
+yarn workspace @bitflow/core test
+```
+
 ## Documentation
 
 If you want to work on the documentation, bootstrap the monorepo and run the
@@ -44,7 +50,7 @@ development server.
 
 ```
 yarn bootstrap
-yarn workspace website dev
+yarn website:dev
 ```
 
 ## Maintainer
