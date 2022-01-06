@@ -1,5 +1,16 @@
 # @bitflow/concept-model
 
+## 0.4.3
+
+### Patch Changes
+
+- [#374](https://github.com/openpatch/bitflow/pull/374) [`92dc252`](https://github.com/openpatch/bitflow/commit/92dc2521de1123768d1666b906b84cd0d0df50bc) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Move to pnpm and fix empty packages of last release
+
+- Updated dependencies [[`92dc252`](https://github.com/openpatch/bitflow/commit/92dc2521de1123768d1666b906b84cd0d0df50bc)]:
+  - @bitflow/flow@0.6.3
+  - @bitflow/flow-node@0.5.3
+  - @bitflow/stats@0.2.3
+
 ## 0.4.2
 
 ### Patch Changes

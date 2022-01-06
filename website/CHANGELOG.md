@@ -1,5 +1,29 @@
 # website
 
+## 0.4.6
+
+### Patch Changes
+
+- [#374](https://github.com/openpatch/bitflow/pull/374) [`92dc252`](https://github.com/openpatch/bitflow/commit/92dc2521de1123768d1666b906b84cd0d0df50bc) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Move to pnpm and fix empty packages of last release
+
+- Updated dependencies [[`92dc252`](https://github.com/openpatch/bitflow/commit/92dc2521de1123768d1666b906b84cd0d0df50bc)]:
+  - @bitflow/core@0.5.3
+  - @bitflow/do-local@0.4.3
+  - @bitflow/end-tries@0.4.3
+  - @bitflow/flow@0.6.3
+  - @bitflow/flow-editor@0.4.3
+  - @bitflow/flow-engine@0.4.3
+  - @bitflow/input-markdown@0.4.3
+  - @bitflow/mock@0.3.4
+  - @bitflow/provider@0.4.3
+  - @bitflow/shell@0.5.3
+  - @bitflow/start-simple@0.4.3
+  - @bitflow/task-choice@0.4.4
+  - @bitflow/task-fill-in-the-blank@0.4.5
+  - @bitflow/task-input@0.4.5
+  - @bitflow/task-yes-no@0.4.3
+  - @bitflow/title-simple@0.4.3
+
 ## 0.4.5
 
 ### Patch Changes
