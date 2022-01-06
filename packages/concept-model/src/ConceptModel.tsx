@@ -35,7 +35,7 @@ export type ConceptModelProps = {
   edges: Edge<{
     factorLoading: number;
   }>[];
-} & Omit<ReactFlowProps, "elements">;
+} & Omit<ReactFlowProps, "elements" | "css">;
 
 export const ConceptModel = ({
   nodes = [],
