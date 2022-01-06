@@ -2,7 +2,7 @@ import chokidar from "chokidar";
 import chalk from "chalk";
 import { exec } from "child_process";
 import { join } from "path";
-import { buildPackage } from "./build.mjs";
+import { buildPackage } from "./buildPackage.mjs";
 
 const log = console.log.bind(console);
 
@@ -35,7 +35,7 @@ localeWatcher.on("change", async (filePath) => {
   }
 
   log(chalk.yellow(`Changes detected in ${fileName}`));
-  exec("yarn vocab compile", { cwd: location }, (err, stdout, stderr) => {
+  exec("pnpm build:locales", { cwd: location }, (err, stdout, stderr) => {
     if (!err || err === null) {
       log(`locales ${chalk.green("success")} - ${splitPath[1]}`);
     } else {
@@ -56,7 +56,7 @@ watcher.on("change", async (filePath) => {
   log(chalk.yellow(`Changes detected in ${fileName}`));
   await buildPackage(join(process.cwd(), `packages/${fileName}`), fileName);
 
-  exec(`yarn build:types`, { cwd: location }, (err, stdout, stderr) => {
+  exec(`pnpm build:types`, { cwd: location }, (err, stdout, stderr) => {
     if (!err || err === null) {
       log(`types ${chalk.green("success")} - ${splitPath[1]}`);
     } else {

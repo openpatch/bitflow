@@ -9,13 +9,13 @@
     "lint": "tsc"
   },
   "dependencies": {
-    "@bitflow/core": "0.5.2",
-    "@bitflow/do-local": "0.4.2",
-    "@bitflow/end-tries": "0.4.2",
-    "@bitflow/flow-engine": "0.4.2",
-    "@bitflow/provider": "0.4.2",
-    "@bitflow/start-simple": "0.4.2",
-    "@bitflow/task-choice": "0.4.3",
+    "@bitflow/core": "workspace:*",
+    "@bitflow/do-local": "workspace:*",
+    "@bitflow/end-tries": "workspace:*",
+    "@bitflow/flow-engine": "workspace:*",
+    "@bitflow/provider": "workspace:*",
+    "@bitflow/start-simple": "workspace:*",
+    "@bitflow/task-choice": "workspace:*",
     "@emotion/cache": "11.7.1",
     "@emotion/react": "11.7.1",
     "@emotion/styled": "11.6.0",
@@ -27,8 +27,6 @@
     "typeface-ubuntu-mono": "1.1.13"
   },
   "devDependencies": {
-    "@babel/core": "7.16.7",
-    "@emotion/babel-preset-css-prop": "11.2.0",
     "@types/react": "17.0.38",
     "typescript": "4.5.4",
     "typescript-styled-plugin": "0.18.2"

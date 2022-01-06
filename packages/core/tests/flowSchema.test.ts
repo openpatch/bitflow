@@ -1,4 +1,4 @@
-import { uuidv4 } from "@bitflow/core";
+import { uuidv4 } from "../src/uuid";
 import { EndSchema as EndTriesSchema } from "@bitflow/end-tries";
 import { StartSchema as StartSimpleSchema } from "@bitflow/start-simple";
 import { TaskSchema as TaskChoiceSchema } from "@bitflow/task-choice";

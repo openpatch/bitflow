@@ -31,15 +31,14 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "version": "yarn build",
+    "version": "pnpm build",
     "lint": "tsc --noEmit",
     "test": "jest --env=jsdom --passWithNoTests",
-    "test:coverage": "yarn test --coverage",
-    "build": "yarn build:pkg && yarn build:types",
+    "build": "pnpm build:pkg && pnpm build:types",
     "build:pkg": "node ../../scripts/build.mjs",
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
   },
   "dependencies": {
-    "@bitflow/core": "0.0.0"
+    "@bitflow/core": "workspace:*"
   }
 }

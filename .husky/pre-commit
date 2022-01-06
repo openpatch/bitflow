@@ -1,3 +1,1 @@
-yarn run pretty-quick --staged
-yarn lint
-yarn test
+pnpm run pretty-quick --staged

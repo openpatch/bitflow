@@ -31,13 +31,18 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "version": "yarn build",
+    "version": "pnpm build",
     "lint": "tsc --noEmit",
     "test": "jest --env=jsdom --passWithNoTests",
-    "test:coverage": "yarn test --coverage",
-    "build": "yarn build:pkg && yarn build:types",
+    "build": "pnpm build:pkg && pnpm build:types",
     "build:pkg": "node ../../scripts/build.mjs",
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
+  },
+  "devDependencies": {
+    "@bitflow/end-tries": "workspace:*",
+    "@bitflow/start-simple": "workspace:*",
+    "@bitflow/task-choice": "workspace:*",
+    "@bitflow/task-input": "workspace:*"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
@@ -47,14 +52,5 @@
     "react": "17.x",
     "react-dom": "17.x",
     "zod": "3.x"
-  },
-  "devDependencies": {
-    "@emotion/cache": "11.7.1",
-    "@emotion/react": "11.7.1",
-    "@emotion/styled": "11.6.0",
-    "@openpatch/patches": "5.1.2",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "zod": "3.11.6"
   }
 }
