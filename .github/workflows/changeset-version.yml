@@ -67,7 +67,7 @@ jobs:
           git config --global user.name 'patcher'
           git config --global user.email 'git@openpatch.org'
           git add packages/**/src/locales.vocab
-          git commit -m "automated locales update"
+          git diff-index --quiet HEAD || git commit -m "automated locales update"
 
       - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@master
