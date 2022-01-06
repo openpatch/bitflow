@@ -1,5 +1,20 @@
 # example-nextjs-client-side-assessment
 
+## 0.4.4
+
+### Patch Changes
+
+- [#374](https://github.com/openpatch/bitflow/pull/374) [`92dc252`](https://github.com/openpatch/bitflow/commit/92dc2521de1123768d1666b906b84cd0d0df50bc) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Move to pnpm and fix empty packages of last release
+
+- Updated dependencies [[`92dc252`](https://github.com/openpatch/bitflow/commit/92dc2521de1123768d1666b906b84cd0d0df50bc)]:
+  - @bitflow/core@0.5.3
+  - @bitflow/do-local@0.4.3
+  - @bitflow/end-tries@0.4.3
+  - @bitflow/flow-engine@0.4.3
+  - @bitflow/provider@0.4.3
+  - @bitflow/start-simple@0.4.3
+  - @bitflow/task-choice@0.4.4
+
 ## 0.4.3
 
 ### Patch Changes
