@@ -69,6 +69,7 @@ export const distanceBetween: DistanceBetween = async ({
           if (n.id === e.target) {
             return n;
           }
+          return null;
         })
       )
       .map((n) => {

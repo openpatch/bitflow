@@ -67,7 +67,7 @@ export const Statistic: TaskBit["Statistic"] = ({ statistic }) => {
               minSize={12}
               maxSize={35}
               shuffle={false}
-              renderer={(tag: {value: string, key: string, count: number }, size: number, color: string) => {
+              renderer={(tag, size, color) => {
                 return (
                   <Box
                     key={tag.key || tag.value}

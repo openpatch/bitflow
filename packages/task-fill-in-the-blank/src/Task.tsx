@@ -1,12 +1,5 @@
 import { css, Theme } from "@emotion/react";
-import {
-  AutoGrid,
-  Box,
-  Code,
-  CodeProps,
-  Markdown,
-  useTheme,
-} from "@openpatch/patches";
+import { AutoGrid, Box, Code, Markdown, useTheme } from "@openpatch/patches";
 import { Draft, produce } from "immer";
 import {
   createContext,

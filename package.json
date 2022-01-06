@@ -3,36 +3,22 @@
   "author": "Mike Barkmin",
   "license": "MIT",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "website",
-      "examples/*"
-    ]
-  },
   "scripts": {
-    "bootstrap": "lerna bootstrap --use-workspaces",
-    "prestart": "yarn && yarn bootstrap",
-    "prebuild": "lerna run --stream --parallel prebuild",
-    "build": "lerna link && yarn build:locales && yarn build:pkg && yarn build:types",
-    "build:pkg": "lerna run --stream --parallel build:pkg",
-    "build:locales": "lerna run --stream --parallel build:locales",
-    "build:types": "lerna run --stream build:types",
-    "dev": "lerna link && yarn types && node scripts/watcher.mjs",
-    "test": "lerna run test --no-private --stream",
-    "test:watch": "lerna run test:watch",
-    "test:coverage": "lerna run test:coverage",
-    "lint": "tsc --noEmit",
+    "preinstall": "npx only-allow pnpm",
+    "dev": "node scripts/watcher.mjs",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
     "version-packages": "changeset version",
     "release": "changeset publish",
-    "website:dev": "yarn workspace website dev",
-    "website:build": "yarn workspace website build",
-    "website:start": "yarn workspace website start",
+    "website:dev": "pnpm --filter website dev",
+    "website:build": "pnpm --filter website build",
+    "website:start": "pnpm --filter website start",
     "storybook": "start-storybook -s .storybook/public -p 6006",
     "storybook:build": "build-storybook -s .storybook/public",
     "storybook:build:docs": "build-storybook -s .storybook/public --docs"
   },
-  "dependencies": {
+  "devDependencies": {
     "@babel/core": "7.16.7",
     "@babel/plugin-transform-runtime": "7.16.7",
     "@babel/preset-env": "7.16.7",
@@ -68,10 +54,9 @@
     "@types/node": "17.0.8",
     "@types/react": "17.0.38",
     "@types/react-dom": "17.0.11",
+    "@vocab/core": "1.0.3",
     "@vocab/cli": "1.0.1",
-    "@vocab/core": "^1.0.3",
     "@vocab/react": "1.1.0",
-    "@vocab/types": "1.0.1",
     "babel-jest": "27.4.6",
     "babel-loader": "8.2.3",
     "chalk": "^5.0.0",
@@ -81,7 +66,6 @@
     "jest": "27.4.7",
     "jest-cli": "27.4.7",
     "jest-node-exports-resolver": "1.1.2",
-    "lerna": "4.0.0",
     "lodash.get": "^4.4.2",
     "plop": "3.0.5",
     "prettier": "2.5.1",
@@ -110,5 +94,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "packageManager": "pnpm@6.24.4"
 }

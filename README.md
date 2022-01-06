@@ -21,7 +21,7 @@ yarn storybook
 You can use plop templates for common task by running:
 
 ```
-yarn plop
+yarn plop && yarn bootstrap
 ```
 
 If you want to work on the documentation, start the dev server by running:

@@ -31,24 +31,19 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "version": "yarn build",
+    "version": "pnpm build",
     "lint": "tsc --noEmit",
     "test": "jest --env=jsdom --passWithNoTests",
-    "test:coverage": "yarn test --coverage",
-    "build": "yarn build:pkg && yarn build:types",
+    "build": "pnpm build:pkg && pnpm build:types",
     "build:pkg": "node ../../scripts/build.mjs",
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
   },
   "dependencies": {
-    "@bitflow/provider": "0.4.2",
+    "@bitflow/provider": "workspace:*",
     "date-fns": "^2.28.0"
   },
   "peerDependencies": {
     "react": "17.x",
     "react-dom": "17.x"
-  },
-  "devDependencies": {
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
   }
 }
