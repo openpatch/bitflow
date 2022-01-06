@@ -1,4 +1,4 @@
-import { Flow } from "@bitflow/core/dist/types";
+import { Flow } from "@bitflow/core";
 import { FC } from "react";
 import { FormState } from "react-hook-form";
 

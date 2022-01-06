@@ -4,15 +4,15 @@
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
-  "typings": "dist/types/index.d.ts",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.mjs",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.js",
-      "default": "./dist/esm/index.js"
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.esm.mjs"
     }
   },
   "files": [
@@ -31,16 +31,13 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "dev": "tsc --build --watch",
-    "build": "concurrently yarn:build:*",
-    "clean": "tsc --build --clean",
+    "version": "yarn build",
+    "lint": "tsc --noEmit",
     "test": "jest --env=jsdom --passWithNoTests",
     "test:coverage": "yarn test --coverage",
-    "version": "yarn build",
-    "lint": "tsc",
-    "build:esm": "tsc --project tsconfig.build.json --declaration --declarationDir dist/esm --module esnext --target es2015 --outDir dist/esm",
-    "build:cjs": "tsc --project tsconfig.build.json --declaration --declarationDir dist/cjs --module commonjs --target es5 --outDir dist/cjs",
-    "build:types": "tsc --project tsconfig.build.json --declaration --declarationDir dist/types"
+    "build": "yarn build:pkg && yarn build:types",
+    "build:pkg": "node ../../scripts/build.mjs",
+    "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
@@ -50,5 +47,14 @@
     "react": "17.x",
     "react-dom": "17.x",
     "zod": "3.x"
+  },
+  "devDependencies": {
+    "@emotion/cache": "11.7.1",
+    "@emotion/react": "11.7.1",
+    "@emotion/styled": "11.6.0",
+    "@openpatch/patches": "5.1.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "zod": "3.11.6"
   }
 }

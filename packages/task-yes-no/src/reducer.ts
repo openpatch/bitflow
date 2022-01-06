@@ -1,4 +1,4 @@
-import produce, { Draft } from "immer";
+import { Draft, produce } from "immer";
 import {
   IAction,
   IAnswer,

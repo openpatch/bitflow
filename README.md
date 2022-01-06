@@ -9,19 +9,13 @@ Bitflow is a library for building flow-based assessment systems. Feel free to ch
 
 ## Development
 
-Before you start you need to install the Biflow dependencies and set up the monorepo via `yarn boot`.
+Before you start you need to install the Biflow dependencies and set up the monorepo via `yarn bootstrap`.
 
-If you want to contribute or develop custom features the easiest way is to start the storybook and to put the desired package in dev mode:
+If you want to contribute or develop custom features the easiest way is to start the storybook and the dev mode:
 
 ```
+yarn dev
 yarn storybook
-yarn workspace @bitflow/task-choice dev
-```
-
-or you can start the examples via:
-
-```
-yarn workspace example-nextjs-client-side-assessment dev
 ```
 
 You can use plop templates for common task by running:
@@ -32,7 +26,7 @@ yarn plop
 
 If you want to work on the documentation, start the dev server by running:
 ```
-yarn workspace website dev
+yarn website:dev
 ```
 
 ## Testing
@@ -43,19 +37,13 @@ Testing is done with jest. You can find the tests in each package in the `tests`
 yarn test
 ```
 
-If you only want to run the tests for a specific packages do:
-
-```
-yarn workspace @bitflow/core test
-```
-
 ## Documentation
 
 If you want to work on the documentation, bootstrap the monorepo and run the
 development server.
 
 ```
-yarn boot
+yarn bootstrap
 yarn workspace website dev
 ```
 

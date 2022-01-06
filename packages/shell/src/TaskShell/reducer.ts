@@ -1,4 +1,4 @@
-import produce, { castDraft, Draft } from "immer";
+import { castDraft, Draft, produce } from "immer";
 import { ConfidenceLevelsProps } from "../ConfidenceLevels";
 import { IShellAction } from "./actions";
 
