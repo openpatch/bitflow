@@ -1,5 +1,20 @@
 # example-nextjs-client-side-assessment
 
+## 0.4.5
+
+### Patch Changes
+
+- [`27fffe0`](https://github.com/openpatch/bitflow/commit/27fffe0bdc244f34c09bd8ac5076d3a16c3ed934) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - The last release did not fix the empty dist directories. Maybe this one will.
+
+- Updated dependencies [[`27fffe0`](https://github.com/openpatch/bitflow/commit/27fffe0bdc244f34c09bd8ac5076d3a16c3ed934)]:
+  - @bitflow/core@0.5.4
+  - @bitflow/do-local@0.4.4
+  - @bitflow/end-tries@0.4.4
+  - @bitflow/flow-engine@0.4.4
+  - @bitflow/provider@0.4.4
+  - @bitflow/start-simple@0.4.4
+  - @bitflow/task-choice@0.4.5
+
 ## 0.4.4
 
 ### Patch Changes

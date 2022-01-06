@@ -1,5 +1,14 @@
 # @bitflow/date
 
+## 0.2.7
+
+### Patch Changes
+
+- [`27fffe0`](https://github.com/openpatch/bitflow/commit/27fffe0bdc244f34c09bd8ac5076d3a16c3ed934) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - The last release did not fix the empty dist directories. Maybe this one will.
+
+- Updated dependencies [[`27fffe0`](https://github.com/openpatch/bitflow/commit/27fffe0bdc244f34c09bd8ac5076d3a16c3ed934)]:
+  - @bitflow/provider@0.4.4
+
 ## 0.2.6
 
 ### Patch Changes
