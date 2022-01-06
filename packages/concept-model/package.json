@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/concept-model",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -41,9 +41,9 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
   },
   "dependencies": {
-    "@bitflow/flow": "0.6.1",
-    "@bitflow/flow-node": "0.5.1",
-    "@bitflow/stats": "0.2.1",
+    "@bitflow/flow": "0.6.2",
+    "@bitflow/flow-node": "0.5.2",
+    "@bitflow/stats": "0.2.2",
     "react-flow-renderer": "^9.7.2"
   },
   "peerDependencies": {

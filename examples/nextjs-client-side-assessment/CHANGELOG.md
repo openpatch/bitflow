@@ -1,5 +1,20 @@
 # example-nextjs-client-side-assessment
 
+## 0.4.3
+
+### Patch Changes
+
+- [#372](https://github.com/openpatch/bitflow/pull/372) [`658b51a`](https://github.com/openpatch/bitflow/commit/658b51a367ea74bdcf36c6766988512fa2324d78) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Fix esm builds
+
+- Updated dependencies [[`658b51a`](https://github.com/openpatch/bitflow/commit/658b51a367ea74bdcf36c6766988512fa2324d78)]:
+  - @bitflow/core@0.5.2
+  - @bitflow/do-local@0.4.2
+  - @bitflow/end-tries@0.4.2
+  - @bitflow/flow-engine@0.4.2
+  - @bitflow/provider@0.4.2
+  - @bitflow/start-simple@0.4.2
+  - @bitflow/task-choice@0.4.3
+
 ## 0.4.2
 
 ### Patch Changes

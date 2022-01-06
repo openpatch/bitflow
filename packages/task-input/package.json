@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/task-input",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflowj#readme",
   "license": "MIT",
@@ -41,8 +41,8 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
   },
   "dependencies": {
-    "@bitflow/core": "0.5.1",
-    "@bitflow/provider": "0.4.1",
+    "@bitflow/core": "0.5.2",
+    "@bitflow/provider": "0.4.2",
     "@hookform/resolvers": "^2.8.5",
     "immer": "^9.0.7",
     "react-tagcloud": "^2.2.0"

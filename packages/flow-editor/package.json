@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/flow-editor",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -41,10 +41,10 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
   },
   "dependencies": {
-    "@bitflow/core": "0.5.1",
-    "@bitflow/flow": "0.6.1",
-    "@bitflow/provider": "0.4.1",
-    "@bitflow/shell": "0.5.1",
+    "@bitflow/core": "0.5.2",
+    "@bitflow/flow": "0.6.2",
+    "@bitflow/provider": "0.4.2",
+    "@bitflow/shell": "0.5.2",
     "@hookform/resolvers": "^2.8.5",
     "react-flow-renderer": "^9.7.2"
   },
