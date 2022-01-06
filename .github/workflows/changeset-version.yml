@@ -39,7 +39,7 @@ jobs:
           git diff-index --quiet HEAD || git commit -m "automated locales update"
 
       - name: Create Release Pull Request or Publish to npm
-        uses: changesets/action@master
+        uses: changesets/action@v1
         with:
           publish: pnpm release
           version: pnpm version-packages

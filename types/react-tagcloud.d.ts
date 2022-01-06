@@ -22,13 +22,10 @@ declare module "react-tagcloud" {
     minSize: number;
     shuffle?: boolean;
     colorOptions?: ColorOptions;
-    disableRandomColor?: boolean
-    randomSeed?: number
-    renderer?: (tag: Tag, size: number, color: string) => JSX.Element
+    disableRandomColor?: boolean;
+    randomSeed?: number;
+    renderer?: (tag: Tag, size: number, color: string) => JSX.Element;
   }
 
-  export class TagCloud extends React.Component<TagCloudProps> {
-
-  }
-
+  export class TagCloud extends React.Component<TagCloudProps> {}
 }
