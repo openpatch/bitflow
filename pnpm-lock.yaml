@@ -198,16 +198,7 @@ importers:
       react-flow-renderer: 9.7.2_react-dom@17.0.2+react@17.0.2
 
   packages/core:
-    specifiers:
-      '@bitflow/end-tries': workspace:*
-      '@bitflow/start-simple': workspace:*
-      '@bitflow/task-choice': workspace:*
-      '@bitflow/task-input': workspace:*
-    devDependencies:
-      '@bitflow/end-tries': link:../end-tries
-      '@bitflow/start-simple': link:../start-simple
-      '@bitflow/task-choice': link:../task-choice
-      '@bitflow/task-input': link:../task-input
+    specifiers: {}
 
   packages/date:
     specifiers:
