@@ -5,7 +5,7 @@ import {
   Flag,
   Play,
   Refresh,
-} from "@openpatch/patches/dist/cjs/icons/shade";
+} from "@openpatch/patches/icons/shade";
 
 export type InteractiveNodeStatusProps = Record<DoTry["status"], number> & {
   tries: number;

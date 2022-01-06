@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "module": "esnext",
     "lib": ["dom", "esnext"],
     "declaration": true,
     "sourceMap": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "outDir": "dist/esm",
-    "declarationDir": "dist/types",
+    "outDir": "dist",
+    "declarationDir": "dist",
     "paths": {
       "@bitflow/*": ["./packages/*"]
     },

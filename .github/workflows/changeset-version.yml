@@ -1,11 +1,7 @@
-name: Publish Packages
+name: Release Pull Request
 
 on:
   push:
-    paths:
-      - ".changeset/**"
-      - "packages/**"
-      - "types/**"
     branches:
       - main
 
@@ -14,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -26,18 +23,24 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn --frozen-lockfile --silent boot
+      - run: yarn --frozen-lockfile --silent bootstrap
+      - run: yarn lint
       - run: yarn test
 
-  publish-npm:
-    needs: build
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: 0
+
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -50,12 +53,24 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-            
-      - uses: actions/setup-node@v1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
         with:
           node-version: 12
-          registry-url: https://registry.npmjs.org/
-      - run: yarn --frozen-lockfile --silent boot
-      - run: yarn publish:ci:npm
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile --silent bootstrap
+
+      - name: Commit locales update
+        run: |
+          git config --global user.name 'patcher'
+          git config --global user.email 'git@openpatch.org'
+          git add packages/**/src/locales.vocab
+          git commit -m "automated locales update"
+
+      - name: Create Release Pull Request or Publish to npm
+        uses: changesets/action@master
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrects.NPM_TOKEN }}

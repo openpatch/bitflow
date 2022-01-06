@@ -1,6 +1,6 @@
 import { Styles } from "@bitflow/flow";
 import { Fragment } from "react";
-import ReactFlow, {
+import ReactFlowRenderer, {
   Background,
   BackgroundVariant,
   Controls,
@@ -10,6 +10,11 @@ import ReactFlow, {
 } from "react-flow-renderer";
 import { LatentVariableNode } from "./LatentVariableNode";
 import { ManifestTaskNode } from "./ManifestTaskNode";
+
+// see https://github.com/emotion-js/emotion/issues/2582
+const anyReactFlow: any = ReactFlowRenderer;
+export const ReactFlow: typeof ReactFlowRenderer =
+  "default" in ReactFlowRenderer ? anyReactFlow.default : ReactFlowRenderer;
 
 export type ConceptModelProps = {
   latentVariables: (Node & {

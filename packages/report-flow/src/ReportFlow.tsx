@@ -1,6 +1,5 @@
 import { FlowEdge, FlowNode, isInteractiveFlowNode } from "@bitflow/core";
 import { Flow, FlowProps } from "@bitflow/flow";
-import React from "react";
 import {
   CheckpointResultNode,
   CheckpointResultNodeProps,

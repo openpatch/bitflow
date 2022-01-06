@@ -1,6 +1,6 @@
 import { Flow as IFlow } from "@bitflow/core";
 import { FC, Fragment } from "react";
-import ReactFlow, {
+import ReactFlowRenderer, {
   Background,
   BackgroundVariant,
   Controls,
@@ -17,6 +17,11 @@ import { SplitRandomNode } from "./SplitRandomNode";
 import { SplitResultNode } from "./SplitResultNode";
 import { Styles } from "./Styles";
 import { SynchronizeNode } from "./SynchronizeNode";
+
+// see https://github.com/emotion-js/emotion/issues/2582
+const anyReactFlow: any = ReactFlowRenderer;
+export const ReactFlow: typeof ReactFlowRenderer =
+  "default" in ReactFlowRenderer ? anyReactFlow.default : ReactFlowRenderer;
 
 export type FlowProps = Pick<IFlow, "nodes" | "edges" | "zoom" | "position"> &
   Omit<ReactFlowProps, "elements" | "zoom" | "posititon" | "css"> & {

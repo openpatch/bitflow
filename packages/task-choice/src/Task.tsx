@@ -1,5 +1,5 @@
 import { AutoGrid, Box, Markdown } from "@openpatch/patches";
-import produce, { Draft } from "immer";
+import { Draft, produce } from "immer";
 import { forwardRef, useEffect, useImperativeHandle, useReducer } from "react";
 import { Choice } from "./Choice";
 import { Feedback } from "./Feedback";
