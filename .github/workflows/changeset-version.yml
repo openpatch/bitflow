@@ -1,4 +1,4 @@
-name: Release Pull Request
+name: Create Pull Request or Release
 
 on:
   push:
