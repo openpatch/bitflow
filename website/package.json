@@ -9,6 +9,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@bitflow/bits": "workspace:*",
     "@bitflow/core": "workspace:*",
     "@bitflow/do-local": "workspace:*",
     "@bitflow/flow": "workspace:*",
@@ -17,7 +18,6 @@
     "@bitflow/mock": "workspace:*",
     "@bitflow/provider": "workspace:*",
     "@bitflow/shell": "workspace:*",
-    "@bitflow/bits": "workspace:*",
     "@emotion/cache": "11.7.1",
     "@emotion/react": "11.7.1",
     "@emotion/styled": "11.6.0",
@@ -27,6 +27,7 @@
     "atob": "2.1.2",
     "lz-string": "1.4.4",
     "next": "12.0.7",
+    "next-seo": "^4.28.1",
     "react-json-view": "1.21.3",
     "typeface-rubik": "1.1.13",
     "typeface-ubuntu-mono": "1.1.13",
