@@ -1,3 +1,5 @@
+import {updateBitsPackage} from "./scripts/updateBitsPackage.mjs";
+
 export default function (plop) {
   plop.setGenerator("bit", {
     description: "Creates a new Bit package.",
@@ -20,6 +22,7 @@ export default function (plop) {
         destination: "packages/{{ type }}-{{ dashCase name }}/",
         base: "plop-templates/bits/{{ type }}",
       },
+      updateBitsPackage(plop)
     ],
   });
   plop.setGenerator("component package", {

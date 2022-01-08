@@ -1,0 +1,54 @@
+{
+  "name": "@bitflow/bits",
+  "version": "0.0.0",
+  "author": "Mike Barkmin",
+  "homepage": "https://github.com/openpatch/bitflow#readme",
+  "license": "MIT",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.mjs",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.esm.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openpatch/bitflow.git",
+    "directory": "packages/bits"
+  },
+  "bugs": {
+    "url": "https://github.com/openpatch/bits/issues"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "version": "pnpm build",
+    "lint": "tsc --noEmit",
+    "test": "jest --env=jsdom --passWithNoTests",
+    "build": "pnpm build:pkg && pnpm build:types",
+    "build:pkg": "node ../../scripts/buildBitsPackage.mjs && node ../../scripts/build.mjs",
+    "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
+  },
+  "dependencies": {
+    "@bitflow/start-simple": "workspace:*",
+    "@bitflow/end-tries": "workspace:*",
+    "@bitflow/task-choice": "workspace:*",
+    "@bitflow/task-fill-in-the-blank": "workspace:*",
+    "@bitflow/task-input": "workspace:*",
+    "@bitflow/task-yes-no": "workspace:*",
+    "@bitflow/input-markdown": "workspace:*",
+    "@bitflow/title-simple": "workspace:*"
+  },
+  "peerDependencies": {
+    "zod": "3.x"
+  }
+}

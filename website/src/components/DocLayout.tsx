@@ -9,11 +9,25 @@ import {
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { NavLayout } from "./NavLayout";
+import {
+  taskBits,
+  startBits,
+  titleBits,
+  inputBits,
+  endBits,
+} from "@bitflow/bits";
 
 export type DocLayoutProps = {
   meta: {
     title: string;
   };
+};
+
+const transformName = (s: string) => {
+  return s
+    .split("-")
+    .map((s) => s[0].toUpperCase() + s.substring(1))
+    .join(" ");
 };
 
 const nav: SidenavProps["sections"] = [
@@ -29,38 +43,26 @@ const nav: SidenavProps["sections"] = [
     href: "/docs/bits",
     label: "Bits",
     links: [
-      {
-        href: "/docs/bits/end-tries",
-        label: "End - Tries",
-      },
-      {
-        href: "/docs/bits/input-markdown",
-        label: "Input - Markdown",
-      },
-      {
-        href: "/docs/bits/start-simple",
-        label: "Start - Simple",
-      },
-      {
-        href: "/docs/bits/task-choice",
-        label: "Task - Choice",
-      },
-      {
-        href: "/docs/bits/task-fill-in-the-blank",
-        label: "Task - Fill in the blank",
-      },
-      {
-        href: "/docs/bits/task-input",
-        label: "Task - Input",
-      },
-      {
-        href: "/docs/bits/task-yes-no",
-        label: "Task - Yes No",
-      },
-      {
-        href: "/docs/bits/title-simple",
-        label: "Title - Simple",
-      },
+      ...Object.keys(startBits).map((b) => ({
+        href: `/docs/bits/start/${b}`,
+        label: `Start - ${transformName(b)}`,
+      })),
+      ...Object.keys(taskBits).map((b) => ({
+        href: `/docs/bits/task/${b}`,
+        label: `Task - ${transformName(b)}`,
+      })),
+      ...Object.keys(titleBits).map((b) => ({
+        href: `/docs/bits/title/${b}`,
+        label: `Title - ${transformName(b)}`,
+      })),
+      ...Object.keys(inputBits).map((b) => ({
+        href: `/docs/bits/input/${b}`,
+        label: `Input - ${transformName(b)}`,
+      })),
+      ...Object.keys(endBits).map((b) => ({
+        href: `/docs/bits/end/${b}`,
+        label: `End - ${transformName(b)}`,
+      })),
     ],
   },
   {
