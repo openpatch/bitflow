@@ -1,8 +1,11 @@
 {
   "name": "example-nextjs-client-side-assessment",
   "description": "A simple example using Next.js and the DoLocal component.",
-  "keywords": ["next", "local"],
-  "version": "0.4.5",
+  "keywords": [
+    "next",
+    "local"
+  ],
+  "version": "0.4.6",
   "private": true,
   "scripts": {
     "dev": "next dev",

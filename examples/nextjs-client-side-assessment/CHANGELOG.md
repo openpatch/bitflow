@@ -1,5 +1,12 @@
 # example-nextjs-client-side-assessment
 
+## 0.4.6
+
+### Patch Changes
+
+- Updated dependencies [[`926943b`](https://github.com/openpatch/bitflow/commit/926943b140157a48057be3f462f709d3541e5fd1)]:
+  - @bitflow/bits@0.0.1
+
 ## 0.4.5
 
 ### Patch Changes
