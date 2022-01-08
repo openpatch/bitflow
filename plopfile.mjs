@@ -1,4 +1,5 @@
 import {updateBitsPackage} from "./scripts/updateBitsPackage.mjs";
+import { execSync } from "child_process";
 
 export default function (plop) {
   plop.setGenerator("bit", {
@@ -22,7 +23,10 @@ export default function (plop) {
         destination: "packages/{{ type }}-{{ dashCase name }}/",
         base: "plop-templates/bits/{{ type }}",
       },
-      updateBitsPackage(plop)
+      () => {
+        updateBitsPackage(plop)()
+    execSync("pnpm i");
+      }
     ],
   });
   plop.setGenerator("component package", {
