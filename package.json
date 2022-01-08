@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install",
     "dev": "node scripts/watcher.mjs",
     "build": "pnpm -r build",
     "test": "jest",
