@@ -1,5 +1,4 @@
 import fs from "fs";
-import { execSync } from "child_process";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -68,8 +67,6 @@ export function updateBitsPackage(plop) {
     });
 
     fs.writeFileSync(pkgPath, JSON.stringify(pkgJson, null, 2));
-
-    execSync("pnpm i");
 
     return "updated @bitflow/bits package";
   };
