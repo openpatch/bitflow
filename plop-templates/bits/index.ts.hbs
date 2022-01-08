@@ -1,0 +1,159 @@
+{{#each bits}}
+import * as {{ name }} from "{{ package }}"
+{{/each}}
+import { z } from "zod";
+
+export {
+{{#each bits}}
+  {{ name }},
+{{/each}}
+};
+
+export const startBits = {
+{{#each startBits}}
+  "{{ key }}": {{ name }},
+{{/each}}
+} as const;
+
+export type StartBitKey = keyof typeof startBits;
+
+export const taskBits = {
+{{#each taskBits}}
+  "{{ key }}": {{ name }},
+{{/each}}
+} as const;
+
+export type TaskBitKey = keyof typeof taskBits;
+
+export const inputBits = {
+{{#each inputBits}}
+  "{{ key }}": {{ name }},
+{{/each}}
+} as const;
+
+export type InputBitKey = keyof typeof  inputBits;
+
+export const endBits = {
+{{#each endBits}}
+  "{{ key }}": {{ name }},
+{{/each}}
+} as const;
+
+export type EndBitKey = keyof  typeof endBits;
+
+export const titleBits = {
+{{#each titleBits}}
+  "{{ key }}": {{ name }},
+{{/each}}
+} as const;
+
+export type TitleBitKey = keyof  typeof titleBits;
+
+export const bits = {
+  start: startBits,
+  task: taskBits,
+  end: endBits,
+  title: titleBits,
+  input: inputBits,
+} as const;
+
+export const schemas = {
+{{#if (single startBits) }}
+  start: {{ startBits.0.name }}.StartSchema,
+{{else}}
+  start: z.union([
+{{#each startBits }}
+    {{ name }}.StartSchema,
+{{/each}}
+  ]),
+{{/if}}
+
+{{#if (single endBits) }}
+  end: {{ endBits.0.name }}.EndSchema,
+{{else}}
+  end: z.union([
+{{#each endBits }}
+    {{ name }}.EndSchema,
+{{/each}}
+  ]),
+{{/if}}
+
+{{#if (single titleBits) }}
+  title: {{ titleBits.0.name }}.TitleSchema,
+{{else}}
+  title: z.union([
+{{#each titleBits }}
+    {{ name }}.TitleSchema,
+{{/each}}
+  ]),
+{{/if}}
+
+{{#if (single inputBits) }}
+  input: {{ inputBits.0.name }}.InputSchema,
+{{else}}
+  input: z.union([
+{{#each inputBits }}
+    {{ name }}.InputSchema,
+{{/each}}
+  ]),
+{{/if}}
+
+{{#if (single taskBits) }}
+  start: {{ taskBits.0.name }}.TaskSchema,
+{{else}}
+  task: z.union([
+{{#each taskBits }}
+    {{ name }}.TaskSchema,
+{{/each}}
+  ]),
+{{/if}}
+};
+
+export const evaluate = {
+{{#each taskBits}}
+  "{{ key }}": {{ name }}.evaluate,
+{{/each}}
+};
+
+export const updateStatistic = {
+{{#each taskBits}}
+  "{{ key }}": {{ name }}.updateStatistic,
+{{/each}}
+};
+
+export type Task =
+{{#each taskBits}}
+  | {{ name }}.ITask
+{{/each}};
+export type TaskResult =
+{{#each taskBits}}
+  | {{ name }}.IResult
+{{/each}};
+export type TaskStatistic =
+{{#each taskBits}}
+  | {{ name }}.IStatistic
+{{/each}};
+export type TaskAnswer =
+{{#each taskBits}}
+  | {{ name }}.IAnswer
+{{/each}};
+
+export type Input =
+{{#each inputBits}}
+  | {{ name }}.IInput
+{{/each}};
+
+export type Title =
+{{#each titleBits}}
+  | {{ name }}.ITitle
+{{/each}};
+
+export type Start =
+{{#each startBits}}
+  | {{ name }}.IStart
+{{/each}};
+
+export type End =
+{{#each endBits}}
+  | {{ name }}.IEnd
+{{/each}};

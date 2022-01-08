@@ -1,35 +1,12 @@
-import { Link as PLink, LinkProps as PLinkProps } from "@openpatch/patches";
-import NLink, { LinkProps as NLinkProps } from "next/link";
+import { makeLinkComponent } from "@openpatch/patches";
+import NextLink from "next/link";
 
-export type LinkProps = PLinkProps & NLinkProps & { anchor?: string };
-
-export const Link = ({
-  href,
-  as,
-  prefetch,
-  replace,
-  scroll,
-  shallow,
-  locale,
-  anchor,
-  ...props
-}: LinkProps) => {
-  if (anchor) {
-    return <PLink href={anchor} {...props} />;
-  }
-
-  return (
-    <NLink
-      as={as}
-      href={href}
-      prefetch={prefetch}
-      replace={replace}
-      scroll={scroll}
-      shallow={shallow}
-      locale={locale}
-      passHref
-    >
-      <PLink {...props} />
-    </NLink>
-  );
-};
+export const Link = makeLinkComponent(({ href, ...restProps }, ref) =>
+  href[0] === "/" ? (
+    <NextLink href={href} passHref>
+      <a ref={ref} {...restProps}></a>
+    </NextLink>
+  ) : (
+    <a href={href} ref={ref} {...restProps} />
+  )
+);

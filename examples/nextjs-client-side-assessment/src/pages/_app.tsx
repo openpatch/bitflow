@@ -1,7 +1,5 @@
-import * as endTries from "@bitflow/end-tries";
+import { bits } from "@bitflow/bits";
 import { BitflowProvider } from "@bitflow/provider";
-import * as startSimple from "@bitflow/start-simple";
-import * as taskChoice from "@bitflow/task-choice";
 import { PatchesProvider } from "@openpatch/patches";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
@@ -15,19 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <BitflowProvider
         locale={router.locale}
         config={{}}
-        bits={{
-          end: {
-            tries: endTries,
-          },
-          start: {
-            simple: startSimple,
-          },
-          input: {},
-          task: {
-            choice: taskChoice,
-          },
-          title: {},
-        }}
+        bits={bits}
       >
         <Component {...pageProps} />
       </BitflowProvider>

@@ -11,22 +11,17 @@ Bitflow is a library for building flow-based assessment systems. Feel free to ch
 
 Before you start you need to install the Biflow dependencies and set up the monorepo via `pnpm install`.
 
-If you want to contribute or develop custom features the easiest way is to start the storybook and the dev mode:
+If you want to contribute or develop custom features the easiest way is to start the documentation and the dev mode:
 
 ```
 pnpm dev
-pnpm storybook
+pnpm website:dev
 ```
 
-You can use plop templates for common task by running:
+You can use plop templates for creating new packages:
 
 ```
 pnpm plop
-```
-
-If you want to work on the documentation, start the dev server by running:
-```
-pnpm website:dev
 ```
 
 ## Testing
@@ -45,10 +40,11 @@ pnpm --filter @bitflow/core test
 
 ## Documentation
 
-If you want to work on the documentation, bootstrap the monorepo and run the
+If you want to work on the documentation, run the
 development server.
 
 ```
+pnpm dev
 pnpm website:dev
 ```
 

@@ -8,7 +8,7 @@ export const meta = {
 ## Terminology
 
 Flow-based assessments with Bitflow consits of a [Flow](/docs/flow). A [Flow](/docs/flow) definies the logic of your
-assessment. A Flow is defined by nodes and edges. A edge just connects two nodes. A node can either be an interactive
+assessment. A Flow is defined by nodes and edges. A edge connects two nodes. A node can either be an interactive
 one or a control one. Interactive meaning requiring interaction by the user and control meaning working in the
 background without the user knowing that they are there. You can read more about [Flows here](/docs/flow).
 
@@ -60,6 +60,28 @@ export default () => {
 }
 ```
 
+You can also use all available bits at once. This is what we will set up in the following script.
+
+```tsx
+import { PatchesProvider } from "@openpatch/patches";
+import { BitflowProvider } from "@bitflow/provider";
+import { bits } from "@bitflow/bits";
+import { DoLocal } from "@bitflow/do-local";
+
+export default () => {
+  return (
+    <PatchesProvider>
+      <BitflowProvider
+        config={{}}
+        bits={bits}
+      >
+        <DoLocal flow={...} />
+      </BitflowProvider>
+    </PatchesProvider>
+  )
+}
+```
+
 If you want to evaluate and store the answers on your server you need to do a little more by using the [Do](/docs/do)
 component.
 
@@ -69,6 +91,13 @@ You can find a minimal example in the [example
 folder](https://github.com/openpatch/bitflow/tree/main/examples/nextjs-client-side-assessment)
 in the GitHub repository.
 
+You can also browse all available [examples here](/docs/examples).
+
+## Show and Edit a Flow
+
+If you also want to show the Flow or want to use the Flow-Editor use have to
+install additional packages. For this visit the [flow documentation](/docs/flow).
+
 export default ({ children }) => (
   <DocLayout meta={meta}>
     <Card>
@@ -76,6 +105,3 @@ export default ({ children }) => (
     </Card>
   </DocLayout>
 );
-
-If you also want to show the Flow or want to use the Flow-Editor use have to
-install additional packages. For this visit the [flow documentation](/docs/flow).

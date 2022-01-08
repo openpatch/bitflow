@@ -1,21 +1,21 @@
 {
   "name": "example-nextjs-client-side-assessment",
+  "description": "A simple example using Next.js and the DoLocal component.",
+  "keywords": ["next", "local"],
   "version": "0.4.5",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "tsc"
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@bitflow/bits": "workspace:*",
     "@bitflow/core": "workspace:*",
     "@bitflow/do-local": "workspace:*",
-    "@bitflow/end-tries": "workspace:*",
     "@bitflow/flow-engine": "workspace:*",
     "@bitflow/provider": "workspace:*",
-    "@bitflow/start-simple": "workspace:*",
-    "@bitflow/task-choice": "workspace:*",
     "@emotion/cache": "11.7.1",
     "@emotion/react": "11.7.1",
     "@emotion/styled": "11.6.0",

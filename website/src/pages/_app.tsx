@@ -1,17 +1,11 @@
-import * as endTries from "@bitflow/end-tries";
-import * as inputMarkdown from "@bitflow/input-markdown";
+import { bits } from "@bitflow/bits";
 import { BitflowProvider } from "@bitflow/provider";
-import * as startSimple from "@bitflow/start-simple";
-import * as taskChoice from "@bitflow/task-choice";
-import * as taskFillInTheBlank from "@bitflow/task-fill-in-the-blank";
-import * as taskInput from "@bitflow/task-input";
-import * as taskYesNo from "@bitflow/task-input";
-import * as titleSimple from "@bitflow/title-simple";
 import { MDXProvider } from "@mdx-js/react";
-import { Code, ThemeProvider } from "@openpatch/patches";
+import { Code, PatchesProvider } from "@openpatch/patches";
 import { AppProps } from "next/app";
 import "typeface-rubik";
 import "typeface-ubuntu-mono";
+import { Link } from "../components/Link";
 
 type CodeBlockProps = {
   className: string;
@@ -26,31 +20,8 @@ const CodeBlock = ({ className, children }: CodeBlockProps) => {
 function MyApp({ Component, pageProps, router }: AppProps) {
   const locale = router.locale || "en";
   return (
-    <ThemeProvider>
-      <BitflowProvider
-        locale={locale}
-        config={{}}
-        bits={{
-          end: {
-            tries: endTries,
-          },
-          task: {
-            choice: taskChoice,
-            "fill-in-the-blank": taskFillInTheBlank,
-            input: taskInput,
-            "yes-no": taskYesNo,
-          },
-          input: {
-            markdown: inputMarkdown,
-          },
-          start: {
-            simple: startSimple,
-          },
-          title: {
-            simple: titleSimple,
-          },
-        }}
-      >
+    <PatchesProvider linkComponent={Link}>
+      <BitflowProvider locale={locale} config={{}} bits={bits}>
         <MDXProvider
           components={{
             code: CodeBlock,
@@ -59,7 +30,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
           <Component {...pageProps} locale={locale} />
         </MDXProvider>
       </BitflowProvider>
-    </ThemeProvider>
+    </PatchesProvider>
   );
 }
 
