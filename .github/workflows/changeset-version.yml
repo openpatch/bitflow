@@ -31,13 +31,6 @@ jobs:
       - name: Test packages
         run: pnpm test
 
-      - name: Commit locales update
-        run: |
-          git config --global user.name 'patcher'
-          git config --global user.email 'git@openpatch.org'
-          git add packages/**/src/locales.vocab
-          git diff-index --quiet HEAD || git commit -m "automated locales update"
-
       - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
         with:
