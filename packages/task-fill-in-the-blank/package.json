@@ -43,7 +43,7 @@
     "@bitflow/core": "workspace:*",
     "@hookform/resolvers": "^2.8.5",
     "immer": "^9.0.7",
-    "react-markdown": "^6.0.3",
+    "react-markdown": "^7.0.0",
     "remark-gfm": "^1.0.0"
   },
   "peerDependencies": {
