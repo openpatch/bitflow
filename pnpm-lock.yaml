@@ -15,7 +15,7 @@ importers:
       '@emotion/cache': 11.7.1
       '@emotion/react': 11.7.1
       '@emotion/styled': 11.6.0
-      '@hookform/resolvers': 2.8.5
+      '@hookform/resolvers': 2.8.8
       '@octokit/core': 3.5.1
       '@openpatch/patches': 5.1.2
       '@testing-library/dom': 8.11.2
@@ -69,7 +69,7 @@ importers:
       '@emotion/cache': 11.7.1
       '@emotion/react': 11.7.1_b3e67f1b1cc68ee82c343add0615c039
       '@emotion/styled': 11.6.0_023218a630dedcfdc5aa065bf93ff9d7
-      '@hookform/resolvers': 2.8.5_react-hook-form@7.22.5
+      '@hookform/resolvers': 2.8.8_react-hook-form@7.22.5
       '@octokit/core': 3.5.1
       '@openpatch/patches': 5.1.2_f082edcdc3bae357a2d9e88717fcc8e1
       '@testing-library/dom': 8.11.2
@@ -2378,6 +2378,15 @@ packages:
       react-hook-form: ^7.0.0
     dependencies:
       react-hook-form: 7.22.5_react@17.0.2
+    dev: false
+
+  /@hookform/resolvers/2.8.8_react-hook-form@7.22.5:
+    resolution: {integrity: sha512-meAEDur1IJBfKyTo9yPYAuzjIfrxA7m9Ov+1nxaW/YupsqMeseWifoUjWK03+hz/RJizsVQAaUjVxFEkyu0GWg==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.22.5_react@17.0.2
+    dev: true
 
   /@istanbuljs/load-nyc-config/1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
