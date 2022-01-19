@@ -45,7 +45,7 @@
     "babel-jest": "27.4.6",
     "babel-loader": "8.2.3",
     "chalk": "5.0.0",
-    "chokidar": "3.5.2",
+    "chokidar": "3.5.3",
     "cross-env": "7.0.3",
     "esbuild": "0.14.11",
     "husky": "7.0.4",
