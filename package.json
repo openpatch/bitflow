@@ -31,7 +31,7 @@
     "@hookform/resolvers": "2.8.8",
     "@octokit/core": "3.5.1",
     "@openpatch/patches": "5.1.2",
-    "@testing-library/dom": "8.11.2",
+    "@testing-library/dom": "8.11.3",
     "@testing-library/jest-dom": "5.16.1",
     "@testing-library/react": "12.1.2",
     "@types/jest": "27.4.0",

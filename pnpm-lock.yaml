@@ -18,7 +18,7 @@ importers:
       '@hookform/resolvers': 2.8.8
       '@octokit/core': 3.5.1
       '@openpatch/patches': 5.1.2
-      '@testing-library/dom': 8.11.2
+      '@testing-library/dom': 8.11.3
       '@testing-library/jest-dom': 5.16.1
       '@testing-library/react': 12.1.2
       '@types/jest': 27.4.0
@@ -72,7 +72,7 @@ importers:
       '@hookform/resolvers': 2.8.8_react-hook-form@7.22.5
       '@octokit/core': 3.5.1
       '@openpatch/patches': 5.1.2_f082edcdc3bae357a2d9e88717fcc8e1
-      '@testing-library/dom': 8.11.2
+      '@testing-library/dom': 8.11.3
       '@testing-library/jest-dom': 5.16.1
       '@testing-library/react': 12.1.2_react-dom@17.0.2+react@17.0.2
       '@types/jest': 27.4.0
@@ -3166,8 +3166,8 @@ packages:
       '@styled-system/core': 5.1.2
       '@styled-system/css': 5.1.5
 
-  /@testing-library/dom/8.11.2:
-    resolution: {integrity: sha512-idsS/cqbYudXcVWngc1PuWNmXs416oBy2g/7Q8QAUREt5Z3MUkAL2XJD7xazLJ6esDfqRDi/ZBxk+OPPXitHRw==}
+  /@testing-library/dom/8.11.3:
+    resolution: {integrity: sha512-9LId28I+lx70wUiZjLvi1DB/WT2zGOxUh46glrSNMaWVx849kKAluezVzZrXJfTKKoQTmEOutLes/bHg4Bj3aA==}
     engines: {node: '>=12'}
     dependencies:
       '@babel/code-frame': 7.16.7
@@ -3203,7 +3203,7 @@ packages:
       react-dom: '*'
     dependencies:
       '@babel/runtime': 7.16.7
-      '@testing-library/dom': 8.11.2
+      '@testing-library/dom': 8.11.3
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: true
