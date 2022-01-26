@@ -47,7 +47,7 @@
     "chalk": "5.0.0",
     "chokidar": "3.5.3",
     "cross-env": "7.0.3",
-    "esbuild": "0.14.13",
+    "esbuild": "0.14.14",
     "husky": "7.0.4",
     "jest": "27.4.7",
     "jest-cli": "27.4.7",
