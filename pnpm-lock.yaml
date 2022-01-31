@@ -55,7 +55,7 @@ importers:
       typescript: 4.5.5
       typescript-styled-plugin: 0.18.2
       walkdir: 0.4.1
-      webpack: 5.67.0
+      webpack: 5.68.0
       zod: 3.11.6
     devDependencies:
       '@babel/core': 7.16.7
@@ -84,7 +84,7 @@ importers:
       '@vocab/core': 1.0.3
       '@vocab/react': 1.1.0_react@17.0.2
       babel-jest: 27.4.6_@babel+core@7.16.7
-      babel-loader: 8.2.3_15abcf48bdaa8457019961a15b19d564
+      babel-loader: 8.2.3_10dc6f040962d945a8dedfc296bb9adc
       chalk: 5.0.0
       chokidar: 3.5.3
       cross-env: 7.0.3
@@ -109,7 +109,7 @@ importers:
       typescript: 4.5.5
       typescript-styled-plugin: 0.18.2
       walkdir: 0.4.1
-      webpack: 5.67.0_esbuild@0.14.14
+      webpack: 5.68.0_esbuild@0.14.14
       zod: 3.11.6
 
   examples/nextjs-client-side-assessment:
@@ -141,7 +141,7 @@ importers:
       '@emotion/react': 11.7.1_b3e67f1b1cc68ee82c343add0615c039
       '@emotion/styled': 11.6.0_023218a630dedcfdc5aa065bf93ff9d7
       '@openpatch/patches': 5.1.2_1d8316f1624856ac642e2977532c4766
-      next: 12.0.7_e5e8e6f666644076a0dee99b8abfa7b4
+      next: 12.0.7_8f7fc7bc5af5851f52b445041427f540
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       typeface-rubik: 1.1.13
@@ -2728,7 +2728,7 @@ packages:
     resolution: {integrity: sha512-sA8LAMMlmcspIZw/jeQuJTyA3uGrqOhTBaQE+G9u6DPohqrBFRkaz7RzzJeqXkUXw600occsIBknSjyVd1R67A==}
     dev: false
 
-  /@next/react-dev-overlay/12.0.7_f7baaea9d178dfbf1d6bdddb6fa3097e:
+  /@next/react-dev-overlay/12.0.7_e8d37026251acb8f0cd306745f1edf7c:
     resolution: {integrity: sha512-dSQLgpZ5uzyittFtIHlJCLAbc0LlMFbRBSYuGsIlrtGyjYN+WMcnz8lK48VLxNPFGuB/hEzkWV4TW5Zu75+Fzg==}
     peerDependencies:
       react: ^17.0.2
@@ -2751,10 +2751,10 @@ packages:
       source-map: 0.8.0-beta.0
       stacktrace-parser: 0.1.10
       strip-ansi: 6.0.1
-      webpack: 5.67.0_esbuild@0.14.14
+      webpack: 5.68.0_esbuild@0.14.14
     dev: false
 
-  /@next/react-refresh-utils/12.0.7_e44e8a909352f7fdb20ebabae8a5ebb6:
+  /@next/react-refresh-utils/12.0.7_de1ecf9b331aa6139210dd58e6795a34:
     resolution: {integrity: sha512-Pglj1t+7RxH0txEqVcD8ZxrJgqLDmKvQDqxKq3ZPRWxMv7LTl7FVT2Pnb36QFeBwCvMVl67jxsADKsW0idz8sA==}
     peerDependencies:
       react-refresh: 0.8.3
@@ -2764,7 +2764,7 @@ packages:
         optional: true
     dependencies:
       react-refresh: 0.8.3
-      webpack: 5.67.0_esbuild@0.14.14
+      webpack: 5.68.0_esbuild@0.14.14
     dev: false
 
   /@next/swc-android-arm64/12.0.7:
@@ -4058,7 +4058,7 @@ packages:
       - supports-color
     dev: true
 
-  /babel-loader/8.2.3_15abcf48bdaa8457019961a15b19d564:
+  /babel-loader/8.2.3_10dc6f040962d945a8dedfc296bb9adc:
     resolution: {integrity: sha512-n4Zeta8NC3QAsuyiizu0GkmRcQ6clkV9WFUnUf1iXP//IeSKbWjofW3UHyZVwlOB4y039YQKefawyTn64Zwbuw==}
     engines: {node: '>= 8.9'}
     peerDependencies:
@@ -4070,7 +4070,7 @@ packages:
       loader-utils: 1.4.0
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.67.0_esbuild@0.14.14
+      webpack: 5.68.0_esbuild@0.14.14
     dev: true
 
   /babel-plugin-apply-mdx-type-prop/1.6.22_@babel+core@7.12.9:
@@ -7813,7 +7813,7 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /next/12.0.7_e5e8e6f666644076a0dee99b8abfa7b4:
+  /next/12.0.7_8f7fc7bc5af5851f52b445041427f540:
     resolution: {integrity: sha512-sKO8GJJYfuk9c+q+zHSNumvff+wP7ufmOlwT6BuzwiYfFJ61VTTkfTcDLSJ+95ErQJiC54uS4Yg5JEE8H6jXRA==}
     engines: {node: '>=12.22.0'}
     hasBin: true
@@ -7836,8 +7836,8 @@ packages:
       '@napi-rs/triples': 1.0.3
       '@next/env': 12.0.7
       '@next/polyfill-module': 12.0.7
-      '@next/react-dev-overlay': 12.0.7_f7baaea9d178dfbf1d6bdddb6fa3097e
-      '@next/react-refresh-utils': 12.0.7_e44e8a909352f7fdb20ebabae8a5ebb6
+      '@next/react-dev-overlay': 12.0.7_e8d37026251acb8f0cd306745f1edf7c
+      '@next/react-refresh-utils': 12.0.7_de1ecf9b331aa6139210dd58e6795a34
       acorn: 8.5.0
       assert: 2.0.0
       browserify-zlib: 0.2.0
@@ -9598,7 +9598,7 @@ packages:
       supports-hyperlinks: 2.2.0
     dev: true
 
-  /terser-webpack-plugin/5.3.0_6e85b7e572a0b0da69ca04d31bcf17bd:
+  /terser-webpack-plugin/5.3.0_7f4fc65acfa64c67b101756e6e18ffe5:
     resolution: {integrity: sha512-LPIisi3Ol4chwAaPP8toUJ3L4qCM1G0wao7L3qNv57Drezxj6+VEyySpPw4B1HSO2Eg/hDY/MNF5XihCAoqnsQ==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -9620,7 +9620,7 @@ packages:
       serialize-javascript: 6.0.0
       source-map: 0.6.1
       terser: 5.10.0_acorn@8.7.0
-      webpack: 5.67.0_esbuild@0.14.14
+      webpack: 5.68.0_esbuild@0.14.14
     transitivePeerDependencies:
       - acorn
     dev: true
@@ -10283,8 +10283,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /webpack/5.67.0_esbuild@0.14.14:
-    resolution: {integrity: sha512-LjFbfMh89xBDpUMgA1W9Ur6Rn/gnr2Cq1jjHFPo4v6a79/ypznSYbAyPgGhwsxBtMIaEmDD1oJoA7BEYw/Fbrw==}
+  /webpack/5.68.0_esbuild@0.14.14:
+    resolution: {integrity: sha512-zUcqaUO0772UuuW2bzaES2Zjlm/y3kRBQDVFVCge+s2Y8mwuUTdperGaAv65/NtRL/1zanpSJOq/MD8u61vo6g==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -10314,7 +10314,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.0_6e85b7e572a0b0da69ca04d31bcf17bd
+      terser-webpack-plugin: 5.3.0_7f4fc65acfa64c67b101756e6e18ffe5
       watchpack: 2.3.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
