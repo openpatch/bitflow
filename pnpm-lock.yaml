@@ -19,7 +19,7 @@ importers:
       '@octokit/core': 3.5.1
       '@openpatch/patches': 5.1.2
       '@testing-library/dom': 8.11.3
-      '@testing-library/jest-dom': 5.16.1
+      '@testing-library/jest-dom': 5.16.2
       '@testing-library/react': 12.1.2
       '@types/jest': 27.4.0
       '@types/lodash.get': 4.4.6
@@ -73,7 +73,7 @@ importers:
       '@octokit/core': 3.5.1
       '@openpatch/patches': 5.1.2_1d8316f1624856ac642e2977532c4766
       '@testing-library/dom': 8.11.3
-      '@testing-library/jest-dom': 5.16.1
+      '@testing-library/jest-dom': 5.16.2
       '@testing-library/react': 12.1.2_react-dom@17.0.2+react@17.0.2
       '@types/jest': 27.4.0
       '@types/lodash.get': 4.4.6
@@ -3170,8 +3170,8 @@ packages:
       pretty-format: 27.4.6
     dev: true
 
-  /@testing-library/jest-dom/5.16.1:
-    resolution: {integrity: sha512-ajUJdfDIuTCadB79ukO+0l8O+QwN0LiSxDaYUTI4LndbbUsGi6rWU1SCexXzBA2NSjlVB9/vbkasQIL3tmPBjw==}
+  /@testing-library/jest-dom/5.16.2:
+    resolution: {integrity: sha512-6ewxs1MXWwsBFZXIk4nKKskWANelkdUehchEOokHsN8X7c2eKXGw+77aRV63UU8f/DTSVUPLaGxdrj4lN7D/ug==}
     engines: {node: '>=8', npm: '>=6', yarn: '>=1'}
     dependencies:
       '@babel/runtime': 7.16.7
@@ -9293,6 +9293,7 @@ packages:
 
   /source-map-resolve/0.6.0:
     resolution: {integrity: sha512-KXBr9d/fO/bWo97NXsPIAW1bFSBOuCnjbNTBMO7N59hsv5i9yzRDfcYwwt0l04+VqnKC+EwzvJZIP/qkuMgR/w==}
+    deprecated: See https://github.com/lydell/source-map-resolve#deprecated
     dependencies:
       atob: 2.1.2
       decode-uri-component: 0.2.0
