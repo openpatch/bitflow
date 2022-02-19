@@ -9,7 +9,7 @@ importers:
       '@babel/preset-env': 7.16.11
       '@babel/preset-react': 7.16.7
       '@babel/preset-typescript': 7.16.7
-      '@changesets/changelog-github': 0.4.2
+      '@changesets/changelog-github': 0.4.3
       '@changesets/cli': 2.20.0
       '@emotion/babel-preset-css-prop': 11.2.0
       '@emotion/cache': 11.7.1
@@ -63,7 +63,7 @@ importers:
       '@babel/preset-env': 7.16.11_@babel+core@7.17.5
       '@babel/preset-react': 7.16.7_@babel+core@7.17.5
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.5
-      '@changesets/changelog-github': 0.4.2
+      '@changesets/changelog-github': 0.4.3
       '@changesets/cli': 2.20.0
       '@emotion/babel-preset-css-prop': 11.2.0_@babel+core@7.17.5
       '@emotion/cache': 11.7.1
@@ -1894,7 +1894,7 @@ packages:
       '@changesets/config': 1.6.4
       '@changesets/get-version-range-type': 0.3.2
       '@changesets/git': 1.3.0
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       '@manypkg/get-packages': 1.1.3
       detect-indent: 6.1.0
       fs-extra: 7.0.1
@@ -1911,16 +1911,16 @@ packages:
       '@babel/runtime': 7.16.7
       '@changesets/errors': 0.1.4
       '@changesets/get-dependents-graph': 1.3.0
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       '@manypkg/get-packages': 1.1.3
       semver: 5.7.1
     dev: true
 
-  /@changesets/changelog-github/0.4.2:
-    resolution: {integrity: sha512-qq8lJcq91ki7UT0fIfIcn5Yy7GJj19TmkLmGZ24/wEfxcD/nHHoTNRoi6nPt+Htf7qEudKxXLzQLi41B7Mt2vg==}
+  /@changesets/changelog-github/0.4.3:
+    resolution: {integrity: sha512-93X4arork7DV4+tVYeNlOTrw7HOXIvvd41yRPY9atJ+nS32W0uS+ewkZdc6WThuqmwGx9xaU+pxHtVLeYJTF0A==}
     dependencies:
       '@changesets/get-github-info': 0.5.0
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       dotenv: 8.6.0
     dev: true
 
@@ -1966,7 +1966,7 @@ packages:
       '@changesets/errors': 0.1.4
       '@changesets/get-dependents-graph': 1.3.0
       '@changesets/logger': 0.0.5
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       '@manypkg/get-packages': 1.1.3
       fs-extra: 7.0.1
       micromatch: 4.0.4
@@ -1981,7 +1981,7 @@ packages:
   /@changesets/get-dependents-graph/1.3.0:
     resolution: {integrity: sha512-4VHQWEluWySPgDdkL94YNxrEjDb9nwNFw515sWDmVrlfpQN5qaP1hdaotrp4mJm4ky85t4cTlrWSP+CTY7IDbw==}
     dependencies:
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       '@manypkg/get-packages': 1.1.3
       chalk: 2.4.2
       fs-extra: 7.0.1
@@ -2003,7 +2003,7 @@ packages:
       '@changesets/config': 1.6.4
       '@changesets/pre': 1.0.9
       '@changesets/read': 0.5.3
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       '@manypkg/get-packages': 1.1.3
     dev: true
 
@@ -2016,7 +2016,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.16.7
       '@changesets/errors': 0.1.4
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       '@manypkg/get-packages': 1.1.3
       is-subdir: 1.2.0
       spawndamnit: 2.0.0
@@ -2031,7 +2031,7 @@ packages:
   /@changesets/parse/0.3.11:
     resolution: {integrity: sha512-w5/X8KijcCrvv5lHimXIBR9o35c78niiBoesBjBUlWeifwPz0DHc/lzVYJKRkA5w0BGqft6T/9hKI68GaYj5wA==}
     dependencies:
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       js-yaml: 3.14.1
     dev: true
 
@@ -2040,7 +2040,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.16.7
       '@changesets/errors': 0.1.4
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       '@manypkg/get-packages': 1.1.3
       fs-extra: 7.0.1
     dev: true
@@ -2052,7 +2052,7 @@ packages:
       '@changesets/git': 1.3.0
       '@changesets/logger': 0.0.5
       '@changesets/parse': 0.3.11
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       chalk: 2.4.2
       fs-extra: 7.0.1
       p-filter: 2.1.0
@@ -2062,11 +2062,15 @@ packages:
     resolution: {integrity: sha512-OeDaB7D+WVy/ErymPzFm58IeGvz4DOl+oedyZETfnkfMezF/Uhrm1Ub6MHrO5LcAaQTW+ptDmr0fmaVyoTxgHw==}
     dev: true
 
+  /@changesets/types/4.1.0:
+    resolution: {integrity: sha512-LDQvVDv5Kb50ny2s25Fhm3d9QSZimsoUGBsUioj6MC3qbMUCuC8GPIvk/M6IvXx3lYhAs0lwWUQLb+VIEUCECw==}
+    dev: true
+
   /@changesets/write/0.1.6:
     resolution: {integrity: sha512-JWE2gJs9eHhorxqembkf43fllKlCz+sp1TJKSheaWfhWILMHPdfa/xQG4+sMZkISo1qZ+IlJyiBLha6iGGjXyA==}
     dependencies:
       '@babel/runtime': 7.16.7
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       fs-extra: 7.0.1
       human-id: 1.0.2
       prettier: 1.19.1
@@ -2797,7 +2801,7 @@ packages:
     resolution: {integrity: sha512-fo+QhuU3qE/2TQMQmbVMqaQ6EWbMhi4ABWP+O4AM1NqPBuy0OrApV5LO6BrrgnhtAHS2NH6RrVk9OL181tTi8A==}
     dependencies:
       '@babel/runtime': 7.16.7
-      '@changesets/types': 4.0.2
+      '@changesets/types': 4.1.0
       '@manypkg/find-root': 1.1.0
       fs-extra: 8.1.0
       globby: 11.0.4
