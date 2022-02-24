@@ -1,11 +1,12 @@
-import * as StartSimple from "@bitflow/start-simple"
-import * as EndTries from "@bitflow/end-tries"
-import * as TaskChoice from "@bitflow/task-choice"
-import * as TaskFill from "@bitflow/task-fill-in-the-blank"
-import * as TaskInput from "@bitflow/task-input"
-import * as TaskYes from "@bitflow/task-yes-no"
-import * as InputMarkdown from "@bitflow/input-markdown"
-import * as TitleSimple from "@bitflow/title-simple"
+import * as StartSimple from "@bitflow/start-simple";
+import * as EndTries from "@bitflow/end-tries";
+import * as TaskChoice from "@bitflow/task-choice";
+import * as TaskFill from "@bitflow/task-fill-in-the-blank";
+import * as TaskHighlighting from "@bitflow/task-highlighting";
+import * as TaskInput from "@bitflow/task-input";
+import * as TaskYes from "@bitflow/task-yes-no";
+import * as InputMarkdown from "@bitflow/input-markdown";
+import * as TitleSimple from "@bitflow/title-simple";
 import { z } from "zod";
 
 export {
@@ -13,6 +14,7 @@ export {
   EndTries,
   TaskChoice,
   TaskFill,
+  TaskHighlighting,
   TaskInput,
   TaskYes,
   InputMarkdown,
@@ -20,37 +22,38 @@ export {
 };
 
 export const startBits = {
-  "simple": StartSimple,
+  simple: StartSimple,
 } as const;
 
 export type StartBitKey = keyof typeof startBits;
 
 export const taskBits = {
-  "choice": TaskChoice,
-  "fill": TaskFill,
-  "input": TaskInput,
-  "yes": TaskYes,
+  choice: TaskChoice,
+  fill: TaskFill,
+  highlighting: TaskHighlighting,
+  input: TaskInput,
+  yes: TaskYes,
 } as const;
 
 export type TaskBitKey = keyof typeof taskBits;
 
 export const inputBits = {
-  "markdown": InputMarkdown,
+  markdown: InputMarkdown,
 } as const;
 
-export type InputBitKey = keyof typeof  inputBits;
+export type InputBitKey = keyof typeof inputBits;
 
 export const endBits = {
-  "tries": EndTries,
+  tries: EndTries,
 } as const;
 
-export type EndBitKey = keyof  typeof endBits;
+export type EndBitKey = keyof typeof endBits;
 
 export const titleBits = {
-  "simple": TitleSimple,
+  simple: TitleSimple,
 } as const;
 
-export type TitleBitKey = keyof  typeof titleBits;
+export type TitleBitKey = keyof typeof titleBits;
 
 export const bits = {
   start: startBits,
@@ -72,62 +75,57 @@ export const schemas = {
   task: z.union([
     TaskChoice.TaskSchema,
     TaskFill.TaskSchema,
+    TaskHighlighting.TaskSchema,
     TaskInput.TaskSchema,
     TaskYes.TaskSchema,
   ]),
 };
 
 export const evaluate = {
-  "choice": TaskChoice.evaluate,
-  "fill": TaskFill.evaluate,
-  "input": TaskInput.evaluate,
-  "yes": TaskYes.evaluate,
+  choice: TaskChoice.evaluate,
+  fill: TaskFill.evaluate,
+  highlighting: TaskHighlighting.evaluate,
+  input: TaskInput.evaluate,
+  yes: TaskYes.evaluate,
 };
 
 export const updateStatistic = {
-  "choice": TaskChoice.updateStatistic,
-  "fill": TaskFill.updateStatistic,
-  "input": TaskInput.updateStatistic,
-  "yes": TaskYes.updateStatistic,
+  choice: TaskChoice.updateStatistic,
+  fill: TaskFill.updateStatistic,
+  highlighting: TaskHighlighting.updateStatistic,
+  input: TaskInput.updateStatistic,
+  yes: TaskYes.updateStatistic,
 };
 
 export type Task =
   | TaskChoice.ITask
   | TaskFill.ITask
+  | TaskHighlighting.ITask
   | TaskInput.ITask
-  | TaskYes.ITask
-;
+  | TaskYes.ITask;
 export type TaskResult =
   | TaskChoice.IResult
   | TaskFill.IResult
+  | TaskHighlighting.IResult
   | TaskInput.IResult
-  | TaskYes.IResult
-;
+  | TaskYes.IResult;
 export type TaskStatistic =
   | TaskChoice.IStatistic
   | TaskFill.IStatistic
+  | TaskHighlighting.IStatistic
   | TaskInput.IStatistic
-  | TaskYes.IStatistic
-;
+  | TaskYes.IStatistic;
 export type TaskAnswer =
   | TaskChoice.IAnswer
   | TaskFill.IAnswer
+  | TaskHighlighting.IAnswer
   | TaskInput.IAnswer
-  | TaskYes.IAnswer
-;
+  | TaskYes.IAnswer;
 
-export type Input =
-  | InputMarkdown.IInput
-;
+export type Input = InputMarkdown.IInput;
 
-export type Title =
-  | TitleSimple.ITitle
-;
+export type Title = TitleSimple.ITitle;
 
-export type Start =
-  | StartSimple.IStart
-;
+export type Start = StartSimple.IStart;
 
-export type End =
-  | EndTries.IEnd
-;
+export type End = EndTries.IEnd;
