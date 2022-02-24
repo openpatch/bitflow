@@ -71,8 +71,8 @@ export const Task: TaskBit["Task"] = forwardRef(
     //blue, lavender, maroon, orange and yellow
     let instruction = task.view.instruction;
     Object.entries(task.view.colors).forEach(([k, v]) => {
-      instruction = instruction.replaceAll(
-        `{{${k}}}`,
+      instruction = instruction.replace(
+        new RegExp(`{{${k}}}`, "g"),
         `<mark id="${k}">${v.label || t(k as IHighlightColor)}</mark>`
       );
     });
