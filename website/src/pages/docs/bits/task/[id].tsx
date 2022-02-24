@@ -27,12 +27,10 @@ import { bits, TaskBitKey } from "@bitflow/bits";
 import { GetStaticPaths, GetStaticProps } from "next";
 
 export type TaskBitDocProps = {
-  id: TaskBitKey
+  id: TaskBitKey;
 };
 
-export default function TaskBitDoc({
-  id
-}: TaskBitDocProps) {
+const Example = ({ id }: TaskBitDocProps) => {
   const taskBit = bits.task[id];
   const { example, name, description } = taskBit.useInformation();
   const [statistic, setStatistic] = useState<Bitflow.TaskStatistic>();
@@ -53,19 +51,78 @@ export default function TaskBitDoc({
     // @ts-ignore
     const result = taskBit.evaluate({ answer, task });
     const updateStatistic = await taskBit.updateStatistic({
-    // @ts-ignore
+      // @ts-ignore
       statistic,
-    // @ts-ignore
+      // @ts-ignore
       answer,
-    // @ts-ignore
+      // @ts-ignore
       task,
     });
     // @ts-ignore
-    setStatistic(updateStatistic);
+    setStatistic(updateStatistic as any);
     // @ts-ignore
-    return result;
+    return result as any;
   };
 
+  return (
+    <FormProvider {...methods}>
+      <Tabs>
+        <TabList inverted>
+          <Tab>Task</Tab>
+          <Tab>View Form</Tab>
+          <Tab>Evaluation Form</Tab>
+          <Tab>Feedback Form</Tab>
+          <Tab>Statistic</Tab>
+        </TabList>
+        <TabPanel p="none">
+          <Box position="relative" height="600px" overflowY="auto">
+            <TaskShell
+              key={nextKey.toISOString()}
+              onNext={async () => setNextKey(new Date())}
+              onRetry={async () => setNextKey(new Date())}
+              evaluate={handleEvaluate}
+              TaskComponent={taskBit.Task as any}
+              mode="default"
+              task={{ ...task }}
+            />
+          </Box>
+        </TabPanel>
+        <TabPanel>
+          <taskBit.ViewForm name="" />
+        </TabPanel>
+        <TabPanel>
+          <taskBit.EvaluationForm name="" />
+        </TabPanel>
+        <TabPanel>
+          <taskBit.FeedbackForm name="" />
+        </TabPanel>
+        <TabPanel>
+          {statistic ? (
+            <Fragment>
+              <taskBit.Statistic
+                // @ts-ignore
+                statistic={{ ...statistic }}
+                // @ts-ignore
+                task={{ ...task }}
+              />
+              <ButtonPrimary fullWidth onClick={() => setStatistic(undefined)}>
+                Reset Statistic
+              </ButtonPrimary>
+            </Fragment>
+          ) : (
+            <Text>
+              Submit some answers in the Task tab to see the statistic.
+            </Text>
+          )}
+        </TabPanel>
+      </Tabs>
+    </FormProvider>
+  );
+};
+
+export default function TaskBitDoc({ id }: TaskBitDocProps) {
+  const taskBit = bits.task[id];
+  const { example, name, description } = taskBit.useInformation();
   return (
     <DocLayout
       meta={{
@@ -102,60 +159,7 @@ export default function TaskBitDoc({
             can submit new answers, show a statistic based on thoses answers or
             modify the task by using the different forms.
           </CardContent>
-          <FormProvider {...methods}>
-            <Tabs>
-              <TabList inverted>
-                <Tab>Task</Tab>
-                <Tab>View Form</Tab>
-                <Tab>Evaluation Form</Tab>
-                <Tab>Feedback Form</Tab>
-                <Tab>Statistic</Tab>
-              </TabList>
-              <TabPanel p="none">
-                <Box position="relative" height="600px" overflowY="auto">
-                  <TaskShell
-                    key={nextKey.toISOString()}
-                    onNext={async () => setNextKey(new Date())}
-                    evaluate={handleEvaluate}
-                    TaskComponent={taskBit.Task as any}
-                    mode="default"
-                    task={{ ...task }}
-                  />
-                </Box>
-              </TabPanel>
-              <TabPanel>
-                <taskBit.ViewForm name="" />
-              </TabPanel>
-              <TabPanel>
-                <taskBit.EvaluationForm name="" />
-              </TabPanel>
-              <TabPanel>
-                <taskBit.FeedbackForm name="" />
-              </TabPanel>
-              <TabPanel>
-                {statistic ? (
-                  <Fragment>
-                    <taskBit.Statistic
-                      // @ts-ignore
-                      statistic={{ ...statistic }}
-                      // @ts-ignore
-                      task={{ ...task }}
-                    />
-                    <ButtonPrimary
-                      fullWidth
-                      onClick={() => setStatistic(undefined)}
-                    >
-                      Reset Statistic
-                    </ButtonPrimary>
-                  </Fragment>
-                ) : (
-                  <Text>
-                    Submit some answers in the Task tab to see the statistic.
-                  </Text>
-                )}
-              </TabPanel>
-            </Tabs>
-          </FormProvider>
+          <Example id={id} />
         </Card>
         <Card>
           <CardHeader>Imports</CardHeader>
@@ -253,13 +257,13 @@ const My = () => (
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const params = context.params as any
+  const params = context.params as any;
   return {
     props: {
       id: params.id,
     },
   };
-}
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = Object.keys(bits.task).map((id) => ({
@@ -269,4 +273,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths,
     fallback: false,
   };
-}
+};

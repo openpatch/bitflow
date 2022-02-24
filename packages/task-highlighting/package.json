@@ -1,6 +1,6 @@
 {
-  "name": "@bitflow/bits",
-  "version": "0.0.2",
+  "name": "@bitflow/task-highlighting",
+  "version": "0.0.0",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -24,32 +24,35 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openpatch/bitflow.git",
-    "directory": "packages/bits"
+    "directory": "packages/task-highlighting"
   },
   "bugs": {
-    "url": "https://github.com/openpatch/bits/issues"
+    "url": "https://github.com/openpatch/bitflow/issues"
   },
   "scripts": {
     "prebuild": "rimraf dist",
     "version": "pnpm build",
     "lint": "tsc --noEmit",
     "test": "jest --env=jsdom --passWithNoTests",
-    "build": "pnpm build:pkg && pnpm build:types",
-    "build:pkg": "node ../../scripts/buildBitsPackage.mjs && node ../../scripts/build.mjs",
+    "build": "pnpm build:locales && pnpm build:pkg && pnpm build:types",
+    "build:pkg": "node ../../scripts/build.mjs",
+    "build:locales": "vocab compile",
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
   },
   "dependencies": {
-    "@bitflow/start-simple": "workspace:*",
-    "@bitflow/end-tries": "workspace:*",
-    "@bitflow/task-choice": "workspace:*",
-    "@bitflow/task-fill-in-the-blank": "workspace:*",
-    "@bitflow/task-highlighting": "workspace:*",
-    "@bitflow/task-input": "workspace:*",
-    "@bitflow/task-yes-no": "workspace:*",
-    "@bitflow/input-markdown": "workspace:*",
-    "@bitflow/title-simple": "workspace:*"
+    "@bitflow/core": "workspace:*",
+    "immer": "^9.0.3"
   },
   "peerDependencies": {
+    "@emotion/cache": "11.x",
+    "@emotion/react": "11.x",
+    "@emotion/styled": "11.x",
+    "@openpatch/patches": "5.x",
+    "@vocab/core": "1.x",
+    "@vocab/react": "1.x",
+    "react": "17.x",
+    "react-dom": "17.x",
+    "react-hook-form": "7.x",
     "zod": "3.x"
   }
 }
