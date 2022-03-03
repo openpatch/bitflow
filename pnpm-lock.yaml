@@ -56,7 +56,7 @@ importers:
       typescript-styled-plugin: 0.18.2
       walkdir: 0.4.1
       webpack: 5.69.1
-      zod: 3.12.0
+      zod: 3.13.4
     devDependencies:
       '@babel/core': 7.17.5
       '@babel/plugin-transform-runtime': 7.17.0_@babel+core@7.17.5
@@ -110,7 +110,7 @@ importers:
       typescript-styled-plugin: 0.18.2
       walkdir: 0.4.1
       webpack: 5.69.1_esbuild@0.14.23
-      zod: 3.12.0
+      zod: 3.13.4
 
   examples/nextjs-client-side-assessment:
     specifiers:
@@ -421,7 +421,7 @@ importers:
       typeface-rubik: 1.1.13
       typeface-ubuntu-mono: 1.1.13
       typescript-styled-plugin: 0.18.2
-      zod: 3.12.0
+      zod: 3.13.4
       zod-to-json-schema: 3.11.3
     dependencies:
       '@bitflow/bits': link:../packages/bits
@@ -446,7 +446,7 @@ importers:
       react-json-view: 1.21.3_b8fdba992ce7d797017dc07106486496
       typeface-rubik: 1.1.13
       typeface-ubuntu-mono: 1.1.13
-      zod: 3.12.0
+      zod: 3.13.4
       zod-to-json-schema: 3.11.3
     devDependencies:
       '@babel/core': 7.17.5
@@ -11580,11 +11580,11 @@ packages:
   /zod-to-json-schema/3.11.3:
     resolution: {integrity: sha512-K5n/Ri8RHzxkmWXnCHoWqaZgSJ6VYnUGhKXnRbgQKCWGkOR3niJb2tXEqFuQTO9wdCp5d06VhYz6FixGiEettA==}
     dependencies:
-      zod: 3.12.0
+      zod: 3.13.4
     dev: false
 
-  /zod/3.12.0:
-    resolution: {integrity: sha512-w+mmntgEL4hDDL5NLFdN6Fq2DSzxfmlSoJqiYE1/CApO8EkOCxvJvRYEVf8Vr/lRs3i6gqoiyFM6KRcWqqdBzQ==}
+  /zod/3.13.4:
+    resolution: {integrity: sha512-LZRucWt4j/ru5azOkJxCfpR87IyFDn8h2UODdqvXzZLb3K7bb9chUrUIGTy3BPsr8XnbQYfQ5Md5Hu2OYIo1mg==}
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
