@@ -38,7 +38,7 @@
     "@types/lodash.get": "4.4.6",
     "@types/node": "17.0.8",
     "@types/react": "17.0.39",
-    "@types/react-dom": "17.0.12",
+    "@types/react-dom": "17.0.13",
     "@vocab/cli": "1.0.1",
     "@vocab/core": "1.0.3",
     "@vocab/react": "1.1.0",
