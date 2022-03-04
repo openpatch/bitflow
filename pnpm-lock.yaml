@@ -55,7 +55,7 @@ importers:
       typescript: 4.6.2
       typescript-styled-plugin: 0.18.2
       walkdir: 0.4.1
-      webpack: 5.69.1
+      webpack: 5.70.0
       zod: 3.13.4
     devDependencies:
       '@babel/core': 7.17.5
@@ -84,7 +84,7 @@ importers:
       '@vocab/core': 1.0.3
       '@vocab/react': 1.1.0_react@17.0.2
       babel-jest: 27.5.1_@babel+core@7.17.5
-      babel-loader: 8.2.3_9351ded4f79a023849d74b5df047d562
+      babel-loader: 8.2.3_ed870ac3ba52c4ec230ba2bc3dbb311c
       chalk: 5.0.0
       chokidar: 3.5.3
       cross-env: 7.0.3
@@ -109,7 +109,7 @@ importers:
       typescript: 4.6.2
       typescript-styled-plugin: 0.18.2
       walkdir: 0.4.1
-      webpack: 5.69.1_esbuild@0.14.24
+      webpack: 5.70.0_esbuild@0.14.24
       zod: 3.13.4
 
   examples/nextjs-client-side-assessment:
@@ -141,7 +141,7 @@ importers:
       '@emotion/react': 11.7.1_cace7fcc789006967e0a1a43d73a7bfc
       '@emotion/styled': 11.6.0_2010255c0938e7687570e6dea374ce67
       '@openpatch/patches': 5.1.2_b40a98c9463ee8a48dde5457b2e9b70b
-      next: 12.0.7_0c21560a31418c2f47467c245317f86d
+      next: 12.0.7_9d3e4d0ea862e649c5cd4fc730de99d3
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       typeface-rubik: 1.1.13
@@ -2885,7 +2885,7 @@ packages:
     resolution: {integrity: sha512-sA8LAMMlmcspIZw/jeQuJTyA3uGrqOhTBaQE+G9u6DPohqrBFRkaz7RzzJeqXkUXw600occsIBknSjyVd1R67A==}
     dev: false
 
-  /@next/react-dev-overlay/12.0.7_fc6af71bc2c131d8b0e7cdc2c9eb5a96:
+  /@next/react-dev-overlay/12.0.7_e4dc28a41fd7a40a687699adff1c938e:
     resolution: {integrity: sha512-dSQLgpZ5uzyittFtIHlJCLAbc0LlMFbRBSYuGsIlrtGyjYN+WMcnz8lK48VLxNPFGuB/hEzkWV4TW5Zu75+Fzg==}
     peerDependencies:
       react: ^17.0.2
@@ -2908,10 +2908,10 @@ packages:
       source-map: 0.8.0-beta.0
       stacktrace-parser: 0.1.10
       strip-ansi: 6.0.1
-      webpack: 5.69.1_esbuild@0.14.24
+      webpack: 5.70.0_esbuild@0.14.24
     dev: false
 
-  /@next/react-refresh-utils/12.0.7_c6fed51fcf0c6547d87d67191469d97f:
+  /@next/react-refresh-utils/12.0.7_ed83db3551f9bb45b1ec6880b68c467b:
     resolution: {integrity: sha512-Pglj1t+7RxH0txEqVcD8ZxrJgqLDmKvQDqxKq3ZPRWxMv7LTl7FVT2Pnb36QFeBwCvMVl67jxsADKsW0idz8sA==}
     peerDependencies:
       react-refresh: 0.8.3
@@ -2921,7 +2921,7 @@ packages:
         optional: true
     dependencies:
       react-refresh: 0.8.3
-      webpack: 5.69.1_esbuild@0.14.24
+      webpack: 5.70.0_esbuild@0.14.24
     dev: false
 
   /@next/swc-android-arm64/12.0.7:
@@ -4288,7 +4288,7 @@ packages:
       - supports-color
     dev: true
 
-  /babel-loader/8.2.3_9351ded4f79a023849d74b5df047d562:
+  /babel-loader/8.2.3_ed870ac3ba52c4ec230ba2bc3dbb311c:
     resolution: {integrity: sha512-n4Zeta8NC3QAsuyiizu0GkmRcQ6clkV9WFUnUf1iXP//IeSKbWjofW3UHyZVwlOB4y039YQKefawyTn64Zwbuw==}
     engines: {node: '>= 8.9'}
     peerDependencies:
@@ -4300,7 +4300,7 @@ packages:
       loader-utils: 1.4.0
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.69.1_esbuild@0.14.24
+      webpack: 5.70.0_esbuild@0.14.24
     dev: true
 
   /babel-plugin-apply-mdx-type-prop/1.6.22_@babel+core@7.12.9:
@@ -5504,8 +5504,8 @@ packages:
       once: 1.4.0
     dev: true
 
-  /enhanced-resolve/5.9.0:
-    resolution: {integrity: sha512-weDYmzbBygL7HzGGS26M3hGQx68vehdEg6VUmqSOaFzXExFqlnKuSvsEJCVGQHScS8CQMbrAqftT+AzzHNt/YA==}
+  /enhanced-resolve/5.9.2:
+    resolution: {integrity: sha512-GIm3fQfwLJ8YZx2smuHpBKkXC1yOk+OBEmKckVyL0i/ea8mqDEykK3ld5dgH1QYPNyT/lIllxV2LULnxCHaHkA==}
     engines: {node: '>=10.13.0'}
     dependencies:
       graceful-fs: 4.2.9
@@ -8630,7 +8630,7 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /next/12.0.7_0c21560a31418c2f47467c245317f86d:
+  /next/12.0.7_9d3e4d0ea862e649c5cd4fc730de99d3:
     resolution: {integrity: sha512-sKO8GJJYfuk9c+q+zHSNumvff+wP7ufmOlwT6BuzwiYfFJ61VTTkfTcDLSJ+95ErQJiC54uS4Yg5JEE8H6jXRA==}
     engines: {node: '>=12.22.0'}
     hasBin: true
@@ -8653,8 +8653,8 @@ packages:
       '@napi-rs/triples': 1.0.3
       '@next/env': 12.0.7
       '@next/polyfill-module': 12.0.7
-      '@next/react-dev-overlay': 12.0.7_fc6af71bc2c131d8b0e7cdc2c9eb5a96
-      '@next/react-refresh-utils': 12.0.7_c6fed51fcf0c6547d87d67191469d97f
+      '@next/react-dev-overlay': 12.0.7_e4dc28a41fd7a40a687699adff1c938e
+      '@next/react-refresh-utils': 12.0.7_ed83db3551f9bb45b1ec6880b68c467b
       acorn: 8.5.0
       assert: 2.0.0
       browserify-zlib: 0.2.0
@@ -10519,7 +10519,7 @@ packages:
       supports-hyperlinks: 2.2.0
     dev: true
 
-  /terser-webpack-plugin/5.3.0_5e3a213cdcd560e8b17aabef7e794b5c:
+  /terser-webpack-plugin/5.3.0_2fb816e4f7aa4cea1d8c25447307267b:
     resolution: {integrity: sha512-LPIisi3Ol4chwAaPP8toUJ3L4qCM1G0wao7L3qNv57Drezxj6+VEyySpPw4B1HSO2Eg/hDY/MNF5XihCAoqnsQ==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -10541,7 +10541,7 @@ packages:
       serialize-javascript: 6.0.0
       source-map: 0.6.1
       terser: 5.10.0_acorn@8.7.0
-      webpack: 5.69.1_esbuild@0.14.24
+      webpack: 5.70.0_esbuild@0.14.24
     transitivePeerDependencies:
       - acorn
     dev: true
@@ -11326,8 +11326,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /webpack/5.69.1_esbuild@0.14.24:
-    resolution: {integrity: sha512-+VyvOSJXZMT2V5vLzOnDuMz5GxEqLk7hKWQ56YxPW/PQRUuKimPqmEIJOx8jHYeyo65pKbapbW464mvsKbaj4A==}
+  /webpack/5.70.0_esbuild@0.14.24:
+    resolution: {integrity: sha512-ZMWWy8CeuTTjCxbeaQI21xSswseF2oNOwc70QSKNePvmxE7XW36i7vpBMYZFAUHPwQiEbNGCEYIOOlyRbdGmxw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -11345,7 +11345,7 @@ packages:
       acorn-import-assertions: 1.8.0_acorn@8.7.0
       browserslist: 4.19.1
       chrome-trace-event: 1.0.3
-      enhanced-resolve: 5.9.0
+      enhanced-resolve: 5.9.2
       es-module-lexer: 0.9.3
       eslint-scope: 5.1.1
       events: 3.3.0
@@ -11357,7 +11357,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.0_5e3a213cdcd560e8b17aabef7e794b5c
+      terser-webpack-plugin: 5.3.0_2fb816e4f7aa4cea1d8c25447307267b
       watchpack: 2.3.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
