@@ -31,7 +31,7 @@ importers:
       '@vocab/react': 1.1.0
       babel-jest: 27.5.1
       babel-loader: 8.2.3
-      chalk: 5.0.0
+      chalk: 5.0.1
       chokidar: 3.5.3
       cross-env: 7.0.3
       esbuild: 0.14.25
@@ -85,7 +85,7 @@ importers:
       '@vocab/react': 1.1.0_react@17.0.2
       babel-jest: 27.5.1_@babel+core@7.17.5
       babel-loader: 8.2.3_ed870ac3ba52c4ec230ba2bc3dbb311c
-      chalk: 5.0.0
+      chalk: 5.0.1
       chokidar: 3.5.3
       cross-env: 7.0.3
       esbuild: 0.14.25
@@ -4732,8 +4732,8 @@ packages:
       supports-color: 7.2.0
     dev: true
 
-  /chalk/5.0.0:
-    resolution: {integrity: sha512-/duVOqst+luxCQRKEo4bNxinsOQtMP80ZYm7mMqzuh5PociNL0PvmHFvREJ9ueYL2TxlHjBcmLCdmocx9Vg+IQ==}
+  /chalk/5.0.1:
+    resolution: {integrity: sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
     dev: true
 
@@ -7827,7 +7827,7 @@ packages:
     resolution: {integrity: sha512-l0x2DvrW294C9uDCoQe1VSU4gf529FkSZ6leBl4TiqZH/e+0R7hSfHQBNut2mNygDgHwvYHfFLn6Oxb3VWj2rA==}
     engines: {node: '>=12'}
     dependencies:
-      chalk: 5.0.0
+      chalk: 5.0.1
       is-unicode-supported: 1.1.0
     dev: true
 
@@ -9165,7 +9165,7 @@ packages:
     hasBin: true
     dependencies:
       '@types/liftoff': 4.0.0
-      chalk: 5.0.0
+      chalk: 5.0.1
       interpret: 2.2.0
       liftoff: 4.0.0
       minimist: 1.2.5
