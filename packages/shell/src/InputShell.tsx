@@ -27,10 +27,12 @@ export const InputShell = <I extends Bitflow.Input>({
   const { t } = useTranslations(translations);
 
   const handleNext = () => {
-    setState("next");
-    onNext().catch(() => {
-      setState("default");
-    });
+    if (onNext) {
+      setState("next");
+      onNext().catch(() => {
+        setState("default");
+      });
+    }
   };
 
   const handlePrevious = () => {
@@ -69,14 +71,16 @@ export const InputShell = <I extends Bitflow.Input>({
         <InputComponent input={input} />
       </ShellContent>
       <ShellFooter>
-        <ButtonPrimary
-          fullWidth
-          onClick={handleNext}
-          disabled={state !== "default"}
-          loading={state === "next"}
-        >
-          {t("next")}
-        </ButtonPrimary>
+        {onNext && (
+          <ButtonPrimary
+            fullWidth
+            onClick={handleNext}
+            disabled={state !== "default"}
+            loading={state === "next"}
+          >
+            {t("next")}
+          </ButtonPrimary>
+        )}
       </ShellFooter>
     </Shell>
   );

@@ -1,5 +1,5 @@
 export interface IShell {
-  onNext: () => Promise<void>;
+  onNext?: () => Promise<void>;
   progress?: {
     value: number;
     max: number;

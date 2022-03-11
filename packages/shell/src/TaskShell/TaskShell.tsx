@@ -293,10 +293,12 @@ export const TaskShell = <
   }
 
   function handleNext() {
-    customDispatch(nextAction());
-    onNext().catch(() => {
-      customDispatch(nextErrorAction());
-    });
+    if (onNext) {
+      customDispatch(nextAction());
+      onNext().catch(() => {
+        customDispatch(nextErrorAction());
+      });
+    }
   }
 
   function handleRetry() {
@@ -405,9 +407,11 @@ export const TaskShell = <
             <Text textColor="primary.800" mb="standard">
               {nudge}
             </Text>
-            <ButtonPrimary onClick={handleNext} fullWidth>
-              {t("next")}
-            </ButtonPrimary>
+            {onNext && (
+              <ButtonPrimary onClick={handleNext} fullWidth>
+                {t("next")}
+              </ButtonPrimary>
+            )}
           </Box>
         )}
         {state === "wrong" && (
@@ -426,9 +430,11 @@ export const TaskShell = <
             <Text textColor="error.800" mb="standard">
               {nudge}
             </Text>
-            <ButtonPrimary onClick={handleNext} fullWidth>
-              {t("next")}
-            </ButtonPrimary>
+            {onNext && (
+              <ButtonPrimary onClick={handleNext} fullWidth>
+                {t("next")}
+              </ButtonPrimary>
+            )}
           </Box>
         )}
         {state === "unknown" && (
@@ -447,9 +453,11 @@ export const TaskShell = <
             <Text textColor="primary.800" mb="standard">
               {nudge}
             </Text>
-            <ButtonPrimary onClick={handleNext} fullWidth>
-              {t("next")}
-            </ButtonPrimary>
+            {onNext && (
+              <ButtonPrimary onClick={handleNext} fullWidth>
+                {t("next")}
+              </ButtonPrimary>
+            )}
           </Box>
         )}
         {state === "manual" && (
@@ -468,9 +476,11 @@ export const TaskShell = <
             <Text textColor="warning.800" mb="standard">
               {nudge}
             </Text>
-            <ButtonPrimary onClick={handleNext} fullWidth>
-              {t("next")}
-            </ButtonPrimary>
+            {onNext && (
+              <ButtonPrimary onClick={handleNext} fullWidth>
+                {t("next")}
+              </ButtonPrimary>
+            )}
           </Box>
         )}
         {(state === "allow-retry" || state === "retry") && (
@@ -505,14 +515,16 @@ export const TaskShell = <
               )}
               {onSkip && (
                 <Box flex="1">
-                  <ButtonPrimary
-                    disabled={state === "retry"}
-                    tone="accent"
-                    onClick={handleNext}
-                    fullWidth
-                  >
-                    {t("next")}
-                  </ButtonPrimary>
+                  {onNext && (
+                    <ButtonPrimary
+                      disabled={state === "retry"}
+                      tone="accent"
+                      onClick={handleNext}
+                      fullWidth
+                    >
+                      {t("next")}
+                    </ButtonPrimary>
+                  )}
                 </Box>
               )}
             </Box>

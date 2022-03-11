@@ -57,14 +57,16 @@ export const StartShell = <S extends Bitflow.Start>({
         <StartComponent start={start} />
       </ShellContent>
       <ShellFooter>
-        <ButtonPrimary
-          fullWidth
-          onClick={handleNext}
-          disabled={state !== "default"}
-          loading={state === "next"}
-        >
-          {t("start")}
-        </ButtonPrimary>
+        {onNext && (
+          <ButtonPrimary
+            fullWidth
+            onClick={handleNext}
+            disabled={state !== "default"}
+            loading={state === "next"}
+          >
+            {t("start")}
+          </ButtonPrimary>
+        )}
       </ShellFooter>
     </Shell>
   );

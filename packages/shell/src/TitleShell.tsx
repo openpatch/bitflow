@@ -27,10 +27,12 @@ export const TitleShell = <P extends Bitflow.Title>({
   const { t } = useTranslations(translations);
 
   const handleNext = () => {
-    setState("next");
-    onNext().catch(() => {
-      setState("default");
-    });
+    if (onNext) {
+      setState("next");
+      onNext().catch(() => {
+        setState("default");
+      });
+    }
   };
 
   const handlePrevious = () => {
@@ -69,14 +71,16 @@ export const TitleShell = <P extends Bitflow.Title>({
         <TitleComponent title={title} />
       </ShellContent>
       <ShellFooter>
-        <ButtonPrimary
-          fullWidth
-          onClick={handleNext}
-          disabled={state !== "default"}
-          loading={state === "next"}
-        >
-          {t("next")}
-        </ButtonPrimary>
+        {onNext && (
+          <ButtonPrimary
+            fullWidth
+            onClick={handleNext}
+            disabled={state !== "default"}
+            loading={state === "next"}
+          >
+            {t("next")}
+          </ButtonPrimary>
+        )}
       </ShellFooter>
     </Shell>
   );
