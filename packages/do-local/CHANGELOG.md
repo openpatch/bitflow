@@ -1,5 +1,12 @@
 # @bitflow/do-local
 
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @bitflow/do@0.5.5
+
 ## 0.4.4
 
 ### Patch Changes
