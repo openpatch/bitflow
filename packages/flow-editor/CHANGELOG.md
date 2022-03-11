@@ -1,5 +1,12 @@
 # @bitflow/flow-editor
 
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies [[`61c3d4d`](https://github.com/openpatch/bitflow/commit/61c3d4d3a44c8dbf03f91f48da3240111b72b9f3)]:
+  - @bitflow/shell@0.6.0
+
 ## 0.4.4
 
 ### Patch Changes

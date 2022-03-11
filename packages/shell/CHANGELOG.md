@@ -1,5 +1,11 @@
 # @bitflow/shell
 
+## 0.6.0
+
+### Minor Changes
+
+- [`61c3d4d`](https://github.com/openpatch/bitflow/commit/61c3d4d3a44c8dbf03f91f48da3240111b72b9f3) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Hide next button on shells, when no onNext prop is provided.
+
 ## 0.5.4
 
 ### Patch Changes
