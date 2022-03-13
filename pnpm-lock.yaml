@@ -48,7 +48,7 @@ importers:
       pretty-quick: 3.1.3
       react: 17.0.2
       react-dom: 17.0.2
-      react-hook-form: 7.27.1
+      react-hook-form: 7.28.0
       rimraf: 3.0.2
       ts-jest: 27.1.3
       ts-node: 10.7.0
@@ -69,9 +69,9 @@ importers:
       '@emotion/cache': 11.7.1
       '@emotion/react': 11.8.2_bf389bc9d9c898d23b26c0366b4e1ca7
       '@emotion/styled': 11.8.1_f003f72b024767ff904b1489bd7777d6
-      '@hookform/resolvers': 2.8.8_react-hook-form@7.27.1
+      '@hookform/resolvers': 2.8.8_react-hook-form@7.28.0
       '@octokit/core': 3.5.1
-      '@openpatch/patches': 5.2.0_2c81b40e9871fab53193927f0a115c22
+      '@openpatch/patches': 5.2.0_eef688d28cd17bbcddb4b74410ca4ef0
       '@testing-library/dom': 8.11.3
       '@testing-library/jest-dom': 5.16.2
       '@testing-library/react': 12.1.4_react-dom@17.0.2+react@17.0.2
@@ -102,7 +102,7 @@ importers:
       pretty-quick: 3.1.3_prettier@2.5.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-hook-form: 7.27.1_react@17.0.2
+      react-hook-form: 7.28.0_react@17.0.2
       rimraf: 3.0.2
       ts-jest: 27.1.3_8436b5b4a8d72edda29150a49609ba88
       ts-node: 10.7.0_e83f13f0cbdf816abaef01cbcf8b0fa5
@@ -140,7 +140,7 @@ importers:
       '@emotion/cache': 11.7.1
       '@emotion/react': 11.7.1_cace7fcc789006967e0a1a43d73a7bfc
       '@emotion/styled': 11.6.0_2010255c0938e7687570e6dea374ce67
-      '@openpatch/patches': 5.1.2_b40a98c9463ee8a48dde5457b2e9b70b
+      '@openpatch/patches': 5.1.2_5cdaa3b2e9849c67798b2148ddc3824d
       next: 12.0.7_9d3e4d0ea862e649c5cd4fc730de99d3
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -263,7 +263,7 @@ importers:
       '@bitflow/flow': link:../flow
       '@bitflow/provider': link:../provider
       '@bitflow/shell': link:../shell
-      '@hookform/resolvers': 2.8.5_react-hook-form@7.27.1
+      '@hookform/resolvers': 2.8.5_react-hook-form@7.28.0
       react-flow-renderer: 9.7.2_react-dom@17.0.2+react@17.0.2
 
   packages/flow-engine:
@@ -343,7 +343,7 @@ importers:
     dependencies:
       '@bitflow/core': link:../core
       '@bitflow/provider': link:../provider
-      '@hookform/resolvers': 2.8.5_react-hook-form@7.27.1
+      '@hookform/resolvers': 2.8.5_react-hook-form@7.28.0
       immer: 9.0.7
 
   packages/task-fill-in-the-blank:
@@ -355,7 +355,7 @@ importers:
       remark-gfm: ^1.0.0
     dependencies:
       '@bitflow/core': link:../core
-      '@hookform/resolvers': 2.8.5_react-hook-form@7.27.1
+      '@hookform/resolvers': 2.8.5_react-hook-form@7.28.0
       immer: 9.0.7
       react-markdown: 6.0.3_00d6772dea80510e818fd171caaa025a
       remark-gfm: 1.0.0
@@ -370,7 +370,7 @@ importers:
     dependencies:
       '@bitflow/core': link:../core
       '@bitflow/provider': link:../provider
-      '@hookform/resolvers': 2.8.5_react-hook-form@7.27.1
+      '@hookform/resolvers': 2.8.5_react-hook-form@7.28.0
       immer: 9.0.7
       react-tagcloud: 2.2.0_react@17.0.2
 
@@ -451,7 +451,7 @@ importers:
     devDependencies:
       '@babel/core': 7.17.5
       '@emotion/babel-preset-css-prop': 11.2.0_@babel+core@7.17.5
-      '@openpatch/patches': 5.2.0_2c81b40e9871fab53193927f0a115c22
+      '@openpatch/patches': 5.2.0_eef688d28cd17bbcddb4b74410ca4ef0
       '@types/atob': 2.1.2
       '@types/lz-string': 1.3.34
       '@types/mdx-js__react': 1.5.5
@@ -2513,20 +2513,20 @@ packages:
     resolution: {integrity: sha512-gfta+H8aziZsm8pZa0vj04KO6biEiisppNgA1kbJvFrrWu9Vm7eaUEy76DIxsuTaWvti5fkJVhllWc6ZTE+Mdw==}
     dev: false
 
-  /@hookform/resolvers/2.8.5_react-hook-form@7.27.1:
+  /@hookform/resolvers/2.8.5_react-hook-form@7.28.0:
     resolution: {integrity: sha512-n7eFm4snsejpfZVH8q2NU7YJbsGhF61IHB0TxgK11nmg08RymEr3KscnbTAZaPd9RaXa3vUPoULgBRN2nVDtMg==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.27.1_react@17.0.2
+      react-hook-form: 7.28.0_react@17.0.2
     dev: false
 
-  /@hookform/resolvers/2.8.8_react-hook-form@7.27.1:
+  /@hookform/resolvers/2.8.8_react-hook-form@7.28.0:
     resolution: {integrity: sha512-meAEDur1IJBfKyTo9yPYAuzjIfrxA7m9Ov+1nxaW/YupsqMeseWifoUjWK03+hz/RJizsVQAaUjVxFEkyu0GWg==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.27.1_react@17.0.2
+      react-hook-form: 7.28.0_react@17.0.2
     dev: true
 
   /@istanbuljs/load-nyc-config/1.1.0:
@@ -3194,7 +3194,7 @@ packages:
       '@octokit/openapi-types': 11.2.0
     dev: true
 
-  /@openpatch/patches/5.1.2_b40a98c9463ee8a48dde5457b2e9b70b:
+  /@openpatch/patches/5.1.2_5cdaa3b2e9849c67798b2148ddc3824d:
     resolution: {integrity: sha512-tB+OwweLQMGlbtv1QbicfqqYceJaNa/lsiMgJzlwGJksCSSi7HISYds8zBwH+f7ieqolkMBUQ7OQF8GKOXmm6g==}
     peerDependencies:
       '@emotion/cache': ^11.0.0
@@ -3224,7 +3224,7 @@ packages:
       polished: 4.1.3
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-hook-form: 7.27.1_react@17.0.2
+      react-hook-form: 7.28.0_react@17.0.2
       react-markdown: 5.0.3_b08e3c15324cbe90a6ff8fcd416c932c
       react-modal: 3.14.4_react-dom@17.0.2+react@17.0.2
       react-syntax-highlighter: 15.4.5_react@17.0.2
@@ -3237,7 +3237,7 @@ packages:
       - supports-color
     dev: false
 
-  /@openpatch/patches/5.2.0_2c81b40e9871fab53193927f0a115c22:
+  /@openpatch/patches/5.2.0_eef688d28cd17bbcddb4b74410ca4ef0:
     resolution: {integrity: sha512-KdU4uv2ZCpqvp5jeb7l3dhRUPTJ243g4V91zqVtSeuqrfE2MykHtd218TrSLcTIIHGtxbw9JbQNhmNuoVdDvIQ==}
     peerDependencies:
       '@emotion/cache': ^11.0.0
@@ -3267,7 +3267,7 @@ packages:
       polished: 4.1.3
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-hook-form: 7.27.1_react@17.0.2
+      react-hook-form: 7.28.0_react@17.0.2
       react-markdown: 8.0.0_00d6772dea80510e818fd171caaa025a
       react-modal: 3.14.4_react-dom@17.0.2+react@17.0.2
       react-syntax-highlighter: 15.4.5_react@17.0.2
@@ -9442,8 +9442,8 @@ packages:
       - react-native
     dev: false
 
-  /react-hook-form/7.27.1_react@17.0.2:
-    resolution: {integrity: sha512-N3a7A6zIQ8DJeThisVZGtOUabTbJw+7DHJidmB9w8m3chckv2ZWKb5MHps9d2pPJqmCDoWe53Bos56bYmJms5w==}
+  /react-hook-form/7.28.0_react@17.0.2:
+    resolution: {integrity: sha512-mmLpT86BkMGPr0r6ca8zxV0WH4Y1FW5MKs7Rq1+uHLVeeg5pSWbF5Z/qLCnM5vPVblHNM6lRBRRotnfEAf0ALA==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17
