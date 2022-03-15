@@ -29,7 +29,7 @@
     "@emotion/react": "11.8.2",
     "@emotion/styled": "11.8.1",
     "@hookform/resolvers": "2.8.8",
-    "@octokit/core": "3.5.1",
+    "@octokit/core": "3.6.0",
     "@openpatch/patches": "5.2.0",
     "@testing-library/dom": "8.11.3",
     "@testing-library/jest-dom": "5.16.2",

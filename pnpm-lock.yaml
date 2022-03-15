@@ -16,7 +16,7 @@ importers:
       '@emotion/react': 11.8.2
       '@emotion/styled': 11.8.1
       '@hookform/resolvers': 2.8.8
-      '@octokit/core': 3.5.1
+      '@octokit/core': 3.6.0
       '@openpatch/patches': 5.2.0
       '@testing-library/dom': 8.11.3
       '@testing-library/jest-dom': 5.16.2
@@ -70,7 +70,7 @@ importers:
       '@emotion/react': 11.8.2_47ea947e2a228aa5b9e98bcc4bbde992
       '@emotion/styled': 11.8.1_014d3fd47caecfb5ae8372631ae4f839
       '@hookform/resolvers': 2.8.8_react-hook-form@7.28.0
-      '@octokit/core': 3.5.1
+      '@octokit/core': 3.6.0
       '@openpatch/patches': 5.2.0_eef688d28cd17bbcddb4b74410ca4ef0
       '@testing-library/dom': 8.11.3
       '@testing-library/jest-dom': 5.16.2
@@ -1969,6 +1969,8 @@ packages:
       '@changesets/get-github-info': 0.5.0
       '@changesets/types': 4.1.0
       dotenv: 8.6.0
+    transitivePeerDependencies:
+      - encoding
     dev: true
 
   /@changesets/cli/2.21.1:
@@ -2040,7 +2042,9 @@ packages:
     resolution: {integrity: sha512-vm5VgHwrxkMkUjFyn3UVNKLbDp9YMHd3vMf1IyJoa/7B+6VpqmtAaXyDS0zBLfN5bhzVCHrRnj4GcZXXcqrFTw==}
     dependencies:
       dataloader: 1.4.0
-      node-fetch: 2.6.6
+      node-fetch: 2.6.7
+    transitivePeerDependencies:
+      - encoding
     dev: true
 
   /@changesets/get-release-plan/3.0.7:
@@ -3178,16 +3182,18 @@ packages:
       '@octokit/types': 6.34.0
     dev: true
 
-  /@octokit/core/3.5.1:
-    resolution: {integrity: sha512-omncwpLVxMP+GLpLPgeGJBF6IWJFjXDS5flY5VbppePYX9XehevbDykRH9PdCdvqt9TS5AOTiDide7h0qrkHjw==}
+  /@octokit/core/3.6.0:
+    resolution: {integrity: sha512-7RKRKuA4xTjMhY+eG3jthb3hlZCsOwg3rztWh75Xc+ShDWOfDDATWbeZpAHBNRpm4Tv9WgBMOy1zEJYXG6NJ7Q==}
     dependencies:
       '@octokit/auth-token': 2.5.0
       '@octokit/graphql': 4.8.0
-      '@octokit/request': 5.6.2
+      '@octokit/request': 5.6.3
       '@octokit/request-error': 2.1.0
       '@octokit/types': 6.34.0
       before-after-hook: 2.2.2
       universal-user-agent: 6.0.0
+    transitivePeerDependencies:
+      - encoding
     dev: true
 
   /@octokit/endpoint/6.0.12:
@@ -3201,9 +3207,11 @@ packages:
   /@octokit/graphql/4.8.0:
     resolution: {integrity: sha512-0gv+qLSBLKF0z8TKaSKTsS39scVKF9dbMxJpj3U0vC7wjNWFuIpL/z76Qe2fiuCbDRcJSavkXsVtMS6/dtQQsg==}
     dependencies:
-      '@octokit/request': 5.6.2
+      '@octokit/request': 5.6.3
       '@octokit/types': 6.34.0
       universal-user-agent: 6.0.0
+    transitivePeerDependencies:
+      - encoding
     dev: true
 
   /@octokit/openapi-types/11.2.0:
@@ -3218,15 +3226,17 @@ packages:
       once: 1.4.0
     dev: true
 
-  /@octokit/request/5.6.2:
-    resolution: {integrity: sha512-je66CvSEVf0jCpRISxkUcCa0UkxmFs6eGDRSbfJtAVwbLH5ceqF+YEyC8lj8ystKyZTy8adWr0qmkY52EfOeLA==}
+  /@octokit/request/5.6.3:
+    resolution: {integrity: sha512-bFJl0I1KVc9jYTe9tdGGpAMPy32dLBXXo1dS/YwSCTL/2nd9XeHsY616RE3HPXDVk+a+dBuzyz5YdlXwcDTr2A==}
     dependencies:
       '@octokit/endpoint': 6.0.12
       '@octokit/request-error': 2.1.0
       '@octokit/types': 6.34.0
       is-plain-object: 5.0.0
-      node-fetch: 2.6.6
+      node-fetch: 2.6.7
       universal-user-agent: 6.0.0
+    transitivePeerDependencies:
+      - encoding
     dev: true
 
   /@octokit/types/6.34.0:
@@ -3930,6 +3940,7 @@ packages:
       prettier: 2.5.1
       yargs: 16.2.0
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: true
 
@@ -3958,8 +3969,9 @@ packages:
       chalk: 4.1.2
       debug: 4.3.3
       form-data: 3.0.1
-      node-fetch: 2.6.6
+      node-fetch: 2.6.7
     transitivePeerDependencies:
+      - encoding
       - supports-color
     dev: true
 
@@ -8812,6 +8824,18 @@ packages:
   /node-fetch/2.6.6:
     resolution: {integrity: sha512-Z8/6vRlTUChSdIgMa51jxQ4lrw/Jy5SOW10ObaA47/RElsAN2c5Pn8bTgFGWn/ibwzXTE8qwr1Yzx28vsecXEA==}
     engines: {node: 4.x || >=6.0.0}
+    dependencies:
+      whatwg-url: 5.0.0
+    dev: true
+
+  /node-fetch/2.6.7:
+    resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
+    engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
+    peerDependenciesMeta:
+      encoding:
+        optional: true
     dependencies:
       whatwg-url: 5.0.0
     dev: true
