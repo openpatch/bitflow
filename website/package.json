@@ -35,7 +35,7 @@
     "zod-to-json-schema": "3.11.3"
   },
   "devDependencies": {
-    "@babel/core": "7.17.7",
+    "@babel/core": "7.17.8",
     "@emotion/babel-preset-css-prop": "11.2.0",
     "@openpatch/patches": "5.2.0",
     "@types/atob": "2.1.2",
