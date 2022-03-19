@@ -25,7 +25,7 @@ importers:
       '@types/lodash.get': 4.4.6
       '@types/node': 17.0.8
       '@types/react': 17.0.41
-      '@types/react-dom': 17.0.13
+      '@types/react-dom': 17.0.14
       '@vocab/cli': 1.0.1
       '@vocab/core': 1.0.3
       '@vocab/react': 1.1.0
@@ -79,7 +79,7 @@ importers:
       '@types/lodash.get': 4.4.6
       '@types/node': 17.0.8
       '@types/react': 17.0.41
-      '@types/react-dom': 17.0.13
+      '@types/react-dom': 17.0.14
       '@vocab/cli': 1.0.1
       '@vocab/core': 1.0.3
       '@vocab/react': 1.1.0_react@17.0.2
@@ -3447,7 +3447,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.16.7
       '@testing-library/dom': 8.11.3
-      '@types/react-dom': 17.0.13
+      '@types/react-dom': 17.0.14
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: true
@@ -3860,8 +3860,8 @@ packages:
   /@types/prop-types/15.7.4:
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
 
-  /@types/react-dom/17.0.13:
-    resolution: {integrity: sha512-wEP+B8hzvy6ORDv1QBhcQia4j6ea4SFIBttHYpXKPFZRviBvknq0FRh3VrIxeXUmsPkwuXVZrVGG7KUVONmXCQ==}
+  /@types/react-dom/17.0.14:
+    resolution: {integrity: sha512-H03xwEP1oXmSfl3iobtmQ/2dHF5aBHr8aUMwyGZya6OW45G+xtdzmq6HkncefiBt5JU8DVyaWl/nWZbjZCnzAQ==}
     dependencies:
       '@types/react': 17.0.41
     dev: true
