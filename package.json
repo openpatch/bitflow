@@ -69,7 +69,7 @@
     "typescript-styled-plugin": "0.18.2",
     "walkdir": "0.4.1",
     "webpack": "5.70.0",
-    "zod": "3.13.4"
+    "zod": "3.14.2"
   },
   "browserslist": {
     "production": [
