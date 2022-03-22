@@ -43,7 +43,7 @@
     "@vocab/core": "1.0.3",
     "@vocab/react": "1.1.0",
     "babel-jest": "27.5.1",
-    "babel-loader": "8.2.3",
+    "babel-loader": "8.2.4",
     "chalk": "5.0.1",
     "chokidar": "3.5.3",
     "cross-env": "7.0.3",
