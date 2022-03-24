@@ -38,7 +38,7 @@ importers:
       husky: 7.0.4
       jest: 27.5.1
       jest-cli: 27.5.1
-      jest-node-exports-resolver: 1.1.4
+      jest-node-exports-resolver: 1.1.5
       lodash.get: 4.4.2
       next: 12.1.0
       node-plop: 0.30.0
@@ -92,7 +92,7 @@ importers:
       husky: 7.0.4
       jest: 27.5.1_ts-node@10.7.0
       jest-cli: 27.5.1_ts-node@10.7.0
-      jest-node-exports-resolver: 1.1.4
+      jest-node-exports-resolver: 1.1.5
       lodash.get: 4.4.2
       next: 12.1.0_978f344c876a57c1143ffe356b90df31
       node-plop: 0.30.0
@@ -7396,8 +7396,8 @@ packages:
       '@types/node': 17.0.8
     dev: true
 
-  /jest-node-exports-resolver/1.1.4:
-    resolution: {integrity: sha512-CFcNX/P72mgLQcDr+GnBf9KkSwQNGjSWluRXinzZ6ogA8Yr7PtatnFKme4qKPHghgSP7JGTaZCcfnmq0PG4e5A==}
+  /jest-node-exports-resolver/1.1.5:
+    resolution: {integrity: sha512-dWar/x+J8ATndZiWYHF1Lswv/CQ8eQBS5RhHlIGqf+cP54oAvJc9+1bESWs3Vd9Kd76U0qtKdDd20fHldfIxfg==}
     dev: true
 
   /jest-pnp-resolver/1.2.2_jest-resolve@27.5.1:
