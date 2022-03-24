@@ -18,7 +18,7 @@ importers:
       '@hookform/resolvers': 2.8.8
       '@octokit/core': 3.6.0
       '@openpatch/patches': 5.2.0
-      '@testing-library/dom': 8.11.3
+      '@testing-library/dom': 8.11.4
       '@testing-library/jest-dom': 5.16.2
       '@testing-library/react': 12.1.4
       '@types/jest': 27.4.1
@@ -72,7 +72,7 @@ importers:
       '@hookform/resolvers': 2.8.8_react-hook-form@7.28.1
       '@octokit/core': 3.6.0
       '@openpatch/patches': 5.2.0_5be66b221b27a60adde8a8154c75821d
-      '@testing-library/dom': 8.11.3
+      '@testing-library/dom': 8.11.4
       '@testing-library/jest-dom': 5.16.2
       '@testing-library/react': 12.1.4_react-dom@17.0.2+react@17.0.2
       '@types/jest': 27.4.1
@@ -3409,8 +3409,8 @@ packages:
       '@styled-system/core': 5.1.2
       '@styled-system/css': 5.1.5
 
-  /@testing-library/dom/8.11.3:
-    resolution: {integrity: sha512-9LId28I+lx70wUiZjLvi1DB/WT2zGOxUh46glrSNMaWVx849kKAluezVzZrXJfTKKoQTmEOutLes/bHg4Bj3aA==}
+  /@testing-library/dom/8.11.4:
+    resolution: {integrity: sha512-7vZ6ZoBEbr6bfEM89W1nzl0vHbuI0g0kRrI0hwSXH3epnuqGO3KulFLQCKfmmW+60t7e4sevAkJPASSMmnNCRw==}
     engines: {node: '>=12'}
     dependencies:
       '@babel/code-frame': 7.16.7
@@ -3420,7 +3420,7 @@ packages:
       chalk: 4.1.2
       dom-accessibility-api: 0.5.10
       lz-string: 1.4.4
-      pretty-format: 27.4.6
+      pretty-format: 27.5.1
     dev: true
 
   /@testing-library/jest-dom/5.16.2:
@@ -3446,7 +3446,7 @@ packages:
       react-dom: '*'
     dependencies:
       '@babel/runtime': 7.16.7
-      '@testing-library/dom': 8.11.3
+      '@testing-library/dom': 8.11.4
       '@types/react-dom': 17.0.14
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -9286,15 +9286,6 @@ packages:
     resolution: {integrity: sha512-m2FgJibYrBGGgQXNzfd0PuDGShJgRavjUoRCw1mZERIWVSXF0iLzLm+aOqTAbLnC3n6JzUhAA8uZnFVghHJ86A==}
     engines: {node: '>=10.13.0'}
     hasBin: true
-    dev: true
-
-  /pretty-format/27.4.6:
-    resolution: {integrity: sha512-NblstegA1y/RJW2VyML+3LlpFjzx62cUrtBIKIWDXEDkjNeleA7Od7nrzcs/VLQvAeV4CgSYhrN39DRN88Qi/g==}
-    engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
-    dependencies:
-      ansi-regex: 5.0.1
-      ansi-styles: 5.2.0
-      react-is: 17.0.2
     dev: true
 
   /pretty-format/27.5.1:
