@@ -1,1 +1,107 @@
-{}
+{
+  "add": {
+    "message": "Add Choice"
+  },
+  "add-pattern": {
+    "message": "Add Pattern"
+  },
+  "checked-feedback": {
+    "message": "Checked Feeedback"
+  },
+  "choice": {
+    "message": "Choice {option}"
+  },
+  "correct-choices": {
+    "message": "Correct Choices"
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "delete-pattern": {
+    "message": "Delete"
+  },
+  "description": {
+    "message": "A task bit allowing to create single or multiple choice questions. The answers of users can be automatically evaluated. Also feedback can be given based on the answer pattern."
+  },
+  "down": {
+    "message": "Down"
+  },
+  "error": {
+    "message": "Error"
+  },
+  "example.choice.a": {
+    "message": "Sumatra"
+  },
+  "example.choice.b": {
+    "message": "Java"
+  },
+  "example.choice.c": {
+    "message": "Cobra"
+  },
+  "example.choice.d": {
+    "message": "Python"
+  },
+  "example.feedback.a.checked": {
+    "message": "This is only an island."
+  },
+  "example.feedback.b.notChecked": {
+    "message": "This is not only an island, but also a programming language."
+  },
+  "example.feedback.pattern.ac": {
+    "message": "It is a trap."
+  },
+  "example.instruction": {
+    "message": "Which of the following are programming languages?"
+  },
+  "info": {
+    "message": "Info"
+  },
+  "instruction": {
+    "message": "Instruction"
+  },
+  "name": {
+    "message": "Choice"
+  },
+  "not-checked-feedback": {
+    "message": "Not Checked Feedback"
+  },
+  "one-choice-required": {
+    "message": "At least one choice is required!"
+  },
+  "pattern": {
+    "message": "Pattern {pattern}"
+  },
+  "pattern-error-duplicate": {
+    "message": "A pattern can not contain duplicates"
+  },
+  "pattern-error-exists": {
+    "message": "This pattern already exists"
+  },
+  "pattern-error-invalid": {
+    "message": "Not a valid pattern"
+  },
+  "patterns": {
+    "message": "Patterns"
+  },
+  "statistic-patterns-description": {
+    "message": "Here you can see the frequency of the patterns. Green highlighted patterns are correct ones, which match the evaluation pattern. If you hover of a pattern you can see the choices."
+  },
+  "success": {
+    "message": "Success"
+  },
+  "up": {
+    "message": "Up"
+  },
+  "variant": {
+    "message": "Variant"
+  },
+  "variant-multiple": {
+    "message": "Multiple"
+  },
+  "variant-single": {
+    "message": "Single"
+  },
+  "warning": {
+    "message": "Warning"
+  }
+}
