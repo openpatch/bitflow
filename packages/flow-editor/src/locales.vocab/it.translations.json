@@ -1,1 +1,281 @@
-{}
+{
+  "add-bit-task-first": {
+    "message": "You need to add a task node first."
+  },
+  "add-input-portal-first": {
+    "message": "You need to add an input portal first."
+  },
+  "bit": {
+    "message": "Bit"
+  },
+  "bit-type-properties-invalid": {
+    "message": "The properties of this bit are invalid. Take a lot at the errors."
+  },
+  "bit-type-unsupported": {
+    "message": "Configuration of this bit type is currently unsupported."
+  },
+  "checkpoint": {
+    "message": "Checkpoint"
+  },
+  "checkpoint-helper-text": {
+    "message": "Stop students from going backwards"
+  },
+  "control": {
+    "message": "Control"
+  },
+  "description": {
+    "message": "Description"
+  },
+  "draft": {
+    "message": "Draft"
+  },
+  "end": {
+    "message": "End"
+  },
+  "end-helper-text": {
+    "message": "The last node in your flow"
+  },
+  "end-markdown": {
+    "message": "Markdown"
+  },
+  "end-points": {
+    "message": "{points, number} of {maxPoints} {maxPoints, plural, =0 {Points} one {Point} other {Points}}"
+  },
+  "end-properties-invalid": {
+    "message": "End Node Properties are invalid."
+  },
+  "end-show-points": {
+    "message": "Show Points"
+  },
+  "end-show-results": {
+    "message": "Show Results"
+  },
+  "errors": {
+    "message": "Errors"
+  },
+  "evaluation": {
+    "message": "Evaluation"
+  },
+  "evaluation-enable-retry": {
+    "message": "Enable retry"
+  },
+  "evaluation-mode": {
+    "message": "Mode"
+  },
+  "evaluation-mode-auto": {
+    "message": "Auto"
+  },
+  "evaluation-mode-auto-helper-text": {
+    "message": "Automatic evaluation"
+  },
+  "evaluation-mode-manual": {
+    "message": "Manual"
+  },
+  "evaluation-mode-manual-helper-text": {
+    "message": "Manual evaluation"
+  },
+  "evaluation-mode-skip": {
+    "message": "Skip"
+  },
+  "evaluation-mode-skip-helper-text": {
+    "message": "Skip evaluation"
+  },
+  "evaluation-show-feedback": {
+    "message": "Show feedback"
+  },
+  "feedback": {
+    "message": "Feedback"
+  },
+  "flow-properties": {
+    "message": "Flow Properties"
+  },
+  "input": {
+    "message": "Input"
+  },
+  "input-markdown": {
+    "message": "Markdown"
+  },
+  "key": {
+    "message": "Key"
+  },
+  "lang-de": {
+    "message": "German"
+  },
+  "lang-en": {
+    "message": "English"
+  },
+  "lang-es": {
+    "message": "Spanish"
+  },
+  "lang-fr": {
+    "message": "French"
+  },
+  "lang-it": {
+    "message": "Italian"
+  },
+  "lang-nl": {
+    "message": "Dutch"
+  },
+  "lang-pt": {
+    "message": "Portuguese"
+  },
+  "lang-tr": {
+    "message": "Turkish"
+  },
+  "language": {
+    "message": "Language"
+  },
+  "meta": {
+    "message": "Meta"
+  },
+  "name": {
+    "message": "Name"
+  },
+  "new-flow-title": {
+    "message": "New Flow"
+  },
+  "new-node-title": {
+    "message": "New {type}"
+  },
+  "node-finished": {
+    "message": "Finished"
+  },
+  "node-no-properties": {
+    "message": "Nothing to configure for this node"
+  },
+  "node-skipped": {
+    "message": "Skipped"
+  },
+  "node-started": {
+    "message": "Started"
+  },
+  "nodes": {
+    "message": "Nodes"
+  },
+  "portal": {
+    "message": "Portal"
+  },
+  "portal-helper-text": {
+    "message": "An input and an output portal are linked and act like a normal edge."
+  },
+  "portal-input": {
+    "message": "Portal Input"
+  },
+  "portal-output": {
+    "message": "Portal Output"
+  },
+  "portal-properties": {
+    "message": "Portal Properties"
+  },
+  "preview": {
+    "message": "Preview"
+  },
+  "private": {
+    "message": "Private"
+  },
+  "properties": {
+    "message": "Properties"
+  },
+  "public": {
+    "message": "Public"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "select-node": {
+    "message": "Select a node"
+  },
+  "split-answer": {
+    "message": "Split Answer"
+  },
+  "split-answer-helper-text": {
+    "message": "Students will be directed based on their answer"
+  },
+  "split-answer-properties": {
+    "message": "Split Answer Properties"
+  },
+  "split-points": {
+    "message": "Split Points"
+  },
+  "split-points-helper-text": {
+    "message": "Students will be directed based on their points"
+  },
+  "split-points-properties": {
+    "message": "Split Points Properties"
+  },
+  "split-random": {
+    "message": "Split Random"
+  },
+  "split-random-helper-text": {
+    "message": "Students will be directed randomly"
+  },
+  "split-result": {
+    "message": "Split Result"
+  },
+  "split-result-helper-text": {
+    "message": "Students will be directed based on their results"
+  },
+  "split-result-properties": {
+    "message": "Split Result Properties"
+  },
+  "start": {
+    "message": "Start"
+  },
+  "start-helper-text": {
+    "message": "The first node in your flow"
+  },
+  "start-markdown": {
+    "message": "Markdown"
+  },
+  "start-properties-invalid": {
+    "message": "Start Node Properties are invalid."
+  },
+  "start-title": {
+    "message": "Title"
+  },
+  "subtype": {
+    "message": "Subtype"
+  },
+  "synchronize": {
+    "message": "Synchronize"
+  },
+  "synchronize-helper-text": {
+    "message": "Force students to wait on your signal"
+  },
+  "task": {
+    "message": "Task"
+  },
+  "task-choice": {
+    "message": "Choice"
+  },
+  "task-fill-in-the-blank": {
+    "message": "Fill in the blank"
+  },
+  "task-input": {
+    "message": "Input"
+  },
+  "title": {
+    "message": "Title"
+  },
+  "title-simple": {
+    "message": "Simple"
+  },
+  "type": {
+    "message": "Type"
+  },
+  "unlisted": {
+    "message": "Unlisted"
+  },
+  "utility": {
+    "message": "Utility"
+  },
+  "value": {
+    "message": "Value"
+  },
+  "view": {
+    "message": "View"
+  },
+  "visibility": {
+    "message": "Visibility"
+  }
+}
