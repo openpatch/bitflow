@@ -27,7 +27,7 @@ export const kappa = ({
 
   let kappa: number = (p0 - pe) / (1 - pe);
 
-  return kappa;
+  return kappa || 0;
 };
 
 export const evaluate: TaskBit["evaluate"] = async ({ task, answer }) => {
