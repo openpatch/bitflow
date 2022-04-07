@@ -51,7 +51,6 @@
     "husky": "7.0.4",
     "jest": "27.5.1",
     "jest-cli": "27.5.1",
-    "jest-node-exports-resolver": "1.1.5",
     "lodash.get": "4.4.2",
     "next": "12.1.0",
     "node-plop": "0.30.0",
