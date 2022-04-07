@@ -42,8 +42,8 @@
   "dependencies": {
     "@bitflow/core": "workspace:*",
     "@bitflow/provider": "workspace:*",
-    "@hookform/resolvers": "^2.8.5",
-    "immer": "^9.0.7",
+    "@hookform/resolvers": "^2.8.8",
+    "immer": "^9.0.12",
     "react-tagcloud": "^2.2.0"
   },
   "peerDependencies": {
