@@ -14,8 +14,16 @@ describe("evaluate", () => {
     });
     expect(result).toEqual({
       allowRetry: true,
-      state: "correct",
       subtype: "highlighting",
+      state: "correct",
+      agreement: {
+        maroon: 0,
+        blue: 0,
+        lavender: 0,
+        orange: 0,
+        yellow: 0,
+      },
+      highlightsFeedback: Array(task.view.text.length).fill(null),
     });
   });
 
@@ -32,6 +40,14 @@ describe("evaluate", () => {
       allowRetry: true,
       state: "manual",
       subtype: "highlighting",
+      agreement: {
+        maroon: 0,
+        blue: 0,
+        lavender: 0,
+        orange: 0,
+        yellow: 0,
+      },
+      highlightsFeedback: Array(task.view.text.length).fill(null),
     });
   });
 });
