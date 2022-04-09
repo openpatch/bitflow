@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/bits",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -43,6 +43,7 @@
     "@bitflow/end-tries": "workspace:*",
     "@bitflow/task-choice": "workspace:*",
     "@bitflow/task-fill-in-the-blank": "workspace:*",
+    "@bitflow/task-highlighting": "workspace:*",
     "@bitflow/task-input": "workspace:*",
     "@bitflow/task-yes-no": "workspace:*",
     "@bitflow/input-markdown": "workspace:*",

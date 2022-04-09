@@ -44,7 +44,7 @@
     "@bitflow/flow": "workspace:*",
     "@bitflow/provider": "workspace:*",
     "@bitflow/shell": "workspace:*",
-    "@hookform/resolvers": "^2.8.5",
+    "@hookform/resolvers": "^2.8.8",
     "react-flow-renderer": "^9.7.2"
   },
   "peerDependencies": {

@@ -1,6 +1,6 @@
 {
-  "name": "@bitflow/task-fill-in-the-blank",
-  "version": "0.4.6",
+  "name": "@bitflow/task-highlighting",
+  "version": "0.1.0",
   "author": "Mike Barkmin",
   "homepage": "https://github.com/openpatch/bitflow#readme",
   "license": "MIT",
@@ -24,7 +24,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openpatch/bitflow.git",
-    "directory": "packages/task-fill-in-the-blank"
+    "directory": "packages/task-highlighting"
   },
   "bugs": {
     "url": "https://github.com/openpatch/bitflow/issues"
@@ -41,10 +41,7 @@
   },
   "dependencies": {
     "@bitflow/core": "workspace:*",
-    "@hookform/resolvers": "^2.8.8",
-    "immer": "^9.0.12",
-    "react-markdown": "^6.0.3",
-    "remark-gfm": "^1.0.0"
+    "immer": "^9.0.12"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
