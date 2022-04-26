@@ -53,7 +53,7 @@
     "@vocab/core": "1.x",
     "@vocab/react": "1.x",
     "@vocab/types": "1.x",
-    "react": "17.x",
-    "react-dom": "17.x"
+    "react": "17.x || 18.x",
+    "react-dom": "17.x || 18.x"
   }
 }
