@@ -1,9 +1,10 @@
 import { VocabProvider } from "@vocab/react";
-import { FC, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { context, ContextProps, Locale, locales } from "./context";
 
 export type BitflowProviderProps = {
   locale?: string;
+  children?: ReactNode;
 } & Pick<ContextProps, "config" | "bits">;
 
 export const BitflowProvider: FC<BitflowProviderProps> = ({

@@ -1,10 +1,9 @@
 import { css } from "@emotion/react";
 import { Box } from "@openpatch/patches";
-import { ReactNode } from "react";
+import { PropsWithChildren } from "react";
 
-export type TabContainerProps = {
-  children: ReactNode;
-};
+export type TabContainerProps = PropsWithChildren<{}>;
+
 export const TabContainer = ({ children }: TabContainerProps) => {
   return (
     <Box

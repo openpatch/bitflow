@@ -1,12 +1,14 @@
-import { Footer, Grid, Nav } from "@openpatch/patches";
-import { FC, Fragment } from "react";
+import { Footer, Nav } from "@openpatch/patches";
+import { FC, Fragment, PropsWithChildren } from "react";
 import { Logo } from "./Logo";
 
 export type NavLayoutProps = {
   active: "docs" | "editor" | "home" | "converter";
 };
 
-export const NavLayout: FC<NavLayoutProps> = ({ children }) => {
+export const NavLayout: FC<PropsWithChildren<NavLayoutProps>> = ({
+  children,
+}) => {
   return (
     <Fragment>
       <Nav

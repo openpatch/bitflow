@@ -1,8 +1,9 @@
 import { css, Global } from "@emotion/react";
+import { Theme } from "@openpatch/patches";
 export const Styles = () => {
   return (
     <Global
-      styles={(theme) => css`
+      styles={(theme: Theme) => css`
         .react-flow__handle-left {
           left: -10px !important;
         }

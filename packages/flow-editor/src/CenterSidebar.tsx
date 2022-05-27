@@ -1,9 +1,11 @@
 import { Box } from "@openpatch/patches";
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 
 export type CenterSidebarProps = {};
 
-export const CenterSidebar: FC<CenterSidebarProps> = ({ children }) => {
+export const CenterSidebar: FC<PropsWithChildren<CenterSidebarProps>> = ({
+  children,
+}) => {
   return (
     <Box
       position="absolute"

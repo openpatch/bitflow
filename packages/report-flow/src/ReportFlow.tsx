@@ -61,18 +61,22 @@ export const ReportFlow = ({ nodes, edges, onSelection }: ReportFlowProps) => {
       minZoom={0.1}
       onlyRenderVisibleElements={false} /* might be a performace issue */
       onSelectionChange={handleSelectionChange}
-      edgeTypes={{
-        correlation: CorrelationEdge,
-      }}
-      nodeTypes={{
-        title: TitleResultNode,
-        input: InputResultNode,
-        task: TaskResultNode,
-        start: StartResultNode,
-        end: EndResultNode,
-        synchronize: SynchronizeResultNode,
-        checkpoint: CheckpointResultNode,
-      }}
+      edgeTypes={
+        {
+          correlation: CorrelationEdge,
+        } as any
+      }
+      nodeTypes={
+        {
+          title: TitleResultNode,
+          input: InputResultNode,
+          task: TaskResultNode,
+          start: StartResultNode,
+          end: EndResultNode,
+          synchronize: SynchronizeResultNode,
+          checkpoint: CheckpointResultNode,
+        } as any
+      }
     />
   );
 };

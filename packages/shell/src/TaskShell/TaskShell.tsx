@@ -189,7 +189,7 @@ export const TaskShell = <
   }, []);
 
   useEffect(() => {
-    const resize = (e: UIEvent) => {
+    const resize = () => {
       customDispatch(
         resizeAction({ width: window.innerHeight, height: window.innerWidth })
       );
@@ -243,7 +243,7 @@ export const TaskShell = <
         }
         const nudge = t("correctNudges", {
           index: Math.floor(Math.random() * 2),
-        });
+        }) as string;
         customDispatch(correctResultStateAction({ nudge }));
       } else if (result.state === "wrong" && result.allowRetry) {
         if (soundUrls) {
@@ -253,7 +253,7 @@ export const TaskShell = <
         }
         const nudge = t("wrongNudges", {
           index: Math.floor(Math.random() * 3),
-        });
+        }) as string;
         customDispatch(retryResultStateAction({ nudge }));
       } else if (result.state === "wrong") {
         if (soundUrls) {
@@ -263,7 +263,7 @@ export const TaskShell = <
         }
         const nudge = t("wrongNudges", {
           index: Math.floor(Math.random() * 3),
-        });
+        }) as string;
         customDispatch(wrongResultStateAction({ nudge }));
       } else if (result.state === "unknown") {
         if (soundUrls) {
@@ -273,7 +273,7 @@ export const TaskShell = <
         }
         const nudge = t("unknownNudges", {
           index: Math.floor(Math.random() * 2),
-        });
+        }) as string;
         customDispatch(unknownResultStateAction({ nudge }));
       } else if (result.state === "manual") {
         if (soundUrls) {
@@ -283,7 +283,7 @@ export const TaskShell = <
         }
         const nudge = t("manualNudges", {
           index: Math.floor(Math.random() * 2),
-        });
+        }) as string;
         customDispatch(manualResultStateAction({ nudge }));
       }
       customDispatch(resultReceiveAction({ result }));
