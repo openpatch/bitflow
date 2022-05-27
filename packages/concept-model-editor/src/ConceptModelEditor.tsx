@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ConceptModel } from "@bitflow/concept-model";
 import { uuidv4 } from "@bitflow/core";
 import { Box, BoxProps, ButtonPrimary } from "@openpatch/patches";

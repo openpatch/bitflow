@@ -1,12 +1,15 @@
 import { css } from "@emotion/react";
 import { Box, Text } from "@openpatch/patches";
-import { FC, Fragment } from "react";
+import { FC, Fragment, PropsWithChildren } from "react";
 
 export type HeaderSidebarProps = {
   header: string;
 };
 
-export const HeaderSidebar: FC<HeaderSidebarProps> = ({ header, children }) => (
+export const HeaderSidebar: FC<PropsWithChildren<HeaderSidebarProps>> = ({
+  header,
+  children,
+}) => (
   <Fragment>
     <Box
       padding="standard"

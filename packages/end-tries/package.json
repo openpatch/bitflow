@@ -43,18 +43,33 @@
     "@bitflow/core": "workspace:*",
     "@bitflow/icons": "workspace:*",
     "@bitflow/provider": "workspace:*",
-    "@bitflow/shell": "workspace:*"
+    "@bitflow/shell": "workspace:*",
+    "zod": "3.17.3"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
     "@emotion/react": "11.x",
     "@emotion/styled": "11.x",
-    "@openpatch/patches": "5.x",
+    "@openpatch/patches": "6.x",
     "@vocab/core": "1.x",
     "@vocab/react": "1.x",
-    "react": "17.x",
-    "react-dom": "17.x",
+    "react": "18.x",
+    "react-dom": "18.x",
     "react-hook-form": "7.x",
     "zod": "3.x"
+  },
+  "devDependencies": {
+    "@babel/core": "7.18.2",
+    "@emotion/cache": "11.7.1",
+    "@emotion/react": "11.9.0",
+    "@emotion/styled": "11.8.1",
+    "@openpatch/patches": "6.0.1",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "18.0.5",
+    "@vocab/core": "1.1.0",
+    "@vocab/react": "1.1.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-hook-form": "^7.31.3"
   }
 }

@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { Box, ButtonGroup, ButtonOutline } from "@openpatch/patches";
 import { useTranslations } from "@vocab/react";
-import { HTMLAttributes, useEffect, useRef } from "react";
+import { CSSProperties, useEffect, useRef } from "react";
 import { colors as col } from "./colors";
 import translations from "./locales.vocab";
 import { IHighlightColor, IResult, ITask, ITaskState } from "./types";
@@ -99,7 +99,7 @@ export const HighlightText = ({
       fg = col[highlight].fg;
     }
 
-    const style: HTMLAttributes<"span">["style"] = {
+    const style: CSSProperties = {
       backgroundColor: bg,
       color: fg,
       borderBottomWidth: 0,
@@ -107,10 +107,10 @@ export const HighlightText = ({
     };
 
     if (feedback?.[i] === "correct") {
-      style.borderBottomWidth = 8;
+      style.borderBottomWidth = "8px";
       style.borderBottomColor = "green";
     } else if (feedback?.[i] === "wrong") {
-      style.borderBottomWidth = 8;
+      style.borderBottomWidth = "8px";
       style.borderBottomColor = "red";
     }
 
@@ -182,7 +182,7 @@ export const HighlightText = ({
                   background-color: ${col[c].bg};
                 `}
                 onClick={onHighlight(c as IHighlightColor)}
-                title={t("highlight-title", { id: i + 1 })}
+                title={t("highlight-title", { id: i + 1 }) as string}
               >
                 {colors[c].label
                   ? `${colors[c].label} (${i + 1})`

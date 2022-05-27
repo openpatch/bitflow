@@ -6,6 +6,7 @@ import {
   FlowTitleNode,
 } from "@bitflow/core";
 import { FlowNode, FlowNodeProps } from "@bitflow/flow-node";
+import { Node } from "react-flow-renderer";
 
 export const BitNode = (
   node: {

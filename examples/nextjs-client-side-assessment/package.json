@@ -14,6 +14,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@babel/core": "7.18.2",
     "@bitflow/bits": "workspace:*",
     "@bitflow/core": "workspace:*",
     "@bitflow/do-local": "workspace:*",
@@ -22,16 +23,17 @@
     "@emotion/cache": "11.7.1",
     "@emotion/react": "11.9.0",
     "@emotion/styled": "11.8.1",
-    "@openpatch/patches": "5.2.1",
-    "next": "12.1.4",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "@openpatch/patches": "6.0.1",
+    "next": "12.1.6",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "react-hook-form": "7.31.3",
     "typeface-rubik": "1.1.13",
     "typeface-ubuntu-mono": "1.1.13"
   },
   "devDependencies": {
-    "@types/react": "17.0.38",
-    "typescript": "4.6.3",
+    "@types/react": "18.0.12",
+    "typescript": "4.7.2",
     "typescript-styled-plugin": "0.18.2"
   }
 }

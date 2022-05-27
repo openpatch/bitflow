@@ -1,12 +1,13 @@
 import { css } from "@emotion/react";
 import { Box, BoxProps, Theme } from "@openpatch/patches";
-import { FC, KeyboardEvent } from "react";
+import { FC, KeyboardEvent, ReactNode } from "react";
 import { IResult } from "./types";
 
 export type OptionProps = {
   onChange: (checked: boolean) => void;
   checked: boolean;
   result?: IResult;
+  children?: ReactNode;
 };
 
 export const Option: FC<OptionProps> = ({

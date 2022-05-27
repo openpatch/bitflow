@@ -3,15 +3,14 @@ import { Box, BoxProps, Heading, Icon, LoadingDots } from "@openpatch/patches";
 import { Close } from "@openpatch/patches/icons/shade";
 import { ChevronLeft } from "@openpatch/patches/icons/solid";
 import { useTranslations } from "@vocab/react";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, PropsWithChildren } from "react";
 import translations from "./locales.vocab";
 import { Progress } from "./Progress";
 
-export type ShellProps = {
-  children: ReactNode;
+export type ShellProps = PropsWithChildren<{
   noHeader?: boolean;
   position?: "absolute" | "unset";
-};
+}>;
 
 export const Shell: FC<ShellProps> = ({
   children,
@@ -44,18 +43,17 @@ export const Shell: FC<ShellProps> = ({
   );
 };
 
-export type ShellHeaderProps = {
+export type ShellHeaderProps = PropsWithChildren<{
   disabled?: boolean;
   loadingPrevious?: boolean;
   loadingClose?: boolean;
   onClose?: () => void;
   onPrevious?: () => void;
-  children: ReactNode;
   progress?: {
     value: number;
     max: number;
   };
-};
+}>;
 
 export const ShellHeader: FC<ShellHeaderProps> = ({
   onClose,

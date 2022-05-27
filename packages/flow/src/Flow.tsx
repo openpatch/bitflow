@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Flow as IFlow } from "@bitflow/core";
 import { FC, Fragment } from "react";
 import ReactFlowRenderer, {
@@ -50,6 +51,7 @@ export const Flow: FC<FlowProps> = ({
       onLoad(reactFlowInstance);
     }
   };
+
   return (
     <Fragment>
       <Styles />

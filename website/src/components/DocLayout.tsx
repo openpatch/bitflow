@@ -7,7 +7,7 @@ import {
   SidenavProps,
 } from "@openpatch/patches";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { NavLayout } from "./NavLayout";
 import {
   taskBits,
@@ -147,7 +147,7 @@ const nav: SidenavProps["sections"] = [
   },
 ];
 
-export const DocLayout: FC<DocLayoutProps> = ({
+export const DocLayout: FC<PropsWithChildren<DocLayoutProps>> = ({
   children,
   meta: { title },
 }) => {

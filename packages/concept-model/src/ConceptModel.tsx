@@ -59,10 +59,12 @@ export const ConceptModel = ({
         elements={[...nodes, ...latentVariables, ...edges]}
         minZoom={0.5}
         onlyRenderVisibleElements={false}
-        nodeTypes={{
-          "manifest-task": ManifestTaskNode,
-          "latent-variable": LatentVariableNode,
-        }}
+        nodeTypes={
+          {
+            "manifest-task": ManifestTaskNode,
+            "latent-variable": LatentVariableNode,
+          } as any
+        }
         {...props}
       >
         <Background variant={BackgroundVariant.Dots} gap={16} size={0.5} />

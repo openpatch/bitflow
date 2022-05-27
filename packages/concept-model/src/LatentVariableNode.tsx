@@ -1,7 +1,7 @@
 import { round } from "@bitflow/stats";
 import { css } from "@emotion/react";
-import { Box, Text } from "@openpatch/patches";
 import { CSSProperties } from "react";
+import { Box, Text } from "@openpatch/patches";
 import { Handle, Position } from "react-flow-renderer";
 
 export type LatentVariableNodeProps = {
