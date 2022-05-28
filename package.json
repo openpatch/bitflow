@@ -33,7 +33,7 @@
     "@openpatch/patches": "5.2.1",
     "@testing-library/dom": "8.13.0",
     "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/react": "12.1.4",
+    "@testing-library/react": "13.3.0",
     "@types/jest": "27.4.1",
     "@types/lodash.get": "4.4.6",
     "@types/node": "17.0.23",

@@ -20,7 +20,7 @@ importers:
       '@openpatch/patches': 5.2.1
       '@testing-library/dom': 8.13.0
       '@testing-library/jest-dom': 5.16.4
-      '@testing-library/react': 12.1.4
+      '@testing-library/react': 13.3.0
       '@types/jest': 27.4.1
       '@types/lodash.get': 4.4.6
       '@types/node': 17.0.23
@@ -73,7 +73,7 @@ importers:
       '@openpatch/patches': 5.2.1_8c4687e8d676cecd00e6cb01dd050fe3
       '@testing-library/dom': 8.13.0
       '@testing-library/jest-dom': 5.16.4
-      '@testing-library/react': 12.1.4_react-dom@17.0.2+react@17.0.2
+      '@testing-library/react': 13.3.0_react-dom@17.0.2+react@17.0.2
       '@types/jest': 27.4.1
       '@types/lodash.get': 4.4.6
       '@types/node': 17.0.23
@@ -3285,16 +3285,16 @@ packages:
       redent: 3.0.0
     dev: true
 
-  /@testing-library/react/12.1.4_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-jiPKOm7vyUw311Hn/HlNQ9P8/lHNtArAx0PisXyFixDDvfl8DbD6EUdbshK5eqauvBSvzZd19itqQ9j3nferJA==}
+  /@testing-library/react/13.3.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-DB79aA426+deFgGSjnf5grczDPiL4taK3hFaa+M5q7q20Kcve9eQottOG5kZ74KEr55v0tU2CQormSSDK87zYQ==}
     engines: {node: '>=12'}
     peerDependencies:
-      react: '*'
-      react-dom: '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
     dependencies:
-      '@babel/runtime': 7.16.7
+      '@babel/runtime': 7.17.9
       '@testing-library/dom': 8.13.0
-      '@types/react-dom': 17.0.15
+      '@types/react-dom': 18.0.5
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: true
@@ -3713,6 +3713,12 @@ packages:
 
   /@types/react-dom/17.0.15:
     resolution: {integrity: sha512-Tr9VU9DvNoHDWlmecmcsE5ZZiUkYx+nKBzum4Oxe1K0yJVyBlfbq7H3eXjxXqJczBKqPGq3EgfTru4MgKb9+Yw==}
+    dependencies:
+      '@types/react': 17.0.44
+    dev: true
+
+  /@types/react-dom/18.0.5:
+    resolution: {integrity: sha512-OWPWTUrY/NIrjsAPkAk1wW9LZeIjSvkXRhclsFO8CZcZGCOg2G0YZy4ft+rOyYxy8B7ui5iZzi9OkDebZ7/QSA==}
     dependencies:
       '@types/react': 17.0.44
     dev: true
