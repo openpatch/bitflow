@@ -1,5 +1,24 @@
 # @bitflow/flow-editor
 
+## 0.5.0
+
+### Minor Changes
+
+- [#508](https://github.com/openpatch/bitflow/pull/508) [`5562934`](https://github.com/openpatch/bitflow/commit/556293410578338349003475ff41eb69d9f2ffdf) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - - Update dependencies
+
+  # BREAKING CHANGES
+
+  - React version 18 or newer is now required.
+  - Patches version 6 or newer is now required.
+
+### Patch Changes
+
+- Updated dependencies [[`5562934`](https://github.com/openpatch/bitflow/commit/556293410578338349003475ff41eb69d9f2ffdf)]:
+  - @bitflow/core@0.6.0
+  - @bitflow/flow@0.7.0
+  - @bitflow/provider@0.5.0
+  - @bitflow/shell@0.7.0
+
 ## 0.4.5
 
 ### Patch Changes
