@@ -1,5 +1,16 @@
 # @bitflow/flow-node
 
+## 0.6.0
+
+### Minor Changes
+
+- [#508](https://github.com/openpatch/bitflow/pull/508) [`5562934`](https://github.com/openpatch/bitflow/commit/556293410578338349003475ff41eb69d9f2ffdf) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - - Update dependencies
+
+  # BREAKING CHANGES
+
+  - React version 18 or newer is now required.
+  - Patches version 6 or newer is now required.
+
 ## 0.5.4
 
 ### Patch Changes

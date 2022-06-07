@@ -1,5 +1,29 @@
 # @bitflow/bits
 
+## 0.2.0
+
+### Minor Changes
+
+- [#508](https://github.com/openpatch/bitflow/pull/508) [`5562934`](https://github.com/openpatch/bitflow/commit/556293410578338349003475ff41eb69d9f2ffdf) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - - Update dependencies
+
+  # BREAKING CHANGES
+
+  - React version 18 or newer is now required.
+  - Patches version 6 or newer is now required.
+
+### Patch Changes
+
+- Updated dependencies [[`5562934`](https://github.com/openpatch/bitflow/commit/556293410578338349003475ff41eb69d9f2ffdf)]:
+  - @bitflow/end-tries@0.5.0
+  - @bitflow/input-markdown@0.5.0
+  - @bitflow/start-simple@0.5.0
+  - @bitflow/task-choice@0.5.0
+  - @bitflow/task-fill-in-the-blank@0.5.0
+  - @bitflow/task-highlighting@0.2.0
+  - @bitflow/task-input@0.5.0
+  - @bitflow/task-yes-no@0.5.0
+  - @bitflow/title-simple@0.5.0
+
 ## 0.1.0
 
 ### Minor Changes
