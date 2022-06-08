@@ -1,1 +1,20 @@
-{}
+{
+  "description": {
+    "message": " "
+  },
+  "example.message": {
+    "message": "In this section you will be asked questions about **control structures**."
+  },
+  "example.title": {
+    "message": "Section One"
+  },
+  "message": {
+    "message": "Message"
+  },
+  "name": {
+    "message": "Simple"
+  },
+  "title": {
+    "message": "Title"
+  }
+}

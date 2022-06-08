@@ -1,1 +1,104 @@
-{}
+{
+  "description": {
+    "message": "A task bit for highlighting parts of a given text."
+  },
+  "name": {
+    "message": "Highlighting"
+  },
+  "instruction": {
+    "message": "Instruction"
+  },
+  "text": {
+    "message": "Text to Highlight"
+  },
+  "example.instruction": {
+    "message": "Mark all fruits with '{{maroon}}' and all vegetables with '{{lavender}}'"
+  },
+  "example.text": {
+    "message": "Cale, Srawberry, Banana, Milk, Test"
+  },
+  "severity.error": {
+    "message": "Error"
+  },
+  "severity.info": {
+    "message": "Info"
+  },
+  "severity.success": {
+    "message": "Success"
+  },
+  "severity.warning": {
+    "message": "Warning"
+  },
+  "highlight-title": {
+    "message": "Highlight the selected text by clicking this button or by pressing {id, number}"
+  },
+  "maroon": {
+    "message": "Maroon"
+  },
+  "yellow": {
+    "message": "Yellow"
+  },
+  "orange": {
+    "message": "Orange"
+  },
+  "blue": {
+    "message": "Blue"
+  },
+  "lavender": {
+    "message": "Lavender"
+  },
+  "maroon-button": {
+    "message": "Maroon ({id, number})"
+  },
+  "yellow-button": {
+    "message": "Yellow ({id, number})"
+  },
+  "orange-button": {
+    "message": "Orange ({id, number})"
+  },
+  "blue-button": {
+    "message": "Blue ({id, number})"
+  },
+  "instruction-shortcodes": {
+    "message": "You can use '{{color-name}}' in your instruction to display a smaller version of the button for this color. Options for color-name are: blue, lavender, maroon, orange and yellow."
+  },
+  "instruction-enabled-highlight-colors": {
+    "message": "Here you can enabled multiple colors for the highlighting task. You can also give each color a custom name. The custom name does not influence the placeholder for the instruction."
+  },
+  "lavender-button": {
+    "message": "Lavender ({id, number})"
+  },
+  "enabled-highlight-colors": {
+    "message": "Enabled Highlight Colors"
+  },
+  "erase": {
+    "message": "Erase"
+  },
+  "reset": {
+    "message": "Reset"
+  },
+  "erase-title": {
+    "message": "Erase the highlight of the selected text by clicking this button or by pressing Delete"
+  },
+  "reset-title": {
+    "message": "Reset all highlights"
+  },
+  "solution": {
+    "message": "Solution"
+  },
+  "instruction-solution": {
+    "message": "You can define a solution which will be used for evaluating the answers."
+  },
+  "cutoffs": {
+    "message": "Cutoffs"
+  },
+  "instruction-cutoffs": {
+    "message": "For comparing your solution with an answer an agreement value will be calculated (Cohen's Kappa). You can define cutoff threshold for each highlight color. If the agreement value is above the cutoff score, the answer will be evaluated as correct. An agreement value of 1 means the answer and the solution are the same. An agreement value of 0 means nothing was highlighted. An agreement value of -1 means everything but the solution was highlighted. An answer will be regared as correct if all cutoffs are reached."
+  },
+  "highlight-agreement": {
+    "message": "Highlight Agreement"
+  },
+  "highlight-agreement-description": {
+    "message": "If checked all correct highlighted areas will be marked in green and all wrong highlighted areas will be marked red."
+  }
+}

@@ -1,1 +1,8 @@
-{}
+{
+  "nodes": {
+    "message": "Nodes"
+  },
+  "properties": {
+    "message": "Properties"
+  }
+}

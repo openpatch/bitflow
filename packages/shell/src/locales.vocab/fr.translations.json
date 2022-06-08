@@ -1,1 +1,47 @@
-{}
+{
+  "accept": {
+    "message": "Accept"
+  },
+  "answer": {
+    "message": "Answer"
+  },
+  "close": {
+    "message": "Close"
+  },
+  "confidence": {
+    "message": "Confidence"
+  },
+  "correctNudges": {
+    "message": "{index, plural, =0 {Nice one!} =1 {Great!} other {Keep it going!}}"
+  },
+  "end": {
+    "message": "End"
+  },
+  "manualNudges": {
+    "message": "{index, plural, other {Your answer will be check manually!}}"
+  },
+  "next": {
+    "message": "Next"
+  },
+  "previous": {
+    "message": "Previous"
+  },
+  "reasoning": {
+    "message": "Reasoning"
+  },
+  "retry": {
+    "message": "Retry"
+  },
+  "skip": {
+    "message": "Skip"
+  },
+  "start": {
+    "message": "Start"
+  },
+  "unknownNudges": {
+    "message": "{index, plural, =0 {Thanks for your answer!} other {Thank you for answering!}}"
+  },
+  "wrongNudges": {
+    "message": "{index, plural, =0 {Maybe next time} =1 {No worries!} other {Every wrong answer is a learning opportunity!}}"
+  }
+}

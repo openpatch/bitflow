@@ -14,6 +14,9 @@
   "correctNudges": {
     "message": "{index, plural, =0 {Sehr gut!} =1 {Super!} other {Weiter so!}}"
   },
+  "end": {
+    "message": "End"
+  },
   "manualNudges": {
     "message": "{index, plural, other {Deine Antwort wird manuell überprüft!}}"
   },
@@ -31,6 +34,9 @@
   },
   "skip": {
     "message": "Überspringen"
+  },
+  "start": {
+    "message": "Start"
   },
   "unknownNudges": {
     "message": "{index, plural, =0 {Danke für deine Antwort!} other {Danke!}}"
