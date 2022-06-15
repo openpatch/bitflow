@@ -30,8 +30,8 @@ importers:
       prettier: 2.7.0
       prettier-plugin-sort-json: 0.0.2
       pretty-quick: 3.1.3
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       rimraf: 3.0.2
       ts-jest: 28.0.5
@@ -41,17 +41,17 @@ importers:
       walkdir: 0.4.1
     dependencies:
       '@babel/core': 7.18.5
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       csstype: 3.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
     devDependencies:
       '@changesets/changelog-github': 0.4.5
       '@changesets/cli': 2.23.0
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
       '@types/jest': 27.5.2
       '@types/node': 17.0.40
       '@types/react': 18.0.12
@@ -64,7 +64,7 @@ importers:
       husky: 8.0.1
       jest: 28.1.1_d0860ccdff211a7de80dc6026d71132a
       jest-cli: 28.1.1_d0860ccdff211a7de80dc6026d71132a
-      next: 12.1.6_ebaa45d3dbea869421c3cff94006b92d
+      next: 12.1.6_e085dcdba0ca19a0a2fff8fdb593fa95
       node-plop: 0.31.0
       plop: 3.1.0
       prettier: 2.7.0
@@ -159,8 +159,8 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
       react-hook-form: 7.32.1
       zod: 3.17.3
@@ -168,20 +168,20 @@ importers:
       '@bitflow/flow': link:../flow
       '@bitflow/flow-node': link:../flow-node
       '@bitflow/stats': link:../stats
-      react-flow-renderer: 9.7.4_react-dom@18.1.0+react@18.1.0
+      react-flow-renderer: 9.7.4_react-dom@18.2.0+react@18.2.0
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
       zod: 3.17.3
 
   packages/concept-model-editor:
@@ -197,27 +197,27 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
       react-hook-form: 7.32.1
     dependencies:
       '@bitflow/concept-model': link:../concept-model
       '@bitflow/core': link:../core
-      react-flow-renderer: 9.7.4_react-dom@18.1.0+react@18.1.0
+      react-flow-renderer: 9.7.4_react-dom@18.2.0+react@18.2.0
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/core:
     specifiers:
@@ -227,34 +227,34 @@ importers:
       '@emotion/styled': 11.9.3
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.12
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       zod: 3.17.3
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
       zod: 3.17.3
 
   packages/date:
     specifiers:
       '@bitflow/provider': workspace:*
       date-fns: ^2.28.0
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
     dependencies:
       '@bitflow/provider': link:../provider
       date-fns: 2.28.0
     devDependencies:
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
 
   packages/do:
     specifiers:
@@ -271,8 +271,8 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
     dependencies:
       '@bitflow/core': link:../core
@@ -282,16 +282,16 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/do-local:
     specifiers:
@@ -308,8 +308,8 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
     dependencies:
       '@bitflow/core': link:../core
@@ -319,16 +319,16 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/end-tries:
     specifiers:
@@ -345,8 +345,8 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       zod: 3.17.3
     dependencies:
@@ -358,16 +358,16 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/flow:
     specifiers:
@@ -382,27 +382,27 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
       react-hook-form: 7.32.1
     dependencies:
       '@bitflow/core': link:../core
       '@bitflow/flow-node': link:../flow-node
-      react-flow-renderer: 9.7.4_react-dom@18.1.0+react@18.1.0
+      react-flow-renderer: 9.7.4_react-dom@18.2.0+react@18.2.0
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/flow-editor:
     specifiers:
@@ -420,8 +420,8 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
       react-hook-form: 7.32.1
     dependencies:
@@ -430,20 +430,20 @@ importers:
       '@bitflow/provider': link:../provider
       '@bitflow/shell': link:../shell
       '@hookform/resolvers': 2.9.0_react-hook-form@7.32.1
-      react-flow-renderer: 9.7.4_react-dom@18.1.0+react@18.1.0
+      react-flow-renderer: 9.7.4_react-dom@18.2.0+react@18.2.0
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/flow-engine:
     specifiers:
@@ -467,25 +467,25 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
       react-hook-form: 7.32.1
     dependencies:
-      react-flow-renderer: 9.7.4_react-dom@18.1.0+react@18.1.0
+      react-flow-renderer: 9.7.4_react-dom@18.2.0+react@18.2.0
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/icons:
     specifiers:
@@ -498,22 +498,22 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/input-markdown:
     specifiers:
@@ -527,8 +527,8 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       zod: 3.17.3
     dependencies:
@@ -536,16 +536,16 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
       zod: 3.17.3
 
   packages/mock:
@@ -559,23 +559,23 @@ importers:
       '@types/react': 18.0.12
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
     dependencies:
       '@bitflow/core': link:../core
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/provider:
     specifiers:
@@ -591,8 +591,8 @@ importers:
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
       lodash.get: ^4.4.2
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       zod: 3.17.3
     dependencies:
@@ -602,17 +602,17 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/lodash.get': 4.4.7
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/report-flow:
     specifiers:
@@ -629,8 +629,8 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
       react-hook-form: 7.32.1
     dependencies:
@@ -638,20 +638,20 @@ importers:
       '@bitflow/flow': link:../flow
       '@bitflow/flow-node': link:../flow-node
       '@bitflow/icons': link:../icons
-      react-flow-renderer: 9.7.4_react-dom@18.1.0+react@18.1.0
+      react-flow-renderer: 9.7.4_react-dom@18.2.0+react@18.2.0
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/shell:
     specifiers:
@@ -666,8 +666,8 @@ importers:
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
       immer: ^9.0.14
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
     dependencies:
       '@bitflow/core': link:../core
@@ -675,16 +675,16 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
 
   packages/start-simple:
     specifiers:
@@ -698,8 +698,8 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       zod: 3.17.3
     dependencies:
@@ -707,16 +707,16 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
       zod: 3.17.3
 
   packages/stats:
@@ -737,8 +737,8 @@ importers:
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
       immer: ^9.0.14
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       zod: 3.17.3
     dependencies:
@@ -749,16 +749,16 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
       zod: 3.17.3
 
   packages/task-fill-in-the-blank:
@@ -775,8 +775,8 @@ importers:
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
       immer: ^9.0.14
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       react-markdown: ^6.0.3
       remark-gfm: ^1.0.0
@@ -785,21 +785,21 @@ importers:
       '@bitflow/core': link:../core
       '@hookform/resolvers': 2.9.0_react-hook-form@7.32.1
       immer: 9.0.14
-      react-markdown: 6.0.3_105ed41200946591595021fa8fe7ed91
+      react-markdown: 6.0.3_41d4700766780f2c07603dff9fdb8c3c
       remark-gfm: 1.0.0
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
       zod: 3.17.3
 
   packages/task-highlighting:
@@ -815,8 +815,8 @@ importers:
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
       immer: ^9.0.14
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       zod: 3.17.3
     dependencies:
@@ -825,16 +825,16 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
       zod: 3.17.3
 
   packages/task-input:
@@ -852,8 +852,8 @@ importers:
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
       immer: ^9.0.14
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       react-tagcloud: ^2.2.0
       zod: 3.17.3
@@ -862,20 +862,20 @@ importers:
       '@bitflow/provider': link:../provider
       '@hookform/resolvers': 2.9.0_react-hook-form@7.32.1
       immer: 9.0.14
-      react-tagcloud: 2.2.0_react@18.1.0
+      react-tagcloud: 2.2.0_react@18.2.0
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
       zod: 3.17.3
 
   packages/task-yes-no:
@@ -891,8 +891,8 @@ importers:
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
       immer: ^9.0.14
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       zod: 3.17.3
     dependencies:
@@ -901,16 +901,16 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
       zod: 3.17.3
 
   packages/title-simple:
@@ -925,8 +925,8 @@ importers:
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
       '@vocab/react': 1.1.1
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       zod: 3.17.3
     dependencies:
@@ -934,16 +934,16 @@ importers:
     devDependencies:
       '@babel/core': 7.18.5
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       '@types/react': 18.0.12
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
+      '@vocab/react': 1.1.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
       zod: 3.17.3
 
   website:
@@ -976,8 +976,8 @@ importers:
       lz-string: 1.4.4
       next: 12.1.6
       next-seo: 5.4.0
-      react: 18.1.0
-      react-dom: 18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0
       react-hook-form: 7.32.1
       react-json-view: 1.21.3
       typeface-rubik: 1.1.13
@@ -996,21 +996,21 @@ importers:
       '@bitflow/provider': link:../packages/provider
       '@bitflow/shell': link:../packages/shell
       '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
       '@hookform/resolvers': 2.9.1_react-hook-form@7.32.1
-      '@mdx-js/loader': 1.6.22_react@18.1.0
-      '@mdx-js/react': 1.6.22_react@18.1.0
+      '@mdx-js/loader': 1.6.22_react@18.2.0
+      '@mdx-js/react': 1.6.22_react@18.2.0
       '@next/mdx': 12.1.6_f56c41adb6190c4680be4a1c0222355d
-      '@openpatch/patches': 6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e
+      '@openpatch/patches': 6.0.1_d5357452174390749746f543cf4f97c6
       atob: 2.1.2
       lz-string: 1.4.4
-      next: 12.1.6_ebaa45d3dbea869421c3cff94006b92d
-      next-seo: 5.4.0_d30c2367b03c877b70a67c330200ac54
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
-      react-json-view: 1.21.3_25229b148ce209d6b72db78cc3ac32b1
+      next: 12.1.6_e085dcdba0ca19a0a2fff8fdb593fa95
+      next-seo: 5.4.0_d362f613b2edd8f1984208423b1dd218
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
+      react-json-view: 1.21.3_cc96d3c68c8b128065a830e738a28846
       typeface-rubik: 1.1.13
       typeface-ubuntu-mono: 1.1.13
       zod: 3.17.3
@@ -1942,7 +1942,7 @@ packages:
       react: 18.1.0
     dev: false
 
-  /@emotion/react/11.9.3_a40fc7d27dca1754753ba17e04dcb52a:
+  /@emotion/react/11.9.3_123369fc64c5b318ff9e4430e5f35a0d:
     resolution: {integrity: sha512-g9Q1GcTOlzOEjqwuLF/Zd9LC+4FljjPjDfxSM7KmEakm+hsHXk+bYZ2q+/hTJzr0OUNkujo72pXLQvXj6H+GJQ==}
     peerDependencies:
       '@babel/core': ^7.0.0
@@ -1963,7 +1963,7 @@ packages:
       '@emotion/weak-memoize': 0.2.5
       '@types/react': 18.0.12
       hoist-non-react-statics: 3.3.2
-      react: 18.1.0
+      react: 18.2.0
 
   /@emotion/serialize/1.0.3:
     resolution: {integrity: sha512-2mSSvgLfyV3q+iVh3YWgNlUc2a9ZlDU7DjuP5MjK3AXRR0dYigCrP99aeFtaB2L/hjfEZdSThn5dsZ0ufqbvsA==}
@@ -2015,7 +2015,7 @@ packages:
       react: 18.1.0
     dev: false
 
-  /@emotion/styled/11.9.3_c11356e7ce113ac2d56c517628fb7e88:
+  /@emotion/styled/11.9.3_cfa523deb91218b611eed2111fc666e0:
     resolution: {integrity: sha512-o3sBNwbtoVz9v7WB1/Y/AmXl69YHmei2mrVnK7JgyBJ//Rst5yqPZCecEJlMlJrFeWHp+ki/54uN265V2pEcXA==}
     peerDependencies:
       '@babel/core': ^7.0.0
@@ -2032,11 +2032,11 @@ packages:
       '@babel/runtime': 7.18.3
       '@emotion/babel-plugin': 11.9.2_@babel+core@7.18.5
       '@emotion/is-prop-valid': 1.1.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
       '@emotion/serialize': 1.0.4
       '@emotion/utils': 1.1.0
       '@types/react': 18.0.12
-      react: 18.1.0
+      react: 18.2.0
 
   /@emotion/unitless/0.7.5:
     resolution: {integrity: sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==}
@@ -2114,7 +2114,7 @@ packages:
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.32.1_react@18.1.0
+      react-hook-form: 7.32.1_react@18.2.0
     dev: false
 
   /@hookform/resolvers/2.9.1_react-hook-form@7.32.1:
@@ -2122,7 +2122,7 @@ packages:
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.32.1_react@18.1.0
+      react-hook-form: 7.32.1_react@18.2.0
     dev: false
 
   /@istanbuljs/load-nyc-config/1.1.0:
@@ -2463,11 +2463,11 @@ packages:
       read-yaml-file: 1.1.0
     dev: true
 
-  /@mdx-js/loader/1.6.22_react@18.1.0:
+  /@mdx-js/loader/1.6.22_react@18.2.0:
     resolution: {integrity: sha512-9CjGwy595NaxAYp0hF9B/A0lH6C8Rms97e2JS9d3jVUtILn6pT5i5IV965ra3lIWc7Rs1GG1tBdVF7dCowYe6Q==}
     dependencies:
       '@mdx-js/mdx': 1.6.22
-      '@mdx-js/react': 1.6.22_react@18.1.0
+      '@mdx-js/react': 1.6.22_react@18.2.0
       loader-utils: 2.0.0
     transitivePeerDependencies:
       - react
@@ -2500,12 +2500,12 @@ packages:
       - supports-color
     dev: false
 
-  /@mdx-js/react/1.6.22_react@18.1.0:
+  /@mdx-js/react/1.6.22_react@18.2.0:
     resolution: {integrity: sha512-TDoPum4SHdfPiGSAaRBw7ECyI8VaHpK8GJugbJIJuqyh6kzw9ZLJZW3HGL3NNrJGxcAixUvqROm+YuQOo5eXtg==}
     peerDependencies:
       react: ^16.13.1 || ^17.0.0
     dependencies:
-      react: 18.1.0
+      react: 18.2.0
     dev: false
 
   /@mdx-js/util/1.6.22:
@@ -2521,8 +2521,8 @@ packages:
       '@mdx-js/loader': '>=0.15.0'
       '@mdx-js/react': '*'
     dependencies:
-      '@mdx-js/loader': 1.6.22_react@18.1.0
-      '@mdx-js/react': 1.6.22_react@18.1.0
+      '@mdx-js/loader': 1.6.22_react@18.2.0
+      '@mdx-js/react': 1.6.22_react@18.2.0
     dev: false
 
   /@next/swc-android-arm-eabi/12.1.6:
@@ -2642,46 +2642,6 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@openpatch/patches/6.0.1_3b881d7fcbd0eef444e94f9e4ce7f69e:
-    resolution: {integrity: sha512-7mdCBg0ZWfR/VyHVyWWerAAka6wQB01Z+xwwMflBQirWbpqSCMX7U/k8MMMuKulWalG8ZoLy517LodiYDXUpOw==}
-    peerDependencies:
-      '@emotion/cache': ^11.0.0
-      '@emotion/react': ^11.1.1
-      '@emotion/styled': ^11.0.0
-      react: '>=18'
-      react-dom: '>=18'
-      react-hook-form: ^7.31.2
-    dependencies:
-      '@codemirror/autocomplete': 0.20.3
-      '@codemirror/lang-java': 0.20.1
-      '@codemirror/lang-javascript': 0.20.1
-      '@codemirror/lang-markdown': 0.20.1
-      '@codemirror/lang-python': 0.20.0
-      '@codemirror/lang-sql': 0.20.4
-      '@codemirror/language': 0.20.2
-      '@codemirror/state': 0.20.1
-      '@codemirror/view': 0.20.7
-      '@emotion/cache': 11.9.3
-      '@emotion/react': 11.9.3_a40fc7d27dca1754753ba17e04dcb52a
-      '@emotion/styled': 11.9.3_c11356e7ce113ac2d56c517628fb7e88
-      lodash: 4.17.21
-      polished: 4.2.2
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-hook-form: 7.32.1_react@18.1.0
-      react-markdown: 8.0.3_105ed41200946591595021fa8fe7ed91
-      react-modal: 3.15.1_react-dom@18.1.0+react@18.1.0
-      react-syntax-highlighter: 15.5.0_react@18.1.0
-      react-tabs: 5.1.0_react@18.1.0
-      react-toastify: 9.0.3_react-dom@18.1.0+react@18.1.0
-      rehype-raw: 6.1.1
-      rehype-sanitize: 5.0.1
-      remark-gfm: 3.0.1
-      styled-system: 5.1.5
-    transitivePeerDependencies:
-      - '@types/react'
-      - supports-color
-
   /@openpatch/patches/6.0.1_97a419cdf24943c8625d58f742b9c301:
     resolution: {integrity: sha512-7mdCBg0ZWfR/VyHVyWWerAAka6wQB01Z+xwwMflBQirWbpqSCMX7U/k8MMMuKulWalG8ZoLy517LodiYDXUpOw==}
     peerDependencies:
@@ -2722,6 +2682,46 @@ packages:
       - '@types/react'
       - supports-color
     dev: false
+
+  /@openpatch/patches/6.0.1_d5357452174390749746f543cf4f97c6:
+    resolution: {integrity: sha512-7mdCBg0ZWfR/VyHVyWWerAAka6wQB01Z+xwwMflBQirWbpqSCMX7U/k8MMMuKulWalG8ZoLy517LodiYDXUpOw==}
+    peerDependencies:
+      '@emotion/cache': ^11.0.0
+      '@emotion/react': ^11.1.1
+      '@emotion/styled': ^11.0.0
+      react: '>=18'
+      react-dom: '>=18'
+      react-hook-form: ^7.31.2
+    dependencies:
+      '@codemirror/autocomplete': 0.20.3
+      '@codemirror/lang-java': 0.20.1
+      '@codemirror/lang-javascript': 0.20.1
+      '@codemirror/lang-markdown': 0.20.1
+      '@codemirror/lang-python': 0.20.0
+      '@codemirror/lang-sql': 0.20.4
+      '@codemirror/language': 0.20.2
+      '@codemirror/state': 0.20.1
+      '@codemirror/view': 0.20.7
+      '@emotion/cache': 11.9.3
+      '@emotion/react': 11.9.3_123369fc64c5b318ff9e4430e5f35a0d
+      '@emotion/styled': 11.9.3_cfa523deb91218b611eed2111fc666e0
+      lodash: 4.17.21
+      polished: 4.2.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.32.1_react@18.2.0
+      react-markdown: 8.0.3_41d4700766780f2c07603dff9fdb8c3c
+      react-modal: 3.15.1_react-dom@18.2.0+react@18.2.0
+      react-syntax-highlighter: 15.5.0_react@18.2.0
+      react-tabs: 5.1.0_react@18.2.0
+      react-toastify: 9.0.3_react-dom@18.2.0+react@18.2.0
+      rehype-raw: 6.1.1
+      rehype-sanitize: 5.0.1
+      remark-gfm: 3.0.1
+      styled-system: 5.1.5
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
 
   /@sinclair/typebox/0.23.5:
     resolution: {integrity: sha512-AFBVi/iT4g20DHoujvMH1aEDn8fGJh4xsRGCP6d8RpLPMqsNPvW01Jcn0QysXTsg++/xj25NmJsGyH9xug/wKg==}
@@ -3095,14 +3095,14 @@ packages:
       - supports-color
     dev: true
 
-  /@vocab/react/1.1.1_react@18.1.0:
+  /@vocab/react/1.1.1_react@18.2.0:
     resolution: {integrity: sha512-pDeaJtvT9Tm2c1tTQ4GNU3byGHJDR6D9wI4xIAPsqCoqkJuf7POVqHASIfWkTj0h6p4oKtFHeHV3XyQEm5ltZA==}
     peerDependencies:
       react: '>=16.3.0'
     dependencies:
       '@vocab/types': 1.1.0
       intl-messageformat: 9.13.0
-      react: 18.1.0
+      react: 18.2.0
     dev: true
 
   /@vocab/types/1.1.0:
@@ -4537,14 +4537,14 @@ packages:
     engines: {node: '>= 10.13.0'}
     dev: true
 
-  /flux/4.0.3_react@18.1.0:
+  /flux/4.0.3_react@18.2.0:
     resolution: {integrity: sha512-yKAbrp7JhZhj6uiT1FTuVMlIAT1J4jqEyBpFApi1kxpGZCvacMVc/t1pMQyotqHhAgvoE3bNvAykhCo2CLjnYw==}
     peerDependencies:
       react: ^15.0.2 || ^16.0.0 || ^17.0.0
     dependencies:
       fbemitter: 3.0.0
       fbjs: 3.0.4
-      react: 18.1.0
+      react: 18.2.0
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -6689,19 +6689,19 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /next-seo/5.4.0_d30c2367b03c877b70a67c330200ac54:
+  /next-seo/5.4.0_d362f613b2edd8f1984208423b1dd218:
     resolution: {integrity: sha512-R9DhajPwJnR/lsF2hZ8cN8uqr5CVITsRrCG1AF5+ufcaybKYOvnH8sH9MaH4/hpkps3PQ9H71S7J7SPYixAYzQ==}
     peerDependencies:
       next: ^8.1.1-canary.54 || >=9.0.0
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
     dependencies:
-      next: 12.1.6_ebaa45d3dbea869421c3cff94006b92d
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
+      next: 12.1.6_e085dcdba0ca19a0a2fff8fdb593fa95
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
-  /next/12.1.6_ebaa45d3dbea869421c3cff94006b92d:
+  /next/12.1.6_e085dcdba0ca19a0a2fff8fdb593fa95:
     resolution: {integrity: sha512-cebwKxL3/DhNKfg9tPZDQmbRKjueqykHHbgaoG4VBRH3AHQJ2HO0dbKFiS1hPhe1/qgc2d/hFeadsbPicmLD+A==}
     engines: {node: '>=12.22.0'}
     hasBin: true
@@ -6722,9 +6722,9 @@ packages:
       '@next/env': 12.1.6
       caniuse-lite: 1.0.30001349
       postcss: 8.4.5
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      styled-jsx: 5.0.2_@babel+core@7.18.5+react@18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      styled-jsx: 5.0.2_@babel+core@7.18.5+react@18.2.0
     optionalDependencies:
       '@next/swc-android-arm-eabi': 12.1.6
       '@next/swc-android-arm64': 12.1.6
@@ -7306,8 +7306,18 @@ packages:
       loose-envify: 1.4.0
       react: 18.1.0
       scheduler: 0.22.0
+    dev: false
 
-  /react-draggable/4.4.5_react-dom@18.1.0+react@18.1.0:
+  /react-dom/18.2.0_react@18.2.0:
+    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      loose-envify: 1.4.0
+      react: 18.2.0
+      scheduler: 0.23.0
+
+  /react-draggable/4.4.5_react-dom@18.2.0+react@18.2.0:
     resolution: {integrity: sha512-OMHzJdyJbYTZo4uQE393fHcqqPYsEtkjfMgvCHr6rejT+Ezn4OZbNyGH50vv+SunC1RMvwOTSWkEODQLzw1M9g==}
     peerDependencies:
       react: '>= 16.3.0'
@@ -7315,11 +7325,11 @@ packages:
     dependencies:
       clsx: 1.1.1
       prop-types: 15.8.1
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
-  /react-flow-renderer/9.7.4_react-dom@18.1.0+react@18.1.0:
+  /react-flow-renderer/9.7.4_react-dom@18.2.0+react@18.2.0:
     resolution: {integrity: sha512-GxHBXzkn8Y+TEG8pul7h6Fjo4cKrT0kW9UQ34OAGZqAnSBLbBsx9W++TF8GiULBbTn3O8o7HtHxux685Op10mQ==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -7331,10 +7341,10 @@ packages:
       d3-selection: 3.0.0
       d3-zoom: 3.0.0
       fast-deep-equal: 3.1.3
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-draggable: 4.4.5_react-dom@18.1.0+react@18.1.0
-      react-redux: 7.2.8_react-dom@18.1.0+react@18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-draggable: 4.4.5_react-dom@18.2.0+react@18.2.0
+      react-redux: 7.2.8_react-dom@18.2.0+react@18.2.0
       redux: 4.2.0
     transitivePeerDependencies:
       - react-native
@@ -7349,13 +7359,13 @@ packages:
       react: 18.1.0
     dev: false
 
-  /react-hook-form/7.32.1_react@18.1.0:
+  /react-hook-form/7.32.1_react@18.2.0:
     resolution: {integrity: sha512-A0bsgZZUnGdG68sXLBNMN7zRYKbYc/ESjDkjrJZ8PZ8/96EQ0IwMfYY3wpopt+yn2+Mm3APEUkw+JdjYQSRVJA==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
     dependencies:
-      react: 18.1.0
+      react: 18.2.0
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -7366,18 +7376,18 @@ packages:
   /react-is/18.1.0:
     resolution: {integrity: sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==}
 
-  /react-json-view/1.21.3_25229b148ce209d6b72db78cc3ac32b1:
+  /react-json-view/1.21.3_cc96d3c68c8b128065a830e738a28846:
     resolution: {integrity: sha512-13p8IREj9/x/Ye4WI/JpjhoIwuzEgUAtgJZNBJckfzJt1qyh24BdTm6UQNGnyTq9dapQdrqvquZTo3dz1X6Cjw==}
     peerDependencies:
       react: ^17.0.0 || ^16.3.0 || ^15.5.4
       react-dom: ^17.0.0 || ^16.3.0 || ^15.5.4
     dependencies:
-      flux: 4.0.3_react@18.1.0
-      react: 18.1.0
+      flux: 4.0.3_react@18.2.0
+      react: 18.2.0
       react-base16-styling: 0.6.0
-      react-dom: 18.1.0_react@18.1.0
+      react-dom: 18.2.0_react@18.2.0
       react-lifecycles-compat: 3.0.4
-      react-textarea-autosize: 8.3.4_105ed41200946591595021fa8fe7ed91
+      react-textarea-autosize: 8.3.4_41d4700766780f2c07603dff9fdb8c3c
     transitivePeerDependencies:
       - '@types/react'
       - encoding
@@ -7386,7 +7396,7 @@ packages:
   /react-lifecycles-compat/3.0.4:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
 
-  /react-markdown/6.0.3_105ed41200946591595021fa8fe7ed91:
+  /react-markdown/6.0.3_41d4700766780f2c07603dff9fdb8c3c:
     resolution: {integrity: sha512-kQbpWiMoBHnj9myLlmZG9T1JdoT/OEyHK7hqM6CqFT14MAkgWiWBUYijLyBmxbntaN6dCDicPcUhWhci1QYodg==}
     peerDependencies:
       '@types/react': '>=16'
@@ -7398,7 +7408,7 @@ packages:
       comma-separated-tokens: 1.0.8
       prop-types: 15.8.1
       property-information: 5.6.0
-      react: 18.1.0
+      react: 18.2.0
       react-is: 17.0.2
       remark-parse: 9.0.0
       remark-rehype: 8.1.0
@@ -7436,6 +7446,33 @@ packages:
       vfile: 5.3.2
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /react-markdown/8.0.3_41d4700766780f2c07603dff9fdb8c3c:
+    resolution: {integrity: sha512-We36SfqaKoVNpN1QqsZwWSv/OZt5J15LNgTLWynwAN5b265hrQrsjMtlRNwUvS+YyR3yDM8HpTNc4pK9H/Gc0A==}
+    peerDependencies:
+      '@types/react': '>=16'
+      react: '>=16'
+    dependencies:
+      '@types/hast': 2.3.4
+      '@types/prop-types': 15.7.5
+      '@types/react': 18.0.12
+      '@types/unist': 2.0.6
+      comma-separated-tokens: 2.0.2
+      hast-util-whitespace: 2.0.0
+      prop-types: 15.8.1
+      property-information: 6.1.1
+      react: 18.2.0
+      react-is: 18.1.0
+      remark-parse: 10.0.1
+      remark-rehype: 10.1.0
+      space-separated-tokens: 2.0.1
+      style-to-object: 0.3.0
+      unified: 10.1.2
+      unist-util-visit: 4.1.0
+      vfile: 5.3.2
+    transitivePeerDependencies:
+      - supports-color
 
   /react-modal/3.15.1_react-dom@18.1.0+react@18.1.0:
     resolution: {integrity: sha512-duB9bxOaYg7Zt6TMFldIFxQRtSP+Dg3F1ZX3FXxSUn+3tZZ/9JCgeAQKDg7rhZSAqopq8TFRw3yIbnx77gyFTw==}
@@ -7450,8 +7487,23 @@ packages:
       react-dom: 18.1.0_react@18.1.0
       react-lifecycles-compat: 3.0.4
       warning: 4.0.3
+    dev: false
 
-  /react-redux/7.2.8_react-dom@18.1.0+react@18.1.0:
+  /react-modal/3.15.1_react-dom@18.2.0+react@18.2.0:
+    resolution: {integrity: sha512-duB9bxOaYg7Zt6TMFldIFxQRtSP+Dg3F1ZX3FXxSUn+3tZZ/9JCgeAQKDg7rhZSAqopq8TFRw3yIbnx77gyFTw==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
+      react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
+    dependencies:
+      exenv: 1.2.2
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-lifecycles-compat: 3.0.4
+      warning: 4.0.3
+
+  /react-redux/7.2.8_react-dom@18.2.0+react@18.2.0:
     resolution: {integrity: sha512-6+uDjhs3PSIclqoCk0kd6iX74gzrGc3W5zcAjbrFgEdIjRSQObdIwfx80unTkVUYvbQ95Y8Av3OvFHq1w5EOUw==}
     peerDependencies:
       react: ^16.8.3 || ^17 || ^18
@@ -7468,8 +7520,8 @@ packages:
       hoist-non-react-statics: 3.3.2
       loose-envify: 1.4.0
       prop-types: 15.8.1
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
       react-is: 17.0.2
     dev: false
 
@@ -7484,6 +7536,19 @@ packages:
       prismjs: 1.28.0
       react: 18.1.0
       refractor: 3.6.0
+    dev: false
+
+  /react-syntax-highlighter/15.5.0_react@18.2.0:
+    resolution: {integrity: sha512-+zq2myprEnQmH5yw6Gqc8lD55QHnpKaU8TOcFeC/Lg/MQSs8UknEA0JC4nTZGFAXC2J2Hyj/ijJ7NlabyPi2gg==}
+    peerDependencies:
+      react: '>= 0.14.0'
+    dependencies:
+      '@babel/runtime': 7.18.3
+      highlight.js: 10.7.3
+      lowlight: 1.20.0
+      prismjs: 1.28.0
+      react: 18.2.0
+      refractor: 3.6.0
 
   /react-tabs/5.1.0_react@18.1.0:
     resolution: {integrity: sha512-jsPVEPuhG7JljTo8Q4ujz4UKRpG90nHlDClAdvV5KrLxCHU+MT/kg7dmhq8fDv8+frciDtaYeFFlTVRLm4N5AQ==}
@@ -7493,29 +7558,39 @@ packages:
       clsx: 1.1.1
       prop-types: 15.8.1
       react: 18.1.0
+    dev: false
 
-  /react-tagcloud/2.2.0_react@18.1.0:
+  /react-tabs/5.1.0_react@18.2.0:
+    resolution: {integrity: sha512-jsPVEPuhG7JljTo8Q4ujz4UKRpG90nHlDClAdvV5KrLxCHU+MT/kg7dmhq8fDv8+frciDtaYeFFlTVRLm4N5AQ==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      clsx: 1.1.1
+      prop-types: 15.8.1
+      react: 18.2.0
+
+  /react-tagcloud/2.2.0_react@18.2.0:
     resolution: {integrity: sha512-5nFYetGdCUmpwTwzuJyg0/rIFkW4atssIHNXrrQNAQfENk1Tov1CNgAtFERXqTUNjgzAu/OSgDMhzOL1Zpc/lw==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
       prop-types: 15.8.1
       randomcolor: 0.6.2
-      react: 18.1.0
+      react: 18.2.0
       seedrandom: 3.0.5
       shuffle-array: 1.0.1
     dev: false
 
-  /react-textarea-autosize/8.3.4_105ed41200946591595021fa8fe7ed91:
+  /react-textarea-autosize/8.3.4_41d4700766780f2c07603dff9fdb8c3c:
     resolution: {integrity: sha512-CdtmP8Dc19xL8/R6sWvtknD/eCXkQr30dtvC4VmGInhRsfF8X/ihXCq6+9l9qbxmKRiq407/7z5fxE7cVWQNgQ==}
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@babel/runtime': 7.18.3
-      react: 18.1.0
-      use-composed-ref: 1.3.0_react@18.1.0
-      use-latest: 1.2.1_105ed41200946591595021fa8fe7ed91
+      react: 18.2.0
+      use-composed-ref: 1.3.0_react@18.2.0
+      use-latest: 1.2.1_41d4700766780f2c07603dff9fdb8c3c
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -7529,9 +7604,27 @@ packages:
       clsx: 1.1.1
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
+    dev: false
+
+  /react-toastify/9.0.3_react-dom@18.2.0+react@18.2.0:
+    resolution: {integrity: sha512-0QZJk0SqYBxouRBGCFU3ymvjlwimRRhVH7SzqGRiVrQ001KSoUNbGKx9Yq42aoPv18n45yJzEFG82zqv3HnASg==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      clsx: 1.1.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
 
   /react/18.1.0:
     resolution: {integrity: sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
+
+  /react/18.2.0:
+    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
@@ -7848,6 +7941,12 @@ packages:
     resolution: {integrity: sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==}
     dependencies:
       loose-envify: 1.4.0
+    dev: false
+
+  /scheduler/0.23.0:
+    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
+    dependencies:
+      loose-envify: 1.4.0
 
   /seedrandom/3.0.5:
     resolution: {integrity: sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==}
@@ -8140,7 +8239,7 @@ packages:
       react: 18.1.0
     dev: false
 
-  /styled-jsx/5.0.2_@babel+core@7.18.5+react@18.1.0:
+  /styled-jsx/5.0.2_@babel+core@7.18.5+react@18.2.0:
     resolution: {integrity: sha512-LqPQrbBh3egD57NBcHET4qcgshPks+yblyhPlH2GY8oaDgKs8SK4C3dBh3oSJjgzJ3G5t1SYEZGHkP+QEpX9EQ==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
@@ -8154,7 +8253,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.18.5
-      react: 18.1.0
+      react: 18.2.0
 
   /styled-system/5.1.5:
     resolution: {integrity: sha512-7VoD0o2R3RKzOzPK0jYrVnS8iJdfkKsQJNiLRDjikOpQVqQHns/DXWaPZOH4tIKkhAT7I6wIsy9FWTWh2X3q+A==}
@@ -8608,15 +8707,15 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /use-composed-ref/1.3.0_react@18.1.0:
+  /use-composed-ref/1.3.0_react@18.2.0:
     resolution: {integrity: sha512-GLMG0Jc/jiKov/3Ulid1wbv3r54K9HlMW29IWcDFPEqFkSO2nS0MuefWgMJpeHQ9YJeXDL3ZUF+P3jdXlZX/cQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      react: 18.1.0
+      react: 18.2.0
     dev: false
 
-  /use-isomorphic-layout-effect/1.1.2_105ed41200946591595021fa8fe7ed91:
+  /use-isomorphic-layout-effect/1.1.2_41d4700766780f2c07603dff9fdb8c3c:
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
       '@types/react': '*'
@@ -8626,10 +8725,10 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.0.12
-      react: 18.1.0
+      react: 18.2.0
     dev: false
 
-  /use-latest/1.2.1_105ed41200946591595021fa8fe7ed91:
+  /use-latest/1.2.1_41d4700766780f2c07603dff9fdb8c3c:
     resolution: {integrity: sha512-xA+AVm/Wlg3e2P/JiItTziwS7FK92LWrDB0p+hgXloIMuVCeJJ8v6f0eeHyPZaJrM+usM1FkFfbNCrJGs8A/zw==}
     peerDependencies:
       '@types/react': '*'
@@ -8639,8 +8738,8 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.0.12
-      react: 18.1.0
-      use-isomorphic-layout-effect: 1.1.2_105ed41200946591595021fa8fe7ed91
+      react: 18.2.0
+      use-isomorphic-layout-effect: 1.1.2_41d4700766780f2c07603dff9fdb8c3c
     dev: false
 
   /util-deprecate/1.0.2:
