@@ -47,7 +47,7 @@
     "@types/react": "18.0.12",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "react-hook-form": "7.32.0",
+    "react-hook-form": "7.32.1",
     "zod": "3.17.3"
   },
   "peerDependencies": {
