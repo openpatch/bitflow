@@ -158,7 +158,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
@@ -178,7 +178,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -196,7 +196,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
@@ -214,7 +214,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -270,7 +270,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.32.2
@@ -288,7 +288,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -307,7 +307,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.32.2
@@ -325,7 +325,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -344,7 +344,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.32.2
@@ -364,7 +364,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -381,7 +381,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
@@ -399,7 +399,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -419,7 +419,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
@@ -440,7 +440,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -466,7 +466,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
@@ -482,7 +482,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -497,7 +497,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.32.2
@@ -510,7 +510,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -526,7 +526,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.32.2
@@ -542,7 +542,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -558,7 +558,7 @@ importers:
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.14
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.32.2
@@ -572,7 +572,7 @@ importers:
       '@openpatch/patches': 6.0.1_1d6e2f0392afd4a24c55fc556dc4d2b7
       '@types/react': 18.0.14
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -589,7 +589,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       lodash.get: ^4.4.2
       react: 18.2.0
       react-dom: 18.2.0
@@ -609,7 +609,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -628,7 +628,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
@@ -648,7 +648,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -664,7 +664,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       immer: ^9.0.14
       react: 18.2.0
       react-dom: 18.2.0
@@ -681,7 +681,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -697,7 +697,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.32.2
@@ -713,7 +713,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -735,7 +735,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       immer: ^9.0.14
       react: 18.2.0
       react-dom: 18.2.0
@@ -755,7 +755,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -773,7 +773,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       immer: ^9.0.14
       react: 18.2.0
       react-dom: 18.2.0
@@ -796,7 +796,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -813,7 +813,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       immer: ^9.0.14
       react: 18.2.0
       react-dom: 18.2.0
@@ -831,7 +831,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -850,7 +850,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       immer: ^9.0.14
       react: 18.2.0
       react-dom: 18.2.0
@@ -872,7 +872,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -889,7 +889,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       immer: ^9.0.14
       react: 18.2.0
       react-dom: 18.2.0
@@ -907,7 +907,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -924,7 +924,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1
+      '@vocab/react': 1.1.2
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.32.2
@@ -940,7 +940,7 @@ importers:
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
       '@vocab/core': 1.1.0
-      '@vocab/react': 1.1.1_react@18.2.0
+      '@vocab/react': 1.1.2_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.32.2_react@18.2.0
@@ -3102,8 +3102,8 @@ packages:
       - supports-color
     dev: true
 
-  /@vocab/react/1.1.1_react@18.2.0:
-    resolution: {integrity: sha512-pDeaJtvT9Tm2c1tTQ4GNU3byGHJDR6D9wI4xIAPsqCoqkJuf7POVqHASIfWkTj0h6p4oKtFHeHV3XyQEm5ltZA==}
+  /@vocab/react/1.1.2_react@18.2.0:
+    resolution: {integrity: sha512-zQhJCKieLO4MV0p0hTq4+d+9kEgx6bbrgtdoDW9UtMvj7B+sxqzvJIFc7+IWbUTKOUjv8eBmr5sh29pBKZaCeA==}
     peerDependencies:
       react: '>=16.3.0'
     dependencies:

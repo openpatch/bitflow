@@ -62,7 +62,7 @@
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
     "@vocab/core": "1.1.0",
-    "@vocab/react": "1.1.1",
+    "@vocab/react": "1.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.32.2"
