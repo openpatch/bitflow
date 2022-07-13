@@ -6,7 +6,7 @@ importers:
     specifiers:
       '@babel/core': 7.18.6
       '@changesets/changelog-github': 0.4.5
-      '@changesets/cli': 2.23.1
+      '@changesets/cli': 2.23.2
       '@emotion/cache': 11.9.3
       '@emotion/react': 11.9.3
       '@emotion/styled': 11.9.3
@@ -48,7 +48,7 @@ importers:
       react-hook-form: 7.33.1_react@18.2.0
     devDependencies:
       '@changesets/changelog-github': 0.4.5
-      '@changesets/cli': 2.23.1
+      '@changesets/cli': 2.23.2
       '@emotion/cache': 11.9.3
       '@emotion/react': 11.9.3_1ac51fab293ebdd5fd446c2e995688cf
       '@emotion/styled': 11.9.3_bba2bfc6057b7869b560e0ca4100c2b7
@@ -1696,8 +1696,8 @@ packages:
       - encoding
     dev: true
 
-  /@changesets/cli/2.23.1:
-    resolution: {integrity: sha512-yXQ29Iw/26yq1oJpOCa7BJDeUvuurZmREmCX9p9m5RxlKNDnROJBylQDCVfqQdZbeV2jfvd3XRKvci80SvGssg==}
+  /@changesets/cli/2.23.2:
+    resolution: {integrity: sha512-o7CWC+mcwOmA3yK5axqHOSYPYEjX/x+nq/s9aX78AyzH1SQZa6L5HX4P9uUXibyjcKynklkmusxv8vN8+hJggA==}
     hasBin: true
     dependencies:
       '@babel/runtime': 7.18.3
