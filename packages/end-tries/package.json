@@ -44,7 +44,7 @@
     "@bitflow/icons": "workspace:*",
     "@bitflow/provider": "workspace:*",
     "@bitflow/shell": "workspace:*",
-    "zod": "3.17.3"
+    "zod": "3.17.9"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
