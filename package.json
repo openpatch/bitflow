@@ -61,7 +61,7 @@
   },
   "packageManager": "pnpm@6.33.1",
   "dependencies": {
-    "@babel/core": "7.18.6",
+    "@babel/core": "7.18.9",
     "@openpatch/patches": "6.0.1",
     "csstype": "3.1.0",
     "react": "18.2.0",
