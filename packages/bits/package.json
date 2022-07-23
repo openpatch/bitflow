@@ -53,6 +53,6 @@
     "zod": "3.x"
   },
   "devDependencies": {
-    "zod": "3.17.9"
+    "zod": "3.17.10"
   }
 }
