@@ -984,7 +984,7 @@ importers:
       typeface-ubuntu-mono: 1.1.13
       typescript-styled-plugin: 0.18.2
       zod: 3.17.10
-      zod-to-json-schema: 3.17.0
+      zod-to-json-schema: 3.17.1
     dependencies:
       '@bitflow/bits': link:../packages/bits
       '@bitflow/core': link:../packages/core
@@ -1014,7 +1014,7 @@ importers:
       typeface-rubik: 1.1.13
       typeface-ubuntu-mono: 1.1.13
       zod: 3.17.10
-      zod-to-json-schema: 3.17.0_zod@3.17.10
+      zod-to-json-schema: 3.17.1_zod@3.17.10
     devDependencies:
       '@babel/core': 7.18.9
       '@emotion/babel-preset-css-prop': 11.2.0_@babel+core@7.18.9
@@ -9432,10 +9432,10 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zod-to-json-schema/3.17.0_zod@3.17.10:
-    resolution: {integrity: sha512-Ioxmh41HTo4xAip7DPy79ysvGibPnDxzGoPNcNT+1dxwLjeXf/BruRnj7sRJAe2p4z8vTx6d62CXigEPTz6DqQ==}
+  /zod-to-json-schema/3.17.1_zod@3.17.10:
+    resolution: {integrity: sha512-h1WLfvkdwM6lcRt5q09ytNh2OKcU13vY9D0FetN/7Erdd7lVraIiMkEnObg3KELm5EQlMqvi0r5nzMa0EA+8qw==}
     peerDependencies:
-      zod: ^3.14.4
+      zod: ^3.17.10
     dependencies:
       zod: 3.17.10
     dev: false
