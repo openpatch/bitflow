@@ -42,7 +42,7 @@
   "dependencies": {
     "@bitflow/core": "workspace:*",
     "@bitflow/flow-node": "workspace:*",
-    "react-flow-renderer": "^9.7.2"
+    "react-flow-renderer": "^10.0.0"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
