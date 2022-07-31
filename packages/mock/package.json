@@ -53,9 +53,9 @@
   },
   "devDependencies": {
     "@babel/core": "7.18.9",
-    "@emotion/cache": "11.9.3",
-    "@emotion/react": "11.9.3",
-    "@emotion/styled": "11.9.3",
+    "@emotion/cache": "11.10.0",
+    "@emotion/react": "11.10.0",
+    "@emotion/styled": "11.10.0",
     "@openpatch/patches": "6.0.1",
     "@types/react": "18.0.15",
     "@vocab/core": "1.1.0",
