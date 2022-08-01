@@ -57,7 +57,7 @@
     "react-hook-form": "7.x"
   },
   "devDependencies": {
-    "@babel/core": "7.18.9",
+    "@babel/core": "7.18.10",
     "@emotion/cache": "11.10.0",
     "@emotion/react": "11.10.0",
     "@emotion/styled": "11.10.0",
