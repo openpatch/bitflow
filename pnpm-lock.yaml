@@ -6,7 +6,7 @@ importers:
     specifiers:
       '@babel/core': 7.18.10
       '@changesets/changelog-github': 0.4.6
-      '@changesets/cli': 2.24.1
+      '@changesets/cli': 2.24.2
       '@emotion/cache': 11.10.1
       '@emotion/react': 11.10.0
       '@emotion/styled': 11.10.0
@@ -48,7 +48,7 @@ importers:
       react-hook-form: 7.34.0_react@18.2.0
     devDependencies:
       '@changesets/changelog-github': 0.4.6
-      '@changesets/cli': 2.24.1
+      '@changesets/cli': 2.24.2
       '@emotion/cache': 11.10.1
       '@emotion/react': 11.10.0_19143dc0f0d75d2d658fd4ae9f380e75
       '@emotion/styled': 11.10.0_15709a41f0ccada4c5c8f65a07bb7444
@@ -1732,11 +1732,11 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@changesets/apply-release-plan/6.0.3:
-    resolution: {integrity: sha512-/3JKqtDefs2YSEQI6JQo43/MKTLfhPdrW/BFmqnRpW8UmPB+YXjjQgfjR/2KOaObLOkoixcL3WCK4wNkn/Krmw==}
+  /@changesets/apply-release-plan/6.0.4:
+    resolution: {integrity: sha512-PutV/ymf8cZMqvaLe/Lh5cP3kBQ9FZl6oGQ3qRDxWD1ML+/uH3jrCE7S7Zw7IVSXkD0lnMD+1dAX7fsOJ6ZvgA==}
     dependencies:
       '@babel/runtime': 7.18.3
-      '@changesets/config': 2.1.0
+      '@changesets/config': 2.1.1
       '@changesets/get-version-range-type': 0.3.2
       '@changesets/git': 1.4.1
       '@changesets/types': 5.1.0
@@ -1777,18 +1777,18 @@ packages:
       - encoding
     dev: true
 
-  /@changesets/cli/2.24.1:
-    resolution: {integrity: sha512-7Lz1inqGQjBrXgnXlENtzQ7EmO/9c+09d9oi8XoK4ARqlJe8GpafjqKRobcjcA/TTI7Fn2+cke4CrXFZfVF8Rw==}
+  /@changesets/cli/2.24.2:
+    resolution: {integrity: sha512-Bya7bnxF8Sz+O25M6kseAludVsCy5nXSW9u2Lbje/XbJTyU5q/xwIiXF9aTUzVi/4jyKoKoOasx7B1/z+NJLzg==}
     hasBin: true
     dependencies:
       '@babel/runtime': 7.18.3
-      '@changesets/apply-release-plan': 6.0.3
+      '@changesets/apply-release-plan': 6.0.4
       '@changesets/assemble-release-plan': 5.2.0
       '@changesets/changelog-git': 0.1.12
-      '@changesets/config': 2.1.0
+      '@changesets/config': 2.1.1
       '@changesets/errors': 0.1.4
       '@changesets/get-dependents-graph': 1.3.3
-      '@changesets/get-release-plan': 3.0.12
+      '@changesets/get-release-plan': 3.0.13
       '@changesets/git': 1.4.1
       '@changesets/logger': 0.0.5
       '@changesets/pre': 1.0.12
@@ -1816,8 +1816,8 @@ packages:
       tty-table: 4.1.6
     dev: true
 
-  /@changesets/config/2.1.0:
-    resolution: {integrity: sha512-43potf+DwYHmH7EY19vxtCq6fqj7UUIrZ4DTwM3pVBqCKxFIytm7GPy7wNAsH06UvMw7NRuOu4QK5HN02GsIrw==}
+  /@changesets/config/2.1.1:
+    resolution: {integrity: sha512-nSRINMqHpdtBpNVT9Eh9HtmLhOwOTAeSbaqKM5pRmGfsvyaROTBXV84ujF9UsWNlV71YxFbxTbeZnwXSGQlyTw==}
     dependencies:
       '@changesets/errors': 0.1.4
       '@changesets/get-dependents-graph': 1.3.3
@@ -1853,12 +1853,12 @@ packages:
       - encoding
     dev: true
 
-  /@changesets/get-release-plan/3.0.12:
-    resolution: {integrity: sha512-TlpEdpxV5ZQmNeHoD6KNKAc01wjRrcu9/CQqzmO4qAlX7ARA4pIuAxd8QZ1AQXv/l4qhHox7SUYH3VLHfarv5w==}
+  /@changesets/get-release-plan/3.0.13:
+    resolution: {integrity: sha512-Zl/UN4FUzb5LwmzhO2STRijJT5nQCN4syPEs0p1HSIR+O2iVOzes+2yTLF2zGiOx8qPOsFx/GRSAvuhSzm+9ig==}
     dependencies:
       '@babel/runtime': 7.18.3
       '@changesets/assemble-release-plan': 5.2.0
-      '@changesets/config': 2.1.0
+      '@changesets/config': 2.1.1
       '@changesets/pre': 1.0.12
       '@changesets/read': 0.5.7
       '@changesets/types': 5.1.0
