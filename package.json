@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.4.6",
-    "@changesets/cli": "2.24.2",
+    "@changesets/cli": "2.24.3",
     "@emotion/cache": "11.10.1",
     "@emotion/react": "11.10.0",
     "@emotion/styled": "11.10.0",
