@@ -8,7 +8,8 @@ export function updateBitsPackage(plop) {
   plop.setHelper("single", (l) => l.length === 1);
 
   function bitData(dir) {
-    const [type, key] = dir.split("-", 2);
+    const i = dir.indexOf("-");
+    const [type, key] = [dir.slice(0, i), dir.slice(i + 1)];
     return {
       key,
       name: `${properCase(type)}${properCase(key)}`,
