@@ -1,24 +1,72 @@
-{ "name": "@bitflow/start-{{dashCase name}}", "version": "0.0.0", "author":
-"Mike Barkmin", "homepage": "https://github.com/openpatch/bitflow#readme",
-"license": "MIT", "main": "dist/index.cjs.js", "module": "dist/index.esm.mjs",
-"types": "dist/index.d.ts", "typings": "dist/index.d.ts", "sideEffects": false,
-"exports": { ".": { "require": "./dist/index.cjs.js", "default":
-"./dist/index.esm.mjs" } }, "files": [ "dist" ], "publishConfig": { "access":
-"public" }, "repository": { "type": "git", "url":
-"git+https://github.com/openpatch/bitflow.git", "directory": "packages/start-{{dashCase
-  name
-}}" }, "bugs": { "url": "https://github.com/openpatch/bitflow/issues" },
-"scripts": { "prebuild": "rimraf dist", "version": "pnpm build", "lint": "tsc
---noEmit", "test": "jest --env=jsdom --passWithNoTests", "build": "pnpm
-build:locales && pnpm build:pkg && pnpm build:types", "build:pkg": "node
-../../scripts/build.mjs", "build:locales": "vocab compile", "build:types": "tsc
---project tsconfig.build.json --declaration --emitDeclarationOnly" },
-"dependencies": { "@bitflow/core": "workspace:*" }, "peerDependencies": {
-"@emotion/cache": "11.x", "@emotion/react": "11.x", "@emotion/styled": "11.x",
-"@openpatch/patches": "6.x", "@vocab/core": "1.x", "@vocab/react": "1.x",
-"react": "18.x", "react-dom": "18.x", "react-hook-form": "7.x", "zod": "3.x" },
-"devDependencies": { "@babel/core": "7.18.9", "@emotion/cache": "11.9.3",
-"@emotion/react": "11.9.3", "@emotion/styled": "11.9.3", "@openpatch/patches":
-"6.0.1", "@types/react": "18.0.15", "@types/react-dom": "18.0.6", "@vocab/core":
-"1.1.0", "@vocab/react": "1.1.2", "react": "18.2.0", "react-dom": "18.2.0",
-"react-hook-form": "7.33.1", "zod": "3.17.9" } }
+{
+  "name": "@bitflow/start-{{dashCase name}}",
+  "version": "0.0.0",
+  "author": "Mike Barkmin",
+  "homepage": "https://github.com/openpatch/bitflow#readme",
+  "license": "MIT",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.mjs",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.esm.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openpatch/bitflow.git",
+    "directory": "packages/start-{{dashCase name}}"
+  },
+  "bugs": {
+    "url": "https://github.com/openpatch/bitflow/issues"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "version": "pnpm build",
+    "lint": "tsc --noEmit",
+    "test": "jest --env=jsdom --passWithNoTests",
+    "build": "pnpm build:locales && pnpm build:pkg && pnpm build:types",
+    "build:pkg": "node ../../scripts/build.mjs",
+    "build:locales": "vocab compile",
+    "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
+  },
+  "dependencies": {
+    "@bitflow/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "@emotion/cache": "11.x",
+    "@emotion/react": "11.x",
+    "@emotion/styled": "11.x",
+    "@openpatch/patches": "6.x",
+    "@vocab/core": "1.x",
+    "@vocab/react": "1.x",
+    "react": "18.x",
+    "react-dom": "18.x",
+    "react-hook-form": "7.x",
+    "zod": "3.x"
+  },
+  "devDependencies": {
+    "@babel/core": "7.18.9",
+    "@emotion/cache": "11.9.3",
+    "@emotion/react": "11.9.3",
+    "@emotion/styled": "11.9.3",
+    "@openpatch/patches": "6.0.1",
+    "@types/react": "18.0.15",
+    "@types/react-dom": "18.0.6",
+    "@vocab/core": "1.1.0",
+    "@vocab/react": "1.1.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "7.33.1",
+    "zod": "3.17.9"
+  }
+}
