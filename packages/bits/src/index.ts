@@ -1,10 +1,10 @@
 import * as StartSimple from "@bitflow/start-simple";
 import * as EndTries from "@bitflow/end-tries";
 import * as TaskChoice from "@bitflow/task-choice";
-import * as TaskFill from "@bitflow/task-fill-in-the-blank";
+import * as TaskFillInTheBlank from "@bitflow/task-fill-in-the-blank";
 import * as TaskHighlighting from "@bitflow/task-highlighting";
 import * as TaskInput from "@bitflow/task-input";
-import * as TaskYes from "@bitflow/task-yes-no";
+import * as TaskYesNo from "@bitflow/task-yes-no";
 import * as InputMarkdown from "@bitflow/input-markdown";
 import * as TitleSimple from "@bitflow/title-simple";
 import { z } from "zod";
@@ -13,10 +13,10 @@ export {
   StartSimple,
   EndTries,
   TaskChoice,
-  TaskFill,
+  TaskFillInTheBlank,
   TaskHighlighting,
   TaskInput,
-  TaskYes,
+  TaskYesNo,
   InputMarkdown,
   TitleSimple,
 };
@@ -29,10 +29,10 @@ export type StartBitKey = keyof typeof startBits;
 
 export const taskBits = {
   choice: TaskChoice,
-  fill: TaskFill,
+  "fill-in-the-blank": TaskFillInTheBlank,
   highlighting: TaskHighlighting,
   input: TaskInput,
-  yes: TaskYes,
+  "yes-no": TaskYesNo,
 } as const;
 
 export type TaskBitKey = keyof typeof taskBits;
@@ -74,53 +74,53 @@ export const schemas = {
 
   task: z.union([
     TaskChoice.TaskSchema,
-    TaskFill.TaskSchema,
+    TaskFillInTheBlank.TaskSchema,
     TaskHighlighting.TaskSchema,
     TaskInput.TaskSchema,
-    TaskYes.TaskSchema,
+    TaskYesNo.TaskSchema,
   ]),
 };
 
 export const evaluate = {
   choice: TaskChoice.evaluate,
-  fill: TaskFill.evaluate,
+  "fill-in-the-blank": TaskFillInTheBlank.evaluate,
   highlighting: TaskHighlighting.evaluate,
   input: TaskInput.evaluate,
-  yes: TaskYes.evaluate,
+  "yes-no": TaskYesNo.evaluate,
 };
 
 export const updateStatistic = {
   choice: TaskChoice.updateStatistic,
-  fill: TaskFill.updateStatistic,
+  "fill-in-the-blank": TaskFillInTheBlank.updateStatistic,
   highlighting: TaskHighlighting.updateStatistic,
   input: TaskInput.updateStatistic,
-  yes: TaskYes.updateStatistic,
+  "yes-no": TaskYesNo.updateStatistic,
 };
 
 export type Task =
   | TaskChoice.ITask
-  | TaskFill.ITask
+  | TaskFillInTheBlank.ITask
   | TaskHighlighting.ITask
   | TaskInput.ITask
-  | TaskYes.ITask;
+  | TaskYesNo.ITask;
 export type TaskResult =
   | TaskChoice.IResult
-  | TaskFill.IResult
+  | TaskFillInTheBlank.IResult
   | TaskHighlighting.IResult
   | TaskInput.IResult
-  | TaskYes.IResult;
+  | TaskYesNo.IResult;
 export type TaskStatistic =
   | TaskChoice.IStatistic
-  | TaskFill.IStatistic
+  | TaskFillInTheBlank.IStatistic
   | TaskHighlighting.IStatistic
   | TaskInput.IStatistic
-  | TaskYes.IStatistic;
+  | TaskYesNo.IStatistic;
 export type TaskAnswer =
   | TaskChoice.IAnswer
-  | TaskFill.IAnswer
+  | TaskFillInTheBlank.IAnswer
   | TaskHighlighting.IAnswer
   | TaskInput.IAnswer
-  | TaskYes.IAnswer;
+  | TaskYesNo.IAnswer;
 
 export type Input = InputMarkdown.IInput;
 

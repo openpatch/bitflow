@@ -14,26 +14,26 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@babel/core": "7.18.2",
+    "@babel/core": "7.18.10",
     "@bitflow/bits": "workspace:*",
     "@bitflow/core": "workspace:*",
     "@bitflow/do-local": "workspace:*",
     "@bitflow/flow-engine": "workspace:*",
     "@bitflow/provider": "workspace:*",
-    "@emotion/cache": "11.7.1",
-    "@emotion/react": "11.9.0",
-    "@emotion/styled": "11.8.1",
+    "@emotion/cache": "11.10.1",
+    "@emotion/react": "11.10.0",
+    "@emotion/styled": "11.10.0",
     "@openpatch/patches": "6.0.1",
-    "next": "12.1.6",
-    "react": "18.1.0",
-    "react-dom": "18.1.0",
-    "react-hook-form": "7.31.3",
+    "next": "12.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "7.34.2",
     "typeface-rubik": "1.1.13",
     "typeface-ubuntu-mono": "1.1.13"
   },
   "devDependencies": {
-    "@types/react": "18.0.12",
-    "typescript": "4.7.2",
+    "@types/react": "18.0.17",
+    "typescript": "4.7.4",
     "typescript-styled-plugin": "0.18.2"
   }
 }

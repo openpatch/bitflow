@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@bitflow/provider": "workspace:*",
-    "date-fns": "^2.28.0"
+    "date-fns": "^2.29.2"
   },
   "peerDependencies": {
     "react": "18.x",
