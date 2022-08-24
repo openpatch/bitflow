@@ -11,7 +11,7 @@ importers:
       '@emotion/react': 11.10.0
       '@emotion/styled': 11.10.0
       '@openpatch/patches': 6.0.1
-      '@types/jest': 28.1.7
+      '@types/jest': 28.1.8
       '@types/node': 18.7.6
       '@types/react': 18.0.17
       '@types/react-dom': 18.0.6
@@ -52,7 +52,7 @@ importers:
       '@emotion/cache': 11.10.3
       '@emotion/react': 11.10.0_9d35b476f76f941257da705780982323
       '@emotion/styled': 11.10.0_4f3ca0bbeb062a6b7881c9b0e9accd2d
-      '@types/jest': 28.1.7
+      '@types/jest': 28.1.8
       '@types/node': 18.7.6
       '@types/react': 18.0.17
       '@types/react-dom': 18.0.6
@@ -3137,8 +3137,8 @@ packages:
       '@types/istanbul-lib-report': 3.0.0
     dev: true
 
-  /@types/jest/28.1.7:
-    resolution: {integrity: sha512-acDN4VHD40V24tgu0iC44jchXavRNVFXQ/E6Z5XNsswgoSO/4NgsXoEYmPUGookKldlZQyIpmrEXsHI9cA3ZTA==}
+  /@types/jest/28.1.8:
+    resolution: {integrity: sha512-8TJkV++s7B6XqnDrzR1m/TT0A0h948Pnl/097veySPN67VRAgQ4gZ7n2KfJo2rVq6njQjdxU3GCCyDvAeuHoiw==}
     dependencies:
       expect: 28.1.3
       pretty-format: 28.1.3
