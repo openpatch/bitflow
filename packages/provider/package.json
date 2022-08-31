@@ -56,8 +56,8 @@
   "devDependencies": {
     "@babel/core": "7.18.13",
     "@emotion/cache": "11.10.3",
-    "@emotion/react": "11.10.0",
-    "@emotion/styled": "11.10.0",
+    "@emotion/react": "11.10.4",
+    "@emotion/styled": "11.10.4",
     "@openpatch/patches": "6.0.1",
     "@types/lodash.get": "4.4.7",
     "@types/react": "18.0.18",

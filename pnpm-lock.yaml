@@ -8,8 +8,8 @@ importers:
       '@changesets/changelog-github': 0.4.6
       '@changesets/cli': 2.24.4
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/jest': 28.1.8
       '@types/node': 18.7.6
@@ -41,7 +41,7 @@ importers:
       walkdir: 0.4.1
     dependencies:
       '@babel/core': 7.18.13
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       csstype: 3.1.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -50,8 +50,8 @@ importers:
       '@changesets/changelog-github': 0.4.6
       '@changesets/cli': 2.24.4
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
       '@types/jest': 28.1.8
       '@types/node': 18.7.6
       '@types/react': 18.0.18
@@ -152,8 +152,8 @@ importers:
       '@bitflow/flow-node': workspace:*
       '@bitflow/stats': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -172,9 +172,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -190,8 +190,8 @@ importers:
       '@bitflow/concept-model': workspace:*
       '@bitflow/core': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -208,9 +208,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -223,8 +223,8 @@ importers:
     specifiers:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       react: 18.2.0
@@ -234,9 +234,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -264,8 +264,8 @@ importers:
       '@bitflow/provider': workspace:*
       '@bitflow/shell': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -282,9 +282,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -301,8 +301,8 @@ importers:
       '@bitflow/flow-engine': workspace:*
       '@bitflow/provider': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -319,9 +319,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -338,8 +338,8 @@ importers:
       '@bitflow/provider': workspace:*
       '@bitflow/shell': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -358,9 +358,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -375,8 +375,8 @@ importers:
       '@bitflow/core': workspace:*
       '@bitflow/flow-node': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -393,9 +393,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -412,8 +412,8 @@ importers:
       '@bitflow/provider': workspace:*
       '@bitflow/shell': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@hookform/resolvers': ^2.9.7
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
@@ -434,9 +434,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -460,8 +460,8 @@ importers:
     specifiers:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -476,9 +476,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -491,8 +491,8 @@ importers:
     specifiers:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -504,9 +504,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -520,8 +520,8 @@ importers:
       '@babel/core': 7.18.13
       '@bitflow/core': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -536,9 +536,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -553,8 +553,8 @@ importers:
       '@babel/core': 7.18.13
       '@bitflow/core': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@vocab/core': 1.1.1
@@ -567,9 +567,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@vocab/core': 1.1.1
       '@vocab/react': 1.1.2_react@18.2.0
@@ -582,8 +582,8 @@ importers:
       '@babel/core': 7.18.13
       '@bitflow/core': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/lodash.get': 4.4.7
       '@types/react': 18.0.18
@@ -602,9 +602,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/lodash.get': 4.4.7
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -622,8 +622,8 @@ importers:
       '@bitflow/flow-node': workspace:*
       '@bitflow/icons': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -642,9 +642,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -658,8 +658,8 @@ importers:
       '@babel/core': 7.18.13
       '@bitflow/core': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -675,9 +675,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -691,8 +691,8 @@ importers:
       '@babel/core': 7.18.13
       '@bitflow/core': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -707,9 +707,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -728,8 +728,8 @@ importers:
       '@bitflow/core': workspace:*
       '@bitflow/provider': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@hookform/resolvers': ^2.9.7
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
@@ -749,9 +749,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -766,8 +766,8 @@ importers:
       '@babel/core': 7.18.13
       '@bitflow/core': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@hookform/resolvers': ^2.9.7
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
@@ -790,9 +790,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -807,8 +807,8 @@ importers:
       '@babel/core': 7.18.13
       '@bitflow/core': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -825,9 +825,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -843,8 +843,8 @@ importers:
       '@bitflow/core': workspace:*
       '@bitflow/provider': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@hookform/resolvers': ^2.9.7
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
@@ -866,9 +866,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -883,8 +883,8 @@ importers:
       '@babel/core': 7.18.13
       '@bitflow/core': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -901,9 +901,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -918,8 +918,8 @@ importers:
       '@babel/core': 7.18.13
       '@bitflow/core': workspace:*
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@openpatch/patches': 6.0.1
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -934,9 +934,9 @@ importers:
     devDependencies:
       '@babel/core': 7.18.13
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
       '@vocab/core': 1.1.1
@@ -960,8 +960,8 @@ importers:
       '@bitflow/shell': workspace:*
       '@emotion/babel-preset-css-prop': 11.10.0
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0
-      '@emotion/styled': 11.10.0
+      '@emotion/react': 11.10.4
+      '@emotion/styled': 11.10.4
       '@hookform/resolvers': 2.9.7
       '@mdx-js/loader': 1.6.22
       '@mdx-js/react': 1.6.22
@@ -996,13 +996,13 @@ importers:
       '@bitflow/provider': link:../packages/provider
       '@bitflow/shell': link:../packages/shell
       '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
       '@hookform/resolvers': 2.9.7_react-hook-form@7.34.2
       '@mdx-js/loader': 1.6.22_react@18.2.0
       '@mdx-js/react': 1.6.22_react@18.2.0
       '@next/mdx': 12.2.5_f56c41adb6190c4680be4a1c0222355d
-      '@openpatch/patches': 6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5
+      '@openpatch/patches': 6.0.1_fa38424430a682ed6b830a6e87cadb72
       atob: 2.1.2
       lz-string: 1.4.4
       next: 12.2.5_8ac08509d25e6d69c30af862f1e489ee
@@ -2116,8 +2116,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@emotion/react/11.10.0_aed70635ff4b560edfa44a39efd95c01:
-    resolution: {integrity: sha512-K6z9zlHxxBXwN8TcpwBKcEsBsOw4JWCCmR+BeeOWgqp8GIU1yA2Odd41bwdAAr0ssbQrbJbVnndvv7oiv1bZeQ==}
+  /@emotion/react/11.10.4_aed70635ff4b560edfa44a39efd95c01:
+    resolution: {integrity: sha512-j0AkMpr6BL8gldJZ6XQsQ8DnS9TxEQu1R+OGmDZiWjBAJtCcbt0tS3I/YffoqHXxH6MjgI7KdMbYKw3MEiU9eA==}
     peerDependencies:
       '@babel/core': ^7.0.0
       '@types/react': '*'
@@ -2133,6 +2133,7 @@ packages:
       '@emotion/babel-plugin': 11.10.0_@babel+core@7.18.13
       '@emotion/cache': 11.10.3
       '@emotion/serialize': 1.1.0
+      '@emotion/use-insertion-effect-with-fallbacks': 1.0.0_react@18.2.0
       '@emotion/utils': 1.2.0
       '@emotion/weak-memoize': 0.3.0
       '@types/react': 18.0.18
@@ -2150,29 +2151,6 @@ packages:
 
   /@emotion/sheet/1.2.0:
     resolution: {integrity: sha512-OiTkRgpxescko+M51tZsMq7Puu/KP55wMT8BgpcXVG2hqXc0Vo0mfymJ/Uj24Hp0i083ji/o0aLddh08UEjq8w==}
-
-  /@emotion/styled/11.10.0_3b87f0648bcf3b598486bb90cdb91d71:
-    resolution: {integrity: sha512-V9oaEH6V4KePeQpgUE83i8ht+4Ri3E8Djp/ZPJ4DQlqWhSKITvgzlR3/YQE2hdfP4Jw3qVRkANJz01LLqK9/TA==}
-    peerDependencies:
-      '@babel/core': ^7.0.0
-      '@emotion/react': ^11.0.0-rc.0
-      '@types/react': '*'
-      react: '>=16.8.0'
-    peerDependenciesMeta:
-      '@babel/core':
-        optional: true
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/core': 7.18.13
-      '@babel/runtime': 7.18.9
-      '@emotion/babel-plugin': 11.10.0_@babel+core@7.18.13
-      '@emotion/is-prop-valid': 1.2.0
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/serialize': 1.1.0
-      '@emotion/utils': 1.2.0
-      '@types/react': 18.0.18
-      react: 18.2.0
 
   /@emotion/styled/11.10.0_ec882efd59799597389c14680ea8a25e:
     resolution: {integrity: sha512-V9oaEH6V4KePeQpgUE83i8ht+4Ri3E8Djp/ZPJ4DQlqWhSKITvgzlR3/YQE2hdfP4Jw3qVRkANJz01LLqK9/TA==}
@@ -2198,8 +2176,39 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@emotion/styled/11.10.4_86436313f309e5a7446845beef594d2b:
+    resolution: {integrity: sha512-pRl4R8Ez3UXvOPfc2bzIoV8u9P97UedgHS4FPX594ntwEuAMA114wlaHvOK24HB48uqfXiGlYIZYCxVJ1R1ttQ==}
+    peerDependencies:
+      '@babel/core': ^7.0.0
+      '@emotion/react': ^11.0.0-rc.0
+      '@types/react': '*'
+      react: '>=16.8.0'
+    peerDependenciesMeta:
+      '@babel/core':
+        optional: true
+      '@types/react':
+        optional: true
+    dependencies:
+      '@babel/core': 7.18.13
+      '@babel/runtime': 7.18.9
+      '@emotion/babel-plugin': 11.10.0_@babel+core@7.18.13
+      '@emotion/is-prop-valid': 1.2.0
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/serialize': 1.1.0
+      '@emotion/use-insertion-effect-with-fallbacks': 1.0.0_react@18.2.0
+      '@emotion/utils': 1.2.0
+      '@types/react': 18.0.18
+      react: 18.2.0
+
   /@emotion/unitless/0.8.0:
     resolution: {integrity: sha512-VINS5vEYAscRl2ZUDiT3uMPlrFQupiKgHz5AA4bCH1miKBg4qtwkim1qPmJj/4WG6TreYMY111rEFsjupcOKHw==}
+
+  /@emotion/use-insertion-effect-with-fallbacks/1.0.0_react@18.2.0:
+    resolution: {integrity: sha512-1eEgUGmkaljiBnRMTdksDV1W4kUnmwgp7X9G8B++9GYwl1lUdqSndSriIrTJ0N7LQaoauY9JJ2yhiOYK5+NI4A==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
 
   /@emotion/utils/1.2.0:
     resolution: {integrity: sha512-sn3WH53Kzpw8oQ5mgMmIzzyAaH2ZqFEbozVVBSYp538E06OSE6ytOp7pRAjNQR+Q/orwqdQYJSe2m3hCOeznkw==}
@@ -2862,46 +2871,6 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@openpatch/patches/6.0.1_8506a1c3ceb600e4bdf4a9e72c2a2aa5:
-    resolution: {integrity: sha512-7mdCBg0ZWfR/VyHVyWWerAAka6wQB01Z+xwwMflBQirWbpqSCMX7U/k8MMMuKulWalG8ZoLy517LodiYDXUpOw==}
-    peerDependencies:
-      '@emotion/cache': ^11.0.0
-      '@emotion/react': ^11.1.1
-      '@emotion/styled': ^11.0.0
-      react: '>=18'
-      react-dom: '>=18'
-      react-hook-form: ^7.31.2
-    dependencies:
-      '@codemirror/autocomplete': 0.20.3
-      '@codemirror/lang-java': 0.20.1
-      '@codemirror/lang-javascript': 0.20.1
-      '@codemirror/lang-markdown': 0.20.1
-      '@codemirror/lang-python': 0.20.0
-      '@codemirror/lang-sql': 0.20.4
-      '@codemirror/language': 0.20.2
-      '@codemirror/state': 0.20.1
-      '@codemirror/view': 0.20.7
-      '@emotion/cache': 11.10.3
-      '@emotion/react': 11.10.0_aed70635ff4b560edfa44a39efd95c01
-      '@emotion/styled': 11.10.0_3b87f0648bcf3b598486bb90cdb91d71
-      lodash: 4.17.21
-      polished: 4.2.2
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-hook-form: 7.34.2_react@18.2.0
-      react-markdown: 8.0.3_fd7dc7ab4c545c7b1f5a35feb8e7a8a9
-      react-modal: 3.15.1_react-dom@18.2.0+react@18.2.0
-      react-syntax-highlighter: 15.5.0_react@18.2.0
-      react-tabs: 5.1.0_react@18.2.0
-      react-toastify: 9.0.3_react-dom@18.2.0+react@18.2.0
-      rehype-raw: 6.1.1
-      rehype-sanitize: 5.0.1
-      remark-gfm: 3.0.1
-      styled-system: 5.1.5
-    transitivePeerDependencies:
-      - '@types/react'
-      - supports-color
-
   /@openpatch/patches/6.0.1_896f5d4dec377b47b0d841c5c8759d89:
     resolution: {integrity: sha512-7mdCBg0ZWfR/VyHVyWWerAAka6wQB01Z+xwwMflBQirWbpqSCMX7U/k8MMMuKulWalG8ZoLy517LodiYDXUpOw==}
     peerDependencies:
@@ -2942,6 +2911,46 @@ packages:
       - '@types/react'
       - supports-color
     dev: false
+
+  /@openpatch/patches/6.0.1_fa38424430a682ed6b830a6e87cadb72:
+    resolution: {integrity: sha512-7mdCBg0ZWfR/VyHVyWWerAAka6wQB01Z+xwwMflBQirWbpqSCMX7U/k8MMMuKulWalG8ZoLy517LodiYDXUpOw==}
+    peerDependencies:
+      '@emotion/cache': ^11.0.0
+      '@emotion/react': ^11.1.1
+      '@emotion/styled': ^11.0.0
+      react: '>=18'
+      react-dom: '>=18'
+      react-hook-form: ^7.31.2
+    dependencies:
+      '@codemirror/autocomplete': 0.20.3
+      '@codemirror/lang-java': 0.20.1
+      '@codemirror/lang-javascript': 0.20.1
+      '@codemirror/lang-markdown': 0.20.1
+      '@codemirror/lang-python': 0.20.0
+      '@codemirror/lang-sql': 0.20.4
+      '@codemirror/language': 0.20.2
+      '@codemirror/state': 0.20.1
+      '@codemirror/view': 0.20.7
+      '@emotion/cache': 11.10.3
+      '@emotion/react': 11.10.4_aed70635ff4b560edfa44a39efd95c01
+      '@emotion/styled': 11.10.4_86436313f309e5a7446845beef594d2b
+      lodash: 4.17.21
+      polished: 4.2.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.34.2_react@18.2.0
+      react-markdown: 8.0.3_fd7dc7ab4c545c7b1f5a35feb8e7a8a9
+      react-modal: 3.15.1_react-dom@18.2.0+react@18.2.0
+      react-syntax-highlighter: 15.5.0_react@18.2.0
+      react-tabs: 5.1.0_react@18.2.0
+      react-toastify: 9.0.3_react-dom@18.2.0+react@18.2.0
+      rehype-raw: 6.1.1
+      rehype-sanitize: 5.0.1
+      remark-gfm: 3.0.1
+      styled-system: 5.1.5
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
 
   /@sinclair/typebox/0.24.28:
     resolution: {integrity: sha512-dgJd3HLOkLmz4Bw50eZx/zJwtBq65nms3N9VBYu5LTjJ883oBFkTyXRlCB/ZGGwqYpJJHA5zW2Ibhl5ngITfow==}
