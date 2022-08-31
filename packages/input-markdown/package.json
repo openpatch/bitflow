@@ -60,7 +60,7 @@
     "@emotion/react": "11.10.0",
     "@emotion/styled": "11.10.0",
     "@openpatch/patches": "6.0.1",
-    "@types/react": "18.0.17",
+    "@types/react": "18.0.18",
     "@types/react-dom": "18.0.6",
     "@vocab/core": "1.1.1",
     "@vocab/react": "1.1.2",
