@@ -131,7 +131,7 @@ importers:
       '@bitflow/task-input': workspace:*
       '@bitflow/task-yes-no': workspace:*
       '@bitflow/title-simple': workspace:*
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/end-tries': link:../end-tries
       '@bitflow/input-markdown': link:../input-markdown
@@ -143,7 +143,7 @@ importers:
       '@bitflow/task-yes-no': link:../task-yes-no
       '@bitflow/title-simple': link:../title-simple
     devDependencies:
-      zod: 3.18.0
+      zod: 3.19.0
 
   packages/concept-model:
     specifiers:
@@ -163,7 +163,7 @@ importers:
       react-dom: 18.2.0
       react-flow-renderer: ^9.7.2
       react-hook-form: 7.34.2
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/flow': link:../flow
       '@bitflow/flow-node': link:../flow-node
@@ -182,7 +182,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.2_react@18.2.0
-      zod: 3.18.0
+      zod: 3.19.0
 
   packages/concept-model-editor:
     specifiers:
@@ -230,7 +230,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.34.2
-      zod: 3.18.0
+      zod: 3.19.0
     devDependencies:
       '@babel/core': 7.19.0
       '@emotion/cache': 11.10.3
@@ -241,7 +241,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.2_react@18.2.0
-      zod: 3.18.0
+      zod: 3.19.0
 
   packages/date:
     specifiers:
@@ -348,13 +348,13 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.34.2
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/core': link:../core
       '@bitflow/icons': link:../icons
       '@bitflow/provider': link:../provider
       '@bitflow/shell': link:../shell
-      zod: 3.18.0
+      zod: 3.19.0
     devDependencies:
       '@babel/core': 7.19.0
       '@emotion/cache': 11.10.3
@@ -530,7 +530,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.34.2
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/core': link:../core
     devDependencies:
@@ -546,7 +546,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.2_react@18.2.0
-      zod: 3.18.0
+      zod: 3.19.0
 
   packages/mock:
     specifiers:
@@ -594,11 +594,11 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.34.2
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/core': link:../core
       lodash.get: 4.4.2
-      zod: 3.18.0
+      zod: 3.19.0
     devDependencies:
       '@babel/core': 7.19.0
       '@emotion/cache': 11.10.3
@@ -701,7 +701,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.34.2
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/core': link:../core
     devDependencies:
@@ -717,7 +717,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.2_react@18.2.0
-      zod: 3.18.0
+      zod: 3.19.0
 
   packages/stats:
     specifiers: {}
@@ -740,7 +740,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.34.2
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/core': link:../core
       '@bitflow/provider': link:../provider
@@ -759,7 +759,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.2_react@18.2.0
-      zod: 3.18.0
+      zod: 3.19.0
 
   packages/task-fill-in-the-blank:
     specifiers:
@@ -780,7 +780,7 @@ importers:
       react-hook-form: 7.34.2
       react-markdown: ^6.0.3
       remark-gfm: ^1.0.0
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/core': link:../core
       '@hookform/resolvers': 2.9.7_react-hook-form@7.34.2
@@ -800,7 +800,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.2_react@18.2.0
-      zod: 3.18.0
+      zod: 3.19.0
 
   packages/task-highlighting:
     specifiers:
@@ -818,7 +818,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.34.2
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/core': link:../core
       immer: 9.0.15
@@ -835,7 +835,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.2_react@18.2.0
-      zod: 3.18.0
+      zod: 3.19.0
 
   packages/task-input:
     specifiers:
@@ -856,7 +856,7 @@ importers:
       react-dom: 18.2.0
       react-hook-form: 7.34.2
       react-tagcloud: ^2.3.1
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/core': link:../core
       '@bitflow/provider': link:../provider
@@ -876,7 +876,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.2_react@18.2.0
-      zod: 3.18.0
+      zod: 3.19.0
 
   packages/task-yes-no:
     specifiers:
@@ -894,7 +894,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.34.2
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/core': link:../core
       immer: 9.0.15
@@ -911,7 +911,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.2_react@18.2.0
-      zod: 3.18.0
+      zod: 3.19.0
 
   packages/title-simple:
     specifiers:
@@ -928,7 +928,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.34.2
-      zod: 3.18.0
+      zod: 3.19.0
     dependencies:
       '@bitflow/core': link:../core
     devDependencies:
@@ -944,7 +944,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.2_react@18.2.0
-      zod: 3.18.0
+      zod: 3.19.0
 
   website:
     specifiers:
@@ -983,7 +983,7 @@ importers:
       typeface-rubik: 1.1.13
       typeface-ubuntu-mono: 1.1.13
       typescript-styled-plugin: 0.18.2
-      zod: 3.18.0
+      zod: 3.19.0
       zod-to-json-schema: 3.17.1
     dependencies:
       '@bitflow/bits': link:../packages/bits
@@ -1013,8 +1013,8 @@ importers:
       react-json-view: 1.21.3_f6c65b7a2530fdc8afff7ccac070559f
       typeface-rubik: 1.1.13
       typeface-ubuntu-mono: 1.1.13
-      zod: 3.18.0
-      zod-to-json-schema: 3.17.1_zod@3.18.0
+      zod: 3.19.0
+      zod-to-json-schema: 3.17.1_zod@3.19.0
     devDependencies:
       '@babel/core': 7.19.0
       '@emotion/babel-preset-css-prop': 11.10.0_@babel+core@7.19.0
@@ -9320,16 +9320,16 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zod-to-json-schema/3.17.1_zod@3.18.0:
+  /zod-to-json-schema/3.17.1_zod@3.19.0:
     resolution: {integrity: sha512-h1WLfvkdwM6lcRt5q09ytNh2OKcU13vY9D0FetN/7Erdd7lVraIiMkEnObg3KELm5EQlMqvi0r5nzMa0EA+8qw==}
     peerDependencies:
       zod: ^3.17.10
     dependencies:
-      zod: 3.18.0
+      zod: 3.19.0
     dev: false
 
-  /zod/3.18.0:
-    resolution: {integrity: sha512-gwTm8RfUCe8l9rDwN5r2A17DkAa8Ez4Yl4yXqc5VqeGaXaJahzYYXbTwvhroZi0SNBqTwh/bKm2N0mpCzuw4bA==}
+  /zod/3.19.0:
+    resolution: {integrity: sha512-Yw0qvUsCNGBe5YacikdMt5gVYeUuaEFVDIHKMfElrGSaBhwR3CQK6vOzgfAJOjTdGIhEeoaj8GtT+NDZrepZbw==}
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
