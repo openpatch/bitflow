@@ -1,5 +1,12 @@
 # @bitflow/do
 
+## 0.6.1
+
+### Patch Changes
+
+- Updated dependencies [[`c385545`](https://github.com/openpatch/bitflow/commit/c385545418608ee8cf11ff431b26c3affc920e67)]:
+  - @bitflow/shell@0.7.1
+
 ## 0.6.0
 
 ### Minor Changes

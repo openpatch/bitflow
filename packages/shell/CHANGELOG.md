@@ -1,5 +1,13 @@
 # @bitflow/shell
 
+## 0.7.1
+
+### Patch Changes
+
+- [`c385545`](https://github.com/openpatch/bitflow/commit/c385545418608ee8cf11ff431b26c3affc920e67) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Fix: Error when attempting to play a sound file which is not available. This
+  bug has existed because new Audio(url).play() returns a promise, therefore the
+  error, which was thrown was not caught. Now we are catching the error.
+
 ## 0.7.0
 
 ### Minor Changes
