@@ -1,5 +1,12 @@
 # @bitflow/end-tries
 
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies [[`c385545`](https://github.com/openpatch/bitflow/commit/c385545418608ee8cf11ff431b26c3affc920e67)]:
+  - @bitflow/shell@0.7.1
+
 ## 0.5.0
 
 ### Minor Changes

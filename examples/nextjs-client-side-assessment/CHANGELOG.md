@@ -1,5 +1,13 @@
 # example-nextjs-client-side-assessment
 
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @bitflow/do-local@0.5.1
+  - @bitflow/bits@0.2.1
+
 ## 0.5.0
 
 ### Minor Changes
