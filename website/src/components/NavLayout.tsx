@@ -23,8 +23,8 @@ export const NavLayout: FC<PropsWithChildren<NavLayoutProps>> = ({
             href: "https://github.com/openpatch/bitflow",
           },
           {
-            label: "Discord",
-            href: "https://discord.gg/dCMM4kV",
+            label: "Matrix",
+            href: "https://matrix.to/#/#openpatch:matrix.org",
           },
         ]}
       ></Nav>

@@ -5,7 +5,7 @@ Bitflow is a library for building flow-based assessment systems. Feel free to ch
 - **Website:** https://bitflow.openpatch.org
 - **Documentation:** https://bitflow.openpatch.org/docs
 - **Website/Docs Repository:** https://github.com/openpatch/bitflow
-- **Community:** https://discord.gg/dCMM4kV
+- **Community:** https://matrix.to/#/#openpatch:matrix.org
 
 ## Development
 
