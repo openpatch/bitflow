@@ -237,9 +237,7 @@ export const TaskShell = <
     if (result) {
       if (result.state === "correct") {
         if (soundUrls) {
-          try {
-            new Audio(soundUrls.correct).play();
-          } catch (e) {}
+          new Audio(soundUrls.correct).play().catch(() => {});
         }
         const nudge = t("correctNudges", {
           index: Math.floor(Math.random() * 2),
@@ -247,9 +245,7 @@ export const TaskShell = <
         customDispatch(correctResultStateAction({ nudge }));
       } else if (result.state === "wrong" && result.allowRetry) {
         if (soundUrls) {
-          try {
-            new Audio(soundUrls.wrong).play();
-          } catch (e) {}
+          new Audio(soundUrls.wrong).play().catch(() => {});
         }
         const nudge = t("wrongNudges", {
           index: Math.floor(Math.random() * 3),
@@ -257,9 +253,7 @@ export const TaskShell = <
         customDispatch(retryResultStateAction({ nudge }));
       } else if (result.state === "wrong") {
         if (soundUrls) {
-          try {
-            new Audio(soundUrls.wrong).play();
-          } catch (e) {}
+          new Audio(soundUrls.wrong).play().catch(() => {});
         }
         const nudge = t("wrongNudges", {
           index: Math.floor(Math.random() * 3),
@@ -267,9 +261,7 @@ export const TaskShell = <
         customDispatch(wrongResultStateAction({ nudge }));
       } else if (result.state === "unknown") {
         if (soundUrls) {
-          try {
-            new Audio(soundUrls.unknown).play();
-          } catch (e) {}
+          new Audio(soundUrls.unknown).play().catch(() => {});
         }
         const nudge = t("unknownNudges", {
           index: Math.floor(Math.random() * 2),
@@ -277,9 +269,7 @@ export const TaskShell = <
         customDispatch(unknownResultStateAction({ nudge }));
       } else if (result.state === "manual") {
         if (soundUrls) {
-          try {
-            new Audio(soundUrls.manual).play();
-          } catch (e) {}
+          new Audio(soundUrls.manual).play().catch(() => {});
         }
         const nudge = t("manualNudges", {
           index: Math.floor(Math.random() * 2),
