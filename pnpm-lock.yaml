@@ -962,7 +962,7 @@ importers:
       '@emotion/cache': 11.10.3
       '@emotion/react': 11.10.4
       '@emotion/styled': 11.10.4
-      '@hookform/resolvers': 2.9.7
+      '@hookform/resolvers': 2.9.8
       '@mdx-js/loader': 1.6.22
       '@mdx-js/react': 1.6.22
       '@next/mdx': 12.3.0
@@ -998,7 +998,7 @@ importers:
       '@emotion/cache': 11.10.3
       '@emotion/react': 11.10.4_4e4920d94160814cb692c17775efbda5
       '@emotion/styled': 11.10.4_290c6ff35a99ee99d746e6dc77416cf8
-      '@hookform/resolvers': 2.9.7_react-hook-form@7.35.0
+      '@hookform/resolvers': 2.9.8_react-hook-form@7.35.0
       '@mdx-js/loader': 1.6.22_react@18.2.0
       '@mdx-js/react': 1.6.22_react@18.2.0
       '@next/mdx': 12.3.0_f56c41adb6190c4680be4a1c0222355d
@@ -2393,6 +2393,14 @@ packages:
 
   /@hookform/resolvers/2.9.7_react-hook-form@7.35.0:
     resolution: {integrity: sha512-BloehX3MOLwuFEwT4yZnmolPjVmqyn8VsSuodLfazbCIqxBHsQ4qUZsi+bvNNCduRli1AGWFrkDLGD5QoNzsoA==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.35.0_react@18.2.0
+    dev: false
+
+  /@hookform/resolvers/2.9.8_react-hook-form@7.35.0:
+    resolution: {integrity: sha512-iVVjH0USq+1TqDdGkWe2M1x7Wn5OFPgVRo7CbWFsXTqqXqCaZtZcnzJu+UhljCWbthFWxWGXKLGYUDPZ04oVvQ==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
