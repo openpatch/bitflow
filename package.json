@@ -24,7 +24,7 @@
     "@emotion/styled": "11.10.4",
     "@types/jest": "28.1.8",
     "@types/node": "18.7.6",
-    "@types/react": "18.0.19",
+    "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
     "@vocab/cli": "1.1.0",
     "chalk": "5.0.1",

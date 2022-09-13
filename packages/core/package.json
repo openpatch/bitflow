@@ -44,7 +44,7 @@
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
     "@openpatch/patches": "6.0.1",
-    "@types/react": "18.0.19",
+    "@types/react": "18.0.20",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.35.0",
