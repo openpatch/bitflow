@@ -19,7 +19,7 @@ importers:
       chalk: 5.0.1
       chokidar: 3.5.3
       cross-env: 7.0.3
-      csstype: 3.1.0
+      csstype: 3.1.1
       esbuild: 0.15.5
       husky: 8.0.1
       jest: 28.1.3
@@ -42,7 +42,7 @@ importers:
     dependencies:
       '@babel/core': 7.19.0
       '@openpatch/patches': 6.0.1_7af6cee8c30c5f4cc41df9b8cdf10876
-      csstype: 3.1.0
+      csstype: 3.1.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.35.0_react@18.2.0
@@ -4247,6 +4247,10 @@ packages:
 
   /csstype/3.1.0:
     resolution: {integrity: sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==}
+
+  /csstype/3.1.1:
+    resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
+    dev: false
 
   /csv-generate/3.4.3:
     resolution: {integrity: sha512-w/T+rqR0vwvHqWs/1ZyMDWtHHSJaN06klRqJXBEpDJaM/+dZkso0OKh1VcuuYvK3XM53KysVNq8Ko/epCK8wOw==}
