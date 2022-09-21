@@ -26,7 +26,7 @@
     "@types/node": "18.7.6",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
-    "@vocab/cli": "1.1.0",
+    "@vocab/cli": "1.2.0",
     "chalk": "5.0.1",
     "chokidar": "3.5.3",
     "cross-env": "7.0.3",
