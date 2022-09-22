@@ -60,7 +60,7 @@
     "@emotion/styled": "11.10.4",
     "@openpatch/patches": "6.0.1",
     "@types/lodash.get": "4.4.7",
-    "@types/react": "18.0.20",
+    "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "@vocab/core": "1.1.1",
     "@vocab/react": "1.1.2",
