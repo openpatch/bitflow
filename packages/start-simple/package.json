@@ -55,7 +55,7 @@
     "zod": "3.x"
   },
   "devDependencies": {
-    "@babel/core": "7.19.1",
+    "@babel/core": "7.19.3",
     "@emotion/cache": "11.10.3",
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
