@@ -65,3 +65,7 @@ Bitflow is maintained by [OpenPatch](https://openpatch.org), an organization for
 Special thanks to the [University of Duisburg-Essen](https://uni-due.de) and the [Chair of Computer Science Education](https://www.ddi.wiwi.uni-due.de/) for supporting the development of this library.
 
 Another huge shoutout to [webkid](https://webkid.io/) for developing and maintaining [React Flow](https://github.com/wbkd/react-flow/). This library is the core of Bitflow.
+
+We also like to thank [Vercel](https://vercel.com) for hosting our documentation.
+
+[![Vercel](https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg)](https://vercel.com?utm_source=openpatch&utm_campaign=oss)
