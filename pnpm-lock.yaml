@@ -16,7 +16,7 @@ importers:
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
       '@vocab/cli': 1.2.0
-      chalk: 5.1.0
+      chalk: 5.1.2
       chokidar: 3.5.3
       cross-env: 7.0.3
       csstype: 3.1.1
@@ -57,7 +57,7 @@ importers:
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
       '@vocab/cli': 1.2.0
-      chalk: 5.1.0
+      chalk: 5.1.2
       chokidar: 3.5.3
       cross-env: 7.0.3
       esbuild: 0.15.5
@@ -3978,8 +3978,8 @@ packages:
       supports-color: 7.2.0
     dev: true
 
-  /chalk/5.1.0:
-    resolution: {integrity: sha512-56zD4khRTBoIyzUYAFgDDaPhUMN/fC/rySe6aZGqbj/VWiU2eI3l6ZLOtYGFZAV5v02mwPjtpzlrOveJiz5eZQ==}
+  /chalk/5.1.2:
+    resolution: {integrity: sha512-E5CkT4jWURs1Vy5qGJye+XwCkNj7Od3Af7CP6SujMetSMkLs8Do2RWJK5yx1wamHV/op8Rz+9rltjaTQWDnEFQ==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
     dev: true
 
@@ -6381,7 +6381,7 @@ packages:
     resolution: {integrity: sha512-l0x2DvrW294C9uDCoQe1VSU4gf529FkSZ6leBl4TiqZH/e+0R7hSfHQBNut2mNygDgHwvYHfFLn6Oxb3VWj2rA==}
     engines: {node: '>=12'}
     dependencies:
-      chalk: 5.1.0
+      chalk: 5.1.2
       is-unicode-supported: 1.2.0
     dev: true
 
@@ -7354,7 +7354,7 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       bl: 5.0.0
-      chalk: 5.1.0
+      chalk: 5.1.2
       cli-cursor: 4.0.0
       cli-spinners: 2.6.1
       is-interactive: 2.0.0
@@ -7553,7 +7553,7 @@ packages:
     hasBin: true
     dependencies:
       '@types/liftoff': 4.0.0
-      chalk: 5.1.0
+      chalk: 5.1.2
       interpret: 2.2.0
       liftoff: 4.0.0
       minimist: 1.2.6
