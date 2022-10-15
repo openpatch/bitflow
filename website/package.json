@@ -21,7 +21,7 @@
     "@emotion/cache": "11.10.3",
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
-    "@hookform/resolvers": "2.9.8",
+    "@hookform/resolvers": "2.9.9",
     "@mdx-js/loader": "1.6.22",
     "@mdx-js/react": "1.6.22",
     "@next/mdx": "12.3.1",
