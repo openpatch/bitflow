@@ -975,7 +975,7 @@ importers:
       atob: 2.1.2
       lz-string: 1.4.4
       next: 12.3.1
-      next-seo: 5.5.0
+      next-seo: 5.6.0
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: 7.37.0
@@ -1006,7 +1006,7 @@ importers:
       atob: 2.1.2
       lz-string: 1.4.4
       next: 12.3.1_f4f28c5f6321d4e221346896f53dcb38
-      next-seo: 5.5.0_0661e55d4ddb87f80f0bb2b0a946ce7e
+      next-seo: 5.6.0_0661e55d4ddb87f80f0bb2b0a946ce7e
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.37.0_react@18.2.0
@@ -7107,8 +7107,8 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /next-seo/5.5.0_0661e55d4ddb87f80f0bb2b0a946ce7e:
-    resolution: {integrity: sha512-5ouBHFtx8YrSDW44lj0qIEQ+oMcz6stgoITB+SqHUZbhgizoJsyLmq73gJ0lxtEKpcN8vG2QgRIJfdb8OAPChw==}
+  /next-seo/5.6.0_0661e55d4ddb87f80f0bb2b0a946ce7e:
+    resolution: {integrity: sha512-6o7OJq+/V7ZrijayG94BvNOYLQg9xQp0OAwLpA5kdlSei3mYsVbSB32UBIqSxT6uqRf55Jmd56ScG65IDnJShw==}
     peerDependencies:
       next: ^8.1.1-canary.54 || >=9.0.0
       react: '>=16.0.0'
