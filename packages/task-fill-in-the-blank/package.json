@@ -44,7 +44,7 @@
     "@hookform/resolvers": "^2.9.7",
     "immer": "^9.0.15",
     "react-markdown": "^6.0.3",
-    "remark-gfm": "^1.0.0"
+    "remark-gfm": "^3.0.0"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
