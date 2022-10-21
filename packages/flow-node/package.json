@@ -40,7 +40,7 @@
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly"
   },
   "dependencies": {
-    "react-flow-renderer": "^9.7.2"
+    "react-flow-renderer": "^10.0.0"
   },
   "peerDependencies": {
     "@emotion/cache": "11.x",
