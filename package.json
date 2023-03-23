@@ -17,7 +17,7 @@
     "website:start": "pnpm --filter website start"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.4.7",
+    "@changesets/changelog-github": "0.4.8",
     "@changesets/cli": "2.25.0",
     "@emotion/cache": "11.10.3",
     "@emotion/react": "11.10.4",
