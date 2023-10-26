@@ -1,1 +1,32 @@
-{}
+{
+  "checkpoint": {
+    "message": "Checkpoint"
+  },
+  "checkpoint-text": {
+    "message": "You reached a checkpoint and can not go back to a previous task."
+  },
+  "continue": {
+    "message": "Continue"
+  },
+  "input": {
+    "message": "Input"
+  },
+  "next": {
+    "message": "Next"
+  },
+  "refresh": {
+    "message": "Refresh"
+  },
+  "synchronize": {
+    "message": "Synchronize"
+  },
+  "synchronize-text": {
+    "message": "Wait until the next node is unlocked."
+  },
+  "task": {
+    "message": "Task"
+  },
+  "title": {
+    "message": "Title"
+  }
+}

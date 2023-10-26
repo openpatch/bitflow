@@ -1,1 +1,98 @@
-{}
+{
+  "add-pattern": {
+    "message": "Add Pattern"
+  },
+  "answers": {
+    "message": "Answers"
+  },
+  "delete-pattern": {
+    "message": "Delete"
+  },
+  "description": {
+    "message": "A task bit allowing to create fill in the blank texts. The text can be written in Markdown. The strike-through syntax will create a blank. The answers of a user can be automatically evaluated, if you provide regular expressions for the blanks. You can also provide feedback by using regular expression, as well."
+  },
+  "error": {
+    "message": "Error"
+  },
+  "example.blank.a": {
+    "message": "[Bb]itflow"
+  },
+  "example.blank.a.feedback.message": {
+    "message": "How is this library called?"
+  },
+  "example.blank.a.feedback.pattern": {
+    "message": "^(?![Bb]itflow).*$"
+  },
+  "example.blank.b": {
+    "message": "[Aa]ssessments|[Tt]ests"
+  },
+  "example.instruction": {
+    "message": "Complete the sentence!"
+  },
+  "example.textWithBlanks": {
+    "message": "~~a~~ is a library for creating and conducting flow-based ~~b~~."
+  },
+  "feedback-for-blank": {
+    "message": "Feedback for {blank}"
+  },
+  "info": {
+    "message": "Info"
+  },
+  "instruction": {
+    "message": "Instruction"
+  },
+  "message": {
+    "message": "Message"
+  },
+  "statistic-most-frequent-answers": {
+    "message": "Most frequent answers"
+  },
+  "statistic-most-frequent-answers-description": {
+    "message": "Here you see the most frequent answer per blank. If you click on one you will see a ranking of answers for this blank."
+  },
+  "name": {
+    "message": "Fill in the blank"
+  },
+  "pattern": {
+    "message": "Pattern {pattern}"
+  },
+  "pattern-error-duplicate": {
+    "message": "A pattern can not contain duplicates"
+  },
+  "pattern-error-exists": {
+    "message": "This pattern already exists"
+  },
+  "pattern-error-invalid": {
+    "message": "Not a valid pattern"
+  },
+  "pattern-for-blank": {
+    "message": "Pattern for {blank}"
+  },
+  "pattern-regex": {
+    "message": "Pattern"
+  },
+  "pattern-regex-helper-text": {
+    "message": "You can use a regular expression"
+  },
+  "patterns": {
+    "message": "Patterns"
+  },
+  "severity": {
+    "message": "Severity"
+  },
+  "success": {
+    "message": "Success"
+  },
+  "text-with-blanks": {
+    "message": "Text with blanks"
+  },
+  "text-with-blanks-helper-text": {
+    "message": "A blank can be defined like so: ~~ID~~. Markdown is supported, but blanks do not work in advanced sections like code blocks."
+  },
+  "up": {
+    "message": "Up"
+  },
+  "warning": {
+    "message": "Warning"
+  }
+}
