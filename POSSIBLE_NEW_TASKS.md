@@ -51,9 +51,15 @@ Present items in a shuffled list and ask the learner to put them in the
 correct order. Useful for algorithms, historical timelines, workflow steps,
 and scientific processes.
 
-The answer is an ordered array of stable item IDs. Provide drag-and-drop
-reordering plus keyboard move-up/move-down controls. Support exact-order and
-partial-credit scoring.
+Authors may optionally enable indentation, configure the target indentation
+level for each item, and set a maximum nesting depth. This supports outlining
+processes, nested concepts, and structured pseudocode without requiring a
+code-specific Parsons puzzle.
+
+The answer is an ordered array of `{ itemId, indentation? }` entries. Provide
+drag-and-drop reordering/indenting plus keyboard move-up/move-down and
+indent/outdent controls. Support exact-order, indentation, and partial-credit
+scoring independently.
 
 ## Matching Pairs
 
