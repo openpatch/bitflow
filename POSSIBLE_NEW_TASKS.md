@@ -102,11 +102,65 @@ automatically graded correctly.
 Store the full text answer and rubric outcomes in the raw attempt report so
 an external reviewer or reporting component can display it.
 
+## Crossword Puzzle
+
+**Suggested type:** `task-crossword`
+
+Present a crossword grid with across/down clues. Authors provide a fixed grid
+shape, numbered clue list, and answers; the component derives intersections
+from the grid and validates that every answer fits before publishing.
+
+The learner answer is a map of cell coordinate to entered letter, optionally
+including which clues have been checked. Evaluate each clue and the completed
+grid; support immediate-feedback and submit-only modes without exposing
+answers before the configured evaluation point.
+
+The grid must be fully keyboard operable: arrow keys move between cells,
+Tab moves between clues, and the current clue is announced. Provide a
+clue-list input alternative for screen readers and small screens.
+
+## Parsons Puzzle
+
+**Suggested type:** `task-parsons-puzzle`
+
+Ask the learner to arrange shuffled code lines into the correct order, with
+optional indentation. This is a specialized, code-aware form of ordering for
+programming assessments.
+
+Authors configure code lines with stable IDs, the target order, indentation
+level, language for syntax highlighting, and optional distractor lines. The
+learner answer is an ordered list of `{ lineId, indentation }` entries.
+
+Evaluate line order and indentation separately to support partial credit and
+specific feedback. Provide drag-and-drop, keyboard move controls, and an
+accessible text/list representation; never require the learner to drag with
+a pointer. Render code as text, never execute it.
+
+## Find the Words
+
+**Suggested type:** `task-word-search`
+
+Present a word-search grid where learners find configured words horizontally,
+vertically, diagonally, and optionally backwards. Authors provide the letter
+grid, target words, and the exact normalized cell paths for each word.
+
+The learner answer is a set of selected cell paths/word IDs. The component
+evaluates paths rather than relying only on the displayed letters, which
+allows duplicate words and deterministic reporting.
+
+Support pointer/touch selection plus a keyboard alternative: choose a target
+word, then enter/select its start and end cells (or choose its cell path from
+a grid navigation mode). Announce found words and remaining targets without
+using color as the only feedback.
+
 ## Suggested Priority
 
 1. Drag and Drop Hotspots
 2. Ordering / Sequencing
 3. Matching Pairs
-4. Numeric / Expression Answer
-5. Image / Diagram Annotation
-6. Short Free-Text With Rubric
+4. Parsons Puzzle
+5. Crossword Puzzle
+6. Find the Words
+7. Numeric / Expression Answer
+8. Image / Diagram Annotation
+9. Short Free-Text With Rubric
