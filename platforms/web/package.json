@@ -1,0 +1,22 @@
+{
+  "name": "web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "lint": "tsc --noEmit",
+    "preview": "vite preview",
+    "test": "echo \"no tests\""
+  },
+  "dependencies": {
+    "@bitflow/task-choice": "workspace:*",
+    "@bitflow/web-component": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "typescript": "^7.0.2",
+    "vite": "^7.3.6"
+  }
+}

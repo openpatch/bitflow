@@ -1,0 +1,280 @@
+[
+  {
+    "schemaVersion": 1,
+    "flowId": "minimal",
+    "flowSchemaVersion": 1,
+    "attemptId": "attempt-group-1",
+    "status": "completed",
+    "subject": {
+      "id": "learner-1",
+      "label": "Alex"
+    },
+    "nodeReports": [
+      {
+        "nodeId": "question",
+        "bitType": "task-choice",
+        "answer": {
+          "selected": [
+            "c-2",
+            "c-7"
+          ]
+        },
+        "result": {
+          "state": "correct",
+          "score": {
+            "earned": 1,
+            "possible": 1
+          },
+          "allowRetry": true,
+          "detail": {
+            "choices": {
+              "c-2": "correct",
+              "c-4": "correct",
+              "c-7": "correct",
+              "c-9": "correct"
+            }
+          }
+        },
+        "tries": 1,
+        "elapsedMs": 240000
+      }
+    ],
+    "score": {
+      "earned": 1,
+      "possible": 1
+    },
+    "startedAt": "2026-03-04T09:00:00.000Z",
+    "completedAt": "2026-03-04T09:06:00.000Z"
+  },
+  {
+    "schemaVersion": 1,
+    "flowId": "minimal",
+    "flowSchemaVersion": 1,
+    "attemptId": "attempt-group-2",
+    "status": "completed",
+    "subject": {
+      "id": "learner-2",
+      "label": "Bo"
+    },
+    "nodeReports": [
+      {
+        "nodeId": "question",
+        "bitType": "task-choice",
+        "answer": {
+          "selected": [
+            "c-2",
+            "c-7"
+          ]
+        },
+        "result": {
+          "state": "correct",
+          "score": {
+            "earned": 1,
+            "possible": 1
+          },
+          "allowRetry": true,
+          "detail": {
+            "choices": {
+              "c-2": "correct",
+              "c-4": "correct",
+              "c-7": "correct",
+              "c-9": "correct"
+            }
+          }
+        },
+        "tries": 1,
+        "elapsedMs": 240000
+      }
+    ],
+    "score": {
+      "earned": 1,
+      "possible": 1
+    },
+    "startedAt": "2026-03-04T09:10:00.000Z",
+    "completedAt": "2026-03-04T09:16:00.000Z"
+  },
+  {
+    "schemaVersion": 1,
+    "flowId": "minimal",
+    "flowSchemaVersion": 1,
+    "attemptId": "attempt-group-3",
+    "status": "completed",
+    "subject": {
+      "id": "learner-3",
+      "label": "Cam"
+    },
+    "nodeReports": [
+      {
+        "nodeId": "question",
+        "bitType": "task-choice",
+        "answer": {
+          "selected": [
+            "c-2",
+            "c-7"
+          ]
+        },
+        "result": {
+          "state": "correct",
+          "score": {
+            "earned": 1,
+            "possible": 1
+          },
+          "allowRetry": true,
+          "detail": {
+            "choices": {
+              "c-2": "correct",
+              "c-4": "correct",
+              "c-7": "correct",
+              "c-9": "correct"
+            }
+          }
+        },
+        "tries": 1,
+        "elapsedMs": 240000
+      }
+    ],
+    "score": {
+      "earned": 1,
+      "possible": 1
+    },
+    "startedAt": "2026-03-04T09:20:00.000Z",
+    "completedAt": "2026-03-04T09:26:00.000Z"
+  },
+  {
+    "schemaVersion": 1,
+    "flowId": "minimal",
+    "flowSchemaVersion": 1,
+    "attemptId": "attempt-group-4",
+    "status": "completed",
+    "subject": {
+      "id": "learner-4",
+      "label": "Dee"
+    },
+    "nodeReports": [
+      {
+        "nodeId": "question",
+        "bitType": "task-choice",
+        "answer": {
+          "selected": [
+            "c-2",
+            "c-7"
+          ]
+        },
+        "result": {
+          "state": "correct",
+          "score": {
+            "earned": 1,
+            "possible": 1
+          },
+          "allowRetry": true,
+          "detail": {
+            "choices": {
+              "c-2": "correct",
+              "c-4": "correct",
+              "c-7": "correct",
+              "c-9": "correct"
+            }
+          }
+        },
+        "tries": 1,
+        "elapsedMs": 240000
+      }
+    ],
+    "score": {
+      "earned": 1,
+      "possible": 1
+    },
+    "startedAt": "2026-03-04T09:30:00.000Z",
+    "completedAt": "2026-03-04T09:36:00.000Z"
+  },
+  {
+    "schemaVersion": 1,
+    "flowId": "minimal",
+    "flowSchemaVersion": 1,
+    "attemptId": "attempt-group-5",
+    "status": "completed",
+    "subject": {
+      "id": "learner-5",
+      "label": "Eli"
+    },
+    "nodeReports": [
+      {
+        "nodeId": "question",
+        "bitType": "task-choice",
+        "answer": {
+          "selected": [
+            "c-2"
+          ]
+        },
+        "result": {
+          "state": "wrong",
+          "score": {
+            "earned": 0,
+            "possible": 1
+          },
+          "allowRetry": true,
+          "detail": {
+            "choices": {
+              "c-2": "correct",
+              "c-4": "correct",
+              "c-7": "wrong",
+              "c-9": "correct"
+            }
+          }
+        },
+        "tries": 1,
+        "elapsedMs": 240000
+      }
+    ],
+    "score": {
+      "earned": 0,
+      "possible": 1
+    },
+    "startedAt": "2026-03-04T09:40:00.000Z",
+    "completedAt": "2026-03-04T09:46:00.000Z"
+  },
+  {
+    "schemaVersion": 1,
+    "flowId": "minimal",
+    "flowSchemaVersion": 1,
+    "attemptId": "attempt-group-6",
+    "status": "completed",
+    "subject": {
+      "id": "learner-6",
+      "label": "Fay"
+    },
+    "nodeReports": [
+      {
+        "nodeId": "question",
+        "bitType": "task-choice",
+        "answer": {
+          "selected": []
+        },
+        "result": {
+          "state": "wrong",
+          "score": {
+            "earned": 0,
+            "possible": 1
+          },
+          "allowRetry": true,
+          "detail": {
+            "choices": {
+              "c-2": "wrong",
+              "c-4": "correct",
+              "c-7": "wrong",
+              "c-9": "correct"
+            }
+          }
+        },
+        "tries": 1,
+        "elapsedMs": 240000
+      }
+    ],
+    "score": {
+      "earned": 0,
+      "possible": 1
+    },
+    "startedAt": "2026-03-04T09:50:00.000Z",
+    "completedAt": "2026-03-04T09:56:00.000Z"
+  }
+]

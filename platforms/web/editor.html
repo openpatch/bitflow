@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Author an assessment — bitflow</title>
+    <link rel="stylesheet" href="./src/demo.css" />
+  </head>
+  <body>
+    <header>
+      <h1><a href="./index.html">bitflow</a> / author an assessment</h1>
+    </header>
+
+    <main>
+      <p class="lede">
+        Add a step from the palette, fill in its form, and press Preview to take
+        it exactly as a learner would — the preview mounts the same component
+        they get.
+      </p>
+
+      <div class="demo demo-tall">
+        <bitflow-flow-editor id="editor" locale="en"></bitflow-flow-editor>
+      </div>
+
+      <div class="row">
+        <button class="plain" id="download">Download the .bitflow file</button>
+        <button class="plain" id="validate">Check it</button>
+      </div>
+
+      <h2>What the page hears</h2>
+      <pre class="log" id="log"></pre>
+    </main>
+
+    <script type="module" src="./src/editor.ts"></script>
+  </body>
+</html>

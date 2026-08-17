@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bitflow — demos</title>
+    <link rel="stylesheet" href="./src/demo.css" />
+  </head>
+  <body>
+    <header>
+      <h1>bitflow</h1>
+      <span class="lede">Assessments as web components.</span>
+    </header>
+
+    <main>
+      <p class="lede">
+        Each page below is plain HTML with one script tag — no framework, no
+        build step of its own. View source on any of them.
+      </p>
+
+      <ul class="cards">
+        <li>
+          <a href="./flow.html">
+            <strong>Take an assessment</strong>
+            <p>
+              <code>&lt;bitflow-flow&gt;</code>, with the page saving progress to
+              IndexedDB and resuming from it.
+            </p>
+          </a>
+        </li>
+        <li>
+          <a href="./editor.html">
+            <strong>Author one</strong>
+            <p><code>&lt;bitflow-flow-editor&gt;</code>, with a live preview.</p>
+          </a>
+        </li>
+        <li>
+          <a href="./bit.html">
+            <strong>One task on its own</strong>
+            <p>
+              Just <code>&lt;bitflow-task-choice&gt;</code> — no flow, no editor,
+              nothing else loaded.
+            </p>
+          </a>
+        </li>
+        <li>
+          <a href="./report.html">
+            <strong>Results</strong>
+            <p>
+              <code>&lt;bitflow-report&gt;</code> and
+              <code>&lt;bitflow-group-report&gt;</code>, computed in the browser.
+            </p>
+          </a>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>

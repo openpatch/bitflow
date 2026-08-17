@@ -837,6 +837,25 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2
 
+  platforms/web:
+    dependencies:
+      '@bitflow/task-choice':
+        specifier: workspace:*
+        version: link:../../packages/bits/task-choice
+      '@bitflow/web-component':
+        specifier: workspace:*
+        version: link:../../packages/web-component
+    devDependencies:
+      '@types/node':
+        specifier: ^26.1.2
+        version: 26.2.0
+      typescript:
+        specifier: ^7.0.2
+        version: 7.0.2
+      vite:
+        specifier: ^7.3.6
+        version: 7.3.6(@types/node@26.2.0)
+
 packages:
 
   '@acemir/cssom@0.9.31':

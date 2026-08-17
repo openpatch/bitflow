@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results — bitflow</title>
+    <link rel="stylesheet" href="./src/demo.css" />
+  </head>
+  <body>
+    <header>
+      <h1><a href="./index.html">bitflow</a> / results</h1>
+    </header>
+
+    <main>
+      <p class="lede">
+        This page imports only the report elements. Neither the assessment
+        runtime nor any task type is loaded — the statistics are computed here in
+        the browser from the result files, and nothing is sent anywhere. Open the
+        network tab and see.
+      </p>
+
+      <h2>One learner</h2>
+      <div class="demo">
+        <bitflow-report id="report" locale="en"></bitflow-report>
+      </div>
+
+      <h2>A class</h2>
+      <div class="demo">
+        <bitflow-group-report id="group" locale="en"></bitflow-group-report>
+      </div>
+
+      <div class="row">
+        <label>
+          Load your own result files:
+          <input id="files" type="file" accept=".json" multiple />
+        </label>
+      </div>
+    </main>
+
+    <script type="module" src="./src/report.ts"></script>
+  </body>
+</html>

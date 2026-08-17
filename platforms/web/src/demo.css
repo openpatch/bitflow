@@ -1,0 +1,118 @@
+/* Chrome for the demo pages themselves. The components bring their own
+   styling; this is only the page around them. */
+:root {
+  color-scheme: light;
+  --page: #f5f5f5;
+  --ink: #242428;
+  --muted: #3c3c3c;
+  --line: #d6d6d6;
+  --brand: #017460;
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--page);
+  line-height: 1.5;
+}
+
+header,
+main,
+footer {
+  max-width: 940px;
+  margin-inline: auto;
+  padding: 16px;
+}
+
+header {
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 16px;
+}
+
+header a {
+  color: var(--brand);
+}
+
+h1 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.lede {
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.demo {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-block: 16px;
+}
+
+.demo-tall {
+  height: 70vh;
+}
+
+.demo-tall > * {
+  height: 100%;
+}
+
+.log {
+  font-family: "Ubuntu Mono", Menlo, monospace;
+  font-size: 13px;
+  background: #242428;
+  color: #f5f5f5;
+  border-radius: 8px;
+  padding: 12px;
+  max-height: 220px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+button.plain {
+  font: inherit;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 2px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+}
+
+.cards {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  padding: 0;
+  list-style: none;
+}
+
+.cards a {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cards a:hover {
+  border-color: var(--brand);
+}
+
+.cards strong {
+  color: var(--brand);
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>One task on its own — bitflow</title>
+    <link rel="stylesheet" href="./src/demo.css" />
+  </head>
+  <body>
+    <header>
+      <h1><a href="./index.html">bitflow</a> / one task on its own</h1>
+    </header>
+
+    <main>
+      <p class="lede">
+        This page imports <code>@bitflow/task-choice</code> and nothing else. No
+        flow, no editor, no other task type — one import defines the element and
+        it works.
+      </p>
+
+      <div class="demo" style="padding: 16px">
+        <bitflow-task-choice id="task" locale="en"></bitflow-task-choice>
+      </div>
+
+      <h2>What the page hears</h2>
+      <pre class="log" id="log"></pre>
+
+      <h2>All of the code</h2>
+      <pre class="log">import "@bitflow/task-choice";
+
+const task = document.querySelector("bitflow-task-choice");
+task.data = { /* the question and its choices */ };
+
+task.addEventListener("bitflow-answerchange", (e) =&gt; e.detail.answer);
+task.addEventListener("bitflow-evaluated", (e) =&gt; e.detail.result);</pre>
+    </main>
+
+    <script type="module" src="./src/bit.ts"></script>
+  </body>
+</html>

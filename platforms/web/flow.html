@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Take an assessment — bitflow</title>
+    <link rel="stylesheet" href="./src/demo.css" />
+  </head>
+  <body>
+    <header>
+      <h1><a href="./index.html">bitflow</a> / take an assessment</h1>
+    </header>
+
+    <main>
+      <p class="lede">
+        The page loads a <code>.bitflow</code> file, saves every durable change
+        to IndexedDB, and resumes from what it saved when you come back. Reload
+        halfway through and see.
+      </p>
+
+      <div class="demo">
+        <bitflow-flow id="flow" locale="en"></bitflow-flow>
+      </div>
+
+      <div class="row">
+        <button class="plain" id="reset">Start over</button>
+        <button class="plain" id="save">Save now</button>
+        <label>
+          Assessment:
+          <select id="which">
+            <option value="/minimal.bitflow">A very short quiz</option>
+            <option value="/all-initial-bits.bitflow">Every kind of task</option>
+          </select>
+        </label>
+      </div>
+
+      <h2>What the page hears</h2>
+      <pre class="log" id="log"></pre>
+    </main>
+
+    <script type="module" src="./src/flow.ts"></script>
+  </body>
+</html>
