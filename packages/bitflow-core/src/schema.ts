@@ -26,6 +26,22 @@ export type Locale = z.infer<typeof LocaleSchema>;
 // `split-answer` / `split-result` / `split-points` nodes; an edge-level
 // condition says the same thing with one concept instead of four.
 
+/**
+ * How a task turned out. Declared here rather than with the rest of the result
+ * types because conditions count outcomes, and the vocabulary has to exist
+ * before they can name one.
+ */
+export const BIT_RESULT_STATES = [
+  "correct",
+  "wrong",
+  /** Not scorable, e.g. a free-text answer nobody graded. */
+  "unknown",
+  /** Needs a human grader. */
+  "manual",
+] as const;
+export const BitResultStateSchema = z.enum(BIT_RESULT_STATES);
+export type BitResultState = z.infer<typeof BitResultStateSchema>;
+
 /** A value pulled out of the running attempt for a condition to compare. */
 export const ValueRefSchema = z.union([
   z.object({
@@ -48,6 +64,19 @@ export const ValueRefSchema = z.union([
   z.object({ kind: z.literal("score") }),
   /** Earned/possible so far, in `[0, 1]`. `0` when nothing is scorable yet. */
   z.object({ kind: z.literal("scoreRatio") }),
+  /**
+   * How many tasks so far ended in a given outcome — "at least three correct"
+   * being the branch a teacher reaches for most often.
+   *
+   * Counts tasks, not points: a partly-credited answer counts once, and only
+   * if it reached the state being counted. That is what "how many did they get
+   * right" means to the person writing the branch, whereas `score` is the
+   * measure to use when partial credit should carry weight.
+   */
+  z.object({
+    kind: z.literal("resultCount"),
+    state: BitResultStateSchema.default("correct"),
+  }),
 ]);
 export type ValueRef = z.infer<typeof ValueRefSchema>;
 
@@ -196,17 +225,6 @@ export const EvaluationSchema = z.object({
   showFeedback: z.boolean().default(true),
 });
 export type Evaluation = z.infer<typeof EvaluationSchema>;
-
-export const BIT_RESULT_STATES = [
-  "correct",
-  "wrong",
-  /** Not scorable, e.g. a free-text answer nobody graded. */
-  "unknown",
-  /** Needs a human grader. */
-  "manual",
-] as const;
-export const BitResultStateSchema = z.enum(BIT_RESULT_STATES);
-export type BitResultState = z.infer<typeof BitResultStateSchema>;
 
 export const BitResultSchema = z.object({
   state: BitResultStateSchema,

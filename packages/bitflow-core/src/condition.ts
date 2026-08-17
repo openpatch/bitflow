@@ -46,6 +46,12 @@ export const resolveValueRef = (
       return context.score.possible === 0
         ? 0
         : context.score.earned / context.score.possible;
+    case "resultCount":
+      // Only tasks the learner has actually reached are in `results`, so this
+      // counts what has happened rather than what the flow contains.
+      return Object.values(context.results).filter(
+        (result) => result.state === ref.state,
+      ).length;
   }
 };
 

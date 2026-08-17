@@ -196,6 +196,76 @@ describe("<Flow>", () => {
     });
   });
 
+  describe("branching on how many were correct", () => {
+    /**
+     * Two questions, then a fork: get both right and the flow moves on to the
+     * harder path, otherwise it goes to the easier one.
+     */
+    const branching = doc(
+      [
+        node("q1", "test-task", { prompt: "One?", correct: "a" }),
+        node("q2", "test-task", { prompt: "Two?", correct: "b" }),
+        node("easy", "test-content", { text: "Let us go back a step." }),
+        node("hard", "test-content", { text: "Ready for something harder." }),
+        node("end", "test-end"),
+      ],
+      [
+        edge("q1", "q2"),
+        edge("q2", "easy"),
+        edge("q2", "hard", {
+          id: "q2->hard",
+          condition: {
+            type: "compare",
+            left: { kind: "resultCount", state: "correct" },
+            op: "gte",
+            right: 2,
+          },
+        }),
+        edge("easy", "end"),
+        edge("hard", "end"),
+      ],
+    );
+
+    const answer = async (
+      user: ReturnType<typeof userEvent.setup>,
+      prompt: string,
+      text: string,
+    ) => {
+      await user.type(screen.getByLabelText(prompt), text);
+      await user.click(screen.getByRole("button", { name: "Check" }));
+      await user.click(screen.getByRole("button", { name: "Next" }));
+    };
+
+    it("takes the harder path once enough are right", async () => {
+      const user = userEvent.setup();
+      setup({ flow: branching });
+
+      await answer(user, "One?", "a");
+      await answer(user, "Two?", "b");
+
+      expect(screen.getByText("Ready for something harder.")).toBeDefined();
+    });
+
+    it("takes the easier path when they are not", async () => {
+      const user = userEvent.setup();
+      setup({ flow: branching });
+
+      await answer(user, "One?", "a");
+      await answer(user, "Two?", "wrong");
+
+      expect(screen.getByText("Let us go back a step.")).toBeDefined();
+    });
+
+    it("counts only what the learner has reached", async () => {
+      const user = userEvent.setup();
+      const { onStateChange } = setup({ flow: branching });
+
+      await answer(user, "One?", "a");
+      // One correct so far, and the threshold is two.
+      expect(lastSnapshot(onStateChange).currentNodeId).toBe("q2");
+    });
+  });
+
   describe("confidence and reasoning", () => {
     const asking = doc(simpleFlow.nodes, simpleFlow.edges, {
       askConfidence: true,

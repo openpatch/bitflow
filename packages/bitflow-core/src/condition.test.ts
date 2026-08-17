@@ -15,6 +15,19 @@ const context: ConditionContext = {
   score: { earned: 3, possible: 4 },
 };
 
+/** Four answered tasks: two right, one wrong, one still to be marked. */
+const cohortContext: ConditionContext = {
+  answers: {},
+  results: {
+    q1: { state: "correct" },
+    q2: { state: "wrong" },
+    q3: { state: "correct" },
+    q4: { state: "manual" },
+  },
+  tries: {},
+  score: { earned: 2, possible: 3 },
+};
+
 const check = (condition: Condition) => evaluateCondition(condition, context);
 
 describe("getPath", () => {
@@ -47,6 +60,46 @@ describe("resolveValueRef", () => {
   it("exposes the running score", () => {
     expect(resolveValueRef({ kind: "score" }, context)).toBe(3);
     expect(resolveValueRef({ kind: "scoreRatio" }, context)).toBe(0.75);
+  });
+
+  it("counts how many tasks ended in a given state", () => {
+    expect(
+      resolveValueRef({ kind: "resultCount", state: "correct" }, cohortContext),
+    ).toBe(2);
+    expect(
+      resolveValueRef({ kind: "resultCount", state: "wrong" }, cohortContext),
+    ).toBe(1);
+    expect(
+      resolveValueRef({ kind: "resultCount", state: "manual" }, cohortContext),
+    ).toBe(1);
+    expect(
+      resolveValueRef({ kind: "resultCount", state: "unknown" }, cohortContext),
+    ).toBe(0);
+  });
+
+  it("counts tasks rather than points", () => {
+    // Partial credit moves the score without moving the count: one correct
+    // answer is one correct answer.
+    const partial: ConditionContext = {
+      ...cohortContext,
+      score: { earned: 2.5, possible: 4 },
+    };
+    expect(
+      resolveValueRef({ kind: "resultCount", state: "correct" }, partial),
+    ).toBe(2);
+    expect(resolveValueRef({ kind: "score" }, partial)).toBe(2.5);
+  });
+
+  it("counts nothing before anything has been answered", () => {
+    const fresh: ConditionContext = {
+      answers: {},
+      results: {},
+      tries: {},
+      score: { earned: 0, possible: 0 },
+    };
+    expect(
+      resolveValueRef({ kind: "resultCount", state: "correct" }, fresh),
+    ).toBe(0);
   });
 
   it("reports a ratio of zero when nothing is scorable yet", () => {
@@ -141,6 +194,45 @@ describe("evaluateCondition", () => {
         right: "correct",
       }),
     ).toBe(false);
+  });
+});
+
+describe("branching on how many were correct", () => {
+  const atLeast = (count: number): Condition => ({
+    type: "compare",
+    left: { kind: "resultCount", state: "correct" },
+    op: "gte",
+    right: count,
+  });
+
+  it("takes the branch once enough are right", () => {
+    expect(evaluateCondition(atLeast(2), cohortContext)).toBe(true);
+    expect(evaluateCondition(atLeast(3), cohortContext)).toBe(false);
+  });
+
+  it("combines with the rest of the model", () => {
+    // "At least two correct and they have not needed a second try on q1."
+    expect(
+      evaluateCondition(
+        {
+          type: "and",
+          conditions: [
+            atLeast(2),
+            {
+              type: "compare",
+              left: { kind: "tries", nodeId: "q1" },
+              op: "lte",
+              right: 1,
+            },
+          ],
+        },
+        cohortContext,
+      ),
+    ).toBe(true);
+  });
+
+  it("refers to no node, so it never trips the reference check", () => {
+    expect(conditionNodeIds(atLeast(2))).toEqual([]);
   });
 });
 

@@ -507,7 +507,10 @@ from the text above, and why.
    Portals were purely a canvas-tidiness device and are replaced by ordinary
    edges. `split-random` is dropped outright: no listed bit needs it, and
    random routing makes an attempt non-reproducible from its snapshot.
-   Conditions gained `and`/`or`/`not` nesting, which the old flat model lacked.
+   Conditions gained `and`/`or`/`not` nesting, which the old flat model lacked,
+   and a `resultCount` value so a branch can read "how many have they got right
+   so far" — the threshold branch a teacher reaches for most often, and one the
+   old model could not express at all.
 3. **`AttemptSnapshot` v1 carries `history`, `elapsedMs` and `enteredAt`**
    beyond the fields listed in `IMPLEMENTATION_HANDOFF.md` §2. "Go back" cannot
    be derived by walking edges backwards once branching is condition-driven,

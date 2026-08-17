@@ -4,10 +4,13 @@ bitflow as custom elements, usable from any framework or from plain HTML.
 
 ```html
 <script type="module" src="./node_modules/@bitflow/web-component/dist/index.js"></script>
-<link rel="stylesheet" href="./node_modules/@bitflow/web-component/dist/index.css" />
 
 <bitflow-flow src="./assessment.bitflow"></bitflow-flow>
 ```
+
+There is no stylesheet to link: each package carries its own CSS and adds it on
+import. A flow resolves its task types at runtime, so no page could know which
+stylesheets to include anyway.
 
 Four entry points, so a page pays only for what it uses:
 
@@ -110,6 +113,51 @@ type BitflowError = {
 
 An invalid or mismatched `attempt` emits `bitflow-error` and leaves the current
 attempt untouched. It is never partially restored.
+
+## Branching
+
+An edge without a condition is always followed. One with a condition is
+followed only when it holds, and conditional edges are considered before
+unconditional ones — so an edge with no condition acts as the "otherwise"
+branch however it was drawn.
+
+A condition compares one value out of the running attempt:
+
+| Value | What it is |
+| --- | --- |
+| `{ kind: "result", nodeId, path: "state" }` | How one task turned out. |
+| `{ kind: "answer", nodeId, path }` | What the learner answered, at a dot path. |
+| `{ kind: "tries", nodeId }` | How many attempts one task took. |
+| `{ kind: "resultCount", state }` | **How many tasks ended in that outcome** — `state` defaults to `"correct"`. |
+| `{ kind: "score" }` | Points earned so far. |
+| `{ kind: "scoreRatio" }` | Earned over possible, in `[0, 1]`. |
+
+Compared with `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `notIn` or `isTrue`,
+and combined with `and`, `or` and `not`.
+
+"Once they have at least three right, move on":
+
+```json
+{
+  "id": "to-harder",
+  "source": "q3",
+  "target": "harder",
+  "condition": {
+    "type": "compare",
+    "left": { "kind": "resultCount", "state": "correct" },
+    "op": "gte",
+    "right": 3
+  }
+}
+```
+
+`resultCount` counts *tasks*, not points: a partly-credited answer counts once,
+and only if it reached the outcome being counted. Use `score` when partial
+credit should carry weight. It counts only the tasks the learner has actually
+reached, so a branch can fire mid-flow.
+
+The editor builds both the single-task and the counting form through dropdowns;
+anything more involved is written in the `.bitflow` file and shown read-only.
 
 ## Saving and resuming an attempt
 
