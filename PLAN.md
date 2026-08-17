@@ -220,6 +220,51 @@ the simplest option at every fork:
   the "each bit is a standalone web component" and "lazy loading" goals,
   prefer the simpler shape.
 
+## Authoring and Learner Experience Principle
+
+Every task must be **straightforward for a teacher to author** and **calm,
+clear, and visually appealing for a student to complete**. The goal is a
+polished educational tool, not a game UI or a configuration-heavy developer
+tool.
+
+- **Teacher-first authoring:** The flow editor presents a short labelled form
+  for each bit, with sensible defaults, inline examples, validation errors
+  next to the relevant field, and a live preview. A teacher should be able to
+  create a useful task without writing JSON or learning implementation
+  concepts. The raw `.bitflow` JSON remains available for advanced use, but
+  must never be the only practical authoring route.
+- **Progressive disclosure:** Show the common settings first (prompt,
+  choices/content, correct answer, feedback). Put uncommon scoring,
+  accessibility, layout, and advanced evaluation settings behind an
+  "Advanced" disclosure with documented defaults. Do not expose options that
+  are not meaningful for the selected task mode.
+- **Authoring guardrails:** Generate stable IDs, normalized image coordinates,
+  grid positions, and derived structures automatically where possible. Validate
+  references, duplicate IDs, impossible geometries, incomplete correct
+  answers, and browser-only evaluator limits before saving. Provide a
+  human-readable explanation and a one-click/focused route to each invalid
+  field.
+- **Preview as the learner:** Every task editor has an in-place "Preview"
+  action using precisely the same standalone web component and client-side
+  evaluator that learners receive. The VS Code extension's existing preview
+  mode must use this path too; never maintain a separate approximate preview.
+- **Deliberate visual restraint:** Use the shared OpenPatch CSS theme:
+  Montserrat, green as an accent/action color, generous whitespace, readable
+  type, rounded surfaces, restrained shadows, and clear correct/incorrect
+  feedback. Avoid gratuitous gradients, confetti, full-screen animations,
+  noisy illustrations, or a different design language per task. Motion is
+  short, optional, and respects `prefers-reduced-motion`.
+- **Responsive and accessible by default:** A task works well at narrow and
+  wide widths, has a keyboard path, visible focus, semantic labels, and a
+  non-visual/textual alternative when visual/spatial interaction is intrinsic.
+  A task that cannot supply an equivalent interaction (for example a pointer
+  accuracy measurement) must clearly offer an author-configured alternative
+  or `notApplicable` path rather than pretending it is universally accessible.
+- **Concrete acceptance check:** Before a task type is considered complete,
+  test that a teacher unfamiliar with the code can author its normal case
+  through the visual editor, preview it, save valid `.bitflow` JSON, and
+  complete it as a learner without consulting developer documentation.
+
 ## Target Package Layout
 
 ```

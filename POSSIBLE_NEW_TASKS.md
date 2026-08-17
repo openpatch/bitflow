@@ -10,6 +10,12 @@ initial nine bits:
 - Emit a serializable answer/result that can be included in an assessment
   attempt snapshot and report.
 - Be keyboard-accessible and have an equivalent non-pointer interaction.
+- Be authorable through a short teacher-facing form with sensible defaults,
+  inline validation, live learner preview, and advanced settings hidden until
+  needed; raw JSON must not be the only practical authoring path.
+- Use the shared, restrained OpenPatch visual language—clear hierarchy,
+  readable text, whitespace, rounded surfaces, and purposeful feedback—not
+  task-specific game-like decoration or distracting animation.
 - **Evaluate entirely in the browser.** A task must be able to determine its
   result from its authored configuration and learner answer without any
   network request, remote service, server-side code execution, or hidden
