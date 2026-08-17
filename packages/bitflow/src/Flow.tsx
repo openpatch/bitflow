@@ -251,6 +251,7 @@ const FlowBody = ({
         readonly={locked}
         locale={locale}
         onAnswerChange={state.setDraft}
+        attempt={attempt}
       />
 
       {result && (

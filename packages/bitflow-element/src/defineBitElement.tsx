@@ -3,6 +3,7 @@ import {
   getBit,
   resolveLocale,
   translate,
+  type AttemptSnapshot,
   type BitResult,
 } from "@bitflow/core";
 import r2wc from "@r2wc/react-to-web-component";
@@ -19,6 +20,11 @@ export type StandaloneBitProps = {
   result?: BitResult;
   readonly?: boolean;
   locale?: string;
+  /**
+   * A finished or in-progress run, for the bits that summarise one. Only `end`
+   * bits read it; see `BitTaskProps.attempt`.
+   */
+  attempt?: AttemptSnapshot;
   /**
    * Show the element's own check/retry buttons. A host that provides its own
    * (as `<bitflow-flow>`'s shell does) sets this to false.
@@ -67,6 +73,7 @@ export const defineBitElement = (
         result: "json",
         readonly: "boolean",
         locale: "string",
+        attempt: "json",
         controls: "boolean",
       },
     }),
@@ -81,6 +88,7 @@ const StandaloneBitBody = ({
   result: resultProp,
   readonly,
   locale,
+  attempt,
   controls = true,
 }: StandaloneBitProps & { type: string }) => {
   const resolved = resolveLocale(locale);
@@ -146,6 +154,7 @@ const StandaloneBitBody = ({
         readonly={readonly || answered}
         locale={resolved}
         onAnswerChange={onAnswerChange}
+        attempt={attempt}
       />
 
       {result && <BitFeedback result={result} locale={resolved} tries={tries} />}

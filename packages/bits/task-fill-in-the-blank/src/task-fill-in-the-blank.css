@@ -1,0 +1,31 @@
+@import "@bitflow/core/theme.css";
+
+/* The text reads as prose with the inputs sitting in the line, so the sentence
+   stays a sentence. `line-height` is loosened to leave room for the boxes. */
+.bitflow-blank-text {
+  white-space: pre-wrap;
+  line-height: 2.2;
+  margin: 0;
+}
+
+.bitflow-blank-wrapper {
+  display: inline;
+}
+
+.bitflow-blank {
+  display: inline-block;
+  width: auto;
+  min-height: 0;
+  padding: 2px var(--bitflow-space-xxsmall);
+  vertical-align: baseline;
+}
+
+.bitflow-blank-correct {
+  border-color: var(--bitflow-color-correct);
+  background: var(--bitflow-color-correct-surface);
+}
+
+.bitflow-blank-wrong {
+  border-color: var(--bitflow-color-wrong);
+  background: var(--bitflow-color-wrong-surface);
+}

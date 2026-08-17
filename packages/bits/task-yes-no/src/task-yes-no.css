@@ -1,0 +1,17 @@
+@import "@bitflow/core/theme.css";
+
+.bitflow-yes-no {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* Two options side by side rather than stacked: they are short, and the pair
+   reads as one choice that way. */
+.bitflow-yes-no .bitflow-option {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}

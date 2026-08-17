@@ -1,6 +1,6 @@
 import type { z } from "zod";
 import type { Diagnostic } from "./errors";
-import type { BitResult, Locale } from "./schema";
+import type { AttemptSnapshot, BitResult, Locale } from "./schema";
 
 /**
  * A component supplied by a bit package.
@@ -49,6 +49,12 @@ export type BitTaskProps<Data = any, Answer = any> = {
   readonly?: boolean;
   locale: Locale;
   onAnswerChange: (answer: Answer) => void;
+  /**
+   * The run so far, when there is one. Only `end` bits have any use for it —
+   * they summarise the attempt the learner just finished. A bit rendered
+   * standalone has no attempt, so anything reading this must cope without it.
+   */
+  attempt?: AttemptSnapshot;
 };
 
 /** What every bit's author-facing `Form` component is handed. */

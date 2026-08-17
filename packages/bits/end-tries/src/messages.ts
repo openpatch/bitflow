@@ -1,0 +1,48 @@
+import type { Catalogs } from "@bitflow/core";
+
+export const messages: Catalogs = {
+  en: {
+    name: "End",
+    description: "The closing screen, with a summary of how the learner did.",
+    titleLabel: "Heading",
+    markdownLabel: "Closing message",
+    markdownHint: "What the learner reads after finishing. Markdown is supported.",
+    showBreakdownLabel: "Show a summary of each task",
+    showBreakdownHint:
+      "Lists every task with its outcome and how many attempts it took.",
+    showScoreLabel: "Show the score",
+    summaryHeading: "Your answers",
+    score: "{earned} of {possible} points",
+    attempts: "{count} attempt(s)",
+    correct: "Correct",
+    wrong: "Not correct",
+    manual: "Waiting for a teacher",
+    unknown: "Not assessed",
+    noTasks: "This assessment had no tasks to assess.",
+  },
+  de: {
+    name: "Ende",
+    description: "Der Schlussbildschirm mit einer Zusammenfassung.",
+    titleLabel: "Überschrift",
+    markdownLabel: "Schlusstext",
+    markdownHint: "Was am Ende zu lesen ist. Markdown ist möglich.",
+    showBreakdownLabel: "Übersicht über alle Aufgaben zeigen",
+    showBreakdownHint:
+      "Listet jede Aufgabe mit Ergebnis und Anzahl der Versuche auf.",
+    showScoreLabel: "Punktzahl zeigen",
+    summaryHeading: "Deine Antworten",
+    score: "{earned} von {possible} Punkten",
+    attempts: "{count} Versuch(e)",
+    correct: "Richtig",
+    wrong: "Nicht richtig",
+    manual: "Wartet auf eine Lehrkraft",
+    unknown: "Nicht bewertet",
+    noTasks: "Dieser Test enthielt keine zu bewertenden Aufgaben.",
+  },
+  fr: { name: "Fin", description: "L'écran final, avec un récapitulatif." },
+  nl: { name: "Einde", description: "Het slotscherm met een samenvatting." },
+  es: { name: "Fin", description: "La pantalla final, con un resumen." },
+  it: { name: "Fine", description: "La schermata finale, con un riepilogo." },
+  pt: { name: "Fim", description: "O ecrã final, com um resumo." },
+  tr: { name: "Son", description: "Özet içeren kapanış ekranı." },
+};

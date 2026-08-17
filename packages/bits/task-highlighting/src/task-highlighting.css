@@ -1,0 +1,107 @@
+@import "@bitflow/core/theme.css";
+
+/* Five hues from sashamaps.net's 99.99%-accessible palette, lightened to work
+   as a background behind body text. Each is paired with its own text colour so
+   the contrast holds. */
+.bitflow-highlight-maroon {
+  background: #f6d6d6;
+  color: #4a1010;
+}
+.bitflow-highlight-orange {
+  background: #ffe0bd;
+  color: #4a2c00;
+}
+.bitflow-highlight-blue {
+  background: #cfe0f7;
+  color: #10294a;
+}
+.bitflow-highlight-lavender {
+  background: #e2dbf5;
+  color: #2b1f4a;
+}
+.bitflow-highlight-yellow {
+  background: #fbf1b8;
+  color: #453c00;
+}
+
+.bitflow-highlight-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-highlight-swatch {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  min-height: 44px;
+  border: var(--bitflow-border-width) solid transparent;
+  border-radius: var(--bitflow-radius-standard);
+  cursor: pointer;
+  font-size: var(--bitflow-font-size-small);
+}
+
+/* The chosen colour is outlined, not just tinted: with five pale swatches side
+   by side, a tint alone does not say which one is active. */
+.bitflow-highlight-swatch:has(:checked) {
+  border-color: var(--bitflow-color-neutral-900);
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-highlight-swatch:has(:focus-visible) {
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+.bitflow-highlight-eraser {
+  background: var(--bitflow-color-neutral-100);
+}
+
+.bitflow-highlight-text {
+  white-space: pre-wrap;
+  line-height: var(--bitflow-line-height-relaxed, 1.8);
+  margin: 0;
+}
+
+/* A word is a button, but it has to read as part of the sentence. */
+.bitflow-highlight-token {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  padding: 1px 0;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--bitflow-radius-small);
+}
+
+.bitflow-highlight-token:disabled {
+  cursor: default;
+}
+
+.bitflow-highlight-token:hover:not(:disabled) {
+  outline: 1px dashed var(--bitflow-color-neutral-400);
+}
+
+.bitflow-highlight-agreement {
+  margin: 0;
+  padding-left: var(--bitflow-space-small);
+  color: var(--bitflow-color-text-muted);
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-highlight-color-row {
+  display: flex;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-highlight-cutoff {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-highlight-cutoff input {
+  max-width: 6em;
+}
