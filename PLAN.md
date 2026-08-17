@@ -163,6 +163,41 @@ the exact patterns already established in `java-memory-playground`.
     dropped entirely.** No competency/latent-variable modeling in this
     rewrite's scope — not ported, not replaced, not referenced anywhere in
     the new packages.
+18. **Resumable assessment state is exported through events so the host can
+    persist it in IndexedDB.** Follow `java-memory-playground`'s useful
+    `edit`/`change` distinction, while keeping storage out of Bitflow:
+    - `<bitflow-flow>` exposes a versioned `attempt` property for loading a
+      previously saved in-progress attempt, and includes an immutable
+      `flowId`/flow-schema version in every snapshot so a host cannot
+      restore an attempt into the wrong assessment.
+    - It dispatches a bubbling, composed `bitflow-statechange` event after
+      every *durable learner-state change* (answer submitted or changed,
+      evaluation result received, retry/skip/next/previous, confidence or
+      reasoning change). `event.detail` is the complete, versioned,
+      JSON-serializable attempt snapshot needed to resume: flow identity,
+      current node, answers, evaluation results, tries/progress, timestamps,
+      and any configured confidence/reasoning. Panning, focus, animation,
+      and other presentation-only changes never emit it.
+    - It dispatches a bubbling, composed `bitflow-save` event when the
+      learner explicitly presses Save/Continue or the host calls the
+      element's `save()` method. Its `detail` carries the same snapshot.
+      This maps to java-memory-playground's explicit `change` event;
+      `bitflow-statechange` maps to its per-edit `edit` event.
+    - The host owns IndexedDB: listen for `bitflow-statechange`, debounce
+      writes keyed by its own learner/assignment identifier, and write the
+      snapshot; load that snapshot on the next visit and set the element's
+      `attempt` property before display. Bitflow must not create an
+      IndexedDB database or choose storage keys itself, because identity,
+      retention, and sync policy belong to the embedding application.
+    - The `<bitflow-flow>` TypeScript API and README include a short,
+      framework-agnostic IndexedDB example using these two events. The VS
+      Code preview disables this persistence behavior, just as
+      java-memory-playground's webview sets `persistence={false}`.
+    - `bitflow-statechange` and `bitflow-save` are part of the stable custom
+      element contract from recommendation 1: document their exact
+      `detail` schema and validate the `attempt` property with zod before
+      restoring it. Invalid/mismatched snapshots dispatch `bitflow-error`
+      with a structured error, never silently partially restore.
 
 ## Simplicity Principle
 
@@ -473,8 +508,11 @@ as noted). Each todo should be tracked to completion before moving on.
     what today's `@bitflow/do` + `@bitflow/do-local` do together, merged
     into one non-pluggable module — evaluate an answer via the bit
     registry, track tries/progress/results in memory, optionally persist
-    to `localStorage` for resume-on-reload. No swappable-backend
-    interface; this is the only implementation there will ever be here.
+    to a serializable, versioned attempt snapshot for resume-on-reload.
+    Do not write `localStorage` or IndexedDB directly: the embedding host
+    persists/restores the snapshot through the custom-element contract in
+    decision 18. No swappable-backend interface; this is the only
+    implementation there will ever be here.
   - Implement the bit registry: `registerBit(type, { schema, Task,
     Evaluation?, Feedback?, Statistic?, evaluate? })`, `getBit(type)`,
     `hasBit(type)`.
@@ -570,6 +608,13 @@ as noted). Each todo should be tracked to completion before moving on.
     needs the full palette) — no lazy loading there, but it's the same
     registry/custom-elements, just imported up front instead of resolved
     dynamically.
+  - Implement decision 18's stable resumability contract on
+    `<bitflow-flow>`: `attempt` input property; `bitflow-statechange`
+    (every durable learner-state change); explicit `bitflow-save` event
+    and `save()` method; structured `bitflow-error` on invalid/mismatched
+    snapshots. Events must bubble and be composed so they cross the Shadow
+    DOM boundary. Document their versioned `detail` schemas and include a
+    framework-agnostic host-side IndexedDB persistence/restore example.
   - `<bitflow-report>` and `<bitflow-group-report>` are fully standalone:
     a page can load just one of them, feeding it raw report data via a
     property/attribute, with zero dependency on the flow/editor/bit
@@ -629,6 +674,11 @@ as noted). Each todo should be tracked to completion before moving on.
   - Confirm `<bitflow-report>`/`<bitflow-group-report>` can be embedded on
     a bare HTML page with only their own script tag — no `<bitflow-flow>`,
     `<bitflow-flow-editor>`, or any bit package loaded.
+  - Confirm a bare HTML host can persist an in-progress `<bitflow-flow>`
+    attempt to IndexedDB from `bitflow-statechange`, reload it through the
+    `attempt` property, and resume at the exact node with answers,
+    evaluations, tries, and progress intact. Confirm an invalid or
+    wrong-flow snapshot dispatches `bitflow-error` and is not restored.
 
 
 ## How to Use This Plan
