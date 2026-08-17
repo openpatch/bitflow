@@ -17,8 +17,7 @@
     "./editor": {
       "types": "./dist/editor.d.ts",
       "import": "./dist/editor.js"
-    },
-    "./index.css": "./dist/index.css"
+    }
   },
   "files": [
     "dist",

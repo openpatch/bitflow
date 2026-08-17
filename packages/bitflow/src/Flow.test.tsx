@@ -320,6 +320,22 @@ describe("<Flow>", () => {
 
       expect(await screen.findByText("Welcome")).toBeDefined();
     });
+
+    it("reset() clears the answer the learner had typed", async () => {
+      const user = userEvent.setup();
+      const { ref } = setup();
+      await user.click(screen.getByRole("button", { name: "Next" }));
+      await user.type(screen.getByLabelText("Capital of France?"), "Paris");
+
+      ref.current?.reset();
+      await screen.findByText("Welcome");
+      await user.click(screen.getByRole("button", { name: "Next" }));
+
+      // Starting over means starting from a blank, not from the last answer.
+      expect(
+        (screen.getByLabelText("Capital of France?") as HTMLInputElement).value,
+      ).toBe("");
+    });
   });
 
   describe("readonly", () => {

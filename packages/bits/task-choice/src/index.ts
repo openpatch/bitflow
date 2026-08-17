@@ -1,6 +1,6 @@
-import { registerBit, translate } from "@bitflow/core";
+import { injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
-import "./task-choice.css";
+import styles from "./task-choice.css?inline";
 import { evaluate } from "./evaluate";
 import { Form } from "./Form";
 import { messages } from "./messages";
@@ -52,3 +52,5 @@ export {
   type ChoiceState,
   type Data,
 } from "./schema";
+
+injectStyles("bitflow-styles-task-choice", styles);

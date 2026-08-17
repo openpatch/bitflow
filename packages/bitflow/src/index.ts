@@ -1,4 +1,7 @@
-import "./flow.css";
+import { injectStyles } from "@bitflow/core";
+import styles from "./flow.css?inline";
+
+injectStyles("bitflow-styles-flow", styles);
 
 /**
  * The learner half. Kept free of `@xyflow/react` and of the editor so that a

@@ -1,4 +1,6 @@
-@import "@bitflow/core/theme.css";
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
 
 /* A fieldset is the right element for a group of radios or checkboxes, but its
    default border and padding are not the look we want. */
@@ -12,14 +14,18 @@
 }
 
 /* Evaluated state. Colour is never the only signal — the option also carries a
-   visually-hidden "correct"/"wrong" label for screen readers, and the border
-   weight changes for anyone who cannot separate the two hues. */
-.bitflow-option-correct {
+   visually-hidden "correct"/"wrong" label for screen readers.
+ *
+ * The class is doubled deliberately. Once an answer has been marked, the
+ * outcome has to beat the neutral "you picked this" tint that `:has(:checked)`
+ * gives a selected option — otherwise a choice the learner ticked *wrongly*
+ * still looks green, which is the one thing this styling exists to prevent. */
+.bitflow-option.bitflow-option-correct {
   border-color: var(--bitflow-color-correct);
   background: var(--bitflow-color-correct-surface);
 }
 
-.bitflow-option-wrong {
+.bitflow-option.bitflow-option-wrong {
   border-color: var(--bitflow-color-wrong);
   background: var(--bitflow-color-wrong-surface);
 }

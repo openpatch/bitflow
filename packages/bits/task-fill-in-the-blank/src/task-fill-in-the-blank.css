@@ -1,4 +1,6 @@
-@import "@bitflow/core/theme.css";
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
 
 /* The text reads as prose with the inputs sitting in the line, so the sentence
    stays a sentence. `line-height` is loosened to leave room for the boxes. */
@@ -20,12 +22,14 @@
   vertical-align: baseline;
 }
 
-.bitflow-blank-correct {
+/* Doubled for the same reason as task-choice: the outcome must outrank the
+   neutral input styling. */
+.bitflow-input.bitflow-blank-correct {
   border-color: var(--bitflow-color-correct);
   background: var(--bitflow-color-correct-surface);
 }
 
-.bitflow-blank-wrong {
+.bitflow-input.bitflow-blank-wrong {
   border-color: var(--bitflow-color-wrong);
   background: var(--bitflow-color-wrong-surface);
 }

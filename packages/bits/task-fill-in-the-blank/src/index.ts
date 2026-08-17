@@ -1,6 +1,6 @@
-import { registerBit, translate } from "@bitflow/core";
+import { injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
-import "./task-fill-in-the-blank.css";
+import styles from "./task-fill-in-the-blank.css?inline";
 import { evaluate } from "./evaluate";
 import { messages } from "./messages";
 import { DataSchema, type Answer, type Data } from "./schema";
@@ -42,3 +42,5 @@ export {
   type BlankState,
   type Data,
 } from "./schema";
+
+injectStyles("bitflow-styles-task-fill-in-the-blank", styles);

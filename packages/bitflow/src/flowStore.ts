@@ -78,9 +78,16 @@ export const createFlowStore = (
      * The single place a durable change is published. Everything that mutates
      * the attempt goes through here, so `bitflow-statechange` cannot drift out
      * of step with what is actually stored.
+     *
+     * `draft` is wrapped rather than passed bare so that "leave the draft
+     * alone" and "clear the draft" are different calls. Passing `undefined` for
+     * both meant `reset()` left the previous answer sitting in the UI.
      */
-    const commit = (attempt: AttemptSnapshot, draft?: unknown) => {
-      set(draft === undefined ? { attempt } : { attempt, draft });
+    const commit = (
+      attempt: AttemptSnapshot,
+      draft?: { value: unknown },
+    ) => {
+      set(draft ? { attempt, draft: draft.value } : { attempt });
       callbacks.onStateChange?.(attempt);
       if (attempt.status === "completed") callbacks.onComplete?.(attempt);
     };
@@ -162,7 +169,9 @@ export const createFlowStore = (
       retry: () => {
         const { attempt } = get();
         if (!attempt) return;
-        commit(retryNode(attempt, attempt.currentNodeId), undefined);
+        // The answer stays put: trying again means adjusting what you wrote,
+        // not starting from a blank.
+        commit(retryNode(attempt, attempt.currentNodeId));
       },
 
       skip: () => {
@@ -183,14 +192,14 @@ export const createFlowStore = (
             : setAnswerIn(attempt, attempt.currentNodeId, draft);
 
         const advanced = goNext(doc, withAnswer);
-        commit(advanced, advanced.answers[advanced.currentNodeId]);
+        commit(advanced, { value: advanced.answers[advanced.currentNodeId] });
       },
 
       previous: () => {
         const { doc, attempt } = get();
         if (!doc || !attempt) return;
         const back = goPrevious(doc, attempt);
-        commit(back, back.answers[back.currentNodeId]);
+        commit(back, { value: back.answers[back.currentNodeId] });
       },
 
       setConfidence: (confidence) => {
@@ -213,7 +222,8 @@ export const createFlowStore = (
           fail(created.error);
           return;
         }
-        commit(created.value, undefined);
+        // A fresh attempt starts with a blank answer, not the last one.
+        commit(created.value, { value: undefined });
       },
 
       save: () => {

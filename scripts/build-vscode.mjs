@@ -32,7 +32,9 @@ const extensionOptions = {
  * The half that runs in the webview, which is a browser.
  *
  * One file, no code splitting: the content security policy admits exactly one
- * nonce-bound script, so every bit and both stylesheets have to be inside it.
+ * nonce-bound script, so every bit has to be inside it. Styling comes with it —
+ * each package carries its own CSS and injects it on import — so there is no
+ * separate stylesheet to load.
  */
 const webviewOptions = {
   ...commonOptions,
@@ -56,28 +58,6 @@ const webviewOptions = {
   },
 };
 
-/**
- * esbuild writes the webview's CSS next to its JS under the entry's name. The
- * webview HTML asks for `webview.css`, which is the same file — this just
- * confirms it arrived, so a missing stylesheet fails the build rather than
- * showing up as an unstyled editor.
- */
-const checkStyles = async () => {
-  const { access } = await import("fs/promises");
-  const stylesheet = path.join(
-    __dirname,
-    "../platforms/vscode/dist/webview.css",
-  );
-  try {
-    await access(stylesheet);
-  } catch {
-    throw new Error(
-      `esbuild produced no ${stylesheet}. The webview must import a stylesheet ` +
-        `(@bitflow/bitflow/index.css) for the editor to be styled.`,
-    );
-  }
-};
-
 async function build() {
   try {
     if (isWatch) {
@@ -92,7 +72,6 @@ async function build() {
         esbuild.build(extensionOptions),
         esbuild.build(webviewOptions),
       ]);
-      await checkStyles();
       console.log("Build complete!");
     }
   } catch (error) {

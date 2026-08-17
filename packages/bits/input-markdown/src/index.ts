@@ -1,9 +1,11 @@
-import { registerBit, translate } from "@bitflow/core";
+import { injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
-import "./input-markdown.css";
+import styles from "./input-markdown.css?inline";
 import { messages } from "./messages";
 import { DataSchema, type Data } from "./schema";
 import { Form, Task } from "./views";
+
+injectStyles("bitflow-styles-input-markdown", styles);
 
 export const TYPE = "input-markdown";
 

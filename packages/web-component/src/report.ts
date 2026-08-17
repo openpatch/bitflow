@@ -1,4 +1,3 @@
-import "@bitflow/report/index.css";
 import { defineReportElements } from "./ReportElements";
 
 /**

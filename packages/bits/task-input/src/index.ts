@@ -1,10 +1,12 @@
-import { registerBit, translate } from "@bitflow/core";
+import { injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
-import "./task-input.css";
+import styles from "./task-input.css?inline";
 import { evaluate } from "./evaluate";
 import { messages } from "./messages";
 import { DataSchema, type Answer, type Data } from "./schema";
 import { Form, Task } from "./views";
+
+injectStyles("bitflow-styles-task-input", styles);
 
 export const TYPE = "task-input";
 

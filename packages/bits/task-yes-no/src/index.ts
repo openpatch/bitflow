@@ -1,10 +1,12 @@
-import { registerBit, translate } from "@bitflow/core";
+import { injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
-import "./task-yes-no.css";
+import styles from "./task-yes-no.css?inline";
 import { evaluate } from "./evaluate";
 import { messages } from "./messages";
 import { DataSchema, type Answer, type Data } from "./schema";
 import { Form, Task } from "./views";
+
+injectStyles("bitflow-styles-task-yes-no", styles);
 
 export const TYPE = "task-yes-no";
 

@@ -1,4 +1,6 @@
-@import "@bitflow/core/theme.css";
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
 
 /* --- learner shell -------------------------------------------------------- */
 
@@ -120,6 +122,9 @@
 .bitflow-editor-canvas {
   min-width: 0;
   min-height: 0;
+  /* The preview is positioned against this. Without it the preview escaped to
+     the viewport and covered the toolbar, leaving no way back to the canvas. */
+  position: relative;
 }
 
 .bitflow-editor-sidebar {

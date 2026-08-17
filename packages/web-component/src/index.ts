@@ -1,5 +1,3 @@
-import "@bitflow/bitflow/index.css";
-import "@bitflow/report/index.css";
 import { defineEditorElement } from "./EditorElement";
 import { defineFlowElement } from "./FlowElement";
 import { defineReportElements } from "./ReportElements";

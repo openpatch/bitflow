@@ -1,4 +1,5 @@
-import "./report.css";
+import { injectStyles } from "@bitflow/core";
+import styles from "./report.css?inline";
 
 export { GroupReport, type GroupReportProps } from "./GroupReport";
 export {
@@ -19,4 +20,6 @@ export {
   type AttemptReport,
   type NodeReport,
 } from "./report";
+
+injectStyles("bitflow-styles-report", styles);
 export * from "./stats";

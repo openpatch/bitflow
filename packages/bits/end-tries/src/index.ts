@@ -1,9 +1,11 @@
-import { registerBit, translate } from "@bitflow/core";
+import { injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
-import "./end-tries.css";
+import styles from "./end-tries.css?inline";
 import { messages } from "./messages";
 import { DataSchema, type Data } from "./schema";
 import { Form, Task } from "./views";
+
+injectStyles("bitflow-styles-end-tries", styles);
 
 export const TYPE = "end-tries";
 

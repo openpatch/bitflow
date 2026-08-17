@@ -1,6 +1,6 @@
-import { registerBit, translate } from "@bitflow/core";
+import { injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
-import "./task-highlighting.css";
+import styles from "./task-highlighting.css?inline";
 import { evaluate } from "./evaluate";
 import { messages } from "./messages";
 import { DataSchema, type Answer, type Data } from "./schema";
@@ -43,3 +43,5 @@ export {
   type Data,
   type Highlights,
 } from "./schema";
+
+injectStyles("bitflow-styles-task-highlighting", styles);

@@ -1,6 +1,5 @@
 import { Flow } from "@bitflow/bitflow";
 import { FlowEditor } from "@bitflow/bitflow/editor";
-import "@bitflow/bitflow/index.css";
 import { parseFlow, type BitflowDocument } from "@bitflow/core";
 
 // Every bit, imported eagerly. The webview is one esbuild bundle with no

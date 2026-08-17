@@ -348,7 +348,9 @@ h6.bitflow-heading {
    target, and the native control keeps its own semantics and keyboard model. */
 .bitflow-option {
   display: flex;
-  align-items: flex-start;
+  /* Centred rather than top-aligned: nearly every choice is one line, and
+     top-aligning a control against a text block leaves it visibly high. */
+  align-items: center;
   gap: var(--bitflow-space-xsmall);
   padding: var(--bitflow-space-xsmall) var(--bitflow-space-small);
   border: var(--bitflow-border-width) solid var(--bitflow-color-border);

@@ -1,9 +1,11 @@
-import { registerBit, translate } from "@bitflow/core";
+import { injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
-import "./title-simple.css";
+import styles from "./title-simple.css?inline";
 import { messages } from "./messages";
 import { DataSchema, type Data } from "./schema";
 import { Form, Task } from "./views";
+
+injectStyles("bitflow-styles-title-simple", styles);
 
 export const TYPE = "title-simple";
 

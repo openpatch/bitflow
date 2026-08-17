@@ -1,4 +1,6 @@
-@import "@bitflow/core/theme.css";
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
 
 /* Five hues from sashamaps.net's 99.99%-accessible palette, lightened to work
    as a background behind body text. Each is paired with its own text colour so

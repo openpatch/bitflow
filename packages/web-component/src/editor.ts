@@ -1,4 +1,3 @@
-import "@bitflow/bitflow/index.css";
 import { defineEditorElement } from "./EditorElement";
 
 /** `<bitflow-flow-editor>` on its own, with the whole palette. */

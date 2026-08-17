@@ -7,3 +7,4 @@ export * from "./id";
 export * from "./registry";
 export * from "./schema";
 export * from "./validate";
+export * from "./styles";

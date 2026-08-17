@@ -1,4 +1,5 @@
-import "./element.css";
+import { injectStyles } from "@bitflow/core";
+import styles from "./element.css?inline";
 
 export { BitFeedback, StateIcon, type BitFeedbackProps } from "./BitFeedback";
 export { BitView, type BitViewProps } from "./BitView";
@@ -19,3 +20,5 @@ export {
   type TextAreaFieldProps,
   type TextFieldProps,
 } from "./form";
+
+injectStyles("bitflow-styles-base", styles);

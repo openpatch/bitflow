@@ -1,4 +1,3 @@
-import "@bitflow/bitflow/index.css";
 import { defineFlowElement } from "./FlowElement";
 
 /**

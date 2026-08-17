@@ -24,8 +24,7 @@
     "./report": {
       "types": "./dist/report.d.ts",
       "import": "./dist/report.js"
-    },
-    "./index.css": "./dist/index.css"
+    }
   },
   "files": [
     "dist",

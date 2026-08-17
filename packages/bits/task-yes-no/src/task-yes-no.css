@@ -1,4 +1,6 @@
-@import "@bitflow/core/theme.css";
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
 
 .bitflow-yes-no {
   border: 0;

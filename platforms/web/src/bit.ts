@@ -1,7 +1,6 @@
 // One import. It registers the bit and defines <bitflow-task-choice>; there is
 // no separate "standalone mode" to opt into.
 import "@bitflow/task-choice";
-import "@bitflow/task-choice/index.css";
 
 const task = document.querySelector("bitflow-task-choice") as HTMLElement & {
   data: unknown;

@@ -153,22 +153,19 @@ export class BitflowEditorProvider implements vscode.CustomTextEditorProvider {
     const scriptUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this.context.extensionUri, "dist", "webview.js"),
     );
-    const styleUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this.context.extensionUri, "dist", "webview.css"),
-    );
     const nonce = getNonce();
 
-    // The policy allows exactly one script, identified by its nonce, plus the
-    // bundled stylesheet and inlined images and fonts. No external source of
-    // anything — a `.bitflow` file is untrusted input, and a webview with a
-    // permissive policy is the obvious way for that to matter.
+    // The policy allows exactly one script, identified by its nonce, plus
+    // inline styles (the packages inject their own) and inlined images and
+    // fonts. No external source of anything — a `.bitflow` file is untrusted
+    // input, and a webview with a permissive policy is the obvious way for
+    // that to matter.
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}'; img-src ${webview.cspSource} data:; font-src ${webview.cspSource} data:;">
-  <link href="${styleUri}" rel="stylesheet">
   <title>Bitflow</title>
   <style>
     html, body {
