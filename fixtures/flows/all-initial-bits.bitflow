@@ -1,0 +1,288 @@
+{
+  "version": 1,
+  "meta": {
+    "id": "all-initial-bits",
+    "title": "Every kind of task",
+    "description": "One valid example of each of the nine initial bit types.",
+    "locale": "en",
+    "askConfidence": true,
+    "askReasoning": false
+  },
+  "nodes": [
+    {
+      "id": "start-simple",
+      "type": "start-simple",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "title": "Every kind of task",
+        "markdown": "This assessment shows one example of each task type in bitflow."
+      }
+    },
+    {
+      "id": "title-simple",
+      "type": "title-simple",
+      "position": {
+        "x": 0,
+        "y": 140
+      },
+      "data": {
+        "title": "Reading a text",
+        "markdown": "The next few tasks are about **prime numbers** and about texts."
+      }
+    },
+    {
+      "id": "input-markdown",
+      "type": "input-markdown",
+      "position": {
+        "x": 0,
+        "y": 280
+      },
+      "data": {
+        "markdown": "A quick reminder:\n\n- 2 is the only even prime\n- 1 is not prime\n\nRead it once more before continuing."
+      }
+    },
+    {
+      "id": "task-choice",
+      "type": "task-choice",
+      "position": {
+        "x": 0,
+        "y": 420
+      },
+      "data": {
+        "instruction": "Which of these numbers are prime?",
+        "variant": "multiple",
+        "choices": [
+          {
+            "id": "c-2",
+            "markdown": "2",
+            "correct": true
+          },
+          {
+            "id": "c-4",
+            "markdown": "4",
+            "correct": false
+          },
+          {
+            "id": "c-7",
+            "markdown": "7",
+            "correct": true
+          }
+        ],
+        "shuffle": false,
+        "partialCredit": true,
+        "evaluation": {
+          "mode": "auto",
+          "enableRetry": true,
+          "showFeedback": true
+        },
+        "patternFeedback": []
+      }
+    },
+    {
+      "id": "task-yes-no",
+      "type": "task-yes-no",
+      "position": {
+        "x": 0,
+        "y": 560
+      },
+      "data": {
+        "question": "Is 1 a prime number?",
+        "correctAnswer": false,
+        "feedbackWhenYes": {
+          "message": "1 has only one divisor, so it does not qualify.",
+          "severity": "info"
+        },
+        "evaluation": {
+          "mode": "auto",
+          "enableRetry": false,
+          "showFeedback": true
+        }
+      }
+    },
+    {
+      "id": "task-input",
+      "type": "task-input",
+      "position": {
+        "x": 0,
+        "y": 700
+      },
+      "data": {
+        "instruction": "What is the smallest prime number?",
+        "matchMode": "exact",
+        "expected": [
+          "2",
+          "two"
+        ],
+        "pattern": "",
+        "caseSensitive": false,
+        "trim": true,
+        "multiline": false,
+        "evaluation": {
+          "mode": "auto",
+          "enableRetry": false,
+          "showFeedback": true
+        },
+        "patternFeedback": []
+      }
+    },
+    {
+      "id": "task-fill-in-the-blank",
+      "type": "task-fill-in-the-blank",
+      "position": {
+        "x": 0,
+        "y": 840
+      },
+      "data": {
+        "instruction": "Complete the sentence.",
+        "text": "A prime number has exactly [[1]] divisors: 1 and [[2]].",
+        "blanks": {
+          "1": [
+            "two",
+            "2"
+          ],
+          "2": [
+            "itself"
+          ]
+        },
+        "caseSensitive": false,
+        "trim": true,
+        "partialCredit": true,
+        "evaluation": {
+          "mode": "auto",
+          "enableRetry": false,
+          "showFeedback": true
+        }
+      }
+    },
+    {
+      "id": "task-highlighting",
+      "type": "task-highlighting",
+      "position": {
+        "x": 0,
+        "y": 980
+      },
+      "data": {
+        "instruction": "Mark every animal in the text.",
+        "text": "The cat sat on the mat while the dog slept.",
+        "colors": {
+          "yellow": {
+            "enabled": true,
+            "label": "animal"
+          }
+        },
+        "reference": [
+          null,
+          null,
+          null,
+          null,
+          "yellow",
+          "yellow",
+          "yellow",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "yellow",
+          "yellow",
+          "yellow",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "cutoffs": {
+          "yellow": 0.6
+        },
+        "evaluation": {
+          "mode": "auto",
+          "enableRetry": true,
+          "showFeedback": true
+        }
+      }
+    },
+    {
+      "id": "end-tries",
+      "type": "end-tries",
+      "position": {
+        "x": 0,
+        "y": 1120
+      },
+      "data": {
+        "title": "That is all of them",
+        "markdown": "You have now seen every task type bitflow ships with.",
+        "showBreakdown": true,
+        "showScore": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-start-simple",
+      "source": "start-simple",
+      "target": "title-simple"
+    },
+    {
+      "id": "e-title-simple",
+      "source": "title-simple",
+      "target": "input-markdown"
+    },
+    {
+      "id": "e-input-markdown",
+      "source": "input-markdown",
+      "target": "task-choice"
+    },
+    {
+      "id": "e-task-choice",
+      "source": "task-choice",
+      "target": "task-yes-no"
+    },
+    {
+      "id": "e-task-yes-no",
+      "source": "task-yes-no",
+      "target": "task-input"
+    },
+    {
+      "id": "e-task-input",
+      "source": "task-input",
+      "target": "task-fill-in-the-blank"
+    },
+    {
+      "id": "e-task-fill-in-the-blank",
+      "source": "task-fill-in-the-blank",
+      "target": "task-highlighting"
+    },
+    {
+      "id": "e-task-highlighting",
+      "source": "task-highlighting",
+      "target": "end-tries"
+    }
+  ]
+}

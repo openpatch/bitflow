@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "meta": {
+    "id": "invalid-graph",
+    "title": "Broken references and an unreachable island",
+    "locale": "en",
+    "askConfidence": false,
+    "askReasoning": false
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start-simple",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "title": "Hello",
+        "markdown": ""
+      }
+    },
+    {
+      "id": "island",
+      "type": "title-simple",
+      "position": {
+        "x": 400,
+        "y": 0
+      },
+      "data": {
+        "title": "Nobody can get here",
+        "markdown": ""
+      }
+    },
+    {
+      "id": "island-2",
+      "type": "title-simple",
+      "position": {
+        "x": 400,
+        "y": 140
+      },
+      "data": {
+        "title": "Nor here",
+        "markdown": ""
+      }
+    },
+    {
+      "id": "end",
+      "type": "end-tries",
+      "position": {
+        "x": 0,
+        "y": 240
+      },
+      "data": {
+        "title": "",
+        "markdown": "",
+        "showBreakdown": true,
+        "showScore": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-missing-target",
+      "source": "start",
+      "target": "does-not-exist"
+    },
+    {
+      "id": "e-island-1-2",
+      "source": "island",
+      "target": "island-2"
+    },
+    {
+      "id": "e-island-2-1",
+      "source": "island-2",
+      "target": "island"
+    },
+    {
+      "id": "e-bad-condition",
+      "source": "start",
+      "target": "end",
+      "condition": {
+        "type": "compare",
+        "left": {
+          "kind": "result",
+          "nodeId": "no-such-node",
+          "path": "state"
+        },
+        "op": "eq",
+        "right": "correct"
+      }
+    }
+  ]
+}

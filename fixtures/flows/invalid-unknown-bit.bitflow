@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "meta": {
+    "id": "invalid-unknown-bit",
+    "title": "References a task type that does not exist",
+    "locale": "en",
+    "askConfidence": false,
+    "askReasoning": false
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start-simple",
+      "position": { "x": 0, "y": 0 },
+      "data": { "title": "Hello", "markdown": "" }
+    },
+    {
+      "id": "mystery",
+      "type": "task-from-the-future",
+      "position": { "x": 0, "y": 120 },
+      "data": { "anything": true }
+    }
+  ],
+  "edges": [{ "id": "e1", "source": "start", "target": "mystery" }]
+}
