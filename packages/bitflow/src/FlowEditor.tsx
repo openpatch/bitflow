@@ -10,6 +10,7 @@ import {
 } from "@bitflow/core";
 import { BitView, CheckboxField, TextAreaField, TextField } from "@bitflow/element";
 import {
+  applyNodeChanges,
   Background,
   Controls,
   MiniMap,
@@ -145,6 +146,20 @@ const FlowEditorBody = ({
     [state.doc.nodes, state.selectedNodeId, resolved, invalidNodeIds],
   );
 
+  /**
+   * React Flow's own copy of the nodes, which it is free to move.
+   *
+   * A drag is dozens of position changes a second. Sending each one to the
+   * store would write the document — and add an undo step — per frame, so the
+   * canvas keeps the in-progress position and the store hears once, on drop.
+   * Without this the node did not move at all until it was released, because
+   * `nodes` was controlled with nothing to write intermediate positions to.
+   */
+  const [canvasNodes, setCanvasNodes] = useState<Node[]>(nodes);
+
+  // Whatever the document says wins: a new node, an undo, a reload.
+  useEffect(() => setCanvasNodes(nodes), [nodes]);
+
   const edges: Edge[] = useMemo(
     () =>
       state.doc.edges.map((edge) => ({
@@ -165,7 +180,13 @@ const FlowEditorBody = ({
   const selectedEdge = state.doc.edges.find((e) => e.id === state.selectedEdgeId);
 
   return (
-    <div className="bitflow-root bitflow-editor">
+    <div
+      className={
+        previewing
+          ? "bitflow-root bitflow-editor bitflow-editor-previewing"
+          : "bitflow-root bitflow-editor"
+      }
+    >
       <div className="bitflow-editor-toolbar">
         <button
           type="button"
@@ -222,13 +243,18 @@ const FlowEditorBody = ({
           </div>
         ) : (
           <ReactFlow
-            nodes={nodes}
+            nodes={canvasNodes}
             edges={edges}
             nodeTypes={nodeTypes as never}
             nodesDraggable={!readonly}
             nodesConnectable={!readonly}
             edgesReconnectable={!readonly}
             fitView
+            // Presentation only: this is what lets a node follow the pointer.
+            onNodesChange={(changes) =>
+              setCanvasNodes((current) => applyNodeChanges(changes, current))
+            }
+            // The one place a move becomes an edit to the document.
             onNodeDragStop={(_event, node) =>
               store.getState().moveNode(node.id, node.position)
             }
@@ -261,6 +287,10 @@ const FlowEditorBody = ({
         )}
       </div>
 
+      {/* Hidden while previewing: the palette and the settings are the
+          author's tools, and a preview is meant to show what the learner sees
+          — including how much room they get. */}
+      {!previewing && (
       <aside className="bitflow-editor-sidebar">
         {!readonly && (
           <section className="bitflow-stack-small bitflow-stack">
@@ -333,6 +363,7 @@ const FlowEditorBody = ({
           </section>
         )}
       </aside>
+      )}
     </div>
   );
 };

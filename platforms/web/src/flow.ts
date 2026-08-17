@@ -3,7 +3,7 @@
 import "@bitflow/web-component/flow";
 
 const flow = document.querySelector("bitflow-flow") as HTMLElement & {
-  src: string;
+  flow?: unknown;
   attempt?: unknown;
   save: () => unknown;
   reset: () => void;
@@ -48,8 +48,16 @@ const write = (key: string, value: unknown) =>
 const keyFor = (src: string) => `demo:${src}`;
 
 const load = async (src: string) => {
-  flow.src = src;
-  const saved = await read(keyFor(src));
+  // Fetched here rather than handed to `src`, so the document is in place
+  // before the attempt is. Assigning `attempt` while `src` is still being
+  // fetched validates it against the *previous* flow, which the element
+  // rightly refuses with FLOW_ATTEMPT_MISMATCH.
+  const [document_, saved] = await Promise.all([
+    fetch(src).then((response) => response.json()),
+    read(keyFor(src)),
+  ]);
+
+  flow.flow = document_;
   if (saved) {
     flow.attempt = saved;
     note("resumed the attempt this browser had saved");

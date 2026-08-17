@@ -18,11 +18,11 @@ export const messages: Catalogs = {
     agreementLabel: "Required agreement per colour",
     agreementHint:
       "0 accepts any answer, 1 demands an exact match. 0.6 is a fair default.",
-    pickColor: "Select text, then choose a colour",
+    pickColor: "Colour to mark with",
     clear: "Clear highlighting",
     eraser: "Erase",
-    keyboardHint:
-      "Select text with the keyboard (Shift and the arrow keys), then press a colour button.",
+    howTo:
+      "Pick a colour, then drag across the text to mark it. Clicking a word marks that word; you can also reach a word with Tab and press Enter.",
     agreementResult: "Agreement: {value}",
     advanced: "Advanced",
     modeLabel: "Grading",
@@ -54,11 +54,11 @@ export const messages: Catalogs = {
     agreementLabel: "Nötige Übereinstimmung je Farbe",
     agreementHint:
       "0 akzeptiert alles, 1 verlangt exakte Übereinstimmung. 0,6 ist ein guter Standard.",
-    pickColor: "Text auswählen, dann eine Farbe wählen",
+    pickColor: "Farbe zum Markieren",
     clear: "Markierung löschen",
     eraser: "Radieren",
-    keyboardHint:
-      "Text mit der Tastatur auswählen (Umschalt und Pfeiltasten), dann eine Farbtaste drücken.",
+    howTo:
+      "Wähle eine Farbe und ziehe dann über den Text, um ihn zu markieren. Ein Klick markiert ein einzelnes Wort; mit Tab und Enter geht es auch über die Tastatur.",
     agreementResult: "Übereinstimmung: {value}",
     advanced: "Erweitert",
     modeLabel: "Bewertung",

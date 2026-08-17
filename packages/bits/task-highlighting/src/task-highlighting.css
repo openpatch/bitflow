@@ -64,24 +64,33 @@
   margin: 0;
 }
 
-/* A word is a button, but it has to read as part of the sentence. */
-.bitflow-highlight-token {
-  font: inherit;
-  color: inherit;
-  border: 0;
-  padding: 1px 0;
-  margin: 0;
-  background: none;
+/* The text has to look markable without looking like a form. A dotted
+   underline says "you can do something here" while leaving it readable as
+   prose; the hover and focus states say which word. */
+.bitflow-highlight-text {
+  cursor: text;
+}
+
+.bitflow-highlight-token[role="button"] {
   cursor: pointer;
   border-radius: var(--bitflow-radius-small);
+  text-decoration: underline dotted var(--bitflow-color-neutral-400);
+  text-underline-offset: 3px;
 }
 
-.bitflow-highlight-token:disabled {
-  cursor: default;
+.bitflow-highlight-token[role="button"]:hover {
+  background: var(--bitflow-color-neutral-100);
+  text-decoration-color: var(--bitflow-color-neutral-900);
 }
 
-.bitflow-highlight-token:hover:not(:disabled) {
-  outline: 1px dashed var(--bitflow-color-neutral-400);
+.bitflow-highlight-token[role="button"]:focus-visible {
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+/* The browser's own selection colour, so a drag in progress is visible over
+   whatever is already marked. */
+.bitflow-highlight-text ::selection {
+  background: var(--bitflow-color-primary-light);
 }
 
 .bitflow-highlight-agreement {

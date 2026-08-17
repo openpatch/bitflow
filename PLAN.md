@@ -816,6 +816,24 @@ outranked the outcome; `reset()` left the previous answer on screen; and the
 editor's preview escaped its container and covered the toolbar that switches it
 off. Each has a regression test or a stylesheet comment explaining the rule.
 
+## Post-Review Fixes
+
+Found by using the editor and the tasks rather than by testing them.
+
+| Reported | Cause | Fix |
+| --- | --- | --- |
+| A node only moved once dropped | `nodes` was controlled with no `onNodesChange`, so React Flow had nowhere to put the in-progress position | The canvas keeps its own copy while dragging; the store hears once, on drop, so a drag is one document write and one undo step |
+| Highlighting text did nothing | Words were `<button>`s, which browsers will not let you select, and the instructions described a keyboard selection that was never implemented | Words are spans with `role="button"`: dragging across text marks the range, clicking marks a word, Tab and Enter still work. The instructions now describe what actually happens |
+| The sidebar stayed in preview mode | — | Preview hides the palette and settings and takes the full width, since it is meant to show what the learner sees |
+
+Dependencies were also brought to their latest versions, with two held back
+deliberately: **Vite stays at 7** (and `@vitejs/plugin-react` at 5 with it),
+because Vite 8 bundles with Rolldown, which leaves the `require("react")`
+inside use-sync-external-store's CJS shim unresolved — the editor bundle throws
+on load. That shim arrives through `@xyflow/react`. Every `vite.config.ts` says
+so. `@types/vscode` stays at `^1.80.0` to match `engines.vscode`: it is the
+oldest VS Code the extension supports, not a version to keep current.
+
 ## How to Use This Plan
 
 This file (`PLAN.md` at the bitflow repo root) is the single source of

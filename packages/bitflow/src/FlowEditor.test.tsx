@@ -108,6 +108,28 @@ describe("<FlowEditor>", () => {
       expect(screen.getByText("This is exactly what the learner sees.")).toBeDefined();
     });
 
+    it("hides the authoring sidebar, so the preview gets the whole width", async () => {
+      const user = userEvent.setup();
+      setup();
+      expect(screen.getByText("Add a step")).toBeDefined();
+
+      await user.click(screen.getByRole("button", { name: "Preview" }));
+
+      // The palette and the settings are the author's tools; a preview shows
+      // what the learner sees, including how much room they get.
+      expect(screen.queryByText("Add a step")).toBeNull();
+      expect(screen.queryByLabelText("Title of the assessment")).toBeNull();
+    });
+
+    it("brings the sidebar back when the preview stops", async () => {
+      const user = userEvent.setup();
+      setup();
+      await user.click(screen.getByRole("button", { name: "Preview" }));
+      await user.click(screen.getByRole("button", { name: "Stop preview" }));
+
+      expect(screen.getByText("Add a step")).toBeDefined();
+    });
+
     it("goes back to the canvas", async () => {
       const user = userEvent.setup();
       setup();

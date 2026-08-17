@@ -130,12 +130,12 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@types/node": "^26.1.2",
+    "@types/node": "^26.2.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@types/vscode": "^1.80.0",
-    "@vscode/vsce": "^3.2.1",
-    "ovsx": "^0.10.6",
+    "@vscode/vsce": "^3.9.2",
+    "ovsx": "^1.1.1",
     "typescript": "^7.0.2"
   },
   "vsce": {

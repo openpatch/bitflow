@@ -1,6 +1,14 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
 
+// Held at Vite 7, and @vitejs/plugin-react at 5 with it, on purpose. Vite 8
+// bundles with Rolldown, which leaves the `require("react")` inside
+// use-sync-external-store's CJS shim unresolved, and the bundle throws on load:
+// "Calling `require` for \"react\" in an environment that doesn't expose the
+// `require` function". That shim arrives through @xyflow/react, which depends
+// on zustand 4, so it cannot be avoided from here. Revisit when either React
+// Flow moves off it or Rolldown handles the interop.
+
 // Five plain HTML pages, one per thing being demonstrated. Deliberately no
 // framework: the point of these components is that a page needs nothing but a
 // script tag, and a React demo would not show that.

@@ -1,5 +1,5 @@
 import { translate, type Locale } from "@bitflow/core";
-import { useMemo, useState, type ReactElement } from "react";
+import { useCallback, useMemo, useState, type ReactElement } from "react";
 import { messages } from "./messages";
 import { COLORS, type Color, type Data, type Highlights } from "./schema";
 
@@ -7,13 +7,8 @@ export type Token = { text: string; start: number; end: number; word: boolean };
 
 /**
  * Splits the text into word and non-word runs, each remembering where it sits
- * in the original string.
- *
- * The stored highlighting stays per character — that is what the evaluator
- * compares — but the *interaction* is per word. Dragging across characters
- * cannot be done with a keyboard without caret browsing, and word-level marking
- * is what a task like "mark the cause" actually asks for. So a word is one
- * button: clickable, tappable, and reachable with Tab.
+ * in the original string. The stored highlighting is per character — that is
+ * what the evaluator compares — and these runs are what the learner touches.
  */
 export const tokenize = (text: string): Token[] => {
   const tokens: Token[] = [];
@@ -44,10 +39,14 @@ export const tokenize = (text: string): Token[] => {
   return tokens;
 };
 
-/** The colour covering a token, if the whole token carries the same one. */
-const colorOf = (highlights: Highlights, token: Token): Color | null => {
-  const first = highlights[token.start] ?? null;
-  for (let i = token.start; i < token.end; i++) {
+/** The colour covering a range, if the whole range carries the same one. */
+const colorOf = (
+  highlights: Highlights,
+  from: number,
+  to: number,
+): Color | null => {
+  const first = highlights[from] ?? null;
+  for (let i = from; i < to; i++) {
     if ((highlights[i] ?? null) !== first) return null;
   }
   return first;
@@ -56,12 +55,29 @@ const colorOf = (highlights: Highlights, token: Token): Color | null => {
 const paint = (
   highlights: Highlights,
   length: number,
-  token: Token,
+  from: number,
+  to: number,
   color: Color | null,
 ): Highlights => {
   const next = Array.from({ length }, (_, i) => highlights[i] ?? null);
-  for (let i = token.start; i < token.end; i++) next[i] = color;
+  for (let i = Math.max(0, from); i < Math.min(length, to); i++) next[i] = color;
   return next;
+};
+
+/**
+ * Where a DOM position sits in the original string.
+ *
+ * Every run is one span holding exactly one text node, and each span records
+ * the index it starts at — so an offset inside that node plus the span's start
+ * is the absolute character index.
+ */
+const offsetOf = (node: Node | null, offset: number): number | null => {
+  const element =
+    node?.nodeType === Node.TEXT_NODE ? node.parentElement : (node as Element | null);
+  const span = element?.closest<HTMLElement>("[data-start]");
+  if (!span) return null;
+  const start = Number(span.dataset.start);
+  return Number.isFinite(start) ? start + offset : null;
 };
 
 export type HighlighterProps = {
@@ -91,10 +107,52 @@ export const Highlighter = ({
   const label = (color: Color) =>
     colors[color]?.label || translate(messages, color, locale);
 
+  const apply = useCallback(
+    (from: number, to: number, color: Color | null) =>
+      onChange(paint(highlights, text.length, from, to, color)),
+    [highlights, onChange, text.length],
+  );
+
+  /**
+   * Marks whatever the learner has selected.
+   *
+   * Dragging across text is what "highlighting" means, so it has to be the
+   * primary gesture — clicking a word is the shortcut, not the whole
+   * interaction. Runs are plain spans rather than buttons precisely so the
+   * browser will let them be selected.
+   */
+  const applySelection = useCallback(() => {
+    if (readonly) return;
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed || selection.rangeCount === 0) return;
+
+    const from = offsetOf(selection.anchorNode, selection.anchorOffset);
+    const to = offsetOf(selection.focusNode, selection.focusOffset);
+    if (from === null || to === null || from === to) return;
+
+    apply(Math.min(from, to), Math.max(from, to), active);
+    // Otherwise the browser's blue selection sits on top of the mark the
+    // learner just made, and they cannot see what they did.
+    selection.removeAllRanges();
+  }, [active, apply, readonly]);
+
+  const toggleWord = useCallback(
+    (token: Token) => {
+      if (readonly) return;
+      const current = colorOf(highlights, token.start, token.end);
+      apply(token.start, token.end, current === active ? null : active);
+    },
+    [active, apply, highlights, readonly],
+  );
+
   return (
     <div className="bitflow-stack-small bitflow-stack">
       {!readonly && enabled.length > 0 && (
-        <div className="bitflow-highlight-palette" role="group" aria-label={t("pickColor")}>
+        <div
+          className="bitflow-highlight-palette"
+          role="group"
+          aria-label={t("pickColor")}
+        >
           {enabled.map((color) => (
             <label
               key={color}
@@ -123,53 +181,57 @@ export const Highlighter = ({
         </div>
       )}
 
-      {!readonly && <p className="bitflow-hint">{t("keyboardHint")}</p>}
+      {!readonly && <p className="bitflow-hint">{t("howTo")}</p>}
 
-      <p className="bitflow-highlight-text">
+      {/* Selection is finished on mouse-up, and on key-up for anyone selecting
+          with shift and the arrow keys under caret browsing. */}
+      <p
+        className="bitflow-highlight-text"
+        onMouseUp={applySelection}
+        onKeyUp={applySelection}
+      >
         {tokens.map((token) => {
-          const color = colorOf(highlights, token);
+          const color = colorOf(highlights, token.start, token.end);
+          const className = [
+            token.word ? "bitflow-highlight-token" : "",
+            color ? `bitflow-highlight-${color}` : "",
+          ]
+            .filter(Boolean)
+            .join(" ");
 
           if (!token.word) {
             return (
-              <span
-                key={token.start}
-                className={color ? `bitflow-highlight-${color}` : undefined}
-              >
+              <span key={token.start} data-start={token.start} className={className}>
                 {token.text}
               </span>
             );
           }
 
           return (
-            <button
+            <span
               key={token.start}
-              type="button"
-              disabled={readonly}
-              // `aria-pressed` plus the colour's own name in the accessible
-              // label: what has been marked, and as what, without seeing it.
-              aria-pressed={color !== null}
-              aria-label={
-                color ? `${token.text} — ${label(color)}` : token.text
-              }
-              className={[
-                "bitflow-highlight-token",
-                color ? `bitflow-highlight-${color}` : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-              onClick={() =>
-                onChange(
-                  paint(
-                    highlights,
-                    text.length,
-                    token,
-                    color === active ? null : active,
-                  ),
-                )
-              }
+              data-start={token.start}
+              className={className}
+              // A span rather than a button: a button cannot be selected as
+              // text in every browser, which would break the drag gesture.
+              // The role and tab stop give it the same keyboard behaviour.
+              role={readonly ? undefined : "button"}
+              tabIndex={readonly ? undefined : 0}
+              aria-pressed={readonly ? undefined : color !== null}
+              aria-label={color ? `${token.text} — ${label(color)}` : token.text}
+              onClick={() => {
+                // A drag that ends inside a word is a selection, not a click.
+                if (!window.getSelection()?.isCollapsed) return;
+                toggleWord(token);
+              }}
+              onKeyDown={(event) => {
+                if (event.key !== "Enter" && event.key !== " ") return;
+                event.preventDefault();
+                toggleWord(token);
+              }}
             >
               {token.text}
-            </button>
+            </span>
           );
         })}
       </p>

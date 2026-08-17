@@ -108,6 +108,11 @@
   background: var(--bitflow-color-background);
 }
 
+/* Previewing drops the sidebar, so the learner's view gets the whole width. */
+.bitflow-editor-previewing {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .bitflow-editor-toolbar {
   grid-column: 1 / -1;
   display: flex;
