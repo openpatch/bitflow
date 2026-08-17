@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "meta": {
+    "id": "teacher-authored",
+    "title": "Fractions: a first check",
+    "locale": "en",
+    "askConfidence": false,
+    "askReasoning": false,
+    "description": "Five minutes, two questions."
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start-simple",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "title": "Fractions: a first check",
+        "markdown": "Two short questions. You can try each one twice."
+      }
+    },
+    {
+      "id": "fractions",
+      "type": "task-choice",
+      "position": {
+        "x": 0,
+        "y": 120
+      },
+      "data": {
+        "instruction": "Which fraction is the largest?",
+        "variant": "single",
+        "choices": [
+          {
+            "id": "c-half",
+            "markdown": "1/2",
+            "correct": false
+          },
+          {
+            "id": "c-third",
+            "markdown": "1/3",
+            "correct": false
+          },
+          {
+            "id": "c-two-thirds",
+            "markdown": "2/3",
+            "correct": true
+          }
+        ],
+        "shuffle": true,
+        "partialCredit": false,
+        "evaluation": {
+          "mode": "auto",
+          "enableRetry": true,
+          "showFeedback": true
+        },
+        "patternFeedback": []
+      }
+    },
+    {
+      "id": "equivalence",
+      "type": "task-yes-no",
+      "position": {
+        "x": 0,
+        "y": 240
+      },
+      "data": {
+        "question": "Is 2/4 the same as 1/2?",
+        "correctAnswer": true,
+        "evaluation": {
+          "mode": "auto",
+          "enableRetry": true,
+          "showFeedback": true
+        }
+      }
+    },
+    {
+      "id": "end",
+      "type": "end-tries",
+      "position": {
+        "x": 0,
+        "y": 360
+      },
+      "data": {
+        "title": "Done",
+        "markdown": "Well done. We will go through these together next lesson.",
+        "showBreakdown": true,
+        "showScore": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-start-fractions",
+      "source": "start",
+      "target": "fractions"
+    },
+    {
+      "id": "e-fractions-equivalence",
+      "source": "fractions",
+      "target": "equivalence"
+    },
+    {
+      "id": "e-equivalence-end",
+      "source": "equivalence",
+      "target": "end"
+    }
+  ]
+}

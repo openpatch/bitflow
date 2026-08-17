@@ -1,0 +1,145 @@
+{
+  "name": "bitflow-studio",
+  "displayName": "Bitflow Studio",
+  "description": "Visual editor for .bitflow files \u2014 build and preview assessments",
+  "version": "0.1.0",
+  "publisher": "openpatch",
+  "author": "Mike Barkmin",
+  "license": "MIT",
+  "private": true,
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openpatch/bitflow.git",
+    "directory": "platforms/vscode"
+  },
+  "keywords": [
+    "assessment",
+    "quiz",
+    "education",
+    "visual-editor",
+    "openpatch"
+  ],
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Education",
+    "Visualization"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "browser": "./dist/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "bitflow.editor",
+        "displayName": "Bitflow",
+        "selector": [
+          {
+            "filenamePattern": "*.bitflow",
+            "scheme": "file"
+          },
+          {
+            "filenamePattern": "*.bitflow",
+            "scheme": "untitled"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "languages": [
+      {
+        "id": "bitflow",
+        "extensions": [
+          ".bitflow"
+        ],
+        "aliases": [
+          "Bitflow"
+        ],
+        "icon": {
+          "light": "./icon.png",
+          "dark": "./icon.png"
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "bitflow.new",
+        "title": "New Assessment",
+        "category": "Bitflow"
+      },
+      {
+        "command": "bitflow.showSource",
+        "title": "Show Source",
+        "category": "Bitflow"
+      },
+      {
+        "command": "bitflow.showEditor",
+        "title": "Show Editor",
+        "category": "Bitflow"
+      },
+      {
+        "command": "bitflow.showPreview",
+        "title": "Preview as a Learner",
+        "category": "Bitflow"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "bitflow.showPreview",
+          "when": "activeCustomEditorId == bitflow.editor",
+          "group": "navigation@1"
+        },
+        {
+          "command": "bitflow.showSource",
+          "when": "activeCustomEditorId == bitflow.editor",
+          "group": "navigation@2"
+        },
+        {
+          "command": "bitflow.showEditor",
+          "when": "resourceExtname == .bitflow && activeCustomEditorId != bitflow.editor",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node ../../scripts/build-vscode.mjs",
+    "lint": "tsc --noEmit",
+    "watch": "node ../../scripts/build-vscode.mjs --watch",
+    "vscode:package": "vsce package",
+    "vscode:publish": "vsce publish --packagePath $(find . -iname *.vsix)",
+    "ovsx:publish": "ovsx publish $(find . -iname *.vsix)"
+  },
+  "dependencies": {
+    "@bitflow/bitflow": "workspace:*",
+    "@bitflow/core": "workspace:*",
+    "@bitflow/element": "workspace:*",
+    "@bitflow/end-tries": "workspace:*",
+    "@bitflow/input-markdown": "workspace:*",
+    "@bitflow/start-simple": "workspace:*",
+    "@bitflow/task-choice": "workspace:*",
+    "@bitflow/task-fill-in-the-blank": "workspace:*",
+    "@bitflow/task-highlighting": "workspace:*",
+    "@bitflow/task-input": "workspace:*",
+    "@bitflow/task-yes-no": "workspace:*",
+    "@bitflow/title-simple": "workspace:*",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@types/vscode": "^1.80.0",
+    "@vscode/vsce": "^3.2.1",
+    "ovsx": "^0.10.6",
+    "typescript": "^7.0.2"
+  },
+  "vsce": {
+    "dependencies": false,
+    "skipDuplicate": true
+  }
+}
