@@ -98,6 +98,53 @@ Accessibility requirements:
 - Require sufficient author-provided textual context for the image and
   hotspot targets.
 
+## Mouse Accuracy
+
+**Suggested type:** `task-mouse-accuracy`
+
+Measure pointer accuracy by asking the learner to click a deterministic
+sequence of targets. This can support lessons about human-computer interaction,
+Fitts's law, or practicing precise pointer control.
+
+Authors configure target positions/sizes, the number of rounds, optional time
+limit, and whether the evaluation emphasizes hits, misses, elapsed time,
+movement distance, or a combination. The learner answer stores the target ID,
+click coordinate, hit/miss result, and monotonic elapsed time for each round;
+the component calculates score entirely in the browser.
+
+This task is intentionally pointer-specific and therefore must not be a
+mandatory-only assessment without an alternative activity. It must:
+
+- Clearly identify the required input modality before starting.
+- Support mouse, trackpad, touch, and other compatible pointing devices.
+- Let a host/author provide an equivalent non-pointer alternative task and
+  mark the result as `notApplicable` when the learner opts out.
+- Store only task-scoped aggregate/round results, never raw browser-level
+  pointer telemetry or device-identifying information.
+
+## Keyboard Speed Test
+
+**Suggested type:** `task-keyboard-speed`
+
+Measure accurate typing of an author-provided text, character sequence, code
+snippet, or command. This can support typing practice or lessons about input
+devices and ergonomics.
+
+Authors configure the prompt text, timing policy, maximum attempts, required
+accuracy, and scoring formula (for example correct characters, accuracy
+percentage, characters per minute, or words per minute). The learner answer
+stores the final entered text plus start/end monotonic timestamps; the
+component derives all metrics locally.
+
+This task is intentionally keyboard-specific and must:
+
+- Accept normal text input, including IME/composition input, rather than
+  recording individual low-level key events.
+- Never capture keys outside its focused input or store a key-by-key log.
+- Let a host/author provide an equivalent alternative task and mark the
+  result as `notApplicable` when keyboard speed is not an appropriate measure.
+- Use a visible timer and allow authors to disable timing for accessibility.
+
 ## Ordering / Sequencing
 
 **Suggested type:** `task-ordering`
@@ -341,17 +388,19 @@ addition to a visual Venn diagram.
 
 1. Drag and Drop Hotspots
 2. Find the Hotspots
-3. Ordering / Sequencing
-4. Matching Pairs
-5. Parsons Puzzle
-6. Crossword Puzzle
-7. Find the Words
-8. Numeric / Expression Answer
-9. Image / Diagram Annotation
-10. Short Free-Text With Rubric
-11. Code Trace
-12. Graph Path and Traversal
-13. Number Representation
-14. Boolean Logic and Truth Tables
-15. Equation Transformation Steps
-16. Fractions and Number Lines
+3. Mouse Accuracy
+4. Keyboard Speed Test
+5. Ordering / Sequencing
+6. Matching Pairs
+7. Parsons Puzzle
+8. Crossword Puzzle
+9. Find the Words
+10. Numeric / Expression Answer
+11. Image / Diagram Annotation
+12. Short Free-Text With Rubric
+13. Code Trace
+14. Graph Path and Traversal
+15. Number Representation
+16. Boolean Logic and Truth Tables
+17. Equation Transformation Steps
+18. Fractions and Number Lines

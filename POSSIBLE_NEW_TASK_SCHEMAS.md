@@ -87,6 +87,73 @@ Learner answer: `{ "placements": [{ "itemId": "alu", "zoneId": "alu-zone" }] }`.
 
 Learner answer: `{ "selections": [{ "x": 0.31, "y": 0.73, "matchedHotspotId": "keyboard" }] }`.
 
+## Mouse Accuracy — `task-mouse-accuracy`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Click each target as accurately as you can.",
+  "targets": [
+    { "id": "target-1", "x": 0.2, "y": 0.3, "radius": 0.04 },
+    { "id": "target-2", "x": 0.8, "y": 0.7, "radius": 0.02 }
+  ],
+  "rounds": { "targetOrder": "fixed", "maximumAttemptsPerTarget": 1 },
+  "evaluation": {
+    "score": { "hits": 1, "misses": 0, "includeElapsedTime": true },
+    "timeLimitMs": 30000,
+    "allowNotApplicable": true
+  },
+  "alternativeTaskId": "keyboard-navigation-alternative"
+}
+```
+
+Learner answer:
+
+```json
+{
+  "status": "completed",
+  "rounds": [
+    { "targetId": "target-1", "x": 0.2, "y": 0.3, "hit": true, "elapsedMs": 812 }
+  ],
+  "totalElapsedMs": 812
+}
+```
+
+`status` is `"completed"` or `"notApplicable"`. Do not store raw pointer
+events, device type, browser data, or high-frequency movement traces.
+
+## Keyboard Speed Test — `task-keyboard-speed`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Type the text exactly as shown.",
+  "text": "The quick brown fox jumps over the lazy dog.",
+  "input": { "multiline": false, "normalizeWhitespace": true },
+  "evaluation": {
+    "timeLimitMs": 60000,
+    "minimumAccuracyPercent": 95,
+    "metrics": ["correctCharacters", "accuracyPercent", "charactersPerMinute", "wordsPerMinute"],
+    "allowNotApplicable": true
+  },
+  "alternativeTaskId": "text-comprehension-alternative"
+}
+```
+
+Learner answer:
+
+```json
+{
+  "status": "completed",
+  "text": "The quick brown fox jumps over the lazy dog.",
+  "startedAtMonotonicMs": 1200,
+  "finishedAtMonotonicMs": 8300
+}
+```
+
+Derive speed and accuracy from final text plus timestamps in the browser. Do
+not store individual key events or keys typed outside the task input.
+
 ## Ordering / Sequencing — `task-ordering`
 
 ```json
