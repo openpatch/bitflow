@@ -80,14 +80,6 @@ export const evaluate = ({
   if (data.evaluation.mode === "skip") {
     return { state: "unknown", allowRetry: false };
   }
-  if (data.evaluation.mode === "manual") {
-    return {
-      state: "manual",
-      score: { earned: 0, possible: 1 },
-      allowRetry: data.evaluation.enableRetry,
-    };
-  }
-
   const agreement = agreementPerColor(data, answer?.highlights ?? []);
   const colors = Object.keys(agreement) as Color[];
 

@@ -34,10 +34,12 @@ export type Locale = z.infer<typeof LocaleSchema>;
 export const BIT_RESULT_STATES = [
   "correct",
   "wrong",
-  /** Not scorable, e.g. a free-text answer nobody graded. */
+  /**
+   * Not scorable: skipped, or a task whose evaluation is switched off. There is
+   * deliberately no "awaiting a teacher" state — bitflow grades in the browser
+   * and has no server, so nothing here could ever resolve one.
+   */
   "unknown",
-  /** Needs a human grader. */
-  "manual",
 ] as const;
 export const BitResultStateSchema = z.enum(BIT_RESULT_STATES);
 export type BitResultState = z.infer<typeof BitResultStateSchema>;
@@ -214,13 +216,11 @@ export type FeedbackMessage = z.infer<typeof FeedbackMessageSchema>;
  * questions — how is it graded, may they retry, do they see feedback — in every
  * task editor.
  *
- * `mode` decides what submitting does:
- * - `auto` — graded in the browser,
- * - `manual` — recorded as needing a human; never marked wrong,
- * - `skip` — shown, but never graded or scored.
+ * `mode` decides what submitting does: `auto` grades it in the browser, `skip`
+ * shows it but never grades or scores it.
  */
 export const EvaluationSchema = z.object({
-  mode: z.enum(["auto", "manual", "skip"]).default("auto"),
+  mode: z.enum(["auto", "skip"]).default("auto"),
   enableRetry: z.boolean().default(false),
   showFeedback: z.boolean().default(true),
 });

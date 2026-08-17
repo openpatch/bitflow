@@ -79,15 +79,15 @@ describe("evaluate", () => {
       expect(result.state).toBe("unknown");
     });
 
-    it("marks a manually graded task as needing review, never wrong", () => {
+    it("leaves an ungraded task out of the score entirely", () => {
       const result = evaluate({
         data: data({
-          evaluation: { mode: "manual", enableRetry: false, showFeedback: true },
+          evaluation: { mode: "skip", enableRetry: false, showFeedback: true },
         }),
         answer: { selected: [] },
       });
-      expect(result.state).toBe("manual");
-      expect(result.score).toEqual({ earned: 0, possible: 1 });
+      expect(result.state).toBe("unknown");
+      expect(result.score).toBeUndefined();
     });
 
     it("passes the retry setting through to the result", () => {
@@ -202,7 +202,7 @@ describe("DataSchema", () => {
     }
   });
 
-  it("allows no correct answer when a teacher grades it", () => {
+  it("allows no correct answer when the task is not graded", () => {
     const parsed = DataSchema.safeParse({
       instruction: "?",
       variant: "multiple",
@@ -210,7 +210,7 @@ describe("DataSchema", () => {
         { id: "a", markdown: "1", correct: false },
         { id: "b", markdown: "2", correct: false },
       ],
-      evaluation: { mode: "manual", enableRetry: false, showFeedback: true },
+      evaluation: { mode: "skip", enableRetry: false, showFeedback: true },
     });
     expect(parsed.success).toBe(true);
   });

@@ -12,7 +12,10 @@
     {
       "id": "start",
       "type": "start-simple",
-      "position": { "x": 0, "y": 0 },
+      "position": {
+        "x": 0,
+        "y": 0
+      },
       "data": {
         "title": "A very short quiz",
         "markdown": "One question about prime numbers. There is no time limit."
@@ -21,7 +24,10 @@
     {
       "id": "explanation",
       "type": "title-simple",
-      "position": { "x": 0, "y": 120 },
+      "position": {
+        "x": 0,
+        "y": 120
+      },
       "data": {
         "title": "Prime numbers",
         "markdown": "A **prime number** has exactly two divisors: 1 and itself."
@@ -30,37 +36,76 @@
     {
       "id": "question",
       "type": "task-choice",
-      "position": { "x": 0, "y": 240 },
+      "position": {
+        "x": 0,
+        "y": 240
+      },
       "data": {
         "instruction": "Which of these numbers are prime?",
         "variant": "multiple",
         "choices": [
-          { "id": "c-2", "markdown": "2", "correct": true },
-          { "id": "c-4", "markdown": "4", "correct": false },
-          { "id": "c-7", "markdown": "7", "correct": true },
-          { "id": "c-9", "markdown": "9", "correct": false }
+          {
+            "id": "c-2",
+            "markdown": "2",
+            "correct": true
+          },
+          {
+            "id": "c-4",
+            "markdown": "4",
+            "correct": false
+          },
+          {
+            "id": "c-7",
+            "markdown": "7",
+            "correct": true
+          },
+          {
+            "id": "c-9",
+            "markdown": "9",
+            "correct": false
+          }
         ],
         "shuffle": false,
         "partialCredit": false,
-        "evaluation": { "mode": "auto", "enableRetry": true, "showFeedback": true },
+        "evaluation": {
+          "mode": "auto",
+          "enableRetry": true,
+          "showFeedback": true
+        },
         "patternFeedback": []
       }
     },
     {
       "id": "end",
       "type": "end-tries",
-      "position": { "x": 0, "y": 360 },
+      "position": {
+        "x": 0,
+        "y": 360
+      },
       "data": {
         "title": "Finished",
         "markdown": "Thank you for taking part.",
         "showBreakdown": true,
-        "showScore": true
+        "showScore": true,
+        "allowReview": true
       }
     }
   ],
   "edges": [
-    { "id": "e-start-explanation", "source": "start", "target": "explanation" },
-    { "id": "e-explanation-question", "source": "explanation", "target": "question" },
-    { "id": "e-question-end", "source": "question", "target": "end" }
+    {
+      "id": "e-start-explanation",
+      "source": "start",
+      "target": "explanation"
+    },
+    {
+      "id": "e-explanation-question",
+      "source": "explanation",
+      "target": "question"
+    },
+    {
+      "id": "e-question-end",
+      "source": "question",
+      "target": "end"
+    }
   ]
 }

@@ -128,12 +128,16 @@ A condition compares one value out of the running attempt:
 | `{ kind: "result", nodeId, path: "state" }` | How one task turned out. |
 | `{ kind: "answer", nodeId, path }` | What the learner answered, at a dot path. |
 | `{ kind: "tries", nodeId }` | How many attempts one task took. |
-| `{ kind: "resultCount", state }` | **How many tasks ended in that outcome** — `state` defaults to `"correct"`. |
+| `{ kind: "resultCount", state }` | How many tasks ended in that outcome — `state` defaults to `"correct"`. |
 | `{ kind: "score" }` | Points earned so far. |
 | `{ kind: "scoreRatio" }` | Earned over possible, in `[0, 1]`. |
 
 Compared with `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `notIn` or `isTrue`,
 and combined with `and`, `or` and `not`.
+
+An outcome is `correct`, `wrong` or `unknown` (skipped, or a task with grading
+switched off). There is no "awaiting a teacher" outcome: bitflow grades in the
+browser and has no server, so nothing here could ever resolve one.
 
 "Once they have at least three right, move on":
 
@@ -156,8 +160,44 @@ and only if it reached the outcome being counted. Use `score` when partial
 credit should carry weight. It counts only the tasks the learner has actually
 reached, so a branch can fire mid-flow.
 
-The editor builds both the single-task and the counting form through dropdowns;
-anything more involved is written in the `.bitflow` file and shown read-only.
+Several rules can apply to one connection. "At least eight correct, but
+question 1 wrong" is two rules joined by `and`:
+
+```json
+{
+  "condition": {
+    "type": "and",
+    "conditions": [
+      {
+        "type": "compare",
+        "left": { "kind": "resultCount", "state": "correct" },
+        "op": "gte",
+        "right": 8
+      },
+      {
+        "type": "compare",
+        "left": { "kind": "result", "nodeId": "q1", "path": "state" },
+        "op": "eq",
+        "right": "wrong"
+      }
+    ]
+  }
+}
+```
+
+The editor builds exactly that — a list of rules joined by all-of or any-of —
+through dropdowns. Anything more deeply nested is written in the `.bitflow`
+file and shown read-only rather than rewritten.
+
+### What the editor checks
+
+`validate()` reports the ways a branch can be written so that it never fires,
+which otherwise fail silently — the flow still runs and the teacher never finds
+out. It flags a threshold higher than the number of tasks before the
+connection, a rule reading a task the learner cannot have reached yet, a node
+that is not a task, an outcome that does not exist, an ordering comparison
+against something that is not a number, a membership test without a list, and
+an empty rule set.
 
 ## Saving and resuming an attempt
 

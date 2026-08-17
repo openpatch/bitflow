@@ -252,6 +252,7 @@ const FlowBody = ({
         locale={locale}
         onAnswerChange={state.setDraft}
         attempt={attempt}
+        flow={doc}
       />
 
       {result && (

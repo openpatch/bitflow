@@ -14,17 +14,6 @@ export const evaluate = ({
 
   const ids = blankIdsIn(data.text);
 
-  if (data.evaluation.mode === "manual") {
-    return {
-      state: "manual",
-      score: { earned: 0, possible: 1 },
-      allowRetry: data.evaluation.enableRetry,
-      detail: {
-        blanks: Object.fromEntries(ids.map((id) => [id, "neutral" as BlankState])),
-      },
-    };
-  }
-
   const blanks: Record<string, BlankState> = {};
   let right = 0;
 

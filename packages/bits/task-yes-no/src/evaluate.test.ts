@@ -47,13 +47,7 @@ describe("evaluate", () => {
     expect(evaluate({ data: withFeedback, answer: { yes: true } }).feedback).toBeUndefined();
   });
 
-  it("respects the grading mode", () => {
-    expect(
-      evaluate({
-        data: data({ evaluation: { mode: "manual", enableRetry: false, showFeedback: true } }),
-        answer: { yes: false },
-      }).state,
-    ).toBe("manual");
+  it("does not grade a task whose grading is switched off", () => {
     expect(
       evaluate({
         data: data({ evaluation: { mode: "skip", enableRetry: false, showFeedback: true } }),

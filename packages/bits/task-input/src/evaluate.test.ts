@@ -105,12 +105,12 @@ describe("DataSchema", () => {
     }
   });
 
-  it("allows an empty expectation when a teacher grades it", () => {
+  it("allows an empty expectation when the task is not graded", () => {
     const parsed = DataSchema.safeParse({
       instruction: "?",
       matchMode: "exact",
       expected: [],
-      evaluation: { mode: "manual", enableRetry: false, showFeedback: true },
+      evaluation: { mode: "skip", enableRetry: false, showFeedback: true },
     });
     expect(parsed.success).toBe(true);
   });

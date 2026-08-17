@@ -87,10 +87,10 @@ describe("evaluate", () => {
   it("respects the grading mode", () => {
     expect(
       evaluate({
-        data: data({ evaluation: { mode: "manual", enableRetry: false, showFeedback: true } }),
+        data: data({ evaluation: { mode: "skip", enableRetry: false, showFeedback: true } }),
         answer: { blanks: {} },
       }).state,
-    ).toBe("manual");
+    ).toBe("unknown");
   });
 });
 

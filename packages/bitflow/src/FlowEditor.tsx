@@ -157,8 +157,21 @@ const FlowEditorBody = ({
    */
   const [canvasNodes, setCanvasNodes] = useState<Node[]>(nodes);
 
-  // Whatever the document says wins: a new node, an undo, a reload.
-  useEffect(() => setCanvasNodes(nodes), [nodes]);
+  /**
+   * Whatever the document says wins: a new node, an undo, a reload.
+   *
+   * Merged rather than replaced, because React Flow hangs its own measurements
+   * off each node and lays edges out from them. Swapping in fresh objects threw
+   * those away, and the canvas then drew no edges at all.
+   */
+  useEffect(() => {
+    setCanvasNodes((current) =>
+      nodes.map((node) => {
+        const existing = current.find((candidate) => candidate.id === node.id);
+        return existing ? { ...existing, ...node } : node;
+      }),
+    );
+  }, [nodes]);
 
   const edges: Edge[] = useMemo(
     () =>

@@ -86,7 +86,8 @@
         "title": "Done",
         "markdown": "Well done. We will go through these together next lesson.",
         "showBreakdown": true,
-        "showScore": true
+        "showScore": true,
+        "allowReview": false
       }
     }
   ],

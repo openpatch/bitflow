@@ -69,7 +69,7 @@ export const DataSchema = z
         code: "custom",
         input: ctx.value.choices,
         path: ["choices"],
-        message: "Mark at least one choice as correct, or switch evaluation to manual.",
+        message: "Mark at least one choice as correct, or switch grading off for this task.",
       });
     }
     if (ctx.value.variant === "single" && correct.length > 1) {

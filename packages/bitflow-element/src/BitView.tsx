@@ -3,6 +3,7 @@ import {
   resolveLocale,
   translate,
   type AttemptSnapshot,
+  type BitflowDocument,
   type BitResult,
   type BitTaskProps,
   type Locale,
@@ -20,6 +21,8 @@ export type BitViewProps = {
   onAnswerChange?: (answer: unknown) => void;
   /** Only `end` bits use it; see `BitTaskProps.attempt`. */
   attempt?: AttemptSnapshot;
+  /** Paired with `attempt`; see `BitTaskProps.flow`. */
+  flow?: BitflowDocument;
 };
 
 /**
@@ -38,6 +41,7 @@ export const BitView = ({
   locale,
   onAnswerChange,
   attempt,
+  flow,
 }: BitViewProps): ReactElement => {
   const resolved = resolveLocale(locale);
   const bit = getBit(type);
@@ -76,6 +80,7 @@ export const BitView = ({
       locale={resolved}
       onAnswerChange={onAnswerChange ?? noop}
       attempt={attempt}
+      flow={flow}
     />
   );
 };

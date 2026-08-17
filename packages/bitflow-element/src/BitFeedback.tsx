@@ -59,7 +59,7 @@ export const BitFeedback = ({
 const stateKey = (state: BitResultState): string => state;
 
 /**
- * The four result icons, inlined rather than pulled from the old
+ * The three result icons, inlined rather than pulled from the old
  * `@bitflow/icons` package — a handful of paths does not need a package.
  *
  * `aria-hidden` because the adjacent text already names the state; a screen
@@ -83,12 +83,6 @@ export const StateIcon = ({ state }: { state: BitResultState }) => (
       <>
         <line x1="4" y1="4" x2="12" y2="12" />
         <line x1="12" y1="4" x2="4" y2="12" />
-      </>
-    )}
-    {state === "manual" && (
-      <>
-        <circle cx="8" cy="8" r="6" />
-        <polyline points="8,4.5 8,8 10.5,9.5" />
       </>
     )}
     {state === "unknown" && (

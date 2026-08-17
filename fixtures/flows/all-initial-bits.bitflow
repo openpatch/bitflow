@@ -239,7 +239,8 @@
         "title": "That is all of them",
         "markdown": "You have now seen every task type bitflow ships with.",
         "showBreakdown": true,
-        "showScore": true
+        "showScore": true,
+        "allowReview": false
       }
     }
   ],

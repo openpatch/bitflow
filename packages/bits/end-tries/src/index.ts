@@ -24,6 +24,7 @@ registerBit<Data, never>({
     markdown: "",
     showBreakdown: true,
     showScore: true,
+    allowReview: false,
   }),
 });
 

@@ -11,6 +11,7 @@ import {
   BitflowDocumentSchema,
   type BitflowDocument,
 } from "./schema";
+import { validateCondition } from "./validateCondition";
 
 export type ValidationResult = {
   valid: boolean;
@@ -128,6 +129,11 @@ export const validateFlow = (doc: BitflowDocument): ValidationResult => {
           });
         }
       }
+      // Beyond dangling references: the ways a condition can be written so it
+      // never fires, which otherwise fail silently.
+      diagnostics.push(
+        ...validateCondition(doc, edge, `edges.${index}.condition`),
+      );
     }
   });
 

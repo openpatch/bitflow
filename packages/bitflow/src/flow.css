@@ -294,6 +294,28 @@
   gap: var(--bitflow-space-xxsmall);
 }
 
+/* One card per rule, so a branch with several reads as a list rather than a
+   wall of dropdowns. */
+.bitflow-rules {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+  counter-reset: bitflow-rule;
+}
+
+.bitflow-rule {
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  padding: var(--bitflow-space-xsmall);
+  background: var(--bitflow-color-neutral-100);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
 .bitflow-condition-advanced {
   font-family: var(--bitflow-font-family-mono);
   font-size: var(--bitflow-font-size-small);

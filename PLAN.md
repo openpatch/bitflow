@@ -837,6 +837,33 @@ on load. That shim arrives through `@xyflow/react`. Every `vite.config.ts` says
 so. `@types/vscode` stays at `^1.80.0` to match `engines.vscode`: it is the
 oldest VS Code the extension supports, not a version to keep current.
 
+## Later Changes
+
+Requested after the rewrite landed, and implemented in the same spirit as the
+rest: schema first, then the teacher-facing form, then the tests.
+
+- **Branch on how many answers were correct.** A `resultCount` value reference,
+  counting tasks rather than points. See the branching section of
+  `packages/web-component/README.md`.
+- **Several rules on one connection.** The condition model already nested; the
+  editor now exposes the shape teachers write — a flat list joined by all-of or
+  any-of — so "at least eight correct, but question 1 wrong" is two rules in a
+  form rather than hand-written JSON.
+- **Branches are validated.** A condition that can never be true is the worst
+  authoring error there is: the flow still runs and nobody finds out. The
+  editor now reports thresholds no learner could reach, rules reading a task
+  they cannot have got to yet, non-task references, impossible outcomes, and
+  malformed comparisons.
+- **"Waiting for a teacher" is gone.** The `manual` result state and evaluation
+  mode are removed. Decision 13 rules out a server, so nothing in this repo
+  could ever resolve such a result: it was a state a learner could enter and
+  never leave. Grading is now `auto` or off.
+- **The end screen can hand the paper back.** `end-tries` gained
+  `allowReview`: the learner opens a task from the summary and sees their own
+  answer in the real task view, read-only. Off by default, because that is a
+  teacher's call. It needs the document as well as the attempt, so
+  `BitTaskProps` gained `flow` alongside `attempt`.
+
 ## How to Use This Plan
 
 This file (`PLAN.md` at the bitflow repo root) is the single source of

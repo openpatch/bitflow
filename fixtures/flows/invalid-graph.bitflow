@@ -55,7 +55,8 @@
         "title": "",
         "markdown": "",
         "showBreakdown": true,
-        "showScore": true
+        "showScore": true,
+        "allowReview": false
       }
     }
   ],

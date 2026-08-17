@@ -1,6 +1,11 @@
 import type { z } from "zod";
 import type { Diagnostic } from "./errors";
-import type { AttemptSnapshot, BitResult, Locale } from "./schema";
+import type {
+  AttemptSnapshot,
+  BitflowDocument,
+  BitResult,
+  Locale,
+} from "./schema";
 
 /**
  * A component supplied by a bit package.
@@ -55,6 +60,12 @@ export type BitTaskProps<Data = any, Answer = any> = {
    * standalone has no attempt, so anything reading this must cope without it.
    */
   attempt?: AttemptSnapshot;
+  /**
+   * The document being run, paired with `attempt`. An end bit needs it to turn
+   * the node ids in a snapshot back into tasks it can show. Absent for a bit
+   * rendered on its own.
+   */
+  flow?: BitflowDocument;
 };
 
 /** What every bit's author-facing `Form` component is handed. */

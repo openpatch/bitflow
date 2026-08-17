@@ -18,7 +18,6 @@ export const messages: Catalogs = {
     previous: "Back",
     correct: "Correct",
     wrong: "Not correct",
-    manual: "Needs review",
     unknown: "Not assessed",
     unknownBit: "This task type is not available.",
     unknownBitHelp:
@@ -35,7 +34,6 @@ export const messages: Catalogs = {
     previous: "Zurück",
     correct: "Richtig",
     wrong: "Nicht richtig",
-    manual: "Wird noch bewertet",
     unknown: "Nicht bewertet",
     unknownBit: "Dieser Aufgabentyp ist nicht verfügbar.",
     unknownBitHelp:
@@ -52,7 +50,6 @@ export const messages: Catalogs = {
     previous: "Retour",
     correct: "Correct",
     wrong: "Incorrect",
-    manual: "À corriger",
     unknown: "Non évalué",
     unknownBit: "Ce type d'exercice n'est pas disponible.",
     unknownBitHelp:
@@ -69,7 +66,6 @@ export const messages: Catalogs = {
     previous: "Terug",
     correct: "Juist",
     wrong: "Niet juist",
-    manual: "Moet nagekeken worden",
     unknown: "Niet beoordeeld",
     unknownBit: "Dit opdrachttype is niet beschikbaar.",
     unknownBitHelp:
@@ -86,7 +82,6 @@ export const messages: Catalogs = {
     previous: "Atrás",
     correct: "Correcto",
     wrong: "Incorrecto",
-    manual: "Pendiente de revisión",
     unknown: "Sin evaluar",
     unknownBit: "Este tipo de tarea no está disponible.",
     unknownBitHelp:
@@ -103,7 +98,6 @@ export const messages: Catalogs = {
     previous: "Indietro",
     correct: "Corretto",
     wrong: "Non corretto",
-    manual: "Da correggere",
     unknown: "Non valutato",
     unknownBit: "Questo tipo di esercizio non è disponibile.",
     unknownBitHelp:
@@ -120,7 +114,6 @@ export const messages: Catalogs = {
     previous: "Voltar",
     correct: "Correto",
     wrong: "Incorreto",
-    manual: "A aguardar correção",
     unknown: "Não avaliado",
     unknownBit: "Este tipo de tarefa não está disponível.",
     unknownBitHelp:
@@ -137,7 +130,6 @@ export const messages: Catalogs = {
     previous: "Geri",
     correct: "Doğru",
     wrong: "Yanlış",
-    manual: "Değerlendirilecek",
     unknown: "Değerlendirilmedi",
     unknownBit: "Bu görev türü kullanılamıyor.",
     unknownBitHelp:

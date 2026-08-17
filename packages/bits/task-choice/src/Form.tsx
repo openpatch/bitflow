@@ -179,7 +179,6 @@ export const Form = ({
           value={data.evaluation.mode}
           options={[
             { value: "auto", label: t("modeAuto") },
-            { value: "manual", label: t("modeManual") },
             { value: "skip", label: t("modeSkip") },
           ]}
           onChange={(mode) =>

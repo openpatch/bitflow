@@ -18,11 +18,46 @@
 }
 
 .bitflow-end-item {
+  border-bottom: 1px solid var(--bitflow-color-border);
+}
+
+.bitflow-end-row {
   display: flex;
   align-items: center;
   gap: var(--bitflow-space-xsmall);
   padding: var(--bitflow-space-xxsmall) 0;
-  border-bottom: 1px solid var(--bitflow-color-border);
+  width: 100%;
+}
+
+/* A whole row is the target, and it has to read as a row of the summary
+   rather than as a button sitting in one. */
+.bitflow-end-row-button {
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: var(--bitflow-radius-standard);
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.bitflow-end-row-button:hover {
+  background: var(--bitflow-color-neutral-100);
+}
+
+.bitflow-end-review {
+  margin-left: auto;
+  color: var(--bitflow-color-primary-dark);
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-end-answer {
+  padding: var(--bitflow-space-small);
+  margin-bottom: var(--bitflow-space-xsmall);
+  border-left: var(--bitflow-border-width) solid var(--bitflow-color-primary-light);
+  background: var(--bitflow-color-neutral-100);
+  border-radius: var(--bitflow-radius-standard);
 }
 
 .bitflow-end-index {

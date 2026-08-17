@@ -67,7 +67,6 @@ const EMPTY_COUNTS = (): Record<BitResultState, number> => ({
   correct: 0,
   wrong: 0,
   unknown: 0,
-  manual: 0,
 });
 
 /** Every item any learner met, in the order they first appear. */

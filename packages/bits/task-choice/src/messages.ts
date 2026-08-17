@@ -29,7 +29,6 @@ export const messages: Catalogs = {
     feedbackLabel: "Show feedback after checking",
     modeLabel: "Grading",
     modeAuto: "Automatic",
-    modeManual: "By a teacher",
     modeSkip: "Not graded",
   },
   de: {
@@ -59,7 +58,6 @@ export const messages: Catalogs = {
     feedbackLabel: "Rückmeldung nach dem Prüfen zeigen",
     modeLabel: "Bewertung",
     modeAuto: "Automatisch",
-    modeManual: "Durch eine Lehrkraft",
     modeSkip: "Nicht bewertet",
   },
   fr: {

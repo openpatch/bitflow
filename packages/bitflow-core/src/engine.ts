@@ -101,9 +101,7 @@ export const previousNodeId = (snapshot: AttemptSnapshot): string | null => {
 /**
  * A bit's result may carry its own `score`. When it does not, the bit is worth
  * one point, earned iff the state is `correct`. `unknown` contributes nothing
- * to either side: nobody has graded it, so it must not drag the ratio down.
- * `manual` counts towards `possible` because it is gradeable, just not yet
- * graded.
+ * to either side: it was never graded, so it must not drag the ratio down.
  */
 export const scoreOf = (result: BitResult): { earned: number; possible: number } => {
   if (result.score) return result.score;

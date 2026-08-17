@@ -11,14 +11,6 @@ export const evaluate = ({
   if (data.evaluation.mode === "skip") {
     return { state: "unknown", allowRetry: false };
   }
-  if (data.evaluation.mode === "manual") {
-    return {
-      state: "manual",
-      score: { earned: 0, possible: 1 },
-      allowRetry: data.evaluation.enableRetry,
-    };
-  }
-
   const given = normalise(answer?.input ?? "", data);
   const correct = matches(given, data);
 

@@ -15,14 +15,14 @@ const context: ConditionContext = {
   score: { earned: 3, possible: 4 },
 };
 
-/** Four answered tasks: two right, one wrong, one still to be marked. */
+/** Four answered tasks: two right, one wrong, one skipped. */
 const cohortContext: ConditionContext = {
   answers: {},
   results: {
     q1: { state: "correct" },
     q2: { state: "wrong" },
     q3: { state: "correct" },
-    q4: { state: "manual" },
+    q4: { state: "unknown" },
   },
   tries: {},
   score: { earned: 2, possible: 3 },
@@ -70,11 +70,8 @@ describe("resolveValueRef", () => {
       resolveValueRef({ kind: "resultCount", state: "wrong" }, cohortContext),
     ).toBe(1);
     expect(
-      resolveValueRef({ kind: "resultCount", state: "manual" }, cohortContext),
-    ).toBe(1);
-    expect(
       resolveValueRef({ kind: "resultCount", state: "unknown" }, cohortContext),
-    ).toBe(0);
+    ).toBe(1);
   });
 
   it("counts tasks rather than points", () => {
@@ -143,8 +140,8 @@ describe("evaluateCondition", () => {
   });
 
   it("checks membership", () => {
-    expect(check(resultState("in", ["correct", "manual"]))).toBe(true);
-    expect(check(resultState("notIn", ["correct", "manual"]))).toBe(false);
+    expect(check(resultState("in", ["correct", "unknown"]))).toBe(true);
+    expect(check(resultState("notIn", ["correct", "unknown"]))).toBe(false);
   });
 
   it("checks truthiness strictly", () => {

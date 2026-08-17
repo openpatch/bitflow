@@ -1,5 +1,5 @@
 import type { BitflowDocument, Condition } from "@bitflow/core";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -48,126 +48,83 @@ const setup = (initial?: Condition) => {
 const lastCondition = (onChange: ReturnType<typeof vi.fn>): Condition =>
   onChange.mock.calls[onChange.mock.calls.length - 1][0];
 
+const rules = () => screen.getAllByRole("listitem");
+const kindPicker = () => screen.getByLabelText(/Only follow this connection/);
+
 describe("<ConditionEditor>", () => {
   beforeEach(registerTestBits);
 
   it("follows the connection always, until told otherwise", () => {
     setup();
-    expect(
-      (screen.getByLabelText(/Only follow this connection/) as HTMLSelectElement).value,
-    ).toBe("always");
+    expect((kindPicker() as HTMLSelectElement).value).toBe("always");
+    expect(screen.queryByRole("listitem")).toBeNull();
   });
 
-  describe("counting correct answers", () => {
-    it("is offered as a kind of condition", async () => {
-      const user = userEvent.setup();
-      const { onChange } = setup();
+  it("starts with one rule that can actually fire", async () => {
+    const user = userEvent.setup();
+    const { onChange } = setup();
 
-      await user.selectOptions(
-        screen.getByLabelText(/Only follow this connection/),
-        "count",
-      );
+    await user.selectOptions(kindPicker(), "rules");
 
-      // A sensible starting point rather than an empty form.
-      expect(lastCondition(onChange)).toEqual({
-        type: "compare",
-        left: { kind: "resultCount", state: "correct" },
-        op: "gte",
-        right: 1,
-      });
+    expect(lastCondition(onChange)).toEqual({
+      type: "compare",
+      left: { kind: "resultCount", state: "correct" },
+      op: "gte",
+      right: 1,
     });
-
-    it("sets how many are needed", async () => {
-      const user = userEvent.setup();
-      const { onChange } = setup({
-        type: "compare",
-        left: { kind: "resultCount", state: "correct" },
-        op: "gte",
-        right: 1,
-      });
-
-      const howMany = screen.getByLabelText("How many tasks");
-      await user.clear(howMany);
-      await user.type(howMany, "3");
-
-      expect(lastCondition(onChange)).toMatchObject({
-        left: { kind: "resultCount", state: "correct" },
-        op: "gte",
-        right: 3,
-      });
-    });
-
-    it("changes at least to at most without losing the count", async () => {
-      const user = userEvent.setup();
-      const { onChange } = setup({
-        type: "compare",
-        left: { kind: "resultCount", state: "correct" },
-        op: "gte",
-        right: 3,
-      });
-
-      await user.selectOptions(screen.getByLabelText("How to compare"), "lte");
-
-      expect(lastCondition(onChange)).toEqual({
-        type: "compare",
-        left: { kind: "resultCount", state: "correct" },
-        op: "lte",
-        right: 3,
-      });
-    });
-
-    it("can count a different outcome", async () => {
-      const user = userEvent.setup();
-      const { onChange } = setup({
-        type: "compare",
-        left: { kind: "resultCount", state: "correct" },
-        op: "gte",
-        right: 2,
-      });
-
-      await user.selectOptions(screen.getByLabelText("Outcome"), "wrong");
-
-      expect(lastCondition(onChange)).toEqual({
-        type: "compare",
-        left: { kind: "resultCount", state: "wrong" },
-        op: "gte",
-        right: 2,
-      });
-    });
-
-    it("shows the count it was given rather than a default", () => {
-      setup({
-        type: "compare",
-        left: { kind: "resultCount", state: "wrong" },
-        op: "eq",
-        right: 4,
-      });
-
-      expect((screen.getByLabelText("How many tasks") as HTMLInputElement).value).toBe("4");
-      expect((screen.getByLabelText("How to compare") as HTMLSelectElement).value).toBe("eq");
-      expect((screen.getByLabelText("Outcome") as HTMLSelectElement).value).toBe("wrong");
-    });
-
-    it("does not ask which task, because it counts all of them", async () => {
-      const user = userEvent.setup();
-      setup();
-      await user.selectOptions(
-        screen.getByLabelText(/Only follow this connection/),
-        "count",
-      );
-      expect(screen.queryByLabelText("Task")).toBeNull();
-    });
+    expect(rules()).toHaveLength(1);
   });
 
-  describe("a single task's outcome", () => {
-    it("still works, and asks which task", async () => {
-      const user = userEvent.setup();
-      const { onChange } = setup();
+  it("goes back to always", async () => {
+    const user = userEvent.setup();
+    const { onChange } = setup({
+      type: "compare",
+      left: { kind: "resultCount", state: "correct" },
+      op: "gte",
+      right: 1,
+    });
 
-      await user.selectOptions(
-        screen.getByLabelText(/Only follow this connection/),
-        "result",
-      );
+    await user.selectOptions(kindPicker(), "always");
+
+    expect(lastCondition(onChange)).toBeUndefined();
+  });
+
+  describe("one rule", () => {
+    const countRule: Condition = {
+      type: "compare",
+      left: { kind: "resultCount", state: "correct" },
+      op: "gte",
+      right: 1,
+    };
+
+    it("stays a bare comparison, so simple documents stay simple", async () => {
+      const user = userEvent.setup();
+      const { onChange } = setup(countRule);
+
+      await user.clear(screen.getByLabelText("How many tasks"));
+      await user.type(screen.getByLabelText("How many tasks"), "3");
+
+      expect(lastCondition(onChange)).toMatchObject({ type: "compare", right: 3 });
+    });
+
+    it("hides the all-of/any-of choice, which would mean nothing", () => {
+      setup(countRule);
+      expect(screen.queryByLabelText("Which rules have to hold")).toBeNull();
+    });
+
+    it("cannot be removed, since a rule set needs at least one", () => {
+      setup(countRule);
+      expect(
+        (screen.getByRole("button", { name: "Remove this rule" }) as HTMLButtonElement)
+          .disabled,
+      ).toBe(true);
+    });
+
+    it("switches between counting and one task's outcome", async () => {
+      const user = userEvent.setup();
+      const { onChange } = setup(countRule);
+
+      await user.selectOptions(screen.getByLabelText("This rule is about"), "result");
 
       expect(lastCondition(onChange)).toEqual({
         type: "compare",
@@ -179,6 +136,119 @@ describe("<ConditionEditor>", () => {
     });
   });
 
+  describe("several rules", () => {
+    /**
+     * The case this exists for: "at least eight correct, but question 1 wrong."
+     * Two rules, joined by all-of.
+     */
+    it("builds a rule set a teacher would actually write", async () => {
+      const user = userEvent.setup();
+      const { onChange } = setup();
+
+      await user.selectOptions(kindPicker(), "rules");
+
+      // Rule one: at least two correct.
+      await user.clear(screen.getByLabelText("How many tasks"));
+      await user.type(screen.getByLabelText("How many tasks"), "2");
+
+      // Rule two: but question 1 was wrong.
+      await user.click(screen.getByRole("button", { name: "Add a rule" }));
+      const second = rules()[1];
+      await user.selectOptions(
+        within(second).getByLabelText("This rule is about"),
+        "result",
+      );
+      await user.selectOptions(within(second).getByLabelText("Outcome"), "wrong");
+
+      expect(lastCondition(onChange)).toEqual({
+        type: "and",
+        conditions: [
+          {
+            type: "compare",
+            left: { kind: "resultCount", state: "correct" },
+            op: "gte",
+            right: 2,
+          },
+          {
+            type: "compare",
+            left: { kind: "result", nodeId: "q1", path: "state" },
+            op: "eq",
+            right: "wrong",
+          },
+        ],
+      });
+    });
+
+    it("offers all-of and any-of once there is something to combine", async () => {
+      const user = userEvent.setup();
+      const { onChange } = setup();
+      await user.selectOptions(kindPicker(), "rules");
+      await user.click(screen.getByRole("button", { name: "Add a rule" }));
+
+      await user.selectOptions(
+        screen.getByLabelText("Which rules have to hold"),
+        "or",
+      );
+
+      expect(lastCondition(onChange)).toMatchObject({ type: "or" });
+    });
+
+    it("removes a rule", async () => {
+      const user = userEvent.setup();
+      const { onChange } = setup();
+      await user.selectOptions(kindPicker(), "rules");
+      await user.click(screen.getByRole("button", { name: "Add a rule" }));
+      expect(rules()).toHaveLength(2);
+
+      await user.click(
+        screen.getAllByRole("button", { name: "Remove this rule" })[1],
+      );
+
+      expect(rules()).toHaveLength(1);
+      // Back to a bare comparison rather than a one-element and.
+      expect(lastCondition(onChange)).toMatchObject({ type: "compare" });
+    });
+
+    it("reopens a saved rule set with every rule in place", () => {
+      setup({
+        type: "and",
+        conditions: [
+          {
+            type: "compare",
+            left: { kind: "resultCount", state: "correct" },
+            op: "gte",
+            right: 8,
+          },
+          {
+            type: "compare",
+            left: { kind: "result", nodeId: "q1", path: "state" },
+            op: "eq",
+            right: "wrong",
+          },
+        ],
+      });
+
+      expect(rules()).toHaveLength(2);
+      expect(
+        (screen.getByLabelText("How many tasks") as HTMLInputElement).value,
+      ).toBe("8");
+      expect(
+        (screen.getByLabelText("Which rules have to hold") as HTMLSelectElement).value,
+      ).toBe("and");
+    });
+  });
+
+  it("no longer offers waiting for a teacher as an outcome", async () => {
+    const user = userEvent.setup();
+    setup();
+    await user.selectOptions(kindPicker(), "rules");
+
+    const outcomes = [...(screen.getByLabelText("Outcome") as HTMLSelectElement).options].map(
+      (option) => option.value,
+    );
+    expect(outcomes).toEqual(["correct", "wrong", "unknown"]);
+  });
+
   it("shows a condition it cannot express read-only, rather than rewriting it", () => {
     setup({
       type: "or",
@@ -188,7 +258,7 @@ describe("<ConditionEditor>", () => {
       ],
     });
 
-    expect(screen.getByText(/"scoreRatio"|"score"/)).toBeDefined();
+    expect(screen.getByText(/cannot show/)).toBeDefined();
     expect(screen.queryByLabelText("How many tasks")).toBeNull();
   });
 });

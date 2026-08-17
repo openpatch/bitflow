@@ -72,7 +72,7 @@ export const DataSchema = z
         input: expected,
         path: ["expected"],
         message:
-          "Enter at least one accepted answer, or switch evaluation to manual.",
+          "Enter at least one accepted answer, or switch grading off for this task.",
       });
     }
   });

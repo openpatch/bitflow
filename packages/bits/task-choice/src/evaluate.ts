@@ -20,15 +20,6 @@ export const evaluate = ({
   if (data.evaluation.mode === "skip") {
     return { state: "unknown", allowRetry: false };
   }
-  if (data.evaluation.mode === "manual") {
-    return {
-      state: "manual",
-      score: { earned: 0, possible: 1 },
-      allowRetry: data.evaluation.enableRetry,
-      detail: { choices: neutralChoices(data) },
-    };
-  }
-
   const choices: Record<string, ChoiceState> = {};
   const feedback: FeedbackMessage[] = [];
   let right = 0;
@@ -67,9 +58,6 @@ export const evaluate = ({
     detail: { choices },
   };
 };
-
-const neutralChoices = (data: Data): Record<string, ChoiceState> =>
-  Object.fromEntries(data.choices.map((choice) => [choice.id, "neutral"]));
 
 /**
  * Feedback keyed to one exact combination of ticked choices — for saying
