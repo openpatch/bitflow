@@ -7,20 +7,24 @@ on:
 
 jobs:
   test:
-    name: Test
+    name: Build, lint and test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2.2.4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
-          version: 6.20.3
-      - uses: actions/setup-node@v2
+          version: 11
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
-          cache: "pnpm"
+          node-version: 22
+          cache: pnpm
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+      # Build first: packages consume each other's dist, and the type check
+      # reads those declarations.
       - name: Build packages
         run: pnpm build
-      - name: Test packages
+      - name: Lint
+        run: pnpm lint
+      - name: Test
         run: pnpm test

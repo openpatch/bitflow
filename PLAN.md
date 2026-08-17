@@ -521,6 +521,32 @@ from the text above, and why.
    payloads are bit-owned, so they cannot be written before the bit schemas
    exist. Envelope/engine coverage in the meantime comes from
    `bitflow-core/src/test-utils.ts`.
+6. **There is an extra package, `@bitflow/element`.** The plan's layout has no
+   home for the React code a bit and the flow runtime must share: a bit cannot
+   depend on `bitflow` (that inverts the dependency direction and defeats lazy
+   loading), and `bitflow-core` must not import React. `@bitflow/element` is
+   that shared layer — it renders a registered bit, sanitises Markdown, supplies
+   the authoring-form fields, and wraps any bit as a standalone custom element.
+   One package, so `defineBitElement(type)` exists once instead of nine times.
+7. **`<bitflow-flow>` renders each bit's React component directly rather than
+   composing the per-bit custom elements.** Decision 11's requirement — one
+   implementation of a bit's rendering, reachable both ways — is met either way,
+   because the standalone element wraps that same component. Going through the
+   DOM inside the flow would add a React → element → React round trip and a
+   second answer-syncing path for no gain. Both goals of decision 11 hold: every
+   bit is still its own custom element, and lazy loading is unchanged. The VS
+   Code webview does the same, for the same reason plus its single-bundle CSP.
+8. **Confidence and reasoning are whole-flow settings, not per-task ones.** The
+   old shell took `enableConfidence`/`enableReasoning` per task. Being asked how
+   sure you are on some questions and not others is itself a hint about which
+   ones are hard, so `meta.askConfidence`/`meta.askReasoning` apply to the whole
+   assessment.
+9. **Each package ships its CSS inside its JavaScript and injects it on
+   import**, rather than exporting a stylesheet for the page to link. A page
+   cannot link stylesheets for bits it only discovers at runtime, so a lazily
+   loaded bit would arrive unstyled — which would make decision 11's promise
+   ("importing the package is the one action that makes a bit usable") false.
+   Found by running the demo in a browser.
 
 ## Todos
 
@@ -543,7 +569,7 @@ as noted). Each todo should be tracked to completion before moving on.
     package, `examples/`, and `website/`.
   - No dependency: this is the first step.
 
-- [ ] **2. Define the shared plain-CSS theme** (`design-theme`) — depends on 1
+- [x] **2. Define the shared plain-CSS theme** (`design-theme`) — depends on 1
   - Create `--bitflow-*` CSS custom properties sourced from
     `../branding/colors/openpatch.gpl` and `../branding/README.md`:
     - `--bitflow-color-primary: #007864;` (OpenPatch Green)
@@ -604,7 +630,7 @@ as noted). Each todo should be tracked to completion before moving on.
     nl, es, it, pt, tr. Fold in locale-aware date formatting here too
     (replacing the standalone `@bitflow/date` package).
 
-- [ ] **4. Build the `bitflow` React package** (`build-bitflow-react`) —
+- [x] **4. Build the `bitflow` React package** (`build-bitflow-react`) —
   depends on 2, 3
   - State management: `zustand` + `zundo` (undo/redo) + `fast-deep-equal`,
     replacing the current React Context + `immer` approach.
@@ -618,7 +644,7 @@ as noted). Each todo should be tracked to completion before moving on.
     unknown/manual/etc.) as small inline SVG components local to `bitflow`
     — no separate icons package.
 
-- [ ] **5. Build `bitflow-report` (client-only, single-attempt AND
+- [x] **5. Build `bitflow-report` (client-only, single-attempt AND
   group/cohort statistics, both as web components)** (`build-bitflow-report`)
   — depends on 3
   - Pure TypeScript core + React views. Re-scopes today's
@@ -649,7 +675,7 @@ as noted). Each todo should be tracked to completion before moving on.
     usable independently of `<bitflow-flow>`/`<bitflow-flow-editor>`,
     exactly like the bits in step 6.
 
-- [ ] **6. Port all 9 bit/task-type packages, each a standalone web
+- [x] **6. Port all 9 bit/task-type packages, each a standalone web
   component** (`port-bit-packages`) — depends on 2, 3
   - One package each: `start-simple`, `end-tries`, `task-choice`,
     `task-yes-no`, `task-input`, `task-fill-in-the-blank`,
@@ -671,7 +697,7 @@ as noted). Each todo should be tracked to completion before moving on.
     the rendered HTML (e.g. via a small allow-list sanitizer) to prevent
     XSS from a `.bitflow` file containing malicious Markdown/HTML.
 
-- [ ] **7. Build the `web-component` package** (`build-web-component`) —
+- [x] **7. Build the `web-component` package** (`build-web-component`) —
   depends on 4, 5, 6
   - Wrap `<Flow>`, `<FlowEditor>`, `<Report>`, and `<GroupReport>` with
     `@r2wc/react-to-web-component` as `<bitflow-flow>`,
@@ -703,7 +729,7 @@ as noted). Each todo should be tracked to completion before moving on.
     packages — verify this by confirming their bundles don't pull in
     `@xyflow/react` or any bit package.
 
-- [ ] **8. Build `platforms/vscode` extension** (`build-vscode-extension`)
+- [x] **8. Build `platforms/vscode` extension** (`build-vscode-extension`)
   — depends on 7
   - Mirror `java-memory-playground-studio`'s architecture: `extension.ts`
     + `BitflowEditorProvider.ts` (Node/extension host) registering a
@@ -722,7 +748,7 @@ as noted). Each todo should be tracked to completion before moving on.
   - Adapt `scripts/build-vscode.mjs`-style bundling (extension for Node,
     webview for browser, one inlined stylesheet + script per CSP rules).
 
-- [ ] **9. Build `platforms/web` demo site** (`build-web-platform`) —
+- [x] **9. Build `platforms/web` demo site** (`build-web-platform`) —
   depends on 7
   - Vite-based demo/playground site replacing `website/` + `examples/`.
   - Showcase embedding `<bitflow-flow>` and `<bitflow-flow-editor>` as
@@ -736,12 +762,15 @@ as noted). Each todo should be tracked to completion before moving on.
     completely standalone on a plain page with no server involved, to
     prove decision 14 works end-to-end purely client-side.
 
-- [ ] **10. Update CI, README, changesets config** (`update-ci-docs`) —
+- [x] **10. Update CI, README, changesets config** (`update-ci-docs`) —
   depends on 8, 9
   - Update the root `README.md`, `.github/workflows/*`, and changesets
     config for the new package layout and release flow.
 
-- [ ] **11. End-to-end verification** (`e2e-verification`) — depends on 10
+- [x] **11. End-to-end verification** (`e2e-verification`) — depends on 10
+  - Done in a browser against the production build of `platforms/web`. What was
+    confirmed, and what it turned up, is recorded in "End-to-End Verification"
+    below.
   - Author a sample `.bitflow` file in `<bitflow-flow-editor>`.
   - Take it in `<bitflow-flow>` preview mode.
   - Confirm lazy-loaded bits only fetch the task-type packages actually
@@ -762,6 +791,30 @@ as noted). Each todo should be tracked to completion before moving on.
     evaluations, tries, and progress intact. Confirm an invalid or
     wrong-flow snapshot dispatches `bitflow-error` and is not restored.
 
+
+## End-to-End Verification
+
+Run against the built demo site in Chrome, plus the automated suite
+(369 tests across 14 packages; `pnpm build`, `pnpm lint`, `pnpm test` all pass).
+
+| Check | Result |
+| --- | --- |
+| Author a `.bitflow` file in `<bitflow-flow-editor>` | Palette of all nine bits, per-bit forms, live validation, canvas. |
+| Take it in preview mode | Preview mounts the real `<Flow>`, inside the editor, with no attempt persisted. |
+| Lazy loading | `minimal.bitflow` registered exactly its four referenced bits; the other five were never fetched. |
+| Theme | OpenPatch green, rounded corners, soft shadows, generous whitespace; no patches/emotion anywhere. |
+| `<bitflow-group-report>` aggregates | Difficulty 67%, mean 0.67, ranks 1,1,1,1,5,5 from the six-learner fixture — its known values. |
+| Reports standalone | The report page loaded four chunks: entry, polyfill, React, core+report. No bit chunk, no editor chunk, and the only requests were the two result files it was told to read. |
+| A single bit standalone | One script chunk; element defined, events fired, evaluated correctly. |
+| IndexedDB resume | Answered, reloaded, resumed at the same node with answer, result and tries intact. |
+| Wrong-flow snapshot | `bitflow-error` with `FLOW_ATTEMPT_MISMATCH`; the current attempt untouched. |
+
+Four defects were found by looking at it rather than by testing it, and are
+fixed: lazily loaded bits arrived unstyled (deviation 9); an answer the learner
+ticked *wrongly* still rendered green, because the neutral "selected" tint
+outranked the outcome; `reset()` left the previous answer on screen; and the
+editor's preview escaped its container and covered the toolbar that switches it
+off. Each has a regression test or a stylesheet comment explaining the rule.
 
 ## How to Use This Plan
 

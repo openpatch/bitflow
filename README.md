@@ -1,71 +1,87 @@
-# Bitflow
+<div align="center">
 
-Bitflow is a library for building flow-based assessment systems. Feel free to check out the [examples](https://github.com/openpatch/bitflow/tree/main/examples/) to get started.
+[![](https://raw.githubusercontent.com/openpatch/branding/main/logos/png/bitflow-circle-mixed_256.png)](https://openpatch.org)
 
-- **Website:** https://bitflow.openpatch.org
-- **Documentation:** https://bitflow.openpatch.org/docs
-- **Website/Docs Repository:** https://github.com/openpatch/bitflow
-- **Community:** https://matrix.to/#/#openpatch:matrix.org
+</div>
 
-## Development
+# bitflow
 
-Before you start you need to install the Biflow dependencies and set up the monorepo via `pnpm install`.
+Assessments built from small, reusable tasks — authored visually, taken in the
+browser, embeddable anywhere as web components.
 
-If you want to contribute or develop custom features the easiest way is to start the documentation and the dev mode:
+```html
+<script type="module" src="https://unpkg.com/@bitflow/web-component"></script>
 
-```
-pnpm dev
-pnpm website:dev
+<bitflow-flow src="./fractions-check.bitflow"></bitflow-flow>
 ```
 
-You can use plop templates for creating new packages:
+No framework required, no server involved. Everything — rendering, grading,
+scoring and statistics — happens in the page.
 
+## What is here
+
+| Package | What it is |
+| --- | --- |
+| [`@bitflow/core`](packages/bitflow-core) | The `.bitflow` schema, the flow engine, the attempt runtime, the bit registry and the i18n helper. Pure TypeScript. |
+| [`@bitflow/element`](packages/bitflow-element) | Renders a registered bit, sanitises author Markdown, and wraps any bit as a standalone custom element. |
+| [`@bitflow/bitflow`](packages/bitflow) | React `<Flow>` (take it) and `<FlowEditor>` (author it). |
+| [`@bitflow/report`](packages/bitflow-report) | Per-attempt reports and cohort statistics, plus `<Report>` and `<GroupReport>`. |
+| [`@bitflow/web-component`](packages/web-component) | All of the above as custom elements, with lazy per-task loading. |
+| [`packages/bits/*`](packages/bits) | One package per task type. |
+| [`platforms/vscode`](platforms/vscode) | Bitflow Studio — a visual editor for `.bitflow` files. |
+| [`platforms/web`](platforms/web) | Demo pages for each of the above. |
+
+## Task types
+
+Choice, yes/no, short answer, fill in the blank and highlighting, plus start,
+explanation, text and end screens. Each is its own package, so a page downloads
+only the ones its assessment actually uses.
+
+## The custom elements
+
+| Element | Purpose |
+| --- | --- |
+| `<bitflow-flow>` | Take an assessment. |
+| `<bitflow-flow-editor>` | Author one. |
+| `<bitflow-report>` | Show one learner's result. |
+| `<bitflow-group-report>` | Show a class's results, with item difficulty, discrimination and reliability. |
+| `<bitflow-task-choice>`, … | Any single task, on its own, with no flow around it. |
+
+Full property, method and event reference:
+[`packages/web-component/README.md`](packages/web-component/README.md).
+
+## Saving progress
+
+bitflow stores nothing. It reports every durable change through a
+`bitflow-statechange` event carrying a complete, versioned snapshot, and accepts
+one back through the `attempt` property. Identity, retention and sync belong to
+whatever embeds it — so does the database.
+
+```js
+flow.addEventListener("bitflow-statechange", (event) => save(event.detail));
+flow.attempt = await load();
 ```
-pnpm plop
-```
 
-## Testing
+## Developing
 
-Testing is done with jest. You can find the tests in each package in the `tests` folder. In order to run the tests for all packages do:
-
-```
+```sh
+pnpm install
+pnpm build      # packages consume each other's dist, so build before linting
+pnpm lint
 pnpm test
+pnpm --filter web dev
 ```
 
-For running tests on an individual package run:
+Requires Node 22+ and pnpm 9+.
 
-```
-pnpm --filter @bitflow/core test
-```
+Committed fixtures live in [`fixtures/`](fixtures): valid and deliberately
+broken flows, an in-progress attempt, and result data with known aggregates.
 
-## Documentation
+## Links
 
-If you want to work on the documentation, run the
-development server.
+- Community: <https://matrix.to/#/#openpatch:matrix.org>
+- Issues: <https://github.com/openpatch/bitflow/issues>
 
-```
-pnpm dev
-pnpm website:dev
-```
+## Licence
 
-## Maintainer
-
-Mike Barkmin • [Twitter](https://twitter.com/mikebarkmin) • [GitHub](https://github.com/mikebarkmin/)
-
-## Support
-
-We are [happy to hear from you](mailto:contact@openpatch.org), if you need custom support or features for your application.
-
----
-
-Bitflow is maintained by [OpenPatch](https://openpatch.org), an organization for educational assessments. If you need help or want to develop Bitflow tools or educational assessments [get in touch](mailto:contact@openpatch.org).
-
-## Thanks!
-
-Special thanks to the [University of Duisburg-Essen](https://uni-due.de) and the [Chair of Computer Science Education](https://www.ddi.wiwi.uni-due.de/) for supporting the development of this library.
-
-Another huge shoutout to [webkid](https://webkid.io/) for developing and maintaining [React Flow](https://github.com/wbkd/react-flow/). This library is the core of Bitflow.
-
-We also like to thank [Vercel](https://vercel.com) for hosting our documentation.
-
-[![Vercel](https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg)](https://vercel.com?utm_source=openpatch&utm_campaign=oss)
+MIT

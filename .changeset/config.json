@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@1.6.0/schema.json",
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
   "access": "public",
   "baseBranch": "main",
   "changelog": [
@@ -7,7 +7,7 @@
     { "repo": "openpatch/bitflow" }
   ],
   "commit": false,
-  "ignore": [],
   "linked": [],
-  "updateInternalDependencies": "patch"
+  "updateInternalDependencies": "patch",
+  "ignore": ["web", "bitflow-studio"]
 }
