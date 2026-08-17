@@ -10,6 +10,28 @@ initial nine bits:
 - Emit a serializable answer/result that can be included in an assessment
   attempt snapshot and report.
 - Be keyboard-accessible and have an equivalent non-pointer interaction.
+- **Evaluate entirely in the browser.** A task must be able to determine its
+  result from its authored configuration and learner answer without any
+  network request, remote service, server-side code execution, or hidden
+  answer API. Server-hosted systems may collect the resulting raw report
+  data, but must not be required to grade the task.
+
+## Browser-Only Evaluation Rules
+
+All future task types must retain deterministic, client-only evaluation:
+
+- Store expected answers, accepted alternatives, scoring policy, and test
+  fixtures in the authored `.bitflow` task data (or in a static bit package),
+  never behind an evaluation endpoint.
+- Code tasks must not execute untrusted learner code with `eval`,
+  `Function`, a remote runner, or a server sandbox. Use a constrained,
+  task-specific interpreter, a finite state machine, parser/token comparison,
+  or author-provided expected traces/test results instead.
+- Any randomness used to generate a task must be seeded and persist the seed
+  in the attempt snapshot so an attempt can be restored and independently
+  re-evaluated in the browser.
+- The component's result must be reproducible from the `.bitflow` schema
+  version, bit version, authored task data, and serialized learner answer.
 
 ## Drag and Drop Hotspots
 
