@@ -214,6 +214,129 @@ word, then enter/select its start and end cells (or choose its cell path from
 a grid navigation mode). Announce found words and remaining targets without
 using color as the only feedback.
 
+## Computer Science Tasks
+
+### Code Trace
+
+**Suggested type:** `task-code-trace`
+
+Show a small, author-provided program and ask the learner to predict variable
+values, output, or the next execution step at configured checkpoints.
+
+Authors provide the code as display text plus a finite sequence of expected
+execution states. The learner selects/fills values for each checkpoint. The
+task evaluates by comparing against those authored states; it never executes
+the displayed code.
+
+### Algorithm Simulation
+
+**Suggested type:** `task-algorithm-simulation`
+
+Ask the learner to perform the next step of a known algorithm, such as
+selection sort, insertion sort, BFS, DFS, Dijkstra, or binary search.
+
+Authors provide a finite state graph of valid algorithm states and transitions
+(or an initial state plus a small, built-in deterministic simulation for that
+specific algorithm). The learner answer selects an allowed transition. This
+keeps evaluation entirely in-browser and allows partial credit for reaching
+correct intermediate states.
+
+### Graph Path and Traversal
+
+**Suggested type:** `task-graph-path`
+
+Present a weighted or unweighted graph and ask the learner to select a path,
+shortest path, traversal order, spanning tree, or cut.
+
+The learner answer is a stable node/edge ID sequence. Evaluate with
+client-side graph algorithms over the authored graph—BFS/DFS, Dijkstra,
+Kruskal/Prim, and direct path validation are deterministic and require no
+server.
+
+### Number Representation
+
+**Suggested type:** `task-number-representation`
+
+Ask learners to convert among binary, decimal, hexadecimal, two's complement,
+ASCII/Unicode, bit masks, and fixed-width integer representations.
+
+Store the source value, target representation, bit width, and accepted
+formatting variants in task data. Evaluate by parsing a deliberately limited
+input grammar and comparing normalized values in the browser.
+
+### Boolean Logic and Truth Tables
+
+**Suggested type:** `task-boolean-logic`
+
+Ask learners to complete a truth table, evaluate a Boolean expression, match a
+logic circuit to its output, or identify an equivalent expression.
+
+Authors provide variables and an expression/circuit in a small safe Boolean
+AST—never JavaScript source. Evaluate the AST for every input row in the
+browser and compare the learner's selected values.
+
+### Finite Automata
+
+**Suggested type:** `task-finite-automaton`
+
+Ask learners to simulate a DFA/NFA on an input word, choose transitions, or
+construct a transition table from a supplied state set and alphabet.
+
+Evaluate with a compact in-browser automaton interpreter over author-provided
+states/transitions. The learner answer is a transition sequence, set of active
+states, or transition table map; no general-purpose code execution is needed.
+
+## Mathematics Tasks
+
+### Equation Transformation Steps
+
+**Suggested type:** `task-equation-steps`
+
+Ask learners to solve an equation by selecting or entering valid intermediate
+transformation steps, such as adding the same value to both sides or factoring
+an expression.
+
+Start with linear equations and a deliberately limited symbolic expression
+grammar. Authors provide expected states or valid state transitions; evaluate
+equivalence in the browser using canonical forms for the supported grammar.
+Do not claim general-purpose computer algebra support unless it is actually
+implemented and fully browser-compatible.
+
+### Function Plot and Point Placement
+
+**Suggested type:** `task-function-plot`
+
+Ask learners to plot a function, place points, identify intercepts, or match a
+formula to a graph.
+
+Use normalized graph coordinates in answers. Authors provide a finite set of
+expected points/regions or a supported mathematical function AST; evaluate
+with client-side numeric sampling and configurable tolerance. Provide keyboard
+coordinate entry as an alternative to pointer placement.
+
+### Fractions and Number Lines
+
+**Suggested type:** `task-fractions`
+
+Ask learners to simplify a fraction, find equivalent fractions, place values
+on a number line, or compare rational numbers.
+
+Parse numerator/denominator input as integers and reduce using browser-side
+integer arithmetic. Number-line positions are normalized coordinates with
+author-configured tolerance; no floating-point-only equality checks.
+
+### Sets, Relations, and Venn Diagrams
+
+**Suggested type:** `task-sets`
+
+Ask learners to construct a set, classify elements into Venn-diagram regions,
+or determine whether a relation is a function/equivalence relation.
+
+Answers are stable element-to-region/set maps. Evaluate membership, union,
+intersection, complement, and relation properties against finite
+author-provided sets entirely in the browser. Provide list/select controls in
+addition to a visual Venn diagram.
+
 ## Suggested Priority
 
 1. Drag and Drop Hotspots
@@ -226,3 +349,9 @@ using color as the only feedback.
 8. Numeric / Expression Answer
 9. Image / Diagram Annotation
 10. Short Free-Text With Rubric
+11. Code Trace
+12. Graph Path and Traversal
+13. Number Representation
+14. Boolean Logic and Truth Tables
+15. Equation Transformation Steps
+16. Fractions and Number Lines
