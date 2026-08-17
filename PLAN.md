@@ -6,6 +6,11 @@ React component monorepo) into a project structured and tooled like its
 sibling `../java-memory-playground`: React internally, exposed as **web
 components**, with a **VS Code extension** for authoring `.bitflow` files.
 
+Read [`IMPLEMENTATION_HANDOFF.md`](IMPLEMENTATION_HANDOFF.md) immediately
+after this file. It contains the current-to-target migration map, stable
+custom-element contract, required fixtures, acceptance-test matrix, and VS
+Code implementation recipe.
+
 No backward compatibility is required. The JSON schema, package
 boundaries, state management, and build tooling may all be redesigned.
 
