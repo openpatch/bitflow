@@ -3,6 +3,10 @@ packages:
   - packages/bits/*
   - platforms/*
   - '!**/test/**'
+  # The pre-rewrite packages, kept as a porting reference until todo 10 deletes
+  # them. They still declare workspace deps on packages that no longer exist,
+  # so pnpm must not treat them as workspace members.
+  - '!legacy/**'
 
 # Which dependencies may run install scripts, spelled for three pnpm majors at
 # once, because the deployment floor and what a contributor has installed are

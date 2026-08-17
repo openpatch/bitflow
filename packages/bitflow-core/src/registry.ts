@@ -1,4 +1,5 @@
 import type { z } from "zod";
+import type { Diagnostic } from "./errors";
 import type { BitResult, Locale } from "./schema";
 
 /**
@@ -32,6 +33,34 @@ export type Evaluate<Data = any, Answer = any> = (
 export type BitInfo = {
   name: string;
   description: string;
+};
+
+/**
+ * What every bit's learner-facing `Task` component is handed. Declared here,
+ * without React, so a bit package can type its component against the contract
+ * the flow and the standalone element both honour.
+ */
+export type BitTaskProps<Data = any, Answer = any> = {
+  data: Data;
+  answer?: Answer;
+  /** Present once evaluated; the view switches to showing the outcome. */
+  result?: BitResult;
+  /** Answered already, or being reviewed — render, but accept no input. */
+  readonly?: boolean;
+  locale: Locale;
+  onAnswerChange: (answer: Answer) => void;
+};
+
+/** What every bit's author-facing `Form` component is handed. */
+export type BitFormProps<Data = any> = {
+  data: Data;
+  locale: Locale;
+  onChange: (data: Data) => void;
+  /**
+   * Validation problems for this node's data, with `path` relative to `data`,
+   * so the form can put each message next to the field that caused it.
+   */
+  errors?: Diagnostic[];
 };
 
 export type BitDefinition<Data = any, Answer = any> = {

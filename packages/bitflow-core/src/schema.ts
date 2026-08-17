@@ -172,6 +172,23 @@ export const FeedbackMessageSchema = z.object({
 });
 export type FeedbackMessage = z.infer<typeof FeedbackMessageSchema>;
 
+/**
+ * Evaluation settings every task bit offers, so a teacher meets the same three
+ * questions — how is it graded, may they retry, do they see feedback — in every
+ * task editor.
+ *
+ * `mode` decides what submitting does:
+ * - `auto` — graded in the browser,
+ * - `manual` — recorded as needing a human; never marked wrong,
+ * - `skip` — shown, but never graded or scored.
+ */
+export const EvaluationSchema = z.object({
+  mode: z.enum(["auto", "manual", "skip"]).default("auto"),
+  enableRetry: z.boolean().default(false),
+  showFeedback: z.boolean().default(true),
+});
+export type Evaluation = z.infer<typeof EvaluationSchema>;
+
 export const BIT_RESULT_STATES = [
   "correct",
   "wrong",

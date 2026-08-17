@@ -1,0 +1,10 @@
+/* The shared token + primitive stylesheet. Bundled into every package's CSS so
+   a page that loads one bit standalone still gets a themed component. */
+@import "@bitflow/core/theme.css";
+
+/* A standalone bit gets the readable measure the flow's shell would otherwise
+   give it, and stays comfortable at any width. */
+.bitflow-bit {
+  max-width: var(--bitflow-max-width-content);
+  width: 100%;
+}

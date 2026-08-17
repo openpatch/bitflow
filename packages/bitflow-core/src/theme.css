@@ -98,3 +98,339 @@
     --bitflow-motion-scale: 0;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Primitives.
+ *
+ * The classes that replace the `@openpatch/patches` components the old code
+ * leaned on: `Box` (296 uses) becomes layout utilities, `Text`/`Heading` become
+ * semantic elements plus type classes, `AutoGrid` becomes one grid class, and
+ * `Input`/`Select`/`Checkbox`/`Alert`/`Card` become styled native markup.
+ *
+ * Plain classes rather than React components on purpose: bit packages must not
+ * depend on the React package (that would invert the dependency direction and
+ * break lazy loading), and a stylesheet is the one thing they can all share.
+ * ------------------------------------------------------------------------- */
+
+.bitflow-root {
+  font-family: var(--bitflow-font-family);
+  font-size: var(--bitflow-font-size-standard);
+  line-height: var(--bitflow-line-height-standard);
+  color: var(--bitflow-color-text);
+  box-sizing: border-box;
+}
+
+.bitflow-root *,
+.bitflow-root *::before,
+.bitflow-root *::after {
+  box-sizing: inherit;
+}
+
+/* Layout ------------------------------------------------------------------ */
+
+/* Vertical rhythm without margin collapsing surprises; the old `Box` with a
+   `space` prop did the same job one element at a time. */
+.bitflow-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+.bitflow-stack-small {
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-stack-large {
+  gap: var(--bitflow-space-medium);
+}
+
+.bitflow-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-row-end {
+  justify-content: flex-end;
+}
+
+.bitflow-row-between {
+  justify-content: space-between;
+}
+
+/* The `AutoGrid` replacement: columns are as wide as they can be without
+   dropping below the minimum, so it reflows on a phone with no media query. */
+.bitflow-grid {
+  display: grid;
+  gap: var(--bitflow-space-small);
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(var(--bitflow-grid-min, 220px), 1fr)
+  );
+}
+
+.bitflow-content {
+  max-width: var(--bitflow-max-width-content);
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* Type -------------------------------------------------------------------- */
+
+.bitflow-heading {
+  font-family: var(--bitflow-font-family);
+  font-weight: var(--bitflow-font-weight-bold);
+  line-height: var(--bitflow-line-height-tight);
+  margin: 0;
+}
+
+h1.bitflow-heading {
+  font-size: var(--bitflow-font-size-xlarge);
+}
+h2.bitflow-heading {
+  font-size: var(--bitflow-font-size-large);
+}
+h3.bitflow-heading,
+h4.bitflow-heading,
+h5.bitflow-heading,
+h6.bitflow-heading {
+  font-size: var(--bitflow-font-size-standard);
+}
+
+.bitflow-text {
+  margin: 0;
+}
+
+.bitflow-text-muted {
+  color: var(--bitflow-color-text-muted);
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Surfaces ---------------------------------------------------------------- */
+
+.bitflow-card {
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  box-shadow: var(--bitflow-shadow-standard);
+  padding: var(--bitflow-space-medium);
+}
+
+.bitflow-alert {
+  display: flex;
+  gap: var(--bitflow-space-xsmall);
+  align-items: flex-start;
+  padding: var(--bitflow-space-small);
+  border-radius: var(--bitflow-radius-standard);
+  border-left: 4px solid var(--bitflow-alert-accent, var(--bitflow-color-info));
+  background: var(--bitflow-alert-surface, var(--bitflow-color-info-surface));
+  color: var(--bitflow-color-text);
+}
+
+.bitflow-alert-success {
+  --bitflow-alert-accent: var(--bitflow-color-correct);
+  --bitflow-alert-surface: var(--bitflow-color-correct-surface);
+}
+.bitflow-alert-error {
+  --bitflow-alert-accent: var(--bitflow-color-wrong);
+  --bitflow-alert-surface: var(--bitflow-color-wrong-surface);
+}
+.bitflow-alert-warning {
+  --bitflow-alert-accent: var(--bitflow-color-warning);
+  --bitflow-alert-surface: var(--bitflow-color-warning-surface);
+}
+.bitflow-alert-info {
+  --bitflow-alert-accent: var(--bitflow-color-info);
+  --bitflow-alert-surface: var(--bitflow-color-info-surface);
+}
+
+/* Controls ---------------------------------------------------------------- */
+
+.bitflow-button {
+  font: inherit;
+  font-weight: var(--bitflow-font-weight-medium);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--bitflow-space-xxsmall);
+  padding: var(--bitflow-space-xsmall) var(--bitflow-space-small);
+  min-height: 44px; /* comfortable touch target */
+  border: var(--bitflow-border-width) solid transparent;
+  border-radius: var(--bitflow-radius-standard);
+  background: var(--bitflow-color-primary);
+  color: var(--bitflow-color-white);
+  cursor: pointer;
+  transition: background-color var(--bitflow-duration-fast) ease-out;
+}
+
+.bitflow-button:hover:not(:disabled) {
+  background: var(--bitflow-color-primary-dark);
+}
+
+.bitflow-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bitflow-button-secondary {
+  background: transparent;
+  color: var(--bitflow-color-primary-dark);
+  border-color: var(--bitflow-color-border);
+}
+
+.bitflow-button-secondary:hover:not(:disabled) {
+  background: var(--bitflow-color-neutral-100);
+}
+
+.bitflow-button-quiet {
+  background: transparent;
+  color: var(--bitflow-color-text-muted);
+  border-color: transparent;
+}
+
+.bitflow-button-quiet:hover:not(:disabled) {
+  background: var(--bitflow-color-neutral-100);
+  color: var(--bitflow-color-text);
+}
+
+.bitflow-input,
+.bitflow-select,
+.bitflow-textarea {
+  font: inherit;
+  width: 100%;
+  padding: var(--bitflow-space-xsmall);
+  min-height: 44px;
+  color: var(--bitflow-color-text);
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-textarea {
+  min-height: 6em;
+  resize: vertical;
+}
+
+.bitflow-input:hover,
+.bitflow-select:hover,
+.bitflow-textarea:hover {
+  border-color: var(--bitflow-color-neutral-400);
+}
+
+.bitflow-input[aria-invalid="true"],
+.bitflow-select[aria-invalid="true"],
+.bitflow-textarea[aria-invalid="true"] {
+  border-color: var(--bitflow-color-wrong);
+}
+
+/* One focus rule for everything, so the keyboard path is always visible. Not
+   `:focus` — a mouse click on a button should not draw a ring. */
+.bitflow-root :focus-visible {
+  outline: none;
+  box-shadow: var(--bitflow-shadow-outline);
+  border-radius: var(--bitflow-radius-small);
+}
+
+/* A clickable label wrapping a native radio/checkbox: the whole row is the
+   target, and the native control keeps its own semantics and keyboard model. */
+.bitflow-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bitflow-space-xsmall);
+  padding: var(--bitflow-space-xsmall) var(--bitflow-space-small);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  background: var(--bitflow-color-surface);
+  cursor: pointer;
+  transition: border-color var(--bitflow-duration-fast) ease-out;
+}
+
+.bitflow-option:hover {
+  border-color: var(--bitflow-color-neutral-400);
+}
+
+.bitflow-option:has(:checked) {
+  border-color: var(--bitflow-color-primary);
+  background: var(--bitflow-color-correct-surface);
+}
+
+.bitflow-option:has(:disabled) {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.bitflow-option input {
+  margin: 0;
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+  accent-color: var(--bitflow-color-primary);
+}
+
+/* Fields ------------------------------------------------------------------ */
+
+.bitflow-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-label {
+  font-weight: var(--bitflow-font-weight-medium);
+}
+
+/* The teacher-facing hint under a field label; progressive disclosure means
+   most authoring settings carry one rather than a manual page. */
+.bitflow-hint {
+  color: var(--bitflow-color-text-muted);
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-field-error {
+  color: var(--bitflow-color-wrong);
+  font-size: var(--bitflow-font-size-small);
+}
+
+/* Result states ----------------------------------------------------------- */
+
+.bitflow-state {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bitflow-space-xxsmall);
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  border-radius: var(--bitflow-radius-full);
+  font-size: var(--bitflow-font-size-small);
+  font-weight: var(--bitflow-font-weight-medium);
+  background: var(--bitflow-state-surface, var(--bitflow-color-neutral-100));
+  color: var(--bitflow-state-color, var(--bitflow-color-text-muted));
+}
+
+.bitflow-state-correct {
+  --bitflow-state-color: var(--bitflow-color-correct);
+  --bitflow-state-surface: var(--bitflow-color-correct-surface);
+}
+.bitflow-state-wrong {
+  --bitflow-state-color: var(--bitflow-color-wrong);
+  --bitflow-state-surface: var(--bitflow-color-wrong-surface);
+}
+.bitflow-state-manual {
+  --bitflow-state-color: var(--bitflow-color-manual);
+  --bitflow-state-surface: var(--bitflow-color-manual-surface);
+}
+.bitflow-state-unknown {
+  --bitflow-state-color: var(--bitflow-color-text-muted);
+  --bitflow-state-surface: var(--bitflow-color-neutral-100);
+}
