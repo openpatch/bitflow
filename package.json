@@ -1,71 +1,27 @@
 {
-  "name": "bitflow",
+  "name": "bitflow-root",
   "author": "Mike Barkmin",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky install",
-    "dev": "node scripts/watcher.mjs",
+    "dev": "pnpm --parallel -r dev",
     "build": "pnpm -r build",
-    "test": "jest",
+    "test": "CI=true pnpm -r test",
     "lint": "pnpm -r lint",
     "version-packages": "changeset version",
-    "release": "changeset publish",
-    "website:dev": "pnpm --filter website dev",
-    "website:build": "pnpm --filter website build",
-    "website:start": "pnpm --filter website start"
+    "release": "changeset publish"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.4.7",
-    "@changesets/cli": "2.25.0",
-    "@emotion/cache": "11.10.3",
-    "@emotion/react": "11.10.4",
-    "@emotion/styled": "11.10.4",
-    "@types/jest": "28.1.8",
-    "@types/node": "18.7.6",
-    "@types/react": "18.0.21",
-    "@types/react-dom": "18.0.6",
-    "@vocab/cli": "1.2.0",
-    "chalk": "5.1.2",
-    "chokidar": "3.5.3",
-    "cross-env": "7.0.3",
-    "esbuild": "0.15.12",
-    "husky": "8.0.1",
-    "jest": "28.1.3",
-    "jest-cli": "28.1.3",
-    "next": "12.3.1",
-    "node-plop": "0.31.0",
-    "plop": "3.1.1",
-    "prettier": "2.7.1",
-    "prettier-plugin-sort-json": "0.0.3",
-    "pretty-quick": "3.1.3",
-    "rimraf": "3.0.2",
-    "ts-jest": "28.0.8",
-    "ts-node": "10.9.1",
-    "typescript": "4.8.4",
-    "typescript-styled-plugin": "0.18.2",
-    "walkdir": "0.4.1"
+    "@changesets/changelog-github": "0.7.0",
+    "@changesets/cli": "2.31.1",
+    "@types/node": "^26.1.2",
+    "esbuild": "^0.25.10",
+    "prettier": "^3.6.2",
+    "typescript": "^7.0.2"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "packageManager": "pnpm@6.34.0",
-  "dependencies": {
-    "@babel/core": "7.19.6",
-    "@openpatch/patches": "6.0.1",
-    "csstype": "3.1.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-hook-form": "7.38.0"
+  "engines": {
+    "pnpm": ">=9"
   }
 }

@@ -1,0 +1,249 @@
+import { z } from "zod";
+
+/**
+ * Version of the `.bitflow` document format. Bumped only for changes a reader
+ * of an older document cannot absorb; additive optional fields do not bump it.
+ */
+export const FLOW_SCHEMA_VERSION = 1;
+
+export const LOCALES = [
+  "en",
+  "de",
+  "fr",
+  "nl",
+  "es",
+  "it",
+  "pt",
+  "tr",
+] as const;
+
+export const LocaleSchema = z.enum(LOCALES);
+export type Locale = z.infer<typeof LocaleSchema>;
+
+// --- conditions -------------------------------------------------------------
+//
+// Conditions live on edges. The old model expressed branching with dedicated
+// `split-answer` / `split-result` / `split-points` nodes; an edge-level
+// condition says the same thing with one concept instead of four.
+
+/** A value pulled out of the running attempt for a condition to compare. */
+export const ValueRefSchema = z.union([
+  z.object({
+    kind: z.literal("answer"),
+    nodeId: z.string().min(1),
+    /** Dot path into the answer object, e.g. `"checked.0"`. */
+    path: z.string().optional(),
+  }),
+  z.object({
+    kind: z.literal("result"),
+    nodeId: z.string().min(1),
+    /** Dot path into the result, e.g. `"state"`. */
+    path: z.string().optional(),
+  }),
+  z.object({
+    kind: z.literal("tries"),
+    nodeId: z.string().min(1),
+  }),
+  /** Points earned so far across the whole attempt. */
+  z.object({ kind: z.literal("score") }),
+  /** Earned/possible so far, in `[0, 1]`. `0` when nothing is scorable yet. */
+  z.object({ kind: z.literal("scoreRatio") }),
+]);
+export type ValueRef = z.infer<typeof ValueRefSchema>;
+
+export const COMPARE_OPS = [
+  "eq",
+  "ne",
+  "gt",
+  "gte",
+  "lt",
+  "lte",
+  "in",
+  "notIn",
+  "isTrue",
+] as const;
+export const CompareOpSchema = z.enum(COMPARE_OPS);
+export type CompareOp = z.infer<typeof CompareOpSchema>;
+
+const ComparableSchema = z.union([z.string(), z.number(), z.boolean()]);
+export type Comparable = z.infer<typeof ComparableSchema>;
+
+export type Condition =
+  | { type: "always" }
+  | {
+      type: "compare";
+      left: ValueRef;
+      op: CompareOp;
+      right?: Comparable | Comparable[];
+    }
+  | { type: "and"; conditions: Condition[] }
+  | { type: "or"; conditions: Condition[] }
+  | { type: "not"; condition: Condition };
+
+export const ConditionSchema: z.ZodType<Condition> = z.lazy(() =>
+  z.union([
+    z.object({ type: z.literal("always") }),
+    z.object({
+      type: z.literal("compare"),
+      left: ValueRefSchema,
+      op: CompareOpSchema,
+      right: z
+        .union([ComparableSchema, z.array(ComparableSchema)])
+        .optional(),
+    }),
+    z.object({
+      type: z.literal("and"),
+      conditions: z.array(ConditionSchema),
+    }),
+    z.object({
+      type: z.literal("or"),
+      conditions: z.array(ConditionSchema),
+    }),
+    z.object({ type: z.literal("not"), condition: ConditionSchema }),
+  ]),
+);
+
+// --- document ---------------------------------------------------------------
+
+export const PositionSchema = z.object({ x: z.number(), y: z.number() });
+export type Position = z.infer<typeof PositionSchema>;
+
+/**
+ * A node in the flow. `type` names a bit ("task-choice", "title-simple", …)
+ * and `data` is owned by that bit's own schema — the envelope deliberately
+ * does not look inside it, so a document round-trips through a host that has
+ * not loaded every bit package.
+ */
+export const BitNodeSchema = z.object({
+  id: z.string().min(1),
+  type: z.string().min(1),
+  position: PositionSchema,
+  data: z.record(z.string(), z.unknown()).default({}),
+});
+export type BitNode = z.infer<typeof BitNodeSchema>;
+
+export const BitEdgeSchema = z.object({
+  id: z.string().min(1),
+  source: z.string().min(1),
+  target: z.string().min(1),
+  sourceHandle: z.string().optional(),
+  targetHandle: z.string().optional(),
+  /** Shown on the canvas; useful to label the two sides of a branch. */
+  label: z.string().optional(),
+  /** Absent means "always follow". */
+  condition: ConditionSchema.optional(),
+});
+export type BitEdge = z.infer<typeof BitEdgeSchema>;
+
+export const ViewportSchema = z.object({
+  x: z.number(),
+  y: z.number(),
+  zoom: z.number().positive(),
+});
+export type Viewport = z.infer<typeof ViewportSchema>;
+
+export const BitflowMetaSchema = z.object({
+  /**
+   * Stable identity of the assessment. An attempt snapshot records it so a
+   * host cannot restore an attempt into a different flow.
+   */
+  id: z.string().min(1),
+  title: z.string().default(""),
+  description: z.string().optional(),
+  locale: LocaleSchema.default("en"),
+});
+export type BitflowMeta = z.infer<typeof BitflowMetaSchema>;
+
+export const BitflowDocumentSchema = z.object({
+  version: z.literal(FLOW_SCHEMA_VERSION),
+  meta: BitflowMetaSchema,
+  nodes: z.array(BitNodeSchema),
+  edges: z.array(BitEdgeSchema),
+  /** Editor camera. Presentation only; never affects a learner's run. */
+  viewport: ViewportSchema.optional(),
+});
+export type BitflowDocument = z.infer<typeof BitflowDocumentSchema>;
+
+// --- bit results ------------------------------------------------------------
+
+export const FeedbackMessageSchema = z.object({
+  message: z.string(),
+  severity: z.enum(["error", "warning", "info", "success"]),
+});
+export type FeedbackMessage = z.infer<typeof FeedbackMessageSchema>;
+
+export const BIT_RESULT_STATES = [
+  "correct",
+  "wrong",
+  /** Not scorable, e.g. a free-text answer nobody graded. */
+  "unknown",
+  /** Needs a human grader. */
+  "manual",
+] as const;
+export const BitResultStateSchema = z.enum(BIT_RESULT_STATES);
+export type BitResultState = z.infer<typeof BitResultStateSchema>;
+
+export const BitResultSchema = z.object({
+  state: BitResultStateSchema,
+  /** Omitted means "worth one point, earned iff correct". */
+  score: z
+    .object({ earned: z.number(), possible: z.number().nonnegative() })
+    .optional(),
+  feedback: z.array(FeedbackMessageSchema).optional(),
+  /** Whether the learner may try again, when the bit allows retries at all. */
+  allowRetry: z.boolean().optional(),
+  /** Bit-specific extras, e.g. which choices were right. */
+  detail: z.record(z.string(), z.unknown()).optional(),
+});
+export type BitResult = z.infer<typeof BitResultSchema>;
+
+// --- attempt snapshot -------------------------------------------------------
+
+/**
+ * Version of the attempt snapshot format, independent of the document format.
+ */
+export const ATTEMPT_SCHEMA_VERSION = 1;
+
+export const ConfidenceSchema = z.object({
+  /** `0`–`1`; how sure the learner said they were. */
+  level: z.number().min(0).max(1),
+});
+export type Confidence = z.infer<typeof ConfidenceSchema>;
+
+export const AttemptStatusSchema = z.enum([
+  "inProgress",
+  "completed",
+  "abandoned",
+]);
+export type AttemptStatus = z.infer<typeof AttemptStatusSchema>;
+
+/**
+ * Everything needed to resume a run. Serializable by construction: the host
+ * persists it verbatim (see `bitflow-statechange`) and hands it back later.
+ *
+ * `history`, `elapsedMs` and `enteredAt` are part of version 1 because
+ * "go back" and per-node timings cannot be reconstructed from the graph once
+ * branching is condition-driven.
+ */
+export const AttemptSnapshotSchema = z.object({
+  schemaVersion: z.literal(ATTEMPT_SCHEMA_VERSION),
+  flowId: z.string().min(1),
+  flowSchemaVersion: z.number().int(),
+  attemptId: z.string().min(1),
+  status: AttemptStatusSchema,
+  currentNodeId: z.string().min(1),
+  /** Visited node ids, oldest first, including the current one. */
+  history: z.array(z.string().min(1)),
+  answers: z.record(z.string(), z.unknown()),
+  results: z.record(z.string(), BitResultSchema),
+  tries: z.record(z.string(), z.number().int().nonnegative()),
+  elapsedMs: z.record(z.string(), z.number().nonnegative()),
+  confidence: z.record(z.string(), ConfidenceSchema).optional(),
+  reasoning: z.record(z.string(), z.string()).optional(),
+  startedAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
+  /** Timestamp the current node was entered; drives `elapsedMs`. */
+  enteredAt: z.iso.datetime(),
+  completedAt: z.iso.datetime().optional(),
+});
+export type AttemptSnapshot = z.infer<typeof AttemptSnapshotSchema>;

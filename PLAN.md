@@ -490,17 +490,49 @@ approach:
   package layout, mirroring java-memory-playground's changeset-based
   release flow.
 
+## Implementation Decisions & Deviations
+
+Recorded per "How to Use This Plan" step 4 — where implementation diverged
+from the text above, and why.
+
+1. **OpenPatch Green is `#017460`, not `#007864`.** The plan quoted the wrong
+   hex. `../branding/colors/openpatch.gpl` defines it as `1 116 96`. Every
+   other colour in the plan matched the palette; only this one did not. The
+   branding file wins.
+2. **Branching moved from control-flow nodes onto edge conditions.** The old
+   model needed four node types (`split-answer`, `split-result`,
+   `split-points`, `split-random`) plus `portal-input`/`portal-output` to
+   express routing. `BitEdge.condition` (already in the plan's data model) says
+   the same thing with one concept, so those six node types are not ported.
+   Portals were purely a canvas-tidiness device and are replaced by ordinary
+   edges. `split-random` is dropped outright: no listed bit needs it, and
+   random routing makes an attempt non-reproducible from its snapshot.
+   Conditions gained `and`/`or`/`not` nesting, which the old flat model lacked.
+3. **`AttemptSnapshot` v1 carries `history`, `elapsedMs` and `enteredAt`**
+   beyond the fields listed in `IMPLEMENTATION_HANDOFF.md` §2. "Go back" cannot
+   be derived by walking edges backwards once branching is condition-driven,
+   and `AttemptReport.nodeReports[].elapsedMs` has nowhere else to come from.
+   All three are part of `schemaVersion: 1`.
+4. **Old packages are parked in `legacy/`, not deleted in todo 1.** They are
+   the reference for porting bit behaviour, so they stay readable on disk until
+   todo 10 removes them. They are outside every workspace glob and build
+   nothing.
+5. **Golden fixtures (handoff §3) land with todo 6, not todo 1.** Their `data`
+   payloads are bit-owned, so they cannot be written before the bit schemas
+   exist. Envelope/engine coverage in the meantime comes from
+   `bitflow-core/src/test-utils.ts`.
+
 ## Todos
 
 Execute in this order (later items depend on earlier ones being done first,
 as noted). Each todo should be tracked to completion before moving on.
 
-- [ ] **0. Commit this plan into the repo** (`commit-plan`)
+- [x] **0. Commit this plan into the repo** (`commit-plan`)
   - Copy this file to `PLAN.md` at the bitflow repo root (already done once
     plan mode is exited) and commit it, so the plan travels with the repo
     for whichever AI/session picks up the implementation.
 
-- [ ] **1. Scaffold new repo layout and tooling** (`scaffold-repo-layout`)
+- [x] **1. Scaffold new repo layout and tooling** (`scaffold-repo-layout`)
   - Create `packages/` and `platforms/` directories mirroring
     `java-memory-playground`'s top-level layout.
   - Set up the pnpm workspace (`pnpm-workspace.yaml`), Vite in library mode
@@ -545,7 +577,7 @@ as noted). Each todo should be tracked to completion before moving on.
   - Confirm no `@openpatch/patches` or `@emotion/*` dependency remains
     anywhere in the new packages.
 
-- [ ] **3. Build `bitflow-core` package** (`build-bitflow-core`) — depends on 1
+- [x] **3. Build `bitflow-core` package** (`build-bitflow-core`) — depends on 1
   - Pure TypeScript, no React, no patches/emotion.
   - New `.bitflow` envelope schema: `{ version, meta, nodes: BitNode[],
     edges: BitEdge[] }`, `BitNode { id, type, position, data }`,

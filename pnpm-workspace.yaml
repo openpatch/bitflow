@@ -1,7 +1,21 @@
 packages:
-  # all packages in subdirs of packages/ and components/
-  - 'packages/*'
-  - 'examples/*'
-  - 'website'
-  # exclude packages that are inside test directories
+  - packages/*
+  - packages/bits/*
+  - platforms/*
   - '!**/test/**'
+
+# Which dependencies may run install scripts, spelled for three pnpm majors at
+# once, because the deployment floor and what a contributor has installed are
+# not the same version. pnpm 9 runs install scripts anyway and reads neither
+# key; pnpm 10 reads `onlyBuiltDependencies`; pnpm 11 reads `allowBuilds` and
+# refuses the install if a package it has not been told about wants to build.
+# Keep the two lists in step.
+onlyBuiltDependencies:
+  - esbuild
+  - '@vscode/vsce-sign'
+  - keytar
+
+allowBuilds:
+  '@vscode/vsce-sign': true
+  esbuild: true
+  keytar: true

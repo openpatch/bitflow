@@ -1,43 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "esnext",
-    "lib": ["dom", "esnext"],
-    "noEmitOnError": true,
-    "declaration": true,
-    "declarationMap": false,
-
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "strict": true,
-    "noFallthroughCasesInSwitch": true,
-    "downlevelIteration": true,
-    "noImplicitAny": true,
-    "resolveJsonModule": true,
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
     "skipLibCheck": true,
-    "sourceMap": false,
-    "strictBindCallApply": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "suppressImplicitAnyIndexErrors": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
 
-    "preserveSymlinks": true,
-
-    "paths": {
-      "@bitflow/*": ["./packages/*"]
-    },
-
-    "typeRoots": ["./node_modules/@types", "./types"],
-
-    "plugins": [
-      {
-        "name": "typescript-styled-plugin"
-      }
-    ]
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   }
 }

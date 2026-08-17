@@ -1,0 +1,100 @@
+/**
+ * bitflow design tokens.
+ *
+ * Replaces the Emotion-based `@openpatch/patches` theme. Values are taken from
+ * `../branding/colors/openpatch.gpl` for colour and reconstructed from the old
+ * patches `base` theme for radii/shadows/type, so the rewrite keeps the same
+ * rounded, soft-shadowed feel.
+ *
+ * Declared on `:root` *and* `:host` on purpose. Custom properties inherit
+ * through a shadow boundary, so `:root` alone is enough whenever the host page
+ * loads this file. The `:host` copy is what makes a single bit element work
+ * when it is dropped on a page that only loaded that one bundle.
+ */
+:root,
+:host {
+  /* Brand — branding/colors/openpatch.gpl */
+  --bitflow-color-primary: #017460; /* OpenPatch Green */
+  --bitflow-color-primary-dark: #004c45; /* Deep Forest */
+  --bitflow-color-primary-light: #b5e3d8; /* Fresh Mint */
+
+  --bitflow-color-neutral-900: #242428; /* Coal */
+  --bitflow-color-neutral-700: #3c3c3c; /* Charcoal */
+  --bitflow-color-neutral-400: #a4a4a4; /* Quicksilver */
+  --bitflow-color-neutral-200: #d6d6d6; /* Silver Charlice */
+  --bitflow-color-neutral-100: #f5f5f5; /* Whitesmoke */
+  --bitflow-color-black: #000000;
+  --bitflow-color-white: #ffffff;
+
+  /* Semantic feedback. Correct reuses the brand green so "right" and "action"
+     read as the same family; the rest are muted so feedback never shouts. */
+  --bitflow-color-correct: #017460;
+  --bitflow-color-correct-surface: #e6f2ef;
+  --bitflow-color-wrong: #a3282d;
+  --bitflow-color-wrong-surface: #f8eaea;
+  --bitflow-color-warning: #8a6100;
+  --bitflow-color-warning-surface: #fbf2df;
+  --bitflow-color-info: #1f5673;
+  --bitflow-color-info-surface: #e8f0f4;
+  --bitflow-color-unknown: var(--bitflow-color-neutral-400);
+  --bitflow-color-manual: #5a4b8a;
+  --bitflow-color-manual-surface: #eeebf6;
+
+  /* Surfaces */
+  --bitflow-color-background: var(--bitflow-color-neutral-100);
+  --bitflow-color-surface: var(--bitflow-color-white);
+  --bitflow-color-border: var(--bitflow-color-neutral-200);
+  --bitflow-color-text: var(--bitflow-color-neutral-900);
+  --bitflow-color-text-muted: var(--bitflow-color-neutral-700);
+
+  /* Type */
+  --bitflow-font-family: "Montserrat", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --bitflow-font-family-mono: "Ubuntu Mono", Menlo, Consolas, monospace;
+  --bitflow-font-size-small: 14px;
+  --bitflow-font-size-standard: 16px;
+  --bitflow-font-size-large: 20px;
+  --bitflow-font-size-xlarge: 24px;
+  --bitflow-font-weight-standard: 400;
+  --bitflow-font-weight-medium: 500;
+  --bitflow-font-weight-bold: 700;
+  --bitflow-line-height-standard: 1.5;
+  --bitflow-line-height-tight: 1.25;
+
+  /* Space */
+  --bitflow-space-xxsmall: 4px;
+  --bitflow-space-xsmall: 8px;
+  --bitflow-space-small: 16px;
+  --bitflow-space-medium: 24px;
+  --bitflow-space-large: 32px;
+  --bitflow-space-xlarge: 48px;
+
+  /* Shape */
+  --bitflow-radius-small: 4px;
+  --bitflow-radius-standard: 8px;
+  --bitflow-radius-large: 12px;
+  --bitflow-radius-full: 9999px;
+  --bitflow-border-width: 2px;
+
+  --bitflow-shadow-standard: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --bitflow-shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --bitflow-shadow-outline: 0 0 0 3px rgba(1, 116, 96, 0.4);
+
+  /* Layout */
+  --bitflow-max-width-content: 720px;
+
+  /* Motion. Every animation in bitflow multiplies its duration by this, so the
+     reduced-motion override below switches the whole library off at once. */
+  --bitflow-motion-scale: 1;
+  --bitflow-duration-fast: calc(120ms * var(--bitflow-motion-scale));
+  --bitflow-duration-standard: calc(200ms * var(--bitflow-motion-scale));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root,
+  :host {
+    --bitflow-motion-scale: 0;
+  }
+}
