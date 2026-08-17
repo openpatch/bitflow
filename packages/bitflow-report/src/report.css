@@ -1,0 +1,72 @@
+@import "@bitflow/core/theme.css";
+
+.bitflow-report {
+  padding: var(--bitflow-space-medium) var(--bitflow-space-small);
+}
+
+.bitflow-report-score {
+  font-size: var(--bitflow-font-size-xlarge);
+  font-weight: var(--bitflow-font-weight-bold);
+  margin: 0;
+}
+
+/* Tables scroll inside their own box rather than pushing the page sideways —
+   a class of thirty with eight tasks is wider than a phone. */
+.bitflow-table-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.bitflow-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-table th,
+.bitflow-table td {
+  text-align: left;
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  border-bottom: 1px solid var(--bitflow-color-border);
+  white-space: nowrap;
+}
+
+.bitflow-table thead th {
+  color: var(--bitflow-color-text-muted);
+  font-weight: var(--bitflow-font-weight-medium);
+  border-bottom: var(--bitflow-border-width) solid var(--bitflow-color-neutral-400);
+}
+
+.bitflow-table tbody th {
+  font-weight: var(--bitflow-font-weight-medium);
+}
+
+.bitflow-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+.bitflow-stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--bitflow-space-small);
+  margin: 0;
+}
+
+.bitflow-stat {
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  padding: var(--bitflow-space-small);
+}
+
+.bitflow-stat-label {
+  color: var(--bitflow-color-text-muted);
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-stat-value {
+  margin: 0;
+  font-size: var(--bitflow-font-size-large);
+  font-weight: var(--bitflow-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}

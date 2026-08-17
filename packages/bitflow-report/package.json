@@ -1,0 +1,66 @@
+{
+  "name": "@bitflow/report",
+  "version": "0.0.0",
+  "author": "Mike Barkmin",
+  "description": "Per-attempt reports and client-side cohort statistics for bitflow.",
+  "homepage": "https://github.com/openpatch/bitflow#readme",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./index.css": "./dist/index.css"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openpatch/bitflow.git",
+    "directory": "packages/bitflow-report"
+  },
+  "bugs": {
+    "url": "https://github.com/openpatch/bitflow/issues"
+  },
+  "scripts": {
+    "version": "pnpm build",
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "rimraf dist && vite build && pnpm build:types",
+    "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly",
+    "dev": "vite build --watch"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@bitflow/core": "workspace:*",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^5.2.0",
+    "jsdom": "^28.0.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "rimraf": "^6.1.3",
+    "typescript": "^7.0.2",
+    "vite": "^7.3.6",
+    "vitest": "^4.1.10"
+  }
+}
