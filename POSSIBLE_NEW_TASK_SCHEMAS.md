@@ -522,6 +522,213 @@ Learner answer: `{ "numerator": 2, "denominator": 3 }`.
 
 Learner answer: `{ "membership": { "six": ["even", "multiple-of-three"], "four": ["even"] } }`.
 
+## Table Completion — `task-table-completion`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Complete the trace table.",
+  "columns": [{ "id": "step", "label": "Step" }, { "id": "total", "label": "total" }],
+  "rows": [
+    {
+      "id": "row-1",
+      "cells": {
+        "step": { "kind": "fixed", "value": "1" },
+        "total": { "kind": "input", "expected": "3", "valueType": "integer" }
+      }
+    }
+  ],
+  "evaluation": { "scorePerCell": 1, "feedbackMode": "onSubmit" }
+}
+```
+
+Learner answer: `{ "cells": { "row-1:total": "3" } }`.
+
+## Proof Builder — `task-proof-builder`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Arrange the proof steps.",
+  "steps": [
+    { "id": "given", "text": "n is even", "initial": true },
+    { "id": "exists-k", "text": "There exists k such that n = 2k" },
+    { "id": "square", "text": "n² = 4k²", "accepting": true },
+    { "id": "distractor", "text": "n is prime", "distractor": true }
+  ],
+  "validTransitions": [
+    { "fromId": "given", "toId": "exists-k" },
+    { "fromId": "exists-k", "toId": "square" }
+  ],
+  "evaluation": { "requireAcceptingStep": true, "feedbackMode": "onSubmit" }
+}
+```
+
+Learner answer: `{ "stepIds": ["given", "exists-k", "square"] }`.
+
+## Regular Expression — `task-regular-expression`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Match a binary number ending in 1.",
+  "regexGrammar": "safeRegexV1",
+  "requiredMatches": ["1", "101", "0001"],
+  "requiredNonMatches": ["", "0", "102"],
+  "allowedFlags": [],
+  "evaluation": { "maximumPatternLength": 100, "feedbackMode": "onSubmit" }
+}
+```
+
+Learner answer: `{ "pattern": "[01]*1", "flags": [] }`.
+
+`safeRegexV1` must be a restricted grammar/safe engine with bounded execution;
+it is not unconstrained JavaScript `RegExp`.
+
+## SQL Result Prediction — `task-sql-result`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Predict the query result.",
+  "tables": [
+    {
+      "name": "students",
+      "columns": ["id", "name"],
+      "rows": [[1, "Ada"], [2, "Grace"]]
+    }
+  ],
+  "query": "SELECT name FROM students ORDER BY id",
+  "expectedResult": {
+    "columns": ["name"],
+    "rows": [["Ada"], ["Grace"]]
+  },
+  "input": { "mode": "table" },
+  "evaluation": { "rowOrderMatters": true, "feedbackMode": "onSubmit" }
+}
+```
+
+Learner answer: `{ "columns": ["name"], "rows": [["Ada"], ["Grace"]] }`.
+
+## Boolean Circuit Builder — `task-circuit-builder`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Build a circuit for A AND B.",
+  "inputs": [{ "id": "a", "label": "A" }, { "id": "b", "label": "B" }],
+  "outputs": [{ "id": "out", "label": "Output" }],
+  "availableGates": ["and", "or", "not"],
+  "limits": { "maximumGates": 3, "allowCycles": false },
+  "testCases": [
+    { "inputs": { "a": false, "b": true }, "expectedOutputs": { "out": false } },
+    { "inputs": { "a": true, "b": true }, "expectedOutputs": { "out": true } }
+  ],
+  "evaluation": { "feedbackMode": "onSubmit" }
+}
+```
+
+Learner answer: `{ "gates": [{ "id": "g1", "kind": "and" }], "wires": [{ "from": "a:out", "to": "g1:in1" }, { "from": "g1:out", "to": "out:in" }] }`.
+
+## Network Topology — `task-network-topology`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Connect both PCs through the switch.",
+  "components": [
+    { "id": "pc-1", "kind": "host", "ports": ["eth0"] },
+    { "id": "pc-2", "kind": "host", "ports": ["eth0"] },
+    { "id": "switch", "kind": "switch", "ports": ["p1", "p2"] }
+  ],
+  "rules": {
+    "requiredReachability": [["pc-1", "pc-2"]],
+    "maximumDegree": { "pc-1": 1, "pc-2": 1 },
+    "forbiddenEdges": [["pc-1", "pc-2"]]
+  },
+  "evaluation": { "feedbackMode": "onSubmit" }
+}
+```
+
+Learner answer: `{ "connections": [{ "from": "pc-1:eth0", "to": "switch:p1" }, { "from": "pc-2:eth0", "to": "switch:p2" }] }`.
+
+## Complexity Classification — `task-complexity-classification`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Match each algorithm to its time complexity.",
+  "snippets": [
+    { "id": "binary-search", "label": "Binary search" },
+    { "id": "nested-loop", "label": "Two nested loops over n" }
+  ],
+  "classes": [
+    { "id": "log-n", "label": "O(log n)" },
+    { "id": "n-squared", "label": "O(n²)" }
+  ],
+  "acceptedMatches": [
+    { "snippetId": "binary-search", "classId": "log-n" },
+    { "snippetId": "nested-loop", "classId": "n-squared" }
+  ],
+  "evaluation": { "feedbackMode": "onSubmit", "scorePerMatch": 1 }
+}
+```
+
+Learner answer: `{ "matches": [{ "snippetId": "binary-search", "classId": "log-n" }] }`.
+
+## Bug Finder — `task-bug-finder`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Find the bugs in this code.",
+  "language": "python",
+  "lines": [
+    { "id": "line-1", "number": 1, "text": "for i in range(10):" },
+    { "id": "line-2", "number": 2, "text": "print(i + 1)" }
+  ],
+  "bugs": [
+    { "id": "off-by-one", "lineId": "line-2", "feedback": "This changes the printed range." }
+  ],
+  "evaluation": { "requiredBugIds": ["off-by-one"], "falsePositivePenalty": 0, "feedbackMode": "onSubmit" }
+}
+```
+
+Learner answer: `{ "selectedIds": ["line-2"] }`.
+
+## Coordinate Transformations — `task-coordinate-transform`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Rotate point A 90° counterclockwise around the origin.",
+  "viewport": { "xMin": -5, "xMax": 5, "yMin": -5, "yMax": 5 },
+  "sourcePoints": [{ "id": "a", "x": 2, "y": 1 }],
+  "transformations": [{ "kind": "rotate", "degrees": 90, "origin": { "x": 0, "y": 0 } }],
+  "expectedPoints": [{ "id": "a", "x": -1, "y": 2 }],
+  "evaluation": { "tolerance": 0, "feedbackMode": "onSubmit" }
+}
+```
+
+Learner answer: `{ "points": [{ "id": "a", "x": -1, "y": 2 }] }`.
+
+## Matrix Operations — `task-matrix`
+
+```json
+{
+  "schemaVersion": 1,
+  "prompt": "Multiply the two matrices.",
+  "operation": "multiply",
+  "left": [[1, 2], [3, 4]],
+  "right": [[2, 0], [1, 2]],
+  "expected": [[4, 4], [10, 8]],
+  "input": { "valueType": "rational" },
+  "evaluation": { "feedbackMode": "onSubmit", "scorePerCell": 1 }
+}
+```
+
+Learner answer: `{ "matrix": [[4, 4], [10, 8]] }`.
+
 ## Suggested Priority
 
 Use the ordering in [`POSSIBLE_NEW_TASKS.md`](POSSIBLE_NEW_TASKS.md). Schemas

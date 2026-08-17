@@ -384,6 +384,120 @@ intersection, complement, and relation properties against finite
 author-provided sets entirely in the browser. Provide list/select controls in
 addition to a visual Venn diagram.
 
+### Table Completion
+
+**Suggested type:** `task-table-completion`
+
+Ask learners to fill missing cells in an authored table: program traces, truth
+tables, dynamic-programming tables, frequency tables, or conversion tables.
+
+Authors provide fixed rows/columns, cell types, and expected values or a
+finite client-side formula for each editable cell. The learner answer is a
+cell-ID-to-value map. Evaluate each normalized value locally and support
+partial credit per cell.
+
+### Proof Builder
+
+**Suggested type:** `task-proof-builder`
+
+Ask learners to arrange/select valid steps in a mathematical proof, logical
+derivation, or algorithm correctness argument.
+
+Authors provide a finite graph of valid proof states/transitions and optional
+distractor steps. Evaluate the selected step-ID sequence against that graph in
+the browser; do not attempt unrestricted natural-language proof grading.
+
+### Regular Expression
+
+**Suggested type:** `task-regular-expression`
+
+Ask learners to write a regular expression that accepts required strings and
+rejects forbidden strings.
+
+Evaluation uses a deliberately restricted, browser-safe regex grammar or a
+safe regex engine with bounded execution—not JavaScript `RegExp` over
+untrusted patterns without safeguards. Authors provide finite required and
+forbidden test strings; the learner answer is the pattern plus enabled flags.
+
+### SQL Result Prediction
+
+**Suggested type:** `task-sql-result`
+
+Show an authored SQL query and database tables, then ask the learner to
+predict the output rows/columns or choose from candidate result tables.
+
+Authors provide the expected normalized result table. Evaluate the learner's
+submitted table/candidate selection against it in the browser; never execute
+learner SQL or require a database server.
+
+### Boolean Circuit Builder
+
+**Suggested type:** `task-circuit-builder`
+
+Ask learners to connect authored input/output nodes and supported Boolean
+gates into a circuit.
+
+The learner answer is a graph of stable node/port IDs. Evaluate only an
+allow-listed set of gates against a finite author-provided truth-table test
+set in the browser; detect cycles and invalid ports before evaluation.
+
+### Network Topology
+
+**Suggested type:** `task-network-topology`
+
+Ask learners to place/connect hosts, switches, routers, or services according
+to an authored topology requirement.
+
+The learner answer is a graph of component/port IDs. Evaluate declarative
+client-side rules such as required/forbidden edges, maximum degree, reachability,
+subnet membership, and redundancy; do not simulate arbitrary network traffic.
+
+### Complexity Classification
+
+**Suggested type:** `task-complexity-classification`
+
+Ask learners to match algorithms or short code snippets to time/space
+complexity classes.
+
+Use deterministic matching: authors define snippet IDs, accepted complexity
+class IDs, and optional explanation keywords. Do not infer complexity by
+executing or statically analyzing arbitrary learner code.
+
+### Bug Finder
+
+**Suggested type:** `task-bug-finder`
+
+Ask learners to select one or more faulty lines in code, a malformed formula,
+or incorrect regions in a diagram.
+
+The learner answer is a set of stable line/region IDs. This reuses the
+hotspot-selection interaction for diagrams and line-selection for code, but
+has distinct evaluation semantics: authors configure required bugs, optional
+false-positive penalties, and per-bug feedback.
+
+### Coordinate Transformations
+
+**Suggested type:** `task-coordinate-transform`
+
+Ask learners to translate, rotate, reflect, or scale points/shapes on a
+coordinate plane.
+
+Authors define the source geometry and transformation(s); the learner submits
+normalized or mathematical coordinates. Evaluate with exact rational/integer
+arithmetic where possible and configurable tolerance otherwise. Provide
+keyboard coordinate entry.
+
+### Matrix Operations
+
+**Suggested type:** `task-matrix`
+
+Ask learners to calculate an authored matrix operation, determinant, inverse,
+or geometric transformation result.
+
+Authors provide finite matrices and an allowed operation; the learner submits
+a matrix/cell map. Evaluate using exact integer/rational arithmetic in the
+browser, with no server algebra service.
+
 ## Suggested Priority
 
 1. Drag and Drop Hotspots
@@ -404,3 +518,13 @@ addition to a visual Venn diagram.
 16. Boolean Logic and Truth Tables
 17. Equation Transformation Steps
 18. Fractions and Number Lines
+19. Table Completion
+20. Proof Builder
+21. Regular Expression
+22. SQL Result Prediction
+23. Boolean Circuit Builder
+24. Network Topology
+25. Complexity Classification
+26. Bug Finder
+27. Coordinate Transformations
+28. Matrix Operations
