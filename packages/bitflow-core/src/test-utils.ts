@@ -31,7 +31,13 @@ export const doc = (
   id = "test-flow",
 ): BitflowDocument => ({
   version: FLOW_SCHEMA_VERSION,
-  meta: { id, title: "Test flow", locale: "en" },
+  meta: {
+    id,
+    title: "Test flow",
+    locale: "en",
+    askConfidence: false,
+    askReasoning: false,
+  },
   nodes,
   edges,
 });

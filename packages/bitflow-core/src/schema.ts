@@ -151,6 +151,14 @@ export const BitflowMetaSchema = z.object({
   title: z.string().default(""),
   description: z.string().optional(),
   locale: LocaleSchema.default("en"),
+  /**
+   * Ask the learner how sure they are after each task. A whole-flow setting
+   * rather than a per-task one: being asked on some questions and not others
+   * reads as a hint about which ones are hard.
+   */
+  askConfidence: z.boolean().default(false),
+  /** Ask the learner to explain their reasoning after each task. */
+  askReasoning: z.boolean().default(false),
 });
 export type BitflowMeta = z.infer<typeof BitflowMetaSchema>;
 

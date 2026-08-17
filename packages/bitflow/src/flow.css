@@ -1,0 +1,294 @@
+@import "@bitflow/core/theme.css";
+
+/* --- learner shell -------------------------------------------------------- */
+
+.bitflow-shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-medium);
+  min-height: 100%;
+  background: var(--bitflow-color-background);
+  padding-bottom: var(--bitflow-space-medium);
+}
+
+.bitflow-shell-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-medium);
+  padding-inline: var(--bitflow-space-small);
+}
+
+.bitflow-shell-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--bitflow-space-small);
+  padding-inline: var(--bitflow-space-small);
+}
+
+.bitflow-progress {
+  width: 100%;
+}
+
+/* `<progress>` needs both the WebKit/Blink pseudo-elements and the Firefox one
+   to be restyled; there is no single cross-browser property for the fill. */
+.bitflow-progress-bar {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 5px;
+  border: 0;
+  background: var(--bitflow-color-neutral-200);
+  color: var(--bitflow-color-primary);
+}
+
+.bitflow-progress-bar::-webkit-progress-bar {
+  background: var(--bitflow-color-neutral-200);
+}
+
+.bitflow-progress-bar::-webkit-progress-value {
+  background: var(--bitflow-color-primary);
+  transition: width var(--bitflow-duration-standard) ease-out;
+}
+
+.bitflow-progress-bar::-moz-progress-bar {
+  background: var(--bitflow-color-primary);
+}
+
+/* --- confidence ----------------------------------------------------------- */
+
+.bitflow-confidence {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-confidence-levels {
+  display: flex;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-confidence-level {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--bitflow-radius-full);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  background: var(--bitflow-color-surface);
+  cursor: pointer;
+  font-weight: var(--bitflow-font-weight-medium);
+}
+
+/* The scale runs from unsure to sure. Only the checked one is tinted, so the
+   row reads as a scale rather than a traffic light the learner must decode. */
+.bitflow-confidence-level:has(:checked) {
+  border-color: var(--bitflow-color-primary);
+  background: var(--bitflow-color-primary-light);
+}
+
+.bitflow-confidence-level:has(:focus-visible) {
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+/* --- editor --------------------------------------------------------------- */
+
+.bitflow-editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  min-height: 420px;
+  background: var(--bitflow-color-background);
+}
+
+.bitflow-editor-toolbar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+  padding: var(--bitflow-space-xsmall) var(--bitflow-space-small);
+  border-bottom: 1px solid var(--bitflow-color-border);
+  background: var(--bitflow-color-surface);
+  flex-wrap: wrap;
+}
+
+.bitflow-editor-canvas {
+  min-width: 0;
+  min-height: 0;
+}
+
+.bitflow-editor-sidebar {
+  border-left: 1px solid var(--bitflow-color-border);
+  background: var(--bitflow-color-surface);
+  padding: var(--bitflow-space-small);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-medium);
+}
+
+/* Below a tablet the sidebar cannot sit beside the canvas and stay usable, so
+   it stacks underneath instead. */
+@media (max-width: 900px) {
+  .bitflow-editor {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(240px, 1fr) auto;
+  }
+
+  .bitflow-editor-sidebar {
+    border-left: 0;
+    border-top: 1px solid var(--bitflow-color-border);
+    max-height: 50vh;
+  }
+}
+
+.bitflow-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-palette-item {
+  font: inherit;
+  font-size: var(--bitflow-font-size-small);
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  background: var(--bitflow-color-surface);
+  cursor: pointer;
+}
+
+.bitflow-palette-item:hover {
+  border-color: var(--bitflow-color-primary);
+}
+
+.bitflow-preview {
+  position: absolute;
+  inset: 0;
+  background: var(--bitflow-color-background);
+  overflow-y: auto;
+  z-index: 5;
+}
+
+/* --- react-flow overrides -------------------------------------------------
+ * A one-for-one port of the old Emotion `Styles.tsx`, with `--bitflow-*` in
+ * place of the patches theme tokens. Same rounded nodes, bordered handles,
+ * outline on selection and bold edge labels as before.
+ * ------------------------------------------------------------------------ */
+
+.bitflow-editor .react-flow__node {
+  border-radius: var(--bitflow-radius-standard);
+  font-family: var(--bitflow-font-family);
+  font-size: var(--bitflow-font-size-standard);
+}
+
+.bitflow-editor .react-flow__node.selected {
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+.bitflow-editor .react-flow__handle {
+  width: 12px;
+  height: 12px;
+  background-color: var(--bitflow-color-neutral-100);
+  border: 2px solid var(--bitflow-color-neutral-900);
+  border-radius: var(--bitflow-radius-small);
+}
+
+.bitflow-editor .react-flow__handle-left {
+  left: -10px;
+}
+
+.bitflow-editor .react-flow__handle-right {
+  right: -10px;
+}
+
+.bitflow-editor .react-flow__edge-path,
+.bitflow-editor .react-flow__connection-path {
+  stroke-width: 4;
+}
+
+.bitflow-editor .react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--bitflow-color-neutral-900);
+}
+
+.bitflow-editor .react-flow__edge-text {
+  font-size: var(--bitflow-font-size-large);
+  font-weight: var(--bitflow-font-weight-bold);
+  stroke: #fff;
+  stroke-width: 1.2;
+}
+
+.bitflow-editor .react-flow__edge-textbg {
+  fill: transparent;
+}
+
+.bitflow-editor .react-flow__minimap {
+  border: 2px solid var(--bitflow-color-neutral-400);
+  border-radius: var(--bitflow-radius-small);
+  box-shadow: var(--bitflow-shadow-standard);
+}
+
+/* --- flow nodes ----------------------------------------------------------- */
+
+.bitflow-node {
+  min-width: 160px;
+  max-width: 240px;
+  padding: var(--bitflow-space-xsmall) var(--bitflow-space-small);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  background: var(--bitflow-color-surface);
+  box-shadow: var(--bitflow-shadow-standard);
+}
+
+.bitflow-node-start {
+  border-color: var(--bitflow-color-primary);
+}
+
+.bitflow-node-end {
+  border-color: var(--bitflow-color-neutral-900);
+}
+
+.bitflow-node-invalid {
+  border-color: var(--bitflow-color-wrong);
+}
+
+.bitflow-node-kind {
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-node-title {
+  font-weight: var(--bitflow-font-weight-medium);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bitflow-inspector-preview {
+  border: 1px dashed var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  padding: var(--bitflow-space-small);
+  background: var(--bitflow-color-neutral-100);
+}
+
+.bitflow-problems {
+  margin: 0;
+  padding-left: var(--bitflow-space-small);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-condition-advanced {
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-small);
+  background: var(--bitflow-color-neutral-100);
+  border-radius: var(--bitflow-radius-small);
+  padding: var(--bitflow-space-xsmall);
+  overflow-x: auto;
+}
