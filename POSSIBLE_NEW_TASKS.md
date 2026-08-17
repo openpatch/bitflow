@@ -43,6 +43,39 @@ Accessibility requirements:
 - Support pointer, touch, and keyboard interaction without requiring native
   HTML drag events alone.
 
+## Find the Hotspots
+
+**Suggested type:** `task-find-hotspots`
+
+Show an image with one or more invisible target regions that the learner must
+identify by clicking/tapping them. Typical uses include finding components in
+a diagram, identifying errors in a screenshot, or locating features on a map.
+This is distinct from `task-drag-drop`: there are no supplied items to place,
+only regions for the learner to discover.
+
+The author configures:
+
+- One background image with descriptive alternative text.
+- Target regions with stable IDs and normalized coordinates (`0..1`),
+  represented as rectangles, circles, or polygons.
+- Optional prompt/instructions, required number of targets, maximum guesses,
+  and whether incorrect guesses are shown or retained.
+- Evaluation policy: all targets required, a required subset, or a target
+  score; optional partial credit and per-region feedback.
+
+The learner answer is an ordered list of normalized clicks/selections:
+`{ x, y, matchedHotspotId?: string }[]`. Preserve both the raw selection and
+matched target ID for deterministic evaluation, reporting, and review.
+
+Accessibility requirements:
+
+- Do not make visual searching the only path: provide a keyboard-accessible
+  list of labelled candidate regions or coordinates, with equivalent scoring.
+- Announce successful, duplicate, and incorrect selections using live
+  regions; do not rely on color alone.
+- Require sufficient author-provided textual context for the image and
+  hotspot targets.
+
 ## Ordering / Sequencing
 
 **Suggested type:** `task-ordering`
@@ -162,11 +195,12 @@ using color as the only feedback.
 ## Suggested Priority
 
 1. Drag and Drop Hotspots
-2. Ordering / Sequencing
-3. Matching Pairs
-4. Parsons Puzzle
-5. Crossword Puzzle
-6. Find the Words
-7. Numeric / Expression Answer
-8. Image / Diagram Annotation
-9. Short Free-Text With Rubric
+2. Find the Hotspots
+3. Ordering / Sequencing
+4. Matching Pairs
+5. Parsons Puzzle
+6. Crossword Puzzle
+7. Find the Words
+8. Numeric / Expression Answer
+9. Image / Diagram Annotation
+10. Short Free-Text With Rubric
