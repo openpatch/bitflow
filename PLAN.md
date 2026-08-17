@@ -86,6 +86,83 @@ the exact patterns already established in `java-memory-playground`.
     over class hierarchies or dependency-injection frameworks. Every
     package should be small enough to read end-to-end in one sitting.
     Concretely: no more indirection than needed for decisions 2, 3, and 11.
+13. **Client-side evaluation only — no server-side scope.** All task
+    evaluation, scoring, and progress/state persistence happen entirely in
+    the browser. The rewrite does not build, call, or assume any backend
+    API. Where the current codebase mixes a pluggable "remote or local"
+    abstraction with cross-learner/cohort statistics, split those two
+    concerns explicitly (see decision 14) so this repo only ever ships the
+    client-only half.
+14. **`report`/`stats` work entirely client-side and are exposed as web
+    components, both for a single attempt and for a group of students.**
+    The current `@bitflow/report-flow` (visual report of a completed run)
+    and `@bitflow/stats` (statistical helpers) packages are **not**
+    dropped and are **not** limited to one learner. Everything runs in the
+    browser with no server required — a group report is just a
+    computation over whatever raw result data the page already has (e.g.
+    several exported per-student result files opened locally, or objects
+    handed to the component by whatever page embeds it, which may or may
+    not itself talk to a server like `../hyperbook-cloud`):
+    - Keep: per-attempt result computation (status per node — correct/
+      wrong/unknown/manual —, score, tries used, time spent) as a plain,
+      serializable JSON "report" object for one completed flow run. This
+      is the **raw result data** unit everything else is built from.
+    - Keep: **group/cohort-level statistics** (`cronbachsAlpha`,
+      `correlation`, `mean`/`median`/`variability`/`rank`,
+      `table`/`summary` aggregation, etc.) as pure functions that take an
+      **array of raw per-student report objects** as input and return
+      aggregate results, computed entirely client-side, no network calls.
+    - Ship **two web components**, both purely client-side and following
+      the same pattern as `<bitflow-flow>`:
+      - `<bitflow-report>` — takes one raw report object (single
+        student/attempt), renders it (the successor to `report-flow`'s
+        `TaskResultState`/`InteractiveNodeStatus` visuals).
+      - `<bitflow-group-report>` — takes an **array** of raw report
+        objects (one per student) as its data, runs the group/cohort
+        statistics functions on them, and renders the aggregate view (the
+        successor to `stats`'s `table`/`summary` views). A page can feed
+        it data from anywhere: files picked from disk, pasted JSON,
+        `localStorage`, or an external service like `hyperbook-cloud` —
+        bitflow doesn't care where the array came from, it only computes
+        and renders from the data it's given.
+    - Both components are restyled with the plain-CSS theme, no patches/
+      emotion, and are lazily loadable/standalone exactly like the bits
+      (decision 11): a page can drop in only `<bitflow-group-report>`
+      without ever loading `<bitflow-flow>` or `<bitflow-flow-editor>`.
+    - The raw per-attempt report JSON shape (and, by extension, the
+      array-of-reports shape `<bitflow-group-report>` consumes) must be
+      documented and stable (versioned like the `.bitflow` schema) so any
+      external system — `hyperbook-cloud` or otherwise — can produce or
+      collect that data and feed it straight into these components.
+15. **`do`/`do-local` become one client-only persistence layer, not a
+    pluggable backend abstraction.** Today's `@bitflow/do` defines a
+    generic interface (`evaluate`/`getResult`/`getConfig`/`getProgress`)
+    that `@bitflow/do-local` implements against in-memory/local state.
+    Since decision 13 rules out a server-side/remote implementation living
+    in this repo, collapse this into a single, non-pluggable client-side
+    module inside the `bitflow` package: it evaluates answers via the bit
+    registry, tracks tries/progress/results locally (in memory, optionally
+    persisted to `localStorage` for resume-on-reload), and exposes the
+    resulting per-attempt state directly to `<bitflow-flow>` and to the
+    report feature in decision 14. No `Do`/`DoLocal` package split, no
+    swappable-backend interface — that indirection is only worth it if a
+    second (remote) implementation is ever actually built, which is out of
+    scope here (simplicity principle, decision 12).
+16. **Small existing packages get folded in, not ported as-is:**
+    - `@bitflow/icons` → a handful of inline SVG icon components living
+      directly in the `bitflow` package (or wherever first used) instead
+      of a standalone package — it's a handful of icons, not worth a
+      package boundary.
+    - `@bitflow/date` → its locale-aware date formatting folds into the
+      `bitflow-core` i18n helper (decision 8) as one small utility
+      function, not a separate package.
+    - `@bitflow/mock` → becomes internal, unpublished test fixtures/helpers
+      colocated with the tests that use them (e.g.
+      `bitflow-core/src/test-utils.ts`), not a shipped package.
+17. **`@bitflow/concept-model` and `@bitflow/concept-model-editor` are
+    dropped entirely.** No competency/latent-variable modeling in this
+    rewrite's scope — not ported, not replaced, not referenced anywhere in
+    the new packages.
 
 ## Simplicity Principle
 
@@ -113,13 +190,27 @@ the simplest option at every fork:
 ```
 packages/
   bitflow-core/         # pure TS: envelope schema, flow-engine (next/previous/
-                         # collect/distance), do-condition evaluator, bit
-                         # registry, i18n helper, shared types — NO React
+                         # collect/distance), do-condition evaluator, client-only
+                         # persistence/progress logic (decision 15), bit
+                         # registry, i18n helper (incl. date formatting,
+                         # decision 16), shared types — NO React
   bitflow/               # React: <Flow> (learner) + <FlowEditor> (author),
                          # @xyflow/react graph canvas, zustand+zundo store,
-                         # Shell/Progress/Confidence UI, uses bitflow-core;
+                         # Shell/Progress/Confidence UI, inline icon
+                         # components (decision 16), uses bitflow-core;
                          # composes bit custom elements from bits/* rather
                          # than duplicating their rendering
+  bitflow-report/        # report computation (decision 14): plain TS, no
+                         # React — produces the versioned, serializable
+                         # per-attempt report JSON ("raw result data") from
+                         # one completed flow run, PLUS pure group/cohort
+                         # statistics functions (cronbachsAlpha/correlation/
+                         # mean/median/table/summary/etc.) that take an
+                         # array of raw report objects (many students) as
+                         # input; also exports <bitflow-report> (single
+                         # attempt) and <bitflow-group-report> (array of
+                         # attempts) React views, wrapped as web components
+                         # in web-component/ — fully client-side, no server
   bits/
     start-simple/
     end-tries/
@@ -134,10 +225,12 @@ packages/
     # self-registers into bitflow-core's bit registry on import, AND
     # r2wc-wraps itself as a standalone custom element
     # (e.g. <bitflow-task-choice>) usable on its own, independent of Flow
-  web-component/         # @bitflow/web-component: r2wc-wraps <Flow> and
-                         # <FlowEditor> as <bitflow-flow> / <bitflow-flow-editor>,
-                         # implements the shared lazy bit-loading resolver
-                         # (also reused by each bit's own custom element)
+  web-component/         # @bitflow/web-component: r2wc-wraps <Flow>,
+                         # <FlowEditor>, <bitflow-report>, and
+                         # <bitflow-group-report> (decision 14) as custom
+                         # elements, implements the shared lazy bit-loading
+                         # resolver (also reused by each bit's own custom
+                         # element)
 platforms/
   vscode/                # bitflow-studio: custom editor for *.bitflow
   web/                   # demo/playground site (Vite), replaces website/ + examples/
@@ -145,7 +238,21 @@ platforms/
 
 Removed/merged: `@bitflow/core`, `@bitflow/flow`, `@bitflow/flow-editor`,
 `@bitflow/flow-engine`, `@bitflow/flow-node`, `@bitflow/provider`,
-`@bitflow/shell`, `@bitflow/bits` (barrel), `examples/`, `website/`.
+`@bitflow/shell`, `@bitflow/bits` (barrel), `@bitflow/do`,
+`@bitflow/do-local`, `@bitflow/icons`, `@bitflow/date`, `@bitflow/mock`,
+`examples/`, `website/`.
+
+Dropped entirely (not ported, decision 17): `@bitflow/concept-model`,
+`@bitflow/concept-model-editor`.
+
+Re-scoped, not dropped (decision 14): `@bitflow/report-flow` and
+`@bitflow/stats` become `bitflow-report`, covering both a single student's
+attempt (`<bitflow-report>`) AND a group of students
+(`<bitflow-group-report>`, running `cronbachsAlpha`/`correlation`/etc. on
+an array of raw report objects) — both are standalone web components that
+run entirely client-side; wherever the raw result data array comes from
+(local files, `hyperbook-cloud`, anything else) is outside bitflow's
+concern.
 
 ## Data Model (new, in `bitflow-core`)
 
@@ -362,13 +469,20 @@ as noted). Each todo should be tracked to completion before moving on.
     its own `data` schema.
   - Port the flow-engine logic (`next`/`previous`/`collect`/`distance`)
     and the do-condition evaluator from the current `flow-engine`/`do.ts`.
+  - Port the **client-only persistence/progress logic** (decision 15):
+    what today's `@bitflow/do` + `@bitflow/do-local` do together, merged
+    into one non-pluggable module — evaluate an answer via the bit
+    registry, track tries/progress/results in memory, optionally persist
+    to `localStorage` for resume-on-reload. No swappable-backend
+    interface; this is the only implementation there will ever be here.
   - Implement the bit registry: `registerBit(type, { schema, Task,
     Evaluation?, Feedback?, Statistic?, evaluate? })`, `getBit(type)`,
     `hasBit(type)`.
   - Implement the lightweight i18n helper: plain JSON message catalogs per
     package + a small `translate(key, locale, vars)` function, no build-time
     compiler (replacing `@vocab/*`). Cover existing locales: en, de, fr,
-    nl, es, it, pt, tr.
+    nl, es, it, pt, tr. Fold in locale-aware date formatting here too
+    (replacing the standalone `@bitflow/date` package).
 
 - [ ] **4. Build the `bitflow` React package** (`build-bitflow-react`) —
   depends on 2, 3
@@ -380,8 +494,42 @@ as noted). Each todo should be tracked to completion before moving on.
     v9).
   - Port `Shell`/`Progress`/`ConfidenceLevels` UI, styled with the new
     plain-CSS theme from step 2 — no patches/emotion.
+  - Port the handful of icons from `@bitflow/icons` (correct/wrong/
+    unknown/manual/etc.) as small inline SVG components local to `bitflow`
+    — no separate icons package.
 
-- [ ] **5. Port all 9 bit/task-type packages, each a standalone web
+- [ ] **5. Build `bitflow-report` (client-only, single-attempt AND
+  group/cohort statistics, both as web components)** (`build-bitflow-report`)
+  — depends on 3
+  - Pure TypeScript core + React views. Re-scopes today's
+    `@bitflow/report-flow` + `@bitflow/stats` per decision 14 — kept for
+    both one learner's attempt and a group of students, running entirely
+    client-side (no server, no network calls anywhere in this package).
+  - Compute a versioned, serializable report JSON — the **raw result
+    data** — from a finished flow run: per-node status (correct/wrong/
+    unknown/manual), score, tries used, time spent.
+  - Port the group/cohort statistics functions (`cronbachsAlpha`,
+    `correlation`, `mean`/`median`/`variability`/`rank`, `table`/`summary`
+    aggregation) as pure functions that take an **array of raw report
+    objects** (one per student) as input and return aggregate results,
+    computed entirely in the browser.
+  - Document both the per-attempt report JSON shape and the array-of-
+    reports shape the group functions expect (each with a version field)
+    as a stable contract, so this raw result data can also be produced or
+    collected by any external system (e.g. `hyperbook-cloud`) if desired
+    — but bitflow's own components work standalone without one.
+  - Build two React views, both restyled with the plain-CSS theme:
+    - `<Report>` (visual successor to `TaskResultState`/
+      `InteractiveNodeStatus`) — takes one raw report object, renders it.
+    - `<GroupReport>` (visual successor to `stats`'s `table`/`summary`
+      views) — takes an array of raw report objects, runs the group/cohort
+      statistics functions, renders the aggregate view.
+  - Both get wrapped as standalone custom elements in step 7
+    (`<bitflow-report>`, `<bitflow-group-report>`) — lazily loadable and
+    usable independently of `<bitflow-flow>`/`<bitflow-flow-editor>`,
+    exactly like the bits in step 6.
+
+- [ ] **6. Port all 9 bit/task-type packages, each a standalone web
   component** (`port-bit-packages`) — depends on 2, 3
   - One package each: `start-simple`, `end-tries`, `task-choice`,
     `task-yes-no`, `task-input`, `task-fill-in-the-blank`,
@@ -396,30 +544,40 @@ as noted). Each todo should be tracked to completion before moving on.
     as a `<bitflow-flow>` node **and** dropped standalone into any HTML
     page (e.g. `<bitflow-task-choice data='...'></bitflow-task-choice>`
     with zero flow/editor involved).
-  - This is what enables the shared lazy-loading resolver in step 6 — do
+  - This is what enables the shared lazy-loading resolver in step 7 — do
     not build a second, separate mechanism for "standalone mode".
   - No `@openpatch/patches` dependency in any bit package.
+  - `input-markdown` renders learner/author-authored Markdown: sanitize
+    the rendered HTML (e.g. via a small allow-list sanitizer) to prevent
+    XSS from a `.bitflow` file containing malicious Markdown/HTML.
 
-- [ ] **6. Build the `web-component` package** (`build-web-component`) —
-  depends on 4, 5
-  - Wrap `<Flow>` and `<FlowEditor>` with `@r2wc/react-to-web-component` as
-    `<bitflow-flow>` and `<bitflow-flow-editor>` custom elements. Internally
-    they render/compose the same per-bit custom elements from step 5 (e.g.
-    `<bitflow-task-choice>`) as node renderers — do not reimplement bit
-    rendering here.
+- [ ] **7. Build the `web-component` package** (`build-web-component`) —
+  depends on 4, 5, 6
+  - Wrap `<Flow>`, `<FlowEditor>`, `<Report>`, and `<GroupReport>` with
+    `@r2wc/react-to-web-component` as `<bitflow-flow>`,
+    `<bitflow-flow-editor>`, `<bitflow-report>`, and
+    `<bitflow-group-report>` custom elements. `<bitflow-flow>`/
+    `<bitflow-flow-editor>` internally render/compose the same per-bit
+    custom elements from step 6 (e.g. `<bitflow-task-choice>`) as node
+    renderers — do not reimplement bit rendering here.
   - Implement the one shared lazy bit-loading resolver, used by
     `<bitflow-flow>`: scan the loaded `.bitflow` JSON for distinct
     `nodes[].type` values, resolve each against a static `import()` map
     (e.g. `{ "task-choice": () => import("@bitflow/task-choice"), ... }`)
     so bundlers code-split per bit, await all needed imports (each
-    self-registers per step 5), show a loading state, then mount.
+    self-registers per step 6), show a loading state, then mount.
   - `<bitflow-flow-editor>` eagerly imports all 9 bit packages (an author
     needs the full palette) — no lazy loading there, but it's the same
     registry/custom-elements, just imported up front instead of resolved
     dynamically.
+  - `<bitflow-report>` and `<bitflow-group-report>` are fully standalone:
+    a page can load just one of them, feeding it raw report data via a
+    property/attribute, with zero dependency on the flow/editor/bit
+    packages — verify this by confirming their bundles don't pull in
+    `@xyflow/react` or any bit package.
 
-- [ ] **7. Build `platforms/vscode` extension** (`build-vscode-extension`)
-  — depends on 6
+- [ ] **8. Build `platforms/vscode` extension** (`build-vscode-extension`)
+  — depends on 7
   - Mirror `java-memory-playground-studio`'s architecture: `extension.ts`
     + `BitflowEditorProvider.ts` (Node/extension host) registering a
     `bitflow.editor` custom editor for `*.bitflow`, owning the
@@ -437,21 +595,26 @@ as noted). Each todo should be tracked to completion before moving on.
   - Adapt `scripts/build-vscode.mjs`-style bundling (extension for Node,
     webview for browser, one inlined stylesheet + script per CSP rules).
 
-- [ ] **8. Build `platforms/web` demo site** (`build-web-platform`) —
-  depends on 6
+- [ ] **9. Build `platforms/web` demo site** (`build-web-platform`) —
+  depends on 7
   - Vite-based demo/playground site replacing `website/` + `examples/`.
   - Showcase embedding `<bitflow-flow>` and `<bitflow-flow-editor>` as
     plain web components in a framework-agnostic page, **and** a separate
     example embedding a single bit standalone (e.g. just
     `<bitflow-task-choice>` with no flow/editor at all) to demonstrate
     decision 11.
+  - Also showcase `<bitflow-report>` (rendering one raw result object) and
+    `<bitflow-group-report>` (rendering an array of several mock raw
+    result objects, with client-side-computed group statistics), both
+    completely standalone on a plain page with no server involved, to
+    prove decision 14 works end-to-end purely client-side.
 
-- [ ] **9. Update CI, README, changesets config** (`update-ci-docs`) —
-  depends on 7, 8
+- [ ] **10. Update CI, README, changesets config** (`update-ci-docs`) —
+  depends on 8, 9
   - Update the root `README.md`, `.github/workflows/*`, and changesets
     config for the new package layout and release flow.
 
-- [ ] **10. End-to-end verification** (`e2e-verification`) — depends on 9
+- [ ] **11. End-to-end verification** (`e2e-verification`) — depends on 10
   - Author a sample `.bitflow` file in `<bitflow-flow-editor>`.
   - Take it in `<bitflow-flow>` preview mode.
   - Confirm lazy-loaded bits only fetch the task-type packages actually
@@ -459,6 +622,14 @@ as noted). Each todo should be tracked to completion before moving on.
     chunks).
   - Visually confirm the theme matches the old bitflow branding/feel
     (OpenPatch green, rounded corners, soft shadows, Montserrat type).
+  - Confirm `<bitflow-group-report>`'s group/cohort statistics produce
+    correct aggregate results when fed an array of several mock raw
+    per-attempt result objects, entirely in the browser with dev tools'
+    network tab showing zero requests.
+  - Confirm `<bitflow-report>`/`<bitflow-group-report>` can be embedded on
+    a bare HTML page with only their own script tag — no `<bitflow-flow>`,
+    `<bitflow-flow-editor>`, or any bit package loaded.
+
 
 ## How to Use This Plan
 
