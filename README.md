@@ -69,7 +69,7 @@ grading has to move.
 ## Task types
 
 Choice, yes/no, short answer, fill in the blank, highlighting, drag and drop,
-find the spot and put in order, plus start, explanation, text and end screens. Each is its own package,
+find the spot, put in order and match up, plus start, explanation, text and end screens. Each is its own package,
 so a page downloads only the ones its assessment actually uses.
 
 More are planned: [`POSSIBLE_NEW_TASKS.md`](POSSIBLE_NEW_TASKS.md) is the

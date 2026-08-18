@@ -303,6 +303,31 @@ editor flags one where it finds it.
 `ImageField` and `readImageFile` are exported from `@bitflow/element`, and
 `ImageSchema` from `@bitflow/core`, for tasks added later.
 
+## Match up
+
+`<bitflow-task-matching>` follows H5P's Image Pair: two shuffled columns, and a
+point for each pair the learner puts back together. A card left unmatched
+simply earns nothing — leaving one alone is not a claim about it.
+
+Both sides are written out. H5P lets the right side be omitted, which quietly
+means "match this picture to a copy of itself" — a second mode hiding in an
+absent field. An author who wants that writes the same thing twice. Text as
+well as pictures, since matching a term to its definition is the commonest
+version of this.
+
+The columns are shuffled independently and seeded from the attempt: line them
+up and the task becomes "match row one to row one", and a reload must not deal
+a new hand around the pairings already made.
+
+### Accessibility
+
+Choose a card on the left, then the one on the right that goes with it — two
+clicks, two taps or two Enters, the same operation whatever drives it. Nothing
+here is spatial, so a list is not a fallback for dragging; it is the shape of
+the question. A card announces what it is matched with, so the pairings are
+readable without following lines across a gap. Choosing an occupied card while
+holding one means "put this here instead" rather than refusing.
+
 ## Put in order
 
 `<bitflow-task-ordering>` follows H5P's Image Sequencing: the order the author

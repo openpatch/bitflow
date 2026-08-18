@@ -163,6 +163,22 @@ const steps = [
     ],
     evaluation,
   }),
+  node("q-match", "task-matching", {
+    instruction: "Match each term to its meaning.",
+    pairs: [
+      {
+        id: "cpu",
+        left: { kind: "text", label: "CPU" },
+        right: { kind: "text", label: "Carries out instructions" },
+      },
+      {
+        id: "ram",
+        left: { kind: "text", label: "RAM" },
+        right: { kind: "text", label: "Holds what is being worked on" },
+      },
+    ],
+    evaluation,
+  }),
   node("end", "end-tries", {
     title: "Finished",
     markdown: "Thank you.",

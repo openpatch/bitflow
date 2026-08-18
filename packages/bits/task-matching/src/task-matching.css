@@ -1,0 +1,69 @@
+.bitflow-matching {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* Two columns while there is room, stacked when there is not: on a phone,
+   side-by-side cards are too narrow to read the text on. */
+.bitflow-matching-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--bitflow-space-small);
+}
+
+.bitflow-matching-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+  padding: 0;
+  margin: var(--bitflow-space-xxsmall) 0 0;
+  list-style: none;
+}
+
+.bitflow-matching-card {
+  width: 100%;
+  padding: var(--bitflow-space-xsmall);
+  font: inherit;
+  color: var(--bitflow-color-text);
+  text-align: left;
+  cursor: pointer;
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-matching-card:disabled {
+  cursor: default;
+}
+
+.bitflow-matching-image {
+  max-height: 4rem;
+}
+
+/* Picked up. Not colour alone — the outline thickens — because "which one am
+   I holding" is the state the whole interaction turns on. */
+.bitflow-matching-card.bitflow-matching-card-held {
+  background: var(--bitflow-color-neutral-100);
+  border-color: var(--bitflow-color-primary);
+  box-shadow: 0 0 0 2px var(--bitflow-color-primary);
+}
+
+/* Already paired. Quieter than an unmatched card, so what is left to do is
+   what stands out. */
+.bitflow-matching-card.bitflow-matching-card-matched {
+  background: var(--bitflow-color-neutral-100);
+  border-style: dashed;
+}
+
+.bitflow-matching-card.bitflow-matching-card-correct {
+  background: color-mix(in srgb, var(--bitflow-color-correct) 12%, var(--bitflow-color-surface));
+  border-style: solid;
+  border-color: var(--bitflow-color-correct);
+}
+
+.bitflow-matching-card.bitflow-matching-card-wrong {
+  background: color-mix(in srgb, var(--bitflow-color-wrong) 12%, var(--bitflow-color-surface));
+  border-style: solid;
+  border-color: var(--bitflow-color-wrong);
+}

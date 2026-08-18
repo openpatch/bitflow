@@ -196,7 +196,13 @@ scoring independently.
 
 ## Matching Pairs
 
-**Suggested type:** `task-matching`
+**Suggested type:** `task-matching` — **built**, as
+[`@bitflow/task-matching`](packages/bits/task-matching), modelled on
+[H5P's Image Pair](https://github.com/jithin-space/h5p-image-pair).
+
+Both sides are written out rather than H5P's optional right side, which quietly
+means "match the picture to itself". Text as well as pictures, and the two
+columns are shuffled independently from an attempt-seeded shuffle.
 
 Ask learners to match items from two lists, such as terms to definitions,
 code fragments to outputs, or images to concepts.
@@ -536,7 +542,7 @@ browser, with no server algebra service.
 3. Mouse Accuracy
 4. Keyboard Speed Test
 5. ~~Ordering / Sequencing~~ — built
-6. Matching Pairs
+6. ~~Matching Pairs~~ — built
 7. Parsons Puzzle
 8. Crossword Puzzle
 9. Find the Words
