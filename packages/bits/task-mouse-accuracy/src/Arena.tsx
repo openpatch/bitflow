@@ -1,5 +1,6 @@
 import { translate, type Locale } from "@bitflow/core";
 import {
+  useEffect,
   useRef,
   useState,
   type PointerEvent as ReactPointerEvent,
@@ -48,6 +49,24 @@ export const Arena = ({
   const done = rounds.length >= data.targets.length;
   const current: Target | undefined = data.targets[rounds.length];
   const finished = readonly || answer.optedOut || done;
+
+  /*
+   * The host's "try again" clears the result and hands the task back live,
+   * keeping the answer — which is right for a task whose answer is a draft to
+   * be corrected, and wrong for one whose answer is the record of a finished
+   * run. Five rounds already recorded leave nothing to click, so the task
+   * would come back to a learner who was told to try again and could not.
+   * Going from frozen to live is therefore taken to mean: run it again.
+   */
+  const wasFrozen = useRef(false);
+  useEffect(() => {
+    const frozen = readonly === true;
+    if (wasFrozen.current && !frozen && done && !answer.optedOut) {
+      setStarted(false);
+      onChange({ rounds: [], optedOut: false });
+    }
+    wasFrozen.current = frozen;
+  });
 
   const begin = () => {
     setStarted(true);

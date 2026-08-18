@@ -626,6 +626,13 @@ nothing at all, and offering it would disguise which question is being asked.
 The start and stand-down buttons are ordinary buttons, and the result is
 reported as a table of rounds rather than only as marks on a picture.
 
+"Try again" starts the run over rather than handing the task back with nothing
+left to click. Retrying clears the result and keeps the answer, which is right
+for an answer that is a draft to be corrected and wrong for one that is the
+record of a finished run — five rounds already recorded leave nothing to do.
+Any task that measures a run rather than collecting a response has to treat a
+retry this way.
+
 ### What an answer contains
 
 Where each click landed inside the task's own area, as a fraction of it;
