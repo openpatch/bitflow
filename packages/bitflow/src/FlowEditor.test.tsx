@@ -84,6 +84,29 @@ describe("<FlowEditor>", () => {
     expect(screen.getByText(/problem/)).toBeDefined();
   });
 
+  it("opens the offending step when a problem is clicked", async () => {
+    const user = userEvent.setup();
+    const broken = doc(
+      [
+        node("a", "test-start", { title: "Start" }),
+        node("b", "test-task", { prompt: "Question", correct: "y" }),
+      ],
+      [edge("a", "b")],
+    );
+    setup({ flow: broken });
+
+    // Nothing is selected, so the inspector is still offering the flow.
+    expect(screen.getByLabelText("Title of the assessment")).toBeDefined();
+
+    const problem = screen.getByRole("button", { name: /dead end|nowhere/i });
+    await user.click(problem);
+
+    // The diagnostic knows exactly which node it is about; clicking it should
+    // save the reader from finding that node on the canvas themselves.
+    expect(screen.queryByLabelText("Title of the assessment")).toBeNull();
+    expect(screen.getByRole("button", { name: "Delete step" })).toBeDefined();
+  });
+
   it("says so when there is nothing to fix", () => {
     setup();
     expect(screen.getByText("No problems found.")).toBeDefined();

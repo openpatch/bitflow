@@ -8,6 +8,7 @@ export {
   type ItemStatistics,
   type LearnerScore,
 } from "./group";
+export { toCsv, type CsvOptions } from "./csv";
 export { messages as reportMessages } from "./messages";
 export { Report, type ReportProps } from "./Report";
 export {

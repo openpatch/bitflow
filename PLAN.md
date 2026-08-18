@@ -918,6 +918,20 @@ rest: schema first, then the teacher-facing form, then the tests.
   learner reached, and `<bitflow-group-report>` says so on the tile when that
   is fewer than all of them.
 
+- **Problems in the editor are links.** Every diagnostic already carried an
+  exact path into the document; the panel printed the message and made the
+  teacher find the step themselves. Clicking one now selects that node or edge,
+  which opens its form with the error already against the right field.
+- **The cohort report exports CSV.** Teachers work in spreadsheets, and numbers
+  that can only be looked at cannot be combined with a register or an earlier
+  run. Learners and item statistics as two tables in one file; an unreached
+  task is blank rather than 0; a UTF-8 BOM so Excel reads the names correctly.
+  `toCsv` is exported for hosts that want to build the file themselves.
+- **A catalog key that nothing defines is now a test failure.** Splitting the
+  catalogs dropped `save` from the editor's, and `translate`'s fallback
+  rendered the button as "save" — the kind of thing only found by looking.
+  `catalogs.test.ts` now resolves every `t("…")` in a catalog's callers.
+
 ## How to Use This Plan
 
 This file (`PLAN.md` at the bitflow repo root) is the single source of

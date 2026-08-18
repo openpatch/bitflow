@@ -374,11 +374,27 @@ const FlowEditorBody = ({
         {!validation.valid && (
           <section className="bitflow-stack-small bitflow-stack">
             <ul className="bitflow-problems">
-              {validation.diagnostics.map((diagnostic, index) => (
-                <li key={index} className="bitflow-field-error">
-                  {diagnostic.message}
-                </li>
-              ))}
+              {validation.diagnostics.map((diagnostic, index) => {
+                const target = targetOf(state.doc)(diagnostic);
+                return (
+                  <li key={index} className="bitflow-field-error">
+                    {/* Every diagnostic carries the exact path to what is
+                        wrong. Reading it out and making the reader find the
+                        step themselves wastes what validation already knows. */}
+                    {target ? (
+                      <button
+                        type="button"
+                        className="bitflow-problem-link"
+                        onClick={() => store.getState().select(target)}
+                      >
+                        {diagnostic.message}
+                      </button>
+                    ) : (
+                      diagnostic.message
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </section>
         )}
@@ -505,6 +521,30 @@ const NodeInspector = ({
     </div>
   );
 };
+
+/**
+ * `nodes.3.data.choices` → that node; `edges.1.condition` → that edge.
+ *
+ * `null` for a diagnostic about the document itself, which has nothing to
+ * select and so stays plain text.
+ */
+const targetOf =
+  (doc: BitflowDocument) =>
+  (
+    diagnostic: Diagnostic,
+  ): { nodeId: string; edgeId: null } | { nodeId: null; edgeId: string } | null => {
+    const node = /^nodes\.(\d+)/.exec(diagnostic.path);
+    if (node) {
+      const id = doc.nodes[Number(node[1])]?.id;
+      return id ? { nodeId: id, edgeId: null } : null;
+    }
+    const edge = /^edges\.(\d+)/.exec(diagnostic.path);
+    if (edge) {
+      const id = doc.edges[Number(edge[1])]?.id;
+      return id ? { nodeId: null, edgeId: id } : null;
+    }
+    return null;
+  };
 
 /** `nodes.3.data.choices` → the id of node 3. */
 const nodeIdOf =

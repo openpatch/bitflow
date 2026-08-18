@@ -199,6 +199,21 @@ that is not a task, an outcome that does not exist, an ordering comparison
 against something that is not a number, a membership test without a list, and
 an empty rule set.
 
+## Exporting results
+
+`<bitflow-group-report>` renders a **Download CSV** button. The file holds two
+tables separated by a blank line — one row per learner with a score and an
+outcome column per task, then one row per task with its difficulty,
+discrimination and average tries. Spreadsheets import that as a single sheet
+with a gap.
+
+A task a learner never reached is left blank rather than zero: the blank is a
+fact about the flow, a zero would be a claim about the learner. The file opens
+with a UTF-8 BOM so Excel does not turn `Müller` into `MÃ¼ller`.
+
+`toCsv(statistics, reports, { headers })` is exported from `@bitflow/report`
+if you would rather build the file yourself.
+
 ## Reliability on a branching assessment
 
 `<bitflow-group-report>` reports Cronbach's α, which assumes every learner

@@ -3,7 +3,7 @@
 // Reads every catalog off disk: importing them would only prove the packages
 // build, and the point is what is *in* them.
 import { readdir, readFile } from "node:fs/promises";
-import { join, relative, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -51,6 +51,25 @@ describe("message catalogs", () => {
     return locales;
   };
 
+  /**
+   * The files that translate against one catalog: its siblings that import it.
+   * A catalog and its callers always live in the same directory here, and
+   * `t` is bound to whichever catalog the file imported.
+   */
+  const usersOf = async (catalogFile: string): Promise<string[]> => {
+    const dir = dirname(catalogFile);
+    const name = basename(catalogFile, ".ts");
+    const users: string[] = [];
+    for (const entry of await readdir(dir, { withFileTypes: true })) {
+      if (!entry.isFile() || !/\.tsx?$/.test(entry.name)) continue;
+      if (entry.name.includes(".test.")) continue;
+      const path = join(dir, entry.name);
+      const source = await readFile(path, "utf8");
+      if (new RegExp(`from "\\./${name}"`).test(source)) users.push(path);
+    }
+    return users;
+  };
+
   it("finds the catalogs it is meant to be checking", async () => {
     const files = await catalogFiles();
     // A rename or a moved package must not turn this suite into a no-op.
@@ -74,6 +93,28 @@ describe("message catalogs", () => {
     }
 
     expect(gaps).toEqual([]);
+  });
+
+  it("has every key the code asks for", async () => {
+    // `translate` falls back to the key itself when it finds nothing, so a
+    // missing key renders as `save` rather than "Save" — visible only to
+    // whoever happens to look at that screen. Splitting a catalog is exactly
+    // when this happens.
+    const missing: string[] = [];
+
+    for (const file of await catalogFiles()) {
+      const catalog = new Set(localesIn(await readFile(file, "utf8")).get("en") ?? []);
+      if (catalog.size === 0) continue;
+
+      for (const user of await usersOf(file)) {
+        const source = await readFile(user, "utf8");
+        for (const [, key] of source.matchAll(/\bt\(\s*"(\w+)"/g)) {
+          if (!catalog.has(key)) missing.push(`${relative(root, user)}: ${key}`);
+        }
+      }
+    }
+
+    expect(missing).toEqual([]);
   });
 
   it("has no key in a locale that English does not have", async () => {

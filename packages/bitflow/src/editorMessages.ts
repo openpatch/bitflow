@@ -8,6 +8,7 @@ import type { Catalogs } from "@bitflow/core";
  */
 export const editorMessages: Catalogs = {
   en: {
+    save: "Save",
     timeLimitLabel: "Time limit for the whole assessment (seconds)",
     timeLimitHint:
       "Leave empty for no limit. The clock counts time spent, so closing the tab pauses it.",
@@ -54,6 +55,7 @@ export const editorMessages: Catalogs = {
     redo: "Redo",
   },
   de: {
+    save: "Speichern",
     timeLimitLabel: "Zeitlimit für den ganzen Test (Sekunden)",
     timeLimitHint:
       "Leer lassen für kein Limit. Gezählt wird die aufgewendete Zeit, das Schließen des Tabs pausiert sie.",

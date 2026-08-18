@@ -1,5 +1,6 @@
 import { formatDuration, resolveLocale, translate } from "@bitflow/core";
 import { useMemo, type ReactElement } from "react";
+import { toCsv } from "./csv";
 import { computeGroupStatistics } from "./group";
 import { messages } from "./messages";
 import { parseReports, type AttemptReport } from "./report";
@@ -58,6 +59,35 @@ export const GroupReport = ({
         <p className="bitflow-text-muted">
           {t("learners", { count: statistics.learners })}
         </p>
+        <div>
+          <button
+            type="button"
+            className="bitflow-button bitflow-button-secondary"
+            onClick={() =>
+              download(
+                `${t("csvFilename")}.csv`,
+                toCsv(statistics, parsed.value, {
+                  headers: {
+                    learner: t("learner"),
+                    rank: t("rank"),
+                    earned: t("earned"),
+                    possible: t("possible"),
+                    ratio: t("ratio"),
+                    task: t("task"),
+                    type: t("type"),
+                    answered: t("answered"),
+                    difficulty: t("difficulty"),
+                    discrimination: t("discrimination"),
+                    averageTries: t("averageTries"),
+                    outcome: t("outcome"),
+                  },
+                }),
+              )
+            }
+          >
+            {t("downloadCsv")}
+          </button>
+        </div>
       </header>
 
       <dl className="bitflow-stat-row">
@@ -192,3 +222,28 @@ const Stat = ({
     {note && <dd className="bitflow-stat-note">{note}</dd>}
   </div>
 );
+
+/**
+ * Hands the file to the browser.
+ *
+ * A blob URL rather than a data URL: a cohort of thirty with twenty tasks
+ * runs to tens of kilobytes, and some browsers still cap data URL length.
+ *
+ * The URL is revoked on the next task rather than immediately. Revoking in
+ * the same tick as the click happens to work in Chrome and has historically
+ * not elsewhere, and the failure mode — an empty or missing file — is both
+ * silent and impossible to reproduce on the machine that shipped it.
+ */
+const download = (filename: string, contents: string): void => {
+  // A BOM, because Excel reads a UTF-8 CSV as Latin-1 without one and a
+  // learner called Müller comes out as MÃ¼ller.
+  const blob = new Blob([`\uFEFF${contents}`], {
+    type: "text/csv;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 0);
+};

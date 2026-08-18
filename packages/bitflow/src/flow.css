@@ -318,6 +318,20 @@
   gap: var(--bitflow-space-xxsmall);
 }
 
+/* A problem is a link to the thing that is wrong, so it looks like one:
+   inheriting the list's colour and size, underlined, aligned left however
+   long the message runs. */
+.bitflow-problem-link {
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /* One card per rule, so a branch with several reads as a list rather than a
    wall of dropdowns. */
 .bitflow-rules {
