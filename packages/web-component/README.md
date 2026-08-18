@@ -555,6 +555,47 @@ Each square is announced with where it is and both clues it answers, so the
 crossing squares — the ones that make a crossword a crossword — say what they
 belong to.
 
+## Find the words
+
+`<bitflow-task-word-search>` follows H5P's Find the Words: a letter grid with
+words hidden in it, a point for each one found, and nothing taken away for a
+drag that finds nothing — dragging across the grid is how the question is
+*read*, not only how it is answered, and charging for looking would make the
+task about caution rather than about finding.
+
+As with the crossword, the grid is built once while authoring rather than in
+the learner's browser each time. The author writes the words, ticks which of
+the eight runs are allowed, and the grid is generated and written into the
+file. Everything is settled by rule or by a seeded generator, so the same
+words in any order always produce the same puzzle — and the same puzzle for
+every learner.
+
+The filler letters are rolled again whenever they would spell one of the
+hidden words somewhere it was not put. That coincidence is rare and it is
+poisonous: a learner who finds the accidental one is right, would be marked
+wrong, and has nothing to learn from it. It is also the reason a find is
+judged on where it was drawn rather than on what the letters spell, which in
+turn lets two words share letters and lets the same word be hidden twice.
+
+Either way along a word counts. Reading it backwards is the same discovery;
+asking people to guess which end the author started at is not part of the
+exercise.
+
+### Accessibility
+
+Drawing along a word and naming its two ends are the same two decisions, so
+the pointer and the keyboard share one operation. With a pointer: press on the
+first letter and pull to the last, and the run snaps to the eight directions a
+word can run — a word search is a game of straight lines, and a drag two
+squares across and one down plainly means the horizontal one. With a keyboard:
+the arrow keys move, Enter marks the first letter, Enter marks the last, and
+Escape abandons the run.
+
+The grid is one tab stop rather than one per square, with the cursor moved
+inside it, so Tab can still leave it. Every find is announced with what was
+found and how many remain, and a found word is struck through in the list as
+well as tinted in the grid.
+
 ## Item pools
 
 A pool hands each learner a random few of its steps. Twenty questions in the

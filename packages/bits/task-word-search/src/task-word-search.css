@@ -1,0 +1,125 @@
+.bitflow-wordsearch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* Grid and word list side by side while there is room, stacked when there is
+   not: on a phone the grid needs the whole width to stay readable. */
+.bitflow-wordsearch-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--bitflow-space-medium);
+  align-items: start;
+}
+
+/* Sized from the number of columns rather than from a cell size, so a wide
+   grid shrinks to fit a phone instead of running off the side. The cells
+   cannot be measured against the grid's own width — that would be circular —
+   so the grid is measured against the page and the cells divide it up. */
+.bitflow-wordsearch-grid {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, calc(var(--bitflow-wordsearch-columns, 10) * 2rem));
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  background: var(--bitflow-color-surface);
+  /* The letters are the puzzle: dragging over them must not smear a text
+     selection across the grid. */
+  user-select: none;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.bitflow-wordsearch-grid:focus-visible {
+  outline: none;
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+.bitflow-wordsearch-row {
+  display: flex;
+}
+
+.bitflow-wordsearch-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 1;
+  /* So the letter can be sized against its own square, whatever the grid
+     worked out to. */
+  container-type: inline-size;
+  color: var(--bitflow-color-text);
+}
+
+/* Sized against the square rather than the page. It has to be a child of the
+   container: a container query unit used on the container itself is circular,
+   and the grid comes out one enormous letter tall. */
+.bitflow-wordsearch-letter {
+  font-family: var(--bitflow-font-family-mono);
+  font-size: 55cqw;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* A word already found, struck through by tinting its squares — a line drawn
+   over the letters would hide the thing it is marking. */
+.bitflow-wordsearch-cell-found {
+  background: var(--bitflow-color-correct-surface);
+  color: var(--bitflow-color-correct);
+  font-weight: var(--bitflow-font-weight-bold);
+  border-radius: var(--bitflow-radius-full);
+}
+
+/* The run being drawn right now. */
+.bitflow-wordsearch-cell-drawing {
+  background: var(--bitflow-color-primary-light);
+  border-radius: var(--bitflow-radius-full);
+}
+
+.bitflow-wordsearch-cell-cursor {
+  box-shadow: inset 0 0 0 2px var(--bitflow-color-primary);
+  border-radius: var(--bitflow-radius-full);
+}
+
+.bitflow-wordsearch-words {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-wordsearch-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xxsmall) var(--bitflow-space-small);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.bitflow-wordsearch-word {
+  font-family: var(--bitflow-font-family-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bitflow-wordsearch-word-found {
+  color: var(--bitflow-color-text-muted);
+  text-decoration: line-through;
+}
+
+.bitflow-wordsearch-missed {
+  margin-inline-start: var(--bitflow-space-xxsmall);
+  font-family: var(--bitflow-font-family);
+  font-size: var(--bitflow-font-size-small);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--bitflow-color-wrong);
+}
+
+/* The author's view: the same grid with the hidden words picked out. */
+.bitflow-wordsearch-preview {
+  margin-top: var(--bitflow-space-xxsmall);
+  cursor: default;
+}

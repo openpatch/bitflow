@@ -288,20 +288,24 @@ as text and never executed.
 
 ## Find the Words
 
-**Suggested type:** `task-word-search`
+**Suggested type:** `task-word-search` — **built**, as
+[`@bitflow/task-word-search`](packages/bits/task-word-search), modelled on
+[H5P's Find the Words](https://github.com/jithin-space/h5p-find-the-words).
 
-Present a word-search grid where learners find configured words horizontally,
-vertically, diagonally, and optionally backwards. Authors provide the letter
-grid, target words, and the exact normalized cell paths for each word.
+The author writes the words and ticks which of the eight runs are allowed; the
+grid is generated from them — but once, while authoring, and written into the
+file, so two learners get the same puzzle. The filler letters are rolled again
+whenever they would spell a hidden word somewhere it was not put, since a
+learner who finds the accidental one is right and would be marked wrong.
 
-The learner answer is a set of selected cell paths/word IDs. The component
-evaluates paths rather than relying only on the displayed letters, which
-allows duplicate words and deterministic reporting.
+The answer is a set of drawn runs rather than word ids, and a find is judged on
+where it was drawn: that is what lets two words share letters and the same word
+be hidden twice. A point per word found, nothing taken away for a drag that
+finds nothing. Either way along a word counts.
 
-Support pointer/touch selection plus a keyboard alternative: choose a target
-word, then enter/select its start and end cells (or choose its cell path from
-a grid navigation mode). Announce found words and remaining targets without
-using color as the only feedback.
+Drawn with a pointer, which snaps to the eight straight lines, or named with
+the keyboard — arrows to move, Enter for the first letter, Enter for the last,
+Escape to abandon.
 
 ## Computer Science Tasks
 
@@ -550,7 +554,7 @@ browser, with no server algebra service.
 6. ~~Matching Pairs~~ — built
 7. ~~Parsons Puzzle~~ — built
 8. ~~Crossword Puzzle~~ — built
-9. Find the Words
+9. ~~Find the Words~~ — built
 10. Numeric / Expression Answer
 11. Image / Diagram Annotation
 12. Short Free-Text With Rubric

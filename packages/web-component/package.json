@@ -67,6 +67,7 @@
     "@bitflow/task-matching": "workspace:*",
     "@bitflow/task-ordering": "workspace:*",
     "@bitflow/task-crossword": "workspace:*",
+    "@bitflow/task-word-search": "workspace:*",
     "@bitflow/task-parsons": "workspace:*",
     "@bitflow/task-yes-no": "workspace:*",
     "@bitflow/title-simple": "workspace:*",

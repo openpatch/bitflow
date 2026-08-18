@@ -338,6 +338,32 @@ export const examples: Example[] = [
       evaluation,
     },
   },
+  {
+    type: "task-word-search",
+    name: "Find the words",
+    shows:
+      "A letter grid built from the words themselves, with filler that never spells one of them by accident. Drag along a word, or find it with the arrow keys and Enter.",
+    data: {
+      instruction: "Eight words from computing are hidden in the grid.",
+      rows: 12,
+      columns: 12,
+      letters:
+        "LRBKTICWCBLAXJMCNDFSZIODIMDGHDJATNOJDIIRDPWGRAPHEVNQBLTRORCHYWWMBUXMSYAKQXPVZNVWFRAYEMMLPNAONKUDMMZGMOZJAMSVXAUWMDJYQAZSQIAEUEUQXMDEHOBMZGFJBNKZ",
+      words: [
+        { id: "word-array", text: "ARRAY", row: 2, column: 7, direction: "southEast" },
+        { id: "word-loop", text: "LOOP", row: 0, column: 10, direction: "south" },
+        { id: "word-stack", text: "STACK", row: 1, column: 7, direction: "southEast" },
+        { id: "word-queue", text: "QUEUE", row: 10, column: 7, direction: "west" },
+        { id: "word-binary", text: "BINARY", row: 0, column: 9, direction: "south" },
+        { id: "word-node", text: "NODE", row: 7, column: 5, direction: "south" },
+        { id: "word-graph", text: "GRAPH", row: 3, column: 7, direction: "east" },
+        { id: "word-sort", text: "SORT", row: 5, column: 8, direction: "north" },
+      ],
+      directions: ["east", "south", "southEast", "north", "west"],
+      showWords: true,
+      evaluation,
+    },
+  },
 ];
 
 export const exampleFor = (type: string | null): Example =>

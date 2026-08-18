@@ -22,6 +22,7 @@ const loaders: Record<string, () => Promise<unknown>> = {
   "task-matching": () => import("@bitflow/task-matching"),
   "task-parsons": () => import("@bitflow/task-parsons"),
   "task-crossword": () => import("@bitflow/task-crossword"),
+  "task-word-search": () => import("@bitflow/task-word-search"),
 };
 
 const params = new URLSearchParams(location.search);

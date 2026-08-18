@@ -19,6 +19,7 @@
 "@bitflow/task-matching": major
 "@bitflow/task-parsons": major
 "@bitflow/task-crossword": major
+"@bitflow/task-word-search": major
 ---
 
 Rewrite bitflow as web components.
