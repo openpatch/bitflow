@@ -303,6 +303,37 @@ editor flags one where it finds it.
 `ImageField` and `readImageFile` are exported from `@bitflow/element`, and
 `ImageSchema` from `@bitflow/core`, for tasks added later.
 
+## Put in order
+
+`<bitflow-task-ordering>` follows H5P's Image Sequencing: the order the author
+writes is the right order, the learner is given the items shuffled, and every
+item that ends up in its authored place is worth a point. An ordering that is
+right except for one transposed pair has clearly been understood, and
+all-or-nothing would say otherwise.
+
+Widened to text as well as pictures. H5P's is images only, but the same task is
+how you ask for the steps of an algorithm, and there is no reason to make a
+teacher screenshot a sentence.
+
+The shuffle is seeded from the attempt: stable across a reload — coming back to
+find the items rearranged around what you had already moved would be worse than
+no shuffle at all — and different between learners without being stored
+anywhere. It is also never the answer, so nobody is handed a full mark for
+doing nothing.
+
+An answer records item ids rather than positions, so it survives the author
+reordering or renaming, and a stale answer naming a deleted item is reconciled
+rather than silently misread.
+
+### Accessibility
+
+Reordering is the same two decisions however it is done — take this one, put it
+there — so the pointer and the keyboard share one operation rather than one
+being a fallback. Dragging moves an item as the pointer crosses its
+neighbours' midpoints; the arrow keys move the focused item one place. Both
+announce where the item landed, because a list that silently rearranges itself
+cannot be used without sight.
+
 ## Find the spot
 
 `<bitflow-task-find-hotspots>` follows H5P's Image Hotspot Question: a picture,

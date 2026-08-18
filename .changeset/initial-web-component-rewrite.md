@@ -15,6 +15,7 @@
 "@bitflow/task-highlighting": major
 "@bitflow/task-drag-drop": major
 "@bitflow/task-find-hotspots": major
+"@bitflow/task-ordering": major
 ---
 
 Rewrite bitflow as web components.
@@ -43,5 +44,6 @@ Item pools hand each learner a random few of a group of interchangeable
 steps, the editor can arrange the canvas and preview from any step, and the
 cohort report exports CSV.
 
-Two more task types: `@bitflow/task-drag-drop` drags labels onto a picture,
-and `@bitflow/task-find-hotspots` asks the learner to click a place on one.
+Three more task types: `@bitflow/task-drag-drop` drags labels onto a picture,
+`@bitflow/task-find-hotspots` asks the learner to click a place on one, and
+`@bitflow/task-ordering` asks them to put items in order.

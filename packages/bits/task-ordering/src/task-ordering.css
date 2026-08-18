@@ -1,0 +1,67 @@
+.bitflow-ordering {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-ordering-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.bitflow-ordering-item {
+  display: flex;
+  gap: var(--bitflow-space-xsmall);
+  align-items: center;
+  width: 100%;
+  padding: var(--bitflow-space-xsmall);
+  font: inherit;
+  color: var(--bitflow-color-text);
+  text-align: left;
+  cursor: grab;
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  /* The browser must not decide a drag is a scroll, or the list cannot be
+     reordered with a finger at all. */
+  touch-action: none;
+}
+
+.bitflow-ordering-item:disabled {
+  cursor: default;
+}
+
+/* The position, which is the thing being changed and so worth showing. */
+.bitflow-ordering-position {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.75rem;
+  text-align: center;
+  background: var(--bitflow-color-neutral-100);
+  border-radius: 50%;
+}
+
+.bitflow-ordering-image {
+  max-height: 4rem;
+}
+
+.bitflow-ordering-item.bitflow-ordering-item-dragging {
+  cursor: grabbing;
+  box-shadow: var(--bitflow-shadow-medium);
+}
+
+.bitflow-ordering-item.bitflow-ordering-item-correct {
+  background: color-mix(in srgb, var(--bitflow-color-correct) 12%, var(--bitflow-color-surface));
+  border-color: var(--bitflow-color-correct);
+}
+
+.bitflow-ordering-item.bitflow-ordering-item-wrong {
+  background: color-mix(in srgb, var(--bitflow-color-wrong) 12%, var(--bitflow-color-surface));
+  border-color: var(--bitflow-color-wrong);
+}

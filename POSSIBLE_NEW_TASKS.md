@@ -172,7 +172,13 @@ This task is intentionally keyboard-specific and must:
 
 ## Ordering / Sequencing
 
-**Suggested type:** `task-ordering`
+**Suggested type:** `task-ordering` — **built**, as
+[`@bitflow/task-ordering`](packages/bits/task-ordering), modelled on
+[H5P's Image Sequencing](https://github.com/jithin-space/h5p-ImageSequencing).
+
+Scoring is H5P's — a point per item in its authored place — and the shuffle is
+seeded from the attempt so it survives a reload. Widened to text items as well
+as pictures.
 
 Present items in a shuffled list and ask the learner to put them in the
 correct order. Useful for algorithms, historical timelines, workflow steps,
@@ -529,7 +535,7 @@ browser, with no server algebra service.
 2. ~~Find the Hotspots~~ — built
 3. Mouse Accuracy
 4. Keyboard Speed Test
-5. Ordering / Sequencing
+5. ~~Ordering / Sequencing~~ — built
 6. Matching Pairs
 7. Parsons Puzzle
 8. Crossword Puzzle

@@ -154,6 +154,15 @@ const steps = [
     ],
     evaluation,
   }),
+  node("q-order", "task-ordering", {
+    instruction: "Put the steps in order.",
+    items: [
+      { id: "a", kind: "text", label: "Read the input" },
+      { id: "b", kind: "text", label: "Sort it" },
+      { id: "c", kind: "text", label: "Print the result" },
+    ],
+    evaluation,
+  }),
   node("end", "end-tries", {
     title: "Finished",
     markdown: "Thank you.",
