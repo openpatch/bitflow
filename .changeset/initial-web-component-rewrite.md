@@ -36,3 +36,7 @@ files visually.
 
 Tasks can carry a weight and a time limit, the assessment as a whole can carry
 one too, and arriving at a step moves focus to it and announces it.
+
+Item pools hand each learner a random few of a group of interchangeable
+steps, the editor can arrange the canvas and preview from any step, and the
+cohort report exports CSV.
