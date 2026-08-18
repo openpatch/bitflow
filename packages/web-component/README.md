@@ -329,10 +329,14 @@ rather than silently misread.
 
 Reordering is the same two decisions however it is done — take this one, put it
 there — so the pointer and the keyboard share one operation rather than one
-being a fallback. Dragging moves an item as the pointer crosses its
-neighbours' midpoints; the arrow keys move the focused item one place. Both
-announce where the item landed, because a list that silently rearranges itself
-cannot be used without sight.
+being a fallback.
+
+With a pointer the item is lifted: it follows the cursor at the size it was
+picked up, and the list opens a gap where it would land, the others moving
+apart to make room. The order is committed once, on release, so the answer is
+where the item was put down rather than every position it passed through. The
+arrow keys do the same a step at a time. Both announce where the item ended up,
+because a list that silently rearranges itself cannot be used without sight.
 
 ## Find the spot
 

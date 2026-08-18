@@ -4,21 +4,43 @@ import {
   useReducer,
   useRef,
   useState,
+  type CSSProperties,
   type PointerEvent as ReactPointerEvent,
   type ReactElement,
 } from "react";
 import { messages } from "./messages";
 import type { Item } from "./schema";
 
+/** An item under the pointer, and where the list would put it down. */
+type Drag = {
+  id: string;
+  /** Where inside the item the pointer took hold, so it does not jump. */
+  grabX: number;
+  grabY: number;
+  /** The pointer now. */
+  x: number;
+  y: number;
+  /** The item's size, so the lifted copy matches what was picked up. */
+  width: number;
+  height: number;
+  /** The order as it would be if dropped here. */
+  order: string[];
+  moved: boolean;
+};
+
 /**
  * The items, in the order the learner has them.
  *
- * Reordering is the same two decisions however it is done — take this one,
- * put it there — so the pointer and the keyboard share the one operation.
- * Dragging moves an item as the pointer crosses its neighbours; the arrow keys
- * move the focused item one place at a time. Neither is a fallback for the
- * other, and both announce where the item has ended up, because a list that
- * silently rearranges itself is unusable without sight.
+ * Reordering is the same two decisions however it is done — take this one, put
+ * it there — so the pointer and the keyboard share one operation rather than
+ * one being a fallback for the other.
+ *
+ * With a pointer the item is lifted: it follows the cursor at the size it was
+ * picked up, and the list opens a gap where it would land. Without that, a
+ * drag is a list that rearranges itself under your hand with nothing in it —
+ * you can see the result but not the act, and there is no way to tell where a
+ * release will put things. The keyboard does the same thing a step at a time,
+ * and both say out loud where the item ended up.
  */
 export const Sequence = ({
   items,
@@ -42,72 +64,118 @@ export const Sequence = ({
 
   const [announcement, setAnnouncement] = useState("");
   const listRef = useRef<HTMLOListElement>(null);
-  /** The id being dragged, in a ref so a fast gesture cannot outrun a render. */
-  const dragRef = useRef<string | null>(null);
+  /**
+   * The drag lives in a ref: a gesture is three events that can arrive inside
+   * one frame, and one read from state would already be stale by `pointerup`.
+   */
+  const dragRef = useRef<Drag | null>(null);
   const [, redraw] = useReducer((count: number) => count + 1, 0);
 
   const itemById = (id: string) => items.find((item) => item.id === id);
   const nameOf = (item: Item) => item.label || item.id;
   const marked = correct !== undefined;
 
-  /** Moves one item to a new index and says where it landed. */
+  const drag = dragRef.current;
+  /** What the list looks like right now, gap and all. */
+  const shown = drag ? drag.order : order;
+
+  const say = (id: string, order: string[]) => {
+    const item = itemById(id);
+    setAnnouncement(
+      t("moved", {
+        item: item ? nameOf(item) : id,
+        position: order.indexOf(id) + 1,
+        total: order.length,
+      }),
+    );
+  };
+
+  /** Moves one item to a new index, and says where it landed. */
   const moveTo = (id: string, to: number) => {
     if (readonly) return;
     const from = order.indexOf(id);
     const target = Math.min(Math.max(to, 0), order.length - 1);
     if (from === -1 || from === target) return;
 
-    const next = [...order];
-    next.splice(from, 1);
-    next.splice(target, 0, id);
-    onReorder(next);
-
-    const item = itemById(id);
-    setAnnouncement(
-      t("moved", {
-        item: item ? nameOf(item) : id,
-        position: target + 1,
-        total: order.length,
-      }),
-    );
+    onReorder(reorder(order, id, target));
+    say(id, reorder(order, id, target));
   };
 
-  /**
-   * While dragging, the item under the pointer takes the dragged item's place.
-   *
-   * Measured against each row's middle rather than its edges, so an item swaps
-   * once the pointer is genuinely past its neighbour rather than jittering
-   * back and forth on the boundary.
-   */
-  const dragOver = (event: PointerEvent | ReactPointerEvent) => {
-    const id = dragRef.current;
-    if (!id || !listRef.current) return;
-
-    const rows = [...listRef.current.querySelectorAll("li")];
-    const target = rows.findIndex((row) => {
-      const box = row.getBoundingClientRect();
-      return event.clientY < box.top + box.height / 2;
-    });
-    moveTo(id, target === -1 ? rows.length - 1 : target);
+  /** Where the pointer would drop the item, by the rows' middles. */
+  const indexAt = (clientY: number): number => {
+    const rows = [...(listRef.current?.querySelectorAll("li") ?? [])];
+    for (let i = 0; i < rows.length; i++) {
+      const box = rows[i].getBoundingClientRect();
+      if (clientY < box.top + box.height / 2) return i;
+    }
+    return Math.max(0, rows.length - 1);
   };
 
-  const endDrag = () => {
-    dragRef.current = null;
+  const startDrag = (event: ReactPointerEvent, id: string) => {
+    if (readonly || event.button !== 0) return;
+    const box = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    dragRef.current = {
+      id,
+      grabX: event.clientX - box.left,
+      grabY: event.clientY - box.top,
+      x: event.clientX,
+      y: event.clientY,
+      width: box.width,
+      height: box.height,
+      order,
+      moved: false,
+    };
     redraw();
   };
 
-  usePointerDrag(dragOver, endDrag);
+  const moveDrag = (event: PointerEvent | ReactPointerEvent) => {
+    const current = dragRef.current;
+    if (!current) return;
+
+    const target = indexAt(event.clientY);
+    dragRef.current = {
+      ...current,
+      x: event.clientX,
+      y: event.clientY,
+      order: reorder(current.order, current.id, target),
+      moved:
+        current.moved ||
+        Math.abs(event.clientX - current.x) > 3 ||
+        Math.abs(event.clientY - current.y) > 3,
+    };
+    redraw();
+  };
+
+  const endDrag = () => {
+    const current = dragRef.current;
+    dragRef.current = null;
+    redraw();
+    if (!current || !current.moved) return;
+
+    // Committed once, on release, rather than on every frame of the drag: the
+    // answer is where the learner put the item down, not the path they took.
+    if (current.order.join() !== order.join()) {
+      onReorder(current.order);
+      say(current.id, current.order);
+    }
+  };
+
+  usePointerDrag(moveDrag, endDrag);
+
+  const lifted = drag?.moved ? itemById(drag.id) : undefined;
 
   return (
     <div className="bitflow-ordering">
       <p className="bitflow-hint">{readonly ? t("howToReadonly") : t("howTo")}</p>
 
       <ol className="bitflow-ordering-list" ref={listRef}>
-        {order.map((id, index) => {
+        {shown.map((id, index) => {
           const item = itemById(id);
           if (!item) return null;
           const right = correct?.includes(id);
-          const dragging = dragRef.current === id;
+          /* The one under the pointer leaves a hole the size it left, so the
+             others move apart and the gap says where it will land. */
+          const isGap = drag?.moved === true && drag.id === id;
 
           const classes = ["bitflow-ordering-item"];
           if (marked) {
@@ -117,7 +185,7 @@ export const Sequence = ({
                 : "bitflow-ordering-item-wrong",
             );
           }
-          if (dragging) classes.push("bitflow-ordering-item-dragging");
+          if (isGap) classes.push("bitflow-ordering-item-gap");
 
           return (
             <li key={id}>
@@ -125,21 +193,18 @@ export const Sequence = ({
                 type="button"
                 className={classes.join(" ")}
                 disabled={readonly}
+                style={isGap ? { height: `${drag.height}px` } : undefined}
                 /*
                  * Its name, where it is, and how many there are — everything a
-                 * reorder needs and none of it visible in a bare list to
-                 * someone who cannot see the rows move.
+                 * reorder needs, and none of it visible to someone who cannot
+                 * see the rows move.
                  */
                 aria-label={t("itemLabel", {
                   item: nameOf(item),
                   position: index + 1,
-                  total: order.length,
+                  total: shown.length,
                 })}
-                onPointerDown={(event) => {
-                  if (readonly || event.button !== 0) return;
-                  dragRef.current = id;
-                  redraw();
-                }}
+                onPointerDown={(event) => startDrag(event, id)}
                 onKeyDown={(event) => {
                   const delta =
                     event.key === "ArrowUp"
@@ -152,19 +217,13 @@ export const Sequence = ({
                   moveTo(id, index + delta);
                 }}
               >
-                <span className="bitflow-ordering-position" aria-hidden="true">
-                  {index + 1}
-                </span>
-
-                {item.kind === "image" && item.image?.src ? (
-                  <img
-                    className="bitflow-ordering-image"
-                    src={item.image.src}
-                    alt=""
-                    draggable={false}
-                  />
-                ) : (
-                  <span className="bitflow-ordering-text">{nameOf(item)}</span>
+                {!isGap && (
+                  <>
+                    <span className="bitflow-ordering-position" aria-hidden="true">
+                      {index + 1}
+                    </span>
+                    {renderContent(item)}
+                  </>
                 )}
 
                 {marked && (
@@ -179,9 +238,55 @@ export const Sequence = ({
         })}
       </ol>
 
+      {/*
+        The item itself, following the cursor. Fixed to the viewport and
+        deaf to the pointer, so it neither drifts with a scrolling ancestor
+        nor gets in the way of the rows it is passing over.
+      */}
+      {lifted && drag && (
+        <div
+          className="bitflow-ordering-item bitflow-ordering-lifted"
+          aria-hidden="true"
+          style={
+            {
+              width: `${drag.width}px`,
+              height: `${drag.height}px`,
+              transform: `translate(${drag.x - drag.grabX}px, ${drag.y - drag.grabY}px)`,
+            } as CSSProperties
+          }
+        >
+          <span className="bitflow-ordering-position">
+            {drag.order.indexOf(drag.id) + 1}
+          </span>
+          {renderContent(lifted)}
+        </div>
+      )}
+
       <div className="bitflow-visually-hidden" role="status" aria-live="polite">
         {announcement}
       </div>
     </div>
   );
+};
+
+const renderContent = (item: Item) =>
+  item.kind === "image" && item.image?.src ? (
+    <img
+      className="bitflow-ordering-image"
+      src={item.image.src}
+      alt=""
+      draggable={false}
+    />
+  ) : (
+    <span className="bitflow-ordering-text">{item.label || item.id}</span>
+  );
+
+/** The list with one item taken out and put back at `to`. */
+const reorder = (order: string[], id: string, to: number): string[] => {
+  const from = order.indexOf(id);
+  if (from === -1) return order;
+  const next = [...order];
+  next.splice(from, 1);
+  next.splice(Math.min(Math.max(to, 0), order.length - 1), 0, id);
+  return next;
 };

@@ -104,11 +104,54 @@ describe("<Sequence>", () => {
     layOut(container);
 
     const third = screen.getByRole("button", { name: /Sort it/ });
-    fireEvent.pointerDown(third, { button: 0 });
+    fireEvent.pointerDown(third, { button: 0, clientX: 0, clientY: 120 });
     // Above the first row's midpoint, so it belongs at the top.
-    fireEvent.pointerMove(window, { clientY: 10 });
+    fireEvent.pointerMove(window, { clientX: 0, clientY: 10 });
+    fireEvent.pointerUp(window, { clientX: 0, clientY: 10 });
 
     expect(last()).toEqual(["b", "c", "a"]);
+  });
+
+  it("commits the order once, when the item is put down", () => {
+    const { container, onReorder } = setup();
+    layOut(container);
+
+    const third = screen.getByRole("button", { name: /Sort it/ });
+    fireEvent.pointerDown(third, { button: 0, clientX: 0, clientY: 120 });
+    fireEvent.pointerMove(window, { clientX: 0, clientY: 60 });
+    fireEvent.pointerMove(window, { clientX: 0, clientY: 10 });
+
+    // The answer is where the item was put down, not the path it took.
+    expect(onReorder).not.toHaveBeenCalled();
+
+    fireEvent.pointerUp(window, { clientX: 0, clientY: 10 });
+    expect(onReorder).toHaveBeenCalledTimes(1);
+  });
+
+  it("lifts the item and leaves a gap while it is being dragged", () => {
+    const { container } = setup();
+    layOut(container);
+
+    const third = screen.getByRole("button", { name: /Sort it/ });
+    fireEvent.pointerDown(third, { button: 0, clientX: 0, clientY: 120 });
+    fireEvent.pointerMove(window, { clientX: 0, clientY: 10 });
+
+    // The item follows the cursor, and the list opens a hole where it would
+    // land — without both, a drag is a list rearranging under your hand.
+    expect(container.querySelector(".bitflow-ordering-lifted")).not.toBeNull();
+    expect(container.querySelector(".bitflow-ordering-item-gap")).not.toBeNull();
+  });
+
+  it("puts nothing down for a press that never moved", () => {
+    const { container, onReorder } = setup();
+    layOut(container);
+
+    const third = screen.getByRole("button", { name: /Sort it/ });
+    fireEvent.pointerDown(third, { button: 0, clientX: 0, clientY: 120 });
+    fireEvent.pointerUp(window, { clientX: 0, clientY: 120 });
+
+    expect(onReorder).not.toHaveBeenCalled();
+    expect(container.querySelector(".bitflow-ordering-lifted")).toBeNull();
   });
 
   it("stops reordering once the drag is over", () => {
@@ -116,10 +159,10 @@ describe("<Sequence>", () => {
     layOut(container);
 
     const third = screen.getByRole("button", { name: /Sort it/ });
-    fireEvent.pointerDown(third, { button: 0 });
-    fireEvent.pointerUp(window, { clientY: 10 });
+    fireEvent.pointerDown(third, { button: 0, clientX: 0, clientY: 120 });
+    fireEvent.pointerUp(window, { clientX: 0, clientY: 120 });
     onReorder.mockClear();
-    fireEvent.pointerMove(window, { clientY: 10 });
+    fireEvent.pointerMove(window, { clientX: 0, clientY: 10 });
 
     expect(onReorder).not.toHaveBeenCalled();
   });

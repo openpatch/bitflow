@@ -51,8 +51,24 @@
   max-height: 4rem;
 }
 
-.bitflow-ordering-item.bitflow-ordering-item-dragging {
+/* The hole the lifted item left. Same height, so nothing jumps, and dashed so
+   it reads as a place rather than as an item. */
+.bitflow-ordering-item.bitflow-ordering-item-gap {
+  background: var(--bitflow-color-neutral-100);
+  border-style: dashed;
+  border-color: var(--bitflow-color-primary);
+}
+
+/* The item under the cursor. Fixed to the viewport so a scrolling ancestor
+   cannot drag it out of line, and deaf to the pointer so it never becomes the
+   thing being dropped on. */
+.bitflow-ordering-lifted {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
   cursor: grabbing;
+  pointer-events: none;
   box-shadow: var(--bitflow-shadow-medium);
 }
 
