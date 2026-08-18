@@ -2,6 +2,7 @@ import type { Catalogs } from "@bitflow/core";
 
 export const messages: Catalogs = {
   en: {
+    reliabilityPartial: "Over the {common} of {total} tasks every learner reached",
     reportHeading: "Result",
     groupHeading: "Class results",
     score: "{earned} of {possible} points",
@@ -39,6 +40,7 @@ export const messages: Catalogs = {
       "How consistently the tasks measure the same thing. Above 0.7 is usually considered acceptable.",
   },
   de: {
+    reliabilityPartial: "Über die {common} von {total} Aufgaben, die alle erreicht haben",
     reportHeading: "Ergebnis",
     groupHeading: "Ergebnisse der Klasse",
     score: "{earned} von {possible} Punkten",

@@ -129,6 +129,24 @@ describe("cronbachsAlpha", () => {
     expect(cronbachsAlpha(items)).toBeCloseTo(0.2727, 4);
   });
 
+  it("is inflated by a padded item, which is why callers must not pad", () => {
+    // The same three items as above, plus a fourth that only the first three
+    // learners reached, padded with 0 for the rest — what the group report
+    // used to do on a branching flow.
+    const common = [
+      [1, 1, 1, 0, 0, 0],
+      [1, 1, 0, 1, 0, 0],
+      [1, 0, 1, 0, 1, 0],
+    ];
+    const padded = [...common, [1, 1, 0, 0, 0, 0]];
+
+    // 0.27 is a test you would not trust; 0.62 looks like one you nearly
+    // would. The padding invented the difference, by making "never saw it"
+    // look like agreement between items.
+    expect(cronbachsAlpha(common)).toBeCloseTo(0.2727, 4);
+    expect(cronbachsAlpha(padded)).toBeCloseTo(0.6154, 4);
+  });
+
   it("is 1 for items that agree perfectly", () => {
     const items = [
       [1, 0, 1, 0],

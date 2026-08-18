@@ -70,3 +70,12 @@
   font-weight: var(--bitflow-font-weight-bold);
   font-variant-numeric: tabular-nums;
 }
+
+/* A caveat on the number above it. Quiet, but on the page — a statistic that
+   only holds for part of the assessment must not read like one that holds for
+   all of it, and a tooltip is not something anyone reads. */
+.bitflow-stat-note {
+  margin: 0;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+}

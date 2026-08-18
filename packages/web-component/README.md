@@ -199,6 +199,20 @@ that is not a task, an outcome that does not exist, an ordering comparison
 against something that is not a number, a membership test without a list, and
 an empty rule set.
 
+## Reliability on a branching assessment
+
+`<bitflow-group-report>` reports Cronbach's α, which assumes every learner
+answered every item. Branching exists so that they do not.
+
+α is therefore computed over the items *every* learner reached, and the report
+says how many that was whenever it is fewer than the whole assessment. Read it
+as a statement about that common core, not about the assessment. If the core
+is smaller than three items there is no α to report, and the tile says so.
+
+It previously ran over every item, scoring an unreached one 0 — which both
+confuses "never saw it" with "got it wrong" and manufactures agreement between
+items. On a realistic branched cohort that turned an α of 0.27 into 0.62.
+
 ## Answers are visible to the learner
 
 `<bitflow-flow>` grades in the page, so the page holds the answer key: the

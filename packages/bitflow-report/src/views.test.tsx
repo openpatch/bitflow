@@ -119,6 +119,30 @@ describe("<GroupReport>", () => {
     expect(screen.getByText("Mean")).toBeDefined();
   });
 
+  it("says nothing about coverage when everyone answered everything", () => {
+    render(<GroupReport reports={cohort()} locale="en" />);
+    expect(screen.queryByText(/every learner reached/)).toBeNull();
+  });
+
+  it("says what reliability was measured on when the cohort branched", () => {
+    // Cam never reaches q2 — the ordinary result of a condition on an edge.
+    const branched = cohort();
+    branched[2] = report({
+      attemptId: "a-3",
+      subject: { label: "Cam" },
+      nodeReports: [
+        { nodeId: "q1", bitType: "task-choice", answer: {}, result: { state: "wrong" }, tries: 1 },
+      ],
+      score: { earned: 0, possible: 1 },
+    });
+
+    render(<GroupReport reports={branched} locale="en" />);
+
+    expect(
+      screen.getByText("Over the 1 of 2 tasks every learner reached"),
+    ).toBeDefined();
+  });
+
   it("reads the array out of JSON text", () => {
     render(<GroupReport reports={JSON.stringify(cohort())} locale="en" />);
     expect(screen.getByText("3 learner(s)")).toBeDefined();

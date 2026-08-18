@@ -59,8 +59,25 @@ export type GroupStatistics = {
    * Internal consistency across items. `null` when there are too few items or
    * learners, or when nobody's score varied — saying "0.0 reliability" in
    * those cases would be a claim the data cannot support.
+   *
+   * Computed over `reliability.common` items only. See there.
    */
   cronbachsAlpha: number | null;
+  /**
+   * What `cronbachsAlpha` was actually measured on.
+   *
+   * Alpha assumes every learner answered every item. Branching exists so that
+   * they do not, and a branched cohort has no such rectangle — so alpha is
+   * taken over the items *everyone* reached, and these two numbers say how
+   * much of the assessment that was. When they differ, alpha describes the
+   * common core rather than the assessment, and the report says so.
+   */
+  reliability: {
+    /** Items every learner has a gradable score for. */
+    common: number;
+    /** Items anyone reached. */
+    total: number;
+  };
 };
 
 const EMPTY_COUNTS = (): Record<BitResultState, number> => ({
@@ -114,12 +131,15 @@ export const computeGroupStatistics = (
     describeItem(reports, totals, nodeId, bitType),
   );
 
+  const common = commonItems(reports, items);
+
   return {
     learners: reports.length,
     items: itemStatistics,
     scores,
     summary: reports.length >= 2 ? summary(totals) : null,
-    cronbachsAlpha: cronbachsAlpha(scoreMatrix(reports, items)),
+    cronbachsAlpha: cronbachsAlpha(scoreMatrix(reports, common)),
+    reliability: { common: common.length, total: items.length },
   };
 };
 
@@ -184,14 +204,24 @@ const discriminationOf = (
 };
 
 /**
- * `items × learners`, for Cronbach's alpha.
+ * The items every learner has a gradable score for.
  *
- * A learner who never reached an item scores 0 on it: alpha needs a complete
- * rectangle, and for a branching assessment "did not reach" and "got it wrong"
- * are not the same thing — which is one reason alpha means less here than on a
- * fixed-form test, and why it is reported alongside the item table rather than
- * on its own.
+ * Alpha used to run over all of them, scoring an unreached item 0. That is
+ * wrong twice over: on a branching flow "never saw it" and "got it wrong" are
+ * different things, and filling the gap with the worst possible score
+ * manufactures agreement between items — inflating the very number it is
+ * meant to measure. Restricting to the common core is the honest version;
+ * when the core is too small there is simply no alpha to report.
  */
+const commonItems = <T extends { nodeId: string }>(
+  reports: AttemptReport[],
+  items: T[],
+): T[] =>
+  items.filter((item) =>
+    reports.every((report) => ratioOf(report, item.nodeId) !== null),
+  );
+
+/** `items × learners`, for Cronbach's alpha. Every cell is a real score. */
 const scoreMatrix = (
   reports: AttemptReport[],
   items: Array<{ nodeId: string }>,

@@ -909,6 +909,15 @@ rest: schema first, then the teacher-facing form, then the tests.
   across every catalog in the repo, in both directions: no locale missing an
   English key, and no locale carrying one English has dropped.
 
+- **Reliability is honest about branching.** Cronbach's α assumes a fixed
+  form; conditions on edges exist so there is not one. α used to run over every
+  item with unreached ones scored 0, which confuses "never saw it" with "got it
+  wrong" *and* manufactures agreement between items — on a realistic branched
+  cohort it turned 0.27 into 0.62, the difference between a test you would not
+  trust and one you nearly would. It is now measured over the items every
+  learner reached, and `<bitflow-group-report>` says so on the tile when that
+  is fewer than all of them.
+
 ## How to Use This Plan
 
 This file (`PLAN.md` at the bitflow repo root) is the single source of

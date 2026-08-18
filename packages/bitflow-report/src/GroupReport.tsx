@@ -69,6 +69,16 @@ export const GroupReport = ({
               ? t("notEnoughData")
               : String(round(statistics.cronbachsAlpha))
           }
+          // Alpha over part of the assessment is a different claim from alpha
+          // over all of it, and the number alone cannot tell you which it is.
+          note={
+            statistics.reliability.common < statistics.reliability.total
+              ? t("reliabilityPartial", {
+                  common: statistics.reliability.common,
+                  total: statistics.reliability.total,
+                })
+              : undefined
+          }
         />
         {statistics.summary && (
           <>
@@ -166,15 +176,19 @@ const Stat = ({
   label,
   value,
   hint,
+  note,
 }: {
   label: string;
   value: string;
   hint?: string;
+  /** A caveat about the number itself, shown rather than hidden in a tooltip. */
+  note?: string;
 }) => (
   <div className="bitflow-stat">
     <dt className="bitflow-stat-label" title={hint}>
       {label}
     </dt>
     <dd className="bitflow-stat-value">{value}</dd>
+    {note && <dd className="bitflow-stat-note">{note}</dd>}
   </div>
 );

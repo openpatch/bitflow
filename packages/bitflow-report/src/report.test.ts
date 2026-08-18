@@ -189,6 +189,64 @@ describe("computeGroupStatistics", () => {
       ),
     );
 
+  /**
+   * A branched cohort: everyone answers q1, only some reach q2. This is the
+   * normal shape for a flow with conditions on its edges, not an edge case.
+   */
+  const branchedCohort = (): AttemptReport[] =>
+    [
+      { label: "Alex", q1: true, q2: true },
+      { label: "Bo", q1: true, q2: false },
+      { label: "Cam", q1: false, q2: null },
+      { label: "Dee", q1: false, q2: null },
+    ].map(({ label, q1, q2 }, index) =>
+      createReport(
+        doc,
+        attempt({
+          attemptId: `attempt-${index}`,
+          results: {
+            q1: { state: q1 ? "correct" : "wrong" },
+            ...(q2 === null
+              ? {}
+              : { q2: { state: q2 ? "correct" : "wrong" } }),
+          },
+        }),
+        { label },
+      ),
+    );
+
+  it("says alpha covered the whole assessment when everyone saw all of it", () => {
+    expect(computeGroupStatistics(cohort()).reliability).toEqual({
+      common: 2,
+      total: 2,
+    });
+  });
+
+  it("measures alpha only over the tasks every learner reached", () => {
+    const stats = computeGroupStatistics(branchedCohort());
+
+    // q2 is still an item in the table — two learners answered it — but it
+    // cannot be part of a statistic that assumes everyone did.
+    expect(stats.items).toHaveLength(2);
+    expect(stats.reliability).toEqual({ common: 1, total: 2 });
+  });
+
+  it("declines to report alpha when the common core is a single task", () => {
+    // Alpha over one item is not a small number, it is not a number.
+    expect(computeGroupStatistics(branchedCohort()).cronbachsAlpha).toBeNull();
+  });
+
+  it("does not treat a task a learner never reached as one they got wrong", () => {
+    // The old matrix filled unreached items with 0, which manufactured
+    // agreement between items and inflated alpha. Two learners who never met
+    // q2 must not make q2 look like it agrees with q1.
+    const reached = computeGroupStatistics(cohort()).cronbachsAlpha;
+    const branched = computeGroupStatistics(branchedCohort()).cronbachsAlpha;
+
+    expect(reached).not.toBeNull();
+    expect(branched).toBeNull();
+  });
+
   it("counts the learners", () => {
     expect(computeGroupStatistics(cohort()).learners).toBe(5);
   });
