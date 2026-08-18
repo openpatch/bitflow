@@ -5,7 +5,7 @@ import {
   type Diagnostic,
   type Result,
 } from "./errors";
-import { incomingEdges, outgoingEdges } from "./engine";
+import { incomingEdges, outgoingEdges, poolMembers } from "./engine";
 import { getBit, listBits } from "./registry";
 import {
   BitflowDocumentSchema,
@@ -138,8 +138,74 @@ export const validateFlow = (doc: BitflowDocument): ValidationResult => {
   });
 
   diagnostics.push(...validateGraphShape(doc));
+  diagnostics.push(...validatePools(doc));
 
   return { valid: diagnostics.length === 0, diagnostics };
+};
+
+/**
+ * The ways a pool can be written so it does not do what it says.
+ *
+ * All silent at runtime: drawing is random, so an author who tries the flow
+ * twice may well not notice that a pool has one member, or that a step names
+ * a pool nothing declares and is therefore always shown.
+ */
+const validatePools = (doc: BitflowDocument): Diagnostic[] => {
+  const diagnostics: Diagnostic[] = [];
+  const declared = new Set(doc.meta.pools.map((pool) => pool.id));
+
+  const seen = new Set<string>();
+  doc.meta.pools.forEach((pool, index) => {
+    if (seen.has(pool.id)) {
+      diagnostics.push({
+        path: `meta.pools.${index}.id`,
+        message: `Duplicate pool "${pool.id}".`,
+      });
+    }
+    seen.add(pool.id);
+
+    const members = poolMembers(doc, pool.id);
+    if (members.length === 0) {
+      diagnostics.push({
+        path: `meta.pools.${index}.id`,
+        message: `The pool "${pool.label || pool.id}" has no steps in it.`,
+      });
+      return;
+    }
+    if (pool.draw > members.length) {
+      diagnostics.push({
+        path: `meta.pools.${index}.draw`,
+        message: `The pool "${pool.label || pool.id}" draws ${pool.draw} steps but only has ${members.length}. Every learner would get all of them.`,
+      });
+    }
+    // Drawing all of them is a pool that does nothing except look like it
+    // varies — worth saying, because the author clearly meant it to.
+    if (pool.draw === members.length && members.length > 1) {
+      diagnostics.push({
+        path: `meta.pools.${index}.draw`,
+        message: `The pool "${pool.label || pool.id}" draws all ${members.length} of its steps, so every learner gets the same ones.`,
+      });
+    }
+  });
+
+  doc.nodes.forEach((node, index) => {
+    if (node.pool && !declared.has(node.pool)) {
+      diagnostics.push({
+        path: `nodes.${index}.pool`,
+        message: `This step is in pool "${node.pool}", which the flow does not declare. It will be shown to everyone.`,
+      });
+    }
+    // A pooled start or end is a flow that sometimes cannot begin or finish.
+    const kind = getBit(node.type)?.kind;
+    if (node.pool && (kind === "start" || kind === "end")) {
+      diagnostics.push({
+        path: `nodes.${index}.pool`,
+        message: `A ${kind} step cannot be part of a pool.`,
+      });
+    }
+  });
+
+  return diagnostics;
 };
 
 const validateGraphShape = (doc: BitflowDocument): Diagnostic[] => {

@@ -13,7 +13,9 @@ import {
 import {
   BitView,
   CheckboxField,
+  Field,
   SecondsField,
+  SelectField,
   TextAreaField,
   TextField,
 } from "@bitflow/element";
@@ -444,7 +446,7 @@ const FlowSettings = ({
   store: EditorStore;
   locale: ReturnType<typeof resolveLocale>;
   readonly?: boolean;
-  t: (key: string) => string;
+  t: (key: string, vars?: Record<string, string | number>) => string;
 }) => {
   const doc = useStore(store, (s) => s.doc);
   if (readonly) {
@@ -481,9 +483,106 @@ const FlowSettings = ({
         checked={doc.meta.askReasoning}
         onChange={(askReasoning) => store.getState().updateMeta({ askReasoning })}
       />
+      <Pools store={store} doc={doc} t={t} />
       <p className="bitflow-hint">{t("nothingSelected")}</p>
       <span className="bitflow-visually-hidden">{locale}</span>
     </>
+  );
+};
+
+/**
+ * Declaring the pools, and how many steps each hands out.
+ *
+ * Which steps are *in* a pool is set on the steps themselves, not listed here:
+ * a pool holding a list of node ids goes stale the moment one is deleted, and
+ * the author is looking at the step anyway when they decide it is one of a
+ * set.
+ */
+const Pools = ({
+  store,
+  doc,
+  t,
+}: {
+  store: EditorStore;
+  doc: BitflowDocument;
+  t: (key: string, vars?: Record<string, string | number>) => string;
+}) => {
+  const pools = doc.meta.pools;
+
+  const update = (id: string, patch: Partial<(typeof pools)[number]>) =>
+    store.getState().updateMeta({
+      pools: pools.map((pool) => (pool.id === id ? { ...pool, ...patch } : pool)),
+    });
+
+  return (
+    <section className="bitflow-stack-small bitflow-stack">
+      <h3 className="bitflow-label">{t("pools")}</h3>
+      <p className="bitflow-hint">{t("poolsHint")}</p>
+
+      {pools.map((pool) => {
+        const members = doc.nodes.filter((node) => node.pool === pool.id).length;
+        return (
+          <div key={pool.id} className="bitflow-rule">
+            <TextField
+              label={t("poolLabel")}
+              value={pool.label}
+              onChange={(label) => update(pool.id, { label })}
+            />
+            <Field
+              label={t("poolDraw")}
+              // Says what it will actually do, so "5 of 3" is visible without
+              // reading the problems list.
+              hint={t("poolDrawHint", { members })}
+            >
+              {(props) => (
+                <input
+                  {...props}
+                  type="number"
+                  className="bitflow-input"
+                  min={1}
+                  value={pool.draw}
+                  onChange={(event) =>
+                    update(pool.id, {
+                      draw: Math.max(1, Math.round(Number(event.target.value) || 1)),
+                    })
+                  }
+                />
+              )}
+            </Field>
+            <button
+              type="button"
+              className="bitflow-button bitflow-button-quiet"
+              onClick={() =>
+                store.getState().updateMeta({
+                  pools: pools.filter((other) => other.id !== pool.id),
+                })
+              }
+            >
+              {t("removePool")}
+            </button>
+          </div>
+        );
+      })}
+
+      <button
+        type="button"
+        className="bitflow-button bitflow-button-secondary"
+        onClick={() =>
+          store.getState().updateMeta({
+            pools: [
+              ...pools,
+              {
+                id: `pool-${pools.length + 1}-${Math.random().toString(36).slice(2, 7)}`,
+                label: t("poolDefaultLabel", { number: pools.length + 1 }),
+                draw: 1,
+              },
+            ],
+          })
+        }
+      >
+        {t("addPool")}
+      </button>
+    </section>
   );
 };
 
@@ -529,6 +628,24 @@ const NodeInspector = ({
         />
       ) : (
         <p className="bitflow-text-muted">{bit?.info(locale).description}</p>
+      )}
+
+      {!readonly && doc.meta.pools.length > 0 && (
+        <SelectField
+          label={t("nodePool")}
+          hint={t("nodePoolHint")}
+          value={node.pool ?? ""}
+          options={[
+            { value: "", label: t("nodePoolNone") },
+            ...doc.meta.pools.map((pool) => ({
+              value: pool.id,
+              label: pool.label || pool.id,
+            })),
+          ]}
+          onChange={(pool) =>
+            store.getState().setNodePool(nodeId, pool === "" ? undefined : pool)
+          }
+        />
       )}
 
       <div className="bitflow-inspector-preview">

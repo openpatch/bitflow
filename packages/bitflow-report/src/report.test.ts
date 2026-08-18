@@ -22,6 +22,7 @@ const doc: BitflowDocument = {
     locale: "en",
     askConfidence: false,
     askReasoning: false,
+    pools: [],
   },
   nodes: [
     { id: "start", type: "t-start", position: { x: 0, y: 0 }, data: {} },
@@ -56,6 +57,7 @@ const attempt = (overrides: Partial<AttemptSnapshot> = {}): AttemptSnapshot => (
   flowSchemaVersion: 1,
   attemptId: "attempt-1",
   status: "completed",
+  pools: {},
   currentNodeId: "q2",
   history: ["start", "q1", "q2"],
   answers: { q1: "a", q2: "b" },

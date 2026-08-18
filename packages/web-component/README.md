@@ -266,6 +266,50 @@ exams. [What bitflow is not for](../../README.md#what-bitflow-is-not-for) has
 the full picture, and [SECURITY.md](../../SECURITY.md) says which of this we
 treat as a bug (none of it) and which we do.
 
+## Item pools
+
+A pool hands each learner a random few of its steps. Twenty questions in the
+file, five per learner, a different five each time.
+
+```jsonc
+{
+  "meta": {
+    "pools": [{ "id": "questions", "label": "Questions", "draw": 5 }]
+  },
+  "nodes": [
+    { "id": "q1", "type": "task-choice", "pool": "questions", /* … */ },
+    { "id": "q2", "type": "task-choice", "pool": "questions", /* … */ }
+    // …
+  ]
+}
+```
+
+Members are ordinary nodes, wired into the graph in the usual way — chained in
+a line is the common case. Drawing decides only which of them a given attempt
+walks through; the rest are stepped over as though the graph did not contain
+them, however many are chained together. Nothing about pools reaches the bits,
+the condition language, or the report.
+
+Membership lives on the node rather than the pool holding a list of ids, so
+deleting a step cannot leave a pool pointing at something that is gone.
+
+The draw happens once, when the attempt is created, and is recorded in the
+snapshot as `pools`. Reloading resumes the same assessment rather than dealing
+a new hand. An attempt that predates a pool has no draw recorded for it, and
+every member stays visible — hiding steps from a learner on the strength of
+missing data is the worse failure.
+
+The progress bar counts the steps this learner will actually take, not the
+twenty in the file. Cohort statistics already cope with learners who saw
+different items, because branching does the same thing — see
+[Reliability on a branching assessment](#reliability-on-a-branching-assessment).
+
+The editor declares pools in the flow settings and assigns steps to them from
+each step's own settings. Validation reports a pool with no members, one that
+draws more steps than it has, one that draws all of them (it looks like it
+varies and does not), a step naming a pool the flow does not declare, and a
+pooled start or end.
+
 ## Scoring and time
 
 Both live on the flow document, so a host that only embeds the elements has

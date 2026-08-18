@@ -5,7 +5,9 @@ import {
 } from "./errors";
 import {
   conditionContext,
+  drawPools,
   getNode,
+  isActiveNode,
   isTerminalNode,
   nextNodeId,
   previousNodeId,
@@ -40,7 +42,12 @@ const touch = (
 
 export const createAttempt = (
   doc: BitflowDocument,
-  options: { attemptId?: string; now?: Date } = {},
+  options: {
+    attemptId?: string;
+    now?: Date;
+    /** Injectable only so tests can draw pools deterministically. */
+    random?: () => number;
+  } = {},
 ): Result<AttemptSnapshot> => {
   const first = startNodeId(doc);
   if (!first) {
@@ -65,6 +72,10 @@ export const createAttempt = (
       results: {},
       tries: {},
       elapsedMs: {},
+      // Drawn once, at the start, and carried in the snapshot from then on:
+      // re-rolling on every render would hand the learner a different
+      // assessment each time the page reloaded.
+      pools: drawPools(doc, options.random),
       startedAt: timestamp,
       updatedAt: timestamp,
       enteredAt: timestamp,
@@ -197,7 +208,7 @@ export const setReasoning = (
 export const attemptAt = (
   doc: BitflowDocument,
   nodeId: string,
-  options: { attemptId?: string; now?: Date } = {},
+  options: { attemptId?: string; now?: Date; random?: () => number } = {},
 ): Result<AttemptSnapshot> => {
   if (!getNode(doc, nodeId)) {
     return {
@@ -380,7 +391,13 @@ export const goNext = (
   if (snapshot.status !== "inProgress") return snapshot;
 
   const timestamp = nowIso(now);
-  const target = nextNodeId(doc, snapshot.currentNodeId, conditionContext(snapshot));
+  const target = nextNodeId(
+    doc,
+    snapshot.currentNodeId,
+    conditionContext(snapshot),
+    // Steps this attempt did not draw are walked past, not stopped on.
+    (node) => isActiveNode(snapshot, node),
+  );
 
   if (target === null) {
     return touch(

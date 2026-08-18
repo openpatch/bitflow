@@ -945,6 +945,16 @@ rest: schema first, then the teacher-facing form, then the tests.
   so a step is never drawn above something that reaches it; cycles and
   unreachable pieces both terminate and both get sensible places.
 
+- **Item pools.** `meta.pools` declares a pool and how many steps it hands out;
+  a node joins one with `node.pool`. Members stay ordinary nodes wired into the
+  graph as usual, and the ones an attempt did not draw are stepped over as
+  though they were not there — so pools reach neither the bits, nor the
+  condition language, nor the report, which already copes with learners seeing
+  different items. Membership lives on the node so a deleted step leaves
+  nothing dangling. The draw is recorded in the snapshot, once, so a reload
+  resumes the same assessment; an attempt with no draw recorded shows every
+  member rather than hiding steps on the strength of missing data.
+
 ## How to Use This Plan
 
 This file (`PLAN.md` at the bitflow repo root) is the single source of

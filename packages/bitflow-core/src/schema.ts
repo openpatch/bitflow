@@ -150,6 +150,13 @@ export const BitNodeSchema = z.object({
   type: z.string().min(1),
   position: PositionSchema,
   data: z.record(z.string(), z.unknown()).default({}),
+  /**
+   * The pool this step belongs to, if any — see `BitflowMeta.pools`.
+   *
+   * Membership lives on the node rather than the pool holding a list of ids,
+   * so deleting a step cannot leave a pool pointing at something that is gone.
+   */
+  pool: z.string().min(1).optional(),
 });
 export type BitNode = z.infer<typeof BitNodeSchema>;
 
@@ -190,6 +197,27 @@ export const BitflowMetaSchema = z.object({
   askConfidence: z.boolean().default(false),
   /** Ask the learner to explain their reasoning after each task. */
   askReasoning: z.boolean().default(false),
+  /**
+   * Groups of interchangeable steps, of which each learner gets a random few.
+   *
+   * The members stay ordinary nodes wired into the graph as usual; drawing
+   * only decides which of them a given attempt walks through, and the rest are
+   * stepped over as though they were not there. That keeps pools out of every
+   * bit, out of the condition language, and out of the report — which already
+   * copes with learners who saw different items, because branching does the
+   * same thing.
+   */
+  pools: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        /** Shown to the author. Learners never see it. */
+        label: z.string().default(""),
+        /** How many members each learner gets. */
+        draw: z.number().int().positive(),
+      }),
+    )
+    .default([]),
   /**
    * Seconds for the whole assessment. Counted as time actually spent, not wall
    * clock: closing the tab pauses it. That is both fairer and the only rule
@@ -307,6 +335,14 @@ export const AttemptSnapshotSchema = z.object({
   results: z.record(z.string(), BitResultSchema),
   tries: z.record(z.string(), z.number().int().nonnegative()),
   elapsedMs: z.record(z.string(), z.number().nonnegative()),
+  /**
+   * Pool id → the node ids this attempt drew, in the order they were drawn.
+   *
+   * Recorded rather than re-rolled, so a reload resumes the same assessment.
+   * A pool the document has gained since is drawn on first use; one it has
+   * lost is simply never consulted again.
+   */
+  pools: z.record(z.string(), z.array(z.string())).default({}),
   confidence: z.record(z.string(), ConfidenceSchema).optional(),
   reasoning: z.record(z.string(), z.string()).optional(),
   startedAt: z.iso.datetime(),

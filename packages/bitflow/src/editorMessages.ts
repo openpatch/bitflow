@@ -8,6 +8,19 @@ import type { Catalogs } from "@bitflow/core";
  */
 export const editorMessages: Catalogs = {
   en: {
+    pools: "Pools",
+    poolsHint:
+      "A pool hands each learner a few of its steps at random. Put a step in one from the step's own settings.",
+    poolLabel: "Name",
+    poolDraw: "How many each learner gets",
+    poolDrawHint: "{members} step(s) are in this pool.",
+    poolDefaultLabel: "Pool {number}",
+    addPool: "Add a pool",
+    removePool: "Remove this pool",
+    nodePool: "Part of a pool",
+    nodePoolHint:
+      "Learners who do not draw this step never see it, and the flow steps straight over it.",
+    nodePoolNone: "Not in a pool",
     arrange: "Arrange",
     previewFromHere: "Preview from here",
     previewFromHereHint:
@@ -59,6 +72,19 @@ export const editorMessages: Catalogs = {
     redo: "Redo",
   },
   de: {
+    pools: "Pools",
+    poolsHint:
+      "Ein Pool gibt jeder lernenden Person zufällig einige seiner Schritte. Zugeordnet wird ein Schritt in seinen eigenen Einstellungen.",
+    poolLabel: "Name",
+    poolDraw: "Wie viele jede Person bekommt",
+    poolDrawHint: "{members} Schritt(e) sind in diesem Pool.",
+    poolDefaultLabel: "Pool {number}",
+    addPool: "Pool hinzufügen",
+    removePool: "Diesen Pool entfernen",
+    nodePool: "Teil eines Pools",
+    nodePoolHint:
+      "Wer diesen Schritt nicht zieht, sieht ihn nie — der Flow geht direkt darüber hinweg.",
+    nodePoolNone: "In keinem Pool",
     arrange: "Anordnen",
     previewFromHere: "Ab hier ansehen",
     previewFromHereHint:

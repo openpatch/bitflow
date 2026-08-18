@@ -29,6 +29,7 @@ export const doc = (
   nodes: BitNode[],
   edges: BitEdge[],
   id = "test-flow",
+  meta: Partial<BitflowDocument["meta"]> = {},
 ): BitflowDocument => ({
   version: FLOW_SCHEMA_VERSION,
   meta: {
@@ -37,6 +38,8 @@ export const doc = (
     locale: "en",
     askConfidence: false,
     askReasoning: false,
+    pools: [],
+    ...meta,
   },
   nodes,
   edges,

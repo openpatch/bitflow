@@ -102,6 +102,7 @@ export const doc = (
     locale: "en",
     askConfidence: false,
     askReasoning: false,
+    pools: [],
     ...meta,
   },
   nodes,

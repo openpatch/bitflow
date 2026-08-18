@@ -158,6 +158,76 @@ describe("<FlowEditor>", () => {
     ).toBe(true);
   });
 
+  describe("pools", () => {
+    it("declares a pool from the flow settings", async () => {
+      const user = userEvent.setup();
+      const { ref } = setup();
+
+      await user.click(screen.getByRole("button", { name: "Add a pool" }));
+
+      const pools = ref.current!.getFlow().meta.pools;
+      expect(pools).toHaveLength(1);
+      expect(pools[0].draw).toBe(1);
+    });
+
+    it("offers no pool picker on a step until a pool exists", () => {
+      setup();
+      // Nothing to choose from, so the field would only be noise.
+      expect(screen.queryByLabelText("Part of a pool")).toBeNull();
+    });
+
+    it("puts the selected step in a pool", async () => {
+      const user = userEvent.setup();
+      const { ref } = setup();
+      await user.click(screen.getByRole("button", { name: "Add a pool" }));
+      const poolId = ref.current!.getFlow().meta.pools[0].id;
+
+      fireEvent.click(screen.getByText("Capital of France?"));
+      await user.selectOptions(screen.getByLabelText("Part of a pool"), poolId);
+
+      expect(ref.current!.getFlow().nodes.find((n) => n.id === "q")?.pool).toBe(
+        poolId,
+      );
+    });
+
+    it("takes a step back out again without leaving a key behind", async () => {
+      const user = userEvent.setup();
+      const { ref } = setup();
+      await user.click(screen.getByRole("button", { name: "Add a pool" }));
+      const poolId = ref.current!.getFlow().meta.pools[0].id;
+      fireEvent.click(screen.getByText("Capital of France?"));
+      await user.selectOptions(screen.getByLabelText("Part of a pool"), poolId);
+
+      await user.selectOptions(screen.getByLabelText("Part of a pool"), "");
+
+      // Absent, not `undefined`: that is what the schema means by "not in a
+      // pool", and it keeps the saved file free of nulls.
+      const node = ref.current!.getFlow().nodes.find((n) => n.id === "q")!;
+      expect("pool" in node).toBe(false);
+    });
+
+    it("says how many steps a pool holds, next to how many it draws", () => {
+      const pooled = doc(
+        [
+          node("start", "test-start", { title: "Welcome" }),
+          { ...node("a", "test-task", { prompt: "A", correct: "x" }), pool: "p" },
+          { ...node("b", "test-task", { prompt: "B", correct: "x" }), pool: "p" },
+          node("end", "test-end"),
+        ],
+        [edge("start", "a"), edge("a", "b"), edge("b", "end")],
+        { pools: [{ id: "p", label: "Questions", draw: 1 }] },
+      );
+      setup({ flow: pooled });
+
+      // "1 of 2" has to be readable without opening the problems list.
+      expect(screen.getByText("2 step(s) are in this pool.")).toBeDefined();
+      expect(
+        (screen.getByLabelText("How many each learner gets") as HTMLInputElement)
+          .value,
+      ).toBe("1");
+    });
+  });
+
   it("says so when there is nothing to fix", () => {
     setup();
     expect(screen.getByText("No problems found.")).toBeDefined();

@@ -32,6 +32,8 @@ export type EditorState = {
   updateMeta: (meta: Partial<BitflowDocument["meta"]>) => void;
   addNode: (type: string, position?: Position) => void;
   updateNodeData: (id: string, data: Record<string, unknown>) => void;
+  /** Puts a step in a pool, or takes it out of one with `undefined`. */
+  setNodePool: (id: string, pool: string | undefined) => void;
   moveNode: (id: string, position: Position) => void;
   /** Repositions every step on a grid. One undo step, not one per node. */
   arrange: () => void;
@@ -53,6 +55,7 @@ export const emptyDocument = (): BitflowDocument => ({
     locale: "en",
     askConfidence: false,
     askReasoning: false,
+    pools: [],
   },
   nodes: [],
   edges: [],
@@ -161,6 +164,19 @@ export const createEditorStore = (
             edit(layout(get().doc));
           },
 
+          setNodePool: (id, pool) => {
+            const { doc } = get();
+            edit({
+              ...doc,
+              nodes: doc.nodes.map((node) =>
+                // Deleted rather than set to undefined: an absent key is what
+                // the schema means by "not in a pool", and it keeps the saved
+                // file free of nulls.
+                node.id === id ? withPool(node, pool) : node,
+              ),
+            });
+          },
+
           moveNode: (id, position) => {
             const { doc } = get();
             edit({
@@ -267,6 +283,12 @@ const chainSource = (
 };
 
 /** Drops a new node below the lowest one so it never lands on top of another. */
+/** `pool` present when there is one, absent when there is not. */
+const withPool = (node: BitNode, pool: string | undefined): BitNode => {
+  const { pool: _dropped, ...rest } = node;
+  return pool ? { ...rest, pool } : rest;
+};
+
 const nextFreePosition = (nodes: BitNode[]): Position => {
   if (nodes.length === 0) return { x: 0, y: 0 };
   const lowest = nodes.reduce((a, b) => (a.position.y > b.position.y ? a : b));
