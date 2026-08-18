@@ -72,6 +72,26 @@ Choice, yes/no, short answer, fill in the blank and highlighting, plus start,
 explanation, text and end screens. Each is its own package, so a page downloads
 only the ones its assessment actually uses.
 
+## Languages
+
+Set `locale` on any element, or let it fall back to the flow's own
+`meta.locale`.
+
+**Taking an assessment** works in English, German, French, Dutch, Spanish,
+Italian, Portuguese and Turkish. Every string a learner reads is translated in
+all eight.
+
+**Authoring** — the editor, the inspector and each task's form — is English
+and German only.
+
+The split is deliberate, and enforced: a catalog is complete for every locale
+it declares, and `packages/web-component/src/catalogs.test.ts` fails if it is
+not. `translate` falls back to English for anything missing, which makes a
+half-translated catalog invisible at runtime, so the guarantee has to be a
+test rather than a habit. Adding a language means translating a catalog
+whole — bits keep their learner strings and their form labels in separate
+catalogs precisely so that is a reasonable amount of work.
+
 ## The custom elements
 
 | Element | Purpose |

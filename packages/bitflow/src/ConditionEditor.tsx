@@ -8,7 +8,7 @@ import {
 } from "@bitflow/core";
 import { Field, SelectField } from "@bitflow/element";
 import type { ReactElement } from "react";
-import { messages } from "./messages";
+import { editorMessages as messages } from "./editorMessages";
 
 /**
  * The teacher-facing branching editor.

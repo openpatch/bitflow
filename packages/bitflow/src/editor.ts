@@ -11,6 +11,7 @@ import styles from "./flow.css?inline";
  * package's main entry so a learner-only page never pays for it.
  */
 export { ConditionEditor } from "./ConditionEditor";
+export { editorMessages } from "./editorMessages";
 export {
   createEditorStore,
   emptyDocument,

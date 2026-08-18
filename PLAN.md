@@ -899,6 +899,16 @@ rest: schema first, then the teacher-facing form, then the tests.
   unfilled and threw on first access, which the learner saw as
   `EVALUATION_FAILED`. Found by the accessibility walk, of all things.
 
+- **Translations are complete or absent, never partial.** Two catalogs claimed
+  eight locales and filled two, so `translate`'s English fallback hid the gap:
+  a French learner read a French question inside English chrome. They served
+  two audiences at once, which is why they were half-full — `@bitflow/bitflow`
+  and `task-choice` now keep learner strings (all eight locales, complete) in
+  `messages.ts` and authoring strings (English and German, complete) in
+  `editorMessages.ts` / `formMessages.ts`. `catalogs.test.ts` enforces it
+  across every catalog in the repo, in both directions: no locale missing an
+  English key, and no locale carrying one English has dropped.
+
 ## How to Use This Plan
 
 This file (`PLAN.md` at the bitflow repo root) is the single source of

@@ -8,7 +8,7 @@ import {
   TextAreaField,
 } from "@bitflow/element";
 import type { ReactElement } from "react";
-import { messages } from "./messages";
+import { formMessages as messages } from "./formMessages";
 import type { Choice, Data } from "./schema";
 
 /**

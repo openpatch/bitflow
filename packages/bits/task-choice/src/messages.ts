@@ -1,5 +1,13 @@
 import type { Catalogs } from "@bitflow/core";
 
+/**
+ * What a learner reads, plus the name and description the editor's palette
+ * shows for this task type.
+ *
+ * Kept apart from the authoring form's labels so each catalog can be complete
+ * in the locales it declares. Mixing them is what left six languages with a
+ * translated question and an English form around it.
+ */
 export const messages: Catalogs = {
   en: {
     name: "Choice",
@@ -9,22 +17,6 @@ export const messages: Catalogs = {
     correct: "correct",
     wrong: "wrong",
     // Authoring
-    instructionLabel: "Question",
-    instructionHint: "Markdown is supported. This is what the learner reads first.",
-    variantLabel: "How many answers are correct?",
-    variantSingle: "Exactly one",
-    variantMultiple: "One or more",
-    choicesLabel: "Choices",
-    choicesHint: "Tick the choices that are correct.",
-    choicePlaceholder: "Choice text",
-    addChoice: "Add choice",
-    removeChoice: "Remove choice",
-    correctLabel: "Correct",
-    advanced: "Advanced",
-    shuffleLabel: "Shuffle the choices",
-    shuffleHint: "Each learner sees them in a different order.",
-    partialCreditLabel: "Give partial credit",
-    partialCreditHint: "Score each choice separately instead of all or nothing.",
   },
   de: {
     name: "Auswahl",
@@ -33,22 +25,6 @@ export const messages: Catalogs = {
     legendMultiple: "Wähle alle zutreffenden Antworten",
     correct: "richtig",
     wrong: "falsch",
-    instructionLabel: "Frage",
-    instructionHint: "Markdown ist möglich. Das liest die Schülerin oder der Schüler zuerst.",
-    variantLabel: "Wie viele Antworten sind richtig?",
-    variantSingle: "Genau eine",
-    variantMultiple: "Eine oder mehrere",
-    choicesLabel: "Antwortmöglichkeiten",
-    choicesHint: "Kreuze die richtigen Antworten an.",
-    choicePlaceholder: "Text der Antwort",
-    addChoice: "Antwort hinzufügen",
-    removeChoice: "Antwort entfernen",
-    correctLabel: "Richtig",
-    advanced: "Erweitert",
-    shuffleLabel: "Antworten mischen",
-    shuffleHint: "Jede Person sieht sie in einer anderen Reihenfolge.",
-    partialCreditLabel: "Teilpunkte vergeben",
-    partialCreditHint: "Jede Antwort einzeln werten statt alles oder nichts.",
   },
   fr: {
     name: "Choix",

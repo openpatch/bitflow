@@ -42,7 +42,7 @@ import { createEditorStore, type EditorStore } from "./editorStore";
 import { nodeTypes } from "./EditorNode";
 import { summarise } from "./summarise";
 import { Flow } from "./Flow";
-import { messages } from "./messages";
+import { editorMessages as messages } from "./editorMessages";
 
 export type FlowEditorHandle = {
   getFlow: () => BitflowDocument;
