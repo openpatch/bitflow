@@ -25,6 +25,16 @@ footer {
   padding: 16px;
 }
 
+/* The authoring page runs the full width of the window.
+   940px is a reading measure, and the editor is not something to read: it is
+   a canvas beside an inspector, and every pixel taken off the canvas is a
+   step the author cannot see. The prose on the page keeps its own measure. */
+body.wide header,
+body.wide main,
+body.wide footer {
+  max-width: none;
+}
+
 header {
   border-bottom: 1px solid var(--line);
   display: flex;
