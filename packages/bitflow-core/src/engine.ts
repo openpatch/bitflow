@@ -190,6 +190,51 @@ export const distanceToEnd = (
   return getNode(doc, fromId) ? walk(fromId) : Number.POSITIVE_INFINITY;
 };
 
+// --- time -------------------------------------------------------------------
+
+/**
+ * Milliseconds spent on one task, including the stretch in progress.
+ *
+ * Time *spent*, not elapsed wall clock: `elapsedMs` only accumulates while the
+ * learner is actually on a node, so closing the tab pauses the clock. That is
+ * the only rule a snapshot can honour across a reload, and the fairer one.
+ */
+export const timeSpentOn = (
+  snapshot: AttemptSnapshot,
+  nodeId: string,
+  now: Date = new Date(),
+): number => {
+  const banked = snapshot.elapsedMs[nodeId] ?? 0;
+  if (snapshot.currentNodeId !== nodeId || snapshot.status !== "inProgress") {
+    return banked;
+  }
+  return banked + sinceEntering(snapshot, now);
+};
+
+/** Milliseconds spent across the whole attempt, on the same basis. */
+export const timeSpent = (
+  snapshot: AttemptSnapshot,
+  now: Date = new Date(),
+): number => {
+  const banked = Object.values(snapshot.elapsedMs).reduce(
+    (total, ms) => total + ms,
+    0,
+  );
+  return snapshot.status === "inProgress"
+    ? banked + sinceEntering(snapshot, now)
+    : banked;
+};
+
+const sinceEntering = (snapshot: AttemptSnapshot, now: Date): number =>
+  Math.max(0, now.getTime() - new Date(snapshot.enteredAt).getTime());
+
+/** The task's own limit in milliseconds, or `null` when it has none. */
+export const taskTimeLimit = (node: BitNode | undefined): number | null => {
+  const evaluation = node?.data?.evaluation as { timeLimit?: unknown } | undefined;
+  const seconds = evaluation?.timeLimit;
+  return typeof seconds === "number" && seconds > 0 ? seconds * 1000 : null;
+};
+
 export type FlowProgress = {
   /** Nodes the learner has already been shown, including the current one. */
   visited: number;

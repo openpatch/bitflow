@@ -1,3 +1,4 @@
+import { defaultEvaluation } from "@bitflow/core";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import "./index";
@@ -9,7 +10,7 @@ const data = {
   caseSensitive: false,
   trim: true,
   partialCredit: true,
-  evaluation: { mode: "auto", enableRetry: false, showFeedback: true },
+  evaluation: { ...defaultEvaluation(), mode: "auto", enableRetry: false, showFeedback: true },
 };
 
 const flush = async () => {

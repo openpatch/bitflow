@@ -59,6 +59,8 @@ export type FlowState = {
   setConfidence: (confidence: Confidence) => void;
   setReasoning: (reasoning: string) => void;
   reset: () => void;
+  /** Ends the attempt where it stands — what a whole-flow time limit does. */
+  finish: () => void;
   save: () => AttemptSnapshot | null;
 
   currentNode: () => BitNode | null;
@@ -224,6 +226,18 @@ export const createFlowStore = (
         }
         // A fresh attempt starts with a blank answer, not the last one.
         commit(created.value, { value: undefined });
+      },
+
+      finish: () => {
+        const { attempt } = get();
+        if (!attempt || attempt.status !== "inProgress") return;
+        const now = new Date();
+        commit({
+          ...attempt,
+          status: "completed",
+          completedAt: now.toISOString(),
+          updatedAt: now.toISOString(),
+        });
       },
 
       save: () => {

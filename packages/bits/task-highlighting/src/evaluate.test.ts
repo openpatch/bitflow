@@ -1,3 +1,4 @@
+import { defaultEvaluation } from "@bitflow/core";
 import { describe, expect, it } from "vitest";
 import { agreementPerColor, evaluate, kappa } from "./evaluate";
 import { DataSchema, type Color, type Data, type Highlights } from "./schema";
@@ -105,7 +106,7 @@ describe("evaluate", () => {
   it("respects the grading mode", () => {
     expect(
       evaluate({
-        data: data({ evaluation: { mode: "skip", enableRetry: false, showFeedback: true } }),
+        data: data({ evaluation: { ...defaultEvaluation(), mode: "skip", enableRetry: false, showFeedback: true } }),
         answer: { highlights: [] },
       }).state,
     ).toBe("unknown");

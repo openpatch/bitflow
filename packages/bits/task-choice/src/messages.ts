@@ -25,11 +25,6 @@ export const messages: Catalogs = {
     shuffleHint: "Each learner sees them in a different order.",
     partialCreditLabel: "Give partial credit",
     partialCreditHint: "Score each choice separately instead of all or nothing.",
-    retryLabel: "Allow another attempt",
-    feedbackLabel: "Show feedback after checking",
-    modeLabel: "Grading",
-    modeAuto: "Automatic",
-    modeSkip: "Not graded",
   },
   de: {
     name: "Auswahl",
@@ -54,11 +49,6 @@ export const messages: Catalogs = {
     shuffleHint: "Jede Person sieht sie in einer anderen Reihenfolge.",
     partialCreditLabel: "Teilpunkte vergeben",
     partialCreditHint: "Jede Antwort einzeln werten statt alles oder nichts.",
-    retryLabel: "Zweiten Versuch erlauben",
-    feedbackLabel: "Rückmeldung nach dem Prüfen zeigen",
-    modeLabel: "Bewertung",
-    modeAuto: "Automatisch",
-    modeSkip: "Nicht bewertet",
   },
   fr: {
     name: "Choix",

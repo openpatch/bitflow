@@ -1,3 +1,4 @@
+import { defaultEvaluation } from "@bitflow/core";
 import { describe, expect, it } from "vitest";
 import { evaluate } from "./evaluate";
 import { DataSchema, type Data } from "./schema";
@@ -72,7 +73,7 @@ describe("evaluate", () => {
     it("never grades a skipped task", () => {
       const result = evaluate({
         data: data({
-          evaluation: { mode: "skip", enableRetry: false, showFeedback: true },
+          evaluation: { ...defaultEvaluation(), mode: "skip", enableRetry: false, showFeedback: true },
         }),
         answer: { selected: ["a", "b"] },
       });
@@ -82,7 +83,7 @@ describe("evaluate", () => {
     it("leaves an ungraded task out of the score entirely", () => {
       const result = evaluate({
         data: data({
-          evaluation: { mode: "skip", enableRetry: false, showFeedback: true },
+          evaluation: { ...defaultEvaluation(), mode: "skip", enableRetry: false, showFeedback: true },
         }),
         answer: { selected: [] },
       });
@@ -93,7 +94,7 @@ describe("evaluate", () => {
     it("passes the retry setting through to the result", () => {
       const result = evaluate({
         data: data({
-          evaluation: { mode: "auto", enableRetry: true, showFeedback: true },
+          evaluation: { ...defaultEvaluation(), mode: "auto", enableRetry: true, showFeedback: true },
         }),
         answer: { selected: [] },
       });
@@ -210,7 +211,7 @@ describe("DataSchema", () => {
         { id: "a", markdown: "1", correct: false },
         { id: "b", markdown: "2", correct: false },
       ],
-      evaluation: { mode: "skip", enableRetry: false, showFeedback: true },
+      evaluation: { ...defaultEvaluation(), mode: "skip", enableRetry: false, showFeedback: true },
     });
     expect(parsed.success).toBe(true);
   });

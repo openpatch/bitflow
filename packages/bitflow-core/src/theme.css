@@ -117,13 +117,18 @@
   font-size: var(--bitflow-font-size-standard);
   line-height: var(--bitflow-line-height-standard);
   color: var(--bitflow-color-text);
-  box-sizing: border-box;
 }
 
+/* Stated outright rather than the usual `box-sizing: inherit` trick. Inherited
+   values follow the flattened tree, and `<details>` slots its children through
+   a UA shadow root that is not a `.bitflow-root` descendant — so everything
+   inside a disclosure inherited the browser's `content-box` instead, and any
+   `width: 100%` control in there overflowed its panel by its own padding. */
+.bitflow-root,
 .bitflow-root *,
 .bitflow-root *::before,
 .bitflow-root *::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 /* Layout ------------------------------------------------------------------ */

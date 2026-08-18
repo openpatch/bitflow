@@ -1,4 +1,8 @@
-import { EvaluationSchema, FeedbackMessageSchema } from "@bitflow/core";
+import {
+  defaultEvaluation,
+  EvaluationSchema,
+  FeedbackMessageSchema,
+} from "@bitflow/core";
 import { z } from "zod";
 
 export const DataSchema = z.object({
@@ -10,11 +14,7 @@ export const DataSchema = z.object({
   feedbackWhenYes: FeedbackMessageSchema.optional(),
   /** Shown when the learner answered no and no was wrong. */
   feedbackWhenNo: FeedbackMessageSchema.optional(),
-  evaluation: EvaluationSchema.default({
-    mode: "auto",
-    enableRetry: false,
-    showFeedback: true,
-  }),
+  evaluation: EvaluationSchema.default(defaultEvaluation),
 });
 export type Data = z.infer<typeof DataSchema>;
 

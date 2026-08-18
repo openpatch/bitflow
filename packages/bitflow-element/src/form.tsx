@@ -83,6 +83,45 @@ export const TextField = ({
   </Field>
 );
 
+export type SecondsFieldProps = Omit<FieldProps, "children"> & {
+  /** Seconds, or `undefined` for no limit at all. */
+  value: number | undefined;
+  onChange: (seconds: number | undefined) => void;
+};
+
+/**
+ * A duration in seconds where leaving it blank means "no limit".
+ *
+ * Blank and zero have to stay distinguishable — zero seconds would be a limit
+ * that has already expired — so this never coerces an empty box to a number.
+ */
+export const SecondsField = ({
+  value,
+  onChange,
+  ...field
+}: SecondsFieldProps): ReactElement => (
+  <Field {...field}>
+    {(props) => (
+      <input
+        {...props}
+        type="number"
+        className="bitflow-input"
+        min={0}
+        step={10}
+        value={value ?? ""}
+        onChange={(event) => {
+          const seconds = Number(event.target.value);
+          onChange(
+            event.target.value === "" || !Number.isFinite(seconds) || seconds <= 0
+              ? undefined
+              : Math.round(seconds),
+          );
+        }}
+      />
+    )}
+  </Field>
+);
+
 export type TextAreaFieldProps = TextFieldProps & { rows?: number };
 
 export const TextAreaField = ({

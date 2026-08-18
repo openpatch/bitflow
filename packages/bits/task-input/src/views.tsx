@@ -3,6 +3,7 @@ import {
   CheckboxField,
   Disclosure,
   errorFor,
+  EvaluationFields,
   Markdown,
   SelectField,
   TextAreaField,
@@ -115,33 +116,11 @@ export const Form = ({
           checked={data.multiline}
           onChange={(multiline) => patch({ multiline })}
         />
-        <SelectField
-          label={t("modeLabel")}
-          value={data.evaluation.mode}
-          options={[
-            { value: "auto", label: t("modeAuto") },
-            { value: "skip", label: t("modeSkip") },
-          ]}
-          onChange={(mode) => patch({ evaluation: { ...data.evaluation, mode } })}
+        <EvaluationFields
+          evaluation={data.evaluation}
+          locale={locale}
+          onChange={(evaluation) => patch({ evaluation })}
         />
-        {data.evaluation.mode === "auto" && (
-          <>
-            <CheckboxField
-              label={t("retryLabel")}
-              checked={data.evaluation.enableRetry}
-              onChange={(enableRetry) =>
-                patch({ evaluation: { ...data.evaluation, enableRetry } })
-              }
-            />
-            <CheckboxField
-              label={t("showFeedbackLabel")}
-              checked={data.evaluation.showFeedback}
-              onChange={(showFeedback) =>
-                patch({ evaluation: { ...data.evaluation, showFeedback } })
-              }
-            />
-          </>
-        )}
       </Disclosure>
     </div>
   );

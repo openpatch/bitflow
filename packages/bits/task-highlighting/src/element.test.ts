@@ -1,3 +1,4 @@
+import { defaultEvaluation } from "@bitflow/core";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import "./index";
@@ -10,7 +11,7 @@ const data = {
   // "cat" is characters 4-6.
   reference: [...text].map((_, i) => (i >= 4 && i < 7 ? "yellow" : null)),
   cutoffs: { yellow: 0.6 },
-  evaluation: { mode: "auto", enableRetry: false, showFeedback: true },
+  evaluation: { ...defaultEvaluation(), mode: "auto", enableRetry: false, showFeedback: true },
 };
 
 const flush = async () => {

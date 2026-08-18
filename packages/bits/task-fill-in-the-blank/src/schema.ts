@@ -1,4 +1,4 @@
-import { EvaluationSchema } from "@bitflow/core";
+import { defaultEvaluation, EvaluationSchema } from "@bitflow/core";
 import { z } from "zod";
 
 /**
@@ -26,11 +26,7 @@ export const DataSchema = z
     caseSensitive: z.boolean().default(false),
     trim: z.boolean().default(true),
     partialCredit: z.boolean().default(true),
-    evaluation: EvaluationSchema.default({
-      mode: "auto",
-      enableRetry: false,
-      showFeedback: true,
-    }),
+    evaluation: EvaluationSchema.default(defaultEvaluation),
   })
   .check((ctx) => {
     if (ctx.value.evaluation.mode !== "auto") return;

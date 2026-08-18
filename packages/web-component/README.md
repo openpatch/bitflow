@@ -199,6 +199,34 @@ that is not a task, an outcome that does not exist, an ordering comparison
 against something that is not a number, a membership test without a list, and
 an empty rule set.
 
+## Scoring and time
+
+Both live on the flow document, so a host that only embeds the elements has
+nothing to configure.
+
+| Where | Field | Meaning |
+| --- | --- | --- |
+| `node.data.evaluation` | `weight` | What the task is worth relative to the others. Defaults to `1`. The runtime multiplies the bit's own score by it, so every bit supports weighting without implementing it. `0` makes a task practice: it counts for nothing and leaves the total alone. |
+| `node.data.evaluation` | `timeLimit` | Seconds on this task, counted from arrival. Omit for no limit. |
+| `meta` | `timeLimit` | Seconds for the whole assessment. Omit for no limit. |
+
+Both clocks count time **spent**, not wall clock: they are recomputed from the
+attempt on every tick, so closing the tab pauses them and reloading resumes
+with the time already used. When a task's time runs out the answer is
+submitted rather than thrown away — a half-finished answer is still what the
+learner had. When the assessment's time runs out the attempt is completed and
+`bitflow-complete` fires, the same as reaching the end.
+
+## Accessibility
+
+Arriving at a step moves focus to its content and announces it — "Step 3.
+Capital of France?" — in a live region. Without that, pressing Next leaves
+focus on a button whose meaning has changed underneath it, and a screen reader
+says nothing about the new question. The first render is deliberately exempt:
+an element must not take focus away from the page that embedded it. Countdowns
+only announce themselves in their final thirty seconds, since a clock that
+speaks every second makes a screen reader unusable.
+
 ## Saving and resuming an attempt
 
 bitflow does not persist anything. It has no way to know who the learner is,

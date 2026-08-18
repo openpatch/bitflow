@@ -18,7 +18,7 @@ export {
   type EditorState,
   type EditorStore,
 } from "./editorStore";
-export { EditorNode, nodeTypes, summarise } from "./EditorNode";
+export { EditorNode, nodeTypes } from "./EditorNode";
 export {
   FlowEditor,
   type FlowEditorHandle,

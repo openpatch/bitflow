@@ -1,5 +1,5 @@
 import { translate, type Locale } from "@bitflow/core";
-import type { ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode, RefObject } from "react";
 import { messages } from "./messages";
 
 /**
@@ -120,16 +120,34 @@ export const Shell = ({
   progress,
   children,
   controls,
+  contentRef,
+  announcement,
 }: {
   progress?: ReactNode;
   children: ReactNode;
   controls?: ReactNode;
+  contentRef?: RefObject<HTMLDivElement | null>;
+  /** Read out when the learner arrives at a new step. */
+  announcement?: string;
 }): ReactElement => (
   <div className="bitflow-root bitflow-shell">
     {progress}
-    <div className="bitflow-shell-content bitflow-content">{children}</div>
+    {/* `tabIndex={-1}` so the runtime can put focus here on arrival: not a tab
+        stop, but focusable on purpose. */}
+    <div
+      ref={contentRef}
+      tabIndex={-1}
+      className="bitflow-shell-content bitflow-content"
+    >
+      {children}
+    </div>
     {controls && (
       <div className="bitflow-shell-controls bitflow-content">{controls}</div>
     )}
+    {/* Separate from the content so moving focus and announcing do not fight:
+        the focus move reads the step, this says where in the flow it is. */}
+    <div className="bitflow-visually-hidden" role="status">
+      {announcement}
+    </div>
   </div>
 );

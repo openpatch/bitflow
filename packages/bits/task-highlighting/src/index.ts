@@ -1,4 +1,4 @@
-import { injectStyles, registerBit, translate } from "@bitflow/core";
+import {defaultEvaluation, injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
 import styles from "./task-highlighting.css?inline";
 import { evaluate } from "./evaluate";
@@ -25,7 +25,7 @@ registerBit<Data, Answer>({
     colors: { yellow: { enabled: true, label: "" } },
     reference: [],
     cutoffs: { yellow: 0.6 },
-    evaluation: { mode: "auto", enableRetry: false, showFeedback: true },
+    evaluation: defaultEvaluation(),
   }),
 });
 

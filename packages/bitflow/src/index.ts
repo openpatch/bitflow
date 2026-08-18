@@ -12,3 +12,4 @@ export { Flow, type FlowHandle, type FlowProps } from "./Flow";
 export { createFlowStore, type FlowCallbacks, type FlowState } from "./flowStore";
 export { messages as flowMessages } from "./messages";
 export { ConfidenceLevels, Progress, Reasoning, Shell } from "./Shell";
+export { summarise } from "./summarise";

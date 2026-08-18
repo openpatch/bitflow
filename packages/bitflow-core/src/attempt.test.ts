@@ -245,3 +245,70 @@ describe("attempt runtime", () => {
     expect(snapshot.tries.q1).toBeUndefined();
   });
 });
+
+describe("task weight", () => {
+  beforeEach(registerTestBits);
+
+  const weighted = (weight: number): BitflowDocument =>
+    doc(
+      [
+        node("start", "test-start"),
+        node("q1", "test-task", { correct: "a", evaluation: { weight } }),
+        node("q2", "test-task", { correct: "b" }),
+        node("end", "test-end"),
+      ],
+      [edge("start", "q1"), edge("q1", "q2"), edge("q2", "end")],
+    );
+
+  const answerBoth = async (document: BitflowDocument) => {
+    const created = createAttempt(document);
+    if (!created.ok) throw new Error(created.error.message);
+    let snapshot = created.value;
+    for (const [nodeId, answer] of [
+      ["q1", "a"],
+      ["q2", "b"],
+    ] as const) {
+      const evaluated = await evaluateNode(document, snapshot, nodeId, answer);
+      if (!evaluated.ok) throw new Error(evaluated.error.message);
+      snapshot = evaluated.value;
+    }
+    return snapshot;
+  };
+
+  it("multiplies what a correct answer is worth", async () => {
+    const snapshot = await answerBoth(weighted(3));
+    expect(snapshot.results.q1.score).toEqual({ earned: 3, possible: 3 });
+    expect(computeScore(snapshot)).toEqual({ earned: 4, possible: 4 });
+  });
+
+  it("scales what a wrong answer costs, not just what it earns", async () => {
+    const document = weighted(3);
+    const created = createAttempt(document);
+    if (!created.ok) throw new Error(created.error.message);
+    const evaluated = await evaluateNode(document, created.value, "q1", "wrong");
+    if (!evaluated.ok) throw new Error(evaluated.error.message);
+
+    // Still out of three: a heavy task the learner got wrong has to weigh on
+    // the total, or weighting would only ever help.
+    expect(evaluated.value.results.q1.score).toEqual({ earned: 0, possible: 3 });
+  });
+
+  it("leaves a result untouched at the default weight", async () => {
+    const snapshot = await answerBoth(weighted(1));
+    // No score is written where the bit did not write one, so a snapshot of an
+    // unweighted flow stays as it was.
+    expect(snapshot.results.q1.score).toBeUndefined();
+    expect(computeScore(snapshot)).toEqual({ earned: 2, possible: 2 });
+  });
+
+  it("can take a task out of the score entirely", async () => {
+    const snapshot = await answerBoth(weighted(0));
+    expect(snapshot.results.q1.score).toEqual({ earned: 0, possible: 0 });
+    expect(computeScore(snapshot)).toEqual({ earned: 1, possible: 1 });
+  });
+
+  it("ignores a weight that is not a usable number", async () => {
+    const snapshot = await answerBoth(weighted(-2 as number));
+    expect(snapshot.results.q1.score).toBeUndefined();
+  });
+});

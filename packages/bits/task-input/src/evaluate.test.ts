@@ -1,3 +1,4 @@
+import { defaultEvaluation } from "@bitflow/core";
 import { describe, expect, it } from "vitest";
 import { evaluate } from "./evaluate";
 import { DataSchema, type Data } from "./schema";
@@ -110,7 +111,7 @@ describe("DataSchema", () => {
       instruction: "?",
       matchMode: "exact",
       expected: [],
-      evaluation: { mode: "skip", enableRetry: false, showFeedback: true },
+      evaluation: { ...defaultEvaluation(), mode: "skip", enableRetry: false, showFeedback: true },
     });
     expect(parsed.success).toBe(true);
   });

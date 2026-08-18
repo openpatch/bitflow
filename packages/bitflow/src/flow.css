@@ -32,6 +32,30 @@
   width: 100%;
 }
 
+/* Focus lands here on arrival, so it must not draw a ring — the learner did
+   not tab to it, and a box round the whole step reads as an error. */
+.bitflow-shell-content:focus {
+  outline: none;
+}
+
+.bitflow-countdown {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--bitflow-space-xxsmall);
+  padding-inline: var(--bitflow-space-small);
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-countdown-value {
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--bitflow-font-weight-medium);
+}
+
+.bitflow-countdown-urgent {
+  color: var(--bitflow-color-wrong);
+}
+
 /* `<progress>` needs both the WebKit/Blink pseudo-elements and the Firefox one
    to be restyled; there is no single cross-browser property for the fill. */
 .bitflow-progress-bar {

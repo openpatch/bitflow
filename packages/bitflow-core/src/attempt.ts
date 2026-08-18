@@ -9,6 +9,7 @@ import {
   isTerminalNode,
   nextNodeId,
   previousNodeId,
+  scoreOf,
   startNodeId,
 } from "./engine";
 import { createId } from "./id";
@@ -18,6 +19,7 @@ import {
   AttemptSnapshotSchema,
   type AttemptSnapshot,
   type BitflowDocument,
+  type BitNode,
   type BitResult,
   type Confidence,
 } from "./schema";
@@ -241,11 +243,31 @@ export const evaluateNode = async (
       snapshot,
       {
         answers: { ...snapshot.answers, [nodeId]: given },
-        results: { ...snapshot.results, [nodeId]: result },
+        results: { ...snapshot.results, [nodeId]: weigh(result, node) },
         tries: { ...snapshot.tries, [nodeId]: (snapshot.tries[nodeId] ?? 0) + 1 },
       },
       now,
     ),
+  };
+};
+
+/**
+ * Scales a result by the task's weight, once, here.
+ *
+ * Doing it in the runtime rather than in each bit means a bit never thinks
+ * about weighting and cannot forget to — including bits written later. The
+ * weight is read off `data.evaluation`, the shape every task bit shares
+ * (`EvaluationSchema`), and a bit without one is simply worth its own score.
+ */
+const weigh = (result: BitResult, node: BitNode): BitResult => {
+  const evaluation = node.data?.evaluation as { weight?: unknown } | undefined;
+  const weight = evaluation?.weight;
+  if (typeof weight !== "number" || weight === 1 || weight < 0) return result;
+
+  const base = scoreOf(result);
+  return {
+    ...result,
+    score: { earned: base.earned * weight, possible: base.possible * weight },
   };
 };
 

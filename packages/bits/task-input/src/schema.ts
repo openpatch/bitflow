@@ -1,4 +1,8 @@
-import { EvaluationSchema, FeedbackMessageSchema } from "@bitflow/core";
+import {
+  defaultEvaluation,
+  EvaluationSchema,
+  FeedbackMessageSchema,
+} from "@bitflow/core";
 import { z } from "zod";
 
 /** Rejects a pattern the browser's own engine cannot compile. */
@@ -28,11 +32,7 @@ export const DataSchema = z
     trim: z.boolean().default(true),
     /** Render a textarea instead of a single-line input. */
     multiline: z.boolean().default(false),
-    evaluation: EvaluationSchema.default({
-      mode: "auto",
-      enableRetry: false,
-      showFeedback: true,
-    }),
+    evaluation: EvaluationSchema.default(defaultEvaluation),
     /** Feedback attached to answers matching a pattern. */
     patternFeedback: z
       .array(

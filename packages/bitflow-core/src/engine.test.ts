@@ -4,10 +4,14 @@ import {
   conditionContext,
   distanceToEnd,
   flowProgress,
+  getNode,
   isTerminalNode,
   nextNodeId,
   outgoingEdges,
   startNodeId,
+  taskTimeLimit,
+  timeSpent,
+  timeSpentOn,
 } from "./engine";
 import { doc, edge, node, registerTestBits } from "./test-utils";
 import type { AttemptSnapshot } from "./schema";
@@ -176,5 +180,60 @@ describe("engine", () => {
     expect(
       flowProgress(linear, { ...snapshot, status: "completed" }).ratio,
     ).toBe(1);
+  });
+});
+
+describe("time spent", () => {
+  beforeEach(registerTestBits);
+
+  const at = (seconds: number) =>
+    new Date(Date.UTC(2026, 0, 1, 10, 0, seconds));
+
+  /** Two minutes banked on "start", currently sitting on "q". */
+  const midway = (): AttemptSnapshot => ({
+    ...snapshotOf(),
+    currentNodeId: "q",
+    history: ["start", "q"],
+    elapsedMs: { start: 120_000, q: 30_000 },
+    enteredAt: at(10).toISOString(),
+  });
+
+  it("counts the stretch in progress on the current task", () => {
+    // 30s banked plus 5s since arriving.
+    expect(timeSpentOn(midway(), "q", at(15))).toBe(35_000);
+  });
+
+  it("counts only what is banked on a task left behind", () => {
+    expect(timeSpentOn(midway(), "start", at(15))).toBe(120_000);
+  });
+
+  it("is zero for a task never reached", () => {
+    expect(timeSpentOn(midway(), "end", at(15))).toBe(0);
+  });
+
+  it("totals the whole attempt, including the stretch in progress", () => {
+    expect(timeSpent(midway(), at(15))).toBe(155_000);
+  });
+
+  it("stops counting once the attempt is over", () => {
+    const finished: AttemptSnapshot = { ...midway(), status: "completed" };
+    // An hour later it still reads the same: the clock measures time spent,
+    // not wall clock, so a closed tab does not run it down.
+    expect(timeSpent(finished, at(3600))).toBe(150_000);
+    expect(timeSpentOn(finished, "q", at(3600))).toBe(30_000);
+  });
+
+  it("does not go backwards if the clock does", () => {
+    expect(timeSpentOn(midway(), "q", at(5))).toBe(30_000);
+  });
+
+  it("reads a task's own limit off its evaluation settings", () => {
+    const limited = doc(
+      [node("q", "test-task", { correct: "a", evaluation: { timeLimit: 90 } })],
+      [],
+    );
+    expect(taskTimeLimit(getNode(limited, "q"))).toBe(90_000);
+    expect(taskTimeLimit(getNode(linear, "q"))).toBeNull();
+    expect(taskTimeLimit(undefined)).toBeNull();
   });
 });

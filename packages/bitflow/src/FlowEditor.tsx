@@ -8,7 +8,13 @@ import {
   type Diagnostic,
   type ValidationResult,
 } from "@bitflow/core";
-import { BitView, CheckboxField, TextAreaField, TextField } from "@bitflow/element";
+import {
+  BitView,
+  CheckboxField,
+  SecondsField,
+  TextAreaField,
+  TextField,
+} from "@bitflow/element";
 import {
   applyNodeChanges,
   Background,
@@ -33,7 +39,8 @@ import {
 import { useStore } from "zustand";
 import { ConditionEditor } from "./ConditionEditor";
 import { createEditorStore, type EditorStore } from "./editorStore";
-import { nodeTypes, summarise } from "./EditorNode";
+import { nodeTypes } from "./EditorNode";
+import { summarise } from "./summarise";
 import { Flow } from "./Flow";
 import { messages } from "./messages";
 
@@ -409,6 +416,12 @@ const FlowSettings = ({
         value={doc.meta.description ?? ""}
         rows={2}
         onChange={(description) => store.getState().updateMeta({ description })}
+      />
+      <SecondsField
+        label={t("timeLimitLabel")}
+        hint={t("timeLimitHint")}
+        value={doc.meta.timeLimit}
+        onChange={(timeLimit) => store.getState().updateMeta({ timeLimit })}
       />
       <CheckboxField
         label={t("askConfidence")}

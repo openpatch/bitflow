@@ -190,6 +190,13 @@ export const BitflowMetaSchema = z.object({
   askConfidence: z.boolean().default(false),
   /** Ask the learner to explain their reasoning after each task. */
   askReasoning: z.boolean().default(false),
+  /**
+   * Seconds for the whole assessment. Counted as time actually spent, not wall
+   * clock: closing the tab pauses it. That is both fairer and the only rule
+   * that survives a reload, since a snapshot records time per task rather than
+   * a deadline.
+   */
+  timeLimit: z.number().int().positive().optional(),
 });
 export type BitflowMeta = z.infer<typeof BitflowMetaSchema>;
 
@@ -223,8 +230,27 @@ export const EvaluationSchema = z.object({
   mode: z.enum(["auto", "skip"]).default("auto"),
   enableRetry: z.boolean().default(false),
   showFeedback: z.boolean().default(true),
+  /**
+   * What this task is worth relative to the others. The runtime multiplies the
+   * bit's own score by it, so a bit never has to think about weighting — and a
+   * new bit gets it without doing anything.
+   */
+  weight: z.number().min(0).default(1),
+  /**
+   * Seconds the learner gets on this task, counted from when they arrive.
+   * Omitted means no limit.
+   */
+  timeLimit: z.number().int().positive().optional(),
 });
 export type Evaluation = z.infer<typeof EvaluationSchema>;
+
+/**
+ * The grading settings a task starts with.
+ *
+ * Bits use this rather than writing the object out, so adding a setting here
+ * reaches every bit at once instead of breaking each one's defaults.
+ */
+export const defaultEvaluation = (): Evaluation => EvaluationSchema.parse({});
 
 export const BitResultSchema = z.object({
   state: BitResultStateSchema,

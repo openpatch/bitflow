@@ -1,4 +1,4 @@
-import { injectStyles, registerBit, translate } from "@bitflow/core";
+import {defaultEvaluation, injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
 import styles from "./task-fill-in-the-blank.css?inline";
 import { evaluate } from "./evaluate";
@@ -26,7 +26,7 @@ registerBit<Data, Answer>({
     caseSensitive: false,
     trim: true,
     partialCredit: true,
-    evaluation: { mode: "auto", enableRetry: false, showFeedback: true },
+    evaluation: defaultEvaluation(),
   }),
 });
 

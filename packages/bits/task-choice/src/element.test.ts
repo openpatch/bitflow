@@ -1,3 +1,4 @@
+import { defaultEvaluation } from "@bitflow/core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import "./index";
 
@@ -17,7 +18,7 @@ const data = {
   ],
   shuffle: false,
   partialCredit: false,
-  evaluation: { mode: "auto", enableRetry: false, showFeedback: true },
+  evaluation: { ...defaultEvaluation(), mode: "auto", enableRetry: false, showFeedback: true },
   patternFeedback: [],
 };
 

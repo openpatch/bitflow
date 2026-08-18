@@ -3,6 +3,7 @@ import {
   CheckboxField,
   Disclosure,
   errorFor,
+  EvaluationFields,
   SelectField,
   TextAreaField,
 } from "@bitflow/element";
@@ -174,37 +175,11 @@ export const Form = ({
           />
         )}
 
-        <SelectField
-          label={t("modeLabel")}
-          value={data.evaluation.mode}
-          options={[
-            { value: "auto", label: t("modeAuto") },
-            { value: "skip", label: t("modeSkip") },
-          ]}
-          onChange={(mode) =>
-            patch({ evaluation: { ...data.evaluation, mode } })
-          }
+        <EvaluationFields
+          evaluation={data.evaluation}
+          locale={locale}
+          onChange={(evaluation) => patch({ evaluation })}
         />
-
-        {/* Retry and feedback only mean anything for a graded task. */}
-        {data.evaluation.mode === "auto" && (
-          <>
-            <CheckboxField
-              label={t("retryLabel")}
-              checked={data.evaluation.enableRetry}
-              onChange={(enableRetry) =>
-                patch({ evaluation: { ...data.evaluation, enableRetry } })
-              }
-            />
-            <CheckboxField
-              label={t("feedbackLabel")}
-              checked={data.evaluation.showFeedback}
-              onChange={(showFeedback) =>
-                patch({ evaluation: { ...data.evaluation, showFeedback } })
-              }
-            />
-          </>
-        )}
       </Disclosure>
     </div>
   );

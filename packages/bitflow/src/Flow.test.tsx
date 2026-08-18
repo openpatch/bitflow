@@ -408,6 +408,63 @@ describe("<Flow>", () => {
     });
   });
 
+  describe("moving between steps", () => {
+    /** The `tabIndex={-1}` wrapper the runtime focuses on arrival. */
+    const content = () =>
+      document.querySelector(".bitflow-content") as HTMLElement;
+
+    it("leaves focus alone on first render", () => {
+      setup();
+      // Mounting a widget must not yank focus off whatever the host page had.
+      expect(document.activeElement).not.toBe(content());
+    });
+
+    it("moves focus to the step after Next", async () => {
+      const user = userEvent.setup();
+      setup();
+
+      await user.click(screen.getByRole("button", { name: "Next" }));
+
+      // Otherwise focus sits on a Next button that now means something else,
+      // and a screen reader says nothing at all about the new question.
+      expect(document.activeElement).toBe(content());
+    });
+
+    it("moves focus back after Back", async () => {
+      const user = userEvent.setup();
+      setup();
+      await user.click(screen.getByRole("button", { name: "Next" }));
+      await user.click(screen.getByRole("button", { name: "Back" }));
+
+      expect(document.activeElement).toBe(content());
+    });
+
+    it("does not steal focus while the learner answers in place", async () => {
+      const user = userEvent.setup();
+      setup();
+      await user.click(screen.getByRole("button", { name: "Next" }));
+      const input = screen.getByLabelText("Capital of France?");
+      await user.type(input, "Paris");
+
+      // Same node throughout, so nothing arrived and focus stays in the field.
+      expect(document.activeElement).toBe(input);
+    });
+
+    it("announces each step to a screen reader", async () => {
+      const user = userEvent.setup();
+      setup();
+
+      const status = screen.getByRole("status");
+      expect(status.textContent).toBe("Step 1. Welcome");
+
+      await user.click(screen.getByRole("button", { name: "Next" }));
+
+      expect(screen.getByRole("status").textContent).toBe(
+        "Step 2. Capital of France?",
+      );
+    });
+  });
+
   describe("readonly", () => {
     it("shows the run without offering any way to change it", async () => {
       setup({ readonly: true });

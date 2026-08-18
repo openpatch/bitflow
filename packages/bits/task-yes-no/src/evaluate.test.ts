@@ -1,3 +1,4 @@
+import { defaultEvaluation } from "@bitflow/core";
 import { describe, expect, it } from "vitest";
 import { evaluate } from "./evaluate";
 import { DataSchema, type Data } from "./schema";
@@ -50,7 +51,7 @@ describe("evaluate", () => {
   it("does not grade a task whose grading is switched off", () => {
     expect(
       evaluate({
-        data: data({ evaluation: { mode: "skip", enableRetry: false, showFeedback: true } }),
+        data: data({ evaluation: { ...defaultEvaluation(), mode: "skip", enableRetry: false, showFeedback: true } }),
         answer: { yes: false },
       }).state,
     ).toBe("unknown");

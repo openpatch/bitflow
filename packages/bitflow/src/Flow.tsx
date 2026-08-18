@@ -2,7 +2,11 @@ import {
   computeScore,
   flowProgress,
   getBit,
+  getNode,
   resolveLocale,
+  taskTimeLimit,
+  timeSpent,
+  timeSpentOn,
   translate,
   type AttemptSnapshot,
   type BitflowDocument,
@@ -19,6 +23,8 @@ import {
   type Ref,
 } from "react";
 import { useStore } from "zustand";
+import { Countdown } from "./Countdown";
+import { summarise } from "./summarise";
 import { createFlowStore, isTaskNode, type FlowState } from "./flowStore";
 import { messages } from "./messages";
 import { ConfidenceLevels, Progress, Reasoning, Shell } from "./Shell";
@@ -151,6 +157,26 @@ const FlowBody = ({
     [locale],
   );
 
+  /**
+   * Focus moves to the step's content whenever the learner arrives somewhere
+   * new.
+   *
+   * Without this, pressing Next leaves focus on the button that is no longer
+   * there in spirit: a screen reader says nothing, and a keyboard user tabs
+   * from the bottom of the page back up to find the question. Skipped on the
+   * first render, where stealing focus from the host page would be rude.
+   */
+  const contentRef = useRef<HTMLDivElement>(null);
+  const arrivedAt = useRef<string | null>(null);
+
+  useEffect(() => {
+    const nodeId = attempt.currentNodeId;
+    if (arrivedAt.current === nodeId) return;
+    const first = arrivedAt.current === null;
+    arrivedAt.current = nodeId;
+    if (!first) contentRef.current?.focus();
+  }, [attempt.currentNodeId]);
+
   if (!node) {
     return (
       <Shell>
@@ -161,6 +187,10 @@ const FlowBody = ({
 
   const score = computeScore(attempt);
   const complete = attempt.status === "completed";
+
+  const flowLimit = doc.meta.timeLimit ? doc.meta.timeLimit * 1000 : null;
+  const taskLimit = taskTimeLimit(getNode(doc, attempt.currentNodeId));
+  const running = attempt.status === "inProgress" && !readonly;
   const showRetry = answered && result?.allowRetry === true && !readonly;
   // `end` bits render their own summary, so the shell adds no Next after them.
   const showNext = !complete && (!isTask || answered) && !readonly;
@@ -168,16 +198,46 @@ const FlowBody = ({
 
   return (
     <Shell
+      contentRef={contentRef}
+      announcement={t("stepAnnouncement", {
+        visited: progress.visited,
+        title: summarise(node.data) || bit?.info(locale).name || "",
+      })}
       progress={
-        <Progress
-          visited={progress.visited}
-          total={
-            Number.isFinite(progress.remaining)
-              ? progress.visited + progress.remaining
-              : progress.visited
-          }
-          locale={locale}
-        />
+        <>
+          <Progress
+            visited={progress.visited}
+            total={
+              Number.isFinite(progress.remaining)
+                ? progress.visited + progress.remaining
+                : progress.visited
+            }
+            locale={locale}
+          />
+          {running && flowLimit !== null && (
+            <Countdown
+              // Recomputed from the snapshot each tick, so a reload resumes
+              // with the time already spent and nothing else.
+              remaining={() => flowLimit - timeSpent(attempt)}
+              label={t("timeLeftWhole")}
+              locale={locale}
+              onExpire={state.finish}
+            />
+          )}
+          {running && taskLimit !== null && !answered && (
+            <Countdown
+              key={attempt.currentNodeId}
+              remaining={() =>
+                taskLimit - timeSpentOn(attempt, attempt.currentNodeId)
+              }
+              label={t("timeLeftTask")}
+              locale={locale}
+              // Submitted rather than discarded: a half-finished answer is
+              // still what they had when the clock ran out.
+              onExpire={() => void state.check()}
+            />
+          )}
+        </>
       }
       controls={
         <>

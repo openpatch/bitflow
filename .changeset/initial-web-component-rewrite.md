@@ -33,3 +33,6 @@ modelling packages are dropped.
 
 There is also a VS Code extension, Bitflow Studio, for authoring `.bitflow`
 files visually.
+
+Tasks can carry a weight and a time limit, the assessment as a whole can carry
+one too, and arriving at a step moves focus to it and announces it.

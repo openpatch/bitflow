@@ -864,6 +864,23 @@ rest: schema first, then the teacher-facing form, then the tests.
   teacher's call. It needs the document as well as the attempt, so
   `BitTaskProps` gained `flow` alongside `attempt`.
 
+- **Tasks can be worth different amounts.** `evaluation.weight` multiplies a
+  bit's own score in the runtime, once, in `evaluateNode`. No bit implements
+  weighting and none has to: a new bit gets it by existing. A weight of `0`
+  makes a task practice rather than assessment — it leaves the total alone.
+- **Time limits, per task and per assessment.** `evaluation.timeLimit` and
+  `meta.timeLimit`, both in seconds, both optional. The clock counts time
+  *spent* rather than wall clock, recomputed from `elapsedMs`/`enteredAt` on
+  every tick, so closing the tab pauses it and a reload cannot hand out free
+  time. A task whose time runs out is submitted, not discarded — a
+  half-finished answer is still the answer they had. The whole assessment
+  running out completes the attempt.
+- **Focus moves with the learner.** Arriving at a step focuses its content and
+  announces it in a live region. Without this, pressing Next left focus on a
+  button that had changed meaning underneath it, and a screen reader said
+  nothing about the new question. The first render is exempt: a widget must not
+  steal focus from the page that embedded it.
+
 ## How to Use This Plan
 
 This file (`PLAN.md` at the bitflow repo root) is the single source of

@@ -1,4 +1,8 @@
-import { EvaluationSchema, FeedbackMessageSchema } from "@bitflow/core";
+import {
+  defaultEvaluation,
+  EvaluationSchema,
+  FeedbackMessageSchema,
+} from "@bitflow/core";
 import { z } from "zod";
 
 export const ChoiceSchema = z.object({
@@ -31,11 +35,7 @@ export const DataSchema = z
      * all-or-nothing. Only meaningful for `multiple`.
      */
     partialCredit: z.boolean().default(false),
-    evaluation: EvaluationSchema.default({
-      mode: "auto",
-      enableRetry: false,
-      showFeedback: true,
-    }),
+    evaluation: EvaluationSchema.default(defaultEvaluation),
     /**
      * Feedback for one exact combination of choices — the successor to the old
      * "patterns" map, with choice ids in place of positional letters.

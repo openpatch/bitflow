@@ -1,4 +1,4 @@
-import { EvaluationSchema } from "@bitflow/core";
+import { defaultEvaluation, EvaluationSchema } from "@bitflow/core";
 import { z } from "zod";
 
 /**
@@ -39,11 +39,7 @@ export const DataSchema = z
      * accident on a mostly-unhighlighted text is easy.
      */
     cutoffs: z.partialRecord(ColorSchema, z.number().min(0).max(1)).default({}),
-    evaluation: EvaluationSchema.default({
-      mode: "auto",
-      enableRetry: false,
-      showFeedback: true,
-    }),
+    evaluation: EvaluationSchema.default(defaultEvaluation),
   })
   .check((ctx) => {
     if (ctx.value.evaluation.mode !== "auto") return;

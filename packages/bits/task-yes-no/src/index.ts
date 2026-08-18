@@ -1,4 +1,4 @@
-import { injectStyles, registerBit, translate } from "@bitflow/core";
+import {defaultEvaluation, injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
 import styles from "./task-yes-no.css?inline";
 import { evaluate } from "./evaluate";
@@ -24,7 +24,7 @@ registerBit<Data, Answer>({
   defaultData: () => ({
     question: "",
     correctAnswer: true,
-    evaluation: { mode: "auto", enableRetry: false, showFeedback: true },
+    evaluation: defaultEvaluation(),
   }),
 });
 
