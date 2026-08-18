@@ -105,3 +105,12 @@
 .bitflow-image-field .bitflow-input[type="file"] {
   padding: var(--bitflow-space-xxsmall);
 }
+
+/* A disclosure's second line: what is inside, so a collapsed list of a dozen
+   is still readable without opening each one. */
+.bitflow-disclosure-aside {
+  display: block;
+  font-size: var(--bitflow-font-size-small);
+  font-weight: normal;
+  color: var(--bitflow-color-text-muted);
+}

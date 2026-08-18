@@ -211,6 +211,18 @@ A step is always drawn below everything that can reach it. Anything the start
 cannot reach is laid out below the rest as its own flow, which is what a
 half-built document looks like most of the time.
 
+## Sizing the inspector
+
+`<bitflow-flow-editor>` puts a grip between the canvas and the settings panel.
+Drag it, or focus it and use the arrow keys — it is a real `separator` that
+reports its width, so the panel is adjustable without a pointer. It will not go
+below 280px, nor take more than 60% of the editor: the canvas is the thing
+being edited.
+
+The width is not saved into the document. It is what one person needs while
+looking at one screen, not a property of the assessment, and writing it to the
+file would push a preference at everyone the file is sent to.
+
 ## Previewing one step
 
 `<bitflow-flow-editor>`'s Preview button starts at the beginning, or — when a
@@ -323,6 +335,11 @@ that is never shown to the learner — it is the author's handle on the canvas.
 Drag on the picture to draw a region; drag a box to move it; drag its
 bottom-right corner to resize. The numeric fields do the same thing and stay
 for anyone without a pointer.
+
+Regions and elements are listed collapsed, each one line: its name and what it
+expects, or where it belongs. A task with a dozen regions is a dozen forms, and
+all of them open at once is a wall. Touching one on the canvas — or drawing a
+new one — opens its panel, since that is plainly the one being worked on.
 
 ### Accessibility
 

@@ -6,6 +6,12 @@ import type { Catalogs } from "@bitflow/core";
  */
 export const formMessages: Catalogs = {
   en: {
+    zoneUnnamed: "Unnamed region",
+    zoneExpectsShort: "Expects",
+    zoneExpectsNothing: "Nothing belongs here yet",
+    elementUnnamed: "Unnamed element",
+    elementBelongsIn: "Belongs in",
+    elementBelongsNowhere: "A distractor — belongs nowhere",
     elementKind: "This element is",
     elementKindText: "Text",
     elementKindImage: "A picture",
@@ -59,6 +65,12 @@ export const formMessages: Catalogs = {
     noZones: "No drop zones yet.",
   },
   de: {
+    zoneUnnamed: "Bereich ohne Namen",
+    zoneExpectsShort: "Erwartet",
+    zoneExpectsNothing: "Hier gehört noch nichts hin",
+    elementUnnamed: "Element ohne Namen",
+    elementBelongsIn: "Gehört in",
+    elementBelongsNowhere: "Ablenker — gehört nirgendwohin",
     elementKind: "Dieses Element ist",
     elementKindText: "Text",
     elementKindImage: "Ein Bild",

@@ -40,6 +40,32 @@ export const Task = ({
   </div>
 );
 
+/** What a collapsed region says about itself. */
+const summariseZone = (
+  zone: DropZone,
+  data: Data,
+  t: (key: string) => string,
+): string => {
+  if (zone.correctElementIds.length === 0) return t("zoneExpectsNothing");
+  const names = zone.correctElementIds
+    .map((id) => data.elements.find((element) => element.id === id))
+    .map((element, index) => element?.label || zone.correctElementIds[index]);
+  return `${t("zoneExpectsShort")} ${names.join(", ")}`;
+};
+
+/** And a collapsed element. */
+const summariseElement = (
+  element: Element,
+  data: Data,
+  t: (key: string) => string,
+): string => {
+  const homes = data.dropZones
+    .filter((zone) => zone.correctElementIds.includes(element.id))
+    .map((zone) => zone.label || zone.id);
+  if (homes.length === 0) return t("elementBelongsNowhere");
+  return `${t("elementBelongsIn")} ${homes.join(", ")}`;
+};
+
 /** A fresh id that will not collide with one the author already used. */
 const newId = (prefix: string, taken: string[]): string => {
   for (let n = taken.length + 1; ; n++) {
@@ -99,6 +125,21 @@ export const Form = ({
   const [selected, setSelected] = useState<
     { type: "zone" | "element"; id: string } | undefined
   >();
+  /**
+   * Which panels are open. A task with a dozen regions is a dozen forms, and
+   * all of them at once is a wall — so each is collapsed to its name and
+   * opened when it is worked on. Drawing or touching a region on the canvas
+   * opens its panel, because that is plainly the one being edited.
+   */
+  const [opened, setOpened] = useState<Record<string, boolean>>({});
+  const isOpen = (key: string) => opened[key] ?? false;
+  const setOpen = (key: string, open: boolean) =>
+    setOpened((current) => ({ ...current, [key]: open }));
+
+  const select = (target: { type: "zone" | "element"; id: string } | undefined) => {
+    setSelected(target);
+    if (target) setOpen(`${target.type}:${target.id}`, true);
+  };
 
   const setElement = (id: string, changes: Partial<Element>) =>
     patch({
@@ -146,7 +187,7 @@ export const Form = ({
         },
       ],
     });
-    setSelected({ type: "zone", id });
+    select({ type: "zone", id });
   };
 
   return (
@@ -177,7 +218,7 @@ export const Form = ({
         data={data}
         locale={locale}
         selected={selected}
-        onSelect={setSelected}
+        onSelect={select}
         onAddZone={addZoneAt}
         onMoveZone={(id, box) => setZone(id, box)}
         onMoveElement={(id, box) => setElement(id, box)}
@@ -203,6 +244,12 @@ export const Form = ({
                 ? "bitflow-rule bitflow-rule-selected"
                 : "bitflow-rule"
             }
+          >
+          <Disclosure
+            summary={zone.label || t("zoneUnnamed")}
+            aside={summariseZone(zone, data, t)}
+            open={isOpen(`zone:${zone.id}`)}
+            onOpenChange={(open) => setOpen(`zone:${zone.id}`, open)}
           >
             <TextField
               label={t("zoneName")}
@@ -271,18 +318,20 @@ export const Form = ({
             >
               {t("remove")}
             </button>
+          </Disclosure>
           </div>
         ))}
 
         <button
           type="button"
           className="bitflow-button bitflow-button-secondary"
-          onClick={() =>
+          onClick={() => {
+            const newZoneId = newId("zone", data.dropZones.map((zone) => zone.id));
             patch({
               dropZones: [
                 ...data.dropZones,
                 {
-                  id: newId("zone", data.dropZones.map((zone) => zone.id)),
+                  id: newZoneId,
                   label: "",
                   x: 0.55,
                   y: 0.2,
@@ -292,8 +341,9 @@ export const Form = ({
                   backgroundOpacity: 100,
                 },
               ],
-            })
-          }
+            });
+            select({ type: "zone", id: newZoneId });
+          }}
         >
           {t("addZone")}
         </button>
@@ -319,6 +369,12 @@ export const Form = ({
                 ? "bitflow-rule bitflow-rule-selected"
                 : "bitflow-rule"
             }
+          >
+          <Disclosure
+            summary={element.label || t("elementUnnamed")}
+            aside={summariseElement(element, data, t)}
+            open={isOpen(`element:${element.id}`)}
+            onOpenChange={(open) => setOpen(`element:${element.id}`, open)}
           >
             <SelectField
               label={t("elementKind")}
@@ -375,18 +431,23 @@ export const Form = ({
             >
               {t("remove")}
             </button>
+          </Disclosure>
           </div>
         ))}
 
         <button
           type="button"
           className="bitflow-button bitflow-button-secondary"
-          onClick={() =>
+          onClick={() => {
+            const newElementId = newId(
+              "element",
+              data.elements.map((element) => element.id),
+            );
             patch({
               elements: [
                 ...data.elements,
                 {
-                  id: newId("element", data.elements.map((element) => element.id)),
+                  id: newElementId,
                   kind: "text" as const,
                   label: "",
                   x: 0.05,
@@ -397,8 +458,9 @@ export const Form = ({
                   backgroundOpacity: 100,
                 },
               ],
-            })
-          }
+            });
+            select({ type: "element", id: newElementId });
+          }}
         >
           {t("addElement")}
         </button>

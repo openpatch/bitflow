@@ -36,6 +36,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
   type ComponentType,
   type ReactElement,
   type Ref,
@@ -47,6 +48,10 @@ import { nodeTypes } from "./EditorNode";
 import { summarise } from "./summarise";
 import { Flow } from "./Flow";
 import { editorMessages as messages } from "./editorMessages";
+import {
+  DEFAULT_INSPECTOR,
+  InspectorResizer,
+} from "./InspectorResizer";
 
 export type FlowEditorHandle = {
   getFlow: () => BitflowDocument;
@@ -111,6 +116,15 @@ const FlowEditorBody = ({
    * the preview is a run, not a mirror of the canvas.
    */
   const [previewFrom, setPreviewFrom] = useState<string | null>(null);
+  /**
+   * How wide the inspector is, in pixels.
+   *
+   * Held here rather than in the document: it is what this person needs while
+   * looking at this screen, not part of the assessment, and saving it into the
+   * file would push a preference at everyone the file is sent to.
+   */
+  const [inspectorWidth, setInspectorWidth] = useState(DEFAULT_INSPECTOR);
+  const editorRef = useRef<HTMLDivElement>(null);
 
   const t = useCallback(
     (key: string, vars?: Record<string, string | number>) =>
@@ -211,10 +225,14 @@ const FlowEditorBody = ({
 
   return (
     <div
+      ref={editorRef}
       className={
         previewing
           ? "bitflow-root bitflow-editor bitflow-editor-previewing"
           : "bitflow-root bitflow-editor"
+      }
+      style={
+        { "--bitflow-inspector-width": `${inspectorWidth}px` } as CSSProperties
       }
     >
       <div className="bitflow-editor-toolbar">
@@ -343,6 +361,15 @@ const FlowEditorBody = ({
       {/* Hidden while previewing: the palette and the settings are the
           author's tools, and a preview is meant to show what the learner sees
           — including how much room they get. */}
+      {!previewing && (
+        <InspectorResizer
+          width={inspectorWidth}
+          editorWidth={editorRef.current?.clientWidth ?? 0}
+          locale={resolved}
+          onResize={setInspectorWidth}
+        />
+      )}
+
       {!previewing && (
       <aside className="bitflow-editor-sidebar">
         {!readonly && (

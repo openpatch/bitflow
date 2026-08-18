@@ -228,6 +228,23 @@ describe("<FlowEditor>", () => {
     });
   });
 
+  it("offers a grip for the settings panel's width", () => {
+    setup();
+
+    // A fixed width is wrong for everyone: too narrow for a task's form on a
+    // laptop, too wide for the canvas on a large screen.
+    expect(screen.getByRole("separator")).toBeDefined();
+  });
+
+  it("hides the grip while previewing, along with the panel", async () => {
+    const user = userEvent.setup();
+    setup();
+
+    await user.click(screen.getByRole("button", { name: "Preview" }));
+
+    expect(screen.queryByRole("separator")).toBeNull();
+  });
+
   it("says so when there is nothing to fix", () => {
     setup();
     expect(screen.getByText("No problems found.")).toBeDefined();

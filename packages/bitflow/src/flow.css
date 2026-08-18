@@ -125,7 +125,10 @@
 
 .bitflow-editor {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
+  /* Canvas, grip, inspector. The inspector's width is set on the element as
+     the author drags the grip; this is only its starting point. */
+  grid-template-columns:
+    minmax(0, 1fr) auto var(--bitflow-inspector-width, 400px);
   grid-template-rows: auto minmax(0, 1fr);
   height: 100%;
   min-height: 420px;
@@ -135,6 +138,34 @@
 /* Previewing drops the sidebar, so the learner's view gets the whole width. */
 .bitflow-editor-previewing {
   grid-template-columns: minmax(0, 1fr);
+}
+
+/* A grip needs to be catchable with a mouse and thicker still with a finger,
+   without a visible bar that wide cutting the editor in half — so the hit area
+   reaches past the line it draws. */
+.bitflow-editor-resizer {
+  width: 9px;
+  margin-inline: -4px;
+  cursor: col-resize;
+  background: none;
+  border: 0;
+  touch-action: none;
+  z-index: 1;
+}
+
+.bitflow-editor-resizer::before {
+  display: block;
+  width: 1px;
+  height: 100%;
+  margin-inline: auto;
+  content: "";
+  background: var(--bitflow-color-border);
+}
+
+.bitflow-editor-resizer:hover::before,
+.bitflow-editor-resizer:focus-visible::before {
+  width: 3px;
+  background: var(--bitflow-color-accent);
 }
 
 .bitflow-editor-toolbar {
@@ -157,7 +188,6 @@
 }
 
 .bitflow-editor-sidebar {
-  border-left: 1px solid var(--bitflow-color-border);
   background: var(--bitflow-color-surface);
   padding: var(--bitflow-space-small);
   overflow-y: auto;
@@ -172,6 +202,11 @@
   .bitflow-editor {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto minmax(240px, 1fr) auto;
+  }
+
+  /* Stacked, there is no width to drag: the inspector already has all of it. */
+  .bitflow-editor-resizer {
+    display: none;
   }
 
   .bitflow-editor-sidebar {

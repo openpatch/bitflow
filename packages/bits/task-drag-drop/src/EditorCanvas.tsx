@@ -1,4 +1,5 @@
 import { translate, type Locale } from "@bitflow/core";
+import { usePointerDrag } from "@bitflow/element";
 import {
   useCallback,
   useReducer,
@@ -9,7 +10,6 @@ import {
 } from "react";
 import { formMessages } from "./formMessages";
 import { inside, type Box } from "./layout";
-import { usePointerDrag } from "./usePointerDrag";
 import type { Data, DropZone, Element } from "./schema";
 
 /** What is being dragged on the authoring canvas. */

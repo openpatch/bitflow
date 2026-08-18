@@ -211,21 +211,42 @@ export const CheckboxField = ({
  */
 export const Disclosure = ({
   summary,
+  aside,
   children,
   defaultOpen = false,
+  open: controlled,
+  onOpenChange,
 }: {
   summary: string;
+  /** A quieter second line — what is inside, without opening it. */
+  aside?: string;
   children: ReactNode;
   defaultOpen?: boolean;
+  /**
+   * Set to drive the state from outside. Left off, the disclosure keeps its
+   * own — which is what most callers want and none of them should have to say.
+   */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }): ReactElement => {
-  const [open, setOpen] = useState(defaultOpen);
+  const [uncontrolled, setUncontrolled] = useState(defaultOpen);
+  const open = controlled ?? uncontrolled;
+
   return (
     <details
       className="bitflow-disclosure"
       open={open}
-      onToggle={(event) => setOpen((event.target as HTMLDetailsElement).open)}
+      onToggle={(event) => {
+        const next = (event.target as HTMLDetailsElement).open;
+        if (next === open) return;
+        setUncontrolled(next);
+        onOpenChange?.(next);
+      }}
     >
-      <summary className="bitflow-disclosure-summary">{summary}</summary>
+      <summary className="bitflow-disclosure-summary">
+        {summary}
+        {aside && <span className="bitflow-disclosure-aside">{aside}</span>}
+      </summary>
       <div className="bitflow-stack">{children}</div>
     </details>
   );

@@ -8,6 +8,7 @@ export { defineBitElement, type StandaloneBitProps } from "./defineBitElement";
 export { Markdown, renderMarkdown } from "./Markdown";
 export { messages as elementMessages } from "./messages";
 export { ImageField } from "./ImageField";
+export { usePointerDrag } from "./usePointerDrag";
 export {
   readImageFile,
   DEFAULT_MAX_EDGE,

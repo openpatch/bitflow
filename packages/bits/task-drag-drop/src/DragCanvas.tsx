@@ -1,4 +1,5 @@
 import { translate, type Locale } from "@bitflow/core";
+import { usePointerDrag } from "@bitflow/element";
 import {
   useCallback,
   useReducer,
@@ -12,7 +13,6 @@ import {
 import type { Judged } from "./evaluate";
 import { messages } from "./messages";
 import type { Data, Element, Placement } from "./schema";
-import { usePointerDrag } from "./usePointerDrag";
 
 /** A drag in progress, in the play area's own 0..1 space. */
 type Drag = {

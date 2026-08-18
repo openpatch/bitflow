@@ -8,6 +8,7 @@ import type { Catalogs } from "@bitflow/core";
  */
 export const editorMessages: Catalogs = {
   en: {
+    resizeInspector: "Width of the settings panel",
     pools: "Pools",
     poolsHint:
       "A pool hands each learner a few of its steps at random. Put a step in one from the step's own settings.",
@@ -72,6 +73,7 @@ export const editorMessages: Catalogs = {
     redo: "Redo",
   },
   de: {
+    resizeInspector: "Breite der Einstellungsleiste",
     pools: "Pools",
     poolsHint:
       "Ein Pool gibt jeder lernenden Person zufällig einige seiner Schritte. Zugeordnet wird ein Schritt in seinen eigenen Einstellungen.",
