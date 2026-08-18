@@ -12,6 +12,14 @@
   },
   "dependencies": {
     "@bitflow/task-choice": "workspace:*",
+    "@bitflow/task-drag-drop": "workspace:*",
+    "@bitflow/task-fill-in-the-blank": "workspace:*",
+    "@bitflow/task-find-hotspots": "workspace:*",
+    "@bitflow/task-highlighting": "workspace:*",
+    "@bitflow/task-input": "workspace:*",
+    "@bitflow/task-matching": "workspace:*",
+    "@bitflow/task-ordering": "workspace:*",
+    "@bitflow/task-yes-no": "workspace:*",
     "@bitflow/web-component": "workspace:*"
   },
   "devDependencies": {

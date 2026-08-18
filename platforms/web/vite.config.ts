@@ -20,6 +20,7 @@ export default defineConfig({
         flow: resolve(import.meta.dirname, "flow.html"),
         editor: resolve(import.meta.dirname, "editor.html"),
         bit: resolve(import.meta.dirname, "bit.html"),
+        bits: resolve(import.meta.dirname, "bits.html"),
         report: resolve(import.meta.dirname, "report.html"),
       },
     },

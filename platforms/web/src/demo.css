@@ -126,3 +126,33 @@ button.plain {
 .cards strong {
   color: var(--brand);
 }
+
+/* The task-type switcher: a row of links, the current one marked. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 16px;
+}
+
+.chip {
+  padding: 4px 10px;
+  font-size: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.chip:hover {
+  border-color: var(--brand);
+}
+
+/* Marked by more than colour: the current page is also the filled one. */
+.chip-current {
+  font-weight: 600;
+  color: #fff;
+  background: var(--brand);
+  border-color: var(--brand);
+}

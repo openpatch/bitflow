@@ -1065,6 +1065,30 @@ importers:
       '@bitflow/task-choice':
         specifier: workspace:*
         version: link:../../packages/bits/task-choice
+      '@bitflow/task-drag-drop':
+        specifier: workspace:*
+        version: link:../../packages/bits/task-drag-drop
+      '@bitflow/task-fill-in-the-blank':
+        specifier: workspace:*
+        version: link:../../packages/bits/task-fill-in-the-blank
+      '@bitflow/task-find-hotspots':
+        specifier: workspace:*
+        version: link:../../packages/bits/task-find-hotspots
+      '@bitflow/task-highlighting':
+        specifier: workspace:*
+        version: link:../../packages/bits/task-highlighting
+      '@bitflow/task-input':
+        specifier: workspace:*
+        version: link:../../packages/bits/task-input
+      '@bitflow/task-matching':
+        specifier: workspace:*
+        version: link:../../packages/bits/task-matching
+      '@bitflow/task-ordering':
+        specifier: workspace:*
+        version: link:../../packages/bits/task-ordering
+      '@bitflow/task-yes-no':
+        specifier: workspace:*
+        version: link:../../packages/bits/task-yes-no
       '@bitflow/web-component':
         specifier: workspace:*
         version: link:../../packages/web-component

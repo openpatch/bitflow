@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task types — bitflow</title>
+    <link rel="stylesheet" href="./src/demo.css" />
+  </head>
+  <body>
+    <header>
+      <h1><a href="./index.html">bitflow</a> / task types</h1>
+    </header>
+
+    <main>
+      <p class="lede">
+        Every task type, one worked example each. Each is a standalone custom
+        element with its own data: no flow around it, no editor, and only this
+        one task type downloaded. Open the network tab and count the chunks.
+      </p>
+
+      <nav class="chips" id="types" aria-label="Task types"></nav>
+
+      <h2 id="name"></h2>
+      <p class="lede" id="shows"></p>
+
+      <div class="demo" id="stage"></div>
+
+      <h2>What the page hears</h2>
+      <pre class="log" id="log"></pre>
+
+      <h2>All of the code</h2>
+      <pre class="log" id="code"></pre>
+
+      <h2>The example's data</h2>
+      <pre class="log" id="source"></pre>
+    </main>
+
+    <script type="module" src="./src/bits.ts"></script>
+  </body>
+</html>
