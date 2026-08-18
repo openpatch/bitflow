@@ -1,33 +1,34 @@
 import { defaultEvaluation } from "@bitflow/core";
-import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import "./index";
 
 const data = {
   instruction: "Label the diagram.",
   background: { src: "/cpu.png", alt: "A CPU diagram" },
-  items: [
-    { id: "alu", kind: "text", label: "ALU" },
-    { id: "reg", kind: "text", label: "Registers" },
+  elements: [
+    { id: "alu", label: "ALU", x: 0.05, y: 0.05, width: 0.2, height: 0.1 },
+    { id: "reg", label: "Registers", x: 0.05, y: 0.2, width: 0.2, height: 0.1 },
   ],
-  zones: [
+  dropZones: [
     {
-      id: "alu-zone",
-      label: "Arithmetic logic unit",
-      rect: { x: 0.1, y: 0.1, width: 0.2, height: 0.2 },
-      acceptedItemIds: ["alu"],
-      score: 1,
+      id: "left",
+      label: "Left block",
+      x: 0.4,
+      y: 0.05,
+      width: 0.25,
+      height: 0.2,
+      correctElementIds: ["alu"],
     },
     {
-      id: "reg-zone",
-      label: "Register file",
-      rect: { x: 0.5, y: 0.1, width: 0.2, height: 0.2 },
-      acceptedItemIds: ["reg"],
-      score: 1,
+      id: "right",
+      label: "Right block",
+      x: 0.7,
+      y: 0.05,
+      width: 0.25,
+      height: 0.2,
+      correctElementIds: ["reg"],
     },
   ],
-  allowMultiplePlacements: false,
-  partialCredit: true,
   evaluation: defaultEvaluation(),
 };
 
@@ -44,13 +45,6 @@ const mount = async (props: Record<string, unknown> = {}) => {
   return element;
 };
 
-const button = (element: HTMLElement, name: string) =>
-  [...element.querySelectorAll("button")].find(
-    (candidate) =>
-      candidate.getAttribute("aria-label") === name ||
-      candidate.textContent?.trim() === name,
-  );
-
 afterEach(() => document.body.replaceChildren());
 
 describe("<bitflow-task-drag-drop>", () => {
@@ -58,42 +52,38 @@ describe("<bitflow-task-drag-drop>", () => {
     expect(customElements.get("bitflow-task-drag-drop")).toBeDefined();
   });
 
-  it("reports a placement through the standard answer event", async () => {
+  it("reports a move through the standard answer event", async () => {
     const element = await mount();
     const listener = vi.fn();
     document.addEventListener("bitflow-answerchange", listener);
 
-    const user = userEvent.setup();
-    await user.click(button(element, "ALU")!);
-    await user.click(button(element, "Arithmetic logic unit, empty")!);
+    const alu = [...element.querySelectorAll("button")].find(
+      (candidate) => candidate.getAttribute("aria-label") === "ALU",
+    )!;
+    alu.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }),
+    );
     await flush();
 
-    expect(listener.mock.calls[0][0].detail.answer).toEqual({
-      placements: [{ itemId: "alu", zoneId: "alu-zone" }],
-    });
+    // A position, because nothing snaps: the region it may or may not be over
+    // is worked out at marking time.
+    const answer = listener.mock.calls[0][0].detail.answer;
+    expect(answer.placements).toHaveLength(1);
+    expect(answer.placements[0].elementId).toBe("alu");
     document.removeEventListener("bitflow-answerchange", listener);
   });
 
-  it("puts every region and every label in the tab order", async () => {
+  it("gives every element a tab stop, and never the regions", async () => {
     const element = await mount();
 
-    // The whole task is reachable without a pointer, which is the point of
-    // pick-up-then-choose rather than a drag gesture.
+    // The regions decide the marking and are not part of the interface: a
+    // learner with a keyboard must not be able to find what nobody can see.
     const reachable = [...element.querySelectorAll("button")]
       .filter((candidate) => !candidate.disabled)
-      .map(
-        (candidate) =>
-          candidate.getAttribute("aria-label") ?? candidate.textContent?.trim(),
-      );
+      .map((candidate) => candidate.getAttribute("aria-label"));
 
-    expect(reachable).toEqual(
-      expect.arrayContaining([
-        "ALU",
-        "Registers",
-        "Arithmetic logic unit, empty",
-        "Register file, empty",
-      ]),
-    );
+    expect(reachable).toEqual(expect.arrayContaining(["ALU", "Registers"]));
+    expect(reachable).not.toContain("Left block");
   });
 
   it("evaluates in the browser, with no answer key request", async () => {
@@ -104,8 +94,8 @@ describe("<bitflow-task-drag-drop>", () => {
       data: DataSchema.parse(data),
       answer: {
         placements: [
-          { itemId: "alu", zoneId: "alu-zone" },
-          { itemId: "reg", zoneId: "reg-zone" },
+          { elementId: "alu", x: 0.45, y: 0.1 },
+          { elementId: "reg", x: 0.75, y: 0.1 },
         ],
       },
     });

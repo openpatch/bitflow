@@ -268,21 +268,46 @@ treat as a bug (none of it) and which we do.
 
 ## Drag and drop
 
-`<bitflow-task-drag-drop>` puts labels onto regions of an image. Regions are
-authored as fractions of the image (`0`–`1`), never pixels, so a task laid out
-against a wide screenshot lands in the same place on a phone. The answer is a
-map of label id to region id for the same reason: a dropped pixel coordinate
-would grade differently on a different screen.
+`<bitflow-task-drag-drop>` follows H5P's Drag and Drop question: elements sit
+on the picture where the author put them, invisible regions decide what
+belongs where, and an element can be marked as usable more than once.
 
-The interaction is pick up a label, then choose a region — two clicks, two
-taps, or two Enters. Native HTML drag-and-drop is deliberately not used: it
-does not fire on touch and cannot be driven from a keyboard, so supporting it
-would have meant building this as a fallback beside it anyway.
+**Nothing snaps.** An element is dragged wherever the learner wants and stays
+exactly there, at the size the author gave it. Which region it turns out to be
+sitting on is worked out at marking time, by asking which region its middle is
+over. The regions are never drawn and never in the tab order — showing them
+would turn "where does this belong on the picture" into "which box lights up".
 
-Alternative text for the image is required when there is an image. The picture
-carries the whole task, and a learner who cannot see it has nothing without it.
-Each region's name is its accessible name, and a region announces what it is
-holding, so the state of the board is readable without seeing it.
+The answer is therefore a position per element, in fractions of the play area,
+not a region id. Fractions rather than pixels so the same answer grades the
+same on a phone and on a projector.
+
+Scoring is H5P's. The maximum is one point per element that belongs somewhere,
+or one per region for an element that can be reused. A wrong placement costs a
+point when `applyPenalties` is on (the default, and effectively required once
+elements are reusable — otherwise scattering everything everywhere scores full
+marks), and the total is floored at zero. `singlePoint` makes the whole task
+worth one mark, all or nothing. An element left on open ground is neither right
+nor wrong.
+
+Alternative text for the background is required. Each region carries a name
+that is never shown to the learner — it is the author's handle on the canvas.
+
+### Authoring
+
+Drag on the picture to draw a region; drag a box to move it; drag its
+bottom-right corner to resize. The numeric fields do the same thing and stay
+for anyone without a pointer.
+
+### Accessibility
+
+Because the regions are invisible, "choose an element, then choose a region" is
+not a path anyone can take — there is nothing to choose. Keyboard users focus
+an element and move it with the arrow keys (Shift for bigger steps, Backspace
+to send it back), which is the same freedom a pointer has at the same
+resolution. An element announces where it now is, as a percentage across and
+down, and never which region it is over: that would tell a screen-reader user
+something the picture tells nobody.
 
 ## Item pools
 

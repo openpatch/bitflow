@@ -9,11 +9,13 @@ import {
   TextAreaField,
   TextField,
 } from "@bitflow/element";
-import type { ReactElement } from "react";
-import { Board } from "./Board";
+import { useState, type ReactElement } from "react";
+import { DragCanvas } from "./DragCanvas";
+import { EditorCanvas } from "./EditorCanvas";
 import { formMessages } from "./formMessages";
-import { messages } from "./messages";
-import type { Answer, Data, Item, Zone, ZoneState } from "./schema";
+import type { Judged } from "./evaluate";
+import type { Box } from "./layout";
+import type { Answer, Data, DropZone, Element } from "./schema";
 
 export const Task = ({
   data,
@@ -25,10 +27,10 @@ export const Task = ({
 }: BitTaskProps<Data, Answer>): ReactElement => (
   <div className="bitflow-stack">
     <Markdown markdown={data.instruction} />
-    <Board
+    <DragCanvas
       data={data}
       placements={answer?.placements ?? []}
-      states={result?.detail?.zones as Record<string, ZoneState> | undefined}
+      judged={result?.detail?.placements as Judged[] | undefined}
       locale={locale}
       readonly={readonly}
       onChange={(placements) => onAnswerChange({ placements })}
@@ -44,6 +46,45 @@ const newId = (prefix: string, taken: string[]): string => {
   }
 };
 
+/** The four fractions every box on the play area is positioned by. */
+const BoxFields = ({
+  box,
+  t,
+  onChange,
+}: {
+  box: { x: number; y: number; width: number; height: number };
+  t: (key: string) => string;
+  onChange: (side: "x" | "y" | "width" | "height", value: number) => void;
+}) => (
+  <div className="bitflow-row">
+    {(
+      [
+        ["x", "left"],
+        ["y", "top"],
+        ["width", "width"],
+        ["height", "height"],
+      ] as const
+    ).map(([side, label]) => (
+      <Field key={side} label={t(label)}>
+        {(props) => (
+          <input
+            {...props}
+            type="number"
+            className="bitflow-input"
+            min={0}
+            max={1}
+            step={0.01}
+            value={box[side]}
+            onChange={(event) =>
+              onChange(side, Math.min(1, Math.max(0, Number(event.target.value) || 0)))
+            }
+          />
+        )}
+      </Field>
+    ))}
+  </div>
+);
+
 export const Form = ({
   data,
   locale,
@@ -52,31 +93,59 @@ export const Form = ({
 }: BitFormProps<Data>): ReactElement => {
   const t = (key: string) => translate(formMessages, key, locale);
   const patch = (changes: Partial<Data>) => onChange({ ...data, ...changes });
+  /** What the canvas has selected, so its fields can be highlighted. */
+  const [selected, setSelected] = useState<
+    { type: "zone" | "element"; id: string } | undefined
+  >();
 
-  const setItem = (id: string, changes: Partial<Item>) =>
+  const setElement = (id: string, changes: Partial<Element>) =>
     patch({
-      items: data.items.map((item) =>
-        item.id === id ? { ...item, ...changes } : item,
+      elements: data.elements.map((element) =>
+        element.id === id ? { ...element, ...changes } : element,
       ),
     });
 
-  const setZone = (id: string, changes: Partial<Zone>) =>
+  const setZone = (id: string, changes: Partial<DropZone>) =>
     patch({
-      zones: data.zones.map((zone) =>
+      dropZones: data.dropZones.map((zone) =>
         zone.id === id ? { ...zone, ...changes } : zone,
       ),
     });
 
-  const removeItem = (id: string) =>
+  const removeElement = (id: string) =>
     patch({
-      items: data.items.filter((item) => item.id !== id),
-      // A deleted label must not stay listed as belonging somewhere, or the
-      // region silently becomes impossible to fill correctly.
-      zones: data.zones.map((zone) => ({
+      elements: data.elements.filter((element) => element.id !== id),
+      // A deleted element must not stay listed as belonging somewhere, or the
+      // zone quietly becomes impossible to fill correctly.
+      dropZones: data.dropZones.map((zone) => ({
         ...zone,
-        acceptedItemIds: zone.acceptedItemIds.filter((itemId) => itemId !== id),
+        correctElementIds: zone.correctElementIds.filter((other) => other !== id),
       })),
     });
+
+  const removeZone = (id: string) =>
+    patch({ dropZones: data.dropZones.filter((zone) => zone.id !== id) });
+
+  const toggle = (list: string[], id: string, on: boolean) =>
+    on ? [...list, id] : list.filter((other) => other !== id);
+
+  /** Adds a zone where it was drawn, and opens it for naming. */
+  const addZoneAt = (box: Box) => {
+    const id = newId("zone", data.dropZones.map((zone) => zone.id));
+    patch({
+      dropZones: [
+        ...data.dropZones,
+        {
+          id,
+          label: "",
+          ...box,
+          correctElementIds: [],
+          backgroundOpacity: 100,
+        },
+      ],
+    });
+    setSelected({ type: "zone", id });
+  };
 
   return (
     <div className="bitflow-stack">
@@ -103,170 +172,106 @@ export const Form = ({
         onChange={(alt) => patch({ background: { ...data.background, alt } })}
       />
 
-      <fieldset className="bitflow-field">
-        <legend className="bitflow-label">{t("itemsLabel")}</legend>
-        <span className="bitflow-hint">{t("itemsHint")}</span>
-        {errorFor(errors, "items") && (
-          <span className="bitflow-field-error" role="alert">
-            {errorFor(errors, "items")}
-          </span>
-        )}
-
-        {data.items.map((item) => (
-          <div key={item.id} className="bitflow-row">
-            <input
-              type="text"
-              className="bitflow-input"
-              aria-label={t("itemPlaceholder")}
-              placeholder={t("itemPlaceholder")}
-              value={item.label}
-              onChange={(event) => setItem(item.id, { label: event.target.value })}
-            />
-            <button
-              type="button"
-              className="bitflow-button bitflow-button-quiet"
-              aria-label={`${t("removeItem")} ${item.label || item.id}`}
-              onClick={() => removeItem(item.id)}
-            >
-              ×
-            </button>
-          </div>
-        ))}
-
-        <button
-          type="button"
-          className="bitflow-button bitflow-button-secondary"
-          onClick={() =>
-            patch({
-              items: [
-                ...data.items,
-                {
-                  id: newId("item", data.items.map((item) => item.id)),
-                  kind: "text",
-                  label: "",
-                },
-              ],
-            })
-          }
-        >
-          {t("addItem")}
-        </button>
-      </fieldset>
+      {/* Drawn on rather than typed at: drag on the background to make a drop
+          zone, drag a box to move it, drag its corner to resize. The numeric
+          fields below stay for anyone without a pointer. */}
+      <EditorCanvas
+        data={data}
+        locale={locale}
+        selected={selected}
+        onSelect={setSelected}
+        onAddZone={addZoneAt}
+        onMoveZone={(id, box) => setZone(id, box)}
+        onMoveElement={(id, box) => setElement(id, box)}
+      />
 
       <fieldset className="bitflow-field">
         <legend className="bitflow-label">{t("zonesLabel")}</legend>
         <span className="bitflow-hint">{t("zonesHint")}</span>
-        {errorFor(errors, "zones") && (
+        {errorFor(errors, "dropZones") && (
           <span className="bitflow-field-error" role="alert">
-            {errorFor(errors, "zones")}
+            {errorFor(errors, "dropZones")}
           </span>
         )}
-
-        {data.zones.length === 0 && (
+        {data.dropZones.length === 0 && (
           <p className="bitflow-text-muted">{t("noZones")}</p>
         )}
 
-        {data.zones.map((zone, index) => (
-          <div key={zone.id} className="bitflow-rule">
+        {data.dropZones.map((zone, index) => (
+          <div
+            key={zone.id}
+            className={
+              selected?.type === "zone" && selected.id === zone.id
+                ? "bitflow-rule bitflow-rule-selected"
+                : "bitflow-rule"
+            }
+          >
             <TextField
               label={t("zoneName")}
-              value={zone.label}
               placeholder={t("zoneNamePlaceholder")}
-              error={errorFor(errors, `zones.${index}.label`)}
+              value={zone.label}
+              error={errorFor(errors, `dropZones.${index}.label`)}
               onChange={(label) => setZone(zone.id, { label })}
             />
-
-            <div className="bitflow-row">
-              {(["x", "y", "width", "height"] as const).map((side) => (
-                <Field
-                  key={side}
-                  label={t(
-                    side === "x"
-                      ? "zoneLeft"
-                      : side === "y"
-                        ? "zoneTop"
-                        : side === "width"
-                          ? "zoneWidth"
-                          : "zoneHeight",
-                  )}
-                >
-                  {(props) => (
-                    <input
-                      {...props}
-                      type="number"
-                      className="bitflow-input"
-                      min={0}
-                      max={1}
-                      step={0.01}
-                      value={zone.rect[side]}
-                      onChange={(event) =>
-                        setZone(zone.id, {
-                          rect: {
-                            ...zone.rect,
-                            [side]: Math.min(
-                              1,
-                              Math.max(0, Number(event.target.value) || 0),
-                            ),
-                          },
-                        })
-                      }
-                    />
-                  )}
-                </Field>
-              ))}
-            </div>
-            {errorFor(errors, `zones.${index}.rect`) && (
+            <BoxFields
+              box={zone}
+              t={t}
+              onChange={(side, value) => setZone(zone.id, { [side]: value })}
+            />
+            {errorFor(errors, `dropZones.${index}`) && (
               <span className="bitflow-field-error" role="alert">
-                {errorFor(errors, `zones.${index}.rect`)}
+                {errorFor(errors, `dropZones.${index}`)}
               </span>
             )}
 
             <fieldset className="bitflow-field">
-              <legend className="bitflow-label">{t("zoneAccepts")}</legend>
-              {data.items.map((item) => (
-                <label key={item.id} className="bitflow-option">
+              <legend className="bitflow-label">{t("zoneExpects")}</legend>
+              {data.elements.map((element) => (
+                <label key={element.id} className="bitflow-option">
                   <input
                     type="checkbox"
-                    checked={zone.acceptedItemIds.includes(item.id)}
+                    checked={zone.correctElementIds.includes(element.id)}
                     onChange={(event) =>
                       setZone(zone.id, {
-                        acceptedItemIds: event.target.checked
-                          ? [...zone.acceptedItemIds, item.id]
-                          : zone.acceptedItemIds.filter((id) => id !== item.id),
+                        correctElementIds: toggle(
+                          zone.correctElementIds,
+                          element.id,
+                          event.target.checked,
+                        ),
                       })
                     }
                   />
-                  <span>{item.label || item.id}</span>
+                  <span>{element.label || element.id}</span>
                 </label>
               ))}
             </fieldset>
 
-            <Field label={t("zoneScore")}>
-              {(props) => (
-                <input
-                  {...props}
-                  type="number"
-                  className="bitflow-input"
-                  min={0}
-                  step={0.5}
-                  value={zone.score}
-                  onChange={(event) =>
-                    setZone(zone.id, {
-                      score: Math.max(0, Number(event.target.value) || 0),
-                    })
-                  }
-                />
-              )}
-            </Field>
+            <TextField
+              label={t("zoneTip")}
+              value={zone.tip ?? ""}
+              onChange={(tip) => setZone(zone.id, { tip: tip || undefined })}
+            />
+            <TextField
+              label={t("zoneFeedbackCorrect")}
+              value={zone.feedbackOnCorrect ?? ""}
+              onChange={(text) =>
+                setZone(zone.id, { feedbackOnCorrect: text || undefined })
+              }
+            />
+            <TextField
+              label={t("zoneFeedbackIncorrect")}
+              value={zone.feedbackOnIncorrect ?? ""}
+              onChange={(text) =>
+                setZone(zone.id, { feedbackOnIncorrect: text || undefined })
+              }
+            />
 
             <button
               type="button"
               className="bitflow-button bitflow-button-quiet"
-              onClick={() =>
-                patch({ zones: data.zones.filter((other) => other.id !== zone.id) })
-              }
+              onClick={() => removeZone(zone.id)}
             >
-              {t("removeZone")}
+              {t("remove")}
             </button>
           </div>
         ))}
@@ -276,16 +281,17 @@ export const Form = ({
           className="bitflow-button bitflow-button-secondary"
           onClick={() =>
             patch({
-              zones: [
-                ...data.zones,
+              dropZones: [
+                ...data.dropZones,
                 {
-                  id: newId("zone", data.zones.map((zone) => zone.id)),
+                  id: newId("zone", data.dropZones.map((zone) => zone.id)),
                   label: "",
-                  // Somewhere visible and roomy enough to click, rather than a
-                  // zero-sized region in the corner.
-                  rect: { x: 0.4, y: 0.4, width: 0.2, height: 0.15 },
-                  acceptedItemIds: [],
-                  score: 1,
+                  x: 0.55,
+                  y: 0.2,
+                  width: 0.3,
+                  height: 0.25,
+                  correctElementIds: [],
+                  backgroundOpacity: 100,
                 },
               ],
             })
@@ -295,38 +301,153 @@ export const Form = ({
         </button>
       </fieldset>
 
-      {/* The board as the learner meets it, so the author can see whether the
-          regions actually land on the picture. */}
-      <Board
-        data={data}
-        placements={[]}
-        locale={locale}
-        readonly
-        onChange={() => {}}
-      />
+      <fieldset className="bitflow-field">
+        <legend className="bitflow-label">{t("elementsLabel")}</legend>
+        <span className="bitflow-hint">{t("elementsHint")}</span>
+        {errorFor(errors, "elements") && (
+          <span className="bitflow-field-error" role="alert">
+            {errorFor(errors, "elements")}
+          </span>
+        )}
+        {data.elements.length === 0 && (
+          <p className="bitflow-text-muted">{t("noElements")}</p>
+        )}
+
+        {data.elements.map((element, index) => (
+          <div
+            key={element.id}
+            className={
+              selected?.type === "element" && selected.id === element.id
+                ? "bitflow-rule bitflow-rule-selected"
+                : "bitflow-rule"
+            }
+          >
+            <TextField
+              label={t("elementText")}
+              value={element.label}
+              error={errorFor(errors, `elements.${index}.label`)}
+              onChange={(label) => setElement(element.id, { label })}
+            />
+            <BoxFields
+              box={element}
+              t={t}
+              onChange={(side, value) => setElement(element.id, { [side]: value })}
+            />
+            {errorFor(errors, `elements.${index}`) && (
+              <span className="bitflow-field-error" role="alert">
+                {errorFor(errors, `elements.${index}`)}
+              </span>
+            )}
+
+            <CheckboxField
+              label={t("elementMultiple")}
+              hint={t("elementMultipleHint")}
+              checked={element.multiple}
+              onChange={(multiple) => setElement(element.id, { multiple })}
+            />
+
+            <button
+              type="button"
+              className="bitflow-button bitflow-button-quiet"
+              onClick={() => removeElement(element.id)}
+            >
+              {t("remove")}
+            </button>
+          </div>
+        ))}
+
+        <button
+          type="button"
+          className="bitflow-button bitflow-button-secondary"
+          onClick={() =>
+            patch({
+              elements: [
+                ...data.elements,
+                {
+                  id: newId("element", data.elements.map((element) => element.id)),
+                  kind: "text" as const,
+                  label: "",
+                  x: 0.05,
+                  y: 0.05 + data.elements.length * 0.14,
+                  width: 0.25,
+                  height: 0.12,
+                  multiple: false,
+                  backgroundOpacity: 100,
+                },
+              ],
+            })
+          }
+        >
+          {t("addElement")}
+        </button>
+      </fieldset>
 
       <Disclosure summary={t("advanced")}>
+        <div className="bitflow-row">
+          <Field label={t("sizeWidth")} hint={t("sizeHint")}>
+            {(props) => (
+              <input
+                {...props}
+                type="number"
+                className="bitflow-input"
+                min={1}
+                value={data.size.width}
+                onChange={(event) =>
+                  patch({
+                    size: {
+                      ...data.size,
+                      width: Math.max(1, Number(event.target.value) || 1),
+                    },
+                  })
+                }
+              />
+            )}
+          </Field>
+          <Field label={t("sizeHeight")}>
+            {(props) => (
+              <input
+                {...props}
+                type="number"
+                className="bitflow-input"
+                min={1}
+                value={data.size.height}
+                onChange={(event) =>
+                  patch({
+                    size: {
+                      ...data.size,
+                      height: Math.max(1, Number(event.target.value) || 1),
+                    },
+                  })
+                }
+              />
+            )}
+          </Field>
+        </div>
+
         <CheckboxField
-          label={t("allowMultipleLabel")}
-          hint={t("allowMultipleHint")}
-          checked={data.allowMultiplePlacements}
-          onChange={(allowMultiplePlacements) => patch({ allowMultiplePlacements })}
+          label={t("singlePointLabel")}
+          hint={t("singlePointHint")}
+          checked={data.singlePoint}
+          onChange={(singlePoint) => patch({ singlePoint })}
         />
         <CheckboxField
-          label={t("partialCreditLabel")}
-          checked={data.partialCredit}
-          onChange={(partialCredit) => patch({ partialCredit })}
+          label={t("applyPenaltiesLabel")}
+          hint={t("applyPenaltiesHint")}
+          checked={data.applyPenalties}
+          onChange={(applyPenalties) => patch({ applyPenalties })}
         />
+        {errorFor(errors, "applyPenalties") && (
+          <span className="bitflow-field-error" role="alert">
+            {errorFor(errors, "applyPenalties")}
+          </span>
+        )}
+
         <EvaluationFields
           evaluation={data.evaluation}
           locale={locale}
           onChange={(evaluation) => patch({ evaluation })}
         />
       </Disclosure>
-
-      <span className="bitflow-visually-hidden">
-        {translate(messages, "name", locale)}
-      </span>
     </div>
   );
 };

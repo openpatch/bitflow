@@ -42,14 +42,17 @@ All future task types must retain deterministic, client-only evaluation:
 ## Drag and Drop Hotspots
 
 **Suggested type:** `task-drag-drop` — **built**, as
-[`@bitflow/task-drag-drop`](packages/bits/task-drag-drop).
+[`@bitflow/task-drag-drop`](packages/bits/task-drag-drop), modelled on
+[H5P's Drag and Drop question](https://github.com/h5p/h5p-drag-question).
 
-Two deliberate departures from the sketch below, both recorded in the package:
-the interaction is pick-up-then-choose rather than a drag gesture, because that
-is the one behaviour that works with a mouse, a finger and a keyboard alike;
-and grading uses the shared `EvaluationSchema` like every other bit rather than
-this file's `feedbackMode`. There is also no `requireAllItems` setting — whether
-an unplaced label matters is already decided by whether some region wanted it.
+It follows that model rather than the sketch below: elements sit on the
+picture instead of in a tray, regions are invisible and only decide marking,
+nothing snaps, and scoring is H5P's (one point per element that belongs
+somewhere, penalties for wrong placements, optional single point). The answer
+is a position per element rather than a region id, since nothing snaps to a
+region. Grading uses bitflow's shared `EvaluationSchema` rather than this
+file's `feedbackMode`, so weight, time limits and retry work here without the
+task knowing they exist.
 
 Allow learners to drag text labels, images, or both into invisible drop zones
 over a background image. Typical uses include labeling diagrams, placing

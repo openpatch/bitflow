@@ -2,95 +2,130 @@ import { defaultEvaluation, EvaluationSchema } from "@bitflow/core";
 import { z } from "zod";
 
 /**
- * A fraction of the background image's width or height.
+ * Modelled on H5P's Drag and Drop question, so a teacher who knows that tool
+ * meets the same ideas here: draggables sitting on the picture rather than in
+ * a tray, a separate say over where each one *may* go and where it *belongs*,
+ * elements that clone themselves, zones that hold one thing, and penalties for
+ * putting something in the wrong place.
  *
- * Never pixels: the image is responsive, and a zone authored against a
- * 1200px-wide screenshot has to land in the same place on a phone. Storing
- * fractions means the picture can be re-exported at another size without
- * every zone moving.
+ * The one departure is units. H5P authors against a fixed play area in pixels
+ * and scales the whole thing; positions here are fractions of the play area,
+ * which comes to the same picture without a magic number in every coordinate.
  */
+
+/** A fraction of the play area's width or height. */
 const Fraction = z.number().min(0).max(1);
 
 export const BackgroundSchema = z.object({
   src: z.string().default(""),
   /**
-   * Required whenever there is an image. The picture carries the whole task,
-   * so a learner who cannot see it has nothing at all without this.
+   * Required whenever there is an image. The picture carries the task, so a
+   * learner who cannot see it has nothing at all without this.
    */
   alt: z.string().default(""),
 });
 
-export const ItemSchema = z.object({
-  /** Stable across edits, so an answer keeps pointing at the same label. */
+/**
+ * The play area's shape. Only its ratio is used — everything inside is
+ * positioned in fractions — but authors think in a canvas size, and H5P files
+ * carry one, so it is kept in the same terms.
+ */
+export const SizeSchema = z.object({
+  width: z.number().positive().default(620),
+  height: z.number().positive().default(310),
+});
+
+const BoxSchema = {
+  x: Fraction,
+  y: Fraction,
+  width: Fraction,
+  height: Fraction,
+};
+
+/** 0 is invisible, 100 fully opaque. H5P's range, so imported files survive. */
+const Opacity = z.number().min(0).max(100).default(100);
+
+export const ElementSchema = z.object({
+  /** Stable across edits, so an answer keeps pointing at the same element. */
   id: z.string().min(1),
   kind: z.enum(["text", "image"]).default("text"),
   /** The visible text, or the alternative text when `kind` is `image`. */
   label: z.string().default(""),
   /** Only read for `kind: "image"`. */
   src: z.string().optional(),
+  ...BoxSchema,
+  /**
+   * Clones the element on being dragged, so it can fill several zones. Its
+   * maximum score rises accordingly: one point per zone it belongs in.
+   */
+  multiple: z.boolean().default(false),
+  backgroundOpacity: Opacity,
 });
-export type Item = z.infer<typeof ItemSchema>;
+export type Element = z.infer<typeof ElementSchema>;
 
-export const ZoneSchema = z.object({
+export const DropZoneSchema = z.object({
   id: z.string().min(1),
   /**
-   * Names the region in words. Not decoration: it is the zone's accessible
-   * name, the thing a keyboard user chooses from, and the only description of
-   * the region for anyone not looking at the image.
+   * Names the region in words.
+   *
+   * Never drawn for the learner — the zone is invisible, and naming it on the
+   * picture would say where the answer goes. It is the author's handle on the
+   * canvas, and the only way to describe the region to someone who cannot
+   * see it.
    */
   label: z.string().default(""),
-  rect: z.object({
-    x: Fraction,
-    y: Fraction,
-    width: Fraction,
-    height: Fraction,
-  }),
-  /** Items that count as correctly placed here. */
-  acceptedItemIds: z.array(z.string()).default([]),
-  /** What this zone is worth. Zones can be weighted against each other. */
-  score: z.number().min(0).default(1),
+  ...BoxSchema,
+  /** The elements that are right here. */
+  correctElementIds: z.array(z.string()).default([]),
+  /** A nudge available before answering. */
+  tip: z.string().optional(),
+  feedbackOnCorrect: z.string().optional(),
+  feedbackOnIncorrect: z.string().optional(),
+  backgroundOpacity: Opacity,
 });
-export type Zone = z.infer<typeof ZoneSchema>;
+export type DropZone = z.infer<typeof DropZoneSchema>;
 
 export const DataSchema = z
   .object({
     instruction: z.string().default(""),
     background: BackgroundSchema.default({ src: "", alt: "" }),
-    items: z.array(ItemSchema).default([]),
-    zones: z.array(ZoneSchema).default([]),
+    size: SizeSchema.default({ width: 620, height: 310 }),
+    elements: z.array(ElementSchema).default([]),
+    dropZones: z.array(DropZoneSchema).default([]),
     /**
-     * Whether one label can be dropped into several zones. Off by default:
-     * "put each label where it belongs" is the usual task, and allowing
-     * reuse turns a labelling exercise into a different one.
+     * The whole task is worth one point, all or nothing, instead of one point
+     * per element in the right place.
      */
-    allowMultiplePlacements: z.boolean().default(false),
-    /** Award a fraction for a partly-right answer instead of all-or-nothing. */
-    partialCredit: z.boolean().default(true),
+    singlePoint: z.boolean().default(false),
+    /**
+     * An element in the wrong zone costs a point. On by default, as in H5P,
+     * and effectively required once elements can be reused: without it,
+     * dropping every element into every zone scores full marks.
+     */
+    applyPenalties: z.boolean().default(true),
     evaluation: EvaluationSchema.default(defaultEvaluation),
   })
   .check((ctx) => {
-    const itemIds = ctx.value.items.map((item) => item.id);
-    if (new Set(itemIds).size !== itemIds.length) {
+    const elementIds = ctx.value.elements.map((element) => element.id);
+    if (new Set(elementIds).size !== elementIds.length) {
       ctx.issues.push({
         code: "custom",
-        input: ctx.value.items,
-        path: ["items"],
-        message: "Each label needs its own id.",
+        input: ctx.value.elements,
+        path: ["elements"],
+        message: "Each element needs its own id.",
       });
     }
 
-    const zoneIds = ctx.value.zones.map((zone) => zone.id);
+    const zoneIds = ctx.value.dropZones.map((zone) => zone.id);
     if (new Set(zoneIds).size !== zoneIds.length) {
       ctx.issues.push({
         code: "custom",
-        input: ctx.value.zones,
-        path: ["zones"],
-        message: "Each region needs its own id.",
+        input: ctx.value.dropZones,
+        path: ["dropZones"],
+        message: "Each drop zone needs its own id.",
       });
     }
 
-    // The image is the task. Without alternative text the task does not exist
-    // for part of the class, and that is not something to discover afterwards.
     if (ctx.value.background.src && !ctx.value.background.alt.trim()) {
       ctx.issues.push({
         code: "custom",
@@ -100,35 +135,53 @@ export const DataSchema = z
       });
     }
 
-    ctx.value.zones.forEach((zone, index) => {
+    ctx.value.elements.forEach((element, index) => {
+      if (!element.label.trim()) {
+        ctx.issues.push({
+          code: "custom",
+          input: element,
+          path: ["elements", index, "label"],
+          message:
+            element.kind === "image"
+              ? "Describe this image. It is how the element is announced and named."
+              : "Give this element some text.",
+        });
+      }
+      if (element.x + element.width > 1 || element.y + element.height > 1) {
+        ctx.issues.push({
+          code: "custom",
+          input: element,
+          path: ["elements", index],
+          message: "This element runs off the edge of the picture.",
+        });
+      }
+    });
+
+    ctx.value.dropZones.forEach((zone, index) => {
       if (!zone.label.trim()) {
         ctx.issues.push({
           code: "custom",
           input: zone,
-          path: ["zones", index, "label"],
+          path: ["dropZones", index, "label"],
           message:
-            "Name this region. It is how the region is announced and how it is chosen without a mouse.",
+            "Name this drop zone. It is how the zone is announced and how it is chosen without a pointer.",
         });
       }
-
-      // A region hanging off the edge cannot be clicked in full, and the
-      // author cannot see that from the numbers.
-      if (zone.rect.x + zone.rect.width > 1 || zone.rect.y + zone.rect.height > 1) {
+      if (zone.x + zone.width > 1 || zone.y + zone.height > 1) {
         ctx.issues.push({
           code: "custom",
-          input: zone.rect,
-          path: ["zones", index, "rect"],
-          message: "This region runs off the edge of the image.",
+          input: zone,
+          path: ["dropZones", index],
+          message: "This drop zone runs off the edge of the picture.",
         });
       }
-
-      for (const itemId of zone.acceptedItemIds) {
-        if (!itemIds.includes(itemId)) {
+      for (const elementId of zone.correctElementIds) {
+        if (!elementIds.includes(elementId)) {
           ctx.issues.push({
             code: "custom",
-            input: zone.acceptedItemIds,
-            path: ["zones", index, "acceptedItemIds"],
-            message: `This region accepts "${itemId}", which is not one of the labels.`,
+            input: zone.correctElementIds,
+            path: ["dropZones", index, "correctElementIds"],
+            message: `This zone expects "${elementId}", which is not an element in this task.`,
           });
         }
       }
@@ -136,53 +189,48 @@ export const DataSchema = z
 
     if (ctx.value.evaluation.mode !== "auto") return;
 
-    // Every guardrail below is about a task that runs but cannot be answered
-    // correctly — the author would only find out by taking it themselves.
-    if (ctx.value.items.length === 0) {
+    if (ctx.value.elements.length === 0) {
       ctx.issues.push({
         code: "custom",
-        input: ctx.value.items,
-        path: ["items"],
-        message: "Add at least one label for the learner to place.",
+        input: ctx.value.elements,
+        path: ["elements"],
+        message: "Add at least one element for the learner to move.",
       });
     }
-    if (ctx.value.zones.length === 0) {
+    if (ctx.value.dropZones.length === 0) {
       ctx.issues.push({
         code: "custom",
-        input: ctx.value.zones,
-        path: ["zones"],
-        message: "Add at least one region to drop labels into.",
+        input: ctx.value.dropZones,
+        path: ["dropZones"],
+        message: "Add at least one drop zone.",
       });
     }
 
-    const graded = ctx.value.zones.filter((zone) => zone.acceptedItemIds.length > 0);
-    if (ctx.value.zones.length > 0 && graded.length === 0) {
+    const anyCorrect = ctx.value.dropZones.some(
+      (zone) => zone.correctElementIds.length > 0,
+    );
+    if (ctx.value.dropZones.length > 0 && !anyCorrect) {
       ctx.issues.push({
         code: "custom",
-        input: ctx.value.zones,
-        path: ["zones"],
+        input: ctx.value.dropZones,
+        path: ["dropZones"],
         message:
-          "No region accepts any label, so no answer can be right. Say which label belongs where, or switch grading off.",
+          "No drop zone expects any element, so no answer can be right. Say what belongs where, or switch grading off.",
       });
     }
 
-    if (!ctx.value.allowMultiplePlacements) {
-      // With reuse off, a label wanted by two zones can only ever satisfy one.
-      const wantedBy = new Map<string, number>();
-      for (const zone of ctx.value.zones) {
-        for (const itemId of new Set(zone.acceptedItemIds)) {
-          wantedBy.set(itemId, (wantedBy.get(itemId) ?? 0) + 1);
-        }
-      }
-      for (const [itemId, count] of wantedBy) {
-        if (count > 1) {
-          ctx.issues.push({
-            code: "custom",
-            input: ctx.value.zones,
-            path: ["zones"],
-            message: `"${itemId}" is accepted by ${count} regions, but a label can only be placed once. Allow reuse, or accept it in one region.`,
-          });
-        }
+    // Without penalties, reusable elements make "drop everything everywhere"
+    // a full-marks answer. H5P requires the setting for the same reason.
+    if (!ctx.value.applyPenalties) {
+      const reusable = ctx.value.elements.filter((element) => element.multiple);
+      if (reusable.length > 0) {
+        ctx.issues.push({
+          code: "custom",
+          input: ctx.value.applyPenalties,
+          path: ["applyPenalties"],
+          message:
+            "With cloning on and penalties off, dropping every element into every zone scores full marks. Switch penalties on.",
+        });
       }
     }
   });
@@ -190,20 +238,26 @@ export const DataSchema = z
 export type Data = z.infer<typeof DataSchema>;
 
 export const PlacementSchema = z.object({
-  itemId: z.string().min(1),
-  zoneId: z.string().min(1),
+  elementId: z.string().min(1),
+  /**
+   * The element's top-left where the learner left it, as fractions of the play
+   * area.
+   *
+   * A position rather than a zone id, because nothing snaps: an element stays
+   * exactly where it was dropped, and which zone that turns out to be inside
+   * is worked out afterwards. Fractions rather than pixels so the same answer
+   * grades the same on a phone and on a projector.
+   */
+  x: Fraction,
+  y: Fraction,
 });
 export type Placement = z.infer<typeof PlacementSchema>;
 
 export const AnswerSchema = z.object({
-  /**
-   * Which label sits in which region — ids, never coordinates. A dropped
-   * pixel position would have to be re-tested against the zones on every
-   * screen size, and would grade differently on a phone.
-   */
+  /** Where the learner left each element. A clone appears more than once. */
   placements: z.array(PlacementSchema).default([]),
 });
 export type Answer = z.infer<typeof AnswerSchema>;
 
-/** Per-zone outcome, surfaced in `BitResult.detail.zones`. */
-export type ZoneState = "correct" | "wrong" | "empty" | "neutral";
+/** Per-placement outcome, surfaced in `BitResult.detail.placements`. */
+export type PlacementState = "correct" | "wrong";

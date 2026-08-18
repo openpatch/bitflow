@@ -22,33 +22,35 @@ registerBit<Data, Answer>({
   defaultData: () => ({
     instruction: "",
     background: { src: "", alt: "" },
-    items: [],
-    zones: [],
-    allowMultiplePlacements: false,
-    partialCredit: true,
+    size: { width: 620, height: 310 },
+    elements: [],
+    dropZones: [],
+    singlePoint: false,
+    applyPenalties: true,
     evaluation: defaultEvaluation(),
   }),
 });
 
 defineBitElement(TYPE);
 
-export { evaluate, zoneStates } from "./evaluate";
-export { Board } from "./Board";
+export { evaluate, homesOf, judge, maxScore, zoneUnder, type Judged } from "./evaluate";
+export { DragCanvas } from "./DragCanvas";
+export { EditorCanvas } from "./EditorCanvas";
+export { inside, type Box } from "./layout";
 export { Form, Task } from "./views";
 export { messages };
 export { formMessages } from "./formMessages";
 export {
   AnswerSchema,
   DataSchema,
-  ItemSchema,
+  DropZoneSchema,
+  ElementSchema,
   PlacementSchema,
-  ZoneSchema,
   type Answer,
   type Data,
-  type Item,
+  type DropZone,
+  type Element,
   type Placement,
-  type Zone,
-  type ZoneState,
 } from "./schema";
 
 injectStyles("bitflow-styles-task-drag-drop", styles);

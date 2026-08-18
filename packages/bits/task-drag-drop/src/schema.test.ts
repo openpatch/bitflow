@@ -5,17 +5,18 @@ import { DataSchema } from "./schema";
 const base = {
   instruction: "Label the diagram.",
   background: { src: "/cpu.png", alt: "A CPU diagram" },
-  items: [
-    { id: "alu", kind: "text", label: "ALU" },
-    { id: "reg", kind: "text", label: "Registers" },
+  elements: [
+    { id: "alu", label: "ALU", x: 0.05, y: 0.05, width: 0.2, height: 0.1 },
   ],
-  zones: [
+  dropZones: [
     {
-      id: "alu-zone",
-      label: "Arithmetic logic unit",
-      rect: { x: 0.1, y: 0.1, width: 0.2, height: 0.2 },
-      acceptedItemIds: ["alu"],
-      score: 1,
+      id: "left",
+      label: "Left block",
+      x: 0.4,
+      y: 0.05,
+      width: 0.25,
+      height: 0.2,
+      correctElementIds: ["alu"],
     },
   ],
   evaluation: defaultEvaluation(),
@@ -35,108 +36,69 @@ describe("DataSchema", () => {
   });
 
   it("insists the image is described", () => {
-    // The picture is the task, so this is not a nicety.
-    expect(problems({ background: { src: "/cpu.png", alt: "  " } })).toContain(
+    expect(problems({ background: { src: "/cpu.png", alt: " " } })).toContain(
       "Describe the image",
     );
   });
 
-  it("does not ask for a description when there is no image", () => {
-    expect(problems({ background: { src: "", alt: "" } })).not.toContain(
-      "Describe the image",
+  it("insists every drop zone is named", () => {
+    expect(problems({ dropZones: [{ ...base.dropZones[0], label: "" }] })).toContain(
+      "Name this drop zone",
     );
   });
 
-  it("insists every region is named", () => {
-    expect(
-      problems({ zones: [{ ...base.zones[0], label: "" }] }),
-    ).toContain("Name this region");
+  it("insists every element says something", () => {
+    expect(problems({ elements: [{ ...base.elements[0], label: "" }] })).toContain(
+      "Give this element some text",
+    );
   });
 
-  it("catches a region hanging off the edge of the image", () => {
-    expect(
-      problems({
-        zones: [
-          { ...base.zones[0], rect: { x: 0.9, y: 0.1, width: 0.2, height: 0.2 } },
-        ],
-      }),
-    ).toContain("runs off the edge");
+  it("catches a box hanging off the edge", () => {
+    expect(problems({ elements: [{ ...base.elements[0], x: 0.95 }] })).toContain(
+      "runs off the edge",
+    );
   });
 
-  it("catches a region accepting a label that does not exist", () => {
+  it("catches a zone expecting an element that does not exist", () => {
     expect(
-      problems({ zones: [{ ...base.zones[0], acceptedItemIds: ["ghost"] }] }),
-    ).toContain('accepts "ghost"');
+      problems({ dropZones: [{ ...base.dropZones[0], correctElementIds: ["ghost"] }] }),
+    ).toContain('expects "ghost"');
   });
 
   it("catches duplicate ids", () => {
     expect(
       problems({
-        items: [
-          { id: "alu", kind: "text", label: "ALU" },
-          { id: "alu", kind: "text", label: "Also ALU" },
-        ],
+        elements: [base.elements[0], { ...base.elements[0], label: "Also ALU" }],
       }),
     ).toContain("own id");
   });
 
-  it("refuses a task with nothing to place", () => {
-    expect(problems({ items: [] })).toContain("at least one label");
-  });
-
-  it("refuses a task with nowhere to place it", () => {
-    expect(problems({ zones: [] })).toContain("at least one region");
+  it("refuses a task with nothing to move or nowhere to put it", () => {
+    expect(problems({ elements: [] })).toContain("at least one element");
+    expect(problems({ dropZones: [] })).toContain("at least one drop zone");
   });
 
   it("refuses a task no answer can get right", () => {
     expect(
-      problems({ zones: [{ ...base.zones[0], acceptedItemIds: [] }] }),
+      problems({ dropZones: [{ ...base.dropZones[0], correctElementIds: [] }] }),
     ).toContain("no answer can be right");
   });
 
-  it("catches one label being wanted by two regions when reuse is off", () => {
-    // Only one of them could ever be satisfied, and the author would find out
-    // by taking their own task.
+  it("refuses cloning with penalties off", () => {
+    // Otherwise dropping everything into every zone is full marks.
     expect(
       problems({
-        zones: [
-          base.zones[0],
-          {
-            id: "second",
-            label: "Somewhere else",
-            rect: { x: 0.5, y: 0.5, width: 0.2, height: 0.2 },
-            acceptedItemIds: ["alu"],
-            score: 1,
-          },
-        ],
+        applyPenalties: false,
+        elements: [{ ...base.elements[0], multiple: true }],
       }),
-    ).toContain("can only be placed once");
-  });
-
-  it("allows that once reuse is switched on", () => {
-    expect(
-      problems({
-        allowMultiplePlacements: true,
-        zones: [
-          base.zones[0],
-          {
-            id: "second",
-            label: "Somewhere else",
-            rect: { x: 0.5, y: 0.5, width: 0.2, height: 0.2 },
-            acceptedItemIds: ["alu"],
-            score: 1,
-          },
-        ],
-      }),
-    ).toBe("");
+    ).toContain("Switch penalties on");
   });
 
   it("leaves an ungraded task alone", () => {
-    // With grading off, a half-built task is a work in progress, not an error.
     expect(
       problems({
-        items: [],
-        zones: [],
+        elements: [],
+        dropZones: [],
         evaluation: { ...defaultEvaluation(), mode: "skip" },
       }),
     ).toBe("");
@@ -144,13 +106,15 @@ describe("DataSchema", () => {
 
   it("fills in what an older document does not say", () => {
     const parsed = DataSchema.parse({
-      items: base.items,
-      zones: base.zones,
       background: base.background,
+      elements: base.elements,
+      dropZones: base.dropZones,
     });
 
-    expect(parsed.partialCredit).toBe(true);
-    expect(parsed.allowMultiplePlacements).toBe(false);
-    expect(parsed.evaluation.weight).toBe(1);
+    // H5P's defaults, so a converted file behaves the way it did there.
+    expect(parsed.applyPenalties).toBe(true);
+    expect(parsed.singlePoint).toBe(false);
+    expect(parsed.size).toEqual({ width: 620, height: 310 });
+    expect(parsed.elements[0].backgroundOpacity).toBe(100);
   });
 });

@@ -1,5 +1,5 @@
-/* Doubled class names throughout, so an outcome colour outranks the generic
-   region style rather than losing to it by source order. */
+/* Doubled class names on outcome styles, so a result colour outranks the
+   generic element style rather than losing to it by source order. */
 
 .bitflow-dragdrop {
   display: flex;
@@ -7,121 +7,165 @@
   gap: var(--bitflow-space-small);
 }
 
-/* The positioning context every region is placed against. Regions are sized in
-   percentages, so the whole board scales with the image and an author's
-   fractions mean the same thing on a phone as on a projector. */
-.bitflow-dragdrop-image {
+/* The play area. Everything inside is positioned in percentages, so an
+   author's fractions mean the same picture on a phone as on a projector, and
+   `aspect-ratio` keeps the shape they laid out. */
+.bitflow-dragdrop-area {
   position: relative;
-  display: block;
   width: 100%;
   overflow: hidden;
   border-radius: var(--bitflow-radius-standard);
 }
 
-.bitflow-dragdrop-image > img {
-  display: block;
+.bitflow-dragdrop-background {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
 }
 
-/* Stands in for a missing picture so the regions still have somewhere to sit
-   while the author is placing them. */
 .bitflow-dragdrop-noimage {
-  width: 100%;
-  aspect-ratio: 3 / 2;
   background: var(--bitflow-color-neutral-100);
 }
 
-.bitflow-dragdrop-zone {
-  position: absolute;
+.bitflow-dragdrop-element {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--bitflow-space-xxsmall);
   font: inherit;
+  font-size: var(--bitflow-font-size-small);
   color: var(--bitflow-color-text);
   text-align: center;
-  cursor: pointer;
-  background: color-mix(in srgb, var(--bitflow-color-surface) 82%, transparent);
-  border: var(--bitflow-border-width) dashed var(--bitflow-color-neutral-400);
-  border-radius: var(--bitflow-radius-standard);
-}
-
-.bitflow-dragdrop-zone:disabled {
-  cursor: default;
-}
-
-.bitflow-dragdrop-zone.bitflow-dragdrop-zone-correct {
-  background: color-mix(in srgb, var(--bitflow-color-correct) 18%, transparent);
-  border-style: solid;
-  border-color: var(--bitflow-color-correct);
-}
-
-.bitflow-dragdrop-zone.bitflow-dragdrop-zone-wrong {
-  background: color-mix(in srgb, var(--bitflow-color-wrong) 18%, transparent);
-  border-style: solid;
-  border-color: var(--bitflow-color-wrong);
-}
-
-/* A region the learner left alone. Marked, but not as an error the way a
-   wrong answer is — they may simply not have got to it. */
-.bitflow-dragdrop-zone.bitflow-dragdrop-zone-empty {
-  border-style: solid;
-  border-color: var(--bitflow-color-neutral-400);
-}
-
-.bitflow-dragdrop-zone-contents {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bitflow-space-xxsmall);
-  justify-content: center;
-  overflow: hidden;
-  font-size: var(--bitflow-font-size-small);
-}
-
-.bitflow-dragdrop-placed > img {
-  max-height: 2rem;
-}
-
-.bitflow-dragdrop-tray {
-  display: flex;
-  flex-direction: column;
-  gap: var(--bitflow-space-xxsmall);
-}
-
-.bitflow-dragdrop-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bitflow-space-xsmall);
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.bitflow-dragdrop-item {
-  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
-  font: inherit;
-  color: var(--bitflow-color-text);
-  cursor: pointer;
+  cursor: grab;
   background: var(--bitflow-color-surface);
   border: var(--bitflow-border-width) solid var(--bitflow-color-border);
   border-radius: var(--bitflow-radius-standard);
 }
 
-/* Picked up. Not colour alone — the border thickens and the label lifts —
-   because "which one am I holding" is the only state in this task. */
-.bitflow-dragdrop-item.bitflow-dragdrop-item-held {
-  background: var(--bitflow-color-neutral-100);
+/* Elements are positioned on the play area wherever they are — at home, or
+   inside a drop zone. They keep the size the author gave them either way: one
+   that shrank to fit the box it landed in would stop looking like the thing
+   that was picked up. */
+.bitflow-dragdrop-element {
+  position: absolute;
+  opacity: var(--bitflow-dragdrop-opacity, 1);
+  /* The browser must not decide a drag is a scroll, or the task cannot be
+     done with a finger at all. */
+  touch-action: none;
+}
+
+/* An element the learner has moved. Nothing snaps, so this is simply where
+   they left it — the regions that decide whether that was right are never
+   drawn. */
+.bitflow-dragdrop-element.bitflow-dragdrop-element-placed {
+  z-index: 2;
+}
+
+/* Under the pointer: lifted, and no transition, so it tracks exactly. */
+.bitflow-dragdrop-element.bitflow-dragdrop-element-dragging {
+  z-index: 3;
+  cursor: grabbing;
+  box-shadow: var(--bitflow-shadow-large, 0 8px 20px rgb(0 0 0 / 25%));
+  transition: none;
+}
+
+.bitflow-dragdrop-element:disabled {
+  cursor: default;
+}
+
+.bitflow-dragdrop-element > img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.bitflow-dragdrop-element.bitflow-dragdrop-element-correct {
+  background: color-mix(in srgb, var(--bitflow-color-correct) 18%, var(--bitflow-color-surface));
+  border-color: var(--bitflow-color-correct);
+}
+
+.bitflow-dragdrop-element.bitflow-dragdrop-element-wrong {
+  background: color-mix(in srgb, var(--bitflow-color-wrong) 18%, var(--bitflow-color-surface));
+  border-color: var(--bitflow-color-wrong);
+}
+
+/* Authoring ---------------------------------------------------------------- */
+
+.bitflow-dragdrop-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+/* Dragging on the canvas draws a zone, so the pointer must not be interpreted
+   as a text selection or a scroll while it happens. */
+.bitflow-dragdrop-area-editing {
+  cursor: crosshair;
+  user-select: none;
+  touch-action: none;
+}
+
+/* A zone or element as the author handles it: outlined, named, and grabbable.
+   Distinct from how a learner sees the same box — this one is a control. */
+.bitflow-dragdrop-handle {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  cursor: move;
+  border: var(--bitflow-border-width) solid var(--bitflow-color-neutral-400);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-dragdrop-handle-zone {
+  background: color-mix(in srgb, var(--bitflow-color-neutral-100) 55%, transparent);
+  border-style: dashed;
+}
+
+.bitflow-dragdrop-handle-element {
+  background: color-mix(in srgb, var(--bitflow-color-surface) 85%, transparent);
+}
+
+.bitflow-dragdrop-handle.bitflow-dragdrop-handle-selected {
   border-color: var(--bitflow-color-accent);
   box-shadow: 0 0 0 2px var(--bitflow-color-accent);
 }
 
-.bitflow-dragdrop-item:disabled {
-  cursor: default;
-  opacity: 0.7;
+.bitflow-dragdrop-handle-label {
+  padding: 2px 4px;
+  overflow: hidden;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
-.bitflow-dragdrop-item > img {
-  display: block;
-  max-height: 3rem;
+/* Big enough to grab with a finger, in the corner where a resize handle is
+   expected. */
+.bitflow-dragdrop-resize {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+  background: var(--bitflow-color-accent);
+  border-radius: 50%;
+}
+
+/* The rectangle under the pointer, before it becomes a zone. */
+.bitflow-dragdrop-drawing {
+  position: absolute;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--bitflow-color-accent) 18%, transparent);
+  border: var(--bitflow-border-width) dashed var(--bitflow-color-accent);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+/* The fields belonging to whatever is selected on the canvas, so drawing a
+   zone and naming it are visibly the same act. */
+.bitflow-rule.bitflow-rule-selected {
+  border-color: var(--bitflow-color-accent);
+  box-shadow: 0 0 0 2px var(--bitflow-color-accent);
 }
