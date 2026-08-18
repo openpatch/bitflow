@@ -222,8 +222,25 @@ export const evaluateNode = async (
     // the score while still marking it as visited.
     result = { state: "unknown" };
   } else {
+    // Parsed rather than passed through, exactly as `BitView` does before
+    // rendering. A document written before a field existed, or by hand, or by
+    // another tool, is missing that field entirely — and a bit reading it
+    // then throws where the schema would simply have filled in its default.
+    const parsed = bit.schema.safeParse(node.data);
+    if (!parsed.success) {
+      return {
+        ok: false,
+        error: bitflowError(
+          "INVALID_FLOW",
+          `Node "${nodeId}" (${node.type}) is not configured correctly: ${parsed.error.issues
+            .map((issue) => issue.message)
+            .join(" ")}`,
+        ),
+      };
+    }
+
     try {
-      result = await bit.evaluate({ data: node.data, answer: given });
+      result = await bit.evaluate({ data: parsed.data, answer: given });
     } catch (cause) {
       return {
         ok: false,

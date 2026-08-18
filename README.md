@@ -18,6 +18,41 @@ browser, embeddable anywhere as web components.
 No framework required, no server involved. Everything — rendering, grading,
 scoring and statistics — happens in the page.
 
+That last part is a design decision with a cost, and the cost decides what
+bitflow is for. **Read [What bitflow is not for](#what-bitflow-is-not-for)
+before using it on anything that counts towards a grade.**
+
+## What bitflow is not for
+
+Grading in the browser means the browser has everything it needs to grade —
+and so does the learner.
+
+- **Every correct answer is in the file.** `correct: true` on a choice, the
+  accepted strings for a short answer, the reference highlighting: a
+  `.bitflow` document carries them all, and the page downloads it whole.
+  Devtools, or just fetching the URL, shows the answer key.
+- **The grading runs where the learner is.** It is ordinary JavaScript in
+  their page. They can change what it does.
+- **Attempts are supplied by the host and taken at face value.** bitflow
+  checks a restored snapshot against the schema, not against reality — a
+  hand-written snapshot with a perfect score is accepted exactly like an
+  earned one.
+
+None of this is a bug to be fixed, and no amount of obfuscation changes it.
+It follows from having no server. So:
+
+**Good for** practice, self-check, worked examples, homework where the point
+is the doing, formative classroom use, and anything a learner has no reason
+to cheat at.
+
+**Not suitable for** exams, placement tests, certification, or any graded
+assessment a learner benefits from passing.
+
+Making it suitable would take a server that keeps the answers, receives
+responses and grades them — deliberately outside this project's scope. If you
+need that, bitflow's schema and editor are still useful to author with; the
+grading has to move.
+
 ## What is here
 
 | Package | What it is |
@@ -79,6 +114,7 @@ broken flows, an in-progress attempt, and result data with known aggregates.
 
 ## Links
 
+- Security and threat model: [`SECURITY.md`](SECURITY.md)
 - Community: <https://matrix.to/#/#openpatch:matrix.org>
 - Issues: <https://github.com/openpatch/bitflow/issues>
 

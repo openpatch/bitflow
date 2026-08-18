@@ -118,6 +118,59 @@ describe("attempt runtime", () => {
     }
   });
 
+  it("fills in a missing field from the schema before grading", async () => {
+    const { registerBit } = await import("./registry");
+    const { z } = await import("zod");
+    registerBit({
+      type: "test-defaulted",
+      kind: "task",
+      schema: z.object({ cutoffs: z.record(z.string(), z.number()).default({}) }),
+      defaultData: () => ({ cutoffs: {} }),
+      info: () => ({ name: "Defaulted", description: "reads a defaulted field" }),
+      // Reads the field the way a real bit does, without guarding it.
+      evaluate: ({ data }) => ({
+        state:
+          (data as { cutoffs: Record<string, number> }).cutoffs["a"] === undefined
+            ? "correct"
+            : "wrong",
+      }),
+    });
+
+    // A document written before `cutoffs` existed, or by hand, has no such
+    // key. This used to reach the bit raw and throw on the first property
+    // access, surfacing as EVALUATION_FAILED to the learner.
+    const older = doc([node("x", "test-defaulted", {})], []);
+    const created = createAttempt(older);
+    if (!created.ok) throw new Error("expected an attempt");
+
+    const result = await evaluateNode(older, created.value, "x", "a");
+
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.value.results.x.state).toBe("correct");
+  });
+
+  it("reports data the schema rejects instead of letting the bit throw", async () => {
+    const { registerBit } = await import("./registry");
+    const { z } = await import("zod");
+    registerBit({
+      type: "test-strict",
+      kind: "task",
+      schema: z.object({ needed: z.string() }),
+      defaultData: () => ({ needed: "" }),
+      info: () => ({ name: "Strict", description: "needs a field" }),
+      evaluate: () => ({ state: "correct" }),
+    });
+
+    const broken = doc([node("x", "test-strict", { needed: 42 })], []);
+    const created = createAttempt(broken);
+    if (!created.ok) throw new Error("expected an attempt");
+
+    const result = await evaluateNode(broken, created.value, "x", "a");
+
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.error.code).toBe("INVALID_FLOW");
+  });
+
   it("keeps a skipped node out of the score but counts the try", () => {
     const snapshot = skipNode(start(), "q1");
     expect(snapshot.tries.q1).toBe(1);

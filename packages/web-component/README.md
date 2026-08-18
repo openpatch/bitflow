@@ -199,6 +199,19 @@ that is not a task, an outcome that does not exist, an ordering comparison
 against something that is not a number, a membership test without a list, and
 an empty rule set.
 
+## Answers are visible to the learner
+
+`<bitflow-flow>` grades in the page, so the page holds the answer key: the
+document you pass to `src` or `flow` contains every correct choice, every
+accepted string and every reference highlighting, and the learner can read it.
+The `attempt` you hand back is validated against the schema, not against what
+actually happened, so a forged snapshot scores whatever it claims.
+
+Design the surrounding product accordingly — practice and formative work, not
+exams. [What bitflow is not for](../../README.md#what-bitflow-is-not-for) has
+the full picture, and [SECURITY.md](../../SECURITY.md) says which of this we
+treat as a bug (none of it) and which we do.
+
 ## Scoring and time
 
 Both live on the flow document, so a host that only embeds the elements has

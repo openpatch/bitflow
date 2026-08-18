@@ -881,6 +881,24 @@ rest: schema first, then the teacher-facing form, then the tests.
   nothing about the new question. The first render is exempt: a widget must not
   steal focus from the page that embedded it.
 
+- **The threat model is written down.** `SECURITY.md` and a section near the
+  top of the README say what grading in the browser costs: the answer key
+  ships with the document, the grading is the learner's own JavaScript, and a
+  restored attempt is checked for shape rather than honesty. bitflow is a
+  practice tool. The README previously sold "no server required" without
+  saying what it buys, which was close to misleading.
+- **Automated accessibility checks.** `packages/web-component/src/a11y.test.ts`
+  runs axe-core over a flow containing every task type, at every step and in
+  both the asked and answered states, plus a standalone task and the editor.
+  It lives there because that is the only place everything is assembled — a
+  label is only accessible in the context it renders in. The rules needing
+  layout are disabled rather than passing vacuously under jsdom.
+- **Node data is parsed before grading.** `evaluateNode` ran `bit.evaluate` on
+  raw `node.data` while `BitView` parsed the same data before rendering. A
+  document missing a field that gained a default later reached the bit
+  unfilled and threw on first access, which the learner saw as
+  `EVALUATION_FAILED`. Found by the accessibility walk, of all things.
+
 ## How to Use This Plan
 
 This file (`PLAN.md` at the bitflow repo root) is the single source of
