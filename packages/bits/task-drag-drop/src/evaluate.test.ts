@@ -70,14 +70,58 @@ describe("zoneUnder", () => {
     expect(zone).toBeUndefined();
   });
 
-  it("goes by the middle, not by touching a corner", () => {
-    // An element overlapping a region by a sliver is not in it: "is the box in
-    // the box" is the judgement a learner is making by eye.
+  it("counts a region the element merely touches, by default", () => {
+    // Aiming at a target is what this feels like; refusing an element that
+    // overlaps the right area by nine tenths teaches the rule, not the subject.
     const document = data();
     const element = document.elements[0];
+    // Spans 0.25–0.45, so it overlaps the region while its middle (0.35) is
+    // outside it — the case the two rules disagree about.
     const grazing = { elementId: "alu", x: 0.25, y: 0.1 };
 
-    expect(zoneUnder(document, element, grazing)).toBeUndefined();
+    expect(zoneUnder(document, element, grazing)?.id).toBe("left");
+  });
+
+  it("wants the middle inside when the region asks for that", () => {
+    const strict = data({
+      dropZones: data().dropZones.map((zone) =>
+        zone.id === "left" ? { ...zone, tolerance: "centre" as const } : zone,
+      ),
+    });
+    const element = strict.elements[0];
+
+    expect(zoneUnder(strict, element, { elementId: "alu", x: 0.25, y: 0.1 })).toBeUndefined();
+    expect(zoneUnder(strict, element, on("left", "alu"))?.id).toBe("left");
+  });
+
+  it("wants the whole element inside when the region asks for that", () => {
+    const strict = data({
+      dropZones: data().dropZones.map((zone) =>
+        zone.id === "left" ? { ...zone, tolerance: "fit" as const } : zone,
+      ),
+    });
+    const element = strict.elements[0];
+
+    // The region is 0.25 wide and the element 0.2, so it fits only just.
+    expect(zoneUnder(strict, element, { elementId: "alu", x: 0.42, y: 0.08 })?.id).toBe("left");
+    expect(zoneUnder(strict, element, { elementId: "alu", x: 0.5, y: 0.08 })).toBeUndefined();
+  });
+
+  it("picks the region the element covers most when it touches two", () => {
+    // `touch` makes overlapping two easy, and draw order would mark a region
+    // the learner barely grazed.
+    const touching = data({
+      dropZones: [
+        { ...data().dropZones[0], x: 0.4, width: 0.2 },
+        { ...data().dropZones[1], x: 0.58, width: 0.2 },
+      ],
+    });
+    const element = touching.elements[0];
+
+    // Spans 0.42–0.62: 0.18 of the first region, 0.04 of the second.
+    expect(zoneUnder(touching, element, { elementId: "alu", x: 0.42, y: 0.1 })?.id).toBe(
+      "left",
+    );
   });
 });
 

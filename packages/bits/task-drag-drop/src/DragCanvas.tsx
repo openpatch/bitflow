@@ -251,9 +251,15 @@ export const DragCanvas = ({
       ? { x: drag.x, y: drag.y }
       : (placement ?? { x: element.x, y: element.y });
     const state = index === null ? undefined : stateOf(index);
+    // Marked, and left on nothing at all: worth showing as its own thing.
+    // It costs no points, so calling it wrong would be a lie, but leaving it
+    // unmarked next to a board of red and green reads as "not looked at".
+    const adrift =
+      judged !== undefined && index !== null && state === undefined;
 
     const classes = ["bitflow-dragdrop-element"];
     if (state) classes.push(`bitflow-dragdrop-element-${state}`);
+    if (adrift) classes.push("bitflow-dragdrop-element-adrift");
     if (dragging) classes.push("bitflow-dragdrop-element-dragging");
     if (placement) classes.push("bitflow-dragdrop-element-placed");
 
@@ -290,8 +296,34 @@ export const DragCanvas = ({
         }}
       >
         {renderContent(element)}
+
+        {/*
+          What this placement did to the score, in the corner, the way H5P
+          shows it. Only where there is a per-element score to show: with the
+          whole task worth one mark there is no +1 to point at, and with
+          penalties off a wrong placement costs nothing, so a −1 would be
+          wrong twice over.
+        */}
+        {state && !data.singlePoint && (state === "correct" || data.applyPenalties) && (
+          <span
+            className={`bitflow-dragdrop-points bitflow-dragdrop-points-${state}`}
+            aria-hidden="true"
+          >
+            {state === "correct" ? "+1" : "−1"}
+          </span>
+        )}
+
         {state && (
-          <span className="bitflow-visually-hidden"> {t(`placement-${state}`)}</span>
+          <span className="bitflow-visually-hidden">
+            {" "}
+            {t(`placement-${state}`)}
+            {!data.singlePoint && (state === "correct" || data.applyPenalties)
+              ? ` ${t(state === "correct" ? "pointGained" : "pointLost")}`
+              : ""}
+          </span>
+        )}
+        {adrift && (
+          <span className="bitflow-visually-hidden"> {t("placement-adrift")}</span>
         )}
       </button>
     );

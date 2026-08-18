@@ -90,6 +90,38 @@
   border-color: var(--bitflow-color-wrong);
 }
 
+/* Marked, but sitting on nothing. It costs no points, so it is not red; but
+   left plain among red and green it reads as "not looked at". */
+.bitflow-dragdrop-element.bitflow-dragdrop-element-adrift {
+  border-style: dashed;
+  border-color: var(--bitflow-color-neutral-400);
+}
+
+/* What this placement did to the score, in the corner. Reads as a badge
+   rather than part of the label, and never as colour alone — the sign says
+   the same thing. */
+.bitflow-dragdrop-points {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 20px;
+  padding: 0 4px;
+  font-size: var(--bitflow-font-size-small);
+  font-weight: var(--bitflow-font-weight-bold);
+  line-height: 18px;
+  color: var(--bitflow-color-surface);
+  text-align: center;
+  border-radius: 10px;
+}
+
+.bitflow-dragdrop-points-correct {
+  background: var(--bitflow-color-correct);
+}
+
+.bitflow-dragdrop-points-wrong {
+  background: var(--bitflow-color-wrong);
+}
+
 /* Authoring ---------------------------------------------------------------- */
 
 .bitflow-dragdrop-editor {

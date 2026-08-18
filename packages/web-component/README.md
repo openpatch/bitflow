@@ -311,9 +311,30 @@ belongs where, and an element can be marked as usable more than once.
 
 **Nothing snaps.** An element is dragged wherever the learner wants and stays
 exactly there, at the size the author gave it. Which region it turns out to be
-sitting on is worked out at marking time, by asking which region its middle is
-over. The regions are never drawn and never in the tab order — showing them
-would turn "where does this belong on the picture" into "which box lights up".
+on is worked out at marking time. The regions are never drawn and never in the
+tab order — showing them would turn "where does this belong on the picture"
+into "which box lights up".
+
+Each region says how much of an element has to be on it, as `tolerance`:
+
+| `tolerance` | Counts when |
+| --- | --- |
+| `touch` (default) | the element overlaps the region at all |
+| `centre` | the element's middle is inside it |
+| `fit` | the element is inside it completely |
+
+`touch` is the default because it is what aiming at a target feels like; a rule
+that refuses an element overlapping the right area by nine tenths teaches the
+rule rather than the subject. The stricter two are for tasks where placing
+precisely is the point. Where an element satisfies several regions at once —
+easy under `touch` — the one it covers most wins, since that is the one the
+learner was aiming at.
+
+After checking, each moved element is marked in place: green where it belongs,
+red where it does not, and outlined where it came to rest on no region at all.
+Unless the whole task is worth a single mark, the element also carries what it
+did to the score — `+1`, or `−1` where a wrong placement costs a point. The
+sign carries the meaning, so it does not rely on the colour.
 
 The answer is therefore a position per element, in fractions of the play area,
 not a region id. Fractions rather than pixels so the same answer grades the

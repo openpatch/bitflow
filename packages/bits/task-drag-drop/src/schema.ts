@@ -77,6 +77,14 @@ export const DropZoneSchema = z.object({
    */
   label: z.string().default(""),
   ...BoxSchema,
+  /**
+   * How much of an element has to be on this region to count as on it.
+   *
+   * `touch` — any overlap at all, which is what aiming at a target feels
+   * like. `centre` — the element's middle is inside. `fit` — the element is
+   * inside completely, for tasks where placing precisely is the point.
+   */
+  tolerance: z.enum(["touch", "centre", "fit"]).default("touch"),
   /** The elements that are right here. */
   correctElementIds: z.array(z.string()).default([]),
   /** A nudge available before answering. */

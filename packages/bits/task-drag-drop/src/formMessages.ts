@@ -6,6 +6,12 @@ import type { Catalogs } from "@bitflow/core";
  */
 export const formMessages: Catalogs = {
   en: {
+    zoneTolerance: "Counts as on this region when",
+    zoneToleranceHint:
+      "Touching is what aiming at a target feels like. The stricter rules are for tasks where placing precisely is the point.",
+    toleranceTouch: "The element touches it at all",
+    toleranceCentre: "The element's middle is inside it",
+    toleranceFit: "The element is inside it completely",
     zoneUnnamed: "Unnamed region",
     zoneExpectsShort: "Expects",
     zoneExpectsNothing: "Nothing belongs here yet",
@@ -65,6 +71,12 @@ export const formMessages: Catalogs = {
     noZones: "No drop zones yet.",
   },
   de: {
+    zoneTolerance: "Gilt als auf diesem Bereich, wenn",
+    zoneToleranceHint:
+      "„Berührt“ entspricht dem Gefühl, ein Ziel zu treffen. Die strengeren Regeln sind für Aufgaben, bei denen genaues Platzieren das Thema ist.",
+    toleranceTouch: "das Element ihn überhaupt berührt",
+    toleranceCentre: "die Mitte des Elements darin liegt",
+    toleranceFit: "das Element vollständig darin liegt",
     zoneUnnamed: "Bereich ohne Namen",
     zoneExpectsShort: "Erwartet",
     zoneExpectsNothing: "Hier gehört noch nichts hin",

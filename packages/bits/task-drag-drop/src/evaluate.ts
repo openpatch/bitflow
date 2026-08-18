@@ -1,5 +1,5 @@
 import type { BitResult } from "@bitflow/core";
-import { inside } from "./layout";
+import { overlapArea, satisfies } from "./layout";
 import type { Answer, Data, DropZone, Element, Placement } from "./schema";
 
 /**
@@ -15,22 +15,38 @@ export const homesOf = (data: Data, elementId: string): string[] =>
     .map((zone) => zone.id);
 
 /**
- * The zone an element has come to rest in, or `undefined` for open ground.
+ * The region an element has come to rest on, or `undefined` for open ground.
  *
- * Decided by where the element's middle ended up — "is the box in the box" —
- * rather than by any snapping, because the element stays exactly where it was
- * dropped. Later zones win, so one drawn over another is the one that counts.
+ * Each region says for itself how much of the element it wants — see
+ * `Tolerance`. Where an element satisfies several at once, which `touch`
+ * makes easy, the one it covers most wins: that is the region the learner was
+ * aiming at, and picking by draw order instead would turn a near-miss into a
+ * mark on a region they barely grazed.
  */
 export const zoneUnder = (
   data: Data,
   element: Element,
   placement: Placement,
 ): DropZone | undefined => {
-  const centre = {
-    x: placement.x + element.width / 2,
-    y: placement.y + element.height / 2,
+  const box = {
+    x: placement.x,
+    y: placement.y,
+    width: element.width,
+    height: element.height,
   };
-  return [...data.dropZones].reverse().find((zone) => inside(zone, centre));
+
+  let best: DropZone | undefined;
+  let bestArea = -1;
+  for (const zone of data.dropZones) {
+    if (!satisfies(box, zone, zone.tolerance)) continue;
+    const area = overlapArea(box, zone);
+    // `>=` so a later region wins a tie, keeping "drawn on top" meaningful.
+    if (area >= bestArea) {
+      best = zone;
+      bestArea = area;
+    }
+  }
+  return best;
 };
 
 /**

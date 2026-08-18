@@ -7,6 +7,9 @@ import type { Catalogs } from "@bitflow/core";
  */
 export const messages: Catalogs = {
   en: {
+    "placement-adrift": "not on any target",
+    pointGained: "one point",
+    pointLost: "one point deducted",
     name: "Drag and drop",
     description: "Elements the learner drags to where they belong on a picture.",
     howTo:
@@ -20,6 +23,9 @@ export const messages: Catalogs = {
     "placement-wrong": "not correct",
   },
   de: {
+    "placement-adrift": "auf keinem Ziel",
+    pointGained: "ein Punkt",
+    pointLost: "ein Punkt abgezogen",
     name: "Zuordnen",
     description: "Elemente, die an die richtige Stelle eines Bildes gezogen werden.",
     howTo:

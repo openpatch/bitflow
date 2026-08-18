@@ -182,6 +182,7 @@ export const Form = ({
           id,
           label: "",
           ...box,
+          tolerance: "touch" as const,
           correctElementIds: [],
           backgroundOpacity: 100,
         },
@@ -269,6 +270,18 @@ export const Form = ({
               </span>
             )}
 
+            <SelectField
+              label={t("zoneTolerance")}
+              hint={t("zoneToleranceHint")}
+              value={zone.tolerance}
+              options={[
+                { value: "touch" as const, label: t("toleranceTouch") },
+                { value: "centre" as const, label: t("toleranceCentre") },
+                { value: "fit" as const, label: t("toleranceFit") },
+              ]}
+              onChange={(tolerance) => setZone(zone.id, { tolerance })}
+            />
+
             <fieldset className="bitflow-field">
               <legend className="bitflow-label">{t("zoneExpects")}</legend>
               {data.elements.map((element) => (
@@ -337,6 +350,7 @@ export const Form = ({
                   y: 0.2,
                   width: 0.3,
                   height: 0.25,
+                  tolerance: "touch" as const,
                   correctElementIds: [],
                   backgroundOpacity: 100,
                 },

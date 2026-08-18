@@ -259,7 +259,86 @@ describe("<DragCanvas>", () => {
       />,
     );
 
-    expect(screen.getByText("not correct")).toBeDefined();
+    expect(screen.getByText(/not correct/)).toBeDefined();
+  });
+
+  describe("once the answer is marked", () => {
+    const marked = (
+      judged: Array<{
+        elementId: string;
+        x: number;
+        y: number;
+        zoneId?: string;
+        state?: "correct" | "wrong";
+      }>,
+      over: Partial<Data> = {},
+    ) =>
+      render(
+        <DragCanvas
+          data={data(over)}
+          placements={judged.map(({ elementId, x, y }) => ({ elementId, x, y }))}
+          judged={judged}
+          locale="en"
+          readonly
+          onChange={() => {}}
+        />,
+      );
+
+    it("shows the point a right placement earned", () => {
+      marked([{ elementId: "alu", x: 0.45, y: 0.1, zoneId: "left", state: "correct" }]);
+
+      expect(screen.getByText("+1")).toBeDefined();
+      expect(screen.getByText(/one point/)).toBeDefined();
+    });
+
+    it("shows the point a wrong one cost", () => {
+      marked([{ elementId: "reg", x: 0.45, y: 0.1, zoneId: "left", state: "wrong" }]);
+
+      expect(screen.getByText("−1")).toBeDefined();
+      expect(screen.getByText(/one point deducted/)).toBeDefined();
+    });
+
+    it("shows no deduction when wrong placements cost nothing", () => {
+      marked([{ elementId: "reg", x: 0.45, y: 0.1, zoneId: "left", state: "wrong" }], {
+        applyPenalties: false,
+      });
+
+      // A −1 would be a lie: with penalties off the placement is simply not
+      // worth anything.
+      expect(screen.queryByText("−1")).toBeNull();
+      expect(screen.getByText(/not correct/)).toBeDefined();
+    });
+
+    it("shows no points at all when the task is worth one mark", () => {
+      marked([{ elementId: "alu", x: 0.45, y: 0.1, zoneId: "left", state: "correct" }], {
+        singlePoint: true,
+      });
+
+      // There is no per-element point to point at.
+      expect(screen.queryByText("+1")).toBeNull();
+    });
+
+    it("marks an element left on nothing as its own thing", () => {
+      const { container } = marked([{ elementId: "alu", x: 0.1, y: 0.8 }]);
+
+      // Neither right nor wrong — it costs nothing — but not plain either,
+      // which among red and green would read as "not looked at".
+      expect(
+        container.querySelector(".bitflow-dragdrop-element-adrift"),
+      ).not.toBeNull();
+      expect(screen.getByText(/not on any target/)).toBeDefined();
+      expect(screen.queryByText("−1")).toBeNull();
+    });
+
+    it("colours a right and a wrong placement differently", () => {
+      const { container } = marked([
+        { elementId: "alu", x: 0.45, y: 0.1, zoneId: "left", state: "correct" },
+        { elementId: "reg", x: 0.45, y: 0.3, zoneId: "left", state: "wrong" },
+      ]);
+
+      expect(container.querySelector(".bitflow-dragdrop-element-correct")).not.toBeNull();
+      expect(container.querySelector(".bitflow-dragdrop-element-wrong")).not.toBeNull();
+    });
   });
 
   it("describes the picture, because the picture is the task", () => {
