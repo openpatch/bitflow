@@ -1,0 +1,86 @@
+.bitflow-mouse {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* The play area. Sized by its own aspect ratio so a target lands in the same
+   place on any screen, which is the whole basis of comparing one attempt with
+   another. */
+.bitflow-mouse-area {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bitflow-color-neutral-100);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  /* A stray drag must not select the page, and a touch must not scroll it. */
+  user-select: none;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.bitflow-mouse-target {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: var(--bitflow-radius-full);
+  background: var(--bitflow-color-primary);
+}
+
+/* The targets after the event, drawn behind the marks so a click that landed
+   on one is still visible. */
+.bitflow-mouse-target-past {
+  background: none;
+  border: var(--bitflow-border-width) dashed var(--bitflow-color-neutral-400);
+}
+
+.bitflow-mouse-target-editing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--bitflow-font-size-small);
+  font-weight: var(--bitflow-font-weight-bold);
+  color: var(--bitflow-color-white);
+  cursor: grab;
+}
+
+.bitflow-mouse-area-editing {
+  cursor: copy;
+}
+
+/* Where a click landed. A cross rather than a dot: it has to be readable on
+   top of a target as well as on the empty area. */
+.bitflow-mouse-mark {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  transform: translate(-50%, -50%);
+  border-radius: var(--bitflow-radius-full);
+  border: 2px solid var(--bitflow-color-white);
+}
+
+.bitflow-mouse-mark-hit {
+  background: var(--bitflow-color-correct);
+}
+
+.bitflow-mouse-mark-miss {
+  background: var(--bitflow-color-wrong);
+}
+
+.bitflow-mouse-rounds {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-mouse-rounds th,
+.bitflow-mouse-rounds td {
+  padding: var(--bitflow-space-xxsmall);
+  text-align: start;
+  border-bottom: var(--bitflow-border-width) solid var(--bitflow-color-border);
+}
+
+.bitflow-mouse-rounds th {
+  color: var(--bitflow-color-text-muted);
+  font-weight: var(--bitflow-font-weight-medium);
+}

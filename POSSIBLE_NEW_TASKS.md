@@ -125,27 +125,25 @@ Accessibility requirements:
 
 ## Mouse Accuracy
 
-**Suggested type:** `task-mouse-accuracy`
+**Suggested type:** `task-mouse-accuracy` — **built**, as
+[`@bitflow/task-mouse-accuracy`](packages/bits/task-mouse-accuracy).
 
-Measure pointer accuracy by asking the learner to click a deterministic
-sequence of targets. This can support lessons about human-computer interaction,
-Fitts's law, or practicing precise pointer control.
+Targets appear one at a time; each round records where the click landed,
+whether it hit, and the monotonic elapsed time. The per-round detail also
+carries the distance moved, the target's width and Fitts's index of difficulty,
+so a lesson can plot time against difficulty. A point per hit, and — if the
+author asks for speed too — a second for each hit inside an allowance, kept
+apart so accuracy still counts on its own.
 
-Authors configure target positions/sizes, the number of rounds, optional time
-limit, and whether the evaluation emphasizes hits, misses, elapsed time,
-movement distance, or a combination. The learner answer stores the target ID,
-click coordinate, hit/miss result, and monotonic elapsed time for each round;
-the component calculates score entirely in the browser.
+The task names the device it needs before it starts. The learner may stand
+down, which returns `unknown`: nothing out of nothing, so it neither rewards
+them nor drags their total down. There is deliberately no keyboard route to the
+targets, since one would measure nothing and would only disguise which question
+is being asked.
 
-This task is intentionally pointer-specific and therefore must not be a
-mandatory-only assessment without an alternative activity. It must:
-
-- Clearly identify the required input modality before starting.
-- Support mouse, trackpad, touch, and other compatible pointing devices.
-- Let a host/author provide an equivalent non-pointer alternative task and
-  mark the result as `notApplicable` when the learner opts out.
-- Store only task-scoped aggregate/round results, never raw browser-level
-  pointer telemetry or device-identifying information.
+An answer holds the click position as a fraction of the task's own area, the
+hit or miss, and the elapsed milliseconds — no window or screen coordinates, no
+pointer type, no device information.
 
 ## Keyboard Speed Test
 
@@ -548,7 +546,7 @@ browser, with no server algebra service.
 
 1. ~~Drag and Drop Hotspots~~ — built
 2. ~~Find the Hotspots~~ — built
-3. Mouse Accuracy
+3. ~~Mouse Accuracy~~ — built
 4. Keyboard Speed Test
 5. ~~Ordering / Sequencing~~ — built
 6. ~~Matching Pairs~~ — built

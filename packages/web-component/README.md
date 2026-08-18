@@ -596,6 +596,44 @@ inside it, so Tab can still leave it. Every find is announced with what was
 found and how many remain, and a found word is struck through in the list as
 well as tinted in the grid.
 
+## Pointing accuracy
+
+`<bitflow-task-mouse-accuracy>` shows targets one at a time and records, for
+each, where the click landed, whether it hit, and how long it took. There is no
+H5P equivalent; it follows the pointing literature instead, and exists as much
+for teaching about human-computer interaction as for practice — the per-round
+detail carries the distance moved, the width of the target and Fitts's index of
+difficulty, which is what you need to plot time against difficulty and find the
+straight line.
+
+Scoring is a point per target hit, and — if the author asks for speed as well —
+a second for each hit made inside an allowance. Kept apart so partial credit
+means something: someone who hit every target but took their time has done the
+accurate half of the task, and one number for both would say otherwise.
+
+### It is a task about using a pointing device
+
+That is not something to paper over. The task says so before it starts, in
+those words, rather than letting someone find out by failing at it. Where the
+author allows it — the default — the learner can stand down instead, and the
+result is `unknown`: worth nothing out of nothing, so it neither rewards them
+nor drags their total down. That is what `notApplicable` means in a system
+whose scores are ratios, and it is the only honest way to count a task somebody
+could not attempt.
+
+There is deliberately no keyboard route to the targets. One would measure
+nothing at all, and offering it would disguise which question is being asked.
+The start and stand-down buttons are ordinary buttons, and the result is
+reported as a table of rounds rather than only as marks on a picture.
+
+### What an answer contains
+
+Where each click landed inside the task's own area, as a fraction of it;
+whether it hit; and the elapsed milliseconds from a monotonic clock. Nothing
+else. No window or screen coordinates, no pointer type, no device or input
+trace — the task measures a person's aim, and has no business describing their
+hardware.
+
 ## Item pools
 
 A pool hands each learner a random few of its steps. Twenty questions in the

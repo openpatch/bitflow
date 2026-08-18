@@ -29,6 +29,7 @@ export const bitLoaders: Record<string, () => Promise<unknown>> = {
   "task-parsons": () => import("@bitflow/task-parsons"),
   "task-crossword": () => import("@bitflow/task-crossword"),
   "task-word-search": () => import("@bitflow/task-word-search"),
+  "task-mouse-accuracy": () => import("@bitflow/task-mouse-accuracy"),
 };
 
 export const KNOWN_BIT_TYPES = Object.keys(bitLoaders);

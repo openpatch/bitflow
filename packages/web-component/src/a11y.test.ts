@@ -226,6 +226,21 @@ const steps = [
     showWords: true,
     evaluation,
   }),
+  node("q-mouse", "task-mouse-accuracy", {
+    instruction: "Click each target as accurately as you can.",
+    targets: [
+      { id: "t1", x: 0.15, y: 0.25, radius: 0.07 },
+      { id: "t2", x: 0.82, y: 0.3, radius: 0.045 },
+      { id: "t3", x: 0.5, y: 0.75, radius: 0.09 },
+      { id: "t4", x: 0.2, y: 0.8, radius: 0.035 },
+      { id: "t5", x: 0.7, y: 0.15, radius: 0.06 },
+    ],
+    aspectRatio: 0.6,
+    scoring: "hits",
+    allowanceMs: 1500,
+    allowOptOut: true,
+    evaluation,
+  }),
   node("end", "end-tries", {
     title: "Finished",
     markdown: "Thank you.",

@@ -364,6 +364,27 @@ export const examples: Example[] = [
       evaluation,
     },
   },
+  {
+    type: "task-mouse-accuracy",
+    name: "Pointing accuracy",
+    shows:
+      "Targets one at a time, timed and measured — the data Fitts's law is about. It says it needs a pointing device before it starts, and lets the learner stand down.",
+    data: {
+      instruction: "Click each target as accurately as you can.",
+      targets: [
+        { id: "t1", x: 0.15, y: 0.25, radius: 0.07 },
+        { id: "t2", x: 0.82, y: 0.3, radius: 0.045 },
+        { id: "t3", x: 0.5, y: 0.75, radius: 0.09 },
+        { id: "t4", x: 0.2, y: 0.8, radius: 0.035 },
+        { id: "t5", x: 0.7, y: 0.15, radius: 0.06 },
+      ],
+      aspectRatio: 0.6,
+      scoring: "hitsAndSpeed",
+      allowanceMs: 1500,
+      allowOptOut: true,
+      evaluation,
+    },
+  },
 ];
 
 export const exampleFor = (type: string | null): Example =>
