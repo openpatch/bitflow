@@ -13,6 +13,7 @@
 "@bitflow/task-input": major
 "@bitflow/task-fill-in-the-blank": major
 "@bitflow/task-highlighting": major
+"@bitflow/task-drag-drop": major
 ---
 
 Rewrite bitflow as web components.
@@ -40,3 +41,6 @@ one too, and arriving at a step moves focus to it and announces it.
 Item pools hand each learner a random few of a group of interchangeable
 steps, the editor can arrange the canvas and preview from any step, and the
 cohort report exports CSV.
+
+A tenth task type, `@bitflow/task-drag-drop`, puts labels onto regions of an
+image.

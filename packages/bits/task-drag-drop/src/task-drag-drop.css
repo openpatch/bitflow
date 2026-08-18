@@ -1,0 +1,127 @@
+/* Doubled class names throughout, so an outcome colour outranks the generic
+   region style rather than losing to it by source order. */
+
+.bitflow-dragdrop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+/* The positioning context every region is placed against. Regions are sized in
+   percentages, so the whole board scales with the image and an author's
+   fractions mean the same thing on a phone as on a projector. */
+.bitflow-dragdrop-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-dragdrop-image > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Stands in for a missing picture so the regions still have somewhere to sit
+   while the author is placing them. */
+.bitflow-dragdrop-noimage {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background: var(--bitflow-color-neutral-100);
+}
+
+.bitflow-dragdrop-zone {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--bitflow-space-xxsmall);
+  font: inherit;
+  color: var(--bitflow-color-text);
+  text-align: center;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--bitflow-color-surface) 82%, transparent);
+  border: var(--bitflow-border-width) dashed var(--bitflow-color-neutral-400);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-dragdrop-zone:disabled {
+  cursor: default;
+}
+
+.bitflow-dragdrop-zone.bitflow-dragdrop-zone-correct {
+  background: color-mix(in srgb, var(--bitflow-color-correct) 18%, transparent);
+  border-style: solid;
+  border-color: var(--bitflow-color-correct);
+}
+
+.bitflow-dragdrop-zone.bitflow-dragdrop-zone-wrong {
+  background: color-mix(in srgb, var(--bitflow-color-wrong) 18%, transparent);
+  border-style: solid;
+  border-color: var(--bitflow-color-wrong);
+}
+
+/* A region the learner left alone. Marked, but not as an error the way a
+   wrong answer is — they may simply not have got to it. */
+.bitflow-dragdrop-zone.bitflow-dragdrop-zone-empty {
+  border-style: solid;
+  border-color: var(--bitflow-color-neutral-400);
+}
+
+.bitflow-dragdrop-zone-contents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xxsmall);
+  justify-content: center;
+  overflow: hidden;
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-dragdrop-placed > img {
+  max-height: 2rem;
+}
+
+.bitflow-dragdrop-tray {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-dragdrop-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xsmall);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.bitflow-dragdrop-item {
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  font: inherit;
+  color: var(--bitflow-color-text);
+  cursor: pointer;
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+/* Picked up. Not colour alone — the border thickens and the label lifts —
+   because "which one am I holding" is the only state in this task. */
+.bitflow-dragdrop-item.bitflow-dragdrop-item-held {
+  background: var(--bitflow-color-neutral-100);
+  border-color: var(--bitflow-color-accent);
+  box-shadow: 0 0 0 2px var(--bitflow-color-accent);
+}
+
+.bitflow-dragdrop-item:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.bitflow-dragdrop-item > img {
+  display: block;
+  max-height: 3rem;
+}

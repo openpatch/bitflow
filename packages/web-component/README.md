@@ -266,6 +266,24 @@ exams. [What bitflow is not for](../../README.md#what-bitflow-is-not-for) has
 the full picture, and [SECURITY.md](../../SECURITY.md) says which of this we
 treat as a bug (none of it) and which we do.
 
+## Drag and drop
+
+`<bitflow-task-drag-drop>` puts labels onto regions of an image. Regions are
+authored as fractions of the image (`0`–`1`), never pixels, so a task laid out
+against a wide screenshot lands in the same place on a phone. The answer is a
+map of label id to region id for the same reason: a dropped pixel coordinate
+would grade differently on a different screen.
+
+The interaction is pick up a label, then choose a region — two clicks, two
+taps, or two Enters. Native HTML drag-and-drop is deliberately not used: it
+does not fire on touch and cannot be driven from a keyboard, so supporting it
+would have meant building this as a fallback beside it anyway.
+
+Alternative text for the image is required when there is an image. The picture
+carries the whole task, and a learner who cannot see it has nothing without it.
+Each region's name is its accessible name, and a region announces what it is
+holding, so the state of the board is readable without seeing it.
+
 ## Item pools
 
 A pool hands each learner a random few of its steps. Twenty questions in the

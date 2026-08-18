@@ -128,6 +128,33 @@ const steps = [
     ),
     evaluation,
   }),
+  node("q-drag", "task-drag-drop", {
+    instruction: "Label the diagram.",
+    background: { src: "/cpu.png", alt: "A CPU diagram with its parts" },
+    items: [
+      { id: "alu", kind: "text", label: "ALU" },
+      { id: "reg", kind: "text", label: "Registers" },
+    ],
+    zones: [
+      {
+        id: "alu-zone",
+        label: "Arithmetic logic unit",
+        rect: { x: 0.1, y: 0.1, width: 0.2, height: 0.2 },
+        acceptedItemIds: ["alu"],
+        score: 1,
+      },
+      {
+        id: "reg-zone",
+        label: "Register file",
+        rect: { x: 0.5, y: 0.1, width: 0.2, height: 0.2 },
+        acceptedItemIds: ["reg"],
+        score: 1,
+      },
+    ],
+    allowMultiplePlacements: false,
+    partialCredit: true,
+    evaluation,
+  }),
   node("end", "end-tries", {
     title: "Finished",
     markdown: "Thank you.",

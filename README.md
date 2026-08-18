@@ -68,9 +68,13 @@ grading has to move.
 
 ## Task types
 
-Choice, yes/no, short answer, fill in the blank and highlighting, plus start,
-explanation, text and end screens. Each is its own package, so a page downloads
-only the ones its assessment actually uses.
+Choice, yes/no, short answer, fill in the blank, highlighting and drag and
+drop, plus start, explanation, text and end screens. Each is its own package,
+so a page downloads only the ones its assessment actually uses.
+
+More are planned: [`POSSIBLE_NEW_TASKS.md`](POSSIBLE_NEW_TASKS.md) is the
+backlog, and [`POSSIBLE_NEW_TASK_SCHEMAS.md`](POSSIBLE_NEW_TASK_SCHEMAS.md)
+sketches the data each would carry.
 
 ## Languages
 

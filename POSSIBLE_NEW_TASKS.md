@@ -41,7 +41,15 @@ All future task types must retain deterministic, client-only evaluation:
 
 ## Drag and Drop Hotspots
 
-**Suggested type:** `task-drag-drop`
+**Suggested type:** `task-drag-drop` — **built**, as
+[`@bitflow/task-drag-drop`](packages/bits/task-drag-drop).
+
+Two deliberate departures from the sketch below, both recorded in the package:
+the interaction is pick-up-then-choose rather than a drag gesture, because that
+is the one behaviour that works with a mouse, a finger and a keyboard alike;
+and grading uses the shared `EvaluationSchema` like every other bit rather than
+this file's `feedbackMode`. There is also no `requireAllItems` setting — whether
+an unplaced label matters is already decided by whether some region wanted it.
 
 Allow learners to drag text labels, images, or both into invisible drop zones
 over a background image. Typical uses include labeling diagrams, placing
@@ -506,7 +514,7 @@ browser, with no server algebra service.
 
 ## Suggested Priority
 
-1. Drag and Drop Hotspots
+1. ~~Drag and Drop Hotspots~~ — built
 2. Find the Hotspots
 3. Mouse Accuracy
 4. Keyboard Speed Test
