@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -163,6 +163,95 @@ describe("<Columns>", () => {
         (b.getAttribute("aria-label") ?? "").includes("matched with"),
       ),
     ).toHaveLength(4);
+  });
+
+  describe("showing which card went with which", () => {
+    /** Gives the cards positions, since jsdom reports every box as zero. */
+    const layOut = (container: HTMLElement) => {
+      const columns = container.querySelector(
+        ".bitflow-matching-columns",
+      ) as HTMLElement;
+      columns.getBoundingClientRect = () =>
+        ({ left: 0, top: 0, width: 500, height: 300 }) as DOMRect;
+
+      const cards = [...container.querySelectorAll(".bitflow-matching-card")];
+      cards.forEach((card, index) => {
+        // Two columns of two: the left pair at x 0–200, the right at 300–500.
+        const left = index < 2 ? 0 : 300;
+        const top = (index % 2) * 60;
+        (card as HTMLElement).getBoundingClientRect = () =>
+          ({ left, right: left + 200, top, bottom: top + 40, height: 40 }) as DOMRect;
+      });
+      fireEvent.resize(window);
+    };
+
+    it("draws a line between the two cards of a pairing", () => {
+      const { container } = setup([{ leftId: "cpu", rightId: "cpu" }]);
+      layOut(container);
+
+      // A dashed border says a card is matched; it does not say to what.
+      const line = container.querySelector(".bitflow-matching-line");
+      expect(line).not.toBeNull();
+      expect(line?.getAttribute("x1")).toBe("200");
+      expect(line?.getAttribute("x2")).toBe("300");
+    });
+
+    it("draws one line per pairing", () => {
+      const { container } = setup([
+        { leftId: "cpu", rightId: "cpu" },
+        { leftId: "ram", rightId: "ram" },
+      ]);
+      layOut(container);
+
+      expect(container.querySelectorAll(".bitflow-matching-line")).toHaveLength(2);
+    });
+
+    it("draws nothing for a card that is not matched", () => {
+      const { container } = setup();
+      layOut(container);
+
+      expect(container.querySelectorAll(".bitflow-matching-line")).toHaveLength(0);
+    });
+
+    it("numbers both cards of a pairing", () => {
+      setup([{ leftId: "cpu", rightId: "ram" }]);
+
+      // Survives the columns stacking, where there is no room for a line.
+      expect(screen.getAllByText("1")).toHaveLength(2);
+    });
+
+    it("colours the line once the answer is marked", () => {
+      const { container } = setup([{ leftId: "cpu", rightId: "cpu" }], {
+        results: [{ leftId: "cpu", rightId: "cpu", correct: true }],
+        readonly: true,
+      });
+      layOut(container);
+
+      expect(
+        container.querySelector(".bitflow-matching-line-correct"),
+      ).not.toBeNull();
+    });
+
+    it("draws no lines when the columns are stacked", () => {
+      const { container } = setup([{ leftId: "cpu", rightId: "cpu" }]);
+      const columns = container.querySelector(
+        ".bitflow-matching-columns",
+      ) as HTMLElement;
+      columns.getBoundingClientRect = () =>
+        ({ left: 0, top: 0, width: 300, height: 600 }) as DOMRect;
+
+      // Every card in one column: a line between them would cross the cards
+      // in between and mean nothing.
+      [...container.querySelectorAll(".bitflow-matching-card")].forEach(
+        (card, index) => {
+          (card as HTMLElement).getBoundingClientRect = () =>
+            ({ left: 0, right: 300, top: index * 60, bottom: index * 60 + 40, height: 40 }) as DOMRect;
+        },
+      );
+      fireEvent.resize(window);
+
+      expect(container.querySelectorAll(".bitflow-matching-line")).toHaveLength(0);
+    });
   });
 
   it("marks each pairing once the answer is in", () => {

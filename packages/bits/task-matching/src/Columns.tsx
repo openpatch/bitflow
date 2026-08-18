@@ -1,7 +1,25 @@
 import { translate, type Locale } from "@bitflow/core";
-import { useEffect, useState, type ReactElement } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactElement,
+} from "react";
 import { messages } from "./messages";
 import type { Match, Pair, Side } from "./schema";
+
+/** One connection, in coordinates relative to the two columns. */
+type Line = {
+  id: string;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  /** Set once the answer is marked. */
+  correct?: boolean;
+};
 
 /**
  * Two columns, and the pairings between them.
@@ -40,6 +58,11 @@ export const Columns = ({
   const [heldId, setHeldId] = useState<string | null>(null);
   const [announcement, setAnnouncement] = useState("");
 
+  const columnsRef = useRef<HTMLDivElement>(null);
+  /** Every card on screen, so a line can be drawn between two of them. */
+  const cardsRef = useRef(new Map<string, HTMLElement>());
+  const [lines, setLines] = useState<Line[]>([]);
+
   const pairById = (id: string) => pairs.find((pair) => pair.id === id);
   const nameOf = (side: Side) => side.label;
   const marked = results !== undefined;
@@ -63,6 +86,69 @@ export const Columns = ({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [heldId, locale]);
+
+  /**
+   * Where to draw each connection, measured from the cards themselves.
+   *
+   * A dashed border says a card is matched; it does not say to what, and with
+   * six cards paired every one of them looks the same. The line is the only
+   * thing that answers "which did I put with which" at a glance.
+   *
+   * Measured rather than calculated: the cards are as tall as their content,
+   * so nothing about their positions is known in advance.
+   */
+  const measure = useCallback(() => {
+    const container = columnsRef.current;
+    if (!container) return setLines([]);
+    const frame = container.getBoundingClientRect();
+
+    const drawn: Line[] = [];
+    for (const match of matches) {
+      const from = cardsRef.current.get(`left:${match.leftId}`);
+      const to = cardsRef.current.get(`right:${match.rightId}`);
+      if (!from || !to) continue;
+
+      const a = from.getBoundingClientRect();
+      const b = to.getBoundingClientRect();
+      // Stacked into one column — on a phone — the two cards overlap
+      // horizontally and a line between them would cross the cards in
+      // between. The number on each card carries the pairing there.
+      if (b.left < a.right) return setLines([]);
+
+      drawn.push({
+        id: `${match.leftId}:${match.rightId}`,
+        x1: a.right - frame.left,
+        y1: a.top + a.height / 2 - frame.top,
+        x2: b.left - frame.left,
+        y2: b.top + b.height / 2 - frame.top,
+        correct: outcome(match),
+      });
+    }
+    setLines(drawn);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matches, results]);
+
+  useLayoutEffect(() => {
+    measure();
+
+    // The cards move whenever they are re-laid-out — a narrower window, a
+    // longer label wrapping to two lines — and every line is wrong the moment
+    // they do. The observer catches both; the resize listener covers the
+    // window alone, where there is no observer to be had.
+    const onResize = () => measure();
+    window.addEventListener("resize", onResize);
+
+    const observer =
+      typeof ResizeObserver === "undefined"
+        ? undefined
+        : new ResizeObserver(onResize);
+    if (observer && columnsRef.current) observer.observe(columnsRef.current);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+      observer?.disconnect();
+    };
+  }, [measure]);
 
   const separate = (match: Match) => {
     if (readonly) return;
@@ -127,6 +213,10 @@ export const Columns = ({
 
   const card = (side: Side, id: string, column: "left" | "right") => {
     const match = column === "left" ? matchOfLeft(id) : matchOfRight(id);
+    // The pairing's number, shown on both of its cards. It survives the
+    // columns stacking, where there is no room for a line, and it is a second
+    // channel besides position for anyone who finds the lines hard to follow.
+    const number = match ? matches.indexOf(match) + 1 : undefined;
     const partner = match
       ? column === "left"
         ? pairById(match.rightId)?.right
@@ -149,6 +239,11 @@ export const Columns = ({
       <li key={id}>
         <button
           type="button"
+          ref={(node) => {
+            const key = `${column}:${id}`;
+            if (node) cardsRef.current.set(key, node);
+            else cardsRef.current.delete(key);
+          }}
           className={classes.join(" ")}
           disabled={readonly}
           aria-pressed={column === "left" ? heldId === id : undefined}
@@ -159,6 +254,12 @@ export const Columns = ({
           }
           onClick={() => (column === "left" ? pickUp(id) : matchWith(id))}
         >
+          {number !== undefined && (
+            <span className="bitflow-matching-index" aria-hidden="true">
+              {number}
+            </span>
+          )}
+
           {side.kind === "image" && side.image?.src ? (
             <img
               className="bitflow-matching-image"
@@ -185,7 +286,26 @@ export const Columns = ({
     <div className="bitflow-matching">
       <p className="bitflow-hint">{readonly ? t("howToReadonly") : t("howTo")}</p>
 
-      <div className="bitflow-matching-columns">
+      <div className="bitflow-matching-columns" ref={columnsRef}>
+        {/* Drawn over the columns and deaf to the pointer, so a line never
+            becomes the thing being clicked. */}
+        <svg className="bitflow-matching-lines" aria-hidden="true">
+          {lines.map((line) => (
+            <line
+              key={line.id}
+              className={
+                line.correct === undefined
+                  ? "bitflow-matching-line"
+                  : `bitflow-matching-line bitflow-matching-line-${line.correct ? "correct" : "wrong"}`
+              }
+              x1={line.x1}
+              y1={line.y1}
+              x2={line.x2}
+              y2={line.y2}
+            />
+          ))}
+        </svg>
+
         <section>
           <h3 className="bitflow-label">{t("leftHeading")}</h3>
           <ul className="bitflow-matching-column">

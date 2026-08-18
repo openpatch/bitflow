@@ -324,9 +324,15 @@ a new hand around the pairings already made.
 Choose a card on the left, then the one on the right that goes with it — two
 clicks, two taps or two Enters, the same operation whatever drives it. Nothing
 here is spatial, so a list is not a fallback for dragging; it is the shape of
-the question. A card announces what it is matched with, so the pairings are
-readable without following lines across a gap. Choosing an occupied card while
-holding one means "put this here instead" rather than refusing.
+the question. Choosing an occupied card while holding one means "put this here
+instead" rather than refusing.
+
+Each pairing is drawn as a line between its two cards, and both carry the
+pairing's number. Three ways of saying the same thing, because none of them
+works everywhere: the line is unavailable when the columns stack on a narrow
+screen, the number survives that but not a screen reader, and the card's
+accessible name — "CPU, matched with Carries out instructions" — covers what
+neither can. The line takes the outcome's colour once the answer is marked.
 
 ## Put in order
 

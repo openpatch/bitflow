@@ -7,9 +7,37 @@
 /* Two columns while there is room, stacked when there is not: on a phone,
    side-by-side cards are too narrow to read the text on. */
 .bitflow-matching-columns {
+  position: relative;
   display: grid;
+  /* Wide enough apart to draw a line between; below that the columns stack
+     and the pairing is carried by the number on each card instead. */
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--bitflow-space-small);
+  gap: var(--bitflow-space-large);
+}
+
+/* The connections, over the columns and deaf to the pointer so a line never
+   becomes the thing being clicked. */
+.bitflow-matching-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.bitflow-matching-line {
+  stroke: var(--bitflow-color-primary);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.bitflow-matching-line-correct {
+  stroke: var(--bitflow-color-correct);
+}
+
+.bitflow-matching-line-wrong {
+  stroke: var(--bitflow-color-wrong);
 }
 
 .bitflow-matching-column {
@@ -22,6 +50,9 @@
 }
 
 .bitflow-matching-card {
+  display: flex;
+  gap: var(--bitflow-space-xsmall);
+  align-items: center;
   width: 100%;
   padding: var(--bitflow-space-xsmall);
   font: inherit;
@@ -39,6 +70,22 @@
 
 .bitflow-matching-image {
   max-height: 4rem;
+}
+
+/* The pairing's number, on both of its cards. Carries the pairing where the
+   columns stack and no line can be drawn, and is a second channel besides
+   position for anyone who finds the lines hard to follow. */
+.bitflow-matching-index {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: var(--bitflow-font-size-small);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5rem;
+  color: var(--bitflow-color-surface);
+  text-align: center;
+  background: var(--bitflow-color-primary);
+  border-radius: 50%;
 }
 
 /* Picked up. Not colour alone — the outline thickens — because "which one am
