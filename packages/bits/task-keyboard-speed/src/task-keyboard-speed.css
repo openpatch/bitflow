@@ -1,0 +1,73 @@
+.bitflow-typing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* The passage, marked character by character as it is passed. Monospaced so
+   the marks line up under each other and a missed character is visible as a
+   shift rather than only as a colour. */
+.bitflow-typing-passage {
+  margin: 0;
+  padding: var(--bitflow-space-xsmall);
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-standard);
+  line-height: var(--bitflow-line-height-standard);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: var(--bitflow-color-neutral-100);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-typing-character-pending {
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-typing-character-right {
+  color: var(--bitflow-color-correct);
+}
+
+/* Underlined as well as coloured, and a typed space that is wrong is drawn as
+   a visible mark: a wrong space is otherwise a blank with a tint on it. */
+.bitflow-typing-character-wrong {
+  color: var(--bitflow-color-wrong);
+  background: var(--bitflow-color-wrong-surface);
+  text-decoration: underline;
+}
+
+.bitflow-typing-input {
+  width: 100%;
+  padding: var(--bitflow-space-xsmall);
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-standard);
+  line-height: var(--bitflow-line-height-standard);
+  color: var(--bitflow-color-text);
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  resize: vertical;
+}
+
+.bitflow-typing-input:focus-visible {
+  outline: none;
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+.bitflow-typing-input:disabled {
+  /* Safari greys a disabled field's text; a finished attempt still has to be
+     readable. */
+  -webkit-text-fill-color: var(--bitflow-color-text);
+  opacity: 1;
+}
+
+.bitflow-typing-meters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-small);
+  margin: 0;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+  /* The seconds change four times a second: a fixed width stops the row
+     jittering sideways while someone is trying to read it. */
+  font-variant-numeric: tabular-nums;
+}

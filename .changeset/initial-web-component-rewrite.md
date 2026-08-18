@@ -21,6 +21,7 @@
 "@bitflow/task-crossword": major
 "@bitflow/task-word-search": major
 "@bitflow/task-mouse-accuracy": major
+"@bitflow/task-keyboard-speed": major
 ---
 
 Rewrite bitflow as web components.

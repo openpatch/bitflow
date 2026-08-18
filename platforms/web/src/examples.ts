@@ -385,6 +385,23 @@ export const examples: Example[] = [
       evaluation,
     },
   },
+  {
+    type: "task-keyboard-speed",
+    name: "Typing",
+    shows:
+      "A passage marked character by character as it is passed, timed from the first keystroke. The text is read off the box, never off the keys, so an input method works and no key log exists to keep.",
+    data: {
+      instruction: "Type the passage exactly as it appears.",
+      text: 
+        "A keyboard is an input device: it turns what you press into characters, one at a time.",
+      scoring: "accuracyAndSpeed",
+      requiredAccuracy: 0.95,
+      targetWpm: 25,
+      timed: true,
+      allowOptOut: true,
+      evaluation,
+    },
+  },
 ];
 
 export const exampleFor = (type: string | null): Example =>

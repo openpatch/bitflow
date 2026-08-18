@@ -241,6 +241,16 @@ const steps = [
     allowOptOut: true,
     evaluation,
   }),
+  node("q-typing", "task-keyboard-speed", {
+    instruction: "Type the passage exactly as it appears.",
+    text: "A keyboard is an input device: it turns what you press into characters, one at a time.",
+    scoring: "accuracy",
+    requiredAccuracy: 0.95,
+    targetWpm: 25,
+    timed: true,
+    allowOptOut: true,
+    evaluation,
+  }),
   node("end", "end-tries", {
     title: "Finished",
     markdown: "Thank you.",

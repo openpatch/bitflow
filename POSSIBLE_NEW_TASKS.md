@@ -147,26 +147,24 @@ pointer type, no device information.
 
 ## Keyboard Speed Test
 
-**Suggested type:** `task-keyboard-speed`
+**Suggested type:** `task-keyboard-speed` — **built**, as
+[`@bitflow/task-keyboard-speed`](packages/bits/task-keyboard-speed).
 
-Measure accurate typing of an author-provided text, character sequence, code
-snippet, or command. This can support typing practice or lessons about input
-devices and ergonomics.
+A passage, a box, and every character marked as it is passed. Accuracy is
+measured against the longer of the two texts, so neither stopping half way nor
+typing extra looks perfect; speed is net words per minute at five characters to
+a word, so it cannot be gamed by typing nonsense quickly. A mark for accuracy,
+and optionally a second for speed — never speed alone.
 
-Authors configure the prompt text, timing policy, maximum attempts, required
-accuracy, and scoring formula (for example correct characters, accuracy
-percentage, characters per minute, or words per minute). The learner answer
-stores the final entered text plus start/end monotonic timestamps; the
-component derives all metrics locally.
+The text is read from the input's value on change, never from key events, which
+is what makes an input method editor work and why there is no key-by-key record
+to keep: the component never has one. An answer holds the finished text and one
+elapsed figure, rather than start and end timestamps, which is less to keep and
+survives a reload.
 
-This task is intentionally keyboard-specific and must:
-
-- Accept normal text input, including IME/composition input, rather than
-  recording individual low-level key events.
-- Never capture keys outside its focused input or store a key-by-key log.
-- Let a host/author provide an equivalent alternative task and mark the
-  result as `notApplicable` when keyboard speed is not an appropriate measure.
-- Use a visible timer and allow authors to disable timing for accessibility.
+Timing can be switched off, which leaves accuracy and takes the scoring with
+it. The learner can stand down, which returns `unknown` — nothing out of
+nothing.
 
 ## Ordering / Sequencing
 
@@ -547,7 +545,7 @@ browser, with no server algebra service.
 1. ~~Drag and Drop Hotspots~~ — built
 2. ~~Find the Hotspots~~ — built
 3. ~~Mouse Accuracy~~ — built
-4. Keyboard Speed Test
+4. ~~Keyboard Speed Test~~ — built
 5. ~~Ordering / Sequencing~~ — built
 6. ~~Matching Pairs~~ — built
 7. ~~Parsons Puzzle~~ — built

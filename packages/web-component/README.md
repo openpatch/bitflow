@@ -641,6 +641,48 @@ else. No window or screen coordinates, no pointer type, no device or input
 trace — the task measures a person's aim, and has no business describing their
 hardware.
 
+## Typing
+
+`<bitflow-task-keyboard-speed>` shows a passage and a box, and marks every
+character of the passage as it is passed — right, wrong, or not yet reached.
+Seeing the mistake where it happened is most of what makes typing practice
+practice rather than testing.
+
+The measurements are the ordinary ones: characters in the right place, accuracy
+against whichever of the two texts is longer, and net words per minute at the
+conventional five characters to a word. Accuracy is measured against the longer
+text so that stopping half way does not look perfect for as far as it went, and
+typing half a page of extra counts against it too.
+
+A mark for accuracy, and — if the author asks — a second for speed. Kept apart,
+and accuracy first, because they are not the same skill and accuracy is the
+half everybody can be asked for. Speed is never the only mark: a task scored on
+words per minute alone would fail a careful typist and pass a fast, wrong one.
+Words per minute is net of errors, so it cannot be gamed by typing nonsense
+quickly.
+
+The clock runs from the first character to the last, and the figure on screen
+is the one the score uses. A separate live timer ticking past the last
+keystroke would show a learner one number and mark them on another.
+
+### It is a task about using a keyboard
+
+The text is read from the input's value on change, never from key events. That
+is what makes it work with an input method editor, where several keystrokes
+compose one character and the keystrokes are not the text — and it is also why
+there is no key-by-key record to keep: the component never has one. An answer
+holds the finished text and one elapsed figure. Nothing listens outside the
+box.
+
+Timing can be switched off entirely, which leaves accuracy. Someone who types
+accurately with one finger, a switch or a head pointer is not typing badly, and
+a clock on the screen says otherwise. Switching timing off also takes the
+scoring back to accuracy rather than leaving a speed mark nobody can earn.
+
+Where the author allows it — the default — the learner can stand down, and the
+result is `unknown`: worth nothing out of nothing, so it neither rewards them
+nor drags their total down.
+
 ## Item pools
 
 A pool hands each learner a random few of its steps. Twenty questions in the

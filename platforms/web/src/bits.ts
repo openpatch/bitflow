@@ -24,6 +24,7 @@ const loaders: Record<string, () => Promise<unknown>> = {
   "task-crossword": () => import("@bitflow/task-crossword"),
   "task-word-search": () => import("@bitflow/task-word-search"),
   "task-mouse-accuracy": () => import("@bitflow/task-mouse-accuracy"),
+  "task-keyboard-speed": () => import("@bitflow/task-keyboard-speed"),
 };
 
 const params = new URLSearchParams(location.search);
