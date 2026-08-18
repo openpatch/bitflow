@@ -199,6 +199,18 @@ that is not a task, an outcome that does not exist, an ordering comparison
 against something that is not a number, a membership test without a list, and
 an empty rule set.
 
+## Arranging the canvas
+
+Node positions live in the document and were only ever set by hand, so a flow
+that came from anywhere else — generated, converted, or merged from two files —
+opened as a heap at the origin. `<bitflow-flow-editor>`'s **Arrange** button
+lays every step out top to bottom in the order a learner meets them, branches
+side by side, in a single undoable step.
+
+A step is always drawn below everything that can reach it. Anything the start
+cannot reach is laid out below the rest as its own flow, which is what a
+half-built document looks like most of the time.
+
 ## Previewing one step
 
 `<bitflow-flow-editor>`'s Preview button starts at the beginning, or — when a

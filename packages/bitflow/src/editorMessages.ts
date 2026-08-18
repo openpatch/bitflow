@@ -8,6 +8,7 @@ import type { Catalogs } from "@bitflow/core";
  */
 export const editorMessages: Catalogs = {
   en: {
+    arrange: "Arrange",
     previewFromHere: "Preview from here",
     previewFromHereHint:
       "Running from the selected step. Nothing before it has been answered, so branches that depend on earlier tasks will take their default route.",
@@ -58,6 +59,7 @@ export const editorMessages: Catalogs = {
     redo: "Redo",
   },
   de: {
+    arrange: "Anordnen",
     previewFromHere: "Ab hier ansehen",
     previewFromHereHint:
       "Startet beim ausgewählten Schritt. Davor wurde nichts beantwortet, deshalb nehmen Verzweigungen, die auf frühere Aufgaben schauen, ihren Standardweg.",

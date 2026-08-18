@@ -13,6 +13,7 @@ import {
   type Viewport,
 } from "@bitflow/core";
 import { temporal, type TemporalState } from "zundo";
+import { layout } from "./layout";
 import { createStore, type StoreApi } from "zustand";
 
 export type EditorCallbacks = {
@@ -32,6 +33,8 @@ export type EditorState = {
   addNode: (type: string, position?: Position) => void;
   updateNodeData: (id: string, data: Record<string, unknown>) => void;
   moveNode: (id: string, position: Position) => void;
+  /** Repositions every step on a grid. One undo step, not one per node. */
+  arrange: () => void;
   removeNode: (id: string) => void;
   connect: (edge: Omit<BitEdge, "id">) => void;
   setEdgeCondition: (id: string, condition: Condition | undefined) => void;
@@ -152,6 +155,10 @@ export const createEditorStore = (
                 node.id === id ? { ...node, data } : node,
               ),
             });
+          },
+
+          arrange: () => {
+            edit(layout(get().doc));
           },
 
           moveNode: (id, position) => {

@@ -239,6 +239,13 @@ const FlowEditorBody = ({
             <button
               type="button"
               className="bitflow-button bitflow-button-quiet"
+              onClick={() => store.getState().arrange()}
+            >
+              {t("arrange")}
+            </button>
+            <button
+              type="button"
+              className="bitflow-button bitflow-button-quiet"
               onClick={() => store.temporal.getState().undo()}
             >
               {t("undo")}

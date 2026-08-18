@@ -133,6 +133,31 @@ describe("<FlowEditor>", () => {
     expect(screen.queryByText("Welcome")).toBeNull();
   });
 
+  it("arranges the canvas in one undoable step", async () => {
+    const user = userEvent.setup();
+    const heaped = doc(
+      [
+        { ...node("start", "test-start", { title: "Welcome" }), position: { x: 0, y: 0 } },
+        { ...node("q", "test-task", { prompt: "Q", correct: "a" }), position: { x: 0, y: 0 } },
+        { ...node("end", "test-end"), position: { x: 0, y: 0 } },
+      ],
+      [edge("start", "q"), edge("q", "end")],
+    );
+    const { ref } = setup({ flow: heaped });
+
+    await user.click(screen.getByRole("button", { name: "Arrange" }));
+
+    const arranged = ref.current!.getFlow().nodes;
+    expect(arranged.map((n) => n.position.y)).toEqual([0, 140, 280]);
+
+    // One undo, not one per node — otherwise arranging a twenty-step flow
+    // costs twenty presses to take back.
+    ref.current!.undo();
+    expect(
+      ref.current!.getFlow().nodes.every((n) => n.position.y === 0),
+    ).toBe(true);
+  });
+
   it("says so when there is nothing to fix", () => {
     setup();
     expect(screen.getByText("No problems found.")).toBeDefined();

@@ -938,6 +938,13 @@ rest: schema first, then the teacher-facing form, then the tests.
   sitting at a node, with a history of just that node so Back is not offered
   for a step that was never reached.
 
+- **The canvas can arrange itself.** Positions live in the document and were
+  only ever set by hand, so an imported or generated flow opened as a heap at
+  the origin. A layered top-down layout — later is further down, branches side
+  by side — in one undoable step. Depth is the *longest* path from the start,
+  so a step is never drawn above something that reaches it; cycles and
+  unreachable pieces both terminate and both get sensible places.
+
 ## How to Use This Plan
 
 This file (`PLAN.md` at the bitflow repo root) is the single source of
