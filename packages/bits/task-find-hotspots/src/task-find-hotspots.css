@@ -1,0 +1,167 @@
+.bitflow-hotspots {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+/* The positioning context every region is placed against. Regions are sized in
+   percentages, so an author's fractions mean the same picture on a phone as on
+   a projector. */
+.bitflow-hotspots-picture {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-hotspots-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bitflow-hotspots-noimage {
+  background: var(--bitflow-color-neutral-100);
+}
+
+/* One control over the whole picture: in the tab order, named, and the thing
+   a click lands on. Deliberately unstyled — the picture is the interface. */
+.bitflow-hotspots-surface {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  cursor: crosshair;
+  background: none;
+  border: 0;
+}
+
+.bitflow-hotspots-surface:disabled {
+  cursor: default;
+}
+
+/* Where a keyboard is aiming. Only while the picture has focus: a pointer user
+   has a cursor already, and a second cross would be a distraction. */
+.bitflow-hotspots-aim {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  pointer-events: none;
+  opacity: 0;
+  border: 2px solid var(--bitflow-color-accent);
+  border-radius: 50%;
+}
+
+.bitflow-hotspots-surface:focus-visible ~ .bitflow-hotspots-aim {
+  opacity: 1;
+}
+
+/* The answer: a small cross where the learner chose. */
+.bitflow-hotspots-mark {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  pointer-events: none;
+  background: var(--bitflow-color-accent);
+  border: 2px solid var(--bitflow-color-surface);
+  border-radius: 50%;
+}
+
+.bitflow-hotspots-mark-correct {
+  background: var(--bitflow-color-correct);
+}
+
+.bitflow-hotspots-mark-wrong {
+  background: var(--bitflow-color-wrong);
+}
+
+/* After marking, the region that was actually hit — so a near miss is a
+   visible near miss rather than a bare cross. */
+.bitflow-hotspots-region {
+  position: absolute;
+  pointer-events: none;
+  border: 2px solid;
+}
+
+.bitflow-hotspots-region-correct {
+  background: color-mix(in srgb, var(--bitflow-color-correct) 15%, transparent);
+  border-color: var(--bitflow-color-correct);
+}
+
+.bitflow-hotspots-region-wrong {
+  background: color-mix(in srgb, var(--bitflow-color-wrong) 15%, transparent);
+  border-color: var(--bitflow-color-wrong);
+}
+
+.bitflow-hotspots-verdict,
+.bitflow-hotspots-feedback {
+  margin: 0;
+}
+
+/* Authoring ---------------------------------------------------------------- */
+
+.bitflow-hotspots-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-hotspots-picture-editing {
+  cursor: crosshair;
+  user-select: none;
+  touch-action: none;
+}
+
+/* Regions are invisible to a learner and outlined to an author: the same
+   rectangle, two different jobs. */
+.bitflow-hotspots-handle {
+  position: absolute;
+  cursor: move;
+  background: color-mix(in srgb, var(--bitflow-color-neutral-100) 45%, transparent);
+  border: var(--bitflow-border-width) dashed var(--bitflow-color-neutral-400);
+}
+
+/* The one to find, told apart from the decoys at a glance. */
+.bitflow-hotspots-handle-correct {
+  background: color-mix(in srgb, var(--bitflow-color-correct) 18%, transparent);
+  border-color: var(--bitflow-color-correct);
+}
+
+.bitflow-hotspots-handle-selected {
+  border-style: solid;
+  box-shadow: 0 0 0 2px var(--bitflow-color-accent);
+}
+
+.bitflow-hotspots-handle-label {
+  display: block;
+  padding: 2px 4px;
+  overflow: hidden;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.bitflow-hotspots-resize {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+  background: var(--bitflow-color-accent);
+  border-radius: 50%;
+}
+
+.bitflow-hotspots-drawing {
+  position: absolute;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--bitflow-color-accent) 18%, transparent);
+  border: var(--bitflow-border-width) dashed var(--bitflow-color-accent);
+}

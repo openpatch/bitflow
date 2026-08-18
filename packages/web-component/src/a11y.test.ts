@@ -144,6 +144,16 @@ const steps = [
     applyPenalties: true,
     evaluation,
   }),
+  node("q-hotspot", "task-find-hotspots", {
+    instruction: "Which of these is an input device?",
+    background: { src: "data:image/png;base64,AAAA", alt: "A workstation" },
+    size: { width: 620, height: 310 },
+    hotspots: [
+      { id: "keyboard", shape: "rect", x: 0.2, y: 0.6, width: 0.3, height: 0.2, correct: true, label: "The keyboard" },
+      { id: "monitor", shape: "rect", x: 0.2, y: 0.1, width: 0.3, height: 0.3, correct: false, label: "The monitor" },
+    ],
+    evaluation,
+  }),
   node("end", "end-tries", {
     title: "Finished",
     markdown: "Thank you.",

@@ -303,6 +303,40 @@ editor flags one where it finds it.
 `ImageField` and `readImageFile` are exported from `@bitflow/element`, and
 `ImageSchema` from `@bitflow/core`, for tasks added later.
 
+## Find the spot
+
+`<bitflow-task-find-hotspots>` follows H5P's Image Hotspot Question: a picture,
+some regions over it, and one click. The task is worth one mark, not one per
+region — the learner is asked where something is and answers once.
+
+Several regions may be correct; any of them wins. The rest are there to be
+wrong usefully: each carries its own feedback, so choosing the monitor can say
+*that shows output rather than taking it in* instead of showing a red cross.
+`missFeedback` covers a click on bare picture.
+
+Regions are never drawn before the answer — outlining the candidates would
+answer the question — and are rectangles or the ellipse inside the same box, so
+the editor draws either by dragging one rectangle. A region drawn later wins
+where they overlap, which is how an exception is carved out of a larger area.
+After marking, the region that was actually hit is outlined, so a near miss
+looks like a near miss.
+
+### Authoring
+
+Drag on the picture to draw a region, drag it to move, drag its corner to
+resize; the numeric fields do the same. Each region needs a name. It is never
+shown to a learner — it describes the region to anyone who cannot see the
+picture, and names it in the report.
+
+### Accessibility
+
+The learner aims at a point, and a keyboard can move a point exactly as freely
+as a pointer can: the picture is one focusable control with a crosshair the
+arrow keys move (Shift for bigger steps) and Enter commits. Nothing is revealed
+that a mouse user is not also working from — the announcement is a position,
+never which region is under it, and choosing says only that a choice was made.
+Alternative text for the picture is required.
+
 ## Drag and drop
 
 `<bitflow-task-drag-drop>` follows H5P's Drag and Drop question: elements sit

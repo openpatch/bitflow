@@ -84,7 +84,15 @@ Accessibility requirements:
 
 ## Find the Hotspots
 
-**Suggested type:** `task-find-hotspots`
+**Suggested type:** `task-find-hotspots` — **built**, as
+[`@bitflow/task-find-hotspots`](packages/bits/task-find-hotspots), modelled on
+[H5P's Image Hotspot Question](https://github.com/h5p/h5p-image-hotspot-question).
+
+H5P's model turned out to be simpler than the sketch below and better: one
+click, one mark, with several regions allowed to be correct and the wrong ones
+carrying their own feedback. There is no required subset, no maximum number of
+guesses and no partial credit, because there is only one choice to make. The
+answer is the point that was clicked plus the region it hit.
 
 Show an image with one or more invisible target regions that the learner must
 identify by clicking/tapping them. Typical uses include finding components in
@@ -518,7 +526,7 @@ browser, with no server algebra service.
 ## Suggested Priority
 
 1. ~~Drag and Drop Hotspots~~ — built
-2. Find the Hotspots
+2. ~~Find the Hotspots~~ — built
 3. Mouse Accuracy
 4. Keyboard Speed Test
 5. Ordering / Sequencing
