@@ -8,6 +8,9 @@ import type { Catalogs } from "@bitflow/core";
  */
 export const editorMessages: Catalogs = {
   en: {
+    previewFromHere: "Preview from here",
+    previewFromHereHint:
+      "Running from the selected step. Nothing before it has been answered, so branches that depend on earlier tasks will take their default route.",
     save: "Save",
     timeLimitLabel: "Time limit for the whole assessment (seconds)",
     timeLimitHint:
@@ -55,6 +58,9 @@ export const editorMessages: Catalogs = {
     redo: "Redo",
   },
   de: {
+    previewFromHere: "Ab hier ansehen",
+    previewFromHereHint:
+      "Startet beim ausgewählten Schritt. Davor wurde nichts beantwortet, deshalb nehmen Verzweigungen, die auf frühere Aufgaben schauen, ihren Standardweg.",
     save: "Speichern",
     timeLimitLabel: "Zeitlimit für den ganzen Test (Sekunden)",
     timeLimitHint:

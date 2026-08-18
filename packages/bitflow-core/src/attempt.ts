@@ -185,6 +185,39 @@ export const setReasoning = (
  * Runs the bit's evaluator and stores answer, result and try count together, so
  * a snapshot never shows a result that belongs to a different answer.
  */
+/**
+ * An attempt already sitting at `nodeId`.
+ *
+ * For previewing one step of a long flow: reaching the last task of a
+ * twenty-step assessment by answering the nineteen in front of it is not a
+ * reasonable thing to ask of someone editing the twentieth. The history holds
+ * only this node, so there is nothing behind it to go back to — a preview
+ * starting in the middle should not pretend the middle was reached.
+ */
+export const attemptAt = (
+  doc: BitflowDocument,
+  nodeId: string,
+  options: { attemptId?: string; now?: Date } = {},
+): Result<AttemptSnapshot> => {
+  if (!getNode(doc, nodeId)) {
+    return {
+      ok: false,
+      error: bitflowError(
+        "INVALID_FLOW",
+        `The flow does not contain a node "${nodeId}".`,
+      ),
+    };
+  }
+
+  const created = createAttempt(doc, options);
+  if (!created.ok) return created;
+
+  return {
+    ok: true,
+    value: { ...created.value, currentNodeId: nodeId, history: [nodeId] },
+  };
+};
+
 export const evaluateNode = async (
   doc: BitflowDocument,
   snapshot: AttemptSnapshot,

@@ -199,6 +199,19 @@ that is not a task, an outcome that does not exist, an ordering comparison
 against something that is not a number, a membership test without a list, and
 an empty rule set.
 
+## Previewing one step
+
+`<bitflow-flow-editor>`'s Preview button starts at the beginning, or — when a
+step is selected on the canvas — at that step, which is what the button says it
+will do. Answering the nineteen steps in front of the twentieth to check the
+twentieth is not a reasonable thing to ask of its author.
+
+Nothing before the chosen step has been answered, so a branch whose condition
+reads an earlier task takes its default route. The preview says so.
+
+`attemptAt(doc, nodeId)` in `@bitflow/core` builds the same snapshot if you
+want this outside the editor.
+
 ## Exporting results
 
 `<bitflow-group-report>` renders a **Download CSV** button. The file holds two

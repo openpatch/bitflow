@@ -932,6 +932,12 @@ rest: schema first, then the teacher-facing form, then the tests.
   rendered the button as "save" — the kind of thing only found by looking.
   `catalogs.test.ts` now resolves every `t("…")` in a catalog's callers.
 
+- **Preview can start anywhere.** Checking the last task of a twenty-step flow
+  meant answering the nineteen in front of it. With a step selected, Preview
+  starts there — `attemptAt(doc, nodeId)` in core builds an attempt already
+  sitting at a node, with a history of just that node so Back is not offered
+  for a step that was never reached.
+
 ## How to Use This Plan
 
 This file (`PLAN.md` at the bitflow repo root) is the single source of

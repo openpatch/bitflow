@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   abandonAttempt,
+  attemptAt,
   canGoPrevious,
   createAttempt,
   evaluateNode,
@@ -296,6 +297,44 @@ describe("attempt runtime", () => {
     expect(snapshot.answers.q1).toBe("a");
     expect(snapshot.results.q1).toBeUndefined();
     expect(snapshot.tries.q1).toBeUndefined();
+  });
+});
+
+describe("attemptAt", () => {
+  beforeEach(registerTestBits);
+
+  it("starts where it is told to, not at the beginning", () => {
+    const created = attemptAt(flow, "q2");
+    if (!created.ok) throw new Error(created.error.message);
+
+    expect(created.value.currentNodeId).toBe("q2");
+  });
+
+  it("offers nothing to go back to", () => {
+    const created = attemptAt(flow, "q2");
+    if (!created.ok) throw new Error(created.error.message);
+
+    // A preview that opens in the middle must not claim the middle was
+    // reached — there is no earlier step, so Back would go nowhere real.
+    expect(created.value.history).toEqual(["q2"]);
+    expect(canGoPrevious(flow, created.value)).toBe(false);
+  });
+
+  it("is otherwise an ordinary fresh attempt", () => {
+    const created = attemptAt(flow, "q2");
+    if (!created.ok) throw new Error(created.error.message);
+
+    expect(created.value.status).toBe("inProgress");
+    expect(created.value.answers).toEqual({});
+    expect(created.value.results).toEqual({});
+    expect(created.value.flowId).toBe(flow.meta.id);
+  });
+
+  it("refuses a node the flow does not have", () => {
+    const created = attemptAt(flow, "nope");
+
+    expect(created.ok).toBe(false);
+    if (!created.ok) expect(created.error.code).toBe("INVALID_FLOW");
   });
 });
 

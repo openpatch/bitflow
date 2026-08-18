@@ -1,5 +1,5 @@
 import type { BitflowDocument } from "@bitflow/core";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createRef } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -105,6 +105,32 @@ describe("<FlowEditor>", () => {
     // save the reader from finding that node on the canvas themselves.
     expect(screen.queryByLabelText("Title of the assessment")).toBeNull();
     expect(screen.getByRole("button", { name: "Delete step" })).toBeDefined();
+  });
+
+  it("previews from the beginning when nothing is selected", async () => {
+    const user = userEvent.setup();
+    setup();
+
+    await user.click(screen.getByRole("button", { name: "Preview" }));
+
+    expect(screen.getByText("Welcome")).toBeDefined();
+  });
+
+  it("previews from the selected step instead of replaying the flow", async () => {
+    const user = userEvent.setup();
+    setup();
+
+    // `fireEvent`, not `userEvent`: a full pointer sequence on the canvas
+    // starts React Flow's drag, and d3-drag reaches for `document` again
+    // after the preview has replaced the canvas it was dragging on.
+    fireEvent.click(screen.getByText("Capital of France?"));
+    // The button says what it will do, because it no longer always does the
+    // same thing.
+    await user.click(screen.getByRole("button", { name: "Preview from here" }));
+
+    // Straight to the task, without answering the steps in front of it.
+    expect(screen.getByLabelText("Capital of France?")).toBeDefined();
+    expect(screen.queryByText("Welcome")).toBeNull();
   });
 
   it("says so when there is nothing to fix", () => {

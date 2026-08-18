@@ -1,7 +1,9 @@
 import {
+  attemptAt,
   listBits,
   resolveLocale,
   translate,
+  type AttemptSnapshot,
   type BitflowDocument,
   type BitflowError,
   type BitFormProps,
@@ -101,6 +103,12 @@ const FlowEditorBody = ({
   const state = useStore(store);
   const resolved = resolveLocale(locale);
   const [previewing, setPreviewing] = useState(false);
+  /**
+   * The step the running preview started at, captured when it starts.
+   * Selecting something else while it runs must not yank the learner back —
+   * the preview is a run, not a mirror of the canvas.
+   */
+  const [previewFrom, setPreviewFrom] = useState<string | null>(null);
 
   const t = useCallback(
     (key: string, vars?: Record<string, string | number>) =>
@@ -211,9 +219,19 @@ const FlowEditorBody = ({
         <button
           type="button"
           className="bitflow-button bitflow-button-secondary"
-          onClick={() => setPreviewing((on) => !on)}
+          onClick={() => {
+            // Starting from the selected step, when there is one: reaching the
+            // last task of a twenty-step flow by answering the nineteen before
+            // it is not a reasonable thing to ask of its author.
+            setPreviewFrom(previewing ? null : state.selectedNodeId);
+            setPreviewing((on) => !on);
+          }}
         >
-          {previewing ? t("stopPreview") : t("preview")}
+          {previewing
+            ? t("stopPreview")
+            : state.selectedNodeId
+              ? t("previewFromHere")
+              : t("preview")}
         </button>
 
         {!readonly && (
@@ -256,10 +274,16 @@ const FlowEditorBody = ({
       <div className="bitflow-editor-canvas">
         {previewing ? (
           <div className="bitflow-preview">
-            <p className="bitflow-hint">{t("previewHint")}</p>
+            <p className="bitflow-hint">
+              {previewFrom ? t("previewFromHereHint") : t("previewHint")}
+            </p>
             {/* The real learner component, with persistence off: a preview
                 must never be an approximation that can drift. */}
-            <Flow flow={state.doc} locale={resolved} />
+            <Flow
+              flow={state.doc}
+              attempt={startedAt(state.doc, previewFrom)}
+              locale={resolved}
+            />
           </div>
         ) : (
           <ReactFlow
@@ -520,6 +544,21 @@ const NodeInspector = ({
       )}
     </div>
   );
+};
+
+/**
+ * An attempt positioned at `nodeId`, or `undefined` to start at the beginning.
+ *
+ * `undefined` rather than a start-node attempt so `<Flow>` creates its own —
+ * one fewer thing that can disagree with the document.
+ */
+const startedAt = (
+  doc: BitflowDocument,
+  nodeId: string | null,
+): AttemptSnapshot | undefined => {
+  if (!nodeId) return undefined;
+  const created = attemptAt(doc, nodeId);
+  return created.ok ? created.value : undefined;
 };
 
 /**
