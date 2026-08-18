@@ -7,6 +7,13 @@ export { EvaluationFields } from "./EvaluationFields";
 export { defineBitElement, type StandaloneBitProps } from "./defineBitElement";
 export { Markdown, renderMarkdown } from "./Markdown";
 export { messages as elementMessages } from "./messages";
+export { ImageField } from "./ImageField";
+export {
+  readImageFile,
+  DEFAULT_MAX_EDGE,
+  DEFAULT_QUALITY,
+  type ReadImageOptions,
+} from "./readImage";
 export {
   CheckboxField,
   Disclosure,

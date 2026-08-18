@@ -1,4 +1,4 @@
-import { defaultEvaluation, EvaluationSchema } from "@bitflow/core";
+import { defaultEvaluation, EvaluationSchema, ImageSchema } from "@bitflow/core";
 import { z } from "zod";
 
 /**
@@ -16,14 +16,13 @@ import { z } from "zod";
 /** A fraction of the play area's width or height. */
 const Fraction = z.number().min(0).max(1);
 
-export const BackgroundSchema = z.object({
-  src: z.string().default(""),
-  /**
-   * Required whenever there is an image. The picture carries the task, so a
-   * learner who cannot see it has nothing at all without this.
-   */
-  alt: z.string().default(""),
-});
+/**
+ * The picture behind the task, stored inside the document.
+ *
+ * `ImageSchema` is shared: a `.bitflow` file is mailed, synced and opened
+ * offline, and a linked picture breaks on every one of those journeys.
+ */
+export const BackgroundSchema = ImageSchema;
 
 /**
  * The play area's shape. Only its ratio is used — everything inside is
@@ -51,7 +50,10 @@ export const ElementSchema = z.object({
   kind: z.enum(["text", "image"]).default("text"),
   /** The visible text, or the alternative text when `kind` is `image`. */
   label: z.string().default(""),
-  /** Only read for `kind: "image"`. */
+  /**
+   * Only read for `kind: "image"`, and embedded like the background. `label`
+   * is this picture's alternative text, so there is one place to write it.
+   */
   src: z.string().optional(),
   ...BoxSchema,
   /**

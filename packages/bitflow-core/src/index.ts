@@ -1,4 +1,5 @@
 export * from "./attempt";
+export * from "./image";
 export * from "./condition";
 export * from "./engine";
 export * from "./errors";

@@ -6,12 +6,19 @@ import type { Catalogs } from "@bitflow/core";
  */
 export const formMessages: Catalogs = {
   en: {
+    elementKind: "This element is",
+    elementKindText: "Text",
+    elementKindImage: "A picture",
+    elementPicture: "Picture on this element",
+    elementPictureAltHint:
+      "Required, and what the element is announced as. Learners using a screen reader have only this.",
     canvasHint:
       "Drag on the picture to draw a drop zone. Drag a box to move it, or its corner to resize. The numbers below do the same thing.",
     instructionLabel: "Instruction",
     instructionHint: "Markdown is supported. Say what the learner should do.",
-    imageLabel: "Background image address",
-    imageHint: "A URL the learner's browser can reach.",
+    imageLabel: "Background picture",
+    imageHint:
+      "Stored inside the assessment, so it travels with the file. It is scaled down and re-encoded when you choose it.",
     altLabel: "What the image shows",
     altHint:
       "Required. Learners using a screen reader have only this, and the image is the task.",
@@ -52,12 +59,19 @@ export const formMessages: Catalogs = {
     noZones: "No drop zones yet.",
   },
   de: {
+    elementKind: "Dieses Element ist",
+    elementKindText: "Text",
+    elementKindImage: "Ein Bild",
+    elementPicture: "Bild auf diesem Element",
+    elementPictureAltHint:
+      "Erforderlich, und zugleich der angesagte Name des Elements. Wer einen Screenreader nutzt, hat nur das.",
     canvasHint:
       "Zieh auf dem Bild, um einen Ablagebereich zu zeichnen. Zieh ein Kästchen zum Verschieben oder seine Ecke zum Ändern der Größe. Die Zahlen darunter tun dasselbe.",
     instructionLabel: "Arbeitsauftrag",
     instructionHint: "Markdown wird unterstützt. Sag, was zu tun ist.",
-    imageLabel: "Adresse des Hintergrundbilds",
-    imageHint: "Eine URL, die der Browser der Lernenden erreichen kann.",
+    imageLabel: "Hintergrundbild",
+    imageHint:
+      "Wird im Test gespeichert und wandert mit der Datei mit. Beim Auswählen wird es verkleinert und neu kodiert.",
     altLabel: "Was das Bild zeigt",
     altHint:
       "Erforderlich. Wer einen Screenreader nutzt, hat nur das — und das Bild ist die Aufgabe.",

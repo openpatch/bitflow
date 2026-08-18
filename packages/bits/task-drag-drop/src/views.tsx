@@ -5,7 +5,9 @@ import {
   errorFor,
   EvaluationFields,
   Field,
+  ImageField,
   Markdown,
+  SelectField,
   TextAreaField,
   TextField,
 } from "@bitflow/element";
@@ -157,19 +159,15 @@ export const Form = ({
         onChange={(instruction) => patch({ instruction })}
       />
 
-      <TextField
+      <ImageField
+        value={data.background}
+        locale={locale}
         label={t("imageLabel")}
         hint={t("imageHint")}
-        value={data.background.src}
-        onChange={(src) => patch({ background: { ...data.background, src } })}
-      />
-      <TextAreaField
-        label={t("altLabel")}
-        hint={t("altHint")}
-        rows={2}
-        value={data.background.alt}
-        error={errorFor(errors, "background.alt")}
-        onChange={(alt) => patch({ background: { ...data.background, alt } })}
+        altLabel={t("altLabel")}
+        altHint={t("altHint")}
+        altError={errorFor(errors, "background.alt")}
+        onChange={(background) => patch({ background })}
       />
 
       {/* Drawn on rather than typed at: drag on the background to make a drop
@@ -322,12 +320,36 @@ export const Form = ({
                 : "bitflow-rule"
             }
           >
-            <TextField
-              label={t("elementText")}
-              value={element.label}
-              error={errorFor(errors, `elements.${index}.label`)}
-              onChange={(label) => setElement(element.id, { label })}
+            <SelectField
+              label={t("elementKind")}
+              value={element.kind}
+              options={[
+                { value: "text" as const, label: t("elementKindText") },
+                { value: "image" as const, label: t("elementKindImage") },
+              ]}
+              onChange={(kind) => setElement(element.id, { kind })}
             />
+
+            {element.kind === "image" ? (
+              <ImageField
+                value={{ src: element.src ?? "", alt: element.label }}
+                locale={locale}
+                label={t("elementPicture")}
+                altLabel={t("elementText")}
+                altHint={t("elementPictureAltHint")}
+                altError={errorFor(errors, `elements.${index}.label`)}
+                onChange={(image) =>
+                  setElement(element.id, { src: image.src, label: image.alt })
+                }
+              />
+            ) : (
+              <TextField
+                label={t("elementText")}
+                value={element.label}
+                error={errorFor(errors, `elements.${index}.label`)}
+                onChange={(label) => setElement(element.id, { label })}
+              />
+            )}
             <BoxFields
               box={element}
               t={t}

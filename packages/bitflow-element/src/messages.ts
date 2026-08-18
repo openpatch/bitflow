@@ -11,6 +11,18 @@ import type { Catalogs } from "@bitflow/core";
  */
 export const messages: Catalogs = {
   en: {
+    imageLabel: "Picture",
+    imageHint:
+      "Stored inside the assessment, so it travels with the file. It is scaled down and re-encoded when you choose it.",
+    imageWorking: "Preparing the picture…",
+    imageSize: "About {size} inside the file.",
+    imageRemove: "Remove the picture",
+    imageFailed: "That file could not be read as a picture.",
+    imageLinked:
+      "This picture is linked rather than stored, so it will not appear where that address cannot be reached. Choose the file again to embed it.",
+    imageAltLabel: "What the picture shows",
+    imageAltHint:
+      "Required. Learners using a screen reader have only this, and the picture is the task.",
     check: "Check",
     retry: "Try again",
     skip: "Skip",
@@ -36,6 +48,18 @@ export const messages: Catalogs = {
     timeLimitHint: "Leave empty for no limit. The clock pauses if they leave.",
   },
   de: {
+    imageLabel: "Bild",
+    imageHint:
+      "Wird im Test gespeichert und wandert mit der Datei mit. Beim Auswählen wird es verkleinert und neu kodiert.",
+    imageWorking: "Bild wird vorbereitet …",
+    imageSize: "Etwa {size} in der Datei.",
+    imageRemove: "Bild entfernen",
+    imageFailed: "Diese Datei konnte nicht als Bild gelesen werden.",
+    imageLinked:
+      "Dieses Bild ist nur verlinkt, nicht gespeichert — es fehlt überall dort, wo die Adresse nicht erreichbar ist. Wähle die Datei erneut, um sie einzubetten.",
+    imageAltLabel: "Was das Bild zeigt",
+    imageAltHint:
+      "Erforderlich. Wer einen Screenreader nutzt, hat nur das — und das Bild ist die Aufgabe.",
     check: "Prüfen",
     retry: "Nochmal versuchen",
     skip: "Überspringen",
@@ -62,6 +86,18 @@ export const messages: Catalogs = {
       "Leer lassen für kein Limit. Die Uhr pausiert beim Verlassen.",
   },
   fr: {
+    imageLabel: "Image",
+    imageHint:
+      "Enregistrée dans l'évaluation, elle voyage donc avec le fichier. Elle est réduite et ré-encodée au moment du choix.",
+    imageWorking: "Préparation de l'image…",
+    imageSize: "Environ {size} dans le fichier.",
+    imageRemove: "Retirer l'image",
+    imageFailed: "Ce fichier n'a pas pu être lu comme une image.",
+    imageLinked:
+      "Cette image est liée et non enregistrée : elle n'apparaîtra pas là où cette adresse est inaccessible. Choisissez à nouveau le fichier pour l'intégrer.",
+    imageAltLabel: "Ce que montre l'image",
+    imageAltHint:
+      "Obligatoire. Les personnes utilisant un lecteur d'écran n'ont que cela, et l'image est l'exercice.",
     check: "Vérifier",
     retry: "Réessayer",
     skip: "Passer",
@@ -88,6 +124,18 @@ export const messages: Catalogs = {
       "Laisser vide pour aucune limite. Le chronomètre se met en pause s'ils quittent la page.",
   },
   nl: {
+    imageLabel: "Afbeelding",
+    imageHint:
+      "Wordt in de toets opgeslagen en reist mee met het bestand. Bij het kiezen wordt hij verkleind en opnieuw gecodeerd.",
+    imageWorking: "Afbeelding wordt voorbereid…",
+    imageSize: "Ongeveer {size} in het bestand.",
+    imageRemove: "Afbeelding verwijderen",
+    imageFailed: "Dit bestand kon niet als afbeelding worden gelezen.",
+    imageLinked:
+      "Deze afbeelding is alleen gekoppeld, niet opgeslagen: hij ontbreekt overal waar dat adres niet bereikbaar is. Kies het bestand opnieuw om het in te sluiten.",
+    imageAltLabel: "Wat de afbeelding toont",
+    imageAltHint:
+      "Verplicht. Wie een schermlezer gebruikt heeft alleen dit, en de afbeelding is de opdracht.",
     check: "Controleren",
     retry: "Opnieuw proberen",
     skip: "Overslaan",
@@ -114,6 +162,18 @@ export const messages: Catalogs = {
       "Laat leeg voor geen limiet. De klok pauzeert als ze weggaan.",
   },
   es: {
+    imageLabel: "Imagen",
+    imageHint:
+      "Se guarda dentro de la evaluación, así que viaja con el archivo. Al elegirla se reduce y se vuelve a codificar.",
+    imageWorking: "Preparando la imagen…",
+    imageSize: "Unos {size} dentro del archivo.",
+    imageRemove: "Quitar la imagen",
+    imageFailed: "No se pudo leer ese archivo como imagen.",
+    imageLinked:
+      "Esta imagen está enlazada, no guardada: no aparecerá donde no se pueda alcanzar esa dirección. Vuelve a elegir el archivo para incrustarla.",
+    imageAltLabel: "Qué muestra la imagen",
+    imageAltHint:
+      "Obligatorio. Quien use un lector de pantalla solo tiene esto, y la imagen es la tarea.",
     check: "Comprobar",
     retry: "Intentar de nuevo",
     skip: "Omitir",
@@ -140,6 +200,18 @@ export const messages: Catalogs = {
       "Déjalo vacío para no poner límite. El reloj se pausa si salen.",
   },
   it: {
+    imageLabel: "Immagine",
+    imageHint:
+      "Salvata dentro la verifica, quindi viaggia con il file. Alla scelta viene ridotta e ricodificata.",
+    imageWorking: "Preparazione dell'immagine…",
+    imageSize: "Circa {size} dentro il file.",
+    imageRemove: "Rimuovi l'immagine",
+    imageFailed: "Non è stato possibile leggere questo file come immagine.",
+    imageLinked:
+      "Questa immagine è collegata e non salvata: non comparirà dove quell'indirizzo non è raggiungibile. Scegli di nuovo il file per incorporarla.",
+    imageAltLabel: "Che cosa mostra l'immagine",
+    imageAltHint:
+      "Obbligatorio. Chi usa uno screen reader ha solo questo, e l'immagine è l'esercizio.",
     check: "Verifica",
     retry: "Riprova",
     skip: "Salta",
@@ -166,6 +238,18 @@ export const messages: Catalogs = {
       "Lascia vuoto per nessun limite. L'orologio si mette in pausa se escono.",
   },
   pt: {
+    imageLabel: "Imagem",
+    imageHint:
+      "Guardada dentro da avaliação, por isso viaja com o ficheiro. Ao escolhê-la é reduzida e recodificada.",
+    imageWorking: "A preparar a imagem…",
+    imageSize: "Cerca de {size} dentro do ficheiro.",
+    imageRemove: "Remover a imagem",
+    imageFailed: "Não foi possível ler este ficheiro como imagem.",
+    imageLinked:
+      "Esta imagem está ligada e não guardada: não aparecerá onde esse endereço não for acessível. Escolha o ficheiro de novo para o incorporar.",
+    imageAltLabel: "O que a imagem mostra",
+    imageAltHint:
+      "Obrigatório. Quem usa um leitor de ecrã tem apenas isto, e a imagem é a tarefa.",
     check: "Verificar",
     retry: "Tentar de novo",
     skip: "Saltar",
@@ -192,6 +276,18 @@ export const messages: Catalogs = {
       "Deixe vazio para não haver limite. O relógio pausa se saírem.",
   },
   tr: {
+    imageLabel: "Görsel",
+    imageHint:
+      "Değerlendirmenin içine kaydedilir, böylece dosyayla birlikte taşınır. Seçildiğinde küçültülür ve yeniden kodlanır.",
+    imageWorking: "Görsel hazırlanıyor…",
+    imageSize: "Dosyada yaklaşık {size}.",
+    imageRemove: "Görseli kaldır",
+    imageFailed: "Bu dosya bir görsel olarak okunamadı.",
+    imageLinked:
+      "Bu görsel kaydedilmedi, yalnızca bağlandı: adrese erişilemeyen her yerde görünmez. Gömmek için dosyayı yeniden seç.",
+    imageAltLabel: "Görselin gösterdiği",
+    imageAltHint:
+      "Zorunlu. Ekran okuyucu kullananların elinde yalnızca bu var ve görsel görevin kendisi.",
     check: "Kontrol et",
     retry: "Tekrar dene",
     skip: "Atla",

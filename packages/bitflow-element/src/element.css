@@ -78,3 +78,30 @@
 .bitflow-disclosure[open] .bitflow-disclosure-summary {
   color: var(--bitflow-color-text);
 }
+
+/* Choosing a picture ------------------------------------------------------- */
+
+.bitflow-image-row {
+  display: flex;
+  gap: var(--bitflow-space-small);
+  align-items: flex-start;
+}
+
+/* Big enough to recognise the picture and to see that it survived scaling,
+   small enough not to push the rest of the form off the screen. */
+.bitflow-image-preview {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  background: var(--bitflow-color-neutral-100);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-image-preview-empty {
+  flex: none;
+}
+
+.bitflow-image-field .bitflow-input[type="file"] {
+  padding: var(--bitflow-space-xxsmall);
+}

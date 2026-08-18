@@ -266,6 +266,31 @@ exams. [What bitflow is not for](../../README.md#what-bitflow-is-not-for) has
 the full picture, and [SECURITY.md](../../SECURITY.md) says which of this we
 treat as a bug (none of it) and which we do.
 
+## Pictures are stored, not linked
+
+Every picture a task uses is embedded in the `.bitflow` document as a `data:`
+URI. A file is mailed between teachers, dropped into a VLE, opened from a
+memory stick and taken into a classroom with no network — a linked image breaks
+on all of those, usually in front of a class.
+
+That costs file size, so the authoring form spends it deliberately. Choosing a
+picture scales it to at most 1600px on its longest edge and re-encodes it:
+JPEG, unless any pixel is transparent, in which case PNG — a logo encoded as
+JPEG comes back with a black background. SVG is passed through untouched, being
+already small and already scalable. A 5 MB photograph typically lands at around
+250 kB. The form shows what the picture costs, and re-encoding is skipped when
+it would make the file bigger.
+
+Alternative text sits in the same field as the picture, because they are one
+decision: an image with no description is a task that does not exist for part
+of the class. The file name seeds it as a first draft to correct.
+
+A plain URL still loads, so documents written before this keep working, and the
+editor flags one where it finds it.
+
+`ImageField` and `readImageFile` are exported from `@bitflow/element`, and
+`ImageSchema` from `@bitflow/core`, for tasks added later.
+
 ## Drag and drop
 
 `<bitflow-task-drag-drop>` follows H5P's Drag and Drop question: elements sit
