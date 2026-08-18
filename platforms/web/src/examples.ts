@@ -318,6 +318,26 @@ export const examples: Example[] = [
       evaluation,
     },
   },
+  {
+    type: "task-crossword",
+    name: "Crossword",
+    shows:
+      "A grid built from the answers themselves — the same clue list always lays out the same way. Type in a square or write the whole answer beside its clue.",
+    data: {
+      instruction: "Fill in the grid from the clues.",
+      words: [
+        { id: "algorithm", clue: "A recipe a computer can follow", answer: "ALGORITHM", row: 0, column: 0, orientation: "down" },
+        { id: "loop", clue: "Code that runs the same steps again and again", answer: "LOOP", row: 1, column: 0, orientation: "across" },
+        { id: "binary", clue: "Counting with nothing but ones and zeros", answer: "BINARY", row: 3, column: 5, orientation: "down" },
+        { id: "memory", clue: "Where a running program keeps what it is working on", answer: "MEMORY", row: 8, column: 0, orientation: "across" },
+        { id: "input", clue: "What the user gives the program", answer: "INPUT", row: 5, column: 4, orientation: "across" },
+        { id: "bug", clue: "A mistake in a program, named after an insect", answer: "BUG", row: 3, column: 5, orientation: "across" },
+      ],
+      scoring: "words",
+      penaliseWrong: false,
+      evaluation,
+    },
+  },
 ];
 
 export const exampleFor = (type: string | null): Example =>

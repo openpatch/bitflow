@@ -19,6 +19,7 @@
     "@bitflow/task-input": "workspace:*",
     "@bitflow/task-matching": "workspace:*",
     "@bitflow/task-ordering": "workspace:*",
+    "@bitflow/task-crossword": "workspace:*",
     "@bitflow/task-parsons": "workspace:*",
     "@bitflow/task-yes-no": "workspace:*",
     "@bitflow/web-component": "workspace:*"

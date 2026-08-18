@@ -1,0 +1,205 @@
+.bitflow-crossword {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* Grid and clues side by side while there is room, stacked when there is not:
+   on a phone a crossword needs the whole width to stay legible. */
+.bitflow-crossword-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--bitflow-space-medium);
+  align-items: start;
+}
+
+/* Sized from the number of columns rather than from a cell size, so a wide
+   puzzle shrinks to fit a phone instead of running off the side. The cells
+   cannot be measured against the grid's own width — that would be circular —
+   so the grid is measured against the page and the cells divide it up. */
+.bitflow-crossword-grid {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, calc(var(--bitflow-crossword-columns, 10) * 2.25rem));
+  border: var(--bitflow-border-width) solid var(--bitflow-color-neutral-900);
+  background: var(--bitflow-color-neutral-900);
+  gap: 1px;
+}
+
+.bitflow-crossword-row {
+  display: flex;
+  gap: 1px;
+}
+
+.bitflow-crossword-cell,
+.bitflow-crossword-blank {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 1;
+  /* So the letter inside can be sized against its own square, whatever the
+     grid worked out to. */
+  container-type: inline-size;
+}
+
+/* Not a square anyone can write in. Solid rather than absent, because the
+   shape of the blanks is how a crossword tells you where the words are. */
+.bitflow-crossword-blank {
+  background: var(--bitflow-color-neutral-900);
+}
+
+.bitflow-crossword-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bitflow-color-surface);
+}
+
+/* The word the cursor is in. Tinted rather than outlined, so it reads as one
+   run of squares instead of several boxes. */
+.bitflow-crossword-cell-word {
+  background: var(--bitflow-color-primary-light);
+}
+
+.bitflow-crossword-cell-here {
+  box-shadow: inset 0 0 0 2px var(--bitflow-color-primary);
+}
+
+.bitflow-crossword-cell-correct {
+  background: var(--bitflow-color-correct-surface);
+}
+
+.bitflow-crossword-cell-wrong {
+  background: var(--bitflow-color-wrong-surface);
+}
+
+.bitflow-crossword-number {
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  font-size: max(0.5rem, 22cqw);
+  line-height: 1;
+  color: var(--bitflow-color-text-muted);
+  pointer-events: none;
+}
+
+.bitflow-crossword-input {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  font: inherit;
+  font-size: 60cqw;
+  font-weight: var(--bitflow-font-weight-medium);
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--bitflow-color-text);
+  background: none;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.bitflow-crossword-input:focus {
+  outline: none;
+}
+
+.bitflow-crossword-input:disabled {
+  cursor: default;
+  /* Safari greys a disabled input's text; a finished crossword still has to
+     be readable. */
+  -webkit-text-fill-color: var(--bitflow-color-text);
+  opacity: 1;
+}
+
+.bitflow-crossword-clues {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+.bitflow-crossword-clue-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+  padding: 0;
+  margin: var(--bitflow-space-xxsmall) 0 0;
+  list-style: none;
+}
+
+.bitflow-crossword-clue {
+  display: flex;
+  gap: var(--bitflow-space-xsmall);
+  align-items: center;
+  padding: var(--bitflow-space-xxsmall);
+  border-radius: var(--bitflow-radius-small);
+}
+
+.bitflow-crossword-clue-current {
+  background: var(--bitflow-color-primary-light);
+}
+
+.bitflow-crossword-clue-text {
+  display: flex;
+  gap: var(--bitflow-space-xsmall);
+  flex: 1;
+  padding: 0;
+  font: inherit;
+  text-align: start;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.bitflow-crossword-clue .bitflow-crossword-number {
+  position: static;
+  font-size: inherit;
+  font-weight: var(--bitflow-font-weight-bold);
+  color: var(--bitflow-color-text-muted);
+}
+
+/* Exactly as many characters wide as the answer, so the box itself says how
+   long the word is — the same thing the grid says. Measured rather than left
+   to the `size` attribute, which counts characters, knows nothing about the
+   letter-spacing, and so cuts the last letter off a long answer. */
+.bitflow-crossword-word {
+  box-sizing: border-box;
+  width: calc(
+    var(--bitflow-crossword-letters, 8) * (1ch + 0.15em) +
+      2 * var(--bitflow-space-xxsmall) + 2 * var(--bitflow-border-width)
+  );
+  padding: var(--bitflow-space-xxsmall);
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-small);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--bitflow-color-text);
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-small);
+}
+
+.bitflow-crossword-mark {
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-crossword-mark-correct {
+  color: var(--bitflow-color-correct);
+}
+
+.bitflow-crossword-mark-wrong {
+  color: var(--bitflow-color-wrong);
+}
+
+/* The author's view: the same grid with the answers filled in. */
+.bitflow-crossword-preview {
+  margin-top: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-crossword-solution {
+  font-size: 60cqw;
+  font-weight: var(--bitflow-font-weight-medium);
+  line-height: 1;
+  text-transform: uppercase;
+}

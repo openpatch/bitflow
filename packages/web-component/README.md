@@ -473,6 +473,88 @@ resolution. An element announces where it now is, as a percentage across and
 down, and never which region it is over: that would tell a screen-reader user
 something the picture tells nobody.
 
+## Parsons puzzle
+
+`<bitflow-task-parsons>` gives the learner the lines of a program, shuffled,
+and asks for the program back: which lines belong, in what order, and — when
+the author asks for it — how deeply each one is nested. Lines that belong
+nowhere are part of the exercise, since deciding what to leave out is most of
+what reading code is.
+
+Scored the way js-parsons scores it: a point per line in the right place, a
+second per line nested correctly when indentation is part of the answer, and,
+if the author turns it on, a point off for each line that should have been left
+behind. Order and indentation are counted separately, so "right steps, wrong
+nesting" is a partial mark and a specific piece of feedback rather than a zero.
+
+The bank is shuffled from the attempt, and never into the answer's own order.
+Code is rendered as text and never executed — a `.bitflow` file can come from
+anywhere, and running what it contains is not a thing this needs to do.
+
+### Accessibility
+
+Every move is a drag and a keystroke, neither one the poor relation. A line is
+dragged from the bank into the program and dropped where it goes, dragged back
+to the bank to take it out, and dragged rightwards to nest it — how far right
+it is dropped is how far in it is, which is the gesture js-parsons established
+and the one the nesting actually looks like. The same three things are choosing
+a line, moving it with the arrow keys, indenting with left and right, and
+Backspace.
+
+Whether a gesture counts as a drag is measured from where it began rather than
+from the last position the pointer reported. A slow drag moves a pixel at a
+time, and against the previous position it never counts at all: it ends as a
+click, which here takes the line straight back out.
+
+## Crossword
+
+`<bitflow-task-crossword>` follows H5P's Crossword, with one deliberate
+difference. H5P lays the grid out in the learner's browser every time the
+content is opened, so the same words can come out differently for two learners
+and an author cannot see what they are setting. Here the layout is worked out
+once, while authoring, and written into the file — the same kind of generator,
+run at the other end. A `.bitflow` file then describes exactly one puzzle,
+which is what makes it reviewable, printable and gradeable.
+
+The author writes answers and clues; the grid is derived from them. The
+generator starts from one answer and hangs the rest off letters already down,
+settling every choice by rule rather than by a coin toss: the same words always
+come out the same way, whatever order they were typed in. It tries each answer
+as the starting one and keeps the best grid, and comes back to a word that
+would not fit until more letters were on the board. A word it cannot place is
+reported by name rather than dropped, and parked clear of the grid so the
+author is not told their words overlap when the truth is that one does not fit.
+
+Scoring is H5P's. By word — the default, and how a crossword is actually solved
+— an answer is right or it is not. By letter, every correct square counts,
+which is kinder to a long answer with one slip in it. A wrong letter can cost a
+point; an empty square never does, so a learner who guesses at the last clue
+never finishes behind one who left it blank.
+
+The schema refuses a grid that cannot be solved: two words wanting different
+letters where they cross, one word written along the length of another, and a
+word that cannot be reached from the rest — which is a list of clues wearing a
+crossword's clothes.
+
+### Accessibility
+
+The grid behaves the way a newspaper crossword behaves: click a square to start
+typing, click it again to turn the corner, and the word you are in is lit so
+you can see what you are answering. Typing moves along the word and Backspace
+walks back through it; the arrow keys move, and a perpendicular one turns the
+corner rather than jumping to a blank square.
+
+The grid is one tab stop, not one per square, so Tab can leave it — a crossword
+that swallows Tab is a trap for anyone driving it from a keyboard. Moving
+between clues is done from the clue list, where every clue is also a text field
+of exactly the right length wired to the same squares. That is not a fallback:
+it is how this is answered with a screen reader, on a phone, or by anyone who
+would rather read the clue and type the word than hunt for the square.
+
+Each square is announced with where it is and both clues it answers, so the
+crossing squares — the ones that make a crossword a crossword — say what they
+belong to.
+
 ## Item pools
 
 A pool hands each learner a random few of its steps. Twenty questions in the

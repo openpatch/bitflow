@@ -249,37 +249,42 @@ an external reviewer or reporting component can display it.
 
 ## Crossword Puzzle
 
-**Suggested type:** `task-crossword`
+**Suggested type:** `task-crossword` — **built**, as
+[`@bitflow/task-crossword`](packages/bits/task-crossword), modelled on
+[H5P's Crossword](https://github.com/otacke/h5p-crossword).
 
-Present a crossword grid with across/down clues. Authors provide a fixed grid
-shape, numbered clue list, and answers; the component derives intersections
-from the grid and validates that every answer fits before publishing.
+The author writes answers and clues and the grid is laid out from them — but
+once, while authoring, and written into the file, rather than in the learner's
+browser every time the content is opened. Two learners then get the same
+puzzle and the author can see what they are setting. The learner answer is a
+map of cell coordinate to letter, and scoring is H5P's: a point per word, or
+per letter, with a wrong letter optionally costing one and an empty square
+never doing so.
 
-The learner answer is a map of cell coordinate to entered letter, optionally
-including which clues have been checked. Evaluate each clue and the completed
-grid; support immediate-feedback and submit-only modes without exposing
-answers before the configured evaluation point.
-
-The grid must be fully keyboard operable: arrow keys move between cells,
-Tab moves between clues, and the current clue is announced. Provide a
-clue-list input alternative for screen readers and small screens.
+The grid is operated the way a newspaper crossword is — click to type, click
+again to turn the corner, arrows to move — and is one tab stop rather than one
+per square, so Tab can still leave it. Moving between clues is done from the
+clue list, where each clue is also a text field of the right length wired to
+the same squares.
 
 ## Parsons Puzzle
 
-**Suggested type:** `task-parsons-puzzle`
+**Suggested type:** `task-parsons` — **built**, as
+[`@bitflow/task-parsons`](packages/bits/task-parsons), scored the way
+[js-parsons](https://github.com/js-parsons/js-parsons) scores it.
 
-Ask the learner to arrange shuffled code lines into the correct order, with
-optional indentation. This is a specialized, code-aware form of ordering for
-programming assessments.
+The learner is given the lines of a program, shuffled, and asks for the
+program back: which lines belong, in what order, and — when the author asks
+for it — how deeply each is nested. Lines that belong nowhere are part of the
+exercise, since deciding what to leave out is most of what reading code is.
+The answer is an ordered list of `{ lineId, indent }`, and order and
+indentation are scored separately so partial credit means something.
 
-Authors configure code lines with stable IDs, the target order, indentation
-level, language for syntax highlighting, and optional distractor lines. The
-learner answer is an ordered list of `{ lineId, indentation }` entries.
-
-Evaluate line order and indentation separately to support partial credit and
-specific feedback. Provide drag-and-drop, keyboard move controls, and an
-accessible text/list representation; never require the learner to drag with
-a pointer. Render code as text, never execute it.
+Every move is a drag or a keystroke, and neither is the poor relation: a line
+is dragged from the bank into the program, back to the bank to take it out,
+and rightwards to nest it — or chosen to add it, moved with up and down,
+indented with left and right, and taken out with Backspace. Code is rendered
+as text and never executed.
 
 ## Find the Words
 
@@ -543,8 +548,8 @@ browser, with no server algebra service.
 4. Keyboard Speed Test
 5. ~~Ordering / Sequencing~~ — built
 6. ~~Matching Pairs~~ — built
-7. Parsons Puzzle
-8. Crossword Puzzle
+7. ~~Parsons Puzzle~~ — built
+8. ~~Crossword Puzzle~~ — built
 9. Find the Words
 10. Numeric / Expression Answer
 11. Image / Diagram Annotation
