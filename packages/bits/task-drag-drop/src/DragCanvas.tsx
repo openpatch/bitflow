@@ -22,6 +22,9 @@ type Drag = {
   /** Where in the element the pointer took hold, so it does not jump. */
   grabX: number;
   grabY: number;
+  /** Where the element started, which is what tells a drag from a click. */
+  fromX: number;
+  fromY: number;
   x: number;
   y: number;
   moved: boolean;
@@ -130,6 +133,8 @@ export const DragCanvas = ({
       index: index === null && element.multiple ? null : index,
       grabX: at.x - origin.x,
       grabY: at.y - origin.y,
+      fromX: origin.x,
+      fromY: origin.y,
       x: origin.x,
       y: origin.y,
       moved: false,
@@ -149,7 +154,11 @@ export const DragCanvas = ({
       ...drag,
       x,
       y,
-      moved: drag.moved || Math.abs(x - drag.x) > 0.004 || Math.abs(y - drag.y) > 0.004,
+      // Measured from where the drag began, so a slow drag is still a drag.
+      moved:
+        drag.moved ||
+        Math.abs(x - drag.fromX) > 0.004 ||
+        Math.abs(y - drag.fromY) > 0.004,
     };
     redraw();
   };

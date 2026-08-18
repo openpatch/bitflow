@@ -179,6 +179,19 @@ const steps = [
     ],
     evaluation,
   }),
+  node("q-parsons", "task-parsons", {
+    instruction: "Arrange the lines to add up a list.",
+    language: "python",
+    lines: [
+      { id: "total", text: "total = 0", indent: 0 },
+      { id: "loop", text: "for value in values:", indent: 0 },
+      { id: "add", text: "total += value", indent: 1 },
+      { id: "stray", text: "print(values)", distractor: true },
+    ],
+    indentationMatters: true,
+    penaliseDistractors: false,
+    evaluation,
+  }),
   node("end", "end-tries", {
     title: "Finished",
     markdown: "Thank you.",

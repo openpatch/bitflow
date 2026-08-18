@@ -17,6 +17,7 @@
 "@bitflow/task-find-hotspots": major
 "@bitflow/task-ordering": major
 "@bitflow/task-matching": major
+"@bitflow/task-parsons": major
 ---
 
 Rewrite bitflow as web components.

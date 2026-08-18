@@ -1,0 +1,52 @@
+import type { Catalogs } from "@bitflow/core";
+
+export const messages: Catalogs = {
+  en: {
+    name: "Parsons puzzle",
+    description: "Shuffled code lines the learner arranges into a program.",
+    howTo:
+      "Drag a line into the program, or drag one back to take it out. Choosing a line adds it to the end. With a keyboard: move a line in the program with the arrow keys and take it out with Backspace.",
+    howToIndent:
+      "Drag a line into the program, and drag it right to indent it — how far right you drop it is how far it is nested. Drag one back to the left-hand list to take it out. With a keyboard: choose a line to add it, move it with up and down, indent and outdent with left and right, and take it out with Backspace.",
+    howToReadonly: "The program is shown as it was left.",
+    bankHeading: "Lines to choose from",
+    programHeading: "The program",
+    bankEmpty: "Every line has been used.",
+    programEmpty: "Nothing here yet. Choose a line to start.",
+    bankLine: "{code}, line {position} of {total} to choose from",
+    programLine: "{code}, line {position} of {total}, indented {indent}",
+    added: "{code} added as line {position}.",
+    removed: "{code} taken out of the program.",
+    movedTo: "{code} moved to line {position}.",
+    indentedTo: "{code} indented {indent}.",
+    lineRight: "in the right place",
+    lineWrong: "not in the right place",
+    lineIndentWrong: "right place, wrong indentation",
+    lineStray: "does not belong in the program",
+    usedDistractors: "{count} line(s) used that do not belong.",
+  },
+  de: {
+    name: "Parsons-Puzzle",
+    description: "Gemischte Codezeilen, die zu einem Programm geordnet werden.",
+    howTo:
+      "Zieh eine Zeile ins Programm oder wieder zurück, um sie zu entfernen. Ein Klick hängt die Zeile hinten an. Mit Tastatur: Zeile im Programm mit den Pfeiltasten bewegen und mit der Rücktaste entfernen.",
+    howToIndent:
+      "Zieh eine Zeile ins Programm und nach rechts, um sie einzurücken — wie weit rechts du sie ablegst, so tief ist sie verschachtelt. Zieh sie zurück in die linke Liste, um sie zu entfernen. Mit Tastatur: Zeile auswählen zum Übernehmen, mit Auf und Ab bewegen, mit Links und Rechts ein- und ausrücken, mit der Rücktaste entfernen.",
+    howToReadonly: "Das Programm steht so, wie es gelassen wurde.",
+    bankHeading: "Zeilen zur Auswahl",
+    programHeading: "Das Programm",
+    bankEmpty: "Alle Zeilen sind verwendet.",
+    programEmpty: "Noch nichts. Wähle eine Zeile, um zu beginnen.",
+    bankLine: "{code}, Zeile {position} von {total} zur Auswahl",
+    programLine: "{code}, Zeile {position} von {total}, {indent} eingerückt",
+    added: "{code} als Zeile {position} übernommen.",
+    removed: "{code} aus dem Programm entfernt.",
+    movedTo: "{code} auf Zeile {position} bewegt.",
+    indentedTo: "{code} {indent} eingerückt.",
+    lineRight: "an der richtigen Stelle",
+    lineWrong: "nicht an der richtigen Stelle",
+    lineIndentWrong: "richtige Stelle, falsche Einrückung",
+    lineStray: "gehört nicht ins Programm",
+    usedDistractors: "{count} Zeile(n) verwendet, die nicht dazugehören.",
+  },
+};

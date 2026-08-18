@@ -1,0 +1,104 @@
+.bitflow-parsons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* Bank and program side by side while there is room, stacked when there is
+   not: on a phone two columns of code are too narrow to read. */
+.bitflow-parsons-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--bitflow-space-small);
+}
+
+.bitflow-parsons-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+  padding: 0;
+  margin: var(--bitflow-space-xxsmall) 0 0;
+  list-style: none;
+}
+
+.bitflow-parsons-line {
+  display: flex;
+  gap: var(--bitflow-space-xsmall);
+  align-items: center;
+  width: 100%;
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  font: inherit;
+  color: var(--bitflow-color-text);
+  text-align: left;
+  cursor: grab;
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-parsons-line:disabled {
+  cursor: default;
+}
+
+/* Code is monospaced and never highlighted: a parser per language for a task
+   about structure would be a poor trade. */
+.bitflow-parsons-line code {
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-small);
+  white-space: pre;
+}
+
+.bitflow-parsons-number {
+  flex: none;
+  width: 1.5rem;
+  font-size: var(--bitflow-font-size-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--bitflow-color-text-muted);
+  text-align: right;
+}
+
+.bitflow-parsons-line.bitflow-parsons-line-correct {
+  background: color-mix(in srgb, var(--bitflow-color-correct) 12%, var(--bitflow-color-surface));
+  border-color: var(--bitflow-color-correct);
+}
+
+.bitflow-parsons-line.bitflow-parsons-line-wrong {
+  background: color-mix(in srgb, var(--bitflow-color-wrong) 12%, var(--bitflow-color-surface));
+  border-color: var(--bitflow-color-wrong);
+}
+
+/* A line that belongs nowhere. Told apart from a misplaced one, because the
+   mistake is different: this one should not be here at all. */
+.bitflow-parsons-line.bitflow-parsons-line-stray {
+  background: var(--bitflow-color-neutral-100);
+  border-style: dashed;
+  border-color: var(--bitflow-color-wrong);
+}
+
+/* The hole the lifted line left. Same height, so nothing jumps, and dashed so
+   it reads as a place rather than as a line of code. */
+.bitflow-parsons-line.bitflow-parsons-line-gap {
+  background: var(--bitflow-color-neutral-100);
+  border-style: dashed;
+  border-color: var(--bitflow-color-primary);
+}
+
+/* The line under the cursor. Fixed to the viewport so a scrolling ancestor
+   cannot drag it out of line, and deaf to the pointer so it never becomes the
+   thing being dropped on. */
+.bitflow-parsons-lifted {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  cursor: grabbing;
+  pointer-events: none;
+  box-shadow: var(--bitflow-shadow-medium);
+}
+
+/* On its way back to the list of lines to choose from: faded, so letting go
+   here plainly does something different from letting go over the program. */
+.bitflow-parsons-lifted.bitflow-parsons-lifted-out {
+  opacity: 0.55;
+  border-style: dashed;
+}

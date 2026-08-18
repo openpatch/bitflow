@@ -142,6 +142,22 @@ describe("<Sequence>", () => {
     expect(container.querySelector(".bitflow-ordering-item-gap")).not.toBeNull();
   });
 
+  it("takes a slow drag as seriously as a quick one", () => {
+    const { container, onReorder } = setup();
+    layOut(container);
+
+    const third = screen.getByRole("button", { name: /Sort it/ });
+    fireEvent.pointerDown(third, { button: 0, clientX: 0, clientY: 120 });
+    // A pixel at a time: measured against the last position rather than the
+    // first, none of these steps would count and the drag would be lost.
+    for (let y = 118; y >= 10; y -= 2) {
+      fireEvent.pointerMove(window, { clientX: 0, clientY: y });
+    }
+    fireEvent.pointerUp(window, { clientX: 0, clientY: 10 });
+
+    expect(onReorder).toHaveBeenCalled();
+  });
+
   it("puts nothing down for a press that never moved", () => {
     const { container, onReorder } = setup();
     layOut(container);

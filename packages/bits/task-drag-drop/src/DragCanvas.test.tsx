@@ -128,6 +128,23 @@ describe("<DragCanvas>", () => {
     expect(last()[0].y).toBeCloseTo(0.9, 5);
   });
 
+  it("shows an element on the move, however slowly it is dragged", () => {
+    const { container, getByRole } = setup();
+    const element = getByRole("button", { name: "ALU" });
+
+    fireEvent.pointerDown(element, { clientX: 120, clientY: 50, button: 0 });
+    // A pixel at a time: measured against the last position rather than the
+    // first, none of these steps would count and the element would sit still
+    // under the pointer all the way across the picture.
+    for (let x = 122; x <= 400; x += 2) {
+      fireEvent.pointerMove(element, { clientX: x, clientY: 50 });
+    }
+
+    expect(
+      container.querySelector(".bitflow-dragdrop-element-dragging"),
+    ).not.toBeNull();
+  });
+
   it("ignores a press that never became a drag", () => {
     const { onChange, getByRole } = setup();
 

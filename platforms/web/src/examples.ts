@@ -298,6 +298,26 @@ export const examples: Example[] = [
       evaluation,
     },
   },
+  {
+    type: "task-parsons",
+    name: "Parsons puzzle",
+    shows:
+      "Code lines to put back in order, with a line that belongs nowhere among them and the nesting to get right as well. Every move is a keystroke as much as a click.",
+    data: {
+      instruction: "Arrange the lines so the program adds up a list of numbers.",
+      language: "python",
+      lines: [
+        { id: "total", text: "total = 0", indent: 0 },
+        { id: "loop", text: "for value in values:", indent: 0 },
+        { id: "add", text: "total += value", indent: 1 },
+        { id: "print", text: "print(total)", indent: 0 },
+        { id: "stray", text: "values.sort()", distractor: true },
+      ],
+      indentationMatters: true,
+      penaliseDistractors: false,
+      evaluation,
+    },
+  },
 ];
 
 export const exampleFor = (type: string | null): Example =>

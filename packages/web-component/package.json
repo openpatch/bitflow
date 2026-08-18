@@ -66,6 +66,7 @@
     "@bitflow/task-input": "workspace:*",
     "@bitflow/task-matching": "workspace:*",
     "@bitflow/task-ordering": "workspace:*",
+    "@bitflow/task-parsons": "workspace:*",
     "@bitflow/task-yes-no": "workspace:*",
     "@bitflow/title-simple": "workspace:*",
     "@r2wc/react-to-web-component": "^2.1.1",

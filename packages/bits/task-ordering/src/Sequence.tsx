@@ -17,6 +17,9 @@ type Drag = {
   /** Where inside the item the pointer took hold, so it does not jump. */
   grabX: number;
   grabY: number;
+  /** Where the drag began, which is what tells a drag from a click. */
+  fromX: number;
+  fromY: number;
   /** The pointer now. */
   x: number;
   y: number;
@@ -118,6 +121,8 @@ export const Sequence = ({
       id,
       grabX: event.clientX - box.left,
       grabY: event.clientY - box.top,
+      fromX: event.clientX,
+      fromY: event.clientY,
       x: event.clientX,
       y: event.clientY,
       width: box.width,
@@ -138,10 +143,13 @@ export const Sequence = ({
       x: event.clientX,
       y: event.clientY,
       order: reorder(current.order, current.id, target),
+      // Measured from where the drag began, not from the last position: a
+      // slow drag moves a pixel at a time and would otherwise never count as
+      // a drag at all.
       moved:
         current.moved ||
-        Math.abs(event.clientX - current.x) > 3 ||
-        Math.abs(event.clientY - current.y) > 3,
+        Math.abs(event.clientX - current.fromX) > 3 ||
+        Math.abs(event.clientY - current.fromY) > 3,
     };
     redraw();
   };

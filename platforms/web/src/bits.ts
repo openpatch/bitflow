@@ -20,6 +20,7 @@ const loaders: Record<string, () => Promise<unknown>> = {
   "task-find-hotspots": () => import("@bitflow/task-find-hotspots"),
   "task-ordering": () => import("@bitflow/task-ordering"),
   "task-matching": () => import("@bitflow/task-matching"),
+  "task-parsons": () => import("@bitflow/task-parsons"),
 };
 
 const params = new URLSearchParams(location.search);
