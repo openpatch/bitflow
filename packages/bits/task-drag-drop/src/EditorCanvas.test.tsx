@@ -43,7 +43,7 @@ const setup = (over: Partial<Data> = {}) => {
   );
 
   const area = utils.container.querySelector(
-    ".bitflow-dragdrop-area",
+    ".bitflow-boxeditor-area",
   ) as HTMLElement;
   // jsdom gives every element a zero-sized box, and the canvas divides by it.
   area.getBoundingClientRect = () =>
@@ -108,7 +108,7 @@ describe("<EditorCanvas>", () => {
     fireEvent.pointerDown(area, { clientX: 100, clientY: 50 });
     fireEvent.pointerMove(area, { clientX: 300, clientY: 150 });
 
-    const drawing = container.querySelector(".bitflow-dragdrop-drawing");
+    const drawing = container.querySelector(".bitflow-boxeditor-drawing");
     expect(drawing).not.toBeNull();
     expect((drawing as HTMLElement).style.width).toBe("20%");
   });
@@ -134,7 +134,7 @@ describe("<EditorCanvas>", () => {
   it("resizes a zone dragged by its corner", () => {
     const { onMoveZone, container } = setup();
     const handle = container.querySelector(
-      ".bitflow-dragdrop-handle-zone .bitflow-dragdrop-resize",
+      ".bitflow-dragdrop-handle-zone .bitflow-boxeditor-resize",
     ) as HTMLElement;
 
     drag(handle, [650, 200], [750, 250]);

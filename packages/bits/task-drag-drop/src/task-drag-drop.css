@@ -67,7 +67,7 @@
 .bitflow-dragdrop-element.bitflow-dragdrop-element-dragging {
   z-index: 3;
   cursor: grabbing;
-  box-shadow: var(--bitflow-shadow-large, 0 8px 20px rgb(0 0 0 / 25%));
+  box-shadow: var(--bitflow-shadow-medium);
   transition: none;
 }
 
@@ -124,80 +124,21 @@
 
 /* Authoring ---------------------------------------------------------------- */
 
-.bitflow-dragdrop-editor {
-  display: flex;
-  flex-direction: column;
-  gap: var(--bitflow-space-xxsmall);
-}
-
-/* Dragging on the canvas draws a zone, so the pointer must not be interpreted
-   as a text selection or a scroll while it happens. */
-.bitflow-dragdrop-area-editing {
-  cursor: crosshair;
-  user-select: none;
-  touch-action: none;
-}
-
-/* A zone or element as the author handles it: outlined, named, and grabbable.
-   Distinct from how a learner sees the same box — this one is a control. */
-.bitflow-dragdrop-handle {
-  position: absolute;
-  display: flex;
-  align-items: flex-start;
-  cursor: move;
-  border: var(--bitflow-border-width) solid var(--bitflow-color-neutral-400);
-  border-radius: var(--bitflow-radius-standard);
-}
-
-.bitflow-dragdrop-handle-zone {
-  background: color-mix(in srgb, var(--bitflow-color-neutral-100) 55%, transparent);
+/* The outline, the handles and the drawing preview come from `BoxEditor`. What
+   belongs to this task is telling a drop zone from a draggable at a glance:
+   one is a place, the other is a thing. */
+.bitflow-boxeditor-box.bitflow-dragdrop-handle-zone {
   border-style: dashed;
 }
 
-.bitflow-dragdrop-handle-element {
+.bitflow-boxeditor-box.bitflow-dragdrop-handle-element {
   background: color-mix(in srgb, var(--bitflow-color-surface) 85%, transparent);
-}
-
-.bitflow-dragdrop-handle.bitflow-dragdrop-handle-selected {
-  border-color: var(--bitflow-color-accent);
-  box-shadow: 0 0 0 2px var(--bitflow-color-accent);
-}
-
-.bitflow-dragdrop-handle-label {
-  padding: 2px 4px;
-  overflow: hidden;
-  font-size: var(--bitflow-font-size-small);
-  color: var(--bitflow-color-text-muted);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-/* Big enough to grab with a finger, in the corner where a resize handle is
-   expected. */
-.bitflow-dragdrop-resize {
-  position: absolute;
-  right: -6px;
-  bottom: -6px;
-  width: 14px;
-  height: 14px;
-  cursor: nwse-resize;
-  background: var(--bitflow-color-accent);
-  border-radius: 50%;
-}
-
-/* The rectangle under the pointer, before it becomes a zone. */
-.bitflow-dragdrop-drawing {
-  position: absolute;
-  pointer-events: none;
-  background: color-mix(in srgb, var(--bitflow-color-accent) 18%, transparent);
-  border: var(--bitflow-border-width) dashed var(--bitflow-color-accent);
-  border-radius: var(--bitflow-radius-standard);
+  border-style: solid;
 }
 
 /* The fields belonging to whatever is selected on the canvas, so drawing a
    zone and naming it are visibly the same act. */
 .bitflow-rule.bitflow-rule-selected {
-  border-color: var(--bitflow-color-accent);
-  box-shadow: 0 0 0 2px var(--bitflow-color-accent);
+  border-color: var(--bitflow-color-primary);
+  box-shadow: 0 0 0 2px var(--bitflow-color-primary);
 }

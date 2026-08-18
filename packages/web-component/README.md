@@ -324,7 +324,8 @@ looks like a near miss.
 ### Authoring
 
 Drag on the picture to draw a region, drag it to move, drag its corner to
-resize; the numeric fields do the same. Each region needs a name. It is never
+resize; the numeric fields do the same. The gesture is `BoxEditor` from
+`@bitflow/element`, shared with drag and drop. Each region needs a name. It is never
 shown to a learner — it describes the region to anyone who cannot see the
 picture, and names it in the report.
 

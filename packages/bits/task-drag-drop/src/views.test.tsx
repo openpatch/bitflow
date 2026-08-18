@@ -48,7 +48,7 @@ const Harness = ({ initial = data() }: { initial?: Data }) => {
  * canvas divides by its width to turn a pointer into a fraction.
  */
 const sizeCanvas = (container: HTMLElement) => {
-  const area = container.querySelector(".bitflow-dragdrop-area") as HTMLElement;
+  const area = container.querySelector(".bitflow-boxeditor-area") as HTMLElement;
   area.getBoundingClientRect = () =>
     ({ left: 0, top: 0, width: 1000, height: 500 }) as DOMRect;
   return area;

@@ -7,6 +7,11 @@ export { EvaluationFields } from "./EvaluationFields";
 export { defineBitElement, type StandaloneBitProps } from "./defineBitElement";
 export { Markdown, renderMarkdown } from "./Markdown";
 export { messages as elementMessages } from "./messages";
+export {
+  BoxEditor,
+  type Box,
+  type BoxEditorItem,
+} from "./BoxEditor";
 export { ImageField } from "./ImageField";
 export { usePointerDrag } from "./usePointerDrag";
 export {

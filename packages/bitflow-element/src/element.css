@@ -114,3 +114,80 @@
   font-weight: normal;
   color: var(--bitflow-color-text-muted);
 }
+
+/* Drawing boxes on a picture ----------------------------------------------- */
+
+.bitflow-boxeditor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+/* Everything inside is positioned in percentages, so an author's fractions
+   mean the same picture on a phone as on a projector. Dragging draws, so the
+   pointer must not be taken for a text selection or a scroll. */
+.bitflow-boxeditor-area {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  cursor: crosshair;
+  user-select: none;
+  touch-action: none;
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-boxeditor-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bitflow-boxeditor-noimage {
+  background: var(--bitflow-color-neutral-100);
+}
+
+/* The base outline. Colour belongs to the task, which sets its own class. */
+.bitflow-boxeditor-box {
+  position: absolute;
+  cursor: move;
+  background: color-mix(in srgb, var(--bitflow-color-neutral-100) 45%, transparent);
+  border: var(--bitflow-border-width) dashed var(--bitflow-color-neutral-400);
+}
+
+.bitflow-boxeditor-box-selected {
+  border-style: solid;
+  box-shadow: 0 0 0 2px var(--bitflow-color-primary);
+}
+
+.bitflow-boxeditor-label {
+  display: block;
+  padding: 2px 4px;
+  overflow: hidden;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Big enough to grab with a finger, in the corner where it is expected. */
+.bitflow-boxeditor-resize {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+  background: var(--bitflow-color-primary);
+  border-radius: 50%;
+}
+
+/* The rectangle under the pointer, before it becomes anything. */
+.bitflow-boxeditor-drawing {
+  position: absolute;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--bitflow-color-primary) 18%, transparent);
+  border: var(--bitflow-border-width) dashed var(--bitflow-color-primary);
+}

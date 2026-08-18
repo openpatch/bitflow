@@ -165,7 +165,7 @@
 .bitflow-editor-resizer:hover::before,
 .bitflow-editor-resizer:focus-visible::before {
   width: 3px;
-  background: var(--bitflow-color-accent);
+  background: var(--bitflow-color-primary);
 }
 
 .bitflow-editor-toolbar {

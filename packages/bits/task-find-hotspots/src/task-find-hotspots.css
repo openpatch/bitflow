@@ -52,7 +52,7 @@
   margin: -11px 0 0 -11px;
   pointer-events: none;
   opacity: 0;
-  border: 2px solid var(--bitflow-color-accent);
+  border: 2px solid var(--bitflow-color-primary);
   border-radius: 50%;
 }
 
@@ -67,7 +67,7 @@
   height: 14px;
   margin: -7px 0 0 -7px;
   pointer-events: none;
-  background: var(--bitflow-color-accent);
+  background: var(--bitflow-color-primary);
   border: 2px solid var(--bitflow-color-surface);
   border-radius: 50%;
 }
@@ -105,63 +105,10 @@
 
 /* Authoring ---------------------------------------------------------------- */
 
-.bitflow-hotspots-editor {
-  display: flex;
-  flex-direction: column;
-  gap: var(--bitflow-space-xxsmall);
-}
-
-.bitflow-hotspots-picture-editing {
-  cursor: crosshair;
-  user-select: none;
-  touch-action: none;
-}
-
-/* Regions are invisible to a learner and outlined to an author: the same
-   rectangle, two different jobs. */
-.bitflow-hotspots-handle {
-  position: absolute;
-  cursor: move;
-  background: color-mix(in srgb, var(--bitflow-color-neutral-100) 45%, transparent);
-  border: var(--bitflow-border-width) dashed var(--bitflow-color-neutral-400);
-}
-
-/* The one to find, told apart from the decoys at a glance. */
-.bitflow-hotspots-handle-correct {
+/* The outline, the drag handles and the drawing preview all come from
+   `BoxEditor`. The one thing that belongs to this task is telling the region
+   to find from the decoys, which the author needs to see at a glance. */
+.bitflow-boxeditor-box.bitflow-hotspots-handle-correct {
   background: color-mix(in srgb, var(--bitflow-color-correct) 18%, transparent);
   border-color: var(--bitflow-color-correct);
-}
-
-.bitflow-hotspots-handle-selected {
-  border-style: solid;
-  box-shadow: 0 0 0 2px var(--bitflow-color-accent);
-}
-
-.bitflow-hotspots-handle-label {
-  display: block;
-  padding: 2px 4px;
-  overflow: hidden;
-  font-size: var(--bitflow-font-size-small);
-  color: var(--bitflow-color-text-muted);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.bitflow-hotspots-resize {
-  position: absolute;
-  right: -6px;
-  bottom: -6px;
-  width: 14px;
-  height: 14px;
-  cursor: nwse-resize;
-  background: var(--bitflow-color-accent);
-  border-radius: 50%;
-}
-
-.bitflow-hotspots-drawing {
-  position: absolute;
-  pointer-events: none;
-  background: color-mix(in srgb, var(--bitflow-color-accent) 18%, transparent);
-  border: var(--bitflow-border-width) dashed var(--bitflow-color-accent);
 }
