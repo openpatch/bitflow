@@ -14,6 +14,8 @@ const loaders: Record<string, () => Promise<unknown>> = {
   "task-choice": () => import("@bitflow/task-choice"),
   "task-yes-no": () => import("@bitflow/task-yes-no"),
   "task-input": () => import("@bitflow/task-input"),
+  "task-numeric": () => import("@bitflow/task-numeric"),
+  "task-math": () => import("@bitflow/task-math"),
   "task-fill-in-the-blank": () => import("@bitflow/task-fill-in-the-blank"),
   "task-highlighting": () => import("@bitflow/task-highlighting"),
   "task-drag-drop": () => import("@bitflow/task-drag-drop"),

@@ -596,6 +596,180 @@ inside it, so Tab can still leave it. Every find is announced with what was
 found and how many remain, and a found word is struck through in the list as
 well as tinted in the grid.
 
+## Numbers
+
+`<bitflow-task-numeric>` takes a number, or a short calculation that comes to
+one, and marks it arithmetically rather than textually. `0.75`, `.75`, `3/4`
+and `75e-2` are one answer. Whether `3.14159` counts as pi is a tolerance the
+author sets, not a question of how many characters happen to match — which is
+the difference between this and `<bitflow-task-input>` with a pattern.
+
+Five ways to say how close is close enough: exactly, within a fixed amount,
+within a percentage, equal to so many decimal places, or equal to so many
+significant figures. The authoring form prints the range the setting actually
+accepts — "anything from 98 to 102" — because a tolerance is two numbers away
+from meaning anything, and an author who cannot see the range is guessing.
+
+Where the mark depends on precision, the learner is told what precision is
+wanted. Rounding to three figures when nobody said three is a trick, not a
+question.
+
+### Arithmetic, and nothing else
+
+The grammar is hand-parsed, in about two hundred lines: the four operations,
+powers, brackets, a named list of functions, and `pi`, `e` and `tau`. There is
+no `eval`, no `Function`, no `RegExp` built from learner text and no request to
+anywhere. The point is not that dangerous things are blocked — it is that the
+grammar has no way to *name* a global, a property or a call target, so they
+cannot be written down. `alert(1)` is not refused as a threat; it is refused
+because `alert` is not one of the seventeen functions and the expression
+therefore ends before the bracket.
+
+A sign binds looser than a power, so `-2^2` is −4, the way it is on paper.
+`2^3^2` is 512. Division by zero and the square root of a negative are "that
+does not work out to a number" rather than a mark against `Infinity`.
+
+An author may write the expected value as an expression too — `2*pi*0.35` beats
+pasting in a rounded decimal and then widening the tolerance to cover the
+rounding. The learner can be held to a plain number where the question is
+"give it as a decimal": `3/4` is then refused rather than quietly worked out,
+which is the whole point of asking.
+
+### Decimal points and units
+
+A comma is read as a decimal point by default, because that is what a learner
+taught in German or French will type. A thousands separator is never accepted
+in any mode: `1,500` cannot mean one and a half and fifteen hundred at once,
+and a task that silently picks one of those readings is worse than one that
+says it did not understand.
+
+The unit is either absent, printed beside the box, or asked for. Printed, the
+learner need not type it and is not punished for typing it anyway; asked for,
+it has to be right, and it can be worth its own mark — `9.81 m/s` has the
+arithmetic right and the physics wrong, and scoring that as nothing says the
+arithmetic was wrong too. Spacing, superscripts and the several multiplication
+signs are folded away, so `N m`, `N·m` and `Nm` are one unit and `m/s²` matches
+`m/s^2`. Capitals are not folded: `mm` and `Mm` differ by a factor of a
+billion.
+
+### The reading is shown
+
+This is the one task type where the thing marked is not the thing typed, so the
+task says what it made of the box as the box is filled in: type `3/4` and it
+reads back `0.75`. A learner who is told that can tell the difference between
+getting the arithmetic wrong and writing something the task could not read. It
+is a polite live region, and it stays quiet when the reading is simply the text
+back again — a region that speaks on every keystroke is worse than one that
+waits until it has something to add.
+
+The answer holds the raw text and nothing else. The number it comes to and the
+unit it carries are derived, and derived is where they stay: a stored copy is a
+second version of the truth that can disagree with the box after a reload. The
+reading the score was worked out from travels with the result instead, which is
+the pair — what was typed, and what it was taken to mean — that makes a
+disputed mark settleable.
+
+### Accessibility
+
+An ordinary text box with an ordinary label, so it is reached, filled in and
+corrected however the learner reaches, fills in and corrects anything else. It
+is `type="text"` rather than `type="number"`: a spinner cannot express `2*pi`,
+and `type="number"` empties itself on the `1.5e` a learner is halfway through
+typing. `inputMode` still brings up the numeric keypad on a phone where no
+calculation is allowed.
+
+The unit beside the box is tied to it with `aria-describedby`, so it is heard
+and not only seen, and so is the note about precision.
+
+## Maths
+
+`<bitflow-task-math>` asks for an *expression* — a fraction, a power, a radical,
+a factorised quadratic — written as maths in a [MathLive](https://mathlive.io)
+field, and compares it as maths. `2x`, `x\cdot 2` and `2\times x` are one
+answer. That is not a list of spellings anybody maintained; it falls out of
+comparing what the two expressions mean.
+
+Writing it as maths is half the point. A fraction typed into a text box is
+`(a+b)/(c+d)`, and a fraction written as a fraction is a fraction — only one of
+those is the notation being taught.
+
+### Two shapes, one task
+
+The author writes a LaTeX template, and what is in it decides the shape:
+
+- **No `\placeholder`** — one editable field, and one answer. "Differentiate
+  x², give the derivative."
+- **One or more `\placeholder[name]{}`** — the formula is printed read-only and
+  the gaps are editable, each marked on its own. "Complete the identity
+  (a+b)² = ▢ + 2ab + ▢."
+
+They are one bit because they are one question with a different number of
+blanks in it: the answer is `{ prompts: { name: latex } }` either way, with the
+single case under the reserved name `answer`, and partial credit falls out for
+free. A five-blank question is still worth one mark, so `evaluation.weight`
+stays the only place a task's worth is decided.
+
+This is not the same thing as `<bitflow-task-fill-in-the-blank>`, which is
+prose with gaps matched as text. This is one formula with gaps matched as
+maths, and merging them would put two rendering engines and two matching
+regimes in one bit.
+
+### Three ways to be right
+
+Which one is chosen changes what the question *is*, so they are named for the
+question rather than the algorithm:
+
+| Setting | `(2x-1)(x+1)` vs `2x²+x-1` | `½` vs `0.5` | For |
+| --- | --- | --- | --- |
+| The same expression | ✗ | ✓ | "Factorise it", "differentiate it" |
+| Anything equal to it | ✓ | ✓ | "Give an expression equal to this" |
+| It comes to the same number | — | ✓ | "How much is it" |
+
+"Anything equal to it" is the wrong choice for "factorise it", where it would
+accept the question back unchanged as its own answer — which is why the
+authoring form says so under the setting rather than leaving it to be
+discovered.
+
+Comparison is done by Cortex's [Compute Engine](https://cortexjs.io), which
+parses LaTeX into MathJSON and reasons over that. It is a library doing
+algebra, not a sandbox running learner input: `parse` builds a data structure
+and the comparison walks it. Nothing is executed and nothing is fetched — the
+whole decision is made in the browser from two strings, so an attempt can be
+re-marked from a snapshot with no network at all.
+
+### It loads when it is needed
+
+MathLive is 823 kB and the algebra engine is larger still. The schema and the
+marking are what a flow needs in order to *run*; the editor is what it needs in
+order to be *answered*, and only on the step that asks. Both are loaded on
+demand, so an assessment that happens to contain one maths question does not
+put a megabyte in front of the other twenty.
+
+The KaTeX fonts are inlined into the bit's stylesheet as data URIs rather than
+fetched from a `fontsDirectory`. That is the one asset a consumer would
+otherwise have to remember to deploy, and forgetting it does not fail loudly —
+it renders integrals and radicals in whatever serif the browser has.
+
+### When it does not load
+
+A chunk that fails to arrive is an ordinary Tuesday, and this bit is the one
+with the most to fail. When MathLive is not there the learner gets a labelled
+text box per answer and types LaTeX into it. That is not a consolation prize:
+a mathfield's value *is* LaTeX, so an answer typed there is the answer the
+marking expects, byte for byte. Anyone who knows the notation is not blocked,
+and everyone else is told why rather than shown an empty rectangle.
+
+### Accessibility
+
+`setPromptState` marks a blank by tinting it, which is colour and a border. The
+same thing is therefore said in words in a live region — how many were right,
+and which blank was which — because colour alone is not a result a screen
+reader can read or a colour-blind learner can trust.
+
+The on-screen maths keyboard is offered by default; it is how the task is
+answerable on a phone at all. It can be turned off for the questions where a
+physical keyboard is part of what is being asked.
+
 ## Pointing accuracy
 
 `<bitflow-task-mouse-accuracy>` shows targets one at a time and records, for

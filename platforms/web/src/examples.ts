@@ -365,6 +365,65 @@ export const examples: Example[] = [
     },
   },
   {
+    type: "task-numeric",
+    name: "Number",
+    shows:
+      "A number, or a calculation that comes to one \u2014 3/4 and 0.75 are the same answer. It says what it makes of what you typed, so nobody is marked on a figure they cannot see. Tolerance, significant figures and units, and no eval anywhere near it.",
+    data: {
+      instruction:
+        "How far does light travel in one second? Give your answer in metres, to within 1%.",
+      expected: "2.998e8",
+      tolerance: "percent",
+      toleranceValue: 1,
+      digits: 2,
+      unitMode: "required",
+      unit: "m",
+      unitAlternatives: ["metres", "meters"],
+      scoring: "valueAndUnit",
+      decimalSeparator: "both",
+      allowExpression: true,
+      valueFeedback: [
+        {
+          value: "3e5",
+          feedback: {
+            message: "That is the speed in kilometres per second.",
+            severity: "info",
+          },
+        },
+      ],
+      evaluation,
+    },
+  },
+  {
+    type: "task-math",
+    name: "Maths",
+    shows:
+      "An answer written as maths and compared as maths: 2x, x\u00b72 and 2\u00d7x are one answer. The formula is the question and the gaps are the answer, and each gap is marked where it stands.",
+    data: {
+      instruction: "Complete the identity.",
+      latex: "(a+b)^2=\\placeholder[first]{}+2ab+\\placeholder[last]{}",
+      blanks: {
+        first: { expected: "a^2", accepted: [] },
+        last: { expected: "b^2", accepted: [] },
+      },
+      compare: "symbolic",
+      tolerance: 0,
+      partialCredit: true,
+      virtualKeyboard: true,
+      blankFeedback: [
+        {
+          blank: "first",
+          latex: "a",
+          feedback: {
+            message: "Nearly — the first term is a squared, not a.",
+            severity: "info",
+          },
+        },
+      ],
+      evaluation,
+    },
+  },
+  {
     type: "task-mouse-accuracy",
     name: "Pointing accuracy",
     shows:

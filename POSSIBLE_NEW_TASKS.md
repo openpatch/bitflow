@@ -209,14 +209,69 @@ pair-selection interface in addition to visual connecting lines.
 
 ## Numeric / Expression Answer
 
-**Suggested type:** `task-numeric`
+**Suggested type:** `task-numeric` — **built**, as
+[`@bitflow/task-numeric`](packages/bits/task-numeric).
 
-Accept a numeric value or a small mathematical expression, with configurable
-units, decimal separators, acceptable tolerance, and significant figures.
+A number, or a short calculation that comes to one, marked arithmetically
+rather than textually: `0.75`, `.75`, `3/4` and `75e-2` are one answer. Five
+ways to say how close is close enough — exactly, a fixed amount, a percentage,
+decimal places, significant figures — and the authoring form prints the range
+the setting actually accepts, because a tolerance is two numbers away from
+meaning anything. Where precision decides the mark, the learner is told which
+precision; springing it is a trick rather than a question.
 
-Evaluation must avoid `eval`; parse only a deliberately small, documented
-expression grammar. Store the raw learner input alongside the normalized
-numeric result for reporting and review.
+The grammar is hand-parsed in about two hundred lines: four operations, powers,
+brackets, seventeen named functions, and `pi`, `e` and `tau`. No `eval`, no
+`Function`, no `RegExp` over learner text, no request anywhere. Nothing is
+blocked so much as unsayable — there is no way to *name* a global, a property
+or a call target, so `alert(1)` fails because `alert` is not on the list, not
+because it was caught.
+
+A comma is a decimal point by default; a thousands separator never is, in any
+mode, since `1,500` cannot mean two things at once. The unit is absent, printed
+beside the box, or asked for — and when asked for it can carry its own mark,
+because `9.81 m/s` has the arithmetic right and the physics wrong.
+
+The answer is the raw text alone. The value and unit it comes to are derived,
+and the reading the score used travels with the *result* rather than the
+answer: one stored copy that can disagree with the box after a reload is worse
+than deriving it twice. The learner is shown that reading as they type, since
+this is the one task type where the thing marked is not the thing typed.
+
+## Maths Expression
+
+**Suggested type:** `task-math` — **built**, as
+[`@bitflow/task-math`](packages/bits/task-math), built on
+[MathLive](https://mathlive.io) and
+[Cortex's Compute Engine](https://cortexjs.io).
+
+Not in the original backlog; added because `task-numeric` answers "what number"
+and a great many maths questions ask "what expression". The learner writes it as
+maths — fractions as fractions, powers as powers — and it is compared as maths:
+`2x`, `x\cdot 2` and `2\times x` are one answer, and no list of spellings was
+maintained to make that true.
+
+The author writes a LaTeX template, and what is in it picks the shape. Without a
+`\placeholder` it is one editable field and one answer; with them the formula is
+printed read-only and the gaps are the answer, each marked where it stands. Both
+are one bit because they are one question with a different number of blanks: the
+answer is `{ prompts: { name: latex } }` either way, and partial credit falls out
+of it. This is distinct from `task-fill-in-the-blank`, which is prose with gaps
+matched as text.
+
+Three comparisons, named for the question rather than the algorithm: the same
+expression however written (what "factorise it" needs, since a factorised answer
+must not match an expanded one), anything mathematically equal to it, or the same
+number within a tolerance.
+
+The rules at the top of this file hold. Compute Engine parses LaTeX into MathJSON
+and reasons over the structure — a library doing algebra, not a sandbox running
+learner input, with no `eval` and no request anywhere. Both it and MathLive are
+loaded on demand, so an assessment with one maths question does not put a
+megabyte in front of the other twenty, and the KaTeX fonts are inlined as data
+URIs rather than left as an asset a consumer has to deploy. Where MathLive cannot
+load at all, the learner gets a text box and types LaTeX — the same answer in the
+same notation, marked the same way.
 
 ## Image / Diagram Annotation
 
@@ -551,7 +606,8 @@ browser, with no server algebra service.
 7. ~~Parsons Puzzle~~ — built
 8. ~~Crossword Puzzle~~ — built
 9. ~~Find the Words~~ — built
-10. Numeric / Expression Answer
+10. ~~Numeric / Expression Answer~~ — built
+10b. ~~Maths Expression~~ — built, as `task-math`
 11. Image / Diagram Annotation
 12. Short Free-Text With Rubric
 13. Code Trace

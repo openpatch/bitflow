@@ -1,0 +1,51 @@
+.bitflow-math {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* MathLive draws itself into this; it has no size of its own until it does,
+   and a field that appears from nothing shifts everything under it. */
+.bitflow-math-host {
+  min-height: var(--bitflow-math-height, 3rem);
+}
+
+.bitflow-math-field {
+  display: block;
+  width: 100%;
+  padding: var(--bitflow-space-xsmall);
+  font-size: var(--bitflow-font-size-large);
+  color: var(--bitflow-color-text);
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-math-field:focus-within {
+  outline: none;
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+/* MathLive's own tokens for a marked blank, pointed at the theme so a right
+   and a wrong answer look the same here as everywhere else in a flow. */
+.bitflow-math-field {
+  --correct-color: var(--bitflow-color-correct);
+  --incorrect-color: var(--bitflow-color-wrong);
+  --caret-color: var(--bitflow-color-primary);
+  --selection-background-color: var(--bitflow-color-primary-light);
+  --placeholder-color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-math-status {
+  margin: 0;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+}
+
+/* The marks are drawn inside the field as colour; this says the same thing in
+   words, for a screen reader and for anyone who does not see the tint. */
+.bitflow-math-outcomes {
+  margin: 0;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text);
+}

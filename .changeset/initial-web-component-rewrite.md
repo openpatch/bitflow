@@ -11,6 +11,8 @@
 "@bitflow/task-choice": major
 "@bitflow/task-yes-no": major
 "@bitflow/task-input": major
+"@bitflow/task-numeric": major
+"@bitflow/task-math": major
 "@bitflow/task-fill-in-the-blank": major
 "@bitflow/task-highlighting": major
 "@bitflow/task-drag-drop": major

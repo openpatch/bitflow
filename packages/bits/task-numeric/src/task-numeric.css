@@ -1,0 +1,77 @@
+.bitflow-numeric {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* The box and its unit read as one control, so the border goes round both
+   rather than leaving the unit floating beside a field it belongs to. */
+.bitflow-numeric-entry {
+  display: flex;
+  align-items: stretch;
+  max-width: var(--bitflow-numeric-width, 22rem);
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-numeric-entry:focus-within {
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+.bitflow-numeric-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--bitflow-space-xsmall);
+  /* Figures line up under each other while the answer is being checked over,
+     and the mono face keeps `1`, `l` and `7` apart. */
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-standard);
+  line-height: var(--bitflow-line-height-standard);
+  color: var(--bitflow-color-text);
+  background: transparent;
+  border: 0;
+  border-radius: inherit;
+}
+
+.bitflow-numeric-input:focus-visible {
+  /* The ring is drawn round the pair by `:focus-within` above. */
+  outline: none;
+}
+
+.bitflow-numeric-input:disabled {
+  /* Safari greys a disabled field's text; a checked answer still has to be
+     readable. */
+  -webkit-text-fill-color: var(--bitflow-color-text);
+  opacity: 1;
+}
+
+.bitflow-numeric-unit {
+  display: flex;
+  align-items: center;
+  padding-inline: var(--bitflow-space-xsmall);
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-standard);
+  color: var(--bitflow-color-text-muted);
+  background: var(--bitflow-color-neutral-100);
+  border-inline-start: var(--bitflow-border-width) solid
+    var(--bitflow-color-border);
+  border-start-end-radius: inherit;
+  border-end-end-radius: inherit;
+  white-space: nowrap;
+}
+
+/* Reserves its line whether or not there is anything to say, so the fields
+   below do not jump up and down as the reading appears and disappears. */
+.bitflow-numeric-reading {
+  margin: 0;
+  min-height: var(--bitflow-line-height-standard);
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-numeric-outcome {
+  margin: 0;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text);
+}
