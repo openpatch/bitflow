@@ -134,3 +134,22 @@
   border-color: var(--bitflow-color-wrong);
   background: var(--bitflow-color-wrong-surface);
 }
+
+/* One column, or one checkpoint, as a single row of the authoring form: what
+   it is called, what it holds, and what to do with it. Wrapping flex rather
+   than a grid, so in an inspector too narrow for both controls the buttons
+   drop to their own line instead of being pushed out of reach — and no
+   container query, since the form has no container to ask. */
+.bitflow-trace-editor-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-trace-editor-row > .bitflow-input,
+.bitflow-trace-editor-row > .bitflow-select {
+  /* `min-width: 0` or a long placeholder sets the basis and nothing wraps. */
+  flex: 1 1 var(--bitflow-trace-editor-min, 7rem);
+  min-width: 0;
+}

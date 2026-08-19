@@ -102,3 +102,37 @@
   opacity: 0.55;
   border-style: dashed;
 }
+
+/* The program as it was understood: what level each line came out at, beside
+   the code it belongs to. A read-back rather than a control — the author edits
+   the text above, and this says what the text meant. */
+.bitflow-parsons-read {
+  margin: 0;
+  padding: var(--bitflow-space-xsmall);
+  list-style: none;
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  overflow-x: auto;
+}
+
+.bitflow-parsons-read-line {
+  display: flex;
+  align-items: baseline;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-parsons-read-line code {
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-small);
+  white-space: pre;
+}
+
+.bitflow-parsons-read-level {
+  flex: none;
+  min-width: var(--bitflow-parsons-level-width, 4.5rem);
+  font-size: var(--bitflow-font-size-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--bitflow-color-text-muted);
+  user-select: none;
+}

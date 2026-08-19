@@ -7,7 +7,7 @@ import {
   SelectField,
   TextAreaField,
 } from "@bitflow/element";
-import type { ReactElement } from "react";
+import { useId, type ReactElement } from "react";
 import { formMessages as messages } from "./formMessages";
 import type { Choice, Data } from "./schema";
 
@@ -26,6 +26,11 @@ export const Form = ({
   errors,
 }: BitFormProps<Data>): ReactElement => {
   const t = (key: string) => translate(messages, key, locale);
+  // Radios only form a group when they share a name, and only within one form.
+  // A literal name would join the radios of every choice editor on the page —
+  // two steps of a flow, or two bits in a gallery — into a single group, where
+  // marking a correct answer in one clears it in the other.
+  const group = useId();
   const patch = (changes: Partial<Data>) => onChange({ ...data, ...changes });
 
   const updateChoice = (id: string, changes: Partial<Choice>) =>
@@ -45,6 +50,19 @@ export const Form = ({
 
   const removeChoice = (id: string) =>
     patch({ choices: data.choices.filter((choice) => choice.id !== id) });
+
+  /**
+   * Order matters even when the choices are shuffled: it is the order the
+   * author reads them back in, and "none of the above" has to be last for
+   * anyone who turns shuffling off.
+   */
+  const move = (index: number, delta: number) => {
+    const to = index + delta;
+    if (to < 0 || to >= data.choices.length) return;
+    const choices = [...data.choices];
+    [choices[index], choices[to]] = [choices[to], choices[index]];
+    patch({ choices });
+  };
 
   /**
    * Switching to single-choice with several answers already marked would
@@ -98,7 +116,7 @@ export const Form = ({
               <label className="bitflow-choice-editor-correct">
                 <input
                   type={data.variant === "single" ? "radio" : "checkbox"}
-                  name="bitflow-choice-editor-correct"
+                  name={group}
                   checked={choice.correct}
                   onChange={(event) =>
                     data.variant === "single"
@@ -125,6 +143,31 @@ export const Form = ({
                 }
               />
 
+              {/* Grouped, so in a narrow inspector all three wrap together
+                  under the text they act on rather than one of them alone. */}
+              <div className="bitflow-row bitflow-choice-editor-actions">
+              <button
+                type="button"
+                className="bitflow-button bitflow-button-quiet"
+                aria-label={t("moveChoiceUp")}
+                title={t("moveChoiceUp")}
+                disabled={index === 0}
+                onClick={() => move(index, -1)}
+              >
+                ↑
+              </button>
+
+              <button
+                type="button"
+                className="bitflow-button bitflow-button-quiet"
+                aria-label={t("moveChoiceDown")}
+                title={t("moveChoiceDown")}
+                disabled={index === data.choices.length - 1}
+                onClick={() => move(index, 1)}
+              >
+                ↓
+              </button>
+
               <button
                 type="button"
                 className="bitflow-button bitflow-button-quiet"
@@ -137,6 +180,7 @@ export const Form = ({
               >
                 ×
               </button>
+              </div>
             </div>
           ))}
         </div>

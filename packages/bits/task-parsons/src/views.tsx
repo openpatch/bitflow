@@ -4,17 +4,23 @@ import {
   Disclosure,
   errorFor,
   EvaluationFields,
-  Field,
   Markdown,
   TextAreaField,
   TextField,
 } from "@bitflow/element";
-import { useMemo, type ReactElement } from "react";
+import { useEffect, useMemo, useState, type ReactElement } from "react";
 import type { LineOutcome } from "./evaluate";
 import { formMessages } from "./formMessages";
 import { Puzzle } from "./Puzzle";
 import type { Answer, Data, Line } from "./schema";
 import { shuffledAwayFrom } from "./shuffle";
+import {
+  asText,
+  distractorLines,
+  linesFrom,
+  programLines,
+  sameLines,
+} from "./text";
 
 export const Task = ({
   data,
@@ -70,14 +76,6 @@ export const Task = ({
   );
 };
 
-/** A fresh id that will not collide with one the author already used. */
-const newId = (taken: string[]): string => {
-  for (let n = taken.length + 1; ; n++) {
-    const id = `line-${n}`;
-    if (!taken.includes(id)) return id;
-  }
-};
-
 export const Form = ({
   data,
   locale,
@@ -88,33 +86,43 @@ export const Form = ({
     translate(formMessages, key, locale, vars);
   const patch = (changes: Partial<Data>) => onChange({ ...data, ...changes });
 
-  const setLine = (id: string, changes: Partial<Line>) =>
-    patch({
-      lines: data.lines.map((line) =>
-        line.id === id ? { ...line, ...changes } : line,
-      ),
-    });
+  /**
+   * The two boxes, as text.
+   *
+   * Held here rather than derived on every render, because `asText` writes
+   * nesting back out at a fixed step: an author typing the second space of a
+   * two-space indent would have it snapped away under the caret, and a
+   * controlled textarea rewritten mid-keystroke puts the cursor at the end.
+   * What they type stays exactly as typed; the document gets the meaning.
+   */
+  const [text, setText] = useState(() => ({
+    program: asText(programLines(data.lines)),
+    distractors: asText(distractorLines(data.lines)),
+  }));
 
-  const move = (index: number, delta: number) => {
-    const to = index + delta;
-    if (to < 0 || to >= data.lines.length) return;
-    const lines = [...data.lines];
-    [lines[index], lines[to]] = [lines[to], lines[index]];
-    patch({ lines });
+  /**
+   * Re-seeded when the document says something the boxes do not — an undo, a
+   * different step selected, a file loaded. Compared by what the text *means*,
+   * so the author's own typing, which produced these very lines, never
+   * reformats itself.
+   */
+  useEffect(() => {
+    const shown = linesFrom(text.program, text.distractors, data.lines);
+    if (sameLines(shown, data.lines)) return;
+    setText({
+      program: asText(programLines(data.lines)),
+      distractors: asText(distractorLines(data.lines)),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.lines]);
+
+  const write = (changes: Partial<typeof text>) => {
+    const next = { ...text, ...changes };
+    setText(next);
+    patch({ lines: linesFrom(next.program, next.distractors, data.lines) });
   };
 
-  const add = (distractor: boolean) =>
-    patch({
-      lines: [
-        ...data.lines,
-        {
-          id: newId(data.lines.map((line) => line.id)),
-          text: "",
-          indent: 0,
-          distractor,
-        },
-      ],
-    });
+  const solution = programLines(data.lines);
 
   return (
     <div className="bitflow-stack">
@@ -133,114 +141,47 @@ export const Form = ({
         onChange={(language) => patch({ language })}
       />
 
-      <fieldset className="bitflow-field">
-        <legend className="bitflow-label">{t("linesLabel")}</legend>
-        <span className="bitflow-hint">{t("linesHint")}</span>
-        {errorFor(errors, "lines") && (
-          <span className="bitflow-field-error" role="alert">
-            {errorFor(errors, "lines")}
-          </span>
-        )}
-        {data.lines.length === 0 && (
-          <p className="bitflow-text-muted">{t("noLines")}</p>
-        )}
+      {/* The program, typed as a program. A Parsons problem is a piece of code
+          and its nesting, and both are things you write by writing them —
+          paste the program in and the indentation you can see is the
+          indentation that gets stored. */}
+      <TextAreaField
+        label={t("programLabel")}
+        hint={t("programHint")}
+        rows={10}
+        value={text.program}
+        placeholder={t("programPlaceholder")}
+        error={errorFor(errors, "lines")}
+        onChange={(program) => write({ program })}
+      />
 
-        {data.lines.map((line, index) => (
-          <div key={line.id} className="bitflow-rule">
-            <Disclosure
-              summary={line.text || t("unnamedLine")}
-              aside={
-                line.distractor
-                  ? t("isDistractor")
-                  : t("atIndent", { indent: line.indent })
-              }
-            >
-              <TextField
-                label={t("lineText")}
-                value={line.text}
-                error={errorFor(errors, `lines.${index}.text`)}
-                onChange={(text) => setLine(line.id, { text })}
-              />
+      <TextAreaField
+        label={t("distractorsLabel")}
+        hint={t("distractorsHint")}
+        rows={4}
+        value={text.distractors}
+        onChange={(distractors) => write({ distractors })}
+      />
 
-              <CheckboxField
-                label={t("lineDistractor")}
-                checked={line.distractor}
-                onChange={(distractor) => setLine(line.id, { distractor })}
-              />
-
-              {!line.distractor && (
-                <Field label={t("lineIndent")}>
-                  {(props) => (
-                    <input
-                      {...props}
-                      type="number"
-                      className="bitflow-input"
-                      min={0}
-                      step={1}
-                      value={line.indent}
-                      onChange={(event) =>
-                        setLine(line.id, {
-                          indent: Math.max(
-                            0,
-                            Math.round(Number(event.target.value) || 0),
-                          ),
-                        })
-                      }
-                    />
-                  )}
-                </Field>
-              )}
-
-              <div className="bitflow-row">
-                <button
-                  type="button"
-                  className="bitflow-button bitflow-button-quiet"
-                  disabled={index === 0}
-                  onClick={() => move(index, -1)}
-                >
-                  {t("moveUp")}
-                </button>
-                <button
-                  type="button"
-                  className="bitflow-button bitflow-button-quiet"
-                  disabled={index === data.lines.length - 1}
-                  onClick={() => move(index, 1)}
-                >
-                  {t("moveDown")}
-                </button>
-                <button
-                  type="button"
-                  className="bitflow-button bitflow-button-quiet"
-                  onClick={() =>
-                    patch({
-                      lines: data.lines.filter((other) => other.id !== line.id),
-                    })
-                  }
-                >
-                  {t("remove")}
-                </button>
-              </div>
-            </Disclosure>
-          </div>
-        ))}
-
-        <div className="bitflow-row">
-          <button
-            type="button"
-            className="bitflow-button bitflow-button-secondary"
-            onClick={() => add(false)}
-          >
-            {t("addLine")}
-          </button>
-          <button
-            type="button"
-            className="bitflow-button bitflow-button-secondary"
-            onClick={() => add(true)}
-          >
-            {t("addDistractor")}
-          </button>
+      {/* What the boxes were understood to mean. The nesting is the half of a
+          Parsons answer that is easiest to get wrong by a space, and reading
+          it back as levels is the only way to see that it was read right. */}
+      {solution.length > 0 && (
+        <div className="bitflow-field">
+          <span className="bitflow-label">{t("readAsLabel")}</span>
+          <span className="bitflow-hint">{t("readAsHint")}</span>
+          <ol className="bitflow-parsons-read">
+            {solution.map((line) => (
+              <li key={line.id} className="bitflow-parsons-read-line">
+                <span className="bitflow-parsons-read-level">
+                  {t("levelShort", { level: line.indent })}
+                </span>
+                <code>{line.text}</code>
+              </li>
+            ))}
+          </ol>
         </div>
-      </fieldset>
+      )}
 
       <Disclosure summary={t("advanced")}>
         <CheckboxField

@@ -8,6 +8,7 @@ import {
   SelectField,
   TextAreaField,
   TextField,
+  usePanels,
 } from "@bitflow/element";
 import { useMemo, type ReactElement } from "react";
 import { Columns } from "./Columns";
@@ -86,6 +87,8 @@ export const Form = ({
   const t = (key: string, vars?: Record<string, string | number>) =>
     translate(formMessages, key, locale, vars);
   const patch = (changes: Partial<Data>) => onChange({ ...data, ...changes });
+
+  const panels = usePanels(data.pairs.map((pair) => pair.id));
 
   const setSide = (id: string, side: "left" | "right", changes: Partial<Side>) =>
     patch({
@@ -171,6 +174,7 @@ export const Form = ({
         {data.pairs.map((pair, index) => (
           <div key={pair.id} className="bitflow-rule">
             <Disclosure
+              {...panels.props(pair.id)}
               summary={
                 pair.left.label || pair.right.label
                   ? t("pairSummary", {

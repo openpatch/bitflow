@@ -37,6 +37,18 @@ describe("<Form>", () => {
     expect(screen.getByText(/new word/i)).toBeDefined();
   });
 
+  it("opens the word it just added, and leaves the others alone", () => {
+    render(<Editing initial={withWords("CROSSWORD")} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /add a word/i }));
+
+    const panels = [...document.querySelectorAll("fieldset details")];
+    expect(panels.map((panel) => (panel as HTMLDetailsElement).open)).toEqual([
+      false,
+      true,
+    ]);
+  });
+
   const cells = (container: HTMLElement) =>
     container.querySelectorAll(
       ".bitflow-crossword-preview .bitflow-crossword-cell",

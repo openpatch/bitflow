@@ -30,11 +30,24 @@
   background: var(--bitflow-color-wrong-surface);
 }
 
-/* Authoring: one row per choice — correct mark, text, remove. */
+/* Authoring: one row per choice — correct mark, text, reorder, remove.
+   Wrapping, so in a narrow inspector the buttons drop below the text they
+   belong to rather than squeezing it to nothing. */
 .bitflow-choice-editor {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-choice-editor > .bitflow-input {
+  flex: 1 1 var(--bitflow-choice-editor-min, 8rem);
+  min-width: 0;
+}
+
+.bitflow-choice-editor-actions {
+  flex: none;
+  flex-wrap: nowrap;
 }
 
 .bitflow-choice-editor-correct {

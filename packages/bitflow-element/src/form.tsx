@@ -1,5 +1,12 @@
 import type { Diagnostic } from "@bitflow/core";
-import { useId, useState, type ReactElement, type ReactNode } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 
 /**
  * The authoring-form building blocks every bit's `Form` is made of.
@@ -252,6 +259,55 @@ export const Disclosure = ({
   );
 };
 
+export type Panels = {
+  /** Spread onto a `Disclosure` to put it under this hook's control. */
+  props: (id: string) => { open: boolean; onOpenChange: (open: boolean) => void };
+  /** Opens one panel — for a list that is also edited somewhere else. */
+  open: (id: string) => void;
+};
+
+/**
+ * Keeps a list of `Disclosure` panels, and opens the ones that appear.
+ *
+ * A list of collapsed panels is the right way to show ten regions or twenty
+ * words: all of them expanded is a wall. But it is the wrong thing to hand
+ * back from "Add a word" — that leaves the author looking at a row called
+ * "Unnamed", one click away from the box they asked for, with no sign that
+ * anything happened except a line appearing. So rows that were already there
+ * start closed, and rows that turn up afterwards start open.
+ *
+ * Keyed by the item's own id rather than its index, so sorting or deleting a
+ * row does not hand its open state to a different one.
+ */
+export const usePanels = (ids: string[]): Panels => {
+  const seen = useRef(new Set(ids));
+  const [open, setOpen] = useState<Record<string, boolean>>({});
+  // Deliberately unkeyed. `ids` is a fresh array on every render, so any
+  // dependency would have to be a join of its contents — and the comparison
+  // that matters is against what was here last time, which the ref already
+  // holds. Nothing added means nothing set, so this does not loop.
+  useEffect(() => {
+    const added = ids.filter((id) => !seen.current.has(id));
+    seen.current = new Set(ids);
+    if (added.length === 0) return;
+    setOpen((current) => ({
+      ...current,
+      ...Object.fromEntries(added.map((id) => [id, true])),
+    }));
+  });
+
+  const setOne = (id: string, next: boolean) =>
+    setOpen((current) => ({ ...current, [id]: next }));
+
+  return {
+    props: (id) => ({
+      open: open[id] ?? false,
+      onOpenChange: (next) => setOne(id, next),
+    }),
+    open: (id) => setOne(id, true),
+  };
+};
+
 /**
  * Picks the message for one field out of a node's diagnostics.
  *
@@ -264,3 +320,17 @@ export const errorFor = (
   path: string,
 ): string | undefined =>
   errors?.find((d) => d.path === path || d.path.startsWith(`${path}.`))?.message;
+
+/**
+ * The message reported against exactly this path, and no deeper one.
+ *
+ * For a list whose members the form also renders. `errorFor("checkpoints")`
+ * would catch `checkpoints.0.line` as well, and the author would read the same
+ * sentence twice — once above the list and once beside the row it is about.
+ * This is the one to use above the list; `errorFor` on each member covers the
+ * rest.
+ */
+export const errorAt = (
+  errors: Diagnostic[] | undefined,
+  path: string,
+): string | undefined => errors?.find((d) => d.path === path)?.message;

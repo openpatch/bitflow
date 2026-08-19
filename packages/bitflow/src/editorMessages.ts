@@ -42,6 +42,11 @@ export const editorMessages: Catalogs = {
     stopPreview: "Stop preview",
     previewHint: "This is exactly what the learner sees.",
     deleteNode: "Delete step",
+    deleteEdge: "Delete this connection",
+    formBroken: "The settings for this {name} step could not be shown",
+    formBrokenHint:
+      "Its data is not what this version of the step expects — most often a file authored against an older one. Everything else in the assessment is unaffected.",
+    formBrokenReset: "Start this step over",
     problems: "{count} problem(s) to fix",
     noProblems: "No problems found.",
     condition: "Only follow this connection when…",
@@ -107,6 +112,11 @@ export const editorMessages: Catalogs = {
     stopPreview: "Vorschau beenden",
     previewHint: "Genau das sehen die Schülerinnen und Schüler.",
     deleteNode: "Schritt löschen",
+    deleteEdge: "Diese Verbindung löschen",
+    formBroken: "Die Einstellungen dieses {name}-Schritts konnten nicht angezeigt werden",
+    formBrokenHint:
+      "Seine Daten entsprechen nicht dem, was diese Version des Schritts erwartet — meist eine Datei aus einer älteren Version. Der Rest des Tests ist davon nicht betroffen.",
+    formBrokenReset: "Diesen Schritt neu beginnen",
     problems: "{count} Problem(e) zu beheben",
     noProblems: "Keine Probleme gefunden.",
     condition: "Dieser Verbindung nur folgen, wenn…",

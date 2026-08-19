@@ -10,6 +10,7 @@ import {
   SelectField,
   TextAreaField,
   TextField,
+  usePanels,
 } from "@bitflow/element";
 import { useState, type ReactElement } from "react";
 import { formMessages } from "./formMessages";
@@ -67,13 +68,11 @@ export const Form = ({
   const t = (key: string) => translate(formMessages, key, locale);
   const patch = (changes: Partial<Data>) => onChange({ ...data, ...changes });
   const [selectedId, setSelectedId] = useState<string | undefined>();
-  const [opened, setOpened] = useState<Record<string, boolean>>({});
+  const panels = usePanels(data.hotspots.map((hotspot) => hotspot.id));
 
-  const setOpen = (id: string, open: boolean) =>
-    setOpened((current) => ({ ...current, [id]: open }));
   const select = (id: string | undefined) => {
     setSelectedId(id);
-    if (id) setOpen(id, true);
+    if (id) panels.open(id);
   };
 
   const setHotspot = (id: string, changes: Partial<Hotspot>) =>
@@ -154,8 +153,7 @@ export const Form = ({
             <Disclosure
               summary={hotspot.label || t("unnamedRegion")}
               aside={t(hotspot.correct ? "isCorrect" : "isDecoy")}
-              open={opened[hotspot.id] ?? false}
-              onOpenChange={(open) => setOpen(hotspot.id, open)}
+              {...panels.props(hotspot.id)}
             >
               <TextField
                 label={t("regionName")}

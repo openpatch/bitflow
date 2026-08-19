@@ -244,3 +244,94 @@ describe("<Form>", () => {
     expect(screen.getByLabelText(/which search/i)).toBeTruthy();
   });
 });
+
+describe("<Form> connections", () => {
+  const twoPlaces = (over: Record<string, unknown> = {}): Data =>
+    DataSchema.parse({
+      goal: "shortestPath",
+      nodes: [
+        { id: "a", label: "A", x: 0.2, y: 0.5 },
+        { id: "b", label: "B", x: 0.5, y: 0.5 },
+        { id: "c", label: "C", x: 0.8, y: 0.5 },
+      ],
+      edges: [],
+      sourceId: "a",
+      targetId: "c",
+      evaluation: { mode: "skip" },
+      ...over,
+    });
+
+  const Editing = ({ initial }: { initial: Data }) => {
+    const [state, setState] = useState(initial);
+    return <Form data={state} locale="en" onChange={setState} errors={[]} />;
+  };
+
+  const add3 = () => {
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole("button", { name: /add a connection/i }));
+    }
+  };
+
+  it("joins a pair that is not joined yet", () => {
+    const onChange = vi.fn();
+    render(
+      <Form
+        data={twoPlaces({ edges: [{ id: "l1", source: "a", target: "b", weight: 1 }] })}
+        locale="en"
+        onChange={onChange}
+        errors={[]}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /add a connection/i }));
+
+    const next = onChange.mock.calls[0][0] as Data;
+    expect([next.edges[1].source, next.edges[1].target]).not.toEqual(["a", "b"]);
+  });
+
+  it("does not make three copies of the same connection", () => {
+    render(<Editing initial={twoPlaces()} />);
+
+    add3();
+
+    const summaries = [
+      ...document.querySelectorAll(".bitflow-disclosure-summary"),
+    ].map((s) => s.textContent);
+    expect(new Set(summaries).size).toBe(summaries.length);
+  });
+
+  /** Undirected, A → B and B → A are one connection, not two. */
+  it("treats a reversed pair as already joined when the graph is undirected", () => {
+    const onChange = vi.fn();
+    render(
+      <Form
+        data={twoPlaces({
+          directed: false,
+          edges: [{ id: "l1", source: "b", target: "a", weight: 1 }],
+        })}
+        locale="en"
+        onChange={onChange}
+        errors={[]}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /add a connection/i }));
+
+    const added = (onChange.mock.calls[0][0] as Data).edges[1];
+    expect([added.source, added.target].sort()).not.toEqual(["a", "b"]);
+  });
+
+  it("draws the graph above the lists that describe it", () => {
+    render(<Editing initial={twoPlaces()} />);
+
+    const form = document.querySelector(".bitflow-stack") as HTMLElement;
+    const html = form.innerHTML;
+    const graph = html.indexOf("bitflow-graph");
+    const places = html.indexOf("Add a place");
+    // Guarded, or a missing diagram would pass this on -1.
+    expect(graph).toBeGreaterThan(-1);
+    expect(places).toBeGreaterThan(-1);
+    // The thing being made comes before the fields that describe it.
+    expect(graph).toBeLessThan(places);
+  });
+});

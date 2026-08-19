@@ -173,21 +173,56 @@ const Editing = ({ initial }: { initial: Data }) => {
 const empty = (): Data => DataSchema.parse({ evaluation: { mode: "skip" } });
 
 describe("<Form>", () => {
-  it("asks for an expected value per column, per checkpoint", () => {
+  it("puts the answer key in the learner's own table", () => {
     render(<Editing initial={empty()} />);
 
     fireEvent.click(screen.getByRole("button", { name: /add a column/i }));
-    fireEvent.change(screen.getByLabelText(/heading/i), { target: { value: "total" } });
+    fireEvent.change(screen.getByLabelText(/heading of column 1/i), {
+      target: { value: "total" },
+    });
     fireEvent.click(screen.getByRole("button", { name: /add a checkpoint/i }));
 
-    expect(screen.getByLabelText("Expected total")).toBeTruthy();
+    // One cell per column per checkpoint, labelled the way the learner's is —
+    // it is the same table, filled in from the other side.
+    expect(screen.getByLabelText("total, Step 1")).toBeTruthy();
+  });
+
+  it("says what to do before there is a table to fill in", () => {
+    render(<Editing initial={empty()} />);
+
+    expect(screen.getByText(/the table to fill in appears here/i)).toBeTruthy();
+  });
+
+  it("writes a value typed in the table onto its checkpoint", () => {
+    const onChange = vi.fn();
+    render(<Form data={data()} locale="en" onChange={onChange} errors={[]} />);
+
+    fireEvent.change(screen.getByLabelText("total, before the loop"), {
+      target: { value: "42" },
+    });
+
+    const next = onChange.mock.calls[0][0] as Data;
+    expect(next.checkpoints[0].expected).toEqual({ total: "42", next: "2" });
+    // The other row is untouched.
+    expect(next.checkpoints[1].expected).toEqual({ total: "6", next: "3" });
+  });
+
+  it("shows the values already written, so the key can be read down a column", () => {
+    render(<Editing initial={data()} />);
+
+    expect(
+      screen.getByLabelText<HTMLInputElement>("total, before the loop").value,
+    ).toBe("0");
+    expect(
+      screen.getByLabelText<HTMLInputElement>("total, after the loop").value,
+    ).toBe("6");
   });
 
   it("takes a column's expected values away with it", () => {
     const onChange = vi.fn();
     render(<Form data={data()} locale="en" onChange={onChange} errors={[]} />);
 
-    fireEvent.click(screen.getAllByRole("button", { name: /^remove$/i })[0]);
+    fireEvent.click(screen.getByRole("button", { name: /remove total/i }));
 
     const next = onChange.mock.calls[0][0] as Data;
     expect(next.columns.map((column) => column.id)).toEqual(["next"]);
@@ -199,20 +234,58 @@ describe("<Form>", () => {
   it("offers the program's lines for a next-line answer", () => {
     render(<Editing initial={data()} />);
 
-    const select = screen.getAllByLabelText<HTMLSelectElement>(
-      /next line: line number/i,
-    )[0];
-    expect([...select.options].map((option) => option.value)).toEqual(["", "1", "2", "3"]);
+    const select = screen.getByLabelText<HTMLSelectElement>(
+      "next line, before the loop",
+    );
+    expect([...select.options].map((option) => option.value)).toEqual([
+      "",
+      "1",
+      "2",
+      "3",
+    ]);
   });
 
   it("moves a checkpoint", () => {
     const onChange = vi.fn();
     render(<Form data={data()} locale="en" onChange={onChange} errors={[]} />);
 
-    fireEvent.click(screen.getAllByRole("button", { name: /move down/i })[0]);
+    fireEvent.click(
+      screen.getByRole("button", { name: /move before the loop down/i }),
+    );
 
     expect(
       (onChange.mock.calls[0][0] as Data).checkpoints.map((c) => c.id),
     ).toEqual(["after", "before"]);
+  });
+
+  it("moves a column, and the table's headings move with it", () => {
+    render(<Editing initial={data()} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /move next line left/i }));
+
+    const headings = [
+      ...document.querySelectorAll(".bitflow-trace-table thead th"),
+    ].map((th) => th.textContent);
+    expect(headings[1]).toContain("next line");
+    expect(headings[2]).toContain("total");
+  });
+
+  it("reports a line that is not in the program under the table", () => {
+    render(
+      <Form
+        data={data()}
+        locale="en"
+        onChange={() => {}}
+        errors={[
+          {
+            path: "checkpoints.0.expected.next",
+            message: "“9” is not one of the program's 3 lines.",
+          },
+        ]}
+      />,
+    );
+
+    // Reported against a cell, which has no label of its own to sit under.
+    expect(screen.getByRole("alert").textContent).toContain("is not one of");
   });
 });

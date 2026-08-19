@@ -214,6 +214,30 @@ export const cellValue = (
   columnId: string,
 ): string => answer?.cells?.[checkpointId]?.[columnId] ?? "";
 
+/**
+ * The author's expected values, arranged as an answer.
+ *
+ * `checkpoint.expected` and `Answer.cells` hold the same thing keyed the same
+ * way — a value per checkpoint per column — so the authoring form can put the
+ * answer key through the very table the learner fills in, rather than a second
+ * grid that has to be kept looking like the first.
+ */
+export const expectedAsAnswer = (data: Data): Answer => ({
+  cells: Object.fromEntries(
+    data.checkpoints.map((checkpoint) => [checkpoint.id, checkpoint.expected]),
+  ),
+});
+
+/** The inverse: what the author typed into that table, back onto the rows. */
+export const answerAsExpected = (
+  checkpoints: Checkpoint[],
+  answer: Answer,
+): Checkpoint[] =>
+  checkpoints.map((checkpoint) => ({
+    ...checkpoint,
+    expected: answer.cells[checkpoint.id] ?? checkpoint.expected,
+  }));
+
 /** The cell with `value` written into it, without disturbing the others. */
 export const withCell = (
   answer: Answer | undefined,

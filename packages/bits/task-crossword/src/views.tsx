@@ -8,6 +8,7 @@ import {
   SelectField,
   TextAreaField,
   TextField,
+  usePanels,
 } from "@bitflow/element";
 import type { ReactElement } from "react";
 import { Crossword } from "./Crossword";
@@ -73,6 +74,7 @@ export const Form = ({
       relayout,
     );
 
+  const panels = usePanels(data.words.map((word) => word.id));
   const unplaced = layout(data.words).unplaced;
   const grid = gridOf(data);
 
@@ -103,6 +105,7 @@ export const Form = ({
           return (
             <div key={word.id} className="bitflow-rule">
               <Disclosure
+                {...panels.props(word.id)}
                 summary={word.answer || t("unnamedWord")}
                 aside={
                   placed

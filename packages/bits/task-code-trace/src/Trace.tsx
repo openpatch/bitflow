@@ -83,6 +83,7 @@ export const TraceTable = ({
   states,
   readonly,
   locale,
+  caption,
   onChange,
 }: {
   data: Data;
@@ -90,6 +91,12 @@ export const TraceTable = ({
   states?: CellStates;
   readonly?: boolean;
   locale: Locale;
+  /**
+   * Overrides the caption. The authoring form renders this same table for the
+   * author to fill in, where it is the answer key rather than the learner's
+   * table, and only the caption can say which of the two you are looking at.
+   */
+  caption?: string;
   onChange: (answer: Answer) => void;
 }): ReactElement => {
   const t = (key: string, vars?: Record<string, string | number>) =>
@@ -111,7 +118,7 @@ export const TraceTable = ({
   return (
     <div className="bitflow-trace-scroll">
       <table className="bitflow-trace-table">
-        <caption className="bitflow-label">{t("tableLabel")}</caption>
+        <caption className="bitflow-label">{caption ?? t("tableLabel")}</caption>
         <thead>
           <tr>
             <th scope="col">{t("stepHeader")}</th>

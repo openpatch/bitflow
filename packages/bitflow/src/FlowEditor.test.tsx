@@ -336,6 +336,65 @@ describe("<FlowEditor>", () => {
     });
   });
 
+  describe("a step whose data the form cannot render", () => {
+    /**
+     * `parseFlow` deliberately does not check bit data, so anything can reach
+     * a form: a file written against an older version of a bit, one edited by
+     * hand, one produced by another tool. Whatever arrives, the author must
+     * still have an editor afterwards.
+     */
+    const flowWith = (data: Record<string, unknown>) =>
+      doc(
+        [
+          node("start", "test-start", { title: "a" }),
+          node("odd", "test-form", data),
+          node("end", "test-end"),
+        ],
+        [edge("start", "odd"), edge("odd", "end")],
+      );
+
+    it("fills in a field the document is missing", () => {
+      // No `items` at all — the shape a bit had before the field existed.
+      setup({ flow: flowWith({ label: "Still editable" }) });
+      fireEvent.click(screen.getByText("Still editable"));
+
+      expect(screen.getByLabelText("Label")).toBeDefined();
+      expect(
+        screen.queryByText(/could not be shown/),
+      ).toBeNull();
+    });
+
+    it("keeps the rest of the editor when the form throws anyway", () => {
+      // A field of the wrong type: no default can repair this one.
+      setup({ flow: flowWith({ label: "Broken", items: "nope" }) });
+      fireEvent.click(screen.getByText("Broken"));
+
+      expect(screen.getByText(/could not be shown/)).toBeDefined();
+      // The canvas, the palette and the toolbar are all still there.
+      expect(screen.getByRole("button", { name: "Content" })).toBeDefined();
+      expect(screen.getByRole("button", { name: "Save" })).toBeDefined();
+    });
+
+    it("offers to start the step over, as an ordinary undoable edit", async () => {
+      const user = userEvent.setup();
+      const { ref, onEdit } = setup({
+        flow: flowWith({ label: "Broken", items: "nope" }),
+      });
+      fireEvent.click(screen.getByText("Broken"));
+
+      await user.click(screen.getByRole("button", { name: "Start this step over" }));
+
+      expect(lastDoc(onEdit).nodes[1].data).toEqual({ label: "", items: [] });
+      expect(screen.getByLabelText("Label")).toBeDefined();
+
+      ref.current?.undo();
+      expect(ref.current?.getFlow().nodes[1].data).toEqual({
+        label: "Broken",
+        items: "nope",
+      });
+    });
+  });
+
   describe("readonly", () => {
     it("hides the palette and the save action", () => {
       setup({ readonly: true });

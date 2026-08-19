@@ -58,6 +58,13 @@ export const loadMathfield = async (): Promise<MathfieldModule | undefined> => {
     if (typeof window === "undefined" || typeof customElements === "undefined") {
       return undefined;
     }
+    // MathLive's `connectedCallback` constructs a `ResizeObserver` without
+    // checking for one, so an environment without it does not get a degraded
+    // field — it gets a throw out of a custom-element callback, where nothing
+    // this package wrote can catch it. jsdom is the environment in question;
+    // every browser has had one for years, so this costs nothing real and
+    // turns "the step explodes" back into the fallback that already exists.
+    if (typeof ResizeObserver === "undefined") return undefined;
     try {
       const module = (await import("mathlive")) as unknown as MathfieldModule & {
         MathfieldElement: { fontsDirectory?: string | null; soundsDirectory?: string | null };

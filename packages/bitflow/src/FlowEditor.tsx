@@ -30,6 +30,7 @@ import {
   type Node,
 } from "@xyflow/react";
 import {
+  Component,
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -39,6 +40,7 @@ import {
   type CSSProperties,
   type ComponentType,
   type ReactElement,
+  type ReactNode,
   type Ref,
 } from "react";
 import { useStore } from "zustand";
@@ -422,7 +424,7 @@ const FlowEditorBody = ({
                   className="bitflow-button bitflow-button-secondary"
                   onClick={() => store.getState().removeEdge(selectedEdge.id)}
                 >
-                  ×
+                  {t("deleteEdge")}
                 </button>
               )}
             </div>
@@ -614,6 +616,64 @@ const Pools = ({
 };
 
 /**
+ * Keeps one broken authoring form from taking the editor with it.
+ *
+ * `BitView` already refuses to render a task whose data does not match its
+ * schema — "a document can outlive the schema it was authored against". The
+ * authoring side needs the same promise and it matters more: a learner who
+ * meets a bad step loses that step, an author who meets one loses the canvas,
+ * the palette, and whatever they had not saved.
+ *
+ * So the form is given a way to fail that leaves the rest standing, and the
+ * author is offered the one repair that is always available — start this step
+ * over. It goes through `updateNodeData`, so it is an ordinary edit and undo
+ * brings the old data back.
+ */
+class FormBoundary extends Component<
+  {
+    locale: ReturnType<typeof resolveLocale>;
+    /** The bit's own name, so the message says which step is at fault. */
+    name: string;
+    onReset: () => void;
+    children: ReactNode;
+  },
+  { error: Error | undefined }
+> {
+  state: { error: Error | undefined } = { error: undefined };
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  render() {
+    const { error } = this.state;
+    if (!error) return this.props.children;
+    const t = (key: string, vars?: Record<string, string | number>) =>
+      translate(messages, key, this.props.locale, vars);
+
+    return (
+      <div className="bitflow-alert bitflow-alert-error" role="alert">
+        <div className="bitflow-stack-small bitflow-stack">
+          <strong>{t("formBroken", { name: this.props.name })}</strong>
+          <p className="bitflow-text-muted">{t("formBrokenHint")}</p>
+          <p className="bitflow-text-muted">{error.message}</p>
+          <button
+            type="button"
+            className="bitflow-button bitflow-button-secondary"
+            onClick={() => {
+              this.props.onReset();
+              this.setState({ error: undefined });
+            }}
+          >
+            {t("formBrokenReset")}
+          </button>
+        </div>
+      </div>
+    );
+  }
+}
+
+/**
  * The selected step's own settings, followed by a live preview of it.
  *
  * The preview renders through `BitView`, the same component the learner gets,
@@ -644,15 +704,33 @@ const NodeInspector = ({
 
   return (
     <div className="bitflow-stack">
-      {Form && !readonly ? (
-        <Form
-          data={node.data}
+      {Form && bit && !readonly ? (
+        <FormBoundary
+          key={nodeId}
           locale={locale}
-          errors={diagnostics}
-          onChange={(data) =>
-            store.getState().updateNodeData(nodeId, data as Record<string, unknown>)
+          name={bit.info(locale).name}
+          onReset={() =>
+            store
+              .getState()
+              .updateNodeData(nodeId, bit.defaultData() as Record<string, unknown>)
           }
-        />
+        >
+          <Form
+            // Merged over the bit's defaults rather than passed straight
+            // through. `parseFlow` deliberately does not check bit data, so a
+            // document written against an older version of a bit arrives here
+            // with fields the form expects simply absent — and a form reading
+            // `data.choices.map` on `undefined` takes the whole editor down.
+            // The merge fills those in; the first edit then writes the
+            // completed shape back and the document is current again.
+            data={{ ...(bit.defaultData() as object), ...node.data }}
+            locale={locale}
+            errors={diagnostics}
+            onChange={(data) =>
+              store.getState().updateNodeData(nodeId, data as Record<string, unknown>)
+            }
+          />
+        </FormBoundary>
       ) : (
         <p className="bitflow-text-muted">{bit?.info(locale).description}</p>
       )}

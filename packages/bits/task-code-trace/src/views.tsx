@@ -1,12 +1,16 @@
-import { translate, type BitFormProps, type BitTaskProps } from "@bitflow/core";
+import {
+  translate,
+  type BitFormProps,
+  type BitTaskProps,
+  type Diagnostic,
+} from "@bitflow/core";
 import {
   CheckboxField,
   Disclosure,
+  errorAt,
   errorFor,
   EvaluationFields,
-  Field,
   Markdown,
-  SelectField,
   TextAreaField,
   TextField,
 } from "@bitflow/element";
@@ -15,6 +19,8 @@ import type { CellStates } from "./evaluate";
 import { formMessages } from "./formMessages";
 import { messages } from "./messages";
 import {
+  answerAsExpected,
+  expectedAsAnswer,
   linesOf,
   type Answer,
   type Checkpoint,
@@ -80,6 +86,12 @@ export const Form = ({
 
   const lines = linesOf(data.code);
 
+  const columnHeading = (column: Column, index: number) =>
+    column.name || `${t("unnamedColumn")} ${index + 1}`;
+
+  const checkpointHeading = (checkpoint: Checkpoint, index: number) =>
+    checkpoint.label || t("unnamedCheckpoint", { number: index + 1 });
+
   const setColumn = (id: string, changes: Partial<Column>) =>
     patch({
       columns: data.columns.map((column) =>
@@ -94,17 +106,22 @@ export const Form = ({
       ),
     });
 
-  const setExpected = (checkpoint: Checkpoint, columnId: string, value: string) =>
-    setCheckpoint(checkpoint.id, {
-      expected: { ...checkpoint.expected, [columnId]: value },
-    });
+  const moveIn = <T,>(list: T[], index: number, delta: number): T[] | undefined => {
+    const to = index + delta;
+    if (to < 0 || to >= list.length) return undefined;
+    const next = [...list];
+    [next[index], next[to]] = [next[to], next[index]];
+    return next;
+  };
+
+  const moveColumn = (index: number, delta: number) => {
+    const columns = moveIn(data.columns, index, delta);
+    if (columns) patch({ columns });
+  };
 
   const moveCheckpoint = (index: number, delta: number) => {
-    const to = index + delta;
-    if (to < 0 || to >= data.checkpoints.length) return;
-    const checkpoints = [...data.checkpoints];
-    [checkpoints[index], checkpoints[to]] = [checkpoints[to], checkpoints[index]];
-    patch({ checkpoints });
+    const checkpoints = moveIn(data.checkpoints, index, delta);
+    if (checkpoints) patch({ checkpoints });
   };
 
   /**
@@ -121,9 +138,6 @@ export const Form = ({
         return { ...checkpoint, expected };
       }),
     });
-
-  const columnHeading = (column: Column, index: number) =>
-    column.name || `${t("unnamedColumn")} ${index + 1}`;
 
   return (
     <div className="bitflow-stack">
@@ -151,12 +165,16 @@ export const Form = ({
         onChange={(code) => patch({ code })}
       />
 
+      {/* Columns and checkpoints are the shape of the table — a heading and a
+          kind, a name and a line. One row each, because a panel to open per
+          column is four clicks to see what one glance should show, and the
+          values they frame are filled in below rather than here. */}
       <fieldset className="bitflow-field">
         <legend className="bitflow-label">{t("columnsLabel")}</legend>
         <span className="bitflow-hint">{t("columnsHint")}</span>
-        {errorFor(errors, "columns") && (
+        {errorAt(errors, "columns") && (
           <span className="bitflow-field-error" role="alert">
-            {errorFor(errors, "columns")}
+            {errorAt(errors, "columns")}
           </span>
         )}
         {data.columns.length === 0 && (
@@ -164,38 +182,75 @@ export const Form = ({
         )}
 
         {data.columns.map((column, index) => (
-          <Disclosure
-            key={column.id}
-            summary={columnHeading(column, index)}
-            aside={t("position", { position: index + 1, total: data.columns.length })}
-          >
-            <TextField
-              label={t("columnName")}
-              hint={t("columnNameHint")}
-              value={column.name}
-              error={errorFor(errors, `columns.${index}.name`)}
-              onChange={(name) => setColumn(column.id, { name })}
-            />
-            <SelectField
-              label={t("columnKind")}
-              value={column.kind}
-              options={[
-                { value: "value" as ColumnKind, label: t("kindValue") },
-                { value: "output" as ColumnKind, label: t("kindOutput") },
-                { value: "line" as ColumnKind, label: t("kindLine") },
-              ]}
-              onChange={(kind) => setColumn(column.id, { kind })}
-            />
-            <div className="bitflow-row">
-              <button
-                type="button"
-                className="bitflow-button bitflow-button-quiet"
-                onClick={() => removeColumn(column.id)}
+          <div key={column.id} className="bitflow-stack-small bitflow-stack">
+            <div className="bitflow-trace-editor-row">
+              <input
+                type="text"
+                className="bitflow-input"
+                value={column.name}
+                placeholder={t("columnNamePlaceholder")}
+                aria-label={t("columnNameOf", { position: index + 1 })}
+                onChange={(event) =>
+                  setColumn(column.id, { name: event.target.value })
+                }
+              />
+              <select
+                className="bitflow-select"
+                value={column.kind}
+                aria-label={t("columnKindOf", {
+                  column: columnHeading(column, index),
+                })}
+                onChange={(event) =>
+                  setColumn(column.id, {
+                    kind: event.target.value as ColumnKind,
+                  })
+                }
               >
-                {t("remove")}
-              </button>
+                <option value="value">{t("kindValue")}</option>
+                <option value="output">{t("kindOutput")}</option>
+                <option value="line">{t("kindLine")}</option>
+              </select>
+              <div className="bitflow-row">
+                <button
+                  type="button"
+                  className="bitflow-button bitflow-button-quiet"
+                  aria-label={t("moveLeftOf", {
+                    column: columnHeading(column, index),
+                  })}
+                  disabled={index === 0}
+                  onClick={() => moveColumn(index, -1)}
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  className="bitflow-button bitflow-button-quiet"
+                  aria-label={t("moveRightOf", {
+                    column: columnHeading(column, index),
+                  })}
+                  disabled={index === data.columns.length - 1}
+                  onClick={() => moveColumn(index, 1)}
+                >
+                  →
+                </button>
+                <button
+                  type="button"
+                  className="bitflow-button bitflow-button-quiet"
+                  aria-label={t("removeColumnOf", {
+                    column: columnHeading(column, index),
+                  })}
+                  onClick={() => removeColumn(column.id)}
+                >
+                  ×
+                </button>
+              </div>
             </div>
-          </Disclosure>
+            {errorFor(errors, `columns.${index}.name`) && (
+              <span className="bitflow-field-error" role="alert">
+                {errorFor(errors, `columns.${index}.name`)}
+              </span>
+            )}
+          </div>
         ))}
 
         <div className="bitflow-row">
@@ -223,9 +278,9 @@ export const Form = ({
       <fieldset className="bitflow-field">
         <legend className="bitflow-label">{t("checkpointsLabel")}</legend>
         <span className="bitflow-hint">{t("checkpointsHint")}</span>
-        {errorFor(errors, "checkpoints") && (
+        {errorAt(errors, "checkpoints") && (
           <span className="bitflow-field-error" role="alert">
-            {errorFor(errors, "checkpoints")}
+            {errorAt(errors, "checkpoints")}
           </span>
         )}
         {data.checkpoints.length === 0 && (
@@ -233,126 +288,87 @@ export const Form = ({
         )}
 
         {data.checkpoints.map((checkpoint, index) => (
-          <Disclosure
-            key={checkpoint.id}
-            summary={
-              checkpoint.label || t("unnamedCheckpoint", { number: index + 1 })
-            }
-            aside={t("position", {
-              position: index + 1,
-              total: data.checkpoints.length,
-            })}
-          >
-            <TextField
-              label={t("checkpointLabel")}
-              hint={t("checkpointLabelHint")}
-              value={checkpoint.label}
-              onChange={(label) => setCheckpoint(checkpoint.id, { label })}
-            />
-
-            <Field
-              label={t("checkpointLine")}
-              hint={t("checkpointLineHint")}
-              error={errorFor(errors, `checkpoints.${index}.line`)}
-            >
-              {(props) => (
-                <select
-                  {...props}
-                  className="bitflow-select"
-                  value={checkpoint.line ?? ""}
-                  onChange={(event) =>
-                    setCheckpoint(checkpoint.id, {
-                      line:
-                        event.target.value === ""
-                          ? undefined
-                          : Number(event.target.value),
-                    })
-                  }
-                >
-                  <option value="">—</option>
-                  {lines.map((line, number) => (
-                    <option key={number} value={number + 1}>
-                      {number + 1}: {line.trim()}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </Field>
-
-            {data.columns.map((column, columnIndex) =>
-              column.kind === "line" ? (
-                <Field
-                  key={column.id}
-                  label={t("expectedLineFor", {
-                    column: columnHeading(column, columnIndex),
-                  })}
-                  error={errorFor(
-                    errors,
-                    `checkpoints.${index}.expected.${column.id}`,
-                  )}
-                >
-                  {(props) => (
-                    <select
-                      {...props}
-                      className="bitflow-select"
-                      value={checkpoint.expected[column.id] ?? ""}
-                      onChange={(event) =>
-                        setExpected(checkpoint, column.id, event.target.value)
-                      }
-                    >
-                      <option value="">—</option>
-                      {lines.map((line, number) => (
-                        <option key={number} value={String(number + 1)}>
-                          {number + 1}: {line.trim()}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                </Field>
-              ) : (
-                <TextField
-                  key={column.id}
-                  label={t("expectedFor", {
-                    column: columnHeading(column, columnIndex),
-                  })}
-                  value={checkpoint.expected[column.id] ?? ""}
-                  onChange={(value) => setExpected(checkpoint, column.id, value)}
-                />
-              ),
-            )}
-
-            <div className="bitflow-row">
-              <button
-                type="button"
-                className="bitflow-button bitflow-button-quiet"
-                disabled={index === 0}
-                onClick={() => moveCheckpoint(index, -1)}
-              >
-                {t("moveUp")}
-              </button>
-              <button
-                type="button"
-                className="bitflow-button bitflow-button-quiet"
-                disabled={index === data.checkpoints.length - 1}
-                onClick={() => moveCheckpoint(index, 1)}
-              >
-                {t("moveDown")}
-              </button>
-              <button
-                type="button"
-                className="bitflow-button bitflow-button-quiet"
-                onClick={() =>
-                  patch({
-                    checkpoints: data.checkpoints.filter(
-                      (other) => other.id !== checkpoint.id,
-                    ),
+          <div key={checkpoint.id} className="bitflow-stack-small bitflow-stack">
+            <div className="bitflow-trace-editor-row">
+              <input
+                type="text"
+                className="bitflow-input"
+                value={checkpoint.label}
+                placeholder={t("checkpointLabelPlaceholder")}
+                aria-label={t("checkpointLabelOf", { position: index + 1 })}
+                onChange={(event) =>
+                  setCheckpoint(checkpoint.id, { label: event.target.value })
+                }
+              />
+              <select
+                className="bitflow-select"
+                value={checkpoint.line ?? ""}
+                aria-label={t("checkpointLineOf", {
+                  step: checkpointHeading(checkpoint, index),
+                })}
+                onChange={(event) =>
+                  setCheckpoint(checkpoint.id, {
+                    line:
+                      event.target.value === ""
+                        ? undefined
+                        : Number(event.target.value),
                   })
                 }
               >
-                {t("remove")}
-              </button>
+                <option value="">{t("checkpointLineNone")}</option>
+                {lines.map((line, number) => (
+                  <option key={number} value={number + 1}>
+                    {number + 1}: {line.trim()}
+                  </option>
+                ))}
+              </select>
+              <div className="bitflow-row">
+                <button
+                  type="button"
+                  className="bitflow-button bitflow-button-quiet"
+                  aria-label={t("moveUpOf", {
+                    step: checkpointHeading(checkpoint, index),
+                  })}
+                  disabled={index === 0}
+                  onClick={() => moveCheckpoint(index, -1)}
+                >
+                  ↑
+                </button>
+                <button
+                  type="button"
+                  className="bitflow-button bitflow-button-quiet"
+                  aria-label={t("moveDownOf", {
+                    step: checkpointHeading(checkpoint, index),
+                  })}
+                  disabled={index === data.checkpoints.length - 1}
+                  onClick={() => moveCheckpoint(index, 1)}
+                >
+                  ↓
+                </button>
+                <button
+                  type="button"
+                  className="bitflow-button bitflow-button-quiet"
+                  aria-label={t("removeCheckpointOf", {
+                    step: checkpointHeading(checkpoint, index),
+                  })}
+                  onClick={() =>
+                    patch({
+                      checkpoints: data.checkpoints.filter(
+                        (other) => other.id !== checkpoint.id,
+                      ),
+                    })
+                  }
+                >
+                  ×
+                </button>
+              </div>
             </div>
-          </Disclosure>
+            {errorFor(errors, `checkpoints.${index}.line`) && (
+              <span className="bitflow-field-error" role="alert">
+                {errorFor(errors, `checkpoints.${index}.line`)}
+              </span>
+            )}
+          </div>
         ))}
 
         <div className="bitflow-row">
@@ -379,6 +395,40 @@ export const Form = ({
           </button>
         </div>
       </fieldset>
+
+      {/* The answer key, in the learner's own table.
+          The author fills in the grid the class will fill in, sees the whole
+          of it at once, and reads down a column the way a trace is checked.
+          It is the same component, so the two cannot drift apart — and a
+          `line` column offers the program's lines here exactly as it will
+          there. */}
+      <div className="bitflow-field">
+        <span className="bitflow-hint">{t("answerKeyHint")}</span>
+        {data.columns.length === 0 || data.checkpoints.length === 0 ? (
+          <p className="bitflow-text-muted">{t("answerKeyEmpty")}</p>
+        ) : (
+          <>
+            <TraceTable
+              data={data}
+              answer={expectedAsAnswer(data)}
+              locale={locale}
+              caption={t("answerKeyLabel")}
+              onChange={(answer) =>
+                patch({ checkpoints: answerAsExpected(data.checkpoints, answer) })
+              }
+            />
+            {expectedErrors(errors).map((diagnostic) => (
+              <span
+                key={diagnostic.path}
+                className="bitflow-field-error"
+                role="alert"
+              >
+                {diagnostic.message}
+              </span>
+            ))}
+          </>
+        )}
+      </div>
 
       <Disclosure summary={t("advanced")}>
         <CheckboxField
@@ -408,3 +458,15 @@ export const Form = ({
     </div>
   );
 };
+
+/**
+ * The diagnostics about the values in the table.
+ *
+ * They are reported against `checkpoints.<n>.expected.<column>`, which is a
+ * cell rather than a field with a label — so they are collected under the
+ * table instead of being dropped for want of somewhere to sit.
+ */
+const expectedErrors = (errors: Diagnostic[] | undefined): Diagnostic[] =>
+  (errors ?? []).filter((diagnostic) =>
+    /^checkpoints\.\d+\.expected\./.test(diagnostic.path),
+  );

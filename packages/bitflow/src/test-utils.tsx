@@ -4,6 +4,7 @@ import {
   type BitflowDocument,
   type BitNode,
   type BitEdge,
+  type BitFormProps,
   type BitTaskProps,
 } from "@bitflow/core";
 import { z } from "zod";
@@ -66,6 +67,36 @@ export const registerTestBits = (): void => {
       state: answer?.text === data.correct ? "correct" : "wrong",
       allowRetry: true,
     }),
+  });
+
+  // The only test bit with an authoring form, and one written the way real
+  // ones are: it reads its list straight, without checking that it is there.
+  registerBit({
+    type: "test-form",
+    kind: "content",
+    schema: z.object({
+      label: z.string().default(""),
+      items: z.array(z.string()).default([]),
+    }),
+    defaultData: () => ({ label: "", items: [] }),
+    info: () => ({ name: "Form", description: "" }),
+    Task: ({ data }: BitTaskProps<{ label: string }>) => <p>{data.label}</p>,
+    Form: ({ data, onChange }: BitFormProps<{ label: string; items: string[] }>) => (
+      <>
+        <label>
+          Label
+          <input
+            value={data.label}
+            onChange={(event) => onChange({ ...data, label: event.target.value })}
+          />
+        </label>
+        <ul>
+          {data.items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      </>
+    ),
   });
 
   registerBit({

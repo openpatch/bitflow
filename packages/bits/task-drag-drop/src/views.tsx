@@ -10,6 +10,7 @@ import {
   SelectField,
   TextAreaField,
   TextField,
+  usePanels,
 } from "@bitflow/element";
 import { useState, type ReactElement } from "react";
 import { DragCanvas } from "./DragCanvas";
@@ -126,19 +127,18 @@ export const Form = ({
     { type: "zone" | "element"; id: string } | undefined
   >();
   /**
-   * Which panels are open. A task with a dozen regions is a dozen forms, and
-   * all of them at once is a wall — so each is collapsed to its name and
-   * opened when it is worked on. Drawing or touching a region on the canvas
-   * opens its panel, because that is plainly the one being edited.
+   * A task with a dozen regions is a dozen forms, and all of them at once is a
+   * wall — so each is collapsed to its name and opened when it is worked on.
+   * Drawing or touching a region on the canvas opens its panel, because that
+   * is plainly the one being edited.
    */
-  const [opened, setOpened] = useState<Record<string, boolean>>({});
-  const isOpen = (key: string) => opened[key] ?? false;
-  const setOpen = (key: string, open: boolean) =>
-    setOpened((current) => ({ ...current, [key]: open }));
+  const zonePanels = usePanels(data.dropZones.map((zone) => zone.id));
+  const elementPanels = usePanels(data.elements.map((element) => element.id));
 
   const select = (target: { type: "zone" | "element"; id: string } | undefined) => {
     setSelected(target);
-    if (target) setOpen(`${target.type}:${target.id}`, true);
+    if (!target) return;
+    (target.type === "zone" ? zonePanels : elementPanels).open(target.id);
   };
 
   const setElement = (id: string, changes: Partial<Element>) =>
@@ -249,8 +249,7 @@ export const Form = ({
           <Disclosure
             summary={zone.label || t("zoneUnnamed")}
             aside={summariseZone(zone, data, t)}
-            open={isOpen(`zone:${zone.id}`)}
-            onOpenChange={(open) => setOpen(`zone:${zone.id}`, open)}
+            {...zonePanels.props(zone.id)}
           >
             <TextField
               label={t("zoneName")}
@@ -284,6 +283,12 @@ export const Form = ({
 
             <fieldset className="bitflow-field">
               <legend className="bitflow-label">{t("zoneExpects")}</legend>
+              {/* A legend over nothing reads as a list that failed to load.
+                  Until something has been added there is nothing a zone could
+                  expect, and saying so is the next instruction. */}
+              {data.elements.length === 0 && (
+                <p className="bitflow-text-muted">{t("zoneExpectsNoElements")}</p>
+              )}
               {data.elements.map((element) => (
                 <label key={element.id} className="bitflow-option">
                   <input
@@ -387,8 +392,7 @@ export const Form = ({
           <Disclosure
             summary={element.label || t("elementUnnamed")}
             aside={summariseElement(element, data, t)}
-            open={isOpen(`element:${element.id}`)}
-            onOpenChange={(open) => setOpen(`element:${element.id}`, open)}
+            {...elementPanels.props(element.id)}
           >
             <SelectField
               label={t("elementKind")}

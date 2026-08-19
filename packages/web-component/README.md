@@ -491,6 +491,12 @@ The bank is shuffled from the attempt, and never into the answer's own order.
 Code is rendered as text and never executed — a `.bitflow` file can come from
 anywhere, and running what it contains is not a thing this needs to do.
 
+It is authored as a program: one box holding the finished code, one holding the
+lines that belong nowhere. Nesting is read off the code, so two-space,
+four-space and tabbed programs all mean the same thing — the narrowest indent
+that occurs is one step — and the form says back what level each line came out
+at, which is the half of the answer a stray space is easiest to lose.
+
 ### Accessibility
 
 Every move is a drag and a keystroke, neither one the poor relation. A line is
@@ -881,6 +887,12 @@ unless the author says capitals matter. A cell the author left blank means
 "there is nothing here yet" — a real part of a trace, which has to be left
 blank for the table to be right, but not a mark to be earned, or a table of
 undefined variables would pay a learner for answering none of it.
+
+The answer key is authored in the learner's own table. The columns and the
+checkpoints are declared a row each — a heading and a kind, a name and a line —
+and then the expected values are typed into the very grid the class will fill
+in, through the same component. The author reads down a column the way a trace
+is checked, and the two views cannot drift apart because there is only one.
 
 ### Accessibility
 
