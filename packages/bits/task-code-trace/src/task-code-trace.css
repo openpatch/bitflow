@@ -1,0 +1,136 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-trace-code {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-trace-lines {
+  margin: 0;
+  padding: var(--bitflow-space-xsmall);
+  list-style: none;
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  /* A long line scrolls its listing rather than the page. */
+  overflow-x: auto;
+}
+
+.bitflow-trace-line {
+  display: flex;
+  align-items: baseline;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* Code is monospaced and never highlighted: a parser per language, in a
+   component whose whole job is to *show* the code, would be a poor trade —
+   and this task never runs it either. */
+.bitflow-trace-line code {
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-small);
+  white-space: pre;
+}
+
+.bitflow-trace-number {
+  flex: none;
+  width: 1.75rem;
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--bitflow-color-text-muted);
+  text-align: right;
+  user-select: none;
+}
+
+/* The checkpoint's own label, against the line it belongs to, so the table row
+   and the listing can be read against each other. */
+.bitflow-trace-mark {
+  flex: none;
+  padding: 0 var(--bitflow-space-xsmall);
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-info);
+  background: var(--bitflow-color-info-surface);
+  border-radius: var(--bitflow-radius-full);
+}
+
+/* A wide table scrolls inside itself. The inputs are focusable, so the whole
+   of it is still reachable from the keyboard without a scroll container that
+   is its own tab stop. */
+.bitflow-trace-scroll {
+  overflow-x: auto;
+}
+
+.bitflow-trace-table {
+  border-collapse: collapse;
+  /* Sized from the content, not from the container: cells at a fraction of a
+     fit-content parent collapse into a smear. */
+  width: auto;
+  min-width: 100%;
+}
+
+.bitflow-trace-table caption {
+  text-align: left;
+  padding-bottom: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-trace-table th,
+.bitflow-trace-table td {
+  padding: var(--bitflow-space-xxsmall);
+  border: 1px solid var(--bitflow-color-border);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.bitflow-trace-table thead th {
+  background: var(--bitflow-color-neutral-100);
+  font-weight: var(--bitflow-font-weight-medium);
+  white-space: nowrap;
+}
+
+.bitflow-trace-table tbody th {
+  font-weight: var(--bitflow-font-weight-standard);
+  background: var(--bitflow-color-neutral-100);
+}
+
+/* The second line of a header: what the column holds, or the line a row sits
+   at. Muted and smaller, so it reads as a note rather than as the heading. */
+.bitflow-trace-note {
+  display: block;
+  font-size: var(--bitflow-font-size-small);
+  font-weight: var(--bitflow-font-weight-standard);
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-trace-cell {
+  padding: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-trace-input,
+.bitflow-trace-select {
+  /* Shorter than a standalone field: a table of 44px controls is a wall. The
+     cell padding keeps the touch target comfortable. */
+  min-height: 2.25rem;
+  min-width: var(--bitflow-trace-cell-width, 7rem);
+}
+
+.bitflow-trace-input {
+  font-family: var(--bitflow-font-family-mono);
+}
+
+/* Doubled for the same reason as task-choice: the outcome must outrank the
+   neutral input styling. */
+.bitflow-trace-cell-correct .bitflow-input,
+.bitflow-trace-cell-correct .bitflow-select {
+  border-color: var(--bitflow-color-correct);
+  background: var(--bitflow-color-correct-surface);
+}
+
+.bitflow-trace-cell-wrong .bitflow-input,
+.bitflow-trace-cell-wrong .bitflow-select {
+  border-color: var(--bitflow-color-wrong);
+  background: var(--bitflow-color-wrong-surface);
+}

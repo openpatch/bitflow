@@ -461,6 +461,111 @@ export const examples: Example[] = [
       evaluation,
     },
   },
+  {
+    type: "task-code-trace",
+    name: "Code trace",
+    shows:
+      "A program shown as text and a trace table beside it: values, the output so far, and which line runs next. The code is never executed \u2014 the author writes the states down, and marking is arithmetic over those.",
+    data: {
+      instruction: "Work through the loop and fill in the table.",
+      language: "Python",
+      code:
+        "total = 0\nfor value in [3, 1, 4]:\n    total += value\n    print(total)\nprint('done')",
+      showLineNumbers: true,
+      columns: [
+        { id: "value", name: "value", kind: "value" },
+        { id: "total", name: "total", kind: "value" },
+        { id: "printed", name: "printed so far", kind: "output" },
+        { id: "next", name: "next line", kind: "line" },
+      ],
+      checkpoints: [
+        {
+          id: "start",
+          label: "before the loop",
+          line: 1,
+          expected: { value: "", total: "0", printed: "", next: "2" },
+        },
+        {
+          id: "first",
+          label: "end of the first pass",
+          line: 4,
+          expected: { value: "3", total: "3", printed: "3", next: "2" },
+        },
+        {
+          id: "second",
+          label: "end of the second pass",
+          line: 4,
+          expected: { value: "1", total: "4", printed: "3 4", next: "2" },
+        },
+        {
+          id: "end",
+          label: "after the loop",
+          line: 5,
+          expected: { value: "4", total: "8", printed: "3 4 8", next: "5" },
+        },
+      ],
+      caseSensitive: false,
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-graph-path",
+    name: "Graph path",
+    shows:
+      "A weighted graph and the cheapest route through it. Dijkstra runs in the page, so every equally cheap route is right without the author listing one \u2014 and the same bit asks for a traversal order, a spanning tree or a cut.",
+    data: {
+      instruction:
+        "Find the **cheapest route** from A to F. Choose the places in order.",
+      directed: false,
+      weighted: true,
+      nodes: [
+        { id: "a", label: "A", x: 0.1, y: 0.5 },
+        { id: "b", label: "B", x: 0.35, y: 0.15 },
+        { id: "c", label: "C", x: 0.35, y: 0.85 },
+        { id: "d", label: "D", x: 0.65, y: 0.15 },
+        { id: "e", label: "E", x: 0.65, y: 0.85 },
+        { id: "f", label: "F", x: 0.9, y: 0.5 },
+      ],
+      edges: [
+        { id: "ab", source: "a", target: "b", weight: 2 },
+        { id: "ac", source: "a", target: "c", weight: 4 },
+        { id: "bd", source: "b", target: "d", weight: 5 },
+        { id: "bc", source: "b", target: "c", weight: 1 },
+        { id: "ce", source: "c", target: "e", weight: 3 },
+        { id: "de", source: "d", target: "e", weight: 1 },
+        { id: "df", source: "d", target: "f", weight: 2 },
+        { id: "ef", source: "e", target: "f", weight: 4 },
+      ],
+      goal: "shortestPath",
+      sourceId: "a",
+      targetId: "f",
+      traversal: "bfs",
+      neighbourOrder: "label",
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-number-representation",
+    name: "Number representation",
+    shows:
+      "The same value written again another way, marked arithmetically: 2A, 2a and 0x2A are one answer. The width and the sign belong to the value, so \u221242 and 11010110 are the same eight bits.",
+    data: {
+      instruction:
+        "Write **\u221242** as an eight-bit two's complement pattern.",
+      sourceRepresentation: "decimal",
+      sourceValue: "-42",
+      targetRepresentation: "binary",
+      bitWidth: 8,
+      signed: true,
+      allowPrefix: true,
+      allowSeparators: true,
+      requireFullWidth: true,
+      scoring: "digits",
+      evaluation,
+    },
+  },
 ];
 
 export const exampleFor = (type: string | null): Example =>

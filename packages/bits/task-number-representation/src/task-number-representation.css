@@ -1,0 +1,42 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+/* The value being converted, set apart from the prose: it is the thing being
+   read off, so it gets the room a heading would. */
+.bitflow-number-given {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+  padding: var(--bitflow-space-small);
+  background: var(--bitflow-color-neutral-100);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+/* Monospaced and spaced out: a run of digits is read position by position, and
+   proportional type makes 1 and 0 different widths at exactly the moment that
+   matters. */
+.bitflow-number-value {
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-large);
+  letter-spacing: 0.08em;
+  word-break: break-all;
+}
+
+.bitflow-number-input {
+  font-family: var(--bitflow-font-family-mono);
+  font-size: var(--bitflow-font-size-large);
+  letter-spacing: 0.08em;
+}
+
+/* Doubled for the same reason as task-choice: the outcome must outrank the
+   neutral input styling. */
+.bitflow-input.bitflow-number-input-correct {
+  border-color: var(--bitflow-color-correct);
+  background: var(--bitflow-color-correct-surface);
+}
+
+.bitflow-input.bitflow-number-input-wrong {
+  border-color: var(--bitflow-color-wrong);
+  background: var(--bitflow-color-wrong-surface);
+}

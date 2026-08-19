@@ -24,6 +24,9 @@
 "@bitflow/task-word-search": major
 "@bitflow/task-mouse-accuracy": major
 "@bitflow/task-keyboard-speed": major
+"@bitflow/task-code-trace": major
+"@bitflow/task-graph-path": major
+"@bitflow/task-number-representation": major
 ---
 
 Rewrite bitflow as web components.

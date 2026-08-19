@@ -857,6 +857,119 @@ Where the author allows it — the default — the learner can stand down, and t
 result is `unknown`: worth nothing out of nothing, so it neither rewards them
 nor drags their total down.
 
+## Code trace
+
+`<bitflow-task-code-trace>` shows a program and asks what it does: a trace
+table with a row per moment and a column per thing being watched.
+
+**The code is never executed.** Not by `eval`, not by `Function`, not by a
+runner somewhere else. What makes the task gradable is that the author writes
+the states down as well as the code, so marking is a comparison against
+authored data rather than a language implementation this package would have to
+be trusted with. The listing is text, and the language is named for the reader
+only — nothing here parses or highlights it.
+
+A column watches one of three things, which is why "predict the variables",
+"predict the output" and "predict which line runs next" are one bit rather
+than three: a value, the output *so far* (cumulative down the table, the way
+output is traced by hand), or the next line to run — chosen from the listing
+rather than typed, so the learner picks a line instead of remembering a number.
+
+Cells are compared as values, not as strings. `6`, `6.0` and `+6` are one
+answer; `[1, 2]` and `[1,2]` are one answer; `True` and `true` are one answer
+unless the author says capitals matter. A cell the author left blank means
+"there is nothing here yet" — a real part of a trace, which has to be left
+blank for the table to be right, but not a mark to be earned, or a table of
+undefined variables would pay a learner for answering none of it.
+
+### Accessibility
+
+The table is a real `<table>` with row and column headers, and every control
+carries its own label — "total, after the loop" — because a header association
+is not a label everywhere. The line numbers are text rather than a CSS marker,
+so they are read out with the line: a question about which line runs next is
+unanswerable if you cannot tell which line you are hearing. Every input is a
+native text box or a `<select>`, so there is nothing here that a pointer can
+do and a keyboard cannot.
+
+## Graph path
+
+`<bitflow-task-graph-path>` draws a graph and asks for something out of it: a
+route, the cheapest route, the order a breadth- or depth-first search visits
+places in, a cheapest spanning tree, or a cheapest cut.
+
+All five are one bit because they are one answer — a set or a sequence of node
+and edge ids — and because they are marked the same way. Dijkstra, the two
+searches, Kruskal and a max-flow all run in the page over the authored graph,
+so the *cost* of the best answer is computed rather than stored. That is what
+lets an equally good alternative be right without the author having thought of
+it, which is the whole difficulty with these questions on paper.
+
+What is wrong with an answer is said in words — "that route works, but there
+is a cheaper one", "those connections go round in a circle", "the order goes
+wrong part of the way through". Each is a statement about what the learner
+chose, so none of it gives the answer away.
+
+A traversal states its tie-break rule as part of the question, because without
+one it has several right orders: neighbours are taken alphabetically, or in
+the order the connections were drawn. Only a traversal is scored out of
+anything but one — a point per place named in the right order before it goes
+wrong. A route that does not arrive is not two-thirds of a route.
+
+Places are stored as fractions of the diagram, never pixels, and the authoring
+form lets them be dragged about or typed in as percentages.
+
+### Accessibility
+
+The diagram is a picture, and never the only place the graph exists: it is
+written out underneath — "A joins B (1), C (4)" — for every reader, and the
+answer is built from real controls rather than from the picture. Buttons add a
+place to a route, checkboxes tick a connection into a tree or a place onto the
+near side of a cut, and clicking the diagram does exactly what those do and
+nothing more. Every change is announced in a live region, and a connection is
+hit through an invisible wide line, because nobody can be asked to click a
+three-pixel stroke.
+
+## Number representation
+
+`<bitflow-task-number-representation>` gives a value and asks for it again
+another way: decimal, binary, octal, hexadecimal, or text taken character by
+character as ASCII or Unicode.
+
+The width and the signedness belong to the *value* rather than to either
+representation — "an eight-bit signed integer" is what a thing is, and decimal
+and binary are two ways of writing it down. That is why there is one of each
+setting rather than one per side, and it is what makes the interesting
+question expressible at all: 214 and −42 are the same eight bits.
+
+It is marked arithmetically. `2A`, `2a` and `0x2A` are one answer, and no list
+of accepted spellings is kept anywhere. A minus sign is refused where the sign
+is the top bit, because writing `-101010` for an eight-bit pattern is the
+mistake the question is usually about — refusing it says so, rather than
+quietly understanding it. The grammar is hand-parsed and deliberately narrow:
+no `eval`, no `Function`, and no `parseInt`, which reads `12nonsense` as twelve
+and `0x10` as sixteen wherever it is handed one. Values are `bigint`, so a
+64-bit pattern is exact.
+
+A space separates one value from the next and an underscore only groups the
+digits of one, so `0100_1000` cannot mean two things at once. The author may
+require the leading zeros, in which case the answer can also be marked digit by
+digit — the two strings line up position for position, and "the third bit is
+wrong" means something. An item is worth the same whether or not the answer
+could be read at all.
+
+The answer is the raw text alone; what it comes to is derived, and shown back
+as the learner types, since this is a task type where the thing marked is not
+the thing typed.
+
+### Accessibility
+
+One labelled text box, monospaced and letter-spaced so a run of digits can be
+read position by position. What the task makes of what was typed is announced
+in a live region as it changes, and what the answer has to look like — the
+number of digits, which prefixes are accepted, whether spaces are allowed — is
+said in the hint under the label rather than discovered by being marked wrong.
+
 ## Item pools
 
 A pool hands each learner a random few of its steps. Twenty questions in the

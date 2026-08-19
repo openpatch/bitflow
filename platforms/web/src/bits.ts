@@ -27,6 +27,10 @@ const loaders: Record<string, () => Promise<unknown>> = {
   "task-word-search": () => import("@bitflow/task-word-search"),
   "task-mouse-accuracy": () => import("@bitflow/task-mouse-accuracy"),
   "task-keyboard-speed": () => import("@bitflow/task-keyboard-speed"),
+  "task-code-trace": () => import("@bitflow/task-code-trace"),
+  "task-graph-path": () => import("@bitflow/task-graph-path"),
+  "task-number-representation": () =>
+    import("@bitflow/task-number-representation"),
 };
 
 const params = new URLSearchParams(location.search);

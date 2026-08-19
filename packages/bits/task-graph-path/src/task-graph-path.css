@@ -1,0 +1,141 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-graph {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+/* Held to the same shape as the viewBox, so a position inside the element is
+   the position inside the diagram — which is what makes dragging a place land
+   where the pointer is, and what keeps a circle round. */
+.bitflow-graph-diagram {
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  touch-action: none;
+}
+
+.bitflow-graph-edge line {
+  stroke: var(--bitflow-color-neutral-400);
+  stroke-width: 3;
+}
+
+.bitflow-graph-edge marker path,
+.bitflow-graph-diagram marker path {
+  fill: var(--bitflow-color-neutral-400);
+}
+
+/* Invisible, wide, and the thing a pointer actually hits: nobody can be asked
+   to click a three-unit line. */
+.bitflow-graph-edge-hit {
+  stroke: transparent;
+  stroke-width: 26;
+  cursor: pointer;
+}
+
+.bitflow-graph-edge-chosen line {
+  stroke: var(--bitflow-color-primary);
+  stroke-width: 7;
+}
+
+.bitflow-graph-weight {
+  fill: var(--bitflow-color-text-muted);
+  font-family: var(--bitflow-font-family);
+  font-size: 26px;
+}
+
+.bitflow-graph-node circle {
+  fill: var(--bitflow-color-surface);
+  stroke: var(--bitflow-color-neutral-700);
+  stroke-width: 3;
+}
+
+.bitflow-graph-node text {
+  fill: var(--bitflow-color-text);
+  font-family: var(--bitflow-font-family);
+  font-size: 30px;
+  font-weight: var(--bitflow-font-weight-medium);
+  /* The label belongs to the circle, not to a text selection that smears
+     across the diagram the moment somebody drags. */
+  user-select: none;
+}
+
+.bitflow-graph-node {
+  cursor: pointer;
+}
+
+.bitflow-graph-node-movable {
+  cursor: grab;
+}
+
+/* The start and the finish are part of the question, so they are marked on the
+   picture and not only in the sentence above it. */
+.bitflow-graph-node-source circle {
+  stroke: var(--bitflow-color-info);
+  stroke-width: 6;
+}
+
+.bitflow-graph-node-target circle {
+  stroke: var(--bitflow-color-manual);
+  stroke-width: 6;
+  stroke-dasharray: 10 6;
+}
+
+.bitflow-graph-node-chosen circle {
+  fill: var(--bitflow-color-primary-light);
+}
+
+.bitflow-graph-node-right circle {
+  fill: var(--bitflow-color-correct-surface);
+  stroke: var(--bitflow-color-correct);
+}
+
+/* The step number beside a place on a route: small, and outside the circle so
+   it never fights the name for room. */
+.bitflow-graph-step {
+  fill: var(--bitflow-color-primary-dark);
+  font-family: var(--bitflow-font-family);
+  font-size: 26px;
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-graph-written summary {
+  cursor: pointer;
+  color: var(--bitflow-color-text-muted);
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-graph-written ul {
+  margin: var(--bitflow-space-xxsmall) 0 0;
+  padding-left: var(--bitflow-space-medium);
+}
+
+/* The answer as a list, numbered, so a route can be read as well as seen. */
+.bitflow-graph-chosen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xxsmall);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: bitflow-graph-step;
+}
+
+.bitflow-graph-chip {
+  counter-increment: bitflow-graph-step;
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  border-radius: var(--bitflow-radius-full);
+  background: var(--bitflow-color-primary-light);
+  color: var(--bitflow-color-primary-dark);
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-graph-chip::before {
+  content: counter(bitflow-graph-step) ". ";
+  font-weight: var(--bitflow-font-weight-bold);
+}

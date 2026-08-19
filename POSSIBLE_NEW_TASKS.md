@@ -362,15 +362,28 @@ Escape to abandon.
 
 ### Code Trace
 
-**Suggested type:** `task-code-trace`
+**Suggested type:** `task-code-trace` — **built**, as
+[`@bitflow/task-code-trace`](packages/bits/task-code-trace).
 
-Show a small, author-provided program and ask the learner to predict variable
-values, output, or the next execution step at configured checkpoints.
+A program shown as text and a trace table beside it: a row per moment, a column
+per thing being watched. The code is never executed — not by `eval`, not by
+`Function`, not by a runner somewhere else — and what makes the task gradable is
+that the author writes the states down as well as the code, so marking is a
+comparison against authored data rather than a language implementation this
+package would have to be trusted with.
 
-Authors provide the code as display text plus a finite sequence of expected
-execution states. The learner selects/fills values for each checkpoint. The
-task evaluates by comparing against those authored states; it never executes
-the displayed code.
+A column watches a value, the output *so far*, or which line runs next, which is
+why "predict the variables", "predict the output" and "predict the next step"
+are one bit rather than three: they are one answer of a different kind. The next
+line is chosen from the listing rather than typed, so the learner picks a line
+instead of remembering a number.
+
+Cells are compared as values rather than as strings: `6`, `6.0` and `+6` are one
+answer, and so are `[1, 2]` and `[1,2]`. A cell the author left blank means "no
+value yet" — a real part of a trace, which has to be left blank for the table to
+be right, but not a mark to be earned, since a table of undefined variables
+would otherwise pay for answering none of it. A point per cell, because a trace
+that goes wrong at step four got the first three right.
 
 ### Algorithm Simulation
 
@@ -387,26 +400,53 @@ correct intermediate states.
 
 ### Graph Path and Traversal
 
-**Suggested type:** `task-graph-path`
+**Suggested type:** `task-graph-path` — **built**, as
+[`@bitflow/task-graph-path`](packages/bits/task-graph-path).
 
-Present a weighted or unweighted graph and ask the learner to select a path,
-shortest path, traversal order, spanning tree, or cut.
+A graph, and something to pick out of it: a route, the cheapest route, the order
+a breadth- or depth-first search visits places in, a cheapest spanning tree, or a
+cheapest cut. All five are one bit because they are one answer — a set or a
+sequence of node and edge ids — and because they are marked the same way.
 
-The learner answer is a stable node/edge ID sequence. Evaluate with
-client-side graph algorithms over the authored graph—BFS/DFS, Dijkstra,
-Kruskal/Prim, and direct path validation are deterministic and require no
-server.
+Dijkstra, the two searches, Kruskal and a max-flow run in the page over the
+authored graph, so the cost of the best answer is computed rather than stored.
+That is what lets an equally good alternative be right without the author having
+thought of it, which is the whole difficulty with these questions on paper. What
+is wrong is said in words — "that route works, but there is a cheaper one" — each
+a statement about what the learner chose, so none of it gives the answer away.
+
+A traversal states its tie-break rule as part of the question, since without one
+it has several right orders, and it is the only goal scored out of more than one:
+a point per place named in the right order before it goes wrong. A route that
+does not arrive is not two-thirds of a route.
+
+The diagram is never the only place the graph exists — it is written out
+underneath — and the answer is built from buttons and checkboxes, with clicking
+the picture doing exactly what those do and nothing more.
 
 ### Number Representation
 
-**Suggested type:** `task-number-representation`
+**Suggested type:** `task-number-representation` — **built**, as
+[`@bitflow/task-number-representation`](packages/bits/task-number-representation).
 
-Ask learners to convert among binary, decimal, hexadecimal, two's complement,
-ASCII/Unicode, bit masks, and fixed-width integer representations.
+The same value written again another way: decimal, binary, octal, hexadecimal, or
+text taken character by character as ASCII or Unicode. The width and the
+signedness belong to the value rather than to either representation — "an
+eight-bit signed integer" is what a thing is — which is what makes the
+interesting question expressible: 214 and −42 are the same eight bits.
 
-Store the source value, target representation, bit width, and accepted
-formatting variants in task data. Evaluate by parsing a deliberately limited
-input grammar and comparing normalized values in the browser.
+Marked arithmetically, so `2A`, `2a` and `0x2A` are one answer and no list of
+spellings is kept anywhere. A minus sign is refused where the sign is the top
+bit, because writing `-101010` for an eight-bit pattern is the mistake the
+question is usually about. The grammar is hand-parsed and narrow: no `eval`, no
+`Function`, and no `parseInt`, which reads `12nonsense` as twelve and `0x10` as
+sixteen wherever it is handed one. Values are `bigint`, so a 64-bit pattern is
+exact.
+
+A space separates one value from the next and an underscore only groups the
+digits of one, so `0100_1000` cannot mean two things at once. Where the leading
+zeros are required the answer can also be marked digit by digit. The answer is
+the raw text alone — what it comes to is derived, and shown back as it is typed.
 
 ### Boolean Logic and Truth Tables
 
@@ -610,9 +650,9 @@ browser, with no server algebra service.
 10b. ~~Maths Expression~~ — built, as `task-math`
 11. Image / Diagram Annotation
 12. Short Free-Text With Rubric
-13. Code Trace
-14. Graph Path and Traversal
-15. Number Representation
+13. ~~Code Trace~~ — built
+14. ~~Graph Path and Traversal~~ — built
+15. ~~Number Representation~~ — built
 16. Boolean Logic and Truth Tables
 17. Equation Transformation Steps
 18. Fractions and Number Lines
