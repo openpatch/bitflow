@@ -37,6 +37,9 @@ export const bitLoaders: Record<string, () => Promise<unknown>> = {
   "task-graph-path": () => import("@bitflow/task-graph-path"),
   "task-number-representation": () =>
     import("@bitflow/task-number-representation"),
+  "task-free-text": () => import("@bitflow/task-free-text"),
+  "task-boolean-logic": () => import("@bitflow/task-boolean-logic"),
+  "task-image-annotation": () => import("@bitflow/task-image-annotation"),
 };
 
 export const KNOWN_BIT_TYPES = Object.keys(bitLoaders);

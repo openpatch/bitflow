@@ -1,0 +1,80 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+/* The rubric, shown before the answer and again with outcomes after. A list
+   rather than a table: it is a set of things to say, not a grid of values. */
+.bitflow-free-text-rubric {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-free-text-criterion {
+  display: flex;
+  align-items: baseline;
+  gap: var(--bitflow-space-xsmall);
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+/* The mark carries no meaning on its own — the state is also in the border and
+   in visually hidden text beside the label, because a tick and a dot are two
+   glyphs a long way from being a distinction. */
+.bitflow-free-text-mark {
+  flex: none;
+  width: 1rem;
+  text-align: center;
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-free-text-criterion-met {
+  border-color: var(--bitflow-color-correct);
+  background: var(--bitflow-color-correct-surface);
+}
+
+.bitflow-free-text-criterion-met .bitflow-free-text-mark {
+  color: var(--bitflow-color-correct);
+}
+
+/* A line that was not mentioned is not marked wrong. Nothing here read the
+   answer, so it is left neutral rather than painted red at a learner who may
+   well have said it in other words. */
+.bitflow-free-text-criterion-missed {
+  border-style: dashed;
+}
+
+.bitflow-free-text-model {
+  padding: var(--bitflow-space-xsmall);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  background: var(--bitflow-color-surface);
+}
+
+/* Authoring: one rubric line as a row — what it looks for, what it is worth,
+   and what to do with it. Wrapping, so a narrow inspector drops the buttons
+   below rather than squeezing the label to nothing. */
+.bitflow-free-text-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-free-text-row > .bitflow-input {
+  flex: 1 1 var(--bitflow-free-text-label-min, 8rem);
+  min-width: 0;
+}
+
+.bitflow-free-text-row > .bitflow-free-text-points {
+  flex: 0 0 var(--bitflow-free-text-points-width, 4.5rem);
+}
+
+.bitflow-free-text-actions {
+  flex: none;
+  flex-wrap: nowrap;
+}

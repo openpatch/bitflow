@@ -27,6 +27,9 @@
 "@bitflow/task-code-trace": major
 "@bitflow/task-graph-path": major
 "@bitflow/task-number-representation": major
+"@bitflow/task-free-text": major
+"@bitflow/task-boolean-logic": major
+"@bitflow/task-image-annotation": major
 ---
 
 Rewrite bitflow as web components.

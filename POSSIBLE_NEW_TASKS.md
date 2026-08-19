@@ -648,12 +648,12 @@ browser, with no server algebra service.
 9. ~~Find the Words~~ — built
 10. ~~Numeric / Expression Answer~~ — built
 10b. ~~Maths Expression~~ — built, as `task-math`
-11. Image / Diagram Annotation
-12. Short Free-Text With Rubric
+11. ~~Image / Diagram Annotation~~ — built
+12. ~~Short Free-Text With Rubric~~ — built
 13. ~~Code Trace~~ — built
 14. ~~Graph Path and Traversal~~ — built
 15. ~~Number Representation~~ — built
-16. Boolean Logic and Truth Tables
+16. ~~Boolean Logic and Truth Tables~~ — built
 17. Equation Transformation Steps
 18. Fractions and Number Lines
 19. Table Completion

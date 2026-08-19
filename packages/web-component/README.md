@@ -982,6 +982,114 @@ in a live region as it changes, and what the answer has to look like — the
 number of digits, which prefixes are accepted, whether spaces are allowed — is
 said in the hint under the label rather than discovered by being marked wrong.
 
+## Written answer
+
+`<bitflow-task-free-text>` collects a few sentences and refuses to pretend it
+understood them.
+
+**Who marks it is the whole of the bit.** Under *a person, later* the task
+scores `unknown` — nothing out of nothing — the text travels whole in the
+attempt for whoever is going to read it, and the learner is told so before they
+start writing. That is the only honest setting for an open question, and it is
+the default. Under *words to look for*, each rubric line looks for its words
+and the learner is told that is what happened: the wording says *mentioned*,
+never *correct*, because a good answer in other words scores zero and saying
+otherwise would be a lie about what a browser can do.
+
+Words are matched whole, so "sort" is not met by "assortment" and "or" is not
+met by every second sentence. Any one of a line's words counts — they are
+spellings of one idea, not a list of requirements — and a line with a space in
+it is looked for as a phrase. The matching walks the answer's own words rather
+than building a `RegExp` out of author text, so an author's stray bracket
+cannot become an exception in a learner's browser.
+
+The rubric is shown before the answer is written as well as after it is marked:
+knowing what is being looked for is part of the question, not a reward for
+finishing. A shortest length is a count on the screen and never a gate — a
+learner who said it in fewer words has not done anything wrong — while a
+longest length is enforced by the box, since a limit that silently accepts more
+is not a limit.
+
+### Accessibility
+
+One labelled text box with the count tied to it through `aria-describedby`, in
+a polite live region so it is available on demand rather than read out a
+keystroke at a time. Each rubric line carries its outcome as text beside the
+label as well as in the tick and the border, and a line that was not mentioned
+is drawn as unfinished rather than as a mistake — nothing read the answer, and
+it may well have been said in other words.
+
+## Truth table
+
+`<bitflow-task-boolean-logic>` asks for a truth table, worked out row by row.
+
+**There is no stored answer key.** The author writes an expression; the rows
+are generated from the variables and every cell is worked out by walking the
+tree. That is what makes it reliable — a table cannot disagree with the heading
+above it, because the table *is* the heading. Renaming a variable or fixing a
+bracket rewrites every cell at once, and there is nothing left over to go
+stale.
+
+The expression is stored as a tree and typed as text. The parser is
+hand-written over a grammar with variables, five connectives, two constants and
+brackets, in the same spirit as the numbers task: no `eval`, no `Function`, no
+`RegExp` built from author text, and no way to *name* a global, a property or a
+call target. `alert(1)` is not blocked, it is unsayable. Every ordinary
+spelling works — `AND`, `&&`, `∧`, `*`; `->`, `=>`, `→` — and precedence is the
+textbook order, so an expression copied out of one means what it meant there.
+The form reads the expression back with only the brackets that carry meaning,
+which is the only way to see that `A ∨ B ∧ C` was understood the way it was
+written.
+
+A column can be marked as given: shown worked out rather than asked for, and
+never scored. A table that builds up to something is taught by handing over the
+early columns.
+
+### Accessibility
+
+A real `<table>` with row and column headers, and every control labelled with
+both — "A ∧ ¬B, when A is true and B is false" — because a header association
+is not a label everywhere. Each cell is a `<select>` with three states rather
+than a checkbox with two: a learner who has not reached a row must not look
+like one who answered false, and an unfinished cell is drawn as unfinished
+rather than as a mistake.
+
+## Mark the picture
+
+`<bitflow-task-image-annotation>` hands the learner the picture and asks them
+to mark it. The difference from *find the spot* is who chooses the position:
+there the author draws the regions and the learner picks one, here the learner
+decides where the thing is. "Which of these is the nucleus" and "mark the
+nucleus" are different questions, and the second cannot be answered by
+elimination.
+
+The accepted regions are never drawn until the answer is in. A point is judged
+by whether it lands inside; a box the learner draws is judged against a box the
+author drew by how much they share as a fraction of everything they cover
+between them — so an outline round the whole picture does not count as an
+outline round one thing. A box against a spot is taken by its middle, since
+"outline it" and "mark the spot" are not the same question.
+
+Each region takes at most one mark and each mark answers at most one region, so
+covering the picture cannot collect every point. A mark in the right place
+under the wrong name is reported as exactly that rather than as a miss. Stray
+marks cost nothing by default: placing the right marks is already what is
+rewarded, and charging for a stray one makes the task about caution.
+
+### Accessibility
+
+Placing a mark is one decision — where — and a keyboard makes it exactly as
+well as a pointer, so there is no fallback path here. A crosshair the arrow
+keys move and Enter places; a box is Enter for one corner and Enter for the
+other, which is the two decisions a drag makes, made one at a time, with Escape
+to start over. Shift moves further per press.
+
+Under the picture, every mark is a row saying where it is in per cent, what it
+is called, and how it was judged — which is not a courtesy, it is the only way
+anybody removes or renames one, and it is how the answer reads back as words.
+What was missed is named there too, since an outline on a picture cannot say it
+to everybody.
+
 ## Item pools
 
 A pool hands each learner a random few of its steps. Twenty questions in the

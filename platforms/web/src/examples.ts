@@ -30,6 +30,14 @@ const processor = svg(
    <text x="310" y="285" font-family="sans-serif" font-size="16" fill="#556">A processor</text>`,
 );
 
+const cell = svg(
+  `<rect width="620" height="310" fill="#eef2f5"/>
+   <ellipse cx="310" cy="155" rx="230" ry="120" fill="#dbe7d4" stroke="#7f9c6d" stroke-width="3"/>
+   <ellipse cx="270" cy="140" rx="55" ry="45" fill="#9fb8d8" stroke="#4a6d99" stroke-width="3"/>
+   <circle cx="420" cy="200" r="22" fill="#c8b6d8" stroke="#7a5c99" stroke-width="3"/>
+   <circle cx="180" cy="215" r="16" fill="#e0c9a6" stroke="#a3854f" stroke-width="3"/>`,
+);
+
 const evaluation = {
   mode: "auto",
   enableRetry: true,
@@ -563,6 +571,128 @@ export const examples: Example[] = [
       allowSeparators: true,
       requireFullWidth: true,
       scoring: "digits",
+      evaluation,
+    },
+  },
+  {
+    type: "task-free-text",
+    name: "Written answer",
+    shows:
+      "A few sentences, kept whole for a person to read. The learner is told before they write whether a person or a word list is going to look at it, and an answer waiting for a reader scores nothing out of nothing rather than pretending to a mark.",
+    data: {
+      instruction: "Why does binary search need the list to be sorted?",
+      placeholder: "",
+      marking: "keywords",
+      minimumLength: 80,
+      maximumLength: 600,
+      criteria: [
+        {
+          id: "sorted",
+          label: "Says the list has to be in order",
+          keywords: ["sorted", "order", "ordered"],
+          points: 1,
+        },
+        {
+          id: "halve",
+          label: "Says half the list is ruled out each time",
+          keywords: ["half", "halve", "halves", "middle"],
+          points: 1,
+        },
+        {
+          id: "compare",
+          label: "Says the comparison tells you which half",
+          keywords: ["compare", "compares", "comparing", "comparison", "bigger", "smaller"],
+          points: 1,
+        },
+      ],
+      modelAnswer:
+        "Comparing with the middle value only tells you which side to keep if everything on one side is smaller and everything on the other is larger. Without that, ruling out half the list would rule out the answer.",
+      caseSensitive: false,
+      evaluation,
+    },
+  },
+  {
+    type: "task-boolean-logic",
+    name: "Truth table",
+    shows:
+      "A truth table worked out from the expression rather than from a stored answer key, so the table cannot disagree with the heading above it. The author types the expression the way it is written on a board; nothing is executed.",
+    data: {
+      instruction:
+        "Fill in the table for **A \u2227 \u00acB**. The middle column is done for you.",
+      variables: ["A", "B"],
+      columns: [
+        {
+          id: "notb",
+          label: "",
+          expression: { kind: "not", value: { kind: "variable", name: "B" } },
+          given: true,
+        },
+        {
+          id: "out",
+          label: "",
+          expression: {
+            kind: "and",
+            left: { kind: "variable", name: "A" },
+            right: { kind: "not", value: { kind: "variable", name: "B" } },
+          },
+          given: false,
+        },
+      ],
+      rowOrder: "standard",
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-image-annotation",
+    name: "Mark the picture",
+    shows:
+      "The learner puts their own marks on the picture, and where they landed is the answer \u2014 no candidate regions to choose between, so it cannot be answered by elimination. The crosshair moves with the arrow keys, so a keyboard aims exactly as freely as a pointer.",
+    data: {
+      instruction: "Mark the nucleus and the two vacuoles.",
+      background: { src: cell, alt: "A plant cell seen through a microscope" },
+      size: { width: 620, height: 310 },
+      annotationKind: "point",
+      maximumCount: 3,
+      requireLabel: false,
+      regions: [
+        {
+          id: "nucleus",
+          kind: "circle",
+          x: 0.435,
+          y: 0.452,
+          radius: 0.09,
+          width: 0.2,
+          height: 0.2,
+          label: "the nucleus",
+          acceptedLabels: [],
+        },
+        {
+          id: "vacuole-1",
+          kind: "circle",
+          x: 0.677,
+          y: 0.645,
+          radius: 0.06,
+          width: 0.2,
+          height: 0.2,
+          label: "the larger vacuole",
+          acceptedLabels: [],
+        },
+        {
+          id: "vacuole-2",
+          kind: "circle",
+          x: 0.29,
+          y: 0.694,
+          radius: 0.055,
+          width: 0.2,
+          height: 0.2,
+          label: "the smaller vacuole",
+          acceptedLabels: [],
+        },
+      ],
+      overlap: 0.5,
+      penaliseExtras: false,
+      caseSensitive: false,
       evaluation,
     },
   },

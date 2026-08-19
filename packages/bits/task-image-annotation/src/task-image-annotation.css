@@ -1,0 +1,201 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-annotate {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+/* The picture holds its own proportions from the authored size, so a mark at
+   40% across is 40% across whatever the picture is being drawn at. */
+.bitflow-annotate-picture {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  overflow: hidden;
+  background: var(--bitflow-color-surface);
+  touch-action: none;
+}
+
+.bitflow-annotate-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+}
+
+.bitflow-annotate-noimage {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bitflow-color-neutral-100),
+    var(--bitflow-color-neutral-100) 10px,
+    var(--bitflow-color-surface) 10px,
+    var(--bitflow-color-surface) 20px
+  );
+}
+
+/* One control over the whole picture: in the tab order, named, and the thing
+   the arrow keys talk to. */
+.bitflow-annotate-surface {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: crosshair;
+}
+
+.bitflow-annotate-surface:disabled {
+  cursor: default;
+}
+
+/* The crosshair the arrow keys move. Two rules crossing rather than a dot, so
+   it can be seen against a busy picture. Shown only while the picture has
+   focus: a pointer user has a cursor already, and a second cross would be a
+   distraction. */
+.bitflow-annotate-aim {
+  position: absolute;
+  width: var(--bitflow-annotate-aim-size, 1.5rem);
+  height: var(--bitflow-annotate-aim-size, 1.5rem);
+  margin-left: calc(var(--bitflow-annotate-aim-size, 1.5rem) / -2);
+  margin-top: calc(var(--bitflow-annotate-aim-size, 1.5rem) / -2);
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(var(--bitflow-color-primary), var(--bitflow-color-primary))
+      center / var(--bitflow-border-width) 100% no-repeat,
+    linear-gradient(var(--bitflow-color-primary), var(--bitflow-color-primary))
+      center / 100% var(--bitflow-border-width) no-repeat;
+}
+
+.bitflow-annotate-surface:focus-visible ~ .bitflow-annotate-aim {
+  opacity: 1;
+}
+
+.bitflow-annotate-mark {
+  position: absolute;
+  pointer-events: none;
+  border: var(--bitflow-border-width) solid var(--bitflow-color-primary);
+  background: color-mix(in srgb, var(--bitflow-color-primary) 15%, transparent);
+}
+
+.bitflow-annotate-mark-point {
+  width: var(--bitflow-annotate-mark-size, 1.5rem);
+  height: var(--bitflow-annotate-mark-size, 1.5rem);
+  margin-left: calc(var(--bitflow-annotate-mark-size, 1.5rem) / -2);
+  margin-top: calc(var(--bitflow-annotate-mark-size, 1.5rem) / -2);
+  border-radius: var(--bitflow-radius-full);
+}
+
+.bitflow-annotate-number {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--bitflow-font-size-small);
+  font-weight: var(--bitflow-font-weight-bold);
+  color: var(--bitflow-color-primary);
+}
+
+/* An outcome is never carried by colour alone: the row below every mark says
+   the same thing in words. */
+.bitflow-annotate-mark-right {
+  border-color: var(--bitflow-color-correct);
+  background: color-mix(in srgb, var(--bitflow-color-correct) 20%, transparent);
+}
+
+.bitflow-annotate-mark-named-wrong {
+  border-color: var(--bitflow-color-warning);
+  border-style: dashed;
+}
+
+.bitflow-annotate-mark-stray {
+  border-color: var(--bitflow-color-wrong);
+  border-style: dashed;
+}
+
+.bitflow-annotate-drawing {
+  border-style: dashed;
+}
+
+/* Where the answer was, drawn only once the answer is in. */
+.bitflow-annotate-region {
+  position: absolute;
+  border: var(--bitflow-border-width) dashed var(--bitflow-color-correct);
+  background: transparent;
+  pointer-events: none;
+}
+
+/* Authoring: the same outline, but a control — it can be selected and dragged,
+   and it names itself. */
+.bitflow-annotate-editor .bitflow-annotate-region {
+  pointer-events: auto;
+  cursor: move;
+  padding: 0;
+  border-style: solid;
+  border-color: var(--bitflow-color-primary);
+  background: color-mix(in srgb, var(--bitflow-color-primary) 10%, transparent);
+}
+
+.bitflow-annotate-editor {
+  cursor: crosshair;
+}
+
+.bitflow-annotate-region-selected {
+  border-color: var(--bitflow-color-primary-dark);
+  background: color-mix(in srgb, var(--bitflow-color-primary) 25%, transparent);
+}
+
+.bitflow-annotate-region-name {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  padding: 0 var(--bitflow-space-xxsmall);
+  font-size: var(--bitflow-font-size-small);
+  white-space: nowrap;
+  color: var(--bitflow-color-text);
+  background: var(--bitflow-color-surface);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+/* Every mark as a row. Not a courtesy for screen readers — it is the only way
+   anybody removes or renames one. */
+.bitflow-annotate-list,
+.bitflow-annotate-missed {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-annotate-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-annotate-row-where {
+  font-variant-numeric: tabular-nums;
+}
+
+.bitflow-annotate-row > .bitflow-input {
+  flex: 1 1 var(--bitflow-annotate-name-min, 8rem);
+  min-width: 0;
+}
+
+.bitflow-annotate-verdict {
+  color: var(--bitflow-color-text-muted);
+}

@@ -1,0 +1,108 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+/* A wide table scrolls inside itself. The controls are focusable, so the whole
+   of it is still reachable from the keyboard without a scroll container that
+   is its own tab stop. */
+.bitflow-truth-scroll {
+  overflow-x: auto;
+}
+
+.bitflow-truth-table {
+  border-collapse: collapse;
+  /* Sized from the content, not from the container: cells at a fraction of a
+     fit-content parent collapse into a smear. */
+  width: auto;
+  min-width: 100%;
+}
+
+.bitflow-truth-table caption {
+  text-align: left;
+  padding-bottom: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-truth-table th,
+.bitflow-truth-table td {
+  padding: var(--bitflow-space-xxsmall);
+  border: 1px solid var(--bitflow-color-border);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.bitflow-truth-table thead th {
+  background: var(--bitflow-color-neutral-100);
+  font-weight: var(--bitflow-font-weight-medium);
+  white-space: nowrap;
+}
+
+/* The input side is the question, not part of the answer: it reads as the
+   frame of the table rather than as cells with something in them. */
+.bitflow-truth-input,
+.bitflow-truth-table tbody th {
+  background: var(--bitflow-color-neutral-100);
+  font-weight: var(--bitflow-font-weight-standard);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* A second line in a heading: that this column is worked out already. */
+.bitflow-truth-note {
+  display: block;
+  font-size: var(--bitflow-font-size-small);
+  font-weight: var(--bitflow-font-weight-standard);
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-truth-cell {
+  padding: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-truth-select {
+  /* Shorter than a standalone field: a table of 44px controls is a wall. The
+     cell padding keeps the touch target comfortable. */
+  min-height: 2.25rem;
+  min-width: var(--bitflow-truth-cell-width, 6rem);
+}
+
+/* Doubled for the same reason as task-choice: the outcome must outrank the
+   neutral control styling. */
+.bitflow-truth-cell-correct .bitflow-select {
+  border-color: var(--bitflow-color-correct);
+  background: var(--bitflow-color-correct-surface);
+}
+
+.bitflow-truth-cell-wrong .bitflow-select {
+  border-color: var(--bitflow-color-wrong);
+  background: var(--bitflow-color-wrong-surface);
+}
+
+/* A cell nobody answered is not a wrong answer. Marked as unfinished rather
+   than as a mistake, because those are different things to be told. */
+.bitflow-truth-cell-blank .bitflow-select {
+  border-style: dashed;
+}
+
+/* Authoring: one column as a row — the expression, its heading, and what to do
+   with it. Wrapping, so a narrow inspector drops the buttons below rather than
+   squeezing the expression to nothing. */
+.bitflow-truth-editor-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-truth-editor-row > .bitflow-input {
+  flex: 1 1 var(--bitflow-truth-editor-min, 7rem);
+  min-width: 0;
+}
+
+.bitflow-truth-expression {
+  font-family: var(--bitflow-font-family-mono);
+}
+
+.bitflow-truth-actions {
+  flex: none;
+  flex-wrap: nowrap;
+}
