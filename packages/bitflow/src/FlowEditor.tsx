@@ -7,17 +7,21 @@ import {
   type BitflowDocument,
   type BitflowError,
   type BitFormProps,
+  type BitNode,
   type Diagnostic,
   type ValidationResult,
 } from "@bitflow/core";
 import {
   BitView,
   CheckboxField,
+  Disclosure,
   Field,
   SecondsField,
   SelectField,
   TextAreaField,
   TextField,
+  usePanels,
+  type Panels,
 } from "@bitflow/element";
 import {
   applyNodeChanges,
@@ -44,7 +48,7 @@ import {
   type Ref,
 } from "react";
 import { useStore } from "zustand";
-import { ConditionEditor } from "./ConditionEditor";
+import { ConditionEditor, summariseCondition } from "./ConditionEditor";
 import { createEditorStore, type EditorStore } from "./editorStore";
 import { nodeTypes } from "./EditorNode";
 import { summarise } from "./summarise";
@@ -126,6 +130,10 @@ const FlowEditorBody = ({
    * file would push a preference at everyone the file is sent to.
    */
   const [inspectorWidth, setInspectorWidth] = useState(DEFAULT_INSPECTOR);
+  // The palette starts open — a new flow has nothing on the canvas and the
+  // palette is the only way to begin. The settings groups start closed.
+  const palettePanel = useGroups(["palette"]);
+  const settingsPanels = useGroups();
   const editorRef = useRef<HTMLDivElement>(null);
 
   const t = useCallback(
@@ -216,10 +224,16 @@ const FlowEditorBody = ({
         targetHandle: edge.targetHandle,
         selected: edge.id === state.selectedEdgeId,
         // A labelled edge is how an author sees at a glance which branch is
-        // which without clicking each one.
-        label: edge.label ?? (edge.condition ? "?" : undefined),
+        // which without clicking each one. Failing a name they wrote, the rule
+        // describes itself: this used to draw a bare "?" on every conditional
+        // edge, so a step with four branches out of it showed four identical
+        // question marks and the only way to tell them apart was to click each.
+        label:
+          edge.label ||
+          summariseCondition(state.doc, edge.condition, resolved) ||
+          undefined,
       })),
-    [state.doc.edges, state.selectedEdgeId],
+    [state.doc.edges, state.selectedEdgeId, state.doc.meta.sections, resolved],
   );
 
   const selectedNode = state.doc.nodes.find((n) => n.id === state.selectedNodeId);
@@ -376,20 +390,29 @@ const FlowEditorBody = ({
       <aside className="bitflow-editor-sidebar">
         {!readonly && (
           <section className="bitflow-stack-small bitflow-stack">
-            <h2 className="bitflow-heading">{t("palette")}</h2>
-            <div className="bitflow-palette">
-              {listBits().map((bit) => (
-                <button
-                  key={bit.type}
-                  type="button"
-                  className="bitflow-palette-item"
-                  title={bit.info(resolved).description}
-                  onClick={() => store.getState().addNode(bit.type)}
-                >
-                  {bit.info(resolved).name}
-                </button>
-              ))}
-            </div>
+            {/* Folds, because it is thirty buttons and it sits above the
+                thing being edited: an author who is editing rather than
+                building scrolled past all of them on every step. Open to
+                begin with, and it stays wherever they leave it. */}
+            <Disclosure
+              summary={t("palette")}
+              aside={t("groupPalette", { count: listBits().length })}
+              {...palettePanel.props("palette")}
+            >
+              <div className="bitflow-palette">
+                {listBits().map((bit) => (
+                  <button
+                    key={bit.type}
+                    type="button"
+                    className="bitflow-palette-item"
+                    title={bit.info(resolved).description}
+                    onClick={() => store.getState().addNode(bit.type)}
+                  >
+                    {bit.info(resolved).name}
+                  </button>
+                ))}
+              </div>
+            </Disclosure>
           </section>
         )}
 
@@ -419,6 +442,36 @@ const FlowEditorBody = ({
                 }
               />
               {!readonly && (
+                <TextField
+                  label={t("edgeLabel")}
+                  hint={t("edgeLabelHint")}
+                  value={selectedEdge.label ?? ""}
+                  onChange={(label) =>
+                    store.getState().setEdgeLabel(selectedEdge.id, label)
+                  }
+                />
+              )}
+              {!readonly && (
+                <SelectField
+                  label={t("edgeReset")}
+                  hint={t("edgeResetHint")}
+                  value={selectedEdge.resetTarget ?? ""}
+                  options={[
+                    { value: "", label: t("edgeResetNone") },
+                    { value: "result", label: t("edgeResetResult") },
+                    { value: "answer", label: t("edgeResetAnswer") },
+                  ]}
+                  onChange={(reset) =>
+                    store
+                      .getState()
+                      .setEdgeReset(
+                        selectedEdge.id,
+                        reset === "" ? undefined : (reset as "result" | "answer"),
+                      )
+                  }
+                />
+              )}
+              {!readonly && (
                 <button
                   type="button"
                   className="bitflow-button bitflow-button-secondary"
@@ -429,7 +482,13 @@ const FlowEditorBody = ({
               )}
             </div>
           ) : (
-            <FlowSettings store={store} locale={resolved} readonly={readonly} t={t} />
+            <FlowSettings
+              store={store}
+              locale={resolved}
+              readonly={readonly}
+              panels={settingsPanels}
+              t={t}
+            />
           )}
         </section>
 
@@ -447,7 +506,27 @@ const FlowEditorBody = ({
                       <button
                         type="button"
                         className="bitflow-problem-link"
-                        onClick={() => store.getState().select(target)}
+                        onClick={() => {
+                          if (target.kind === "node") {
+                            store
+                              .getState()
+                              .select({ nodeId: target.nodeId, edgeId: null });
+                            return;
+                          }
+                          if (target.kind === "edge") {
+                            store
+                              .getState()
+                              .select({ nodeId: null, edgeId: target.edgeId });
+                            return;
+                          }
+                          // The flow's own settings: clear the selection so the
+                          // panel shows them, and open the group at fault —
+                          // otherwise the author is sent to a folded heading.
+                          store
+                            .getState()
+                            .select({ nodeId: null, edgeId: null });
+                          settingsPanels.open(target.group);
+                        }}
                       >
                         {diagnostic.message}
                       </button>
@@ -466,15 +545,54 @@ const FlowEditorBody = ({
   );
 };
 
+/**
+ * The flow's own settings, in groups that fold away.
+ *
+ * They used to be one flat column — every field, every explanation, all of it
+ * on screen at once — which came to about two pages of prose in a panel three
+ * hundred pixels wide. None of the text was wrong; there was just no way to put
+ * it down.
+ *
+ * So each group collapses, and its summary carries what it is currently set
+ * to. That is the part that makes folding safe: an author can read every
+ * setting off the closed panel and only open the one they mean to change.
+ */
+/**
+ * Open/closed state for the sidebar's groups, remembered for the session.
+ *
+ * Not `usePanels`, which opens whichever rows *appear* — right for a list an
+ * author is adding to, wrong for a fixed set of groups that all exist from the
+ * start. Held here rather than inside each group so that selecting a step and
+ * coming back does not refold everything the author had opened.
+ */
+const useGroups = (openAtFirst: string[] = []): Panels => {
+  const [open, setOpen] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(openAtFirst.map((id) => [id, true])),
+  );
+  const set = (id: string, next: boolean) =>
+    setOpen((current) => ({ ...current, [id]: next }));
+
+  return {
+    props: (id) => ({
+      open: open[id] ?? false,
+      onOpenChange: (next) => set(id, next),
+    }),
+    open: (id) => set(id, true),
+  };
+};
+
 const FlowSettings = ({
   store,
   locale,
   readonly,
+  panels,
   t,
 }: {
   store: EditorStore;
   locale: ReturnType<typeof resolveLocale>;
   readonly?: boolean;
+  /** Held above this component so a trip to a step and back does not refold. */
+  panels: Panels;
   t: (key: string, vars?: Record<string, string | number>) => string;
 }) => {
   const doc = useStore(store, (s) => s.doc);
@@ -482,37 +600,131 @@ const FlowSettings = ({
     return <p className="bitflow-text-muted">{doc.meta.title}</p>;
   }
 
+  const { meta } = doc;
+  const asking = [
+    meta.askConfidence ? t("askConfidenceShort") : "",
+    meta.askReasoning ? t("askReasoningShort") : "",
+  ].filter(Boolean);
+
+  // The short form, not the one in the dropdown: the dropdown explains the
+  // choice in a sentence, the folded summary is a value and has one line.
+  const navigationLabel = {
+    linear: t("navigationShortLinear"),
+    back: t("navigationShortBack"),
+    free: t("navigationShortFree"),
+  }[meta.navigation];
+
+  /** `translate` has no plurals, so a count says which wording it wants. */
+  const counted = (count: number, one: string, many: string) =>
+    count === 1 ? t(one) : t(many, { count });
+
   return (
     <>
+      {/* The two an author looks at first, and the only two worth the room
+          unconditionally. */}
       <TextField
         label={t("flowTitle")}
-        value={doc.meta.title}
+        value={meta.title}
         onChange={(title) => store.getState().updateMeta({ title })}
       />
       <TextAreaField
         label={t("flowDescription")}
-        value={doc.meta.description ?? ""}
+        value={meta.description ?? ""}
         rows={2}
         onChange={(description) => store.getState().updateMeta({ description })}
       />
-      <SecondsField
-        label={t("timeLimitLabel")}
-        hint={t("timeLimitHint")}
-        value={doc.meta.timeLimit}
-        onChange={(timeLimit) => store.getState().updateMeta({ timeLimit })}
-      />
-      <CheckboxField
-        label={t("askConfidence")}
-        hint={t("askConfidenceHint")}
-        checked={doc.meta.askConfidence}
-        onChange={(askConfidence) => store.getState().updateMeta({ askConfidence })}
-      />
-      <CheckboxField
-        label={t("askReasoning")}
-        checked={doc.meta.askReasoning}
-        onChange={(askReasoning) => store.getState().updateMeta({ askReasoning })}
-      />
-      <Pools store={store} doc={doc} t={t} />
+
+      <Disclosure
+        summary={t("groupTiming")}
+        aside={
+          meta.timeLimit
+            ? t("groupTimingSet", { minutes: Math.ceil(meta.timeLimit / 60) })
+            : t("groupTimingNone")
+        }
+        {...panels.props("timing")}
+      >
+        <SecondsField
+          label={t("timeLimitLabel")}
+          hint={t("timeLimitHint")}
+          value={meta.timeLimit}
+          onChange={(timeLimit) => store.getState().updateMeta({ timeLimit })}
+        />
+      </Disclosure>
+
+      <Disclosure
+        summary={t("groupMoving")}
+        aside={navigationLabel}
+        {...panels.props("moving")}
+      >
+        <SelectField
+          label={t("navigation")}
+          hint={t("navigationHint")}
+          value={meta.navigation}
+          options={[
+            { value: "linear", label: t("navigationLinear") },
+            { value: "back", label: t("navigationBack") },
+            { value: "free", label: t("navigationFree") },
+          ]}
+          onChange={(navigation) => store.getState().updateMeta({ navigation })}
+        />
+        <CheckboxField
+          label={t("allowSkip")}
+          hint={t("allowSkipHint")}
+          checked={meta.allowSkip}
+          onChange={(allowSkip) => store.getState().updateMeta({ allowSkip })}
+        />
+      </Disclosure>
+
+      <Disclosure
+        summary={t("groupAsking")}
+        aside={asking.length > 0 ? asking.join(" · ") : t("groupAskingNone")}
+        {...panels.props("asking")}
+      >
+        <CheckboxField
+          label={t("askConfidence")}
+          hint={t("askConfidenceHint")}
+          checked={meta.askConfidence}
+          onChange={(askConfidence) =>
+            store.getState().updateMeta({ askConfidence })
+          }
+        />
+        <CheckboxField
+          label={t("askReasoning")}
+          checked={meta.askReasoning}
+          onChange={(askReasoning) =>
+            store.getState().updateMeta({ askReasoning })
+          }
+        />
+      </Disclosure>
+
+      <Disclosure
+        summary={t("pools")}
+        aside={
+          meta.pools.length > 0
+            ? counted(meta.pools.length, "groupPoolsOne", "groupPoolsMany")
+            : t("groupNone")
+        }
+        {...panels.props("pools")}
+      >
+        <Pools store={store} doc={doc} t={t} />
+      </Disclosure>
+
+      <Disclosure
+        summary={t("sections")}
+        aside={
+          meta.sections.length > 0
+            ? counted(
+                meta.sections.length,
+                "groupSectionsOne",
+                "groupSectionsMany",
+              )
+            : t("groupNone")
+        }
+        {...panels.props("sections")}
+      >
+        <Sections store={store} doc={doc} t={t} />
+      </Disclosure>
+
       <p className="bitflow-hint">{t("nothingSelected")}</p>
       <span className="bitflow-visually-hidden">{locale}</span>
     </>
@@ -545,7 +757,6 @@ const Pools = ({
 
   return (
     <section className="bitflow-stack-small bitflow-stack">
-      <h3 className="bitflow-label">{t("pools")}</h3>
       <p className="bitflow-hint">{t("poolsHint")}</p>
 
       {pools.map((pool) => {
@@ -578,6 +789,12 @@ const Pools = ({
                 />
               )}
             </Field>
+            <CheckboxField
+              label={t("poolShuffle")}
+              hint={t("poolShuffleHint")}
+              checked={pool.shuffle}
+              onChange={(shuffle) => update(pool.id, { shuffle })}
+            />
             <button
               type="button"
               className="bitflow-button bitflow-button-quiet"
@@ -604,12 +821,113 @@ const Pools = ({
                 id: `pool-${pools.length + 1}-${Math.random().toString(36).slice(2, 7)}`,
                 label: t("poolDefaultLabel", { number: pools.length + 1 }),
                 draw: 1,
+                shuffle: false,
               },
             ],
           })
         }
       >
         {t("addPool")}
+      </button>
+    </section>
+  );
+};
+
+/**
+ * Declaring the sections, and the material every step in one is about.
+ *
+ * Which steps are *in* a section is set on the steps themselves, for the same
+ * reason pool membership is: a list of node ids here would go stale the moment
+ * one was deleted, and the author is looking at the step when they decide it
+ * belongs with the others.
+ *
+ * A panel per section rather than a compact line, because the passage is a
+ * whole textarea and the rows would not fit on one.
+ */
+const Sections = ({
+  store,
+  doc,
+  t,
+}: {
+  store: EditorStore;
+  doc: BitflowDocument;
+  t: (key: string, vars?: Record<string, string | number>) => string;
+}) => {
+  const sections = doc.meta.sections;
+  const panels = usePanels(sections.map((section) => section.id));
+
+  const update = (id: string, patch: Partial<(typeof sections)[number]>) =>
+    store.getState().updateMeta({
+      sections: sections.map((section) =>
+        section.id === id ? { ...section, ...patch } : section,
+      ),
+    });
+
+  return (
+    <section className="bitflow-stack-small bitflow-stack">
+      <p className="bitflow-hint">{t("sectionsHint")}</p>
+
+      {sections.map((section) => {
+        const members = doc.nodes.filter(
+          (node) => node.section === section.id,
+        ).length;
+        return (
+          <Disclosure
+            key={section.id}
+            summary={section.label || t("sectionUnnamed")}
+            // `usePanels` opens the rows that appear, so "Add a section" hands
+            // back the textarea rather than a shut row called "Section 2".
+            {...panels.props(section.id)}
+          >
+            <TextField
+              label={t("sectionLabel")}
+              hint={t("sectionLabelHint")}
+              value={section.label}
+              onChange={(label) => update(section.id, { label })}
+            />
+            <TextAreaField
+              label={t("sectionMarkdown")}
+              // Says how many steps will show it, so an empty section is
+              // visible here rather than only in the problems list.
+              hint={t("sectionMarkdownHint", { members })}
+              rows={4}
+              value={section.markdown}
+              onChange={(markdown) => update(section.id, { markdown })}
+            />
+            <button
+              type="button"
+              className="bitflow-button bitflow-button-quiet"
+              onClick={() =>
+                store.getState().updateMeta({
+                  sections: sections.filter(
+                    (other) => other.id !== section.id,
+                  ),
+                })
+              }
+            >
+              {t("removeSection")}
+            </button>
+          </Disclosure>
+        );
+      })}
+
+      <button
+        type="button"
+        className="bitflow-button bitflow-button-secondary"
+        onClick={() =>
+          store.getState().updateMeta({
+            sections: [
+              ...sections,
+              {
+                id: `section-${sections.length + 1}-${Math.random().toString(36).slice(2, 7)}`,
+                label: t("sectionDefaultLabel", { number: sections.length + 1 }),
+                markdown: "",
+              },
+            ],
+          })
+        }
+      >
+        {t("addSection")}
       </button>
     </section>
   );
@@ -735,22 +1053,54 @@ const NodeInspector = ({
         <p className="bitflow-text-muted">{bit?.info(locale).description}</p>
       )}
 
-      {!readonly && doc.meta.pools.length > 0 && (
-        <SelectField
-          label={t("nodePool")}
-          hint={t("nodePoolHint")}
-          value={node.pool ?? ""}
-          options={[
-            { value: "", label: t("nodePoolNone") },
-            ...doc.meta.pools.map((pool) => ({
-              value: pool.id,
-              label: pool.label || pool.id,
-            })),
-          ]}
-          onChange={(pool) =>
-            store.getState().setNodePool(nodeId, pool === "" ? undefined : pool)
-          }
-        />
+      {/* Folded, and named by what the step already belongs to. Both pickers
+          sat open under every step's own form with a line of explanation each,
+          for a setting most steps never use. */}
+      {!readonly && (doc.meta.pools.length > 0 || doc.meta.sections.length > 0) && (
+        <Disclosure
+          summary={t("groupBelongs")}
+          aside={belongsTo(doc, node, t)}
+        >
+          {doc.meta.pools.length > 0 && (
+            <SelectField
+              label={t("nodePool")}
+              hint={t("nodePoolHint")}
+              value={node.pool ?? ""}
+              options={[
+                { value: "", label: t("nodePoolNone") },
+                ...doc.meta.pools.map((pool) => ({
+                  value: pool.id,
+                  label: pool.label || pool.id,
+                })),
+              ]}
+              onChange={(pool) =>
+                store
+                  .getState()
+                  .setNodePool(nodeId, pool === "" ? undefined : pool)
+              }
+            />
+          )}
+
+          {doc.meta.sections.length > 0 && (
+            <SelectField
+              label={t("nodeSection")}
+              hint={t("nodeSectionHint")}
+              value={node.section ?? ""}
+              options={[
+                { value: "", label: t("nodeSectionNone") },
+                ...doc.meta.sections.map((section) => ({
+                  value: section.id,
+                  label: section.label || section.id,
+                })),
+              ]}
+              onChange={(section) =>
+                store
+                  .getState()
+                  .setNodeSection(nodeId, section === "" ? undefined : section)
+              }
+            />
+          )}
+        </Disclosure>
       )}
 
       <div className="bitflow-inspector-preview">
@@ -775,6 +1125,19 @@ const NodeInspector = ({
   );
 };
 
+/** What a step already belongs to, for the folded panel to say. */
+const belongsTo = (
+  doc: BitflowDocument,
+  node: BitNode,
+  t: (key: string, vars?: Record<string, string | number>) => string,
+): string => {
+  const pool = doc.meta.pools.find((each) => each.id === node.pool);
+  const section = doc.meta.sections.find((each) => each.id === node.section);
+  const parts = [pool?.label || node.pool, section?.label || node.section];
+  const named = parts.filter((part): part is string => Boolean(part));
+  return named.length > 0 ? named.join(" · ") : t("groupBelongsNone");
+};
+
 /**
  * An attempt positioned at `nodeId`, or `undefined` to start at the beginning.
  *
@@ -796,20 +1159,42 @@ const startedAt = (
  * `null` for a diagnostic about the document itself, which has nothing to
  * select and so stays plain text.
  */
+/** Where a problem is, so the list can take the author straight to it. */
+type ProblemTarget =
+  | { kind: "node"; nodeId: string }
+  | { kind: "edge"; edgeId: string }
+  /** A group of the flow's own settings, which the panel opens. */
+  | { kind: "group"; group: string };
+
+/**
+ * Which settings group a `meta.…` path lives in.
+ *
+ * A pool that draws more than it holds used to report itself as plain text
+ * with nowhere to go — `targetOf` only knew about nodes and edges — and now
+ * that the groups fold, the settings it names might not even be on screen.
+ */
+const SETTINGS_GROUP: Array<[RegExp, string]> = [
+  [/^meta\.pools/, "pools"],
+  [/^meta\.sections/, "sections"],
+  [/^meta\.timeLimit/, "timing"],
+  [/^meta\.(navigation|allowSkip)/, "moving"],
+];
+
 const targetOf =
   (doc: BitflowDocument) =>
-  (
-    diagnostic: Diagnostic,
-  ): { nodeId: string; edgeId: null } | { nodeId: null; edgeId: string } | null => {
+  (diagnostic: Diagnostic): ProblemTarget | null => {
     const node = /^nodes\.(\d+)/.exec(diagnostic.path);
     if (node) {
       const id = doc.nodes[Number(node[1])]?.id;
-      return id ? { nodeId: id, edgeId: null } : null;
+      return id ? { kind: "node", nodeId: id } : null;
     }
     const edge = /^edges\.(\d+)/.exec(diagnostic.path);
     if (edge) {
       const id = doc.edges[Number(edge[1])]?.id;
-      return id ? { nodeId: null, edgeId: id } : null;
+      return id ? { kind: "edge", edgeId: id } : null;
+    }
+    for (const [pattern, group] of SETTINGS_GROUP) {
+      if (pattern.test(diagnostic.path)) return { kind: "group", group };
     }
     return null;
   };

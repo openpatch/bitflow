@@ -189,6 +189,46 @@ describe("validating a branch", () => {
       ).toContain("nothing to compare against");
     });
 
+    /**
+     * Both of these are fractions the author sees as something else — a
+     * five-point scale, a percentage — so the number they reach for is the
+     * one that can never be true. Nothing else in the flow would say so.
+     */
+    it("rejects a share of the marks written as a percentage", () => {
+      expect(
+        problems({
+          type: "compare",
+          left: { kind: "scoreRatio" },
+          op: "gte",
+          right: 50,
+        })[0],
+      ).toContain("runs from 0 to 1");
+    });
+
+    it("accepts a share of the marks written as a fraction", () => {
+      expect(
+        problems({
+          type: "compare",
+          left: { kind: "scoreRatio" },
+          op: "gte",
+          right: 0.5,
+        }),
+      ).toEqual([]);
+    });
+
+    it("rejects a confidence written against the five-point scale", () => {
+      expect(
+        problems(
+          {
+            type: "compare",
+            left: { kind: "confidence", nodeId: "q1" },
+            op: "gte",
+            right: 4,
+          },
+        ).join(" "),
+      ).toContain("runs from 0 to 1");
+    });
+
     it("allows isTrue, which needs no right-hand side", () => {
       expect(
         problems({

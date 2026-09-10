@@ -44,6 +44,26 @@ export const BIT_RESULT_STATES = [
 export const BitResultStateSchema = z.enum(BIT_RESULT_STATES);
 export type BitResultState = z.infer<typeof BitResultStateSchema>;
 
+/**
+ * Which tasks a count or a score is taken over.
+ *
+ * Absent means the whole attempt, which is what a whole-assessment threshold
+ * wants. A scope is what makes adaptive routing expressible: "did they pass
+ * *this section*", "of the *last three*, how many were right".
+ */
+export const ScopeSchema = z.union([
+  /** Everything in one section — see `BitflowMeta.sections`. */
+  z.object({ kind: z.literal("section"), id: z.string().min(1) }),
+  /** A hand-picked set of steps. */
+  z.object({ kind: z.literal("nodes"), nodeIds: z.array(z.string().min(1)) }),
+  /**
+   * The most recently answered steps, newest first, counted off the attempt's
+   * own history. A step answered twice counts once — it is the same task.
+   */
+  z.object({ kind: z.literal("last"), count: z.number().int().positive() }),
+]);
+export type Scope = z.infer<typeof ScopeSchema>;
+
 /** A value pulled out of the running attempt for a condition to compare. */
 export const ValueRefSchema = z.union([
   z.object({
@@ -62,10 +82,47 @@ export const ValueRefSchema = z.union([
     kind: z.literal("tries"),
     nodeId: z.string().min(1),
   }),
-  /** Points earned so far across the whole attempt. */
-  z.object({ kind: z.literal("score") }),
+  /**
+   * How many times the learner has been *shown* a step, read off the history.
+   *
+   * Distinct from `tries`, which counts gradings: a content step is never
+   * graded, so a loop that goes round an explanation has nothing else to count.
+   * This is what gives a loop a way out — "after the third time, move on".
+   */
+  z.object({
+    kind: z.literal("visits"),
+    nodeId: z.string().min(1),
+  }),
+  /**
+   * How sure the learner said they were, `0`–`1`, when `meta.askConfidence` is
+   * on. Undefined for a step they were never asked about, which makes any
+   * comparison false rather than accidentally true.
+   *
+   * Confident and wrong is a different learner from unsure and wrong, and it is
+   * the branch worth drawing: one has a misconception, the other has a gap.
+   */
+  z.object({
+    kind: z.literal("confidence"),
+    nodeId: z.string().min(1),
+  }),
+  /**
+   * Seconds spent on one step, or on the whole attempt when `nodeId` is
+   * omitted. Time *spent*, on the same basis as the limits: the clock pauses
+   * when the learner is not there.
+   */
+  z.object({
+    kind: z.literal("timeSpent"),
+    nodeId: z.string().min(1).optional(),
+  }),
+  /**
+   * Seconds left on `meta.timeLimit`. Undefined when the flow has no limit, so
+   * "less than a minute left" is simply false rather than true for everyone.
+   */
+  z.object({ kind: z.literal("timeRemaining") }),
+  /** Points earned so far, over the whole attempt or one scope. */
+  z.object({ kind: z.literal("score"), scope: ScopeSchema.optional() }),
   /** Earned/possible so far, in `[0, 1]`. `0` when nothing is scorable yet. */
-  z.object({ kind: z.literal("scoreRatio") }),
+  z.object({ kind: z.literal("scoreRatio"), scope: ScopeSchema.optional() }),
   /**
    * How many tasks so far ended in a given outcome — "at least three correct"
    * being the branch a teacher reaches for most often.
@@ -78,6 +135,7 @@ export const ValueRefSchema = z.union([
   z.object({
     kind: z.literal("resultCount"),
     state: BitResultStateSchema.default("correct"),
+    scope: ScopeSchema.optional(),
   }),
 ]);
 export type ValueRef = z.infer<typeof ValueRefSchema>;
@@ -157,6 +215,15 @@ export const BitNodeSchema = z.object({
    * so deleting a step cannot leave a pool pointing at something that is gone.
    */
   pool: z.string().min(1).optional(),
+  /**
+   * The section this step belongs to, if any — see `BitflowMeta.sections`.
+   *
+   * Orthogonal to `pool`: a pool decides *which* steps a learner gets and in
+   * what order, a section says what a run of steps have in common — the
+   * passage they are all about, the name the progress line shows, and the
+   * scope a condition can count over.
+   */
+  section: z.string().min(1).optional(),
 });
 export type BitNode = z.infer<typeof BitNodeSchema>;
 
@@ -170,6 +237,23 @@ export const BitEdgeSchema = z.object({
   label: z.string().optional(),
   /** Absent means "always follow". */
   condition: ConditionSchema.optional(),
+  /**
+   * What arriving over this edge clears on the step it lands on.
+   *
+   * This is what makes a remediation loop work. Without it, an edge that goes
+   * back to a question the learner got wrong lands on a step that already has
+   * a result, so the runtime shows the old answer marked wrong with no way to
+   * change it — the loop is drawable but does nothing.
+   *
+   * `"result"` clears the grading and keeps what they wrote, the same bargain
+   * Try again makes. `"answer"` clears both, which is what a task that
+   * *measures* something (a timed run, a typing speed) needs: its recorded
+   * figure has to be taken again, not edited.
+   *
+   * Absent means the step is left exactly as it was, which is right for an
+   * edge that goes back so the learner can *read* an answer again.
+   */
+  resetTarget: z.enum(["result", "answer"]).optional(),
 });
 export type BitEdge = z.infer<typeof BitEdgeSchema>;
 
@@ -215,9 +299,68 @@ export const BitflowMetaSchema = z.object({
         label: z.string().default(""),
         /** How many members each learner gets. */
         draw: z.number().int().positive(),
+        /**
+         * Show the drawn members in a random order rather than the order they
+         * are wired in.
+         *
+         * The draw was always recorded in the order it happened; until this
+         * existed nothing read that order back, so "the same ten questions,
+         * shuffled" — which is what most people mean by a randomised test —
+         * could not be expressed at all. A shuffled pool navigates by its drawn
+         * order instead of by its internal edges, so it must have exactly one
+         * way out; `validateFlow` says so when it does not. The way in needs no
+         * such rule — every edge into a shuffled pool lands on whichever member
+         * the draw put first.
+         */
+        shuffle: z.boolean().default(false),
       }),
     )
     .default([]),
+  /**
+   * Named runs of steps that belong together.
+   *
+   * A section carries the thing its steps share and the flow had nowhere to
+   * put: the passage, listing or diagram every question in it refers to. Before
+   * this, a reading comprehension with five questions meant pasting the passage
+   * into all five, because a content step shows its text once and is gone.
+   *
+   * It is also a scope — `ScopeSchema` — so "did they pass this section" is a
+   * branch rather than a hand-listed set of node ids, and the name shows on the
+   * progress line so a learner knows where they are in a long assessment.
+   */
+  sections: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        /** Shown to the learner above every step in the section. */
+        label: z.string().default(""),
+        /**
+         * Markdown rendered above every step in the section — the passage, the
+         * code listing, the data table the questions are about.
+         */
+        markdown: z.string().default(""),
+      }),
+    )
+    .default([]),
+  /**
+   * How freely the learner may move.
+   *
+   * - `linear` — forwards only. An exam.
+   * - `back` — they may step back through what they have seen. The default,
+   *   and what the runtime always did.
+   * - `free` — they may jump to any step they have already visited, from a
+   *   list. That list doubles as the check-your-work screen before finishing.
+   *
+   * Going back re-runs the branch on the way forward again, in every mode: an
+   * answer changed on the second pass has to be able to send them elsewhere.
+   */
+  navigation: z.enum(["linear", "back", "free"]).default("back"),
+  /**
+   * Whether a learner may pass on a task without answering. A task may
+   * override it — `EvaluationSchema.allowSkip` — for the one question everyone
+   * has to attempt.
+   */
+  allowSkip: z.boolean().default(true),
   /**
    * Seconds for the whole assessment. Counted as time actually spent, not wall
    * clock: closing the tab pauses it. That is both fairer and the only rule
@@ -269,6 +412,12 @@ export const EvaluationSchema = z.object({
    * Omitted means no limit.
    */
   timeLimit: z.number().int().positive().optional(),
+  /**
+   * Whether this task may be passed on. Omitted follows the flow's
+   * `meta.allowSkip`, which is the answer for all but the odd question that
+   * everyone has to attempt.
+   */
+  allowSkip: z.boolean().optional(),
 });
 export type Evaluation = z.infer<typeof EvaluationSchema>;
 

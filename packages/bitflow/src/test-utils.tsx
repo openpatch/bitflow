@@ -99,6 +99,25 @@ export const registerTestBits = (): void => {
     ),
   });
 
+  /**
+   * An end bit that *does* something — saving a copy, posting the attempt back
+   * — rather than only printing a summary. It reads `readonly` the way the real
+   * ones do, which is what makes it able to catch the run being over being
+   * mistaken for the run being reviewed.
+   */
+  registerBit({
+    type: "test-acting-end",
+    kind: "end",
+    schema: z.object({}),
+    defaultData: () => ({}),
+    info: () => ({ name: "Acting end", description: "" }),
+    Task: ({ readonly }: BitTaskProps<Record<string, never>>) => (
+      <button type="button" disabled={readonly}>
+        Save a copy
+      </button>
+    ),
+  });
+
   registerBit({
     type: "test-end",
     kind: "end",
@@ -134,6 +153,9 @@ export const doc = (
     askConfidence: false,
     askReasoning: false,
     pools: [],
+    sections: [],
+    navigation: "back",
+    allowSkip: true,
     ...meta,
   },
   nodes,

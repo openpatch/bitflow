@@ -10,6 +10,7 @@ import {
   goNext,
   parseFlow,
   restoreAttempt,
+  setAnswer,
   validateFlow,
   type BitflowDocument,
 } from "@bitflow/core";
@@ -84,6 +85,95 @@ describe("fixtures/flows/all-initial-bits.bitflow", () => {
     const types = parsed("flows/all-initial-bits.bitflow").nodes.map((n) => n.type);
     expect(new Set(types).size).toBe(9);
     expect(types).toHaveLength(9);
+  });
+});
+
+describe("fixtures/flows/adaptive.bitflow", () => {
+  const doc = () => parsed("flows/adaptive.bitflow");
+
+  it("parses and validates", () => {
+    expect(validateFlow(doc())).toEqual({ valid: true, diagnostics: [] });
+  });
+
+  it("routes a learner who declines away from the assessment", async () => {
+    const document_ = doc();
+    const created = createAttempt(document_);
+    if (!created.ok) throw new Error(created.error.message);
+
+    let attempt = goNext(document_, created.value);
+    expect(attempt.currentNodeId).toBe("consent");
+
+    attempt = setAnswer(attempt, "consent", false);
+    attempt = goNext(document_, attempt);
+
+    // Nothing recorded, and nowhere near a question.
+    expect(attempt.currentNodeId).toBe("declined");
+    expect(attempt.status).toBe("completed");
+  });
+
+  it("sends a wrong answer round the loop and back to the question", async () => {
+    const document_ = doc();
+    const created = createAttempt(document_);
+    if (!created.ok) throw new Error(created.error.message);
+
+    let attempt = goNext(document_, created.value);
+    attempt = setAnswer(attempt, "consent", true);
+    attempt = goNext(document_, attempt);
+    expect(attempt.currentNodeId).toBe("who");
+
+    attempt = setAnswer(attempt, "who", { name: "Robin" });
+    attempt = goNext(document_, attempt);
+    expect(attempt.currentNodeId).toBe("q-year");
+
+    const wrong = await evaluateNode(document_, attempt, "q-year", { input: "1801" });
+    if (!wrong.ok) throw new Error(wrong.error.message);
+    attempt = goNext(document_, wrong.value);
+    expect(attempt.currentNodeId).toBe("why-year");
+
+    attempt = goNext(document_, attempt);
+    expect(attempt.currentNodeId).toBe("q-year");
+    // The point of `resetTarget`: the question is answerable again rather than
+    // sitting there already marked.
+    expect(attempt.results["q-year"]).toBeUndefined();
+    expect(attempt.tries["q-year"]).toBe(1);
+  });
+
+  it("gives up on the loop rather than going round for ever", async () => {
+    const document_ = doc();
+    const created = createAttempt(document_);
+    if (!created.ok) throw new Error(created.error.message);
+
+    let attempt = goNext(document_, created.value);
+    attempt = setAnswer(attempt, "consent", true);
+    attempt = goNext(document_, attempt);
+    attempt = setAnswer(attempt, "who", { name: "Robin" });
+    attempt = goNext(document_, attempt);
+
+    // Wrong every time. The loop is bounded by how often the question has been
+    // shown, so it has to let go.
+    for (let round = 0; round < 5; round++) {
+      if (attempt.currentNodeId !== "q-year") break;
+      const wrong = await evaluateNode(document_, attempt, "q-year", {
+        input: "1801",
+      });
+      if (!wrong.ok) throw new Error(wrong.error.message);
+      attempt = goNext(document_, wrong.value);
+      if (attempt.currentNodeId !== "why-year") break;
+      attempt = goNext(document_, attempt);
+    }
+
+    expect(attempt.currentNodeId).toBe("q-built");
+  });
+
+  it("draws two of the three closing questions, in the order it drew them", () => {
+    const document_ = doc();
+    const created = createAttempt(document_);
+    if (!created.ok) throw new Error(created.error.message);
+
+    const drawn = created.value.pools.bank;
+    expect(drawn).toHaveLength(2);
+    expect(new Set(drawn).size).toBe(2);
+    for (const id of drawn) expect(id).toMatch(/^bank-[123]$/);
   });
 });
 

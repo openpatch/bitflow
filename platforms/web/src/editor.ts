@@ -11,7 +11,9 @@ const note = (message: string) => {
   log.textContent = `${new Date().toLocaleTimeString()}  ${message}\n${log.textContent}`;
 };
 
-editor.src = "/minimal.bitflow";
+// The one with sections, a shuffled pool, a loop and a confidence branch —
+// the flow-control settings are only worth looking at on a flow that uses them.
+editor.src = "/adaptive.bitflow";
 
 editor.addEventListener("bitflow-edit", (event) => {
   const { flow } = (event as CustomEvent).detail;

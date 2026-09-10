@@ -46,6 +46,12 @@ export const messages: Catalogs = {
     weightHint: "Points, relative to the other tasks. 1 is the usual.",
     timeLimitLabel: "Time limit (seconds)",
     timeLimitHint: "Leave empty for no limit. The clock pauses if they leave.",
+    allowSkipLabel: "Passing on this task",
+    allowSkipHint:
+      "The flow decides unless this task says otherwise.",
+    allowSkipFlow: "Follow the assessment's setting",
+    allowSkipYes: "Allowed",
+    allowSkipNo: "Not allowed",
   },
   de: {
     imageLabel: "Bild",
@@ -84,6 +90,12 @@ export const messages: Catalogs = {
     timeLimitLabel: "Zeitlimit (Sekunden)",
     timeLimitHint:
       "Leer lassen für kein Limit. Die Uhr pausiert beim Verlassen.",
+    allowSkipLabel: "Diese Aufgabe überspringen",
+    allowSkipHint:
+      "Es gilt die Einstellung des Tests, außer diese Aufgabe sagt etwas anderes.",
+    allowSkipFlow: "Einstellung des Tests folgen",
+    allowSkipYes: "Erlaubt",
+    allowSkipNo: "Nicht erlaubt",
   },
   fr: {
     imageLabel: "Image",
@@ -122,6 +134,12 @@ export const messages: Catalogs = {
     timeLimitLabel: "Limite de temps (secondes)",
     timeLimitHint:
       "Laisser vide pour aucune limite. Le chronomètre se met en pause s'ils quittent la page.",
+    allowSkipLabel: "Passer cet exercice",
+    allowSkipHint:
+      "Le réglage de l'évaluation s'applique, sauf indication contraire ici.",
+    allowSkipFlow: "Suivre le réglage de l'évaluation",
+    allowSkipYes: "Autorisé",
+    allowSkipNo: "Non autorisé",
   },
   nl: {
     imageLabel: "Afbeelding",
@@ -160,6 +178,12 @@ export const messages: Catalogs = {
     timeLimitLabel: "Tijdslimiet (seconden)",
     timeLimitHint:
       "Laat leeg voor geen limiet. De klok pauzeert als ze weggaan.",
+    allowSkipLabel: "Deze opgave overslaan",
+    allowSkipHint:
+      "De instelling van de toets geldt, tenzij deze opgave iets anders zegt.",
+    allowSkipFlow: "De instelling van de toets volgen",
+    allowSkipYes: "Toegestaan",
+    allowSkipNo: "Niet toegestaan",
   },
   es: {
     imageLabel: "Imagen",
@@ -198,6 +222,12 @@ export const messages: Catalogs = {
     timeLimitLabel: "Límite de tiempo (segundos)",
     timeLimitHint:
       "Déjalo vacío para no poner límite. El reloj se pausa si salen.",
+    allowSkipLabel: "Saltarse esta tarea",
+    allowSkipHint:
+      "Se aplica el ajuste de la evaluación, salvo que esta tarea diga otra cosa.",
+    allowSkipFlow: "Seguir el ajuste de la evaluación",
+    allowSkipYes: "Permitido",
+    allowSkipNo: "No permitido",
   },
   it: {
     imageLabel: "Immagine",
@@ -236,6 +266,12 @@ export const messages: Catalogs = {
     timeLimitLabel: "Limite di tempo (secondi)",
     timeLimitHint:
       "Lascia vuoto per nessun limite. L'orologio si mette in pausa se escono.",
+    allowSkipLabel: "Saltare questo esercizio",
+    allowSkipHint:
+      "Vale l'impostazione della verifica, salvo diversa indicazione qui.",
+    allowSkipFlow: "Segui l'impostazione della verifica",
+    allowSkipYes: "Consentito",
+    allowSkipNo: "Non consentito",
   },
   pt: {
     imageLabel: "Imagem",
@@ -274,6 +310,12 @@ export const messages: Catalogs = {
     timeLimitLabel: "Limite de tempo (segundos)",
     timeLimitHint:
       "Deixe vazio para não haver limite. O relógio pausa se saírem.",
+    allowSkipLabel: "Passar à frente desta tarefa",
+    allowSkipHint:
+      "Aplica-se a definição do teste, salvo indicação em contrário aqui.",
+    allowSkipFlow: "Seguir a definição do teste",
+    allowSkipYes: "Permitido",
+    allowSkipNo: "Não permitido",
   },
   tr: {
     imageLabel: "Görsel",
@@ -312,5 +354,11 @@ export const messages: Catalogs = {
     timeLimitLabel: "Süre sınırı (saniye)",
     timeLimitHint:
       "Sınır istemiyorsanız boş bırakın. Sayfadan ayrılırlarsa saat durur.",
+    allowSkipLabel: "Bu görevi geçme",
+    allowSkipHint:
+      "Bu görev aksini söylemedikçe testin ayarı geçerlidir.",
+    allowSkipFlow: "Testin ayarını izle",
+    allowSkipYes: "İzin veriliyor",
+    allowSkipNo: "İzin verilmiyor",
   },
 };

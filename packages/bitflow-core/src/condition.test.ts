@@ -8,25 +8,41 @@ import {
 } from "./condition";
 import type { Condition } from "./schema";
 
-const context: ConditionContext = {
+/**
+ * A context with everything a branch may read, so a test only states the part
+ * it is about. Scores are no longer carried in the context — they are worked
+ * out from the results, which is what makes a scoped score possible.
+ */
+const ctx = (partial: Partial<ConditionContext> = {}): ConditionContext => ({
+  answers: {},
+  results: {},
+  tries: {},
+  visits: {},
+  confidence: {},
+  timeSpent: {},
+  totalTimeSpent: 0,
+  timeRemaining: null,
+  history: [],
+  sections: {},
+  ...partial,
+});
+
+const context = ctx({
   answers: { q1: { choices: ["a", "c"], text: "hello" }, q2: true },
   results: { q1: { state: "correct" }, q2: { state: "wrong" } },
   tries: { q1: 2 },
-  score: { earned: 3, possible: 4 },
-};
+});
 
 /** Four answered tasks: two right, one wrong, one skipped. */
-const cohortContext: ConditionContext = {
-  answers: {},
+const cohortContext = ctx({
   results: {
     q1: { state: "correct" },
     q2: { state: "wrong" },
     q3: { state: "correct" },
     q4: { state: "unknown" },
   },
-  tries: {},
-  score: { earned: 2, possible: 3 },
-};
+  history: ["q1", "q2", "q3", "q4"],
+});
 
 const check = (condition: Condition) => evaluateCondition(condition, context);
 
@@ -58,8 +74,9 @@ describe("resolveValueRef", () => {
   });
 
   it("exposes the running score", () => {
-    expect(resolveValueRef({ kind: "score" }, context)).toBe(3);
-    expect(resolveValueRef({ kind: "scoreRatio" }, context)).toBe(0.75);
+    // Worked out from the results themselves: one right, one wrong.
+    expect(resolveValueRef({ kind: "score" }, context)).toBe(1);
+    expect(resolveValueRef({ kind: "scoreRatio" }, context)).toBe(0.5);
   });
 
   it("counts how many tasks ended in a given state", () => {
@@ -77,10 +94,13 @@ describe("resolveValueRef", () => {
   it("counts tasks rather than points", () => {
     // Partial credit moves the score without moving the count: one correct
     // answer is one correct answer.
-    const partial: ConditionContext = {
+    const partial = ctx({
       ...cohortContext,
-      score: { earned: 2.5, possible: 4 },
-    };
+      results: {
+        ...cohortContext.results,
+        q1: { state: "correct", score: { earned: 1.5, possible: 2 } },
+      },
+    });
     expect(
       resolveValueRef({ kind: "resultCount", state: "correct" }, partial),
     ).toBe(2);
@@ -88,14 +108,8 @@ describe("resolveValueRef", () => {
   });
 
   it("counts nothing before anything has been answered", () => {
-    const fresh: ConditionContext = {
-      answers: {},
-      results: {},
-      tries: {},
-      score: { earned: 0, possible: 0 },
-    };
     expect(
-      resolveValueRef({ kind: "resultCount", state: "correct" }, fresh),
+      resolveValueRef({ kind: "resultCount", state: "correct" }, ctx()),
     ).toBe(0);
   });
 
@@ -103,7 +117,7 @@ describe("resolveValueRef", () => {
     expect(
       resolveValueRef(
         { kind: "scoreRatio" },
-        { ...context, score: { earned: 0, possible: 0 } },
+        ctx({ results: { q1: { state: "unknown" } } }),
       ),
     ).toBe(0);
   });

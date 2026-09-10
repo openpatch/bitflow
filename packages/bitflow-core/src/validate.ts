@@ -5,7 +5,13 @@ import {
   type Diagnostic,
   type Result,
 } from "./errors";
-import { incomingEdges, outgoingEdges, poolMembers } from "./engine";
+import {
+  incomingEdges,
+  outgoingEdges,
+  poolExitEdges,
+  poolMembers,
+  sectionMembers,
+} from "./engine";
 import { getBit, listBits } from "./registry";
 import {
   BitflowDocumentSchema,
@@ -139,8 +145,58 @@ export const validateFlow = (doc: BitflowDocument): ValidationResult => {
 
   diagnostics.push(...validateGraphShape(doc));
   diagnostics.push(...validatePools(doc));
+  diagnostics.push(...validateSections(doc));
 
   return { valid: diagnostics.length === 0, diagnostics };
+};
+
+/**
+ * The ways a section can be written so it does nothing.
+ *
+ * A section is only ever visible through its members, so one that has none
+ * shows nothing, scopes nothing, and looks from the editor exactly like one
+ * that works.
+ */
+const validateSections = (doc: BitflowDocument): Diagnostic[] => {
+  const diagnostics: Diagnostic[] = [];
+  const declared = new Set<string>();
+
+  doc.meta.sections.forEach((section, index) => {
+    if (declared.has(section.id)) {
+      diagnostics.push({
+        path: `meta.sections.${index}.id`,
+        message: `Duplicate section "${section.id}".`,
+      });
+    }
+    declared.add(section.id);
+
+    if (sectionMembers(doc, section.id).length === 0) {
+      diagnostics.push({
+        path: `meta.sections.${index}.id`,
+        message: `The section "${section.label || section.id}" has no steps in it, so nothing shows its text.`,
+      });
+    }
+  });
+
+  doc.nodes.forEach((node, index) => {
+    if (node.section && !declared.has(node.section)) {
+      diagnostics.push({
+        path: `nodes.${index}.section`,
+        message: `This step is in section "${node.section}", which the flow does not declare.`,
+      });
+    }
+    // A start or an end is not part of the material a section introduces, and
+    // showing the passage over the closing summary reads as a mistake.
+    const kind = getBit(node.type)?.kind;
+    if (node.section && (kind === "start" || kind === "end")) {
+      diagnostics.push({
+        path: `nodes.${index}.section`,
+        message: `A ${kind} step cannot be part of a section.`,
+      });
+    }
+  });
+
+  return diagnostics;
 };
 
 /**
@@ -179,12 +235,35 @@ const validatePools = (doc: BitflowDocument): Diagnostic[] => {
       });
     }
     // Drawing all of them is a pool that does nothing except look like it
-    // varies — worth saying, because the author clearly meant it to.
-    if (pool.draw === members.length && members.length > 1) {
+    // varies — worth saying, because the author clearly meant it to. Unless it
+    // shuffles, in which case drawing all of them is exactly the point: the
+    // same questions in a different order.
+    if (pool.draw === members.length && members.length > 1 && !pool.shuffle) {
       diagnostics.push({
         path: `meta.pools.${index}.draw`,
-        message: `The pool "${pool.label || pool.id}" draws all ${members.length} of its steps, so every learner gets the same ones.`,
+        message: `The pool "${pool.label || pool.id}" draws all ${members.length} of its steps, so every learner gets the same ones. Turn on shuffle to vary the order instead.`,
       });
+    }
+
+    if (!pool.shuffle) return;
+
+    // A shuffled pool navigates by its drawn order, so its way out cannot be
+    // the internal wiring — after a shuffle the last member is a different one
+    // for every learner. It has to leave from one place.
+    const exits = poolExitEdges(doc, pool.id);
+    if (exits.length === 0) {
+      diagnostics.push({
+        path: `meta.pools.${index}.shuffle`,
+        message: `Nothing leads out of the shuffled pool "${pool.label || pool.id}", so a learner who finishes it has nowhere to go. Connect one of its steps to what comes next.`,
+      });
+    } else {
+      const sources = new Set(exits.map((exit) => exit.source));
+      if (sources.size > 1) {
+        diagnostics.push({
+          path: `meta.pools.${index}.shuffle`,
+          message: `${sources.size} steps in the shuffled pool "${pool.label || pool.id}" lead out of it. Because the order changes for every learner, they would all be tried in turn rather than the one you drew. Leave the pool from a single step.`,
+        });
+      }
     }
   });
 

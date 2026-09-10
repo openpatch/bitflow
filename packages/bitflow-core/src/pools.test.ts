@@ -28,7 +28,7 @@ const flow = (draw = 2): BitflowDocument =>
       edge("q4", "end"),
     ],
     "pooled",
-    { pools: [{ id: "questions", label: "Questions", draw }] },
+    { pools: [{ id: "questions", label: "Questions", draw, shuffle: false }] },
   );
 
 /** A generator that cycles through fixed values, so a draw is reproducible. */
@@ -154,7 +154,7 @@ describe("item pools", () => {
         [node("start", "test-start"), node("end", "test-end")],
         [edge("start", "end")],
         "empty-pool",
-        { pools: [{ id: "questions", label: "Questions", draw: 2 }] },
+        { pools: [{ id: "questions", label: "Questions", draw: 2, shuffle: false }] },
       );
       expect(messages(empty).join(" ")).toContain("has no steps in it");
     });
@@ -189,7 +189,7 @@ describe("item pools", () => {
         ],
         [edge("start", "end")],
         "pooled-end",
-        { pools: [{ id: "questions", label: "", draw: 1 }] },
+        { pools: [{ id: "questions", label: "", draw: 1, shuffle: false }] },
       );
       expect(messages(pooled).join(" ")).toContain("cannot be part of a pool");
     });

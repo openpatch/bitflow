@@ -6,6 +6,7 @@ import {
   type BitEdge,
   type BitflowDocument,
   type Condition,
+  type Scope,
   type ValueRef,
 } from "./schema";
 
@@ -29,11 +30,81 @@ export const validateCondition = (
     doc.nodes.filter((n) => getBit(n.type)?.kind === "task").map((n) => n.id),
   );
   const nodeIds = new Set(doc.nodes.map((n) => n.id));
+  const sectionIds = new Set(doc.meta.sections.map((section) => section.id));
+  const reachable = nodesBefore(doc, edge.source);
   // How many tasks a learner could possibly have answered by this point.
-  const answerable = nodesBefore(doc, edge.source).filter((id) =>
-    taskIds.has(id),
-  ).length;
-  const before = new Set(nodesBefore(doc, edge.source));
+  const answerable = reachable.filter((id) => taskIds.has(id)).length;
+  const before = new Set(reachable);
+
+  /**
+   * How many tasks a scope can contribute by this point. A threshold above it
+   * is a branch that never fires, which is the whole point of this pass.
+   */
+  const answerableIn = (scope: Scope | undefined): number => {
+    if (!scope) return answerable;
+    switch (scope.kind) {
+      case "nodes":
+        return scope.nodeIds.filter(
+          (id) => taskIds.has(id) && before.has(id),
+        ).length;
+      case "section":
+        return doc.nodes.filter(
+          (node) =>
+            node.section === scope.id &&
+            taskIds.has(node.id) &&
+            before.has(node.id),
+        ).length;
+      case "last":
+        // "Of the last five" can only ever be as many as they have answered.
+        return Math.min(scope.count, answerable);
+    }
+  };
+
+  /** The ways a scope can be written so it covers nothing. */
+  const checkScope = (scope: Scope | undefined): void => {
+    if (!scope) return;
+    if (scope.kind === "section") {
+      if (!sectionIds.has(scope.id)) {
+        diagnostics.push({
+          path,
+          message: `This rule counts section "${scope.id}", which the flow does not declare.`,
+        });
+      } else if (answerableIn(scope) === 0) {
+        diagnostics.push({
+          path,
+          message: `Section "${scope.id}" has no task before this connection, so counting it here is never anything but zero.`,
+        });
+      }
+      return;
+    }
+    if (scope.kind === "nodes") {
+      if (scope.nodeIds.length === 0) {
+        diagnostics.push({
+          path,
+          message: "This rule counts no steps at all, so it is always zero.",
+        });
+        return;
+      }
+      for (const id of scope.nodeIds) {
+        if (!nodeIds.has(id)) {
+          diagnostics.push({
+            path,
+            message: `This rule counts "${id}", which is not a node in this flow.`,
+          });
+        } else if (!taskIds.has(id)) {
+          diagnostics.push({
+            path,
+            message: `"${id}" is not a task, so it never contributes a result to count.`,
+          });
+        } else if (!before.has(id)) {
+          diagnostics.push({
+            path,
+            message: `The learner cannot have reached "${id}" by this point in the flow, so counting it here does nothing.`,
+          });
+        }
+      }
+    }
+  };
 
   const walk = (condition: Condition): void => {
     switch (condition.type) {
@@ -65,19 +136,44 @@ export const validateCondition = (
   ): void => {
     const { left, op, right } = condition;
 
+    if ("scope" in left) checkScope(left.scope);
+
     // A branch that reads a task the learner has not met yet can never be true.
-    if ("nodeId" in left && nodeIds.has(left.nodeId)) {
-      if (!taskIds.has(left.nodeId) && left.kind !== "answer") {
+    const nodeId = "nodeId" in left ? left.nodeId : undefined;
+    if (nodeId !== undefined && nodeIds.has(nodeId)) {
+      // `visits` and `timeSpent` are true of any step; the rest need a task.
+      // `answer` sits with them because a content bit may hold one.
+      const anyStep =
+        left.kind === "answer" ||
+        left.kind === "visits" ||
+        left.kind === "timeSpent";
+      if (!anyStep && !taskIds.has(nodeId)) {
         diagnostics.push({
           path,
-          message: `"${left.nodeId}" is not a task, so it never has a result to compare. Point this at a task.`,
+          message: `"${nodeId}" is not a task, so it never has a result to compare. Point this at a task.`,
         });
-      } else if (!before.has(left.nodeId)) {
+      } else if (!before.has(nodeId)) {
         diagnostics.push({
           path,
-          message: `The learner cannot have reached "${left.nodeId}" by this point in the flow, so this connection is never followed.`,
+          message: `The learner cannot have reached "${nodeId}" by this point in the flow, so this connection is never followed.`,
         });
       }
+    }
+
+    // Reading something the flow never collects.
+    if (left.kind === "confidence" && !doc.meta.askConfidence) {
+      diagnostics.push({
+        path,
+        message:
+          "This flow does not ask how sure the learner is, so there is never a confidence to compare. Turn on the confidence question, or use a different rule.",
+      });
+    }
+    if (left.kind === "timeRemaining" && doc.meta.timeLimit === undefined) {
+      diagnostics.push({
+        path,
+        message:
+          "This flow has no time limit, so there is never any time remaining to compare. Set a limit for the whole assessment, or use time spent instead.",
+      });
     }
 
     if (op === "in" || op === "notIn") {
@@ -112,6 +208,8 @@ export const validateCondition = (
         return;
       }
       checkCountRange(left, op, right);
+      checkConfidenceRange(left, right);
+      checkRatioRange(left, right);
       return;
     }
 
@@ -128,9 +226,38 @@ export const validateCondition = (
       });
     }
 
-    if (left.kind === "resultCount" && typeof right === "number") {
+    if (typeof right === "number") {
       checkCountRange(left, op, right);
+      checkConfidenceRange(left, right);
+      checkRatioRange(left, right);
     }
+  };
+
+  /**
+   * Confidence is a fraction, and the scale the learner sees has five points on
+   * it. Comparing against 4 is the mistake everyone makes once.
+   */
+  const checkConfidenceRange = (left: ValueRef, right: number): void => {
+    if (left.kind !== "confidence") return;
+    if (right >= 0 && right <= 1) return;
+    diagnostics.push({
+      path,
+      message: `How sure the learner is runs from 0 to 1, so "${right}" is outside it. The top of the five-point scale is 1, the middle is 0.6.`,
+    });
+  };
+
+  /**
+   * A share of the marks is a fraction, not a percentage. "Half" is 0.5, and a
+   * rule written against 50 is a branch that can never fire — the same mistake
+   * as writing confidence against the five-point scale, and just as silent.
+   */
+  const checkRatioRange = (left: ValueRef, right: number): void => {
+    if (left.kind !== "scoreRatio") return;
+    if (right >= 0 && right <= 1) return;
+    diagnostics.push({
+      path,
+      message: `The share of the marks runs from 0 to 1, so "${right}" is outside it. Half the marks is 0.5, all of them is 1.`,
+    });
   };
 
   /** A threshold no learner could reach is a branch that never fires. */
@@ -148,19 +275,22 @@ export const validateCondition = (
       });
       return;
     }
-    if ((op === "gte" || op === "eq") && right > answerable) {
+    // Counted against the scope, not the whole flow: "three of the last two"
+    // is as unreachable as "three of the two that came before".
+    const reachableCount = answerableIn(left.scope);
+    if ((op === "gte" || op === "eq") && right > reachableCount) {
       diagnostics.push({
         path,
         message:
-          answerable === 0
+          reachableCount === 0
             ? "There are no tasks before this connection, so counting answers here is never true."
-            : `Only ${answerable} task(s) come before this connection, so "${right}" can never be reached.`,
+            : `Only ${reachableCount} task(s) come before this connection, so "${right}" can never be reached.`,
       });
     }
-    if (op === "gt" && right >= answerable) {
+    if (op === "gt" && right >= reachableCount) {
       diagnostics.push({
         path,
-        message: `Only ${answerable} task(s) come before this connection, so more than ${right} can never be reached.`,
+        message: `Only ${reachableCount} task(s) come before this connection, so more than ${right} can never be reached.`,
       });
     }
   };

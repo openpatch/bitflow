@@ -38,6 +38,93 @@
   outline: none;
 }
 
+/* --- sections ------------------------------------------------------------- */
+
+/* Where in the assessment they are, under the progress bar. Quiet: it names
+   the part of the paper, it is not the question. */
+.bitflow-section-label {
+  margin: 0;
+  padding-inline: var(--bitflow-space-small);
+  font-size: var(--bitflow-font-size-small);
+  font-weight: var(--bitflow-font-weight-medium);
+  color: var(--bitflow-color-text-muted);
+}
+
+/* The passage every step in the section is about. Set apart from the question
+   below it, because it is material to consult rather than something to answer,
+   and capped in height so a long passage cannot push the question off screen. */
+.bitflow-section-stimulus {
+  padding: var(--bitflow-space-small);
+  border-inline-start: var(--bitflow-border-width) solid
+    var(--bitflow-color-primary-light);
+  border-radius: var(--bitflow-radius-standard);
+  background: var(--bitflow-color-surface);
+  max-height: var(--bitflow-stimulus-max-height, 40vh);
+  overflow-y: auto;
+}
+
+/* --- the step list, when the flow allows free movement -------------------- */
+
+.bitflow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+  border-top: 1px solid var(--bitflow-color-border);
+  padding-top: var(--bitflow-space-small);
+}
+
+.bitflow-steps-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-step {
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--bitflow-space-xxsmall);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  color: var(--bitflow-color-text);
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  cursor: pointer;
+}
+
+.bitflow-step:hover:not(:disabled) {
+  border-color: var(--bitflow-color-primary);
+}
+
+/* Answered and outstanding are told apart by more than colour: the outstanding
+   ones keep the plain surface and a dashed edge, so the difference survives
+   both a monochrome screen and a reader who cannot see the fill. */
+.bitflow-step-answered {
+  background: var(--bitflow-color-correct-surface);
+  border-color: var(--bitflow-color-primary-light);
+}
+
+.bitflow-step-outstanding {
+  border-style: dashed;
+  border-color: var(--bitflow-color-neutral-400);
+}
+
+.bitflow-step-current {
+  border-color: var(--bitflow-color-primary);
+  font-weight: var(--bitflow-font-weight-bold);
+  /* It is the step they are on, not one to go to, so it is disabled — and a
+     disabled control must not look unavailable here. */
+  opacity: 1;
+  cursor: default;
+}
+
+.bitflow-shell-steps {
+  padding-inline: var(--bitflow-space-small);
+}
+
 .bitflow-countdown {
   display: flex;
   justify-content: flex-end;

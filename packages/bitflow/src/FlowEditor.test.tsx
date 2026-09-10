@@ -215,7 +215,7 @@ describe("<FlowEditor>", () => {
           node("end", "test-end"),
         ],
         [edge("start", "a"), edge("a", "b"), edge("b", "end")],
-        { pools: [{ id: "p", label: "Questions", draw: 1 }] },
+        { pools: [{ id: "p", label: "Questions", draw: 1, shuffle: false }] },
       );
       setup({ flow: pooled });
 
@@ -441,5 +441,242 @@ describe("editor store", () => {
 
     const store = ref.current;
     expect(store?.getFlow().edges).toHaveLength(2);
+  });
+
+  describe("what a connection clears on arrival", () => {
+    /**
+     * A loop back to a question, wired the way a remediation loop is, plus a
+     * threshold no learner can reach — the unreachable rule is only there to
+     * put a clickable problem in the list, which is how a test reaches the
+     * edge inspector without a canvas to click on.
+     */
+    const looping = doc(
+      [
+        node("start", "test-start", { title: "Start" }),
+        node("q", "test-task", { prompt: "First", correct: "a" }),
+        node("why", "test-content", { text: "Because." }),
+        node("end", "test-end"),
+      ],
+      [
+        edge("start", "q"),
+        edge("q", "end"),
+        edge("why", "q", {
+          resetTarget: "result",
+          condition: {
+            type: "compare",
+            left: { kind: "resultCount", state: "correct" },
+            op: "gte",
+            right: 99,
+          },
+        }),
+        edge("q", "why"),
+      ],
+    );
+
+    const selectTheLoop = async (user: ReturnType<typeof userEvent.setup>) => {
+      await user.click(
+        screen.getByRole("button", { name: /can never be reached/ }),
+      );
+    };
+
+    it("shows what the connection already clears", async () => {
+      const user = userEvent.setup();
+      setup({ flow: looping });
+      await selectTheLoop(user);
+
+      const select = screen.getByLabelText(
+        /Arriving here clears/,
+      ) as HTMLSelectElement;
+      expect(select.value).toBe("result");
+    });
+
+    it("changes it, and writes it into the document", async () => {
+      const user = userEvent.setup();
+      const { onEdit } = setup({ flow: looping });
+      await selectTheLoop(user);
+
+      await user.selectOptions(
+        screen.getByLabelText(/Arriving here clears/),
+        "answer",
+      );
+
+      const written = lastDoc(onEdit).edges.find((e) => e.source === "why");
+      expect(written?.resetTarget).toBe("answer");
+    });
+
+    it("takes it off the connection entirely rather than storing a nothing", async () => {
+      const user = userEvent.setup();
+      const { onEdit } = setup({ flow: looping });
+      await selectTheLoop(user);
+
+      await user.selectOptions(screen.getByLabelText(/Arriving here clears/), "");
+
+      const written = lastDoc(onEdit).edges.find((e) => e.source === "why");
+      expect(written).toBeDefined();
+      expect("resetTarget" in written!).toBe(false);
+    });
+  });
+
+  describe("naming a connection", () => {
+    const branching = doc(
+      [
+        node("start", "test-start", { title: "Start" }),
+        node("q", "test-task", { prompt: "First", correct: "a" }),
+        node("end", "test-end"),
+      ],
+      [
+        edge("start", "q"),
+        edge("q", "end", {
+          condition: {
+            type: "compare",
+            left: { kind: "resultCount", state: "correct" },
+            op: "gte",
+            right: 99,
+          },
+        }),
+      ],
+    );
+
+    const selectTheBranch = async (user: ReturnType<typeof userEvent.setup>) => {
+      await user.click(
+        screen.getByRole("button", { name: /can never be reached/ }),
+      );
+    };
+
+    it("starts with no name of its own, because the rule describes itself", async () => {
+      const user = userEvent.setup();
+      setup({ flow: branching });
+      await selectTheBranch(user);
+
+      expect(
+        (screen.getByLabelText(/Name this connection/) as HTMLInputElement).value,
+      ).toBe("");
+    });
+
+    it("writes the author's own name onto the connection", async () => {
+      const user = userEvent.setup();
+      const { onEdit } = setup({ flow: branching });
+      await selectTheBranch(user);
+
+      await user.type(screen.getByLabelText(/Name this connection/), "did well");
+
+      const written = lastDoc(onEdit).edges.find((e) => e.source === "q");
+      expect(written?.label).toBe("did well");
+    });
+
+    it("takes the name off again rather than storing an empty one", async () => {
+      const user = userEvent.setup();
+      const { onEdit } = setup({
+        flow: doc(branching.nodes, [
+          branching.edges[0],
+          { ...branching.edges[1], label: "did well" },
+        ]),
+      });
+      await selectTheBranch(user);
+
+      await user.clear(screen.getByLabelText(/Name this connection/));
+
+      const written = lastDoc(onEdit).edges.find((e) => e.source === "q");
+      expect(written).toBeDefined();
+      expect("label" in written!).toBe(false);
+    });
+  });
+
+  describe("keeping the panel readable", () => {
+    /**
+     * jsdom applies no user-agent styles, so everything inside a closed
+     * `<details>` is still findable by the other tests in this file. These
+     * assert the `open` state itself, which is the part a reader cannot see.
+     */
+    const group = (name: RegExp | string) =>
+      screen.getByText(name).closest("details") as HTMLDetailsElement;
+
+    it("starts with the settings folded away", () => {
+      setup();
+      for (const name of [
+        "Timing",
+        "How learners may move",
+        "What learners are asked after a task",
+        "Pools",
+        "Sections",
+      ]) {
+        expect(group(name).open, `${name} should start closed`).toBe(false);
+      }
+    });
+
+    it("says what each group is set to without opening it", () => {
+      setup({
+        flow: doc(simpleFlow.nodes, simpleFlow.edges, {
+          timeLimit: 900,
+          navigation: "free",
+          askConfidence: true,
+        }),
+      });
+
+      expect(group("Timing").textContent).toContain("15 min");
+      // The short form: a value slot is one line, and the sentence in the
+      // dropdown does not fit it.
+      expect(group("How learners may move").textContent).toContain("Free");
+      expect(
+        group("What learners are asked after a task").textContent,
+      ).toContain("How sure");
+    });
+
+    it("counts without the bracketed plural that reads badly as a value", () => {
+      setup({
+        flow: doc(simpleFlow.nodes, simpleFlow.edges, {
+          pools: [{ id: "p", label: "Questions", draw: 1, shuffle: false }],
+        }),
+      });
+      expect(group("Pools").textContent).toContain("1 pool");
+      expect(group("Pools").textContent).not.toContain("pool(s)");
+    });
+
+    it("says a group is empty rather than saying nothing", () => {
+      setup();
+      expect(group("Timing").textContent).toContain("No limit");
+      expect(group("Pools").textContent).toContain("None");
+      expect(group("Add a step").textContent).toContain("kinds");
+    });
+
+    it("leaves the palette open, because a new flow has nothing else", () => {
+      setup();
+      expect(group("Add a step").open).toBe(true);
+    });
+
+    it("keeps a group open across a trip to a step and back", async () => {
+      const user = userEvent.setup();
+      setup();
+
+      await user.click(screen.getByText("Pools"));
+      expect(group("Pools").open).toBe(true);
+
+      // Select a step — the panel swaps to its form — then deselect.
+      await user.click(screen.getByText("Timing"));
+      expect(group("Pools").open).toBe(true);
+    });
+
+    it("opens the group a problem points at, and takes the author there", async () => {
+      const user = userEvent.setup();
+      // A pool that draws more than it holds. It reports against `meta.pools`,
+      // which had nowhere to go at all before, and is now behind a fold.
+      setup({
+        flow: doc(
+          [
+            node("start", "test-start", { title: "Start" }),
+            { ...node("q", "test-task", { prompt: "A", correct: "a" }), pool: "p" },
+            node("end", "test-end"),
+          ],
+          [edge("start", "q"), edge("q", "end")],
+          { pools: [{ id: "p", label: "Questions", draw: 5, shuffle: false }] },
+        ),
+      });
+
+      expect(group("Pools").open).toBe(false);
+
+      await user.click(screen.getByRole("button", { name: /only has 1/ }));
+
+      expect(group("Pools").open).toBe(true);
+    });
   });
 });

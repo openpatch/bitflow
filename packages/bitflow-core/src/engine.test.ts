@@ -48,7 +48,7 @@ describe("engine", () => {
   });
 
   it("walks a linear flow and stops at the end bit", () => {
-    const context = conditionContext(snapshotOf());
+    const context = conditionContext(linear, snapshotOf());
     expect(nextNodeId(linear, "start", context)).toBe("title");
     expect(nextNodeId(linear, "title", context)).toBe("q");
     expect(nextNodeId(linear, "q", context)).toBe("end");
@@ -61,7 +61,7 @@ describe("engine", () => {
       [edge("end", "q")],
     );
     expect(isTerminalNode(looping, "end")).toBe(true);
-    expect(nextNodeId(looping, "end", conditionContext(snapshotOf(looping)))).toBeNull();
+    expect(nextNodeId(looping, "end", conditionContext(looping, snapshotOf(looping)))).toBeNull();
   });
 
   describe("branching", () => {
@@ -104,7 +104,7 @@ describe("engine", () => {
         ...snapshotOf(branching),
         results: { q: { state: "correct" } },
       };
-      expect(nextNodeId(branching, "q", conditionContext(snapshot))).toBe("hard");
+      expect(nextNodeId(branching, "q", conditionContext(branching, snapshot))).toBe("hard");
     });
 
     it("falls back to the unconditional edge when it does not", () => {
@@ -112,12 +112,12 @@ describe("engine", () => {
         ...snapshotOf(branching),
         results: { q: { state: "wrong" } },
       };
-      expect(nextNodeId(branching, "q", conditionContext(snapshot))).toBe("easy");
+      expect(nextNodeId(branching, "q", conditionContext(branching, snapshot))).toBe("easy");
     });
 
     it("falls back when the referenced node has no result yet", () => {
       expect(
-        nextNodeId(branching, "q", conditionContext(snapshotOf(branching))),
+        nextNodeId(branching, "q", conditionContext(branching, snapshotOf(branching))),
       ).toBe("easy");
     });
   });

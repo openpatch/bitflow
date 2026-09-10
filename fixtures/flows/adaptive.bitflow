@@ -1,0 +1,299 @@
+{
+  "version": 1,
+  "meta": {
+    "id": "adaptive",
+    "title": "Reading, with a way back round",
+    "description": "Consent, a name, a section with a shared passage, a remediation loop and a branch on how sure the learner was.",
+    "locale": "en",
+    "askConfidence": true,
+    "askReasoning": false,
+    "navigation": "free",
+    "allowSkip": true,
+    "sections": [
+      {
+        "id": "passage",
+        "label": "The passage",
+        "markdown": "Ada Lovelace wrote what is often called the first computer program: a method for the Analytical Engine to compute Bernoulli numbers. The engine was never built.\n\nShe published it in 1843, as a note appended to her translation of somebody else's paper."
+      }
+    ],
+    "pools": [
+      { "id": "bank", "label": "Closing questions", "draw": 2, "shuffle": true }
+    ],
+    "timeLimit": 900
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start-simple",
+      "position": { "x": 0, "y": 0 },
+      "data": {
+        "title": "Reading, with a way back round",
+        "markdown": "A short comprehension exercise.",
+        "showOutline": true
+      }
+    },
+    {
+      "id": "consent",
+      "type": "start-consent",
+      "position": { "x": 0, "y": 140 },
+      "data": {
+        "title": "Before you start",
+        "markdown": "This records your answers, how sure you said you were, and how long each question took. Your teacher can see all of it. Nothing about your device is recorded.",
+        "agreeLabel": "",
+        "requiredHint": "",
+        "allowDecline": true,
+        "declineLabel": ""
+      }
+    },
+    {
+      "id": "declined",
+      "type": "end-tries",
+      "position": { "x": 360, "y": 140 },
+      "data": {
+        "title": "No problem",
+        "markdown": "Nothing has been recorded. Tell your teacher you would rather do something else.",
+        "showBreakdown": false,
+        "showScore": false,
+        "allowReview": false
+      }
+    },
+    {
+      "id": "who",
+      "type": "start-identify",
+      "position": { "x": 0, "y": 280 },
+      "data": {
+        "title": "Who you are",
+        "markdown": "So your work can be handed back.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "First name",
+            "hint": "Or a nickname your teacher will recognise.",
+            "required": true,
+            "kind": "text",
+            "options": []
+          },
+          {
+            "id": "class",
+            "label": "Class",
+            "hint": "",
+            "required": false,
+            "kind": "select",
+            "options": ["7a", "7b", "7c"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "q-year",
+      "type": "task-numeric",
+      "position": { "x": 0, "y": 420 },
+      "section": "passage",
+      "data": {
+        "instruction": "In which year did she publish it?",
+        "expected": "1843",
+        "tolerance": "exact",
+        "allowExpression": false,
+        "valueFeedback": [],
+        "evaluation": { "mode": "auto", "enableRetry": false, "showFeedback": true, "weight": 1 }
+      }
+    },
+    {
+      "id": "why-year",
+      "type": "input-markdown",
+      "position": { "x": 360, "y": 420 },
+      "data": {
+        "markdown": "Look again at the second paragraph. The year is written out in full."
+      }
+    },
+    {
+      "id": "q-built",
+      "type": "task-yes-no",
+      "position": { "x": 0, "y": 560 },
+      "section": "passage",
+      "data": {
+        "question": "Was the Analytical Engine ever built?",
+        "correctAnswer": false,
+        "evaluation": { "mode": "auto", "enableRetry": false, "showFeedback": true, "weight": 1 }
+      }
+    },
+    {
+      "id": "sure-but-wrong",
+      "type": "input-markdown",
+      "position": { "x": 360, "y": 560 },
+      "data": {
+        "markdown": "You were sure, and it was not right — which usually means the passage said something other than you expected. Read the last sentence of the first paragraph again before you carry on."
+      }
+    },
+    {
+      "id": "bank-1",
+      "type": "task-choice",
+      "position": { "x": 0, "y": 700 },
+      "pool": "bank",
+      "data": {
+        "instruction": "What was the method for?",
+        "variant": "single",
+        "choices": [
+          { "id": "c1", "markdown": "Computing Bernoulli numbers", "correct": true },
+          { "id": "c2", "markdown": "Translating a paper", "correct": false },
+          { "id": "c3", "markdown": "Building an engine", "correct": false }
+        ],
+        "shuffle": false,
+        "partialCredit": false,
+        "patternFeedback": [],
+        "evaluation": { "mode": "auto", "enableRetry": false, "showFeedback": true, "weight": 1 }
+      }
+    },
+    {
+      "id": "bank-2",
+      "type": "task-choice",
+      "position": { "x": 0, "y": 840 },
+      "pool": "bank",
+      "data": {
+        "instruction": "How was the method published?",
+        "variant": "single",
+        "choices": [
+          { "id": "c1", "markdown": "As a note on a translation", "correct": true },
+          { "id": "c2", "markdown": "As a book of her own", "correct": false },
+          { "id": "c3", "markdown": "It was never published", "correct": false }
+        ],
+        "shuffle": false,
+        "partialCredit": false,
+        "patternFeedback": [],
+        "evaluation": { "mode": "auto", "enableRetry": false, "showFeedback": true, "weight": 1 }
+      }
+    },
+    {
+      "id": "bank-3",
+      "type": "task-choice",
+      "position": { "x": 0, "y": 980 },
+      "pool": "bank",
+      "data": {
+        "instruction": "Who is credited with the first computer program?",
+        "variant": "single",
+        "choices": [
+          { "id": "c1", "markdown": "Ada Lovelace", "correct": true },
+          { "id": "c2", "markdown": "Charles Babbage", "correct": false },
+          { "id": "c3", "markdown": "Jacob Bernoulli", "correct": false }
+        ],
+        "shuffle": false,
+        "partialCredit": false,
+        "patternFeedback": [],
+        "evaluation": { "mode": "auto", "enableRetry": false, "showFeedback": true, "weight": 1 }
+      }
+    },
+    {
+      "id": "certificate",
+      "type": "end-certificate",
+      "position": { "x": 0, "y": 1120 },
+      "data": {
+        "title": "Well read",
+        "markdown": "For getting most of the way through on your own.",
+        "issuer": "Room 12",
+        "showName": true,
+        "showScore": true,
+        "showDate": true,
+        "printLabel": ""
+      }
+    },
+    {
+      "id": "keep-a-copy",
+      "type": "end-download",
+      "position": { "x": 360, "y": 1120 },
+      "data": {
+        "title": "That is the end",
+        "markdown": "Keep a copy of what you answered.",
+        "buttonLabel": "",
+        "filename": "reading",
+        "includeAnswers": true
+      }
+    }
+  ],
+  "edges": [
+    { "id": "e-start", "source": "start", "target": "consent" },
+    {
+      "id": "e-declined",
+      "source": "consent",
+      "target": "declined",
+      "label": "said no",
+      "condition": {
+        "type": "compare",
+        "left": { "kind": "answer", "nodeId": "consent" },
+        "op": "eq",
+        "right": false
+      }
+    },
+    { "id": "e-agreed", "source": "consent", "target": "who" },
+    { "id": "e-who", "source": "who", "target": "q-year" },
+    {
+      "id": "e-year-wrong",
+      "source": "q-year",
+      "target": "why-year",
+      "label": "wrong",
+      "condition": {
+        "type": "compare",
+        "left": { "kind": "result", "nodeId": "q-year", "path": "state" },
+        "op": "eq",
+        "right": "wrong"
+      }
+    },
+    { "id": "e-year-on", "source": "q-year", "target": "q-built" },
+    {
+      "id": "e-year-again",
+      "source": "why-year",
+      "target": "q-year",
+      "label": "try again",
+      "resetTarget": "result",
+      "condition": {
+        "type": "compare",
+        "left": { "kind": "visits", "nodeId": "q-year" },
+        "op": "lte",
+        "right": 2
+      }
+    },
+    { "id": "e-year-give-up", "source": "why-year", "target": "q-built" },
+    {
+      "id": "e-sure-but-wrong",
+      "source": "q-built",
+      "target": "sure-but-wrong",
+      "label": "sure, and wrong",
+      "condition": {
+        "type": "and",
+        "conditions": [
+          {
+            "type": "compare",
+            "left": { "kind": "result", "nodeId": "q-built", "path": "state" },
+            "op": "eq",
+            "right": "wrong"
+          },
+          {
+            "type": "compare",
+            "left": { "kind": "confidence", "nodeId": "q-built" },
+            "op": "gte",
+            "right": 0.8
+          }
+        ]
+      }
+    },
+    { "id": "e-built-on", "source": "q-built", "target": "bank-1" },
+    { "id": "e-reread", "source": "sure-but-wrong", "target": "bank-1" },
+    { "id": "e-bank-1", "source": "bank-1", "target": "bank-2" },
+    { "id": "e-bank-2", "source": "bank-2", "target": "bank-3" },
+    {
+      "id": "e-certificate",
+      "source": "bank-3",
+      "target": "certificate",
+      "label": "did well in the passage",
+      "condition": {
+        "type": "compare",
+        "left": {
+          "kind": "scoreRatio",
+          "scope": { "kind": "section", "id": "passage" }
+        },
+        "op": "gte",
+        "right": 1
+      }
+    },
+    { "id": "e-download", "source": "bank-3", "target": "keep-a-copy" }
+  ]
+}

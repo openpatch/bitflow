@@ -4,16 +4,17 @@ import {
   type Result,
 } from "./errors";
 import {
+  canGoTo,
   conditionContext,
   drawPools,
   getNode,
   isActiveNode,
   isTerminalNode,
-  nextNodeId,
+  nextStep,
   previousNodeId,
-  scoreOf,
   startNodeId,
 } from "./engine";
+import { scoreOf } from "./score";
 import { createId } from "./id";
 import { getBit } from "./registry";
 import {
@@ -391,15 +392,14 @@ export const goNext = (
   if (snapshot.status !== "inProgress") return snapshot;
 
   const timestamp = nowIso(now);
-  const target = nextNodeId(
-    doc,
-    snapshot.currentNodeId,
-    conditionContext(snapshot),
+  const step = nextStep(doc, snapshot.currentNodeId, conditionContext(doc, snapshot, now), {
     // Steps this attempt did not draw are walked past, not stopped on.
-    (node) => isActiveNode(snapshot, node),
-  );
+    isActive: (node) => isActiveNode(snapshot, node),
+    // A shuffled pool is walked in the order this attempt drew, not as wired.
+    order: snapshot.pools,
+  });
 
-  if (target === null) {
+  if (step === null) {
     return touch(
       snapshot,
       {
@@ -411,12 +411,16 @@ export const goNext = (
     );
   }
 
+  const target = step.nodeId;
   const arrivedAtEnd = getBit(getNode(doc, target)?.type ?? "")?.kind === "end";
 
   return touch(
     snapshot,
     {
       ...leaveCurrentNode(snapshot, now),
+      // Clearing before arriving, not after, so the learner never sees the
+      // stale result flash on the step they were sent back to.
+      ...clearedFor(snapshot, target, step.edge?.resetTarget),
       currentNodeId: target,
       history: [...snapshot.history, target],
       enteredAt: timestamp,
@@ -429,6 +433,29 @@ export const goNext = (
 };
 
 /**
+ * What an edge's `resetTarget` clears on the step it lands on.
+ *
+ * The try count is never cleared. It is the record of how many attempts the
+ * task took, and a loop that erased it would report a learner who went round
+ * three times as one who answered first time.
+ */
+const clearedFor = (
+  snapshot: AttemptSnapshot,
+  nodeId: string,
+  reset: "result" | "answer" | undefined,
+): Partial<AttemptSnapshot> => {
+  if (!reset) return {};
+
+  const results = { ...snapshot.results };
+  delete results[nodeId];
+  if (reset === "result") return { results };
+
+  const answers = { ...snapshot.answers };
+  delete answers[nodeId];
+  return { results, answers };
+};
+
+/**
  * Steps back through the visited history. The step is popped so going forward
  * again re-evaluates the branch — an answer changed in between must be able to
  * send the learner down a different path.
@@ -438,6 +465,7 @@ export const goPrevious = (
   snapshot: AttemptSnapshot,
   now?: Date,
 ): AttemptSnapshot => {
+  if (!canGoPrevious(doc, snapshot)) return snapshot;
   const target = previousNodeId(snapshot);
   if (target === null || !getNode(doc, target)) return snapshot;
 
@@ -459,8 +487,45 @@ export const canGoPrevious = (
   doc: BitflowDocument,
   snapshot: AttemptSnapshot,
 ): boolean => {
+  // `linear` is an exam: what has been answered stays answered.
+  if (doc.meta.navigation === "linear") return false;
   const target = previousNodeId(snapshot);
   return target !== null && getNode(doc, target) !== undefined;
+};
+
+/**
+ * Jumps straight to a step the learner has already been to.
+ *
+ * Only offered when the flow allows free movement, and only backwards: the
+ * history is truncated to the step jumped to, exactly as stepping back does, so
+ * going forward again re-runs every branch in between. Answers and results stay
+ * put — the jump is a change of view, not an undo.
+ */
+export const goTo = (
+  doc: BitflowDocument,
+  snapshot: AttemptSnapshot,
+  nodeId: string,
+  now?: Date,
+): AttemptSnapshot => {
+  if (!canGoTo(doc, snapshot, nodeId)) return snapshot;
+  if (nodeId === snapshot.currentNodeId) return snapshot;
+
+  // The first visit, not the last: a step reached twice through a loop belongs
+  // where the learner first met it, which is where the step list shows it.
+  const index = snapshot.history.indexOf(nodeId);
+
+  return touch(
+    snapshot,
+    {
+      ...leaveCurrentNode(snapshot, now),
+      currentNodeId: nodeId,
+      history: snapshot.history.slice(0, index + 1),
+      enteredAt: nowIso(now),
+      status: "inProgress",
+      completedAt: undefined,
+    },
+    now,
+  );
 };
 
 export const isComplete = (snapshot: AttemptSnapshot): boolean =>

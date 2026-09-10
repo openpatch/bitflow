@@ -3,7 +3,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ConditionEditor } from "./ConditionEditor";
+import { ConditionEditor, summariseCondition } from "./ConditionEditor";
 import { doc, edge, node, registerTestBits } from "./test-utils";
 
 /**
@@ -260,5 +260,328 @@ describe("<ConditionEditor>", () => {
 
     expect(screen.getByText(/cannot show/)).toBeDefined();
     expect(screen.queryByLabelText("How many tasks")).toBeNull();
+  });
+
+  describe("the rules added after the first two", () => {
+    const ruleKindPicker = () =>
+      within(rules()[0]).getByLabelText("This rule is about");
+
+    it("builds a yes/no answer rule with no dot path in sight", async () => {
+      // The branch a consent step needs. Written as an object with a path it
+      // could not be built here at all, which is why the answer is a bare
+      // boolean.
+      const user = userEvent.setup();
+      const { onChange } = setup();
+
+      await user.selectOptions(kindPicker(), "rules");
+      await user.selectOptions(ruleKindPicker(), "answer");
+      await user.selectOptions(
+        within(rules()[0]).getByLabelText("Their answer is"),
+        "no",
+      );
+
+      expect(lastCondition(onChange)).toEqual({
+        type: "compare",
+        left: { kind: "answer", nodeId: "q1" },
+        op: "eq",
+        right: false,
+      });
+    });
+
+    it("reads a yes/no answer rule back into the form", () => {
+      setup({
+        type: "compare",
+        left: { kind: "answer", nodeId: "q2" },
+        op: "eq",
+        right: false,
+      });
+      expect((ruleKindPicker() as HTMLSelectElement).value).toBe("answer");
+      expect(
+        (within(rules()[0]).getByLabelText("Their answer is") as HTMLSelectElement)
+          .value,
+      ).toBe("no");
+    });
+
+    it("leaves an answer buried at a path to the file", () => {
+      // Shown read-only rather than rewritten: there is no jargon-free way to
+      // offer a dot path, and mangling it would be worse than not showing it.
+      setup({
+        type: "compare",
+        left: { kind: "answer", nodeId: "q1", path: "choices.0" },
+        op: "eq",
+        right: true,
+      });
+      expect(screen.getByText(/rule the form cannot show/)).toBeDefined();
+    });
+
+    it("builds a confidence rule on the five-point scale, not on fractions", async () => {
+      const user = userEvent.setup();
+      const { onChange } = setup();
+
+      await user.selectOptions(kindPicker(), "rules");
+      await user.selectOptions(ruleKindPicker(), "confidence");
+      await user.selectOptions(
+        within(rules()[0]).getByLabelText("How sure"),
+        "1",
+      );
+
+      expect(lastCondition(onChange)).toEqual({
+        type: "compare",
+        left: { kind: "confidence", nodeId: "q1" },
+        op: "gte",
+        right: 1,
+      });
+    });
+
+    it("builds a share-of-the-marks rule, in percent", async () => {
+      // The branch a section-pass needs, and the last one that could only be
+      // written by hand in the file.
+      const user = userEvent.setup();
+      const { onChange } = setup();
+
+      await user.selectOptions(kindPicker(), "rules");
+      await user.selectOptions(ruleKindPicker(), "score");
+
+      expect(lastCondition(onChange)).toEqual({
+        type: "compare",
+        left: { kind: "scoreRatio" },
+        op: "gte",
+        right: 0.8,
+      });
+
+      const percent = within(rules()[0]).getByLabelText("Percent");
+      expect((percent as HTMLInputElement).value).toBe("80");
+    });
+
+    it("reads a share rule back without turning it into a fraction on screen", () => {
+      setup({
+        type: "compare",
+        left: { kind: "scoreRatio" },
+        op: "gte",
+        right: 0.5,
+      });
+      expect(
+        (within(rules()[0]).getByLabelText("Percent") as HTMLInputElement).value,
+      ).toBe("50");
+    });
+
+    it("keeps points and shares apart", async () => {
+      const user = userEvent.setup();
+      const { onChange } = setup({
+        type: "compare",
+        left: { kind: "scoreRatio" },
+        op: "gte",
+        right: 0.8,
+      });
+
+      await user.selectOptions(
+        within(rules()[0]).getByLabelText("Measured as"),
+        "points",
+      );
+
+      // 0.8 points is not what "80%" meant, so the value does not travel.
+      expect(lastCondition(onChange)).toEqual({
+        type: "compare",
+        left: { kind: "score" },
+        op: "gte",
+        right: 5,
+      });
+    });
+
+    it("builds a clock rule in seconds", async () => {
+      const user = userEvent.setup();
+      const { onChange } = setup();
+
+      await user.selectOptions(kindPicker(), "rules");
+      await user.selectOptions(ruleKindPicker(), "time");
+
+      expect(lastCondition(onChange)).toEqual({
+        type: "compare",
+        left: { kind: "timeRemaining" },
+        op: "lte",
+        right: 60,
+      });
+    });
+
+    it("counts over the last few tasks when asked", async () => {
+      const user = userEvent.setup();
+      const { onChange } = setup();
+
+      await user.selectOptions(kindPicker(), "rules");
+      await user.selectOptions(
+        within(rules()[0]).getByLabelText("Counted over"),
+        "last",
+      );
+
+      expect(lastCondition(onChange)).toEqual({
+        type: "compare",
+        left: {
+          kind: "resultCount",
+          state: "correct",
+          scope: { kind: "last", count: 3 },
+        },
+        op: "gte",
+        right: 1,
+      });
+    });
+
+    it("offers no section scope when the flow declares none", async () => {
+      // A picker with nothing in it would store a scope that counts nothing.
+      const user = userEvent.setup();
+      setup();
+      await user.selectOptions(kindPicker(), "rules");
+
+      const scope = within(rules()[0]).getByLabelText("Counted over");
+      expect(
+        [...(scope as HTMLSelectElement).options].map((option) => option.value),
+      ).toEqual(["all", "last"]);
+    });
+
+    it("keeps the step it was pointed at when the rule changes kind", async () => {
+      // Changing your mind about half a rule must not throw away the other half.
+      const user = userEvent.setup();
+      const { onChange } = setup({
+        type: "compare",
+        left: { kind: "result", nodeId: "q2", path: "state" },
+        op: "eq",
+        right: "wrong",
+      });
+
+      await user.selectOptions(ruleKindPicker(), "confidence");
+      expect(lastCondition(onChange)).toMatchObject({
+        left: { kind: "confidence", nodeId: "q2" },
+      });
+    });
+  });
+
+  describe("what a connection says on the canvas", () => {
+    const summarise = (condition: Condition | undefined) =>
+      summariseCondition(flow, condition, "en");
+
+    it("says nothing for a connection that is always followed", () => {
+      expect(summarise(undefined)).toBeUndefined();
+    });
+
+    it("names the outcome it branches on", () => {
+      expect(
+        summarise({
+          type: "compare",
+          left: { kind: "result", nodeId: "q1", path: "state" },
+          op: "eq",
+          right: "wrong",
+        }),
+      ).toBe("wrong");
+    });
+
+    it("says which way a yes/no answer went", () => {
+      expect(
+        summarise({
+          type: "compare",
+          left: { kind: "answer", nodeId: "q1" },
+          op: "eq",
+          right: false,
+        }),
+      ).toBe("answered No");
+    });
+
+    it("writes a count with the symbol rather than a word", () => {
+      expect(
+        summarise({
+          type: "compare",
+          left: { kind: "resultCount", state: "correct" },
+          op: "gte",
+          right: 3,
+        }),
+      ).toBe("≥ 3 correct");
+    });
+
+    it("says what a count was taken over", () => {
+      expect(
+        summarise({
+          type: "compare",
+          left: {
+            kind: "resultCount",
+            state: "correct",
+            scope: { kind: "last", count: 3 },
+          },
+          op: "gte",
+          right: 2,
+        }),
+      ).toBe("≥ 2 correct of last 3");
+    });
+
+    it("shows confidence on the scale the learner saw, not as a fraction", () => {
+      expect(
+        summarise({
+          type: "compare",
+          left: { kind: "confidence", nodeId: "q1" },
+          op: "gte",
+          right: 0.8,
+        }),
+      ).toBe("sure ≥ 4");
+    });
+
+    it("joins several rules the way they are combined", () => {
+      expect(
+        summarise({
+          type: "and",
+          conditions: [
+            {
+              type: "compare",
+              left: { kind: "result", nodeId: "q1", path: "state" },
+              op: "eq",
+              right: "wrong",
+            },
+            {
+              type: "compare",
+              left: { kind: "confidence", nodeId: "q1" },
+              op: "gte",
+              right: 0.8,
+            },
+          ],
+        }),
+      ).toBe("wrong and sure ≥ 4");
+    });
+
+    it("writes a share of the marks as a percentage", () => {
+      // Which is how the section-pass branch reads: "≥ 100% in Reading".
+      expect(
+        summarise({
+          type: "compare",
+          left: {
+            kind: "scoreRatio",
+            scope: { kind: "section", id: "reading" },
+          },
+          op: "gte",
+          right: 0.8,
+        }),
+      ).toBe("≥ 80% in reading");
+    });
+
+    it("admits it cannot describe a rule the form cannot show", () => {
+      // Better than "?", which said a rule was there and nothing else.
+      expect(
+        summarise({
+          type: "compare",
+          left: { kind: "answer", nodeId: "q1", path: "choices.0" },
+          op: "eq",
+          right: true,
+        }),
+      ).toBe("a rule you cannot see from here");
+    });
+
+    it("cuts a long rule set rather than letting it cover the canvas", () => {
+      const summary = summarise({
+        type: "and",
+        conditions: Array.from({ length: 6 }, () => ({
+          type: "compare" as const,
+          left: { kind: "resultCount" as const, state: "correct" as const },
+          op: "gte" as const,
+          right: 3,
+        })),
+      });
+      expect(summary!.length).toBeLessThanOrEqual(40);
+      expect(summary!.endsWith("…")).toBe(true);
+    });
   });
 });

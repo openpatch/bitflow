@@ -34,12 +34,17 @@ export type EditorState = {
   updateNodeData: (id: string, data: Record<string, unknown>) => void;
   /** Puts a step in a pool, or takes it out of one with `undefined`. */
   setNodePool: (id: string, pool: string | undefined) => void;
+  setNodeSection: (id: string, section: string | undefined) => void;
   moveNode: (id: string, position: Position) => void;
   /** Repositions every step on a grid. One undo step, not one per node. */
   arrange: () => void;
   removeNode: (id: string) => void;
   connect: (edge: Omit<BitEdge, "id">) => void;
   setEdgeCondition: (id: string, condition: Condition | undefined) => void;
+  /** What arriving over an edge clears on the step it lands on. */
+  setEdgeReset: (id: string, reset: "result" | "answer" | undefined) => void;
+  /** The author's own name for a connection, shown on the canvas. */
+  setEdgeLabel: (id: string, label: string) => void;
   removeEdge: (id: string) => void;
   setViewport: (viewport: Viewport) => void;
   select: (selection: { nodeId?: string | null; edgeId?: string | null }) => void;
@@ -56,6 +61,9 @@ export const emptyDocument = (): BitflowDocument => ({
     askConfidence: false,
     askReasoning: false,
     pools: [],
+    sections: [],
+    navigation: "back",
+    allowSkip: true,
   },
   nodes: [],
   edges: [],
@@ -177,6 +185,16 @@ export const createEditorStore = (
             });
           },
 
+          setNodeSection: (id, section) => {
+            const { doc } = get();
+            edit({
+              ...doc,
+              nodes: doc.nodes.map((node) =>
+                node.id === id ? withSection(node, section) : node,
+              ),
+            });
+          },
+
           moveNode: (id, position) => {
             const { doc } = get();
             edit({
@@ -225,6 +243,37 @@ export const createEditorStore = (
                   ? condition
                     ? { ...e, condition }
                     : stripCondition(e)
+                  : e,
+              ),
+            });
+          },
+
+          setEdgeLabel: (id, label) => {
+            const { doc } = get();
+            edit({
+              ...doc,
+              edges: doc.edges.map((e) =>
+                e.id === id
+                  ? // An empty box means "no name", not a name that is empty:
+                    // the key comes off entirely, and the edge goes back to
+                    // describing its own rule.
+                    label.trim() === ""
+                    ? stripLabel(e)
+                    : { ...e, label }
+                  : e,
+              ),
+            });
+          },
+
+          setEdgeReset: (id, reset) => {
+            const { doc } = get();
+            edit({
+              ...doc,
+              edges: doc.edges.map((e) =>
+                e.id === id
+                  ? reset
+                    ? { ...e, resetTarget: reset }
+                    : stripReset(e)
                   : e,
               ),
             });
@@ -287,6 +336,21 @@ const chainSource = (
 const withPool = (node: BitNode, pool: string | undefined): BitNode => {
   const { pool: _dropped, ...rest } = node;
   return pool ? { ...rest, pool } : rest;
+};
+
+const withSection = (node: BitNode, section: string | undefined): BitNode => {
+  const { section: _dropped, ...rest } = node;
+  return section ? { ...rest, section } : rest;
+};
+
+const stripLabel = (edge: BitEdge): BitEdge => {
+  const { label: _dropped, ...rest } = edge;
+  return rest;
+};
+
+const stripReset = (edge: BitEdge): BitEdge => {
+  const { resetTarget: _dropped, ...rest } = edge;
+  return rest;
 };
 
 const nextFreePosition = (nodes: BitNode[]): Position => {

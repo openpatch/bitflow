@@ -1,11 +1,13 @@
 import {
   canGoPrevious,
+  canGoTo,
   createAttempt,
   evaluateNode,
   getBit,
   getNode,
   goNext,
   goPrevious,
+  goTo,
   parseFlow,
   restoreAttempt,
   retryNode,
@@ -56,6 +58,8 @@ export type FlowState = {
   skip: () => void;
   next: () => void;
   previous: () => void;
+  /** Jumps back to a step already visited, when the flow allows it. */
+  goTo: (nodeId: string) => void;
   setConfidence: (confidence: Confidence) => void;
   setReasoning: (reasoning: string) => void;
   reset: () => void;
@@ -65,6 +69,7 @@ export type FlowState = {
 
   currentNode: () => BitNode | null;
   canGoBack: () => boolean;
+  canJumpTo: (nodeId: string) => boolean;
 };
 
 export const createFlowStore = (
@@ -198,10 +203,28 @@ export const createFlowStore = (
       },
 
       previous: () => {
-        const { doc, attempt } = get();
+        const { doc, attempt, draft } = get();
         if (!doc || !attempt) return;
-        const back = goPrevious(doc, attempt);
+        // The draft is kept on the way back for the same reason it is kept on
+        // the way forward: a content step is never checked, and losing what
+        // they typed because they looked at the previous page would be theft.
+        const withAnswer =
+          draft === undefined
+            ? attempt
+            : setAnswerIn(attempt, attempt.currentNodeId, draft);
+        const back = goPrevious(doc, withAnswer);
         commit(back, { value: back.answers[back.currentNodeId] });
+      },
+
+      goTo: (nodeId) => {
+        const { doc, attempt, draft } = get();
+        if (!doc || !attempt) return;
+        const withAnswer =
+          draft === undefined
+            ? attempt
+            : setAnswerIn(attempt, attempt.currentNodeId, draft);
+        const moved = goTo(doc, withAnswer, nodeId);
+        commit(moved, { value: moved.answers[moved.currentNodeId] });
       },
 
       setConfidence: (confidence) => {
@@ -255,6 +278,11 @@ export const createFlowStore = (
       canGoBack: () => {
         const { doc, attempt } = get();
         return Boolean(doc && attempt && canGoPrevious(doc, attempt));
+      },
+
+      canJumpTo: (nodeId) => {
+        const { doc, attempt } = get();
+        return Boolean(doc && attempt && canGoTo(doc, attempt, nodeId));
       },
     };
   });

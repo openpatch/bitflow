@@ -111,6 +111,84 @@ export const Reasoning = ({
   </div>
 );
 
+/** One row of the step list, already turned into what it should read as. */
+export type StepListItem = {
+  nodeId: string;
+  position: number;
+  current: boolean;
+  answered: boolean;
+  outstanding: boolean;
+  /** What the step is, for anyone who cannot see the numbers. */
+  title: string;
+};
+
+/**
+ * The list a flow set to free navigation shows: every step the learner has
+ * been to, and which of them still has no answer.
+ *
+ * It is the check-your-work screen as much as it is navigation — the reason it
+ * marks what is outstanding rather than only where they are. Numbers are for
+ * the eye; each button carries its position, what the step was and its state in
+ * its accessible name, because "3" on its own tells a screen reader nothing.
+ */
+export const StepList = ({
+  steps,
+  locale,
+  onGoTo,
+}: {
+  steps: StepListItem[];
+  locale: Locale;
+  onGoTo: (nodeId: string) => void;
+}): ReactElement => {
+  const t = (key: string) => translate(messages, key, locale);
+
+  return (
+    <nav className="bitflow-steps" aria-label={t("stepsLabel")}>
+      <p className="bitflow-hint">{t("stepsHint")}</p>
+      <ol className="bitflow-steps-list">
+        {steps.map((step) => {
+          const state = step.current
+            ? t("stepHere")
+            : step.outstanding
+              ? t("stepNotAnswered")
+              : step.answered
+                ? t("stepAnswered")
+                : "";
+
+          return (
+            <li key={step.nodeId}>
+              <button
+                type="button"
+                className={[
+                  "bitflow-step",
+                  step.current ? "bitflow-step-current" : "",
+                  step.outstanding ? "bitflow-step-outstanding" : "",
+                  step.answered ? "bitflow-step-answered" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                aria-current={step.current ? "step" : undefined}
+                // Nowhere to go: they are already looking at it.
+                disabled={step.current}
+                onClick={() => onGoTo(step.nodeId)}
+              >
+                <span aria-hidden="true">{step.position}</span>
+                <span className="bitflow-visually-hidden">
+                  {/* Joined with full stops so a screen reader pauses between
+                      the number, what the step was, and how it stands. */}
+                  {[String(step.position), step.title, state]
+                    .filter(Boolean)
+                    .join(". ")}
+                </span>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+};
+
 /**
  * The frame around whatever the learner is looking at: progress on top, the
  * bit in the middle, controls at the bottom. Every step of a flow uses it, so
@@ -120,12 +198,15 @@ export const Shell = ({
   progress,
   children,
   controls,
+  steps,
   contentRef,
   announcement,
 }: {
   progress?: ReactNode;
   children: ReactNode;
   controls?: ReactNode;
+  /** The step list, when the flow lets the learner move about freely. */
+  steps?: ReactNode;
   contentRef?: RefObject<HTMLDivElement | null>;
   /** Read out when the learner arrives at a new step. */
   announcement?: string;
@@ -144,6 +225,7 @@ export const Shell = ({
     {controls && (
       <div className="bitflow-shell-controls bitflow-content">{controls}</div>
     )}
+    {steps && <div className="bitflow-shell-steps bitflow-content">{steps}</div>}
     {/* Separate from the content so moving focus and announcing do not fight:
         the focus move reads the step, this says where in the flow it is. */}
     <div className="bitflow-visually-hidden" role="status">

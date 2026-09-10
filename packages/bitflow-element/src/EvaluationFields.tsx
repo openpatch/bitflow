@@ -82,6 +82,31 @@ export const EvaluationFields = ({
         value={evaluation.timeLimit}
         onChange={(timeLimit) => patch({ timeLimit })}
       />
+
+      {/* Three states, not a checkbox: "follow the flow" has to be distinct
+          from "yes", or every task authored before this existed would start
+          overriding a setting nobody touched. */}
+      <SelectField
+        label={t("allowSkipLabel")}
+        hint={t("allowSkipHint")}
+        value={
+          evaluation.allowSkip === undefined
+            ? "flow"
+            : evaluation.allowSkip
+              ? "yes"
+              : "no"
+        }
+        options={[
+          { value: "flow", label: t("allowSkipFlow") },
+          { value: "yes", label: t("allowSkipYes") },
+          { value: "no", label: t("allowSkipNo") },
+        ]}
+        onChange={(choice) =>
+          patch({
+            allowSkip: choice === "flow" ? undefined : choice === "yes",
+          })
+        }
+      />
     </>
   );
 };

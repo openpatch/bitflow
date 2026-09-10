@@ -6,6 +6,7 @@ export * from "./errors";
 export * from "./i18n";
 export * from "./id";
 export * from "./registry";
+export * from "./score";
 export * from "./schema";
 export * from "./validate";
 export * from "./styles";

@@ -1,18 +1,22 @@
 import {
+  canLeaveNode,
+  canSkip,
   computeScore,
   flowProgress,
   getBit,
   getNode,
   resolveLocale,
+  sectionOf,
   taskTimeLimit,
   timeSpent,
   timeSpentOn,
   translate,
+  visitedSteps,
   type AttemptSnapshot,
   type BitflowDocument,
   type BitflowError,
 } from "@bitflow/core";
-import { BitFeedback, BitView, elementMessages } from "@bitflow/element";
+import { BitFeedback, BitView, elementMessages, Markdown } from "@bitflow/element";
 import {
   useCallback,
   useEffect,
@@ -27,7 +31,13 @@ import { Countdown } from "./Countdown";
 import { summarise } from "./summarise";
 import { createFlowStore, isTaskNode, type FlowState } from "./flowStore";
 import { messages } from "./messages";
-import { ConfidenceLevels, Progress, Reasoning, Shell } from "./Shell";
+import {
+  ConfidenceLevels,
+  Progress,
+  Reasoning,
+  Shell,
+  StepList,
+} from "./Shell";
 
 export type FlowHandle = {
   /** Publishes the current snapshot through `onSave` and returns it. */
@@ -194,7 +204,32 @@ const FlowBody = ({
   const showRetry = answered && result?.allowRetry === true && !readonly;
   // `end` bits render their own summary, so the shell adds no Next after them.
   const showNext = !complete && (!isTask || answered) && !readonly;
+  // A step that is not graded but still has to be done — consent, saying who
+  // you are — holds the learner here until it is. The step says what is
+  // missing; all the runtime does is refuse to move on.
+  const canLeave = canLeaveNode(node, state.draft);
   const showCheck = isTask && !answered && !readonly && Boolean(bit?.evaluate);
+  const showSkip = isTask && !answered && !readonly && canSkip(doc, node);
+
+  // The passage, listing or table this step and its neighbours are about. Kept
+  // above the bit rather than inside it: it belongs to the section, and the bit
+  // must not have to know it is in one.
+  const section = sectionOf(doc, node);
+
+  const showSteps = doc.meta.navigation === "free" && !readonly;
+  const steps = showSteps
+    ? visitedSteps(doc, attempt).map((step) => ({
+        nodeId: step.nodeId,
+        position: step.position,
+        current: step.current,
+        answered: step.answered,
+        outstanding: step.outstanding,
+        title:
+          summarise(step.node.data) ||
+          getBit(step.node.type)?.info(locale).name ||
+          step.node.type,
+      }))
+    : [];
 
   return (
     <Shell
@@ -214,6 +249,9 @@ const FlowBody = ({
             }
             locale={locale}
           />
+          {section?.label && (
+            <p className="bitflow-section-label">{section.label}</p>
+          )}
           {running && flowLimit !== null && (
             <Countdown
               // Recomputed from the snapshot each tick, so a reload resumes
@@ -253,7 +291,7 @@ const FlowBody = ({
             )}
           </div>
           <div className="bitflow-row bitflow-row-end">
-            {isTask && !answered && !readonly && (
+            {showSkip && (
               <button
                 type="button"
                 className="bitflow-button bitflow-button-secondary"
@@ -285,6 +323,7 @@ const FlowBody = ({
               <button
                 type="button"
                 className="bitflow-button"
+                disabled={!canLeave}
                 onClick={state.next}
               >
                 {tShared("next")}
@@ -302,7 +341,18 @@ const FlowBody = ({
           </div>
         </>
       }
+      steps={
+        showSteps && steps.length > 0 ? (
+          <StepList steps={steps} locale={locale} onGoTo={state.goTo} />
+        ) : undefined
+      }
     >
+      {section?.markdown && (
+        <div className="bitflow-section-stimulus">
+          <Markdown markdown={section.markdown} />
+        </div>
+      )}
+
       <BitView
         type={node.type}
         data={node.data}

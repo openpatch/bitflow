@@ -1,9 +1,11 @@
 import { evaluateCondition, type ConditionContext } from "./condition";
 import { getBit } from "./registry";
+import { totalScore } from "./score";
 import type {
   AttemptSnapshot,
   BitEdge,
   BitflowDocument,
+  BitflowMeta,
   BitNode,
   BitResult,
 } from "./schema";
@@ -21,19 +23,18 @@ export const getNode = (
  * source handle then the edge id break ties, so traversal never depends on
  * array order in the file.
  */
+const byPriority = (a: BitEdge, b: BitEdge): number => {
+  const conditional = Number(Boolean(b.condition)) - Number(Boolean(a.condition));
+  if (conditional !== 0) return conditional;
+  const handle = (a.sourceHandle ?? "").localeCompare(b.sourceHandle ?? "");
+  if (handle !== 0) return handle;
+  return a.id.localeCompare(b.id);
+};
+
 export const outgoingEdges = (
   doc: BitflowDocument,
   nodeId: string,
-): BitEdge[] =>
-  doc.edges
-    .filter((e) => e.source === nodeId)
-    .sort((a, b) => {
-      const conditional = Number(Boolean(b.condition)) - Number(Boolean(a.condition));
-      if (conditional !== 0) return conditional;
-      const handle = (a.sourceHandle ?? "").localeCompare(b.sourceHandle ?? "");
-      if (handle !== 0) return handle;
-      return a.id.localeCompare(b.id);
-    });
+): BitEdge[] => doc.edges.filter((e) => e.source === nodeId).sort(byPriority);
 
 export const incomingEdges = (
   doc: BitflowDocument,
@@ -125,23 +126,87 @@ export const isTerminalNode = (
   return outgoingEdges(doc, nodeId).length === 0;
 };
 
-/**
- * The node that follows `currentId`, or `null` when the run is over.
- *
- * Pure: branching reads only the attempt context, so replaying the same
- * context always picks the same path.
- */
-export const nextNodeId = (
+/** A pool that shows its drawn members in a random order. */
+const shuffledPoolOf = (
   doc: BitflowDocument,
-  currentId: string,
-  context: ConditionContext,
+  node: BitNode | undefined,
+): BitflowMeta["pools"][number] | undefined => {
+  if (!node?.pool) return undefined;
+  const pool = doc.meta.pools.find((candidate) => candidate.id === node.pool);
+  return pool?.shuffle ? pool : undefined;
+};
+
+/**
+ * Edges that leave a pool — source inside it, target outside.
+ *
+ * A shuffled pool navigates by its drawn order rather than by its internal
+ * wiring, so once the order runs out the only edges that still mean anything
+ * are the ones pointing out of it. Which member happens to carry them does not
+ * matter, and must not: after a shuffle the last member is a different one for
+ * every learner.
+ *
+ * There is no matching `poolEntryEdges`, because the way *in* needs no rule:
+ * every edge into a shuffled pool lands on whichever member the draw put first
+ * (`redirectIntoPool`), so any number of them behave the same. Only the way out
+ * is ambiguous, and `validateFlow` is where that gets said.
+ */
+export const poolExitEdges = (
+  doc: BitflowDocument,
+  poolId: string,
+): BitEdge[] =>
+  doc.edges
+    .filter((edge) => {
+      const source = getNode(doc, edge.source);
+      const target = getNode(doc, edge.target);
+      return (
+        source?.pool === poolId &&
+        target !== undefined &&
+        target.pool !== poolId
+      );
+    })
+    .sort(byPriority);
+
+/**
+ * Where the learner goes next, and over which edge.
+ *
+ * The edge is part of the answer because `resetTarget` lives on it: the runtime
+ * has to know how it arrived somewhere to know what to clear on getting there.
+ */
+export type NextStep = {
+  nodeId: string;
+  /** Absent when the step came from a pool's drawn order rather than an edge. */
+  edge?: BitEdge;
+};
+
+export type NextStepOptions = {
   /**
    * Pool members this attempt did not draw. They are stepped over as though
    * the graph did not contain them, which is what lets a pool be twenty
    * ordinary nodes chained together rather than a construct of its own.
    */
-  isActive: (node: BitNode) => boolean = () => true,
-): string | null => {
+  isActive?: (node: BitNode) => boolean;
+  /**
+   * Pool id → the members this attempt drew, in the order to show them. Only
+   * consulted for a pool with `shuffle` on; `AttemptSnapshot.pools` is what
+   * goes here.
+   */
+  order?: Record<string, string[]>;
+};
+
+/**
+ * The step that follows `currentId`, or `null` when the run is over.
+ *
+ * Pure: branching reads only the attempt context and the draw the attempt
+ * already recorded, so replaying the same inputs always picks the same path.
+ */
+export const nextStep = (
+  doc: BitflowDocument,
+  currentId: string,
+  context: ConditionContext,
+  options: NextStepOptions = {},
+): NextStep | null => {
+  const { isActive = () => true, order = {} } = options;
+
   // A chain of undrawn members is walked through in one call, so the learner
   // never lands on one. Bounded by the node count: a cycle made entirely of
   // undrawn steps has no way out, and must not become an infinite loop.
@@ -151,25 +216,79 @@ export const nextNodeId = (
     if (!node) return null;
     if (getBit(node.type)?.kind === "end") return null;
 
-    const target = firstEdgeTarget(doc, from, context);
-    if (target === null) return null;
+    const candidate = stepFrom(doc, node, context, order);
+    if (candidate === null) return null;
 
-    const next = getNode(doc, target);
+    const target = redirectIntoPool(doc, node, candidate, order);
+    const next = getNode(doc, target.nodeId);
     if (next && isActive(next)) return target;
-    from = target;
+    from = target.nodeId;
   }
   return null;
 };
 
-/** The first outgoing edge whose condition holds, and whose target exists. */
-const firstEdgeTarget = (
+/** `nextStep`, for callers that only need to know where. */
+export const nextNodeId = (
   doc: BitflowDocument,
-  nodeId: string,
+  currentId: string,
   context: ConditionContext,
-): string | null => {
-  for (const edge of outgoingEdges(doc, nodeId)) {
+  isActive: (node: BitNode) => boolean = () => true,
+  order: Record<string, string[]> = {},
+): string | null => nextStep(doc, currentId, context, { isActive, order })?.nodeId ?? null;
+
+/** One hop out of `node`: along the pool's drawn order, or along an edge. */
+const stepFrom = (
+  doc: BitflowDocument,
+  node: BitNode,
+  context: ConditionContext,
+  order: Record<string, string[]>,
+): NextStep | null => {
+  const pool = shuffledPoolOf(doc, node);
+  // No draw recorded — an older snapshot, or a pool added since — so the pool
+  // is walked exactly as it is wired rather than jumped out of.
+  const drawn = pool ? order[pool.id] ?? [] : [];
+  if (pool && drawn.length > 0) {
+    const index = drawn.indexOf(node.id);
+    if (index >= 0 && index + 1 < drawn.length) {
+      return { nodeId: drawn[index + 1] };
+    }
+    // The order is spent (or this member was never in it): the way on is
+    // whichever edge leaves the pool.
+    return firstMatchingEdge(doc, poolExitEdges(doc, pool.id), context);
+  }
+  return firstMatchingEdge(doc, outgoingEdges(doc, node.id), context);
+};
+
+/**
+ * Arriving at a shuffled pool from outside lands on whichever member the draw
+ * put first, not on whichever one the author happened to wire the edge to.
+ *
+ * A pool with no draw recorded — an older snapshot, or a pool added since — is
+ * walked exactly as it is wired, on the same reasoning as `isActiveNode`:
+ * missing data must not change what the learner is shown.
+ */
+const redirectIntoPool = (
+  doc: BitflowDocument,
+  from: BitNode,
+  candidate: NextStep,
+  order: Record<string, string[]>,
+): NextStep => {
+  const pool = shuffledPoolOf(doc, getNode(doc, candidate.nodeId));
+  if (!pool || from.pool === pool.id) return candidate;
+  const drawn = order[pool.id] ?? [];
+  if (drawn.length === 0) return candidate;
+  return { ...candidate, nodeId: drawn[0] };
+};
+
+/** The first edge whose condition holds, and whose target exists. */
+const firstMatchingEdge = (
+  doc: BitflowDocument,
+  edges: BitEdge[],
+  context: ConditionContext,
+): NextStep | null => {
+  for (const edge of edges) {
     if (!edge.condition || evaluateCondition(edge.condition, context)) {
-      if (getNode(doc, edge.target)) return edge.target;
+      if (getNode(doc, edge.target)) return { nodeId: edge.target, edge };
     }
   }
   return null;
@@ -185,40 +304,189 @@ export const previousNodeId = (snapshot: AttemptSnapshot): string | null => {
   return history.length >= 2 ? history[history.length - 2] : null;
 };
 
-// --- scoring ----------------------------------------------------------------
+/** One row of the step list free navigation shows. */
+export type VisitedStep = {
+  nodeId: string;
+  node: BitNode;
+  /** Where it sits in the list, 1-based. */
+  position: number;
+  current: boolean;
+  /** A task the learner has a result for. Always false for a content step. */
+  answered: boolean;
+  /** A task with no result yet — the thing a check-your-work list is for. */
+  outstanding: boolean;
+  section?: BitflowMeta["sections"][number];
+};
 
 /**
- * A bit's result may carry its own `score`. When it does not, the bit is worth
- * one point, earned iff the state is `correct`. `unknown` contributes nothing
- * to either side: it was never graded, so it must not drag the ratio down.
+ * The steps the learner has been to, oldest first and each one once.
+ *
+ * Read off the history rather than the graph: with conditions on edges the
+ * document cannot say which steps a particular learner saw. A step visited
+ * twice — a remediation loop — is one row, at the position it first appeared.
  */
-export const scoreOf = (result: BitResult): { earned: number; possible: number } => {
-  if (result.score) return result.score;
-  if (result.state === "unknown") return { earned: 0, possible: 0 };
-  return { earned: result.state === "correct" ? 1 : 0, possible: 1 };
+export const visitedSteps = (
+  doc: BitflowDocument,
+  snapshot: AttemptSnapshot,
+): VisitedStep[] => {
+  const steps: VisitedStep[] = [];
+  const seen = new Set<string>();
+
+  for (const nodeId of snapshot.history) {
+    if (seen.has(nodeId)) continue;
+    seen.add(nodeId);
+    const node = getNode(doc, nodeId);
+    if (!node) continue;
+
+    const isTask = getBit(node.type)?.kind === "task";
+    const answered = snapshot.results[nodeId] !== undefined;
+    steps.push({
+      nodeId,
+      node,
+      position: steps.length + 1,
+      current: nodeId === snapshot.currentNodeId,
+      answered: isTask && answered,
+      outstanding: isTask && !answered,
+      section: sectionOf(doc, node),
+    });
+  }
+
+  return steps;
 };
+
+/**
+ * Whether the learner may jump straight to `nodeId`.
+ *
+ * Only somewhere they have already been, and only when the flow allows free
+ * movement. Jumping forward is not on offer at any setting: which step comes
+ * next depends on answers that have not been given yet, so there is nothing
+ * truthful to jump to.
+ */
+export const canGoTo = (
+  doc: BitflowDocument,
+  snapshot: AttemptSnapshot,
+  nodeId: string,
+): boolean =>
+  doc.meta.navigation === "free" &&
+  snapshot.history.includes(nodeId) &&
+  getNode(doc, nodeId) !== undefined;
+
+// --- sections ---------------------------------------------------------------
+
+/** The section a step belongs to, if the flow still declares one. */
+export const sectionOf = (
+  doc: BitflowDocument,
+  node: BitNode | undefined,
+): BitflowMeta["sections"][number] | undefined =>
+  node?.section
+    ? doc.meta.sections.find((section) => section.id === node.section)
+    : undefined;
+
+/** The nodes in a section, in document order. */
+export const sectionMembers = (
+  doc: BitflowDocument,
+  sectionId: string,
+): BitNode[] => doc.nodes.filter((node) => node.section === sectionId);
+
+// --- policy -----------------------------------------------------------------
+
+/**
+ * Whether the learner may pass on this task.
+ *
+ * The task decides when it says so, otherwise the flow does. Read off the data
+ * rather than through the bit, so a bit never has to know the setting exists —
+ * the same bargain `weight` and `timeLimit` already make.
+ */
+export const canSkip = (
+  doc: BitflowDocument,
+  node: BitNode | undefined,
+): boolean => {
+  const evaluation = node?.data?.evaluation as { allowSkip?: unknown } | undefined;
+  return typeof evaluation?.allowSkip === "boolean"
+    ? evaluation.allowSkip
+    : doc.meta.allowSkip;
+};
+
+/**
+ * Whether the learner may leave this step yet.
+ *
+ * Only a bit that declares `isComplete` can hold them, and only that bit knows
+ * why — the runtime disables Next and leaves the explanation to the step. A
+ * bit whose data does not parse is not held: refusing to let someone past a
+ * step that is broken anyway traps them in the assessment.
+ */
+export const canLeaveNode = (
+  node: BitNode | undefined,
+  answer: unknown,
+): boolean => {
+  if (!node) return true;
+  const bit = getBit(node.type);
+  if (!bit?.isComplete) return true;
+  const parsed = bit.schema.safeParse(node.data);
+  if (!parsed.success) return true;
+  return bit.isComplete({ data: parsed.data, answer });
+};
+
+// --- scoring ----------------------------------------------------------------
 
 export const computeScore = (
   snapshot: AttemptSnapshot,
-): { earned: number; possible: number } => {
-  let earned = 0;
-  let possible = 0;
-  for (const result of Object.values(snapshot.results)) {
-    const score = scoreOf(result);
-    earned += score.earned;
-    possible += score.possible;
-  }
-  return { earned, possible };
-};
+): { earned: number; possible: number } =>
+  totalScore(Object.values(snapshot.results));
 
+/**
+ * Everything a branch may read, gathered out of the attempt in one place.
+ *
+ * Takes the document as well as the snapshot because time limits, sections and
+ * the flow's own clock are properties of the assessment, not of the run.
+ */
 export const conditionContext = (
+  doc: BitflowDocument,
   snapshot: AttemptSnapshot,
-): ConditionContext => ({
-  answers: snapshot.answers,
-  results: snapshot.results,
-  tries: snapshot.tries,
-  score: computeScore(snapshot),
-});
+  now: Date = new Date(),
+): ConditionContext => {
+  const visits: Record<string, number> = {};
+  for (const nodeId of snapshot.history) {
+    visits[nodeId] = (visits[nodeId] ?? 0) + 1;
+  }
+
+  const confidence: Record<string, number> = {};
+  for (const [nodeId, value] of Object.entries(snapshot.confidence ?? {})) {
+    confidence[nodeId] = value.level;
+  }
+
+  // Seconds, to match the units an author writes limits in. The node in
+  // progress is included so "they have been on this one for two minutes" is a
+  // branch that can fire while it is still true.
+  const perNode: Record<string, number> = {};
+  for (const nodeId of new Set([
+    ...Object.keys(snapshot.elapsedMs),
+    snapshot.currentNodeId,
+  ])) {
+    perNode[nodeId] = timeSpentOn(snapshot, nodeId, now) / 1000;
+  }
+
+  const spent = timeSpent(snapshot, now) / 1000;
+  const limit = doc.meta.timeLimit ?? null;
+
+  const sections: Record<string, string> = {};
+  for (const node of doc.nodes) {
+    if (node.section) sections[node.id] = node.section;
+  }
+
+  return {
+    answers: snapshot.answers,
+    results: snapshot.results,
+    tries: snapshot.tries,
+    visits,
+    confidence,
+    timeSpent: perNode,
+    totalTimeSpent: spent,
+    timeRemaining: limit === null ? null : Math.max(0, limit - spent),
+    history: snapshot.history,
+    sections,
+  };
+};
 
 // --- collection -------------------------------------------------------------
 
