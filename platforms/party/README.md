@@ -53,7 +53,7 @@ both consumers are bundlers, and a `dist` step here would buy nothing.
 ```sh
 pnpm --filter bitflow-party dev      # partykit dev, localhost:1999
 pnpm --filter bitflow-party test     # the room reducer (vitest, node)
-pnpm --filter bitflow-party deploy   # partykit deploy → *.partykit.dev
+pnpm --filter bitflow-party run deploy   # partykit deploy → *.partykit.dev
 ```
 
 ## Known limits
