@@ -1,0 +1,59 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-certificate {
+  border: var(--bitflow-border-width) solid var(--bitflow-color-primary-light);
+  border-radius: var(--bitflow-radius-large);
+  padding: var(--bitflow-space-large);
+  background: var(--bitflow-color-surface);
+  text-align: center;
+}
+
+.bitflow-certificate-title {
+  margin: 0 0 var(--bitflow-space-small);
+  font-size: var(--bitflow-font-size-xlarge);
+  font-weight: var(--bitflow-font-weight-bold);
+  color: var(--bitflow-color-primary-dark);
+}
+
+.bitflow-certificate-facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+  margin: var(--bitflow-space-medium) 0 0;
+}
+
+.bitflow-certificate-fact dt {
+  font-size: var(--bitflow-font-size-small);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-certificate-fact dd {
+  margin: 0;
+  font-size: var(--bitflow-font-size-large);
+  font-weight: var(--bitflow-font-weight-medium);
+}
+
+.bitflow-certificate-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* On paper the certificate is the whole page. The button that produced it is
+   not part of it, and neither is the assessment's own chrome — but this
+   stylesheet can only speak for what this bit renders. */
+@media print {
+  .bitflow-certificate-actions {
+    display: none;
+  }
+
+  .bitflow-certificate {
+    border-color: var(--bitflow-color-neutral-400);
+    /* Printers drop background colours by default; the border is what carries
+       the shape, so it has to survive on its own. */
+    background: none;
+  }
+}

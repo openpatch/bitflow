@@ -1,3 +1,15 @@
 /* The tokens and primitives arrive with @bitflow/element, which every
    package here depends on. Importing them again would ship a second
    copy of the same stylesheet in every bundle. */
+
+.bitflow-outline {
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  padding: var(--bitflow-space-small);
+}
+
+.bitflow-outline-list {
+  margin: var(--bitflow-space-xsmall) 0 0;
+  padding-inline-start: var(--bitflow-space-medium);
+  color: var(--bitflow-color-text-muted);
+}

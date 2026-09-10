@@ -23,6 +23,37 @@ export const steps = [
   node("start", "start-simple", {
     title: "A short quiz",
     markdown: "Four questions about capitals.",
+    showOutline: true,
+  }),
+  node("consent", "start-consent", {
+    title: "Before you start",
+    markdown: "This records your answers and how long each question took.",
+    agreeLabel: "",
+    requiredHint: "",
+    allowDecline: true,
+    declineLabel: "",
+  }),
+  node("who", "start-identify", {
+    title: "Who you are",
+    markdown: "So your work can be handed back.",
+    fields: [
+      {
+        id: "name",
+        label: "First name",
+        hint: "",
+        required: true,
+        kind: "text",
+        options: [],
+      },
+      {
+        id: "class",
+        label: "Class",
+        hint: "Ask if you are not sure.",
+        required: false,
+        kind: "select",
+        options: ["7a", "7b"],
+      },
+    ],
   }),
   node("explain", "title-simple", {
     title: "Before you start",
@@ -360,6 +391,62 @@ export const steps = [
     allowReview: true,
   }),
 ];
+
+/**
+ * The bits that cannot sit in one linear chain.
+ *
+ * Every one of these is an `end`, and an `end` is terminal — a flow can only
+ * walk through one of them. They are checked on their own instead, with the
+ * attempt and the document a finished run would have handed them, because
+ * that is the state whose markup is worth checking: an end bit with nothing to
+ * report renders almost nothing.
+ */
+export const extraSteps = [
+  node("end-handoff", "end-handoff", {
+    title: "All done",
+    markdown: "Your work is on its way back.",
+    postMessage: false,
+    messageOrigin: "",
+    continueUrl: "https://school.example/next",
+    continueLabel: "",
+  }),
+  node("end-certificate", "end-certificate", {
+    title: "Certificate of completion",
+    markdown: "For finishing the whole assessment.",
+    issuer: "Room 12",
+    showName: true,
+    showScore: true,
+    showDate: true,
+    printLabel: "",
+  }),
+  node("end-download", "end-download", {
+    title: "All done",
+    markdown: "Keep a copy for yourself.",
+    buttonLabel: "",
+    filename: "attempt",
+    includeAnswers: true,
+  }),
+];
+
+/** A finished run, for the end bits that only have markup once there is one. */
+export const attempt = {
+  schemaVersion: 1,
+  flowId: "a11y-flow",
+  flowSchemaVersion: 1,
+  attemptId: "a11y-attempt",
+  status: "completed",
+  currentNodeId: "end",
+  history: ["start", "who", "q-yes-no", "end"],
+  answers: { who: { name: "Robin", class: "7b" }, "q-yes-no": true },
+  results: { "q-yes-no": { state: "correct" } },
+  tries: { "q-yes-no": 1 },
+  elapsedMs: { "q-yes-no": 4000 },
+  pools: {},
+  startedAt: "2026-01-01T10:00:00.000Z",
+  updatedAt: "2026-01-01T10:05:00.000Z",
+  enteredAt: "2026-01-01T10:05:00.000Z",
+  completedAt: "2026-01-01T10:05:00.000Z",
+};
 
 export const flow = {
   version: 1,

@@ -14,7 +14,12 @@ import { hasBit } from "@bitflow/core";
  */
 export const bitLoaders: Record<string, () => Promise<unknown>> = {
   "start-simple": () => import("@bitflow/start-simple"),
+  "start-consent": () => import("@bitflow/start-consent"),
+  "start-identify": () => import("@bitflow/start-identify"),
   "end-tries": () => import("@bitflow/end-tries"),
+  "end-handoff": () => import("@bitflow/end-handoff"),
+  "end-certificate": () => import("@bitflow/end-certificate"),
+  "end-download": () => import("@bitflow/end-download"),
   "title-simple": () => import("@bitflow/title-simple"),
   "input-markdown": () => import("@bitflow/input-markdown"),
   "task-choice": () => import("@bitflow/task-choice"),

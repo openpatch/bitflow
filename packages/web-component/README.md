@@ -128,12 +128,66 @@ A condition compares one value out of the running attempt:
 | `{ kind: "result", nodeId, path: "state" }` | How one task turned out. |
 | `{ kind: "answer", nodeId, path }` | What the learner answered, at a dot path. |
 | `{ kind: "tries", nodeId }` | How many attempts one task took. |
-| `{ kind: "resultCount", state }` | How many tasks ended in that outcome — `state` defaults to `"correct"`. |
-| `{ kind: "score" }` | Points earned so far. |
-| `{ kind: "scoreRatio" }` | Earned over possible, in `[0, 1]`. |
+| `{ kind: "visits", nodeId }` | How many times a step has been shown. |
+| `{ kind: "confidence", nodeId }` | How sure they said they were, `0`–`1`. |
+| `{ kind: "timeSpent", nodeId? }` | Seconds on one step, or on the whole run. |
+| `{ kind: "timeRemaining" }` | Seconds left on the assessment's own limit. |
+| `{ kind: "resultCount", state, scope? }` | How many tasks ended in that outcome — `state` defaults to `"correct"`. |
+| `{ kind: "score", scope? }` | Points earned so far. |
+| `{ kind: "scoreRatio", scope? }` | Earned over possible, in `[0, 1]`. |
 
 Compared with `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `notIn` or `isTrue`,
 and combined with `and`, `or` and `not`.
+
+`confidence` and `timeRemaining` are *absent* rather than zero when there is
+nothing to read — a step nobody was asked about, an assessment with no limit —
+so a threshold on either is simply false instead of true for everybody. That is
+also why `validate()` reports a confidence rule in a flow that never asks how
+sure the learner is.
+
+Confidence is the branch worth drawing that nothing else expresses: confident
+and wrong is a misconception, unsure and wrong is a gap, and they need different
+next steps.
+
+```json
+{
+  "condition": {
+    "type": "and",
+    "conditions": [
+      {
+        "type": "compare",
+        "left": { "kind": "result", "nodeId": "q3", "path": "state" },
+        "op": "eq",
+        "right": "wrong"
+      },
+      {
+        "type": "compare",
+        "left": { "kind": "confidence", "nodeId": "q3" },
+        "op": "gte",
+        "right": 0.8
+      }
+    ]
+  }
+}
+```
+
+Confidence runs `0`–`1`; the five points the learner is offered are `0.2`
+through `1`, and the editor shows them as those five rather than as fractions.
+
+### Counting over part of the assessment
+
+`resultCount`, `score` and `scoreRatio` take an optional `scope`. Without one
+they cover the whole run, which is what a final threshold wants; with one they
+answer "did they pass *this section*" or "of the *last three*, how many".
+
+| Scope | Covers |
+| --- | --- |
+| `{ kind: "section", id }` | Every step in that section. |
+| `{ kind: "nodes", nodeIds }` | A hand-picked set. |
+| `{ kind: "last", count }` | The most recently answered tasks, newest first. |
+
+`last` counts back through the attempt's own history, so a step answered twice
+counts once — it is the same task.
 
 An outcome is `correct`, `wrong` or `unknown` (skipped, or a task with grading
 switched off). There is no "awaiting a teacher" outcome: bitflow grades in the
@@ -186,8 +240,16 @@ question 1 wrong" is two rules joined by `and`:
 ```
 
 The editor builds exactly that — a list of rules joined by all-of or any-of —
-through dropdowns. Anything more deeply nested is written in the `.bitflow`
-file and shown read-only rather than rewritten.
+through dropdowns: an outcome, a yes/no answer, how many tasks, how much of the
+marks, how sure they were, how many times a step has been shown, and the clock,
+each with its scope where one applies. Anything more deeply nested, or an answer
+buried at a dot path, is written in the `.bitflow` file and shown read-only
+rather than rewritten.
+
+On the canvas a connection carries its own rule in short — `answered No`,
+`≥ 3 correct of last 5`, `≥ 80% in Reading` — so a step with four branches out
+of it is readable without clicking each one. An author who wants different
+wording sets the connection's own name, which wins.
 
 ### What the editor checks
 
@@ -198,6 +260,105 @@ connection, a rule reading a task the learner cannot have reached yet, a node
 that is not a task, an outcome that does not exist, an ordering comparison
 against something that is not a number, a membership test without a list, and
 an empty rule set.
+
+## Going back round: a connection that resets
+
+An edge may carry `resetTarget`, which says what arriving over it clears on the
+step it lands on.
+
+| `resetTarget` | Clears |
+| --- | --- |
+| absent | Nothing. They see the step as they left it. |
+| `"result"` | The marking. What they wrote stays, to be corrected. |
+| `"answer"` | The marking and the answer. |
+
+This is what makes a remediation loop work. Draw
+`question → (wrong) → explanation → question` without it and the learner lands
+back on their old answer, already marked wrong, with a Next button and no way to
+change anything: the loop is drawable, and does nothing.
+
+`"result"` is the usual choice — it is the bargain Try again already makes.
+`"answer"` is for a task that *measures* something, a timed run or a typing
+speed, whose recorded figure has to be taken again rather than edited.
+
+The try count is never cleared. It is the record of how many goes the task took,
+and a loop that erased it would report someone who went round three times as
+having answered first time.
+
+## Sections
+
+A section is a run of steps that belong together and share something: the
+passage five comprehension questions are about, the listing three trace
+questions step through, the table the sums come from.
+
+```json
+{
+  "meta": {
+    "sections": [
+      { "id": "reading", "label": "Reading", "markdown": "It was a bright…" }
+    ]
+  },
+  "nodes": [{ "id": "q1", "type": "task-choice", "section": "reading" }]
+}
+```
+
+The markdown is rendered above every step in the section, the label shows under
+the progress bar, and the section is a `scope` a branch can count over. Before
+this the passage had to be pasted into all five questions, because a content
+step shows its text once and is gone.
+
+Membership lives on the node, like pool membership and for the same reason: a
+list of ids on the section would go stale the moment a step was deleted. A start
+or an end cannot be in one.
+
+## How freely a learner may move
+
+`meta.navigation`:
+
+| Setting | What it does |
+| --- | --- |
+| `"linear"` | Forwards only. An exam. |
+| `"back"` | They may step back through what they have seen. The default. |
+| `"free"` | They may jump to any step already visited, from a list. |
+
+The list `free` renders is also the check-your-work screen: it marks which steps
+are tasks with no answer yet. Jumping is backwards only at every setting —
+which step comes next depends on answers not yet given, so there is nothing
+truthful to jump forward to.
+
+Going back re-runs every branch on the way forward again, in all three modes. An
+answer changed on the second pass has to be able to send them somewhere else.
+
+`meta.allowSkip` decides whether a task may be passed on without answering. A
+single task overrides it from its own grading settings — for the one question
+everyone has to attempt.
+
+## Shuffling a pool
+
+A pool draws a few of its members for each learner. With `"shuffle": true` it
+also decides the order they arrive in, so drawing *all* of them is how you give
+everyone the same questions in a different sequence — which is what most people
+mean by a randomised test, and which could not be expressed at all before.
+
+```json
+{ "id": "bank", "label": "Questions", "draw": 10, "shuffle": true }
+```
+
+A shuffled pool navigates by the order the attempt drew rather than by its
+internal wiring, so it needs one step leading in and one leading out.
+`validate()` says so when more than one member leads out of it, or none does.
+Members are still ordinary nodes chained together as usual; the chain is what
+the author draws, and the draw is what the learner walks.
+
+## A step that has to be done
+
+A bit may declare `isComplete`, and while it returns `false` the runtime will
+not let the learner move on. It is for steps that are not graded but still have
+to be *done* — agreeing to take part, saying who you are.
+
+The runtime only disables Next. Saying what is missing is the step's job, and
+both bits that use this render the reason above the button and before it in
+reading order, so it arrives before the dead control rather than after it.
 
 ## Arranging the canvas
 
@@ -302,6 +463,158 @@ editor flags one where it finds it.
 
 `ImageField` and `readImageFile` are exported from `@bitflow/element`, and
 `ImageSchema` from `@bitflow/core`, for tasks added later.
+
+## The opening screen
+
+`<bitflow-start-simple>` is a title and a message. With `showOutline` on it also
+says what is ahead: roughly how many questions, the time limit, and whether they
+can go back.
+
+Those three are worked out from the assessment itself, so they cannot go stale
+the way "this test has 12 questions" does the moment a thirteenth is added. The
+count is approximate on purpose — branching means not every learner meets every
+task — and a pool contributes what it draws rather than what it holds.
+
+## Consent
+
+`<bitflow-start-consent>` says what the assessment records and will not let the
+learner start until they have answered either way. It is the step that tells the
+learner about the things the measurement tasks keep — see
+[Pointing accuracy](#pointing-accuracy) and [Typing](#typing) for exactly what
+those are, and what they deliberately do not store.
+
+With `allowDecline` on — the default — the choice is a radio group and declining
+is a complete answer, so a connection can route it somewhere else:
+
+```json
+{
+  "source": "consent",
+  "target": "practice-instead",
+  "condition": {
+    "type": "compare",
+    "left": { "kind": "answer", "nodeId": "consent" },
+    "op": "eq",
+    "right": false
+  }
+}
+```
+
+Consent that cannot be refused is not consent. With `allowDecline` off the
+control becomes a single tick box, there is one way on, and the text above it
+should say so.
+
+The answer is a bare `boolean` — `true` for yes — rather than an object, so the
+branch above needs no dot path and the editor can offer it as an ordinary rule:
+*the learner's answer to this step is No*. `task-yes-no` stores its answer the
+same way, and the same rule works for it.
+
+### Accessibility
+
+Radio group when there are two answers, a single checkbox when there is one —
+a lone unticked box does not say which answer silence means. Every option is a
+whole clickable line at least 44px tall. While nothing is chosen the step says
+why Next will not move, above the button and before it in reading order.
+
+## Who you are
+
+`<bitflow-start-identify>` asks the learner for a name, a pseudonym, a class —
+whatever the author lists — before anything is graded, so a report or a
+certificate has something to label a row with. Without it that label has to come
+from the surrounding application.
+
+Each field is `{ id, label, hint, required, kind, options }`. `kind: "select"`
+is for answers that come from a fixed set: free text turns twenty people in one
+class into three different spellings, and nothing lines up afterwards. A field
+with no label is never shown, and never required — a blank box nobody can answer
+would be a dead end.
+
+The answer is a map of field id to what they entered. **It is stored in the
+attempt in the clear**, like every other answer, so ask for as little as the job
+needs; a first name or a pseudonym is usually enough to hand work back.
+
+The first field that gets an answer is what `<bitflow-end-certificate>` prints
+as the learner's name, so put that one first.
+
+### Accessibility
+
+Every control has a real `<label>` tied to it by `for`, hints are rendered
+underneath the question they belong to, and required fields say so in the label
+rather than only in colour. While a required answer is missing the step says so
+above the Next button.
+
+## Hand back to the host
+
+`<bitflow-end-handoff>` returns the finished attempt to the page around it.
+bitflow has no server, so for an embedded assessment this is the moment the
+result leaves the tab — and the learner is told what happened to it, because if
+it went nowhere, that tab is the only place their work exists.
+
+```json
+{
+  "type": "end-handoff",
+  "data": {
+    "postMessage": true,
+    "messageOrigin": "https://school.example",
+    "continueUrl": "https://school.example/next"
+  }
+}
+```
+
+The host receives `{ type: "bitflow:attempt", attempt }` on `window.parent`.
+
+`messageOrigin` must be an exact `scheme://host[:port]`. **`*` is rejected
+outright**: a wildcard target hands a learner's whole attempt — every answer,
+every explanation they typed — to whatever page happens to have framed this one,
+and the browser warns nobody. Anything carrying a path is a typo, and a typo
+here has to fail loudly rather than deliver somewhere unintended; the authoring
+form says so next to the field.
+
+It posts once per attempt, not once per render. Nothing framing the page at all
+is caught before the post rather than after: `window.parent` is then the page
+itself, so posting would deliver here and report success, and the learner is
+told instead that their work has not gone anywhere.
+
+What the learner is told is "sent", not "arrived". `postMessage` is one-way and
+there is no acknowledgement to wait for — a target origin that does not match
+the page on the other side is discarded silently, with nothing thrown and
+nothing returned — so the wording says the work was sent to the surrounding page
+and to speak up if nothing follows. The failure state covers what does throw,
+and offers another go.
+
+`continueUrl` is an ordinary link they choose to follow, never a redirect: being
+moved off the page that says whether your work was saved is not something to do
+to somebody. It is drawn only when it is a `http`/`https` or relative address —
+a document comes from wherever `src` points, and `javascript:` in an `href`
+would run in the page holding the attempt, which is exactly what `Markdown`
+already refuses for a link written in prose. The authoring form says so on the
+field.
+
+## Certificate
+
+`<bitflow-end-certificate>` is a printable closing sheet: heading, message,
+name, score, date and who set the assessment. Everything on it comes out of the
+run, so nothing is typed twice and nothing can disagree with what happened.
+
+The name is taken from a `start-identify` step in the same flow — its first
+answered field. Nothing is shown if the assessment never asked. The print button
+is outside the certificate and hidden by `@media print`, because a sheet with
+"Print this" printed on it is not a certificate.
+
+## Save a copy
+
+`<bitflow-end-download>` hands the learner their own attempt as a JSON file,
+saved on their device with nothing sent anywhere. It is the export a *learner*
+can perform: no account, no network, works in a room with no internet.
+
+With `includeAnswers` on, the file is a complete record that can be restored
+into the flow and re-marked in a browser. With it off, the answers go — and the
+written reasoning goes with them, because an explanation in someone's own words
+gives away at least as much as the answer it explains. Confidence stays; it is a
+number about a task.
+
+If the browser refuses to save, the step says so out loud. This may be the only
+copy of the work there is, so a silent failure is the one outcome that must not
+happen.
 
 ## Match up
 

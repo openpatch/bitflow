@@ -1,0 +1,24 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-identify {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  padding: var(--bitflow-space-small);
+  margin: 0;
+}
+
+/* The box keeps its height whether or not it currently says anything. Letting
+   it collapse moved the Next button up by a line at the exact moment the
+   learner was reaching for it — they answer the last field, the reason
+   disappears, and the button is no longer under the pointer. */
+.bitflow-identify-required {
+  margin: 0;
+  min-height: 1.5em;
+  color: var(--bitflow-color-warning);
+  font-size: var(--bitflow-font-size-small);
+}

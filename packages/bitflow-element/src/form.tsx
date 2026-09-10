@@ -244,7 +244,12 @@ export const Disclosure = ({
       className="bitflow-disclosure"
       open={open}
       onToggle={(event) => {
-        const next = (event.target as HTMLDetailsElement).open;
+        // `currentTarget`, not `target`: React delivers a nested `<details>`'s
+        // toggle to its ancestors too, and reading the target meant a child
+        // opening dragged every disclosure above it open with it. Invisible
+        // until one of these was nested inside another, and then immediate.
+        if (event.target !== event.currentTarget) return;
+        const next = event.currentTarget.open;
         if (next === open) return;
         setUncontrolled(next);
         onOpenChange?.(next);

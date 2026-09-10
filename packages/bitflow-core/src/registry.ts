@@ -92,6 +92,19 @@ export type BitDefinition<Data = any, Answer = any> = {
   info: (locale: Locale) => BitInfo;
   /** Required for `kind: "task"`; how an answer becomes a result. */
   evaluate?: Evaluate<Data, Answer>;
+  /**
+   * Whether the learner may move on from this step yet.
+   *
+   * For a step that is not graded but still has to be *done* — agreeing to
+   * take part, saying who you are. A task expresses the same thing by simply
+   * not being answered; a content bit had no way to say it at all, so a
+   * consent screen was a checkbox anyone could walk straight past.
+   *
+   * Absent means "always", which is every existing bit. Returning `false` must
+   * be accompanied by the bit rendering what is missing: the runtime only
+   * disables Next, it does not know what to say.
+   */
+  isComplete?: (args: EvaluateArgs<Data, Answer>) => boolean;
   /** The learner-facing view. */
   Task?: BitComponent;
   /** Author-facing form for the bit's evaluation settings. */

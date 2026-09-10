@@ -68,11 +68,43 @@
   padding-top: var(--bitflow-space-small);
 }
 
+/* Name on the left, what it is currently set to on the right, on one line.
+   That pairing is what makes a folded panel readable: an author reads every
+   setting off the closed summaries and opens only the one they mean to
+   change. */
 .bitflow-disclosure-summary {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+  min-height: 44px;
   font-weight: var(--bitflow-font-weight-medium);
   color: var(--bitflow-color-text-muted);
   margin-bottom: var(--bitflow-space-xsmall);
+}
+
+/* `display: flex` takes the browser's own triangle away, so the affordance
+   has to be drawn back — a chevron that turns, rather than nothing at all. */
+.bitflow-disclosure-summary::marker,
+.bitflow-disclosure-summary::-webkit-details-marker {
+  content: "";
+  display: none;
+}
+
+.bitflow-disclosure-summary::before {
+  content: "";
+  flex: none;
+  width: 0.4em;
+  height: 0.4em;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  transition: transform var(--bitflow-duration-fast);
+}
+
+.bitflow-disclosure[open] > .bitflow-disclosure-summary::before {
+  transform: rotate(45deg);
 }
 
 .bitflow-disclosure[open] .bitflow-disclosure-summary {
@@ -108,11 +140,19 @@
 
 /* A disclosure's second line: what is inside, so a collapsed list of a dozen
    is still readable without opening each one. */
+/* Pushed to the end of the line, and never wrapped: it is a value, and a
+   value broken across two lines stops looking like one. The summary text
+   gives way first. */
 .bitflow-disclosure-aside {
-  display: block;
+  margin-inline-start: auto;
+  padding-inline-start: var(--bitflow-space-xsmall);
   font-size: var(--bitflow-font-size-small);
   font-weight: normal;
   color: var(--bitflow-color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 55%;
 }
 
 /* Drawing boxes on a picture ----------------------------------------------- */

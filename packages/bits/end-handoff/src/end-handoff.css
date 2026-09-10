@@ -1,0 +1,30 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+/* A live region has to keep its box whether or not it currently says
+   anything, or announcing pushes the page around under the reader. */
+.bitflow-handoff-state {
+  margin: 0;
+  min-height: var(--bitflow-space-small);
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+}
+
+/* Colour is the last thing that says which of these it is — the words already
+   do, and they are the part that survives being read aloud. */
+.bitflow-handoff-sent {
+  color: var(--bitflow-color-correct);
+}
+
+.bitflow-handoff-failed,
+.bitflow-handoff-misconfigured {
+  color: var(--bitflow-color-wrong);
+}
+
+/* Nothing in the theme styles a bare link, and a closing screen is the wrong
+   place for one to be indistinguishable from the sentence around it. */
+.bitflow-handoff-link {
+  color: var(--bitflow-color-primary-dark);
+  text-underline-offset: 0.2em;
+}

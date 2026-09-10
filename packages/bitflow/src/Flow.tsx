@@ -155,7 +155,14 @@ const FlowBody = ({
   const isTask = isTaskNode(node);
   const answered = result !== undefined;
   const progress = flowProgress(doc, attempt);
-  const locked = readonly || answered || attempt.status !== "inProgress";
+  // An `end` bit is deliberately not locked by the run being over. Being here
+  // *is* the run being over, and what an end bit does at that moment — saving a
+  // copy, posting the attempt back to the host — is the whole of its job. The
+  // host's own `readonly` still applies, and that is the flag which actually
+  // means "you are looking at a finished attempt, not taking one".
+  const locked =
+    readonly ||
+    (bit?.kind !== "end" && (answered || attempt.status !== "inProgress"));
 
   const t = useCallback(
     (key: string, vars?: Record<string, string | number>) =>

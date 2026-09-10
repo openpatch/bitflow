@@ -1,0 +1,34 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-consent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xsmall);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  padding: var(--bitflow-space-small);
+  margin: 0;
+}
+
+/* A whole line is the target, not just the control, and it is at least 44px
+   tall — this is the last thing a learner touches before starting. */
+.bitflow-consent-option {
+  display: flex;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+  min-height: 44px;
+  cursor: pointer;
+}
+
+/* The box keeps its height whether or not it currently says anything. Letting
+   it collapse moved the Next button up by a line at the exact moment the
+   learner was reaching for it — they answer the last field, the reason
+   disappears, and the button is no longer under the pointer. */
+.bitflow-consent-required {
+  margin: 0;
+  min-height: 1.5em;
+  color: var(--bitflow-color-warning);
+  font-size: var(--bitflow-font-size-small);
+}

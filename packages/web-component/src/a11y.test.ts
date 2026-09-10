@@ -2,7 +2,7 @@ import axe, { type Result } from "axe-core";
 import { afterEach, describe, expect, it } from "vitest";
 import { loadBits } from "./bitLoaders";
 import "./index";
-import { flow, steps } from "./a11yFixture";
+import { attempt, extraSteps, flow, steps } from "./a11yFixture";
 
 /**
  * Automated accessibility checks over the real elements, with every bit
@@ -101,6 +101,38 @@ const labelled = (element: Element, label: string) =>
     (button) => button.textContent === label,
   );
 
+/**
+ * Answers whatever a step is holding the learner on.
+ *
+ * Some steps are not graded but still have to be *done* — agreeing to take
+ * part, saying who you are — and until they are, Next is disabled. Clicking a
+ * disabled button does nothing, so without this the walk stalls there and
+ * every step after it silently stops being checked.
+ */
+const satisfyStep = (element: Element) => {
+  const first = <T extends Element>(selector: string): T | undefined =>
+    (element.querySelector(selector) as T | null) ?? undefined;
+
+  const radio = first<HTMLInputElement>('input[type="radio"]:not(:checked)');
+  if (radio) radio.click();
+
+  const box = first<HTMLInputElement>('input[type="checkbox"]:not(:checked)');
+  if (box) box.click();
+
+  for (const input of element.querySelectorAll<HTMLInputElement>(
+    'input[type="text"]',
+  )) {
+    if (input.value !== "") continue;
+    // React tracks the value it set, so assigning through the prototype's
+    // setter is what makes it notice a change at all.
+    Object.getOwnPropertyDescriptor(
+      HTMLInputElement.prototype,
+      "value",
+    )!.set!.call(input, "Robin");
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+};
+
 afterEach(() => document.body.replaceChildren());
 
 describe("accessibility", () => {
@@ -128,7 +160,15 @@ describe("accessibility", () => {
         await expectAccessible(element);
       }
 
-      const next = labelled(element, "Next");
+      let next = labelled(element, "Next");
+      if (next?.disabled) {
+        satisfyStep(element);
+        await flush();
+        next = labelled(element, "Next");
+        // The step is answered now, which changes what is on screen — the
+        // required-hint disappears, and a fieldset gains a checked control.
+        await expectAccessible(element);
+      }
       // The end screen has no Next; anywhere else, a missing one means the
       // walk stalled and the steps after it were never checked.
       if (!next) {
@@ -147,6 +187,34 @@ describe("accessibility", () => {
     // Without this the test would still pass if the walk stopped at step one,
     // which is exactly how an accessibility suite quietly stops checking.
     expect(visited).toEqual(steps.map((step) => step.type));
+  }, 30_000);
+
+  it("checks the end screens a single walk cannot reach", async () => {
+    // Every one of them is terminal, so a flow can only ever walk through one.
+    await loadBits(extraSteps.map((step) => step.type));
+
+    for (const step of extraSteps) {
+      const element = document.createElement(
+        `bitflow-${step.type}`,
+      ) as HTMLElement & Record<string, unknown>;
+      // The attempt and the document a finished run would have handed them:
+      // an end bit with nothing to report renders almost nothing.
+      Object.assign(element, {
+        data: step.data,
+        locale: "en",
+        attempt,
+        flow,
+      });
+      document.body.append(element);
+      await flush();
+      await waitFor(
+        () => element.textContent !== "",
+        () => `${step.type} rendered nothing`,
+      );
+
+      await expectAccessible(element);
+      element.remove();
+    }
   }, 30_000);
 
   it("checks a task mounted on its own", async () => {

@@ -1,8 +1,9 @@
 import { injectStyles, registerBit, translate } from "@bitflow/core";
 import { defineBitElement } from "@bitflow/element";
 import styles from "./start-simple.css?inline";
+import { formMessages } from "./formMessages";
 import { messages } from "./messages";
-import { DataSchema, type Data } from "./schema";
+import { DataSchema, outlineOf, type Data } from "./schema";
 import { Form, Task } from "./views";
 
 injectStyles("bitflow-styles-start-simple", styles);
@@ -19,9 +20,17 @@ registerBit<Data, never>({
     name: translate(messages, "name", locale),
     description: translate(messages, "description", locale),
   }),
-  defaultData: () => ({ title: "", markdown: "" }),
+  defaultData: () => ({ title: "", markdown: "", showOutline: false }),
 });
 
 defineBitElement(TYPE);
 
-export { DataSchema, Form, messages, Task, type Data };
+export {
+  DataSchema,
+  Form,
+  formMessages,
+  messages,
+  outlineOf,
+  Task,
+  type Data,
+};
