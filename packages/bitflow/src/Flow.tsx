@@ -52,6 +52,17 @@ export type FlowProps = {
   locale?: string;
   /** Show the run without accepting further learner input. */
   readonly?: boolean;
+  /**
+   * Steps the host is holding shut. The learner may answer the step they are on
+   * but not move on from it, and not skip past it. Looking back at what they
+   * have already done stays open to them — a hold is there to keep a class
+   * together, not to trap somebody on one screen — and it changes nothing,
+   * because coming forward again arrives at the same held step.
+   *
+   * Host-supplied, like `readonly`: the runtime has no idea where the list
+   * comes from and never asks.
+   */
+  lockedNodeIds?: string[];
   onStateChange?: (attempt: AttemptSnapshot) => void;
   onSave?: (attempt: AttemptSnapshot) => void;
   onComplete?: (attempt: AttemptSnapshot) => void;
@@ -71,6 +82,7 @@ export const Flow = ({
   attempt,
   locale,
   readonly,
+  lockedNodeIds,
   onStateChange,
   onSave,
   onComplete,
@@ -130,6 +142,7 @@ export const Flow = ({
       state={state}
       locale={resolved}
       readonly={readonly}
+      lockedNodeIds={lockedNodeIds}
       doc={state.doc}
       attempt={state.attempt}
     />
@@ -142,12 +155,14 @@ const FlowBody = ({
   attempt,
   locale,
   readonly,
+  lockedNodeIds,
 }: {
   state: FlowState;
   doc: BitflowDocument;
   attempt: AttemptSnapshot;
   locale: ReturnType<typeof resolveLocale>;
   readonly?: boolean;
+  lockedNodeIds?: string[];
 }) => {
   const node = state.currentNode();
   const result = attempt.results[attempt.currentNodeId];
@@ -209,6 +224,11 @@ const FlowBody = ({
   const taskLimit = taskTimeLimit(getNode(doc, attempt.currentNodeId));
   const running = attempt.status === "inProgress" && !readonly;
   const showRetry = answered && result?.allowRetry === true && !readonly;
+  // A host holding this step shut. The learner may answer it but not move on
+  // from it, and not skip past it — a gate that can be walked around is not a
+  // gate. Back and the step list stay open: both only ever lead to somewhere
+  // already visited, and the way forward is through this step either way.
+  const held = lockedNodeIds?.includes(attempt.currentNodeId) ?? false;
   // `end` bits render their own summary, so the shell adds no Next after them.
   const showNext = !complete && (!isTask || answered) && !readonly;
   // A step that is not graded but still has to be done — consent, saying who
@@ -216,7 +236,7 @@ const FlowBody = ({
   // missing; all the runtime does is refuse to move on.
   const canLeave = canLeaveNode(node, state.draft);
   const showCheck = isTask && !answered && !readonly && Boolean(bit?.evaluate);
-  const showSkip = isTask && !answered && !readonly && canSkip(doc, node);
+  const showSkip = isTask && !answered && !readonly && canSkip(doc, node) && !held;
 
   // The passage, listing or table this step and its neighbours are about. Kept
   // above the bit rather than inside it: it belongs to the section, and the bit
@@ -286,6 +306,11 @@ const FlowBody = ({
       }
       controls={
         <>
+          {held && (
+            <p className="bitflow-hold-reason" role="status">
+              {t("waitingForHost")}
+            </p>
+          )}
           <div className="bitflow-row">
             {state.canGoBack() && !readonly && (
               <button
@@ -330,7 +355,7 @@ const FlowBody = ({
               <button
                 type="button"
                 className="bitflow-button"
-                disabled={!canLeave}
+                disabled={!canLeave || held}
                 onClick={state.next}
               >
                 {tShared("next")}

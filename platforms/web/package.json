@@ -11,6 +11,8 @@
     "test": "echo \"no tests\""
   },
   "dependencies": {
+    "@bitflow/core": "workspace:*",
+    "@bitflow/report": "workspace:*",
     "@bitflow/task-boolean-logic": "workspace:*",
     "@bitflow/task-choice": "workspace:*",
     "@bitflow/task-code-trace": "workspace:*",
@@ -33,7 +35,9 @@
     "@bitflow/task-parsons": "workspace:*",
     "@bitflow/task-word-search": "workspace:*",
     "@bitflow/task-yes-no": "workspace:*",
-    "@bitflow/web-component": "workspace:*"
+    "@bitflow/web-component": "workspace:*",
+    "bitflow-party": "workspace:*",
+    "partysocket": "^1.3.0"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",

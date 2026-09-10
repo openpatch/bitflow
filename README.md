@@ -65,6 +65,18 @@ grading has to move.
 | [`packages/bits/*`](packages/bits) | One package per task type. |
 | [`platforms/vscode`](platforms/vscode) | Bitflow Studio — a visual editor for `.bitflow` files. |
 | [`platforms/web`](platforms/web) | Demo pages for each of the above. |
+| [`platforms/party`](platforms/party) | A PartyKit server for running a flow with a class — a live board and step locks. Private, not published. |
+
+## Live sessions
+
+`platforms/party` plus the host and join pages in `platforms/web` add the first
+thing that runs *with a class*: a host points a session at a flow URL, shares a
+code, students join and work through it at their own pace, and the host watches
+a live board and can lock steps. The server stores results, never the document,
+and never an answer — and grading still runs in the learner's page, so the
+progress the board shows is self-reported and can be forged. A live session
+makes a lesson easier to run; it does not change [what bitflow is not
+for](#what-bitflow-is-not-for).
 
 ## Task types
 

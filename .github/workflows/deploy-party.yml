@@ -1,0 +1,30 @@
+name: Deploy party
+
+# Deploys the live-session server to PartyKit on every push to main. Deliberately
+# separate from pull-request.yml and changeset-version.yml: publishing is an
+# outward-facing action, and this private platform is never published to npm.
+#
+# The two secrets come from `npx partykit token generate`, run locally — it
+# opens a browser to authorise. Adding them to the repository is a manual step.
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter bitflow-party deploy
+        env:
+          PARTYKIT_TOKEN: ${{ secrets.PARTYKIT_TOKEN }}
+          PARTYKIT_LOGIN: ${{ secrets.PARTYKIT_LOGIN }}

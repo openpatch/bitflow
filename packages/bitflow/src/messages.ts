@@ -37,6 +37,7 @@ export const messages: Catalogs = {
     stepHere: "You are here",
     stepAnswered: "Answered",
     stepNotAnswered: "Not answered yet",
+    waitingForHost: "Waiting for the teacher to open the next step.",
   },
   de: {
     progressLabel: "Fortschritt",
@@ -63,6 +64,7 @@ export const messages: Catalogs = {
     stepHere: "Du bist hier",
     stepAnswered: "Beantwortet",
     stepNotAnswered: "Noch nicht beantwortet",
+    waitingForHost: "Warte darauf, dass die Lehrkraft den nächsten Schritt öffnet.",
   },
   fr: {
     confidence1: "Pas sûr du tout",
@@ -89,6 +91,7 @@ export const messages: Catalogs = {
     stepHere: "Vous êtes ici",
     stepAnswered: "Répondu",
     stepNotAnswered: "Pas encore répondu",
+    waitingForHost: "En attente que l'enseignant ouvre l'étape suivante.",
   },
   nl: {
     confidence1: "Helemaal niet zeker",
@@ -115,6 +118,7 @@ export const messages: Catalogs = {
     stepHere: "Je bent hier",
     stepAnswered: "Beantwoord",
     stepNotAnswered: "Nog niet beantwoord",
+    waitingForHost: "Wachten tot de docent de volgende stap opent.",
   },
   es: {
     confidence1: "Nada seguro",
@@ -141,6 +145,7 @@ export const messages: Catalogs = {
     stepHere: "Estás aquí",
     stepAnswered: "Respondida",
     stepNotAnswered: "Todavía sin responder",
+    waitingForHost: "Esperando a que el profesor abra el siguiente paso.",
   },
   it: {
     confidence1: "Per niente sicuro",
@@ -167,6 +172,7 @@ export const messages: Catalogs = {
     stepHere: "Sei qui",
     stepAnswered: "Risposta data",
     stepNotAnswered: "Ancora senza risposta",
+    waitingForHost: "In attesa che l'insegnante apra il prossimo passo.",
   },
   pt: {
     confidence1: "Nada seguro",
@@ -193,6 +199,7 @@ export const messages: Catalogs = {
     stepHere: "Estás aqui",
     stepAnswered: "Respondida",
     stepNotAnswered: "Ainda sem resposta",
+    waitingForHost: "À espera que o professor abra o passo seguinte.",
   },
   tr: {
     confidence1: "Hiç emin değilim",
@@ -219,5 +226,6 @@ export const messages: Catalogs = {
     stepHere: "Buradasın",
     stepAnswered: "Yanıtlandı",
     stepNotAnswered: "Henüz yanıtlanmadı",
+    waitingForHost: "Öğretmenin bir sonraki adımı açmasını bekliyorsun.",
   },
 };

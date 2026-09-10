@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join a session — bitflow</title>
+    <link rel="stylesheet" href="./src/demo.css" />
+  </head>
+  <body>
+    <header>
+      <h1><a href="./index.html">bitflow</a> / join a session</h1>
+    </header>
+
+    <main>
+      <p class="lede">
+        You are taking the assessment in a live session. Your teacher can see
+        where you are and how you are doing — but not what you wrote. That stays
+        in your browser.
+      </p>
+
+      <section id="join">
+        <div class="row">
+          <label>
+            Your name:
+            <input id="name" type="text" autocomplete="name" />
+          </label>
+          <button class="plain" id="join-button">Join</button>
+        </div>
+        <p id="join-error" class="bitflow-alert bitflow-alert-error" role="alert" hidden></p>
+      </section>
+
+      <section id="taking" hidden>
+        <div class="demo demo-tall">
+          <bitflow-flow id="flow" locale="en"></bitflow-flow>
+        </div>
+        <p id="flow-error" class="bitflow-alert bitflow-alert-error" role="alert" hidden></p>
+      </section>
+    </main>
+
+    <script type="module" src="./src/join.ts"></script>
+  </body>
+</html>

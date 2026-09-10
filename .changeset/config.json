@@ -9,5 +9,5 @@
   "commit": false,
   "linked": [],
   "updateInternalDependencies": "patch",
-  "ignore": ["web", "bitflow-studio"]
+  "ignore": ["web", "bitflow-studio", "bitflow-party"]
 }

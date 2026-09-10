@@ -1,0 +1,29 @@
+{
+  "name": "bitflow-party",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./protocol": {
+      "types": "./src/protocol.ts",
+      "import": "./src/protocol.ts"
+    }
+  },
+  "scripts": {
+    "dev": "partykit dev src/server.ts",
+    "deploy": "partykit deploy",
+    "build": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "partykit": "^0.0.115",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@bitflow/report": "workspace:*",
+    "typescript": "^7.0.2",
+    "vite": "^7.3.6",
+    "vitest": "^4.1.10"
+  }
+}

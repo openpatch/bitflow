@@ -28,6 +28,17 @@
   padding-inline: var(--bitflow-space-small);
 }
 
+/* Why the learner cannot move on when a host holds the step shut. A min-height
+   keeps the line's space reserved, so it vanishing on unlock does not shift
+   the Next button under a pointer that was over it. */
+.bitflow-hold-reason {
+  margin: 0;
+  padding-inline: var(--bitflow-space-small);
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+  min-height: 1.5em;
+}
+
 .bitflow-progress {
   width: 100%;
 }

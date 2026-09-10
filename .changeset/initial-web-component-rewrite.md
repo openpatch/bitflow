@@ -87,3 +87,19 @@ will not start until the learner has answered either way,
 finished attempt to the page hosting the assessment,
 `@bitflow/end-certificate` is a printable closing sheet, and
 `@bitflow/end-download` hands the learner their own attempt as a file.
+
+`<Flow>` and `<bitflow-flow>` gain a `lockedNodeIds` prop: steps a host is
+holding shut. The learner may answer the step they are on but not move on from
+it, and may not skip past it — a gate that can be walked around is not a gate.
+Looking back at what they have already done stays open to them. It
+is host-supplied, in exactly the same shape as the existing `readonly`: the
+runtime has no idea where the list comes from and never asks. A node report
+whose `answer` has been stripped is now a valid report, so a live session can
+send the host results, scores, tries and timings without ever sending what
+anyone wrote.
+
+There is also a PartyKit platform, `platforms/party`, for running a flow with
+a class: a host points a session at a flow URL, shares a code, and watches a
+live board while locking steps. The packages stay transport-free — the socket
+lives entirely in `platforms/` — and the server stores results, never the
+document, and never an answer. It is private and is not published.

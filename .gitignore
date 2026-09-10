@@ -1,5 +1,8 @@
 node_modules
 dist
+# PartyKit's local Durable Object state: a room's sqlite files, written by
+# `partykit dev`. Session rows, not source.
+.partykit
 .DS_Store
 *.log
 *.vsix

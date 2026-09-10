@@ -46,6 +46,7 @@ Takes an assessment.
 | `attempt` | `AttemptSnapshot \| string` | A saved attempt to validate and restore. |
 | `locale` | `string` | UI language; falls back to English. |
 | `readonly` | `boolean` | Show the run without accepting input. |
+| `lockedNodeIds` | `string[]` | Steps a host is holding shut. The learner may answer the step they are on but not move on from it. Looking back stays open. |
 | `save()` | `() => AttemptSnapshot \| null` | Emits `bitflow-save` and returns the snapshot. |
 | `reset()` | `() => void` | Starts a fresh attempt. |
 

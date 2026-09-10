@@ -22,6 +22,8 @@ export default defineConfig({
         bit: resolve(import.meta.dirname, "bit.html"),
         bits: resolve(import.meta.dirname, "bits.html"),
         report: resolve(import.meta.dirname, "report.html"),
+        host: resolve(import.meta.dirname, "host.html"),
+        join: resolve(import.meta.dirname, "join.html"),
       },
     },
   },

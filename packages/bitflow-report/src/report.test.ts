@@ -23,6 +23,9 @@ const doc: BitflowDocument = {
     askConfidence: false,
     askReasoning: false,
     pools: [],
+    sections: [],
+    navigation: "back",
+    allowSkip: true,
   },
   nodes: [
     { id: "start", type: "t-start", position: { x: 0, y: 0 }, data: {} },

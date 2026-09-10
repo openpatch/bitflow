@@ -17,6 +17,7 @@ export type FlowElementProps = {
   attempt?: AttemptSnapshot | string;
   locale?: string;
   readonly?: boolean;
+  lockedNodeIds?: string[];
 };
 
 /**
@@ -34,6 +35,7 @@ const FlowElement = ({
   attempt,
   locale,
   readonly,
+  lockedNodeIds,
 }: FlowElementProps) => {
   const [resolved, setResolved] = useState<BitflowDocument | undefined>();
   const [loading, setLoading] = useState(false);
@@ -102,6 +104,7 @@ const FlowElement = ({
       attempt={attempt}
       locale={locale}
       readonly={readonly}
+      lockedNodeIds={lockedNodeIds}
       onStateChange={(snapshot) => emit(container, "bitflow-statechange", snapshot)}
       onSave={(snapshot) => emit(container, "bitflow-save", snapshot)}
       onComplete={(snapshot) =>
@@ -129,6 +132,7 @@ const Base = r2wc(FlowElement, {
     attempt: "json",
     locale: "string",
     readonly: "boolean",
+    lockedNodeIds: "json",
   },
 }) as unknown as { new (): HTMLElement };
 

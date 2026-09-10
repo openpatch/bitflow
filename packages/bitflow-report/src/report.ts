@@ -22,7 +22,10 @@ export const REPORT_SCHEMA_VERSION = 1;
 export const NodeReportSchema = z.object({
   nodeId: z.string().min(1),
   bitType: z.string().min(1),
-  answer: z.unknown(),
+  // Optional so a report whose `answer` has been stripped — a live session
+  // sends the host results, scores, tries and timings, never what anyone
+  // wrote — is still a valid report. Statistics and CSV never read it.
+  answer: z.unknown().optional(),
   result: BitResultSchema.optional(),
   tries: z.number().int().nonnegative(),
   elapsedMs: z.number().nonnegative().optional(),

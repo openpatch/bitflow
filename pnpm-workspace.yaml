@@ -14,8 +14,10 @@ onlyBuiltDependencies:
   - esbuild
   - '@vscode/vsce-sign'
   - keytar
+  - workerd
 
 allowBuilds:
   '@vscode/vsce-sign': true
   esbuild: true
   keytar: true
+  workerd: true
