@@ -4,3 +4,7 @@ dist
 *.log
 *.vsix
 .vscode-test
+# The working plan for whatever is being built next. Notes, not source:
+# it is rewritten between pieces of work and says nothing about the repo as
+# it stands. CLAUDE.md is the part that is meant to last.
+plan.md
