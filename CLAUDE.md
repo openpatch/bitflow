@@ -208,12 +208,23 @@ published at 0.x before this and stop there. They want an `npm deprecate`
 pointing at `@bitflow/web-component` once its first release is out.
 
 The two published packages are not on the same clock. `@bitflow/core` is at
-0.6.0 on npm and goes to 1.0.0; `@bitflow/web-component` has never been
-published and starts at 0.1.0, deliberately pre-1.0 while the element API is
-still moving. Note that changesets computes both from the `version` field in
+0.6.0 on npm and goes to 1.0.0; `@bitflow/web-component` holds only a stray
+`0.0.0` and starts in earnest at 0.1.0, deliberately pre-1.0 while the element
+API is still moving. Note that changesets computes both from the `version` field in
 the repo, which is `0.0.0` — not from what npm holds. So a `minor` on core
 would produce 0.1.0, *below* its published 0.6.0. Check
 `pnpm exec changeset status --verbose` before merging a release PR.
+
+Both publish to npm through **trusted publishing**, so there is no npm token
+anywhere and there must not be one: `changeset-version.yml` carries
+`id-token: write` and passes no `NPM_TOKEN`, and an empty or stale one in the
+environment is worse than none — it reaches .npmrc as a bearer token and npm
+answers the publish `E404 Not Found`, which is what it returns rather than 401
+for a write it will not authorise. The same 404 came out of pnpm before 11.1.3,
+which sent the unexpanded `${NPM_TOKEN}` literally, so the `version: 11` pin in
+that workflow is a floor and not decoration. Configure the publisher per package
+at npmjs.com → the package → Settings → Trusted publisher; it names the repo and
+the workflow *file*, so renaming `changeset-version.yml` breaks publishing.
 
 ## Conventions the tests enforce
 

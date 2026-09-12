@@ -4,9 +4,14 @@ name: Create Pull Request or Release
 # Two registries come out of this one job: npm for `@bitflow/core` and
 # `@bitflow/web-component`, and the two VS Code marketplaces for Bitflow Studio.
 #
-# Three secrets, all manual repository settings:
+# npm needs no secret: both packages use trusted publishing, so the runner
+# mints a short-lived OIDC token instead. That costs `id-token: write` below,
+# and means *no* NPM_TOKEN in the environment — an empty or stale one lands in
+# .npmrc as a bearer token and npm answers a publish with 404 Not Found, which
+# is what it says instead of 401 for a write it will not authorise.
 #
-#   NPM_TOKEN    an automation token for the @bitflow scope.
+# Two secrets, both manual repository settings:
+#
 #   VSCE_TOKEN   an Azure DevOps PAT for the `openpatch` publisher, with
 #                Marketplace → Manage. https://marketplace.visualstudio.com
 #   OVSX_TOKEN   an Open VSX access token for the same publisher, which is
@@ -26,6 +31,9 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  # Trusted publishing. Without it the runner cannot mint an OIDC token at
+  # all, and npm falls back to looking for a credential that is not there.
+  id-token: write
 
 jobs:
   release:
@@ -41,11 +49,16 @@ jobs:
 
       - uses: pnpm/action-setup@v4
         with:
+          # 11 resolves to the newest 11.x, which matters: OIDC publishing was
+          # broken until 11.1.3 (pnpm/pnpm#11526) — it sent the unexpanded
+          # `${NPM_TOKEN}` as a literal bearer token and got the same 404.
           version: 11
       - uses: actions/setup-node@v4
         with:
+          # Trusted publishing wants Node >= 22.14 and npm >= 11.5.1.
           node-version: 22
           cache: pnpm
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -69,7 +82,6 @@ jobs:
           version: pnpm version-packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # Same gate as npm: only when changesets actually published something, so
       # a version PR does not ship an extension. Publishing the same version
