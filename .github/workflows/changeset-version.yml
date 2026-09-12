@@ -16,6 +16,13 @@ name: Create Pull Request or Release
 # anyway (`privatePackages.version`), so the version in its package.json is
 # already the new one by the time this runs.
 
+# Merging the version PR is a push to main, which runs this again — that run
+# finds no changesets left, so `publish` is what happens instead of `version`.
+on:
+  push:
+    branches:
+      - main
+
 permissions:
   contents: write
   pull-requests: write
