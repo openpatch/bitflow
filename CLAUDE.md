@@ -142,9 +142,12 @@ about the new bit:
 6. A changeset against `@bitflow/web-component` — the new bit ships inside it,
    and has no version of its own to bump.
 7. `packages/web-component/README.md` — a section, including accessibility.
-8. `POSSIBLE_NEW_TASKS.md` — mark it built.
+8. `platforms/web/public/llms.txt` — a `### <type> — "Name"` section with the
+   bit's `data` fields, for an agent writing a flow. `llmsTxt.test.ts` in
+   `web-component` fails without one.
+9. `POSSIBLE_NEW_TASKS.md` — mark it built.
 
-Steps 2, 5 and 8 are for task bits only: the gallery shows one question at a
+Steps 2, 5 and 9 are for task bits only: the gallery shows one question at a
 time and has no use for a start or an end, and `POSSIBLE_NEW_TASKS.md` is a
 backlog of tasks. A new `start-*`/`end-*` bit still needs all the others.
 
