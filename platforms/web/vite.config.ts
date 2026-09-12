@@ -19,13 +19,7 @@ import { defineConfig } from "vite";
 // there. Their source stays in the repo and still type-checks; put the two
 // lines back, with the host card and `VITE_PARTY_HOST`, to ship them again.
 export default defineConfig({
-  // Served from the root in dev and from `/bitflow/` on GitHub Pages, which
-  // `configure-pages` hands the build as `BASE_PATH`. Empty is what that action
-  // reports for a custom domain, so it falls back to the root rather than
-  // producing an empty base. Public files are referenced relative to the page
-  // for the same reason — Vite rewrites `/x.png` in markup, but not a string in
-  // a `<option value>` or a `fetch`.
-  base: process.env.BASE_PATH || "/",
+  base: "/",
   build: {
     rollupOptions: {
       input: {
