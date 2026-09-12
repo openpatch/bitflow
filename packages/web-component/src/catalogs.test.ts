@@ -106,33 +106,24 @@ describe("message catalogs", () => {
     // side by side. Which `t` is bound to which is not worth parsing — the
     // bug being caught is a key that resolves to nothing at all.
     const missing: string[] = [];
-    const catalogs = new Map<string, Set<string>>();
+
+    // Built by walking catalog → users once, rather than asking "does this
+    // catalog have this user?" for every pair: `usersOf` reads a whole
+    // directory, so the pairwise form re-read the tree 59 times per file and
+    // took longer than the CI timeout.
+    /** source file → every key in scope for it. */
+    const scopes = new Map<string, Set<string>>();
 
     for (const file of await catalogFiles()) {
-      catalogs.set(
-        file,
-        new Set(localesIn(await readFile(file, "utf8")).get("en") ?? []),
-      );
-    }
-
-    /** Every key in scope for one source file. */
-    const inScope = async (user: string): Promise<Set<string>> => {
-      const keys = new Set<string>();
-      for (const [file, catalog] of catalogs) {
-        if ((await usersOf(file)).includes(user)) {
-          for (const key of catalog) keys.add(key);
-        }
+      const english = localesIn(await readFile(file, "utf8")).get("en") ?? [];
+      for (const user of await usersOf(file)) {
+        const known = scopes.get(user) ?? new Set<string>();
+        for (const key of english) known.add(key);
+        scopes.set(user, known);
       }
-      return keys;
-    };
-
-    const users = new Set<string>();
-    for (const file of catalogs.keys()) {
-      for (const user of await usersOf(file)) users.add(user);
     }
 
-    for (const user of users) {
-      const known = await inScope(user);
+    for (const [user, known] of scopes) {
       if (known.size === 0) continue;
       const source = await readFile(user, "utf8");
       for (const [, key] of source.matchAll(/\bt\(\s*"(\w+)"/g)) {
