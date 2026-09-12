@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/element",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "Renders a registered bit and wraps it as a standalone custom element. Shared by every bit package and by the flow runtime.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

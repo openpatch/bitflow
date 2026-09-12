@@ -1,0 +1,15 @@
+# What stays out of the .vsix. Everything the extension needs at runtime is
+# bundled into dist/ by scripts/build-vscode.mjs, so the sources that produced
+# it are dead weight — and the source maps are three quarters of the download.
+.vscode/**
+src/**
+node_modules/**
+**/tsconfig.json
+**/*.map
+**/*.ts
+**/*.tsx
+.gitignore
+# Development notes and the fixture they tell you to open. Neither is reachable
+# from the installed extension.
+DEVELOPMENT.md
+example.bitflow

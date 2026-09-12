@@ -1,40 +1,6 @@
 ---
-"@bitflow/core": major
-"@bitflow/element": major
-"@bitflow/bitflow": major
-"@bitflow/report": major
-"@bitflow/web-component": major
-"@bitflow/start-simple": major
-"@bitflow/start-consent": major
-"@bitflow/start-identify": major
-"@bitflow/title-simple": major
-"@bitflow/input-markdown": major
-"@bitflow/end-tries": major
-"@bitflow/end-handoff": major
-"@bitflow/end-certificate": major
-"@bitflow/end-download": major
-"@bitflow/task-choice": major
-"@bitflow/task-yes-no": major
-"@bitflow/task-input": major
-"@bitflow/task-numeric": major
-"@bitflow/task-math": major
-"@bitflow/task-fill-in-the-blank": major
-"@bitflow/task-highlighting": major
-"@bitflow/task-drag-drop": major
-"@bitflow/task-find-hotspots": major
-"@bitflow/task-ordering": major
-"@bitflow/task-matching": major
-"@bitflow/task-parsons": major
-"@bitflow/task-crossword": major
-"@bitflow/task-word-search": major
-"@bitflow/task-mouse-accuracy": major
-"@bitflow/task-keyboard-speed": major
-"@bitflow/task-code-trace": major
-"@bitflow/task-graph-path": major
-"@bitflow/task-number-representation": major
-"@bitflow/task-free-text": major
-"@bitflow/task-boolean-logic": major
-"@bitflow/task-image-annotation": major
+"@bitflow/core": minor
+"@bitflow/web-component": minor
 ---
 
 Rewrite bitflow as web components.
@@ -43,6 +9,22 @@ bitflow is now a set of custom elements — `<bitflow-flow>`,
 `<bitflow-flow-editor>`, `<bitflow-report>`, `<bitflow-group-report>`, and one
 per task type — usable from any framework or from plain HTML. React remains the
 implementation behind them.
+
+Two packages ship, not thirty-six. `@bitflow/web-component` carries the elements
+and every task type inside it, each still its own lazily loaded chunk, so a flow
+downloads only the tasks it references — and a page needs one
+`<script type="module">` and nothing else: there is no React to install and no
+dependency of any kind. `@bitflow/core` stays separate because it is the half
+that runs in Node — the schema, the flow engine and the scoring, for a server or
+a CLI that reads a `.bitflow` file without drawing it.
+
+The per-task packages are no longer published on their own. `@bitflow/task-choice`,
+`@bitflow/task-yes-no`, `@bitflow/task-input`, `@bitflow/task-fill-in-the-blank`,
+`@bitflow/task-highlighting`, `@bitflow/input-markdown`, `@bitflow/start-simple`
+and `@bitflow/end-tries` stop at 0.x; their code, and that of every task type
+added since, arrives inside `@bitflow/web-component`. They are still one
+directory per task in the repository — the split is how the code is written, not
+how it is shipped.
 
 The `.bitflow` format is redesigned and not backward compatible: branching lives
 on edges as conditions rather than in dedicated control-flow nodes, and each
@@ -98,7 +80,7 @@ whose `answer` has been stripped is now a valid report, so a live session can
 send the host results, scores, tries and timings without ever sending what
 anyone wrote.
 
-There is also a PartyKit platform, `platforms/party`, for running a flow with
+There is also a live-session platform, `platforms/party`, for running a flow with
 a class: a host points a session at a flow URL, shares a code, and watches a
 live board while locking steps. The packages stay transport-free — the socket
 lives entirely in `platforms/` — and the server stores results, never the

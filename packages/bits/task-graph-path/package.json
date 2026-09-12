@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/task-graph-path",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "A graph and a path, traversal, spanning tree or cut for the learner to pick out.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

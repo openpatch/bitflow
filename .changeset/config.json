@@ -4,10 +4,27 @@
   "baseBranch": "main",
   "changelog": [
     "@changesets/changelog-github",
-    { "repo": "openpatch/bitflow" }
+    {
+      "repo": "openpatch/bitflow"
+    }
   ],
   "commit": false,
   "linked": [],
   "updateInternalDependencies": "patch",
-  "ignore": ["web", "bitflow-studio", "bitflow-party"]
+  "privatePackages": {
+    "version": true,
+    "tag": false
+  },
+  "ignore": [
+    "@bitflow/task-*",
+    "@bitflow/start-*",
+    "@bitflow/end-*",
+    "@bitflow/title-*",
+    "@bitflow/input-*",
+    "@bitflow/element",
+    "@bitflow/bitflow",
+    "@bitflow/report",
+    "web",
+    "bitflow-party"
+  ]
 }

@@ -1,9 +1,24 @@
 name: Create Pull Request or Release
 
-on:
-  push:
-    branches:
-      - main
+# Changesets opens a "Version Packages" PR; merging that PR is what publishes.
+# Two registries come out of this one job: npm for `@bitflow/core` and
+# `@bitflow/web-component`, and the two VS Code marketplaces for Bitflow Studio.
+#
+# Three secrets, all manual repository settings:
+#
+#   NPM_TOKEN    an automation token for the @bitflow scope.
+#   VSCE_TOKEN   an Azure DevOps PAT for the `openpatch` publisher, with
+#                Marketplace → Manage. https://marketplace.visualstudio.com
+#   OVSX_TOKEN   an Open VSX access token for the same publisher, which is
+#                what VSCodium and the other non-Microsoft builds install from.
+#
+# The extension is `private: true` and never goes to npm; changesets versions it
+# anyway (`privatePackages.version`), so the version in its package.json is
+# already the new one by the time this runs.
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   release:
@@ -32,7 +47,15 @@ jobs:
       - name: Test packages
         run: pnpm test
 
+      # Built before the publish step, not after: on the run that publishes,
+      # the version PR has already been merged, so package.json carries the new
+      # version and the .vsix is stamped with it. On a run that only opens the
+      # PR this is thrown away.
+      - name: Build vscode package
+        run: pnpm --filter bitflow-studio vscode:package
+
       - name: Create Release Pull Request or Publish to npm
+        id: changesets
         uses: changesets/action@v1
         with:
           publish: pnpm release
@@ -40,3 +63,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Same gate as npm: only when changesets actually published something, so
+      # a version PR does not ship an extension. Publishing the same version
+      # twice is rejected by both marketplaces, which is the backstop.
+      - name: Publish VS Code extension
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          pnpm --filter bitflow-studio vscode:publish
+          pnpm --filter bitflow-studio ovsx:publish
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
+          OVSX_PAT: ${{ secrets.OVSX_TOKEN }}

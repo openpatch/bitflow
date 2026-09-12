@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/task-number-representation",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "A value to write again in another number representation, checked arithmetically.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

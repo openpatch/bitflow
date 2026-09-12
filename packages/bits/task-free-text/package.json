@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/task-free-text",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "A longer written answer, kept for a person to read and checked against a rubric.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

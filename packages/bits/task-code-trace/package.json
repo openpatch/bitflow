@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/task-code-trace",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "A program shown as text and a trace table for the learner to fill in; the code is never executed.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

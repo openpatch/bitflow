@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/input-markdown",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "A Markdown text block shown to the learner.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

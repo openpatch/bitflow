@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/task-crossword",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "A crossword grid the learner fills in from across and down clues.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

@@ -133,10 +133,14 @@ about the new bit:
 
 1. `packages/web-component/src/bitLoaders.ts` — the lazy-import map.
 2. `platforms/web/src/bits.ts` — the gallery's separate map.
-3. `package.json` dependencies in both of those packages.
+3. `package.json` in both of those packages. In `web-component` it is a
+   **devDependency** — see "What gets published" below; in `platforms/web`,
+   which is private and bundles the same way, either field works, so follow the
+   bits already there.
 4. `packages/web-component/src/a11yFixture.ts` — a fixture node.
 5. `platforms/web/src/examples.ts` — a gallery example.
-6. `.changeset/initial-web-component-rewrite.md` — `"@bitflow/<name>": major`.
+6. A changeset against `@bitflow/web-component` — the new bit ships inside it,
+   and has no version of its own to bump.
 7. `packages/web-component/README.md` — a section, including accessibility.
 8. `POSSIBLE_NEW_TASKS.md` — mark it built.
 
@@ -151,6 +155,65 @@ terminal, so a walk only ever reaches one. Put it in `extraSteps` instead, which
 Both import maps are written out literally on purpose. A computed specifier
 (`import("@bitflow/" + type)`) defeats code splitting and pulls every bit into
 one chunk.
+
+## What gets published
+
+Two packages of the thirty-six, and the split between them is the only one a
+consumer sees:
+
+- **`@bitflow/core`** — the half that runs in Node. Schema, flow engine,
+  scoring, no React, no DOM. What a server or a CLI reads a `.bitflow` file
+  with. Its only dependency is zod.
+- **`@bitflow/web-component`** — everything else, bundled. `vite.config.ts`
+  makes *nothing* external, so React, `@bitflow/element`, `@bitflow/bitflow`,
+  `@bitflow/report` and all 31 bits are inside its `dist`, and the per-bit
+  dynamic imports in `bitLoaders.ts` are still separate chunks. The published
+  manifest has **no `dependencies` at all**: a page loads one
+  `<script type="module">` and installs nothing.
+
+A third thing ships, to neither: **Bitflow Studio**, the VS Code extension in
+`platforms/vscode`. It is `private: true` like the rest, but changesets still
+*versions* it — `privatePackages: {version: true}` — so the `.vsix` carries a
+real number, and `changeset-version.yml` pushes it to the VS Code Marketplace
+and Open VSX on the same `published == 'true'` gate as npm. `.vscodeignore`
+keeps the sources and source maps out; everything it runs is bundled into
+`dist/` by `scripts/build-vscode.mjs`. This mirrors `openpatch/hyperbook`, which
+releases `hyperbook-studio` the same way.
+
+Everything else carries `private: true` *and* sits behind the `ignore` globs in
+`.changeset/config.json`. Without those globs, `updateInternalDependencies`
+gives all 34 a patch bump and a changelog on every core release — noise in
+every version PR about packages nobody can install. The globs are written by
+prefix (`@bitflow/task-*`, `start-*`, `end-*`, `title-*`, `input-*`), so a new
+bit is covered the moment it is named and there is nothing to remember.
+
+The cost of ignoring them is the rule already in step 6 above: **changing a bit
+does not bump anything by itself.** Write the changeset against
+`@bitflow/web-component`, which is what the change actually ships inside.
+
+The one-package-per-bit layout is how the code is *written* — it is what keeps
+mathlive out of a flow with no maths task and gives each bit its own tests —
+not how it is shipped.
+
+Which makes one rule worth keeping: **a bundled dependency belongs in
+`devDependencies`.** Put a bit in `web-component`'s `dependencies` and
+`changeset publish` rewrites `workspace:*` to a version number that was never
+published, and `npm i @bitflow/web-component` fails for everyone. `pnpm --filter
+@bitflow/web-component pack` and reading the packed `package.json` is how to
+check; `dependencies` should be absent.
+
+`@bitflow/task-choice`, `task-yes-no`, `task-input`, `task-fill-in-the-blank`,
+`task-highlighting`, `input-markdown`, `start-simple` and `end-tries` were
+published at 0.x before this and stop there. They want an `npm deprecate`
+pointing at `@bitflow/web-component` once its first release is out.
+
+The two published packages are not on the same clock. `@bitflow/core` is at
+0.6.0 on npm and goes to 1.0.0; `@bitflow/web-component` has never been
+published and starts at 0.1.0, deliberately pre-1.0 while the element API is
+still moving. Note that changesets computes both from the `version` field in
+the repo, which is `0.0.0` — not from what npm holds. So a `minor` on core
+would produce 0.1.0, *below* its published 0.6.0. Check
+`pnpm exec changeset status --verbose` before merging a release PR.
 
 ## Conventions the tests enforce
 

@@ -1,6 +1,6 @@
 {
   "name": "@bitflow/core",
-  "version": "0.0.0",
+  "version": "0.6.0",
   "author": "Mike Barkmin",
   "description": "Schema, flow engine, attempt runtime and bit registry for bitflow. Pure TypeScript, no UI.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

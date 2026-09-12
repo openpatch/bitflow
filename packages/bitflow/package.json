@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/bitflow",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "React components for taking and authoring a bitflow assessment.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/task-highlighting",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "A text the learner highlights in colours.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

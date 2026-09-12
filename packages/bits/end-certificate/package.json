@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/end-certificate",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "Printable closing summary for a bitflow assessment.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

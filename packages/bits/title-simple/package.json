@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/title-simple",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "A titled explanation screen between tasks.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

@@ -55,17 +55,21 @@ grading has to move.
 
 ## What is here
 
-| Package | What it is |
-| --- | --- |
-| [`@bitflow/core`](packages/bitflow-core) | The `.bitflow` schema, the flow engine, the attempt runtime, the bit registry and the i18n helper. Pure TypeScript. |
-| [`@bitflow/element`](packages/bitflow-element) | Renders a registered bit, sanitises author Markdown, and wraps any bit as a standalone custom element. |
-| [`@bitflow/bitflow`](packages/bitflow) | React `<Flow>` (take it) and `<FlowEditor>` (author it). |
-| [`@bitflow/report`](packages/bitflow-report) | Per-attempt reports and cohort statistics, plus `<Report>` and `<GroupReport>`. |
-| [`@bitflow/web-component`](packages/web-component) | All of the above as custom elements, with lazy per-task loading. |
-| [`packages/bits/*`](packages/bits) | One package per task type. |
-| [`platforms/vscode`](platforms/vscode) | Bitflow Studio — a visual editor for `.bitflow` files. |
-| [`platforms/web`](platforms/web) | Demo pages for each of the above, published to [openpatch.github.io/bitflow](https://openpatch.github.io/bitflow/) on every push to main. |
-| [`platforms/party`](platforms/party) | A PartyServer room — a Cloudflare Worker you deploy yourself — for running a flow with a class: a live board and step locks. Private, not published, and not part of the deployed gallery. |
+Two things are published to npm, and the VS Code extension to the two
+marketplaces. Everything else in the table is how the code is organised, and
+arrives inside one of them.
+
+| Package | What it is | On npm |
+| --- | --- | --- |
+| [`@bitflow/core`](packages/bitflow-core) | The `.bitflow` schema, the flow engine, the attempt runtime, the bit registry and the i18n helper. Pure TypeScript — it runs in Node, which is why it is published on its own. | **yes** |
+| [`@bitflow/web-component`](packages/web-component) | All of the below as custom elements, with lazy per-task loading. Bundled whole: installing it pulls in nothing else, not even React. | **yes** |
+| [`@bitflow/element`](packages/bitflow-element) | Renders a registered bit, sanitises author Markdown, and wraps any bit as a standalone custom element. | inside web-component |
+| [`@bitflow/bitflow`](packages/bitflow) | React `<Flow>` (take it) and `<FlowEditor>` (author it). | inside web-component |
+| [`@bitflow/report`](packages/bitflow-report) | Per-attempt reports and cohort statistics, plus `<Report>` and `<GroupReport>`. | inside web-component |
+| [`packages/bits/*`](packages/bits) | One package per task type — 31 of them, each its own chunk at runtime. | inside web-component |
+| [`platforms/vscode`](platforms/vscode) | Bitflow Studio — a visual editor for `.bitflow` files. | VS Code Marketplace and [Open VSX](https://open-vsx.org), not npm |
+| [`platforms/web`](platforms/web) | Demo pages for each of the above, published to [openpatch.github.io/bitflow](https://openpatch.github.io/bitflow/) on every push to main. | no |
+| [`platforms/party`](platforms/party) | A PartyServer room — a Cloudflare Worker you deploy yourself — for running a flow with a class: a live board and step locks. Not part of the deployed gallery either. | no |
 
 ## Live sessions
 

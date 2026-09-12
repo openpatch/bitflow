@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/task-boolean-logic",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "A truth table to complete, worked out from a Boolean expression.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

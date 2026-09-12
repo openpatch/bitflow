@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/task-keyboard-speed",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "Typing an author's text back, measured for accuracy and speed.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

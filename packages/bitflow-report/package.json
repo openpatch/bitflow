@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/report",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "Per-attempt reports and client-side cohort statistics for bitflow.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

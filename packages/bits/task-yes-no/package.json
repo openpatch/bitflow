@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/task-yes-no",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "A yes/no question.",
   "homepage": "https://github.com/openpatch/bitflow#readme",

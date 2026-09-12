@@ -1,6 +1,7 @@
 {
   "name": "@bitflow/task-mouse-accuracy",
   "version": "0.0.0",
+  "private": true,
   "author": "Mike Barkmin",
   "description": "Timed clicks on a sequence of targets, for lessons about pointing.",
   "homepage": "https://github.com/openpatch/bitflow#readme",
