@@ -22,8 +22,26 @@ import {
  * therefore a host-side callback in practice, whichever page registers it.
  */
 
+/**
+ * Where the session server lives. The default is `wrangler dev`'s port, set in
+ * `platforms/party/wrangler.jsonc`, so a local session needs no environment at
+ * all. A deployed one is your own Worker — `VITE_PARTY_HOST` is the host it
+ * answers on, `bitflow-party.<subdomain>.workers.dev` or a custom domain.
+ * `PartySocket` picks `ws` for localhost and `wss` for everything else.
+ */
 export const PARTY_HOST =
-  import.meta.env.VITE_PARTY_HOST ?? "localhost:1999";
+  // `||`, not `??`: an unset repository variable reaches the build as an empty
+  // string, and falling back on empty is the difference between the default
+  // and a socket to nowhere.
+  import.meta.env.VITE_PARTY_HOST || "localhost:1999";
+
+/**
+ * The Durable Object namespace, which is the kebab-case of the `Session`
+ * binding in `platforms/party/wrangler.jsonc`: together they make the route
+ * `/parties/session/<room code>`. PartyServer has no default party — leaving
+ * this out asks for `main`, which nothing answers.
+ */
+const PARTY = "session";
 
 /**
  * Six characters from an unambiguous alphabet — no `O`/`0` or `I`/`1`, which
@@ -79,7 +97,7 @@ export class LiveSession {
     name: string | undefined,
     callbacks: SessionCallbacks,
   ) {
-    this.socket = new PartySocket({ host: PARTY_HOST, room });
+    this.socket = new PartySocket({ host: PARTY_HOST, party: PARTY, room });
 
     this.socket.addEventListener("message", (event) => {
       const message = parseServerMessage(JSON.parse((event as MessageEvent).data));

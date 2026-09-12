@@ -10,20 +10,22 @@
     }
   },
   "scripts": {
-    "dev": "partykit dev src/server.ts",
-    "deploy": "partykit deploy",
-    "build": "tsc --noEmit",
-    "lint": "tsc --noEmit",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "types": "wrangler types",
+    "build": "wrangler types && tsc --noEmit",
+    "lint": "wrangler types && tsc --noEmit",
     "test": "vitest run"
   },
   "dependencies": {
-    "partykit": "^0.0.115",
+    "partyserver": "^0.5.10",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@bitflow/report": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "^7.3.6",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "wrangler": "^4.131.1"
   }
 }

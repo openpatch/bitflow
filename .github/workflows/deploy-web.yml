@@ -1,0 +1,66 @@
+name: Deploy web
+
+# Publishes the demo gallery to GitHub Pages on every push to main. The only
+# deployment this repo has: a static site, no account anywhere, no secrets.
+#
+# One manual step, once: Settings → Pages → Source: GitHub Actions.
+# (`configure-pages` below asks for that itself, but the toggle is the thing
+# that makes it stick.)
+#
+# The live-session pages are deliberately not part of this. `platforms/party`
+# and the host/join pages still build and are still tested, but they need a
+# Cloudflare Worker deployed alongside them, so the gallery ships without
+# them — see the "Live sessions" section of CLAUDE.md for turning them back on.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time, and never cancel one halfway: a cancelled Pages
+# deploy leaves the site on whatever it was serving, which is fine, but a
+# cancelled one mid-upload is not worth finding out about.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: actions/configure-pages@v5
+        id: pages
+        with:
+          enablement: true
+      - run: pnpm install --frozen-lockfile
+      # The whole workspace: the gallery imports every bit's built `dist`, so
+      # `pnpm --filter web build` alone would bundle whatever was there last.
+      - run: pnpm build
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: platforms/web/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

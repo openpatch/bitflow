@@ -9,8 +9,8 @@ const group = document.querySelector("bitflow-group-report") as HTMLElement & {
   reports: unknown;
 };
 
-report.report = await (await fetch("/single-report.json")).json();
-group.reports = await (await fetch("/group-reports.json")).json();
+report.report = await (await fetch("single-report.json")).json();
+group.reports = await (await fetch("group-reports.json")).json();
 
 /**
  * Result data can come from anywhere — exported files, pasted JSON, a service.

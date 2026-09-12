@@ -1,6 +1,0 @@
-{
-  "name": "bitflow-party",
-  "main": "src/server.ts",
-  "port": 1999,
-  "compatibilityDate": "2026-09-06"
-}

@@ -245,6 +245,14 @@ h6.bitflow-heading {
   color: var(--bitflow-color-text);
 }
 
+/* `display: flex` above beats the `hidden` attribute's UA `display: none`, so
+   an alert kept in the markup and revealed on demand — which is how every page
+   here does it — renders as an empty coloured strip until it has something to
+   say. */
+.bitflow-alert[hidden] {
+  display: none;
+}
+
 .bitflow-alert-success {
   --bitflow-alert-accent: var(--bitflow-color-correct);
   --bitflow-alert-surface: var(--bitflow-color-correct-surface);
