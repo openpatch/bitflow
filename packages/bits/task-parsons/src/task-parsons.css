@@ -8,7 +8,7 @@
    not: on a phone two columns of code are too narrow to read. */
 .bitflow-parsons-columns {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: var(--bitflow-space-small);
 }
 
@@ -25,7 +25,11 @@
   display: flex;
   gap: var(--bitflow-space-xsmall);
   align-items: center;
-  width: 100%;
+  /* An indented line is shifted, not widened: the indent comes off the width,
+     or every indented line would stick out past the column by exactly its
+     indentation. */
+  margin-inline-start: var(--bitflow-parsons-indent, 0rem);
+  width: calc(100% - var(--bitflow-parsons-indent, 0rem));
   padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
   font: inherit;
   color: var(--bitflow-color-text);
@@ -41,11 +45,22 @@
 }
 
 /* Code is monospaced and never highlighted: a parser per language for a task
-   about structure would be a poor trade. */
+   about structure would be a poor trade.
+
+   A long line wraps rather than running out of its box — a column is 260px at
+   narrowest, and `for (int x = 0; x < a[y].length; x++) {` does not fit that.
+   Wrapped continuations hang one step in, so a wrapped line still reads as
+   one line and not as two. `min-width: 0` lets the flex item shrink below its
+   unwrapped width at all. */
 .bitflow-parsons-line code {
+  flex: 1;
+  min-width: 0;
   font-family: var(--bitflow-font-family-mono);
   font-size: var(--bitflow-font-size-small);
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding-inline-start: 2ch;
+  text-indent: -2ch;
 }
 
 .bitflow-parsons-number {

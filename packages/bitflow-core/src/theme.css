@@ -17,6 +17,15 @@
   --bitflow-color-primary: #017460; /* OpenPatch Green */
   --bitflow-color-primary-dark: #004c45; /* Deep Forest */
   --bitflow-color-primary-light: #b5e3d8; /* Fresh Mint */
+  /* Text and marks drawn *on* the primary colour: a filled button's label, a
+     numbered badge. Its own token so a host whose brand is light can make it
+     dark, rather than getting white text on pale yellow.
+
+     A host re-branding bitflow sets the primary family together: primary,
+     -dark, -light, on-primary, and --bitflow-shadow-outline. Custom properties
+     resolve where they are declared, so re-declaring only the primary on a
+     container leaves the others computed from this green. */
+  --bitflow-color-on-primary: var(--bitflow-color-white);
 
   --bitflow-color-neutral-900: #242428; /* Coal */
   --bitflow-color-neutral-700: #3c3c3c; /* Charcoal */
@@ -80,10 +89,8 @@
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --bitflow-shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --bitflow-shadow-outline: 0 0 0 3px rgba(1, 116, 96, 0.4);
-
-  /* Layout */
-  --bitflow-max-width-content: 720px;
+  --bitflow-shadow-outline: 0 0 0 3px
+    color-mix(in srgb, var(--bitflow-color-primary) 40%, transparent);
 
   /* Motion. Every animation in bitflow multiplies its duration by this, so the
      reduced-motion override below switches the whole library off at once. */
@@ -175,8 +182,10 @@
   );
 }
 
+/* Content fills the shell, padding and all. A host that wants a readable
+   measure can set --bitflow-max-width-content; unset means no cap. */
 .bitflow-content {
-  max-width: var(--bitflow-max-width-content);
+  max-width: var(--bitflow-max-width-content, none);
   margin-inline: auto;
   width: 100%;
 }
@@ -284,7 +293,7 @@ h6.bitflow-heading {
   border: var(--bitflow-border-width) solid transparent;
   border-radius: var(--bitflow-radius-standard);
   background: var(--bitflow-color-primary);
-  color: var(--bitflow-color-white);
+  color: var(--bitflow-color-on-primary);
   cursor: pointer;
   transition: background-color var(--bitflow-duration-fast) ease-out;
 }

@@ -4,28 +4,72 @@
 
 /* --- learner shell -------------------------------------------------------- */
 
+/* The element is a column the shell stretches down, so it fits whatever box
+   the page gives it: a fixed `height` and it fills and scrolls the step; only
+   a `max-height` and it grows with the step up to the cap, then scrolls; no
+   height at all and it grows with the step. A percentage max-height on the
+   shell alone cannot do the middle one — against a parent of auto height it
+   resolves to none. */
+bitflow-flow {
+  display: flex;
+  flex-direction: column;
+}
+
+bitflow-flow > .bitflow-shell {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* Fills a host that has a height, and scrolls inside it rather than spilling
+   out. A host box of fixed height with `overflow: hidden` — a card on a page,
+   a directive in a book — otherwise clips whatever does not fit, and a long
+   step or the result page loses its bottom half with nothing to scroll.
+
+   Only the step itself scrolls: the progress bar stays on top and Check, Back
+   and Next stay on the bottom edge, so the way on is never scrolled out of
+   reach. `max-height: 100%` resolves to none when the host has no definite
+   height, so a flow left to size itself grows with its content instead. The
+   shell's own `overflow-y` is a fallback for a host too short to hold even
+   the chrome. */
 .bitflow-shell {
   display: flex;
   flex-direction: column;
-  gap: var(--bitflow-space-medium);
   min-height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
   background: var(--bitflow-color-background);
-  padding-bottom: var(--bitflow-space-medium);
 }
 
 .bitflow-shell-content {
   display: flex;
   flex-direction: column;
   gap: var(--bitflow-space-medium);
-  padding-inline: var(--bitflow-space-small);
+  /* The space round the step is its own padding, not a gap in the shell, so
+     it scrolls with the step and the bars above and below sit flush. */
+  padding: var(--bitflow-space-medium) var(--bitflow-space-small);
+  /* Takes the height the chrome leaves and scrolls within it. `min-height: 0`
+     is what lets a flex item shrink below its content at all. */
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
+/* The step's children are flex items of the scroller; left shrinkable, a
+   tall one would be squashed to fit instead of making the step scroll. */
+.bitflow-shell-content > * {
+  flex-shrink: 0;
+}
+
+/* A bar pinned under the scrolling step, set off by a rule rather than by
+   space, so it stays compact and still reads as separate from the question. */
 .bitflow-shell-controls {
+  flex: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: var(--bitflow-space-small);
-  padding-inline: var(--bitflow-space-small);
+  padding: var(--bitflow-space-xsmall) var(--bitflow-space-small);
+  border-top: 1px solid var(--bitflow-color-neutral-400);
 }
 
 /* Why the learner cannot move on when a host holds the step shut. A min-height
@@ -44,9 +88,12 @@
 }
 
 /* Focus lands here on arrival, so it must not draw a ring — the learner did
-   not tab to it, and a box round the whole step reads as an error. */
-.bitflow-shell-content:focus {
+   not tab to it, and a box round the whole step reads as an error. The
+   general ring is a box-shadow on `.bitflow-root :focus-visible`, which a
+   programmatic focus after a key press matches, so this has to outrank it. */
+.bitflow-root .bitflow-shell-content:focus {
   outline: none;
+  box-shadow: none;
 }
 
 /* --- sections ------------------------------------------------------------- */
@@ -55,7 +102,7 @@
    the part of the paper, it is not the question. */
 .bitflow-section-label {
   margin: 0;
-  padding-inline: var(--bitflow-space-small);
+  padding: var(--bitflow-space-xsmall) var(--bitflow-space-small) 0;
   font-size: var(--bitflow-font-size-small);
   font-weight: var(--bitflow-font-weight-medium);
   color: var(--bitflow-color-text-muted);
@@ -134,13 +181,14 @@
 
 .bitflow-shell-steps {
   padding-inline: var(--bitflow-space-small);
+  padding-bottom: var(--bitflow-space-small);
 }
 
 .bitflow-countdown {
   display: flex;
   justify-content: flex-end;
   gap: var(--bitflow-space-xxsmall);
-  padding-inline: var(--bitflow-space-small);
+  padding: var(--bitflow-space-xsmall) var(--bitflow-space-small) 0;
   font-size: var(--bitflow-font-size-small);
   color: var(--bitflow-color-text-muted);
 }

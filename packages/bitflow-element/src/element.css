@@ -2,10 +2,10 @@
    a page that loads one bit standalone still gets a themed component. */
 @import "@bitflow/core/theme.css";
 
-/* A standalone bit gets the readable measure the flow's shell would otherwise
-   give it, and stays comfortable at any width. */
+/* A standalone bit fills its host, like the flow's shell does. A page that
+   wants a readable measure can set --bitflow-max-width-content. */
 .bitflow-bit {
-  max-width: var(--bitflow-max-width-content);
+  max-width: var(--bitflow-max-width-content, none);
   width: 100%;
 }
 

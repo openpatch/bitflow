@@ -363,10 +363,12 @@ export const Puzzle = ({
                       className={classes.join(" ")}
                       data-line={entry.lineId}
                       disabled={readonly}
-                      style={{
-                        marginInlineStart: `${entry.indent * STEP_REM}rem`,
-                        ...(isGap && drag ? { height: `${drag.height}px` } : {}),
-                      }}
+                      style={
+                        {
+                          "--bitflow-parsons-indent": `${entry.indent * STEP_REM}rem`,
+                          ...(isGap && drag ? { height: `${drag.height}px` } : {}),
+                        } as CSSProperties
+                      }
                       aria-label={t("programLine", {
                         code: line.text,
                         position: index + 1,

@@ -82,7 +82,7 @@
   font-size: var(--bitflow-font-size-small);
   font-variant-numeric: tabular-nums;
   line-height: 1.5rem;
-  color: var(--bitflow-color-surface);
+  color: var(--bitflow-color-on-primary);
   text-align: center;
   background: var(--bitflow-color-primary);
   border-radius: 50%;

@@ -206,7 +206,15 @@ const FlowBody = ({
     if (arrivedAt.current === nodeId) return;
     const first = arrivedAt.current === null;
     arrivedAt.current = nodeId;
-    if (!first) contentRef.current?.focus();
+    if (first) return;
+    // A flow in a fixed-height host scrolls the step inside the shell, which
+    // would otherwise keep the previous step's scroll position — arriving at
+    // a new question half-way down it.
+    const content = contentRef.current;
+    if (!content) return;
+    content.scrollTop = 0;
+    content.closest(".bitflow-shell")?.scrollTo?.(0, 0);
+    content.focus();
   }, [attempt.currentNodeId]);
 
   if (!node) {

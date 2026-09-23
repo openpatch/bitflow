@@ -40,7 +40,7 @@
   justify-content: center;
   font-size: var(--bitflow-font-size-small);
   font-weight: var(--bitflow-font-weight-bold);
-  color: var(--bitflow-color-white);
+  color: var(--bitflow-color-on-primary);
   cursor: grab;
 }
 

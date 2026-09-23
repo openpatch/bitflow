@@ -53,6 +53,33 @@ Takes an assessment.
 Only the bit packages a document actually references are downloaded, as
 separate chunks, the first time that document is loaded.
 
+The progress bar stays at the top and the buttons at the bottom; only the
+step between them scrolls. Give the element a `height` and it fills it; give it
+only a `max-height` and it grows with the step up to that, then scrolls; give it
+neither and it grows with the step.
+
+## Theming
+
+Every colour, font and spacing is a `--bitflow-*` custom property, and the
+elements render into the light DOM, so a host re-themes them by declaring the
+properties on the element or on a container around it:
+
+```css
+.my-assessment {
+  --bitflow-color-primary: #7c3aed;
+  --bitflow-color-primary-dark: color-mix(in srgb, #7c3aed, black 30%);
+  --bitflow-color-primary-light: color-mix(in srgb, #7c3aed, white 70%);
+  --bitflow-color-on-primary: #ffffff;
+  --bitflow-shadow-outline: 0 0 0 3px color-mix(in srgb, #7c3aed 40%, transparent);
+  --bitflow-font-family: inherit;
+}
+```
+
+Set the primary family together. A custom property is resolved where it is
+declared, so the derived ones are already fixed to bitflow's green by the
+time they reach your container; re-declaring only `--bitflow-color-primary`
+gives a new button colour with the old hover and focus ring.
+
 ## `<bitflow-flow-editor>`
 
 Authors an assessment. Loads the whole bit palette up front.
