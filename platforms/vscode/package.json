@@ -2,7 +2,7 @@
   "name": "bitflow-studio",
   "displayName": "Bitflow Studio",
   "description": "Visual editor for .bitflow files \u2014 build and preview assessments",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "openpatch",
   "author": "Mike Barkmin",
   "license": "MIT",
