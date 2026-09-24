@@ -75,6 +75,12 @@ properties on the element or on a container around it:
 }
 ```
 
+Dark mode follows the CSS `color-scheme` of the page around the element, never
+the OS by itself: every colour token is a `light-dark()` pair. Set
+`color-scheme: dark` on a container when your page switches to dark, or
+`color-scheme: light dark` on the page to follow the OS. A page that sets
+neither gets the light theme.
+
 Set the primary family together. A custom property is resolved where it is
 declared, so the derived ones are already fixed to bitflow's green by the
 time they reach your container; re-declaring only `--bitflow-color-primary`

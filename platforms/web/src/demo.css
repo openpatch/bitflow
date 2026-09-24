@@ -11,7 +11,6 @@
 
 body {
   margin: 0;
-  font-family: "Montserrat", system-ui, -apple-system, sans-serif;
   color: var(--ink);
   background: var(--page);
   line-height: 1.5;

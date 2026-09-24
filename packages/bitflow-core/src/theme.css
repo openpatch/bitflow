@@ -14,9 +14,21 @@
 :root,
 :host {
   /* Brand — branding/colors/openpatch.gpl */
-  --bitflow-color-primary: #017460; /* OpenPatch Green */
-  --bitflow-color-primary-dark: #004c45; /* Deep Forest */
-  --bitflow-color-primary-light: #b5e3d8; /* Fresh Mint */
+  /* Every colour is a light-dark() pair, resolved against the `color-scheme`
+     of the element that uses it — so bitflow is light unless its host says
+     otherwise. A page declaring `color-scheme: light dark` follows the OS; a
+     host with its own dark mode sets `color-scheme: dark` on the container
+     when it switches. Nothing inside bitflow picks a scheme by itself, which
+     is what keeps a light page on a dark OS from getting a dark box.
+
+     The dark values sit on a #1e1e1e page with #2c2c2c surfaces. The neutral
+     scale inverts — 900 is the strongest ink either way, so a crossword's
+     blocked cells and grid lines stay the opposite of its letter cells — and
+     each feedback accent clears 4.5:1 both on its own surface and as text on
+     the page. */
+  --bitflow-color-primary: light-dark(#017460, #57a396); /* OpenPatch Green */
+  --bitflow-color-primary-dark: light-dark(#004c45, #7cbfb2); /* Deep Forest */
+  --bitflow-color-primary-light: light-dark(#b5e3d8, #214640); /* Fresh Mint */
   /* Text and marks drawn *on* the primary colour: a filled button's label, a
      numbered badge. Its own token so a host whose brand is light can make it
      dark, rather than getting white text on pale yellow.
@@ -25,40 +37,41 @@
      -dark, -light, on-primary, and --bitflow-shadow-outline. Custom properties
      resolve where they are declared, so re-declaring only the primary on a
      container leaves the others computed from this green. */
-  --bitflow-color-on-primary: var(--bitflow-color-white);
+  --bitflow-color-on-primary: light-dark(#ffffff, #1e1e1e);
 
-  --bitflow-color-neutral-900: #242428; /* Coal */
-  --bitflow-color-neutral-700: #3c3c3c; /* Charcoal */
-  --bitflow-color-neutral-400: #a4a4a4; /* Quicksilver */
-  --bitflow-color-neutral-200: #d6d6d6; /* Silver Charlice */
-  --bitflow-color-neutral-100: #f5f5f5; /* Whitesmoke */
+  --bitflow-color-neutral-900: light-dark(#242428, #f5f5f5); /* Coal */
+  --bitflow-color-neutral-700: light-dark(#3c3c3c, #d6d6d6); /* Charcoal */
+  --bitflow-color-neutral-400: light-dark(#a4a4a4, #7a7a7a); /* Quicksilver */
+  --bitflow-color-neutral-200: light-dark(#d6d6d6, #464646); /* Silver Charlice */
+  --bitflow-color-neutral-100: light-dark(#f5f5f5, #353535); /* Whitesmoke */
   --bitflow-color-black: #000000;
   --bitflow-color-white: #ffffff;
 
   /* Semantic feedback. Correct reuses the brand green so "right" and "action"
      read as the same family; the rest are muted so feedback never shouts. */
-  --bitflow-color-correct: #017460;
-  --bitflow-color-correct-surface: #e6f2ef;
-  --bitflow-color-wrong: #a3282d;
-  --bitflow-color-wrong-surface: #f8eaea;
-  --bitflow-color-warning: #8a6100;
-  --bitflow-color-warning-surface: #fbf2df;
-  --bitflow-color-info: #1f5673;
-  --bitflow-color-info-surface: #e8f0f4;
+  --bitflow-color-correct: light-dark(#017460, #57a396);
+  --bitflow-color-correct-surface: light-dark(#e6f2ef, #18312d);
+  --bitflow-color-wrong: light-dark(#a3282d, #c67a7d);
+  --bitflow-color-wrong-surface: light-dark(#f8eaea, #3b2021);
+  --bitflow-color-warning: light-dark(#8a6100, #af9452);
+  --bitflow-color-warning-surface: light-dark(#fbf2df, #362d17);
+  --bitflow-color-info: light-dark(#1f5673, #7496a8);
+  --bitflow-color-info-surface: light-dark(#e8f0f4, #1e2a31);
   --bitflow-color-unknown: var(--bitflow-color-neutral-400);
-  --bitflow-color-manual: #5a4b8a;
-  --bitflow-color-manual-surface: #eeebf6;
+  --bitflow-color-manual: light-dark(#5a4b8a, #958cb4);
+  --bitflow-color-manual-surface: light-dark(#eeebf6, #2b2836);
 
   /* Surfaces */
-  --bitflow-color-background: var(--bitflow-color-neutral-100);
-  --bitflow-color-surface: var(--bitflow-color-white);
+  --bitflow-color-background: light-dark(#f5f5f5, #1e1e1e);
+  --bitflow-color-surface: light-dark(#ffffff, #2c2c2c);
   --bitflow-color-border: var(--bitflow-color-neutral-200);
   --bitflow-color-text: var(--bitflow-color-neutral-900);
   --bitflow-color-text-muted: var(--bitflow-color-neutral-700);
 
   /* Type */
-  --bitflow-font-family: "Montserrat", system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  /* The page's own font: bitflow sits inside someone else's page and should
+     read as part of it. Set it to a font stack to give bitflow its own. */
+  --bitflow-font-family: inherit;
   --bitflow-font-family-mono: "Ubuntu Mono", Menlo, Consolas, monospace;
   --bitflow-font-size-small: 14px;
   --bitflow-font-size-standard: 16px;
