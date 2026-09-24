@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { DataSchema, type Answer, type Data } from "./schema";
 import { Form, Task } from "./views";
 
@@ -333,5 +333,61 @@ describe("<Form> connections", () => {
     expect(places).toBeGreaterThan(-1);
     // The thing being made comes before the fields that describe it.
     expect(graph).toBeLessThan(places);
+  });
+});
+
+describe("phone-width scaling", () => {
+  /**
+   * jsdom has no ResizeObserver, so the diagram's own guard for that has to be
+   * exercised on purpose: a fake that hands back the callback it was built
+   * with, so a test can pretend the box was just measured.
+   */
+  class FakeResizeObserver {
+    static last: FakeResizeObserver | undefined;
+    callback: ResizeObserverCallback;
+    constructor(callback: ResizeObserverCallback) {
+      this.callback = callback;
+      FakeResizeObserver.last = this;
+    }
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+    fire() {
+      this.callback([], this as unknown as ResizeObserver);
+    }
+  }
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  const radiusOf = (container: HTMLElement) =>
+    Number(
+      container.querySelector(".bitflow-graph-node circle")?.getAttribute("r"),
+    );
+
+  it("draws a bigger node once the diagram measures narrow than it does wide", () => {
+    vi.stubGlobal("ResizeObserver", FakeResizeObserver);
+    const { container } = render(<Answering initial={graph()} />);
+    const svg = container.querySelector(".bitflow-graph-diagram") as SVGSVGElement;
+
+    svg.getBoundingClientRect = () => ({ width: 900 }) as DOMRect;
+    act(() => FakeResizeObserver.last?.fire());
+    const wideRadius = radiusOf(container);
+
+    // A phone at roughly 326px wide, the width the diagram is drawn at once
+    // the surrounding page's margins are taken out.
+    svg.getBoundingClientRect = () => ({ width: 326 }) as DOMRect;
+    act(() => FakeResizeObserver.last?.fire());
+    const narrowRadius = radiusOf(container);
+
+    expect(narrowRadius).toBeGreaterThan(wideRadius);
+  });
+
+  it("stays at the base radius where there is no ResizeObserver to measure with", () => {
+    vi.stubGlobal("ResizeObserver", undefined);
+    const { container } = render(<Answering initial={graph()} />);
+
+    expect(radiusOf(container)).toBe(34);
   });
 });

@@ -87,6 +87,27 @@
   box-shadow: var(--bitflow-shadow-outline);
 }
 
+/* A word at the text's own line-height is around 17px tall — narrower than a
+   fingertip. Padding it inline would shift the letters apart from their
+   neighbours and change how the sentence reads; padding it in the block
+   direction only opens up the row it sits on, which the taller line-height
+   makes room for. `box-decoration-break: clone` repeats that padding on each
+   line a token is split across, so a word wrapped mid-token is not left with
+   a sliver of unpadded target on one line. Kept to coarse pointers: a mouse
+   already lands exactly where it is aimed, and the desktop reading layout
+   should not shift under it. */
+@media (pointer: coarse) {
+  .bitflow-highlight-text {
+    line-height: 2.2;
+  }
+
+  .bitflow-highlight-token[role="button"] {
+    padding-block: 4px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+}
+
 /* The browser's own selection colour, so a drag in progress is visible over
    whatever is already marked. */
 .bitflow-highlight-text ::selection {

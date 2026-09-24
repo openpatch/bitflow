@@ -95,6 +95,20 @@ export const Typist = ({
 
   return (
     <div className="bitflow-typing">
+      {/*
+        The task measures a physical keyboard; a coarse pointer means a
+        touchscreen, thumb-typing on a keyboard the task never asked for.
+        Hidden by CSS alone — `@media (pointer: coarse)` — so nothing here
+        detects or records what the learner is using. It sits above the
+        controls, in reading order, so it is read before the box it warns
+        about rather than discovered after.
+      */}
+      {!readonly && (
+        <p className="bitflow-alert bitflow-alert-warning bitflow-typing-touch-notice">
+          {t("touchNotice")}
+        </p>
+      )}
+
       <p className="bitflow-hint">
         {readonly ? t("howToReadonly") : `${t("needsKeyboard")} ${t("howTo")}`}
       </p>

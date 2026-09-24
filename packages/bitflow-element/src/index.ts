@@ -14,6 +14,7 @@ export {
 } from "./BoxEditor";
 export { ImageField } from "./ImageField";
 export { usePointerDrag } from "./usePointerDrag";
+export { useAutoScroll } from "./useAutoScroll";
 export {
   readImageFile,
   DEFAULT_MAX_EDGE,

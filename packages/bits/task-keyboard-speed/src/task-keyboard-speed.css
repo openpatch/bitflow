@@ -60,6 +60,23 @@
   opacity: 1;
 }
 
+/* A coarse pointer means a touchscreen, and this task measures a physical
+   keyboard: what a phone would return is not on the same scale as what it is
+   compared against. The media query alone decides whether this shows —
+   nothing in script inspects or stores the device, which is what keeps this
+   a display concern rather than a measurement one. The compound selector, two
+   classes rather than one, is what outweighs `.bitflow-alert`'s own
+   `display: flex` regardless of which stylesheet happens to load second. */
+.bitflow-typing-touch-notice.bitflow-alert-warning {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .bitflow-typing-touch-notice.bitflow-alert-warning {
+    display: flex;
+  }
+}
+
 .bitflow-typing-meters {
   display: flex;
   flex-wrap: wrap;

@@ -28,6 +28,12 @@ export const Task = ({
     value: answer?.input ?? "",
     disabled: readonly,
     placeholder: translate(messages, "placeholder", locale),
+    // Graded against `expected` verbatim (or a pattern), on both variants: a
+    // multi-line answer is still compared word for word, so autocorrect
+    // silently changing what was typed is as harmful there as in one line.
+    autoCapitalize: "off" as const,
+    autoCorrect: "off" as const,
+    spellCheck: false,
     onChange: (event: { target: { value: string } }) =>
       onAnswerChange({ input: event.target.value }),
   };

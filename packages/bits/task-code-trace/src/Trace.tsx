@@ -190,6 +190,13 @@ export const TraceTable = ({
                           aria-label={label}
                           value={value}
                           disabled={readonly}
+                          // A traced value or an expression is not prose: a
+                          // learner who types `true` should be marked against
+                          // `true`, not against the `True` iOS capitalises it
+                          // to, and a variable name is not a spelling mistake.
+                          autoCapitalize="off"
+                          autoCorrect="off"
+                          spellCheck={false}
                           onChange={(event) => set(event.target.value)}
                         />
                       )}

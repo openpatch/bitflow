@@ -50,8 +50,21 @@ export const cellCorrect = (
   const got = normalise(given, caseSensitive);
 
   const a = asNumber(wanted);
-  const b = asNumber(got);
+  // A comma for the decimal point only where a number is expected: that is
+  // how "1,5" is written in a German classroom, but in a cell holding text
+  // or a list the comma is part of the value.
+  const b = asNumber(a === undefined ? got : got.replace(/^([+-]?\d+),(\d+)$/, "$1.$2"));
   if (a !== undefined && b !== undefined) return a === b;
+
+  // `wahr` is `true` and `falsch` is `false`: a prediction about a program's
+  // value, written in the language of the lesson. Only where case does not
+  // count either — an author who asks for `True` exactly is asking for a
+  // spelling, not a value.
+  if (!caseSensitive) {
+    const truth = (value: string) =>
+      value === "true" || value === "wahr" ? "true" : value === "false" || value === "falsch" ? "false" : value;
+    return truth(wanted) === truth(got);
+  }
 
   return wanted === got;
 };

@@ -71,4 +71,20 @@ describe("<bitflow-task-input>", () => {
     const element = await mount({ data: { ...data, multiline: true } });
     expect(element.querySelector("textarea")).toBeDefined();
   });
+
+  it("turns off autocorrect on the answer box, which is graded verbatim", async () => {
+    const element = await mount();
+    const input = element.querySelector("input") as HTMLInputElement;
+    expect(input.getAttribute("autocapitalize")).toBe("off");
+    expect(input.getAttribute("autocorrect")).toBe("off");
+    expect(input.getAttribute("spellcheck")).toBe("false");
+  });
+
+  it("turns off autocorrect on the textarea variant too", async () => {
+    const element = await mount({ data: { ...data, multiline: true } });
+    const textarea = element.querySelector("textarea") as HTMLTextAreaElement;
+    expect(textarea.getAttribute("autocapitalize")).toBe("off");
+    expect(textarea.getAttribute("autocorrect")).toBe("off");
+    expect(textarea.getAttribute("spellcheck")).toBe("false");
+  });
 });

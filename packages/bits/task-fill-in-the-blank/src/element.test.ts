@@ -64,4 +64,12 @@ describe("<bitflow-task-fill-in-the-blank>", () => {
     expect(listener.mock.calls[0][0].detail.result.state).toBe("correct");
     document.removeEventListener("bitflow-evaluated", listener);
   });
+
+  it("turns off autocorrect and spellcheck on a blank, which is graded verbatim", async () => {
+    const element = await mount();
+    const input = element.querySelector("input") as HTMLInputElement;
+    expect(input.getAttribute("autocapitalize")).toBe("off");
+    expect(input.getAttribute("autocorrect")).toBe("off");
+    expect(input.getAttribute("spellcheck")).toBe("false");
+  });
 });

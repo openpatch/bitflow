@@ -9,12 +9,20 @@
 
 /* The play area. Everything inside is positioned in percentages, so an
    author's fractions mean the same picture on a phone as on a projector, and
-   `aspect-ratio` keeps the shape they laid out. */
+   `aspect-ratio` keeps the shape they laid out.
+
+   `container-type` turns it into a query container so an element's label —
+   sized in `cqw`, a percentage of *this* box's width — can shrink with it. An
+   author lays the picture out at a comfortable desktop width; the area itself
+   still renders at whatever width the phone gives it, so a label fixed in px
+   is sized for a box that no longer exists. `cqw` only resolves on a child of
+   the container, never on the container itself, which the elements are. */
 .bitflow-dragdrop-area {
   position: relative;
   width: 100%;
   overflow: hidden;
   border-radius: var(--bitflow-radius-standard);
+  container-type: inline-size;
 }
 
 .bitflow-dragdrop-background {
@@ -35,7 +43,15 @@
   justify-content: center;
   padding: var(--bitflow-space-xxsmall);
   font: inherit;
-  font-size: var(--bitflow-font-size-small);
+  /* An author's label is written for the box it was authored in, at whatever
+     width that was. `cqw` reads the play area's *current* width, so the same
+     label shrinks along with a box that is now much narrower than it was
+     drawn, and never grows past the standard size on a wide screen. The
+     minimum is a floor, not a target — a long label still wraps rather than
+     overflowing its box. */
+  font-size: clamp(11px, 3.5cqw, var(--bitflow-font-size-small));
+  line-height: var(--bitflow-line-height-tight);
+  overflow-wrap: anywhere;
   color: var(--bitflow-color-text);
   text-align: center;
   cursor: grab;
@@ -73,6 +89,23 @@
 
 .bitflow-dragdrop-element:disabled {
   cursor: default;
+}
+
+/* A box drawn small enough to read is still too small to pick up with a
+   finger: an author-sized target and a comfortable touch target are not the
+   same number. The pseudo-element enlarges only the *hit* area — inset
+   outward from the element's own edges, which stay exactly where the author
+   drew them — so the visible size onscreen, and the position everything else
+   is measured against, never changes. Kept to coarse pointers so a mouse,
+   whose pointer already lands wherever it is aimed, never sees neighbouring
+   elements start stealing each other's clicks. The element is already
+   `position: absolute`, which is what gives this an edge to inset from. */
+@media (pointer: coarse) {
+  .bitflow-dragdrop-element::before {
+    content: "";
+    position: absolute;
+    inset: -10px;
+  }
 }
 
 .bitflow-dragdrop-element > img {

@@ -63,7 +63,7 @@ describe("<Puzzle>", () => {
     setup([{ lineId: "total", indent: 0 }]);
 
     // One entry, in the program — not two, one in each list.
-    expect(screen.getAllByRole("button", { name: /total = 0/ })).toHaveLength(1);
+    expect(screen.getAllByRole("button", { name: /^total = 0/ })).toHaveLength(1);
     expect(line("total = 0").getAttribute("aria-label")).toContain("line 1 of 1");
   });
 
@@ -254,6 +254,45 @@ describe("<Puzzle>", () => {
 
       expect(last()).toHaveLength(2);
     });
+
+    it("does not start a drag from a touch on the line body", () => {
+      const { container, onChange } = start();
+      layOut(container);
+
+      fireEvent.pointerDown(line("total += value"), {
+        button: 0,
+        pointerType: "touch",
+        clientX: 0,
+        clientY: 90,
+      });
+      fireEvent.pointerMove(window, { clientX: 0, clientY: 5 });
+      fireEvent.pointerUp(window, { clientX: 0, clientY: 5 });
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it("drags by the grip with a finger", () => {
+      const { container, last } = start();
+      layOut(container);
+      const grip = line("total += value").querySelector(
+        ".bitflow-parsons-grip",
+      )!;
+
+      fireEvent.pointerDown(grip, {
+        button: 0,
+        pointerType: "touch",
+        clientX: 0,
+        clientY: 90,
+      });
+      fireEvent.pointerMove(window, { clientX: 0, clientY: 5 });
+      fireEvent.pointerUp(window, { clientX: 0, clientY: 5 });
+
+      expect(last().map((entry: PlacedLine) => entry.lineId)).toEqual([
+        "add",
+        "total",
+        "loop",
+      ]);
+    });
   });
 
   describe("carrying a line between the lists", () => {
@@ -387,6 +426,35 @@ describe("<Puzzle>", () => {
       ]);
     });
 
+    it("indents a line by dragging it with a finger on the grip", () => {
+      const { container, last } = setup(
+        [
+          { lineId: "loop", indent: 0 },
+          { lineId: "add", indent: 0 },
+        ],
+        { indentationMatters: true },
+      );
+      layOut(container);
+      const grip = line("total += value").querySelector(
+        ".bitflow-parsons-grip",
+      )!;
+
+      fireEvent.pointerDown(grip, {
+        button: 0,
+        pointerType: "touch",
+        clientX: 410,
+        clientY: 60,
+      });
+      // 48px right of the program's edge, which is two steps of 1.5rem.
+      fireEvent.pointerMove(window, { clientX: 458, clientY: 60 });
+      fireEvent.pointerUp(window, { clientX: 458, clientY: 60 });
+
+      expect(last()).toEqual([
+        { lineId: "loop", indent: 0 },
+        { lineId: "add", indent: 2 },
+      ]);
+    });
+
     it("does not indent by dragging when indentation is not part of the answer", () => {
       const { container, last } = setup([
         { lineId: "loop", indent: 0 },
@@ -466,5 +534,85 @@ describe("<Puzzle>", () => {
     fireEvent.keyDown(line("total = 0"), { key: "ArrowUp" });
 
     expect(onChange).not.toHaveBeenCalled();
+  });
+});
+
+describe("<Puzzle> buttons for a touch screen", () => {
+  it("moves a line up and down", () => {
+    const { last } = setup([
+      { lineId: "total", indent: 0 },
+      { lineId: "loop", indent: 0 },
+    ]);
+    fireEvent.click(screen.getByRole("button", { name: "Move for value in values: up" }));
+    expect(last()).toEqual([
+      { lineId: "loop", indent: 0 },
+      { lineId: "total", indent: 0 },
+    ]);
+  });
+
+  it("indents and outdents when indentation is part of the answer", () => {
+    const { last } = setup([{ lineId: "add", indent: 1 }], { indentationMatters: true });
+    fireEvent.click(screen.getByRole("button", { name: "Indent total += value" }));
+    expect(last()).toEqual([{ lineId: "add", indent: 2 }]);
+    fireEvent.click(screen.getByRole("button", { name: "Outdent total += value" }));
+    expect(last()).toEqual([{ lineId: "add", indent: 0 }]);
+  });
+
+  it("offers no indenting when indentation is not asked for, and nothing when read-only", () => {
+    setup([{ lineId: "add", indent: 0 }]);
+    expect(screen.queryByRole("button", { name: /^Indent/ })).toBeNull();
+    document.body.replaceChildren();
+    setup([{ lineId: "add", indent: 0 }], {}, { readonly: true });
+    expect(screen.queryByRole("button", { name: /^Move/ })).toBeNull();
+  });
+});
+
+describe("<Puzzle> as a structogram", () => {
+  it("draws a Verzweigung, its other case and a loop from the words on the lines", () => {
+    const { container } = render(
+      <Puzzle
+        data={DataSchema.parse({
+          display: "structogram",
+          indentationMatters: true,
+          lines: [
+            { id: "if", text: "wenn x > 0", indent: 0 },
+            { id: "a", text: "gib x aus", indent: 1 },
+            { id: "else", text: "sonst", indent: 0 },
+            { id: "loop", text: "solange x < 0", indent: 1 },
+            { id: "b", text: "erhöhe x", indent: 2 },
+          ],
+          evaluation: { mode: "auto", enableRetry: true, showFeedback: true, weight: 1 },
+        })}
+        placed={[
+          { lineId: "if", indent: 0 },
+          { lineId: "a", indent: 1 },
+          { lineId: "else", indent: 0 },
+          { lineId: "loop", indent: 1 },
+          { lineId: "b", indent: 2 },
+        ]}
+        locale="de"
+        onChange={() => {}}
+      />,
+    );
+    const kind = (id: string) =>
+      container.querySelector(`.bitflow-parsons-program [data-line="${id}"]`)!.className;
+    expect(kind("if")).toContain("bitflow-parsons-line-branch");
+    expect(kind("else")).toContain("bitflow-parsons-line-else");
+    expect(kind("loop")).toContain("bitflow-parsons-line-loop");
+    expect(kind("a")).not.toMatch(/line-(branch|else|loop)/);
+    expect(container.querySelector(".bitflow-parsons-cases")?.textContent).toBe("janein");
+  });
+
+  it("draws the same program as nested blocks, each set in by its level", () => {
+    const { container } = setup(
+      [
+        { lineId: "loop", indent: 0 },
+        { lineId: "add", indent: 1 },
+      ],
+      { display: "structogram", indentationMatters: true },
+    );
+    expect(container.querySelector(".bitflow-parsons-structogram")).not.toBeNull();
+    const body = container.querySelector('.bitflow-parsons-program [data-line="add"]') as HTMLElement;
+    expect(body.style.getPropertyValue("--bitflow-parsons-indent")).toBe("1.5rem");
   });
 });

@@ -5,7 +5,7 @@ export const messages: Catalogs = {
     name: "Put in order",
     description: "Items the learner arranges into the right order.",
     howTo:
-      "Put the items in order. Drag one up or down, or focus one and move it with the arrow keys.",
+      "Put the items in order. Drag one up or down — on a touch screen, by the dots at its left — or focus one and move it with the arrow keys.",
     howToReadonly: "The items are shown in the order they were left.",
     itemLabel: "{item}, {position} of {total}",
     moved: "{item} moved to {position} of {total}.",
@@ -16,7 +16,7 @@ export const messages: Catalogs = {
     name: "In die richtige Reihenfolge bringen",
     description: "Elemente, die in die richtige Reihenfolge gebracht werden.",
     howTo:
-      "Bring die Elemente in die richtige Reihenfolge. Zieh eines nach oben oder unten, oder wähle es aus und bewege es mit den Pfeiltasten.",
+      "Bring die Elemente in die richtige Reihenfolge. Zieh eines nach oben oder unten — auf einem Touchscreen an den Punkten links —, oder wähle es aus und bewege es mit den Pfeiltasten.",
     howToReadonly: "Die Elemente stehen in der zuletzt gewählten Reihenfolge.",
     itemLabel: "{item}, {position} von {total}",
     moved: "{item} auf Platz {position} von {total} bewegt.",

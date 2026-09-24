@@ -66,6 +66,8 @@ export const Columns = ({
   const pairById = (id: string) => pairs.find((pair) => pair.id === id);
   const nameOf = (side: Side) => side.label;
   const marked = results !== undefined;
+  /** The held card's own name, for the sticky status line below. */
+  const heldName = heldId ? nameOf(pairById(heldId)!.left) : null;
 
   const matchOfLeft = (id: string) => matches.find((m) => m.leftId === id);
   const matchOfRight = (id: string) => matches.find((m) => m.rightId === id);
@@ -326,6 +328,19 @@ export const Columns = ({
           </ul>
         </section>
       </div>
+
+      {/*
+        On a phone the columns stack, so choosing a left card and then
+        scrolling down to its partner carries the held card out of view.
+        `position: sticky` keeps this line on screen for exactly that scroll.
+        It says the same thing the live region below already speaks, so it is
+        `aria-hidden`: a screen reader user hears it once, not twice.
+      */}
+      {heldName !== null && (
+        <p className="bitflow-matching-status" aria-hidden="true">
+          {t("holdingStatus", { card: heldName })}
+        </p>
+      )}
 
       <div className="bitflow-visually-hidden" role="status" aria-live="polite">
         {announcement}

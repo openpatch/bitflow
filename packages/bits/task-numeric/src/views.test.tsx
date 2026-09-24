@@ -86,6 +86,41 @@ describe("Task", () => {
     ).toBe("decimal");
   });
 
+  it("offers a sign toggle that flips a leading minus through the normal change path", async () => {
+    render(<Live data={make({ allowExpression: false })} />);
+    const input = screen.getByLabelText("Your answer") as HTMLInputElement;
+    await userEvent.type(input, "3.5");
+
+    const toggle = screen.getByRole("button", { name: "Change sign" });
+    await userEvent.click(toggle);
+    expect(input.value).toBe("-3.5");
+    // Returns focus to the field, so the digits typed next land there rather
+    // than nowhere.
+    expect(document.activeElement).toBe(input);
+
+    await userEvent.click(toggle);
+    expect(input.value).toBe("3.5");
+  });
+
+  it("has no sign toggle for an expression field, whose text keyboard has a minus key already", () => {
+    render(<Live data={make({ allowExpression: true })} />);
+    expect(screen.queryByRole("button", { name: "Change sign" })).toBeNull();
+  });
+
+  it("has no sign toggle once the answer is read-only", () => {
+    render(
+      <Task
+        data={make()}
+        answer={{ input: "0.75" }}
+        readonly
+        result={{ state: "correct", score: { earned: 1, possible: 1 } }}
+        locale="en"
+        onAnswerChange={vi.fn()}
+      />,
+    );
+    expect(screen.queryByRole("button", { name: "Change sign" })).toBeNull();
+  });
+
   it("accepts no input once the answer has been checked", () => {
     render(
       <Task

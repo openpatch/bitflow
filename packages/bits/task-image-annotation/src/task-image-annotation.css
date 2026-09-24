@@ -17,6 +17,19 @@
   border-radius: var(--bitflow-radius-standard);
   overflow: hidden;
   background: var(--bitflow-color-surface);
+  /* A point mark is placed with a tap, so by default a swipe that starts on
+     the picture is left to the browser to scroll the step with — the picture
+     fills the width, and a scroll trap here would strand a phone at whatever
+     step has one. */
+  touch-action: manipulation;
+}
+
+/* A drag is required here — drawing or moving a `rect` mark or region — and a
+   browser cannot tell that drag from a scroll before it has moved, so the
+   trade is made deliberately: this picture no longer scrolls from a swipe
+   that starts on it, in exchange for being able to draw on it with a finger
+   at all. */
+.bitflow-annotate-picture-drag {
   touch-action: none;
 }
 

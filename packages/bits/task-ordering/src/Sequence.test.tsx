@@ -112,6 +112,41 @@ describe("<Sequence>", () => {
     expect(last()).toEqual(["b", "c", "a"]);
   });
 
+  it("leaves a finger on the row to scroll the page", () => {
+    const { container, onReorder } = setup();
+    layOut(container);
+
+    const third = screen.getByRole("button", { name: /Sort it/ });
+    fireEvent.pointerDown(third, {
+      button: 0,
+      pointerType: "touch",
+      clientX: 0,
+      clientY: 120,
+    });
+    fireEvent.pointerMove(window, { clientX: 0, clientY: 10 });
+    fireEvent.pointerUp(window, { clientX: 0, clientY: 10 });
+
+    expect(onReorder).not.toHaveBeenCalled();
+  });
+
+  it("drags by the grip with a finger", () => {
+    const { container, last } = setup();
+    layOut(container);
+
+    const third = screen.getByRole("button", { name: /Sort it/ });
+    const grip = third.querySelector(".bitflow-ordering-grip")!;
+    fireEvent.pointerDown(grip, {
+      button: 0,
+      pointerType: "touch",
+      clientX: 0,
+      clientY: 120,
+    });
+    fireEvent.pointerMove(window, { clientX: 0, clientY: 10 });
+    fireEvent.pointerUp(window, { clientX: 0, clientY: 10 });
+
+    expect(last()).toEqual(["b", "c", "a"]);
+  });
+
   it("commits the order once, when the item is put down", () => {
     const { container, onReorder } = setup();
     layOut(container);

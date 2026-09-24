@@ -11,6 +11,13 @@ export const messages: Catalogs = {
     description: "Timed clicks on a sequence of targets, for lessons about pointing.",
     needsPointer:
       "This task needs a mouse, a trackpad or a touchscreen: it measures how accurately and how quickly you can point at something.",
+    // Shown only on a coarse pointer, purely by a CSS media query — nothing
+    // here detects or records the device, so the notice costs the answer
+    // nothing to add. A touchscreen can still play; it is a different enough
+    // way of pointing that the number it produces will not sit next to a
+    // mouse's on the same scale.
+    touchNotice:
+      "This task measures pointing with a mouse or trackpad. On a touch screen your result will not be comparable.",
     howTo: "{total} targets appear one at a time. Click each one as accurately as you can.",
     howToReadonly: "The clicks are shown where they landed.",
     start: "Start",
@@ -38,6 +45,8 @@ export const messages: Catalogs = {
     description: "Klicks auf eine Folge von Zielen, für Unterricht über Zeigegeräte.",
     needsPointer:
       "Diese Aufgabe braucht eine Maus, ein Trackpad oder einen Touchscreen: Sie misst, wie genau und wie schnell du auf etwas zeigen kannst.",
+    touchNotice:
+      "Diese Aufgabe misst das Zeigen mit einer Maus oder einem Trackpad. Auf einem Touchscreen ist dein Ergebnis nicht vergleichbar.",
     howTo: "{total} Ziele erscheinen nacheinander. Klick jedes so genau wie möglich an.",
     howToReadonly: "Die Klicks stehen dort, wo sie gelandet sind.",
     start: "Los",

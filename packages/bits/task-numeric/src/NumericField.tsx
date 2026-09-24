@@ -1,5 +1,5 @@
 import { translate, type Locale } from "@bitflow/core";
-import { useId, type ReactElement } from "react";
+import { useId, useRef, type ReactElement } from "react";
 import { read, type Reading } from "./evaluate";
 import { messages } from "./messages";
 import type { Answer, Data } from "./schema";
@@ -144,6 +144,24 @@ export const NumericField = ({
   const notes = requirements(data, t);
   const showUnit = data.unitMode === "shown" && data.unit.trim() !== "";
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // A physical keyboard always has a minus key, and the expression field
+  // already accepts a `text` keyboard, which does too. It is only the plain
+  // `decimal` keypad iOS shows for a non-expression field that leaves a
+  // negative answer untypeable, so the toggle exists for exactly that case;
+  // `@media (pointer: coarse)` in the stylesheet then keeps it off a mouse or
+  // physical keyboard, which never needed it.
+  const showSignToggle = !data.allowExpression && !readonly;
+
+  const toggleSign = () => {
+    const input = answer.input;
+    onChange({ input: input.startsWith("-") ? input.slice(1) : `-${input}` });
+    // The click already moved focus to this button; hand it back to the field
+    // so the digits that follow land where they were typed before.
+    inputRef.current?.focus();
+  };
+
   const marked = reading;
   const outcome =
     marked === undefined
@@ -163,7 +181,18 @@ export const NumericField = ({
           {t("answerLabel")}
         </label>
         <div className="bitflow-numeric-entry">
+          {showSignToggle && (
+            <button
+              type="button"
+              className="bitflow-numeric-sign"
+              aria-label={t("toggleSign")}
+              onClick={toggleSign}
+            >
+              ±
+            </button>
+          )}
           <input
+            ref={inputRef}
             id={id}
             className="bitflow-numeric-input"
             type="text"

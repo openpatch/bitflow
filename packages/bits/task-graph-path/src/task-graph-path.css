@@ -22,7 +22,7 @@
 
 .bitflow-graph-edge line {
   stroke: var(--bitflow-color-neutral-400);
-  stroke-width: 3;
+  stroke-width: calc(3 * var(--bitflow-graph-scale, 1));
 }
 
 .bitflow-graph-edge marker path,
@@ -31,34 +31,41 @@
 }
 
 /* Invisible, wide, and the thing a pointer actually hits: nobody can be asked
-   to click a three-unit line. */
+   to click a three-unit line. Scaled by --bitflow-graph-scale along with
+   everything else on a narrow screen, or the hit target would stay
+   phone-unusable even once the line beneath it is visible again. */
 .bitflow-graph-edge-hit {
   stroke: transparent;
-  stroke-width: 26;
+  stroke-width: calc(26 * var(--bitflow-graph-scale, 1));
   cursor: pointer;
 }
 
 .bitflow-graph-edge-chosen line {
   stroke: var(--bitflow-color-primary);
-  stroke-width: 7;
+  stroke-width: calc(7 * var(--bitflow-graph-scale, 1));
 }
 
+/* The viewBox scales every user unit by rendered-width / VIEW_WIDTH, so a
+   fixed font-size here would shrink along with the diagram on a phone.
+   --bitflow-graph-scale, set on the svg from its measured rendered width,
+   undoes that below a reference width; the fallback of 1 is what a host
+   without a ResizeObserver — jsdom included — leaves it at. */
 .bitflow-graph-weight {
   fill: var(--bitflow-color-text-muted);
   font-family: var(--bitflow-font-family);
-  font-size: 26px;
+  font-size: calc(26px * var(--bitflow-graph-scale, 1));
 }
 
 .bitflow-graph-node circle {
   fill: var(--bitflow-color-surface);
   stroke: var(--bitflow-color-neutral-700);
-  stroke-width: 3;
+  stroke-width: calc(3 * var(--bitflow-graph-scale, 1));
 }
 
 .bitflow-graph-node text {
   fill: var(--bitflow-color-text);
   font-family: var(--bitflow-font-family);
-  font-size: 30px;
+  font-size: calc(30px * var(--bitflow-graph-scale, 1));
   font-weight: var(--bitflow-font-weight-medium);
   /* The label belongs to the circle, not to a text selection that smears
      across the diagram the moment somebody drags. */
@@ -77,12 +84,12 @@
    picture and not only in the sentence above it. */
 .bitflow-graph-node-source circle {
   stroke: var(--bitflow-color-info);
-  stroke-width: 6;
+  stroke-width: calc(6 * var(--bitflow-graph-scale, 1));
 }
 
 .bitflow-graph-node-target circle {
   stroke: var(--bitflow-color-manual);
-  stroke-width: 6;
+  stroke-width: calc(6 * var(--bitflow-graph-scale, 1));
   stroke-dasharray: 10 6;
 }
 
@@ -100,7 +107,7 @@
 .bitflow-graph-step {
   fill: var(--bitflow-color-primary-dark);
   font-family: var(--bitflow-font-family);
-  font-size: 26px;
+  font-size: calc(26px * var(--bitflow-graph-scale, 1));
   font-weight: var(--bitflow-font-weight-bold);
 }
 

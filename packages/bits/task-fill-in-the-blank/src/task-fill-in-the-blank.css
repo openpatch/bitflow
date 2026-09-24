@@ -17,6 +17,11 @@
 .bitflow-blank {
   display: inline-block;
   width: auto;
+  /* `size` is set from the longest accepted answer with no upper bound, so a
+     long one can be wider than a phone screen. Capped at the wrapper's own
+     width, which is inline inside the sentence, so the box still wraps to the
+     next line with the surrounding words rather than running off the edge. */
+  max-width: 100%;
   min-height: 0;
   padding: 2px var(--bitflow-space-xxsmall);
   vertical-align: baseline;

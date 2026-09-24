@@ -202,7 +202,15 @@ export const Canvas = ({
   return (
     <div className="bitflow-annotate">
       <div
-        className="bitflow-annotate-picture"
+        // A point mark is a tap, so the picture leaves a swipe to the browser
+        // to scroll the step with. A `rect` mark is drawn with a drag, which a
+        // browser cannot tell from a scroll gesture on its own, so only that
+        // mode opts the picture out of scrolling.
+        className={
+          data.annotationKind === "rect"
+            ? "bitflow-annotate-picture bitflow-annotate-picture-drag"
+            : "bitflow-annotate-picture"
+        }
         ref={pictureRef}
         style={{ aspectRatio: `${data.size.width} / ${data.size.height}` }}
       >

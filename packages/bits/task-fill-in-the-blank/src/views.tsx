@@ -70,6 +70,13 @@ export const Task = ({
                 size={Math.max(8, longestAccepted(data, segment.blank))}
                 value={answer?.blanks?.[segment.blank] ?? ""}
                 disabled={readonly}
+                // A blank is graded against `data.blanks` verbatim, so "true"
+                // silently becoming "True" or a word being "corrected" to a
+                // near-miss would be marked wrong for something the learner
+                // never typed.
+                autoCapitalize="off"
+                autoCorrect="off"
+                spellCheck={false}
                 onChange={(event) => setBlank(segment.blank, event.target.value)}
               />
               {states[segment.blank] && states[segment.blank] !== "neutral" && (

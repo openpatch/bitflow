@@ -7,6 +7,7 @@ export const messages: Catalogs = {
     description:
       "A number or a short calculation, checked against an expected value.",
     answerLabel: "Your answer",
+    toggleSign: "Change sign",
     placeholder: "Type a number",
     placeholderExpression: "Type a number or a calculation",
     unitAria: "The unit is {unit}",
@@ -33,6 +34,7 @@ export const messages: Catalogs = {
     description:
       "Eine Zahl oder eine kurze Rechnung, gegen einen erwarteten Wert geprüft.",
     answerLabel: "Deine Antwort",
+    toggleSign: "Vorzeichen wechseln",
     placeholder: "Zahl eingeben",
     placeholderExpression: "Zahl oder Rechnung eingeben",
     unitAria: "Die Einheit ist {unit}",

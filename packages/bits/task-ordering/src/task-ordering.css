@@ -28,7 +28,37 @@
   border-radius: var(--bitflow-radius-standard);
   /* The browser must not decide a drag is a scroll, or the list cannot be
      reordered with a finger at all. */
+  /* Taps and scrolls go to the browser as usual: the rows fill the width, and
+     a list that took every swipe for a drag would leave nowhere to scroll the
+     step from. A finger drags by the grip, which opts out on its own. */
+  touch-action: manipulation;
+}
+
+/* Where a finger takes hold. Six dots, drawn rather than typed so no font has
+   to have the glyph. Wide enough to land a thumb on without hitting the text. */
+.bitflow-ordering-grip {
+  flex: none;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  margin-block: calc(-1 * var(--bitflow-space-xsmall));
+  margin-inline-start: calc(-1 * var(--bitflow-space-xsmall));
   touch-action: none;
+  cursor: grab;
+}
+
+.bitflow-ordering-grip::before {
+  content: "";
+  width: 12px;
+  height: 18px;
+  background: radial-gradient(
+      circle,
+      var(--bitflow-color-neutral-400) 1.5px,
+      transparent 2px
+    )
+    0 0 / 6px 6px;
 }
 
 .bitflow-ordering-item:disabled {

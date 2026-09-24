@@ -140,6 +140,17 @@ export const Arena = ({
   if (!started && !finished) {
     return (
       <div className="bitflow-mouse">
+        {/*
+          The task measures a mouse or trackpad; a coarse pointer means a
+          touchscreen, a different enough way of pointing that the numbers
+          will not sit on the same scale. Hidden by CSS alone — nothing here
+          detects or records what the learner is using — and placed above the
+          Start button, in reading order, so it is read before the choice it
+          bears on rather than after.
+        */}
+        <p className="bitflow-alert bitflow-alert-warning bitflow-mouse-touch-notice">
+          {t("touchNotice")}
+        </p>
         {/* Said before starting, not discovered by someone who cannot do it. */}
         <p className="bitflow-hint">
           {t("needsPointer")} {t("howTo", { total: data.targets.length })}

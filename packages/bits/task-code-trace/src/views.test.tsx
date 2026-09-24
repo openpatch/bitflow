@@ -148,6 +148,15 @@ describe("<Task>", () => {
     expect(container.textContent).toContain("wrong");
   });
 
+  it("turns off autocorrect and spellcheck on a value cell, which is not prose", () => {
+    render(<Answering initial={data()} />);
+
+    const input = screen.getByLabelText<HTMLInputElement>("total, before the loop");
+    expect(input.getAttribute("autocapitalize")).toBe("off");
+    expect(input.getAttribute("autocorrect")).toBe("off");
+    expect(input.getAttribute("spellcheck")).toBe("false");
+  });
+
   it("accepts no input once it is answered", () => {
     render(
       <Task

@@ -104,6 +104,26 @@ describe("<Task>", () => {
     expect(screen.getByText("Nothing marked yet.")).toBeTruthy();
   });
 
+  /**
+   * A point mark is a tap, so the picture leaves a swipe for the browser to
+   * scroll the step with. A `rect` mark is drawn with a drag, which a
+   * browser cannot tell from a scroll before it moves, so only that mode
+   * opts the picture out of scrolling.
+   */
+  it("only keeps a swipe from scrolling when a mark has to be dragged", () => {
+    const { container: point } = render(<Answering initial={data()} />);
+    expect(
+      point.querySelector(".bitflow-annotate-picture-drag"),
+    ).toBeNull();
+
+    const { container: rect } = render(
+      <Answering initial={data({ annotationKind: "rect" })} />,
+    );
+    expect(
+      rect.querySelector(".bitflow-annotate-picture-drag"),
+    ).not.toBeNull();
+  });
+
   it("takes a mark off again", () => {
     render(<Answering initial={data()} />);
     fireEvent.click(surface(), { detail: 0 });
@@ -204,6 +224,19 @@ describe("<Form>", () => {
 
     const panel = document.querySelector("fieldset details") as HTMLDetailsElement;
     expect(panel.open).toBe(true);
+  });
+
+  /**
+   * Drawing or moving a region is always a drag here, whichever shape the
+   * author is placing, so the authoring canvas keeps the browser out of the
+   * gesture unconditionally — unlike the learner's picture, which only needs
+   * that for a `rect` mark.
+   */
+  it("always keeps a swipe from scrolling, since a region is always dragged", () => {
+    const { container } = render(<Editing initial={data()} />);
+    expect(
+      container.querySelector(".bitflow-annotate-picture-drag"),
+    ).not.toBeNull();
   });
 
   /**

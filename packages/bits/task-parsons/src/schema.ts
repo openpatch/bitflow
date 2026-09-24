@@ -55,6 +55,16 @@ export const DataSchema = z
      * then land in the right place.
      */
     penaliseDistractors: z.boolean().default(false),
+    /**
+     * How the program is drawn. `code` is lines of text, indented; a
+     * `structogram` draws the same lines as a Nassi–Shneiderman diagram, each
+     * nested block set in from the one it belongs to with the enclosing
+     * block's strip down its side — the notation a school book teaches before
+     * any language, so a puzzle about a loop's body can be asked before the
+     * class has written code. The lines, the answer and the marking are the
+     * same either way; only the picture changes.
+     */
+    display: z.enum(["code", "structogram"]).default("code"),
     evaluation: EvaluationSchema.default(defaultEvaluation),
   })
   .check((ctx) => {

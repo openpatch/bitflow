@@ -19,6 +19,11 @@ export const formMessages: Catalogs = {
       "How the program was understood — the level each line sits at. Indentation is the half of the answer that is easiest to lose to a stray space.",
     levelShort: "Level {level}",
     advanced: "Advanced",
+    displayLabel: "How the lines are drawn",
+    displayHint:
+      "A structogram draws the same lines as a Nassi–Shneiderman diagram: a nested block sits inside the loop or branch it belongs to.",
+    displayCode: "Code, indented",
+    displayStructogram: "Structogram",
     indentationLabel: "Indentation is part of the answer",
     indentationHint:
       "Off, the learner is asked only for the order and cannot change indentation.",
@@ -45,6 +50,11 @@ export const formMessages: Catalogs = {
       "Wie das Programm gelesen wurde — auf welcher Stufe jede Zeile sitzt. Die Einrückung ist der Teil der Lösung, den ein verirrtes Leerzeichen am leichtesten kippt.",
     levelShort: "Stufe {level}",
     advanced: "Erweitert",
+    displayLabel: "Darstellung der Zeilen",
+    displayHint:
+      "Ein Struktogramm zeigt dieselben Zeilen als Nassi-Shneiderman-Diagramm: Ein verschachtelter Block steht in der Schleife oder Verzweigung, zu der er gehört.",
+    displayCode: "Code, eingerückt",
+    displayStructogram: "Struktogramm",
     indentationLabel: "Einrückung gehört zur Lösung",
     indentationHint:
       "Aus wird nur nach der Reihenfolge gefragt, und die Einrückung ist nicht änderbar.",

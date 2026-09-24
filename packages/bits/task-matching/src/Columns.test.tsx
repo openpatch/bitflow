@@ -87,6 +87,26 @@ describe("<Columns>", () => {
     expect(screen.getByRole("status").textContent).toContain("Holding CPU");
   });
 
+  it("shows a sticky status line for the held card, and clears it once matched", async () => {
+    const user = userEvent.setup();
+    render(<Stateful />);
+
+    expect(document.querySelector(".bitflow-matching-status")).toBeNull();
+
+    await user.click(screen.getByRole("button", { name: /^CPU/ }));
+
+    const status = document.querySelector(".bitflow-matching-status");
+    expect(status).not.toBeNull();
+    expect(status?.textContent).toContain("Holding: CPU");
+    // The live region already speaks it; the visible line must not repeat it
+    // to a screen reader.
+    expect(status?.getAttribute("aria-hidden")).toBe("true");
+
+    await user.click(screen.getByRole("button", { name: /^Carries out/ }));
+
+    expect(document.querySelector(".bitflow-matching-status")).toBeNull();
+  });
+
   it("does nothing when a right card is chosen with empty hands", async () => {
     const user = userEvent.setup();
     const { onChange } = setup();

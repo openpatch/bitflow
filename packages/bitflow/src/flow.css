@@ -69,6 +69,14 @@ bitflow-flow > .bitflow-shell {
   align-items: center;
   gap: var(--bitflow-space-small);
   padding: var(--bitflow-space-xsmall) var(--bitflow-space-small);
+  /* A host that draws its own button in the corner — hyperbook's reset,
+     bottom right — needs the bar's own controls kept clear of it. Unset,
+     this adds nothing; a host reserves space by setting the variable on
+     its container, which cascades down since it is inherited like any
+     other custom property. */
+  padding-inline-end: calc(
+    var(--bitflow-space-small) + var(--bitflow-controls-inset-end, 0px)
+  );
   border-top: 1px solid var(--bitflow-color-neutral-400);
 }
 
@@ -94,6 +102,24 @@ bitflow-flow > .bitflow-shell {
 .bitflow-root .bitflow-shell-content:focus {
   outline: none;
   box-shadow: none;
+}
+
+/* A host that prints the page — `end-certificate`'s `window.print()`, or a
+   reader's own print — needs the whole flow on the sheet, not the screen's
+   worth that fits the shell's box. Printing has no scrollbar to offer, so a
+   `max-height` here would clip the rest of the step rather than scroll it,
+   and the controls that drive that scrolling have nothing to do on paper. */
+@media print {
+  .bitflow-shell,
+  .bitflow-shell-content {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .bitflow-shell-controls,
+  .bitflow-progress {
+    display: none;
+  }
 }
 
 /* --- sections ------------------------------------------------------------- */

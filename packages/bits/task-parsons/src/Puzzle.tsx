@@ -1,5 +1,5 @@
 import { translate, type Locale } from "@bitflow/core";
-import { usePointerDrag } from "@bitflow/element";
+import { useAutoScroll, usePointerDrag } from "@bitflow/element";
 import {
   useReducer,
   useRef,
@@ -167,6 +167,11 @@ export const Puzzle = ({
     fromBank: boolean,
   ) => {
     if (readonly || event.button !== 0) return;
+    // A finger on the line is a scroll — bank and program fill the width, and
+    // a list that took every touch for a drag would leave nowhere to scroll
+    // the step from. Only the grip, which says it can be taken hold of, starts
+    // a drag; a finger on the body still taps to add or remove the line.
+    if (isFinger(event.pointerType) && !isGrip(event.target)) return;
     const box = (event.currentTarget as HTMLElement).getBoundingClientRect();
     dragRef.current = {
       lineId,
@@ -186,7 +191,7 @@ export const Puzzle = ({
     redraw();
   };
 
-  const moveDrag = (event: PointerEvent | ReactPointerEvent) => {
+  const moveDrag = (event: Pick<PointerEvent, "clientX" | "clientY">) => {
     const current = dragRef.current;
     if (!current) return;
 
@@ -250,10 +255,14 @@ export const Puzzle = ({
         Math.abs(event.clientX - current.fromX) > 3 ||
         Math.abs(event.clientY - current.fromY) > 3,
     };
+    if (dragRef.current.moved) {
+      autoScroll.follow(programRef.current, event.clientX, event.clientY);
+    }
     redraw();
   };
 
   const endDrag = () => {
+    autoScroll.stop();
     const current = dragRef.current;
     dragRef.current = null;
     redraw();
@@ -276,6 +285,13 @@ export const Puzzle = ({
     );
   };
 
+  // The lines move under a pointer that holds still while the columns scroll,
+  // so what it is over is measured again after every step of the scroll.
+  const autoScroll = useAutoScroll(() => {
+    const current = dragRef.current;
+    if (current) moveDrag({ clientX: current.x, clientY: current.y });
+  });
+
   usePointerDrag(moveDrag, endDrag);
 
   /** What a marked line is, in words: colour is never the only channel. */
@@ -288,7 +304,13 @@ export const Puzzle = ({
   };
 
   return (
-    <div className="bitflow-parsons">
+    <div
+      className={
+        data.display === "structogram"
+          ? "bitflow-parsons bitflow-parsons-structogram"
+          : "bitflow-parsons"
+      }
+    >
       <p className="bitflow-hint">
         {readonly
           ? t("howToReadonly")
@@ -319,6 +341,7 @@ export const Puzzle = ({
                     onPointerDown={(event) => startDrag(event, line.id, true)}
                     onClick={() => add(line)}
                   >
+                    {!readonly && <Grip />}
                     <code>{line.text}</code>
                   </button>
                 </li>
@@ -342,6 +365,9 @@ export const Puzzle = ({
                 const isGap = drag?.moved === true && drag.lineId === entry.lineId;
 
                 const classes = ["bitflow-parsons-line"];
+                const block =
+                  data.display === "structogram" ? blockOf(shown, index, lineById) : undefined;
+                if (block) classes.push(`bitflow-parsons-line-${block}`);
                 if (isGap) classes.push("bitflow-parsons-line-gap");
                 if (outcome) {
                   classes.push(
@@ -357,7 +383,7 @@ export const Puzzle = ({
                   /* Keyed by the line, not by where it sits: a line keeps its
                      element as the program is rearranged, so the browser keeps
                      the focus and the drag keeps its hold on it. */
-                  <li key={entry.lineId}>
+                  <li key={entry.lineId} className="bitflow-parsons-row">
                     <button
                       type="button"
                       className={classes.join(" ")}
@@ -395,6 +421,7 @@ export const Puzzle = ({
                     >
                       {!isGap && (
                         <>
+                          {!readonly && <Grip />}
                           <span
                             className="bitflow-parsons-number"
                             aria-hidden="true"
@@ -402,6 +429,15 @@ export const Puzzle = ({
                             {index + 1}
                           </span>
                           <code>{line.text}</code>
+                          {/* The two cases of a Verzweigung, named where the
+                              triangle's sides come down, as a structogram
+                              draws them. */}
+                          {block === "branch" && (
+                            <span className="bitflow-parsons-cases" aria-hidden="true">
+                              <span>{t("yes")}</span>
+                              <span>{t("no")}</span>
+                            </span>
+                          )}
                         </>
                       )}
                       {outcome && (
@@ -411,6 +447,53 @@ export const Puzzle = ({
                         </span>
                       )}
                     </button>
+                    {/* The arrow keys, as buttons, for a touch screen: dragging a
+                        line to exactly the right place and nesting with a thumb
+                        is fiddly, and a tap is not. Shown only for a coarse
+                        pointer — a mouse drags, a keyboard has the keys. */}
+                    {!readonly && !isGap && (
+                      <div className="bitflow-parsons-actions">
+                        <button
+                          type="button"
+                          className="bitflow-parsons-action"
+                          aria-label={t("moveUp", { code: line.text })}
+                          disabled={index === 0}
+                          onClick={() => move(index, -1)}
+                        >
+                          ↑
+                        </button>
+                        <button
+                          type="button"
+                          className="bitflow-parsons-action"
+                          aria-label={t("moveDown", { code: line.text })}
+                          disabled={index === shown.length - 1}
+                          onClick={() => move(index, 1)}
+                        >
+                          ↓
+                        </button>
+                        {data.indentationMatters && (
+                          <>
+                            <button
+                              type="button"
+                              className="bitflow-parsons-action"
+                              aria-label={t("outdent", { code: line.text })}
+                              disabled={entry.indent === 0}
+                              onClick={() => indent(index, -1)}
+                            >
+                              ⇤
+                            </button>
+                            <button
+                              type="button"
+                              className="bitflow-parsons-action"
+                              aria-label={t("indent", { code: line.text })}
+                              onClick={() => indent(index, 1)}
+                            >
+                              ⇥
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    )}
                   </li>
                 );
               })}
@@ -440,6 +523,7 @@ export const Puzzle = ({
             } as CSSProperties
           }
         >
+          <Grip />
           <code>{codeOf(drag.lineId)}</code>
         </div>
       )}
@@ -449,4 +533,39 @@ export const Puzzle = ({
       </div>
     </div>
   );
+};
+
+/** Where a finger takes hold of a line. Decoration to anything but a touch. */
+const Grip = () => <span className="bitflow-parsons-grip" aria-hidden="true" />;
+
+/** A touch or a pen: a pointer whose drag the browser would take for a scroll. */
+const isFinger = (pointerType: string): boolean =>
+  pointerType === "touch" || pointerType === "pen";
+
+const isGrip = (target: EventTarget | null): boolean =>
+  target instanceof Element && target.closest(".bitflow-parsons-grip") !== null;
+
+/**
+ * What a program line is in a structogram, read off the lines themselves.
+ *
+ * A line with deeper lines after it opens a block: a Verzweigung when it reads
+ * like one — "wenn", "falls", "if" — and a loop otherwise ("solange", "für",
+ * "wiederhole", "while", "for"). A line reading "sonst" or "else" starts the
+ * other case of the Verzweigung above it. Read from the words rather than
+ * authored, so the notation costs the author nothing; a puzzle whose lines use
+ * other words is still drawn, just with every block as a loop's frame.
+ */
+const BRANCH = /^\s*(wenn|falls|if)\b/i;
+const OTHERWISE = /^\s*(sonst|else)\b/i;
+
+const blockOf = (
+  lines: PlacedLine[],
+  index: number,
+  lineById: (id: string) => Line | undefined,
+): "branch" | "else" | "loop" | undefined => {
+  const text = lineById(lines[index].lineId)?.text ?? "";
+  if (OTHERWISE.test(text)) return "else";
+  const next = lines[index + 1];
+  if (!next || next.indent <= lines[index].indent) return undefined;
+  return BRANCH.test(text) ? "branch" : "loop";
 };

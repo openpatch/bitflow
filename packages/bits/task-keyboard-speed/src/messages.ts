@@ -10,6 +10,11 @@ export const messages: Catalogs = {
     name: "Typing",
     description: "Typing an author's text back, measured for accuracy and speed.",
     needsKeyboard: "This task needs a keyboard.",
+    // Shown only on a coarse pointer, purely by a CSS media query — nothing
+    // here detects or records the device, so the notice costs the answer
+    // nothing to add.
+    touchNotice:
+      "This task measures typing on a keyboard. On a touch screen your result will not be comparable.",
     howTo:
       "Type the passage into the box. The clock runs from your first character to your last, so read it through first if you like, and stopping after you have finished costs you nothing.",
     howToReadonly: "The typing is shown as it was left.",
@@ -27,6 +32,8 @@ export const messages: Catalogs = {
     name: "Tippen",
     description: "Einen vorgegebenen Text abtippen, gemessen nach Genauigkeit und Tempo.",
     needsKeyboard: "Diese Aufgabe braucht eine Tastatur.",
+    touchNotice:
+      "Diese Aufgabe misst das Tippen auf einer Tastatur. Auf einem Touchscreen ist dein Ergebnis nicht vergleichbar.",
     howTo:
       "Tipp den Text in das Feld. Die Zeit läuft vom ersten bis zum letzten Zeichen — lies also ruhig erst in Ruhe, und nach dem letzten Zeichen kostet Warten nichts mehr.",
     howToReadonly: "Der getippte Text steht so, wie er gelassen wurde.",

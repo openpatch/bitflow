@@ -36,6 +36,19 @@ describe("normalise", () => {
 });
 
 describe("cellCorrect", () => {
+  it("takes a comma as the decimal point where a number is expected", () => {
+    expect(cellCorrect("1.5", "1,5", false)).toBe(true);
+    expect(cellCorrect("[1,5]", "[1.5]", false)).toBe(false);
+    expect(cellCorrect("1,5", "1.5", false)).toBe(false);
+  });
+
+  it("reads wahr and falsch as true and false, unless case counts", () => {
+    expect(cellCorrect("true", "wahr", false)).toBe(true);
+    expect(cellCorrect("False", "falsch", false)).toBe(true);
+    expect(cellCorrect("true", "falsch", false)).toBe(false);
+    expect(cellCorrect("True", "wahr", true)).toBe(false);
+  });
+
   it("compares numbers as numbers", () => {
     // A trace is a claim about a value, not about how it is spelled.
     expect(cellCorrect("6", "6.0", false)).toBe(true);

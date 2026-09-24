@@ -165,13 +165,18 @@
    letter-spacing, and so cuts the last letter off a long answer. */
 .bitflow-crossword-word {
   box-sizing: border-box;
+  /* `1ch` is measured against this rule's own font, so raising the font-size
+     below scales the box along with it — the width still fits exactly this
+     many letters. */
   width: calc(
     var(--bitflow-crossword-letters, 8) * (1ch + 0.15em) +
       2 * var(--bitflow-space-xxsmall) + 2 * var(--bitflow-border-width)
   );
   padding: var(--bitflow-space-xxsmall);
   font-family: var(--bitflow-font-family-mono);
-  font-size: var(--bitflow-font-size-small);
+  /* Below 16px, iOS Safari zooms the whole page in when this input gets
+     focus, which then has to be zoomed back out by hand. */
+  font-size: var(--bitflow-font-size-standard);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--bitflow-color-text);

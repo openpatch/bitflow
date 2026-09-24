@@ -25,6 +25,7 @@ registerBit<Data, Answer>({
     lines: [],
     indentationMatters: false,
     penaliseDistractors: false,
+    display: "code",
     evaluation: defaultEvaluation(),
   }),
 });

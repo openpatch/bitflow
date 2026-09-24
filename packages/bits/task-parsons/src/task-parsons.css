@@ -38,10 +38,43 @@
   background: var(--bitflow-color-surface);
   border: var(--bitflow-border-width) solid var(--bitflow-color-border);
   border-radius: var(--bitflow-radius-standard);
+  /* Taps and scrolls go to the browser as usual: bank and program fill the
+     width, and a line that took every swipe for a drag would leave nowhere
+     to scroll the step from. A finger drags by the grip, which opts out on
+     its own. */
+  touch-action: manipulation;
 }
 
 .bitflow-parsons-line:disabled {
   cursor: default;
+}
+
+/* Where a finger takes hold. Six dots, drawn rather than typed so no font has
+   to have the glyph — the same shape as task-ordering's grip. Wide enough to
+   land a thumb on without hitting the code. */
+.bitflow-parsons-grip {
+  flex: none;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  margin-block: calc(-1 * var(--bitflow-space-xxsmall));
+  margin-inline-start: calc(-1 * var(--bitflow-space-xsmall));
+  touch-action: none;
+  cursor: grab;
+}
+
+.bitflow-parsons-grip::before {
+  content: "";
+  width: 12px;
+  height: 18px;
+  background: radial-gradient(
+      circle,
+      var(--bitflow-color-neutral-400) 1.5px,
+      transparent 2px
+    )
+    0 0 / 6px 6px;
 }
 
 /* Code is monospaced and never highlighted: a parser per language for a task
@@ -150,4 +183,162 @@
   font-variant-numeric: tabular-nums;
   color: var(--bitflow-color-text-muted);
   user-select: none;
+}
+
+/* --- structogram ---------------------------------------------------------- */
+
+/* The same lines as a Nassi–Shneiderman diagram. The program is one column of
+   blocks touching edge to edge, and a nested block is set in from its parent
+   by a strip per level — the strip of the loop or branch it sits inside —
+   rather than shifted across as indented code is. Statements are not code
+   here, so they are set in the page's own font. */
+.bitflow-parsons-structogram .bitflow-parsons-line code {
+  font-family: var(--bitflow-font-family);
+  font-size: var(--bitflow-font-size-standard);
+}
+
+.bitflow-parsons-structogram .bitflow-parsons-program {
+  gap: 0;
+}
+
+.bitflow-parsons-structogram .bitflow-parsons-program .bitflow-parsons-line {
+  margin-inline-start: 0;
+  width: 100%;
+  border-radius: 0;
+  margin-top: calc(-1 * var(--bitflow-border-width));
+  padding-inline-start: calc(
+    var(--bitflow-parsons-indent, 0rem) + var(--bitflow-space-xsmall)
+  );
+  /* The strips: one per level, each ending in a rule, drawn only as far in as
+     the line is nested. Set as its own layer so an outcome colour, which sets
+     the background, does not take the strips with it. */
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--bitflow-color-neutral-200) 0 calc(1.5rem - 2px),
+    var(--bitflow-color-neutral-700) calc(1.5rem - 2px) 1.5rem
+  );
+  background-size: var(--bitflow-parsons-indent, 0rem) 100%;
+  background-repeat: no-repeat;
+}
+
+.bitflow-parsons-structogram .bitflow-parsons-program li:first-child .bitflow-parsons-line {
+  margin-top: 0;
+  border-start-start-radius: var(--bitflow-radius-standard);
+  border-start-end-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-parsons-structogram .bitflow-parsons-program li:last-child .bitflow-parsons-line {
+  border-end-start-radius: var(--bitflow-radius-standard);
+  border-end-end-radius: var(--bitflow-radius-standard);
+}
+
+/* A program line and, on a touch screen, the buttons that move it. */
+.bitflow-parsons-row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-parsons-row > .bitflow-parsons-line {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Two small columns rather than a row of four, so the code keeps the width
+   on a phone: up and down in one, out and in the other. Hidden for a fine
+   pointer, which drags; the keys do the same from a keyboard. */
+.bitflow-parsons-actions {
+  display: none;
+  flex: none;
+  grid-template-rows: 1fr 1fr;
+  grid-auto-flow: column;
+  gap: 2px;
+}
+
+@media (pointer: coarse) {
+  .bitflow-parsons-actions {
+    display: grid;
+  }
+}
+
+.bitflow-parsons-action {
+  min-width: 2rem;
+  min-height: 1.5rem;
+  padding: 0;
+  font: inherit;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text);
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-small);
+  cursor: pointer;
+}
+
+.bitflow-parsons-action:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* A Verzweigung's head, the way a structogram draws it: a triangle whose two
+   sides come down from the top corners to meet under the condition, with the
+   two cases named at the bottom on either side. Only across the line's own
+   width — the strips of the blocks around it stay as they are. */
+.bitflow-parsons-structogram .bitflow-parsons-program .bitflow-parsons-line-branch {
+  position: relative;
+  padding-bottom: 1.25em;
+  background-image:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      var(--bitflow-color-neutral-700) 50%,
+      transparent calc(50% + 1px)
+    ),
+    linear-gradient(
+      to top left,
+      transparent calc(50% - 1px),
+      var(--bitflow-color-neutral-700) 50%,
+      transparent calc(50% + 1px)
+    ),
+    repeating-linear-gradient(
+      to right,
+      var(--bitflow-color-neutral-200) 0 calc(1.5rem - 2px),
+      var(--bitflow-color-neutral-700) calc(1.5rem - 2px) 1.5rem
+    );
+  background-size:
+    calc((100% - var(--bitflow-parsons-indent, 0rem)) / 2) 100%,
+    calc((100% - var(--bitflow-parsons-indent, 0rem)) / 2) 100%,
+    var(--bitflow-parsons-indent, 0rem) 100%;
+  background-position:
+    var(--bitflow-parsons-indent, 0rem) 0,
+    100% 0,
+    0 0;
+  background-repeat: no-repeat;
+}
+
+.bitflow-parsons-structogram .bitflow-parsons-line-branch code {
+  text-align: center;
+}
+
+.bitflow-parsons-cases {
+  position: absolute;
+  inset-inline: calc(var(--bitflow-parsons-indent, 0rem) + var(--bitflow-space-xsmall))
+    var(--bitflow-space-xsmall);
+  bottom: 2px;
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+  pointer-events: none;
+}
+
+/* The other case of the Verzweigung above: set apart as a band, the place
+   where a structogram's second column begins. */
+.bitflow-parsons-structogram .bitflow-parsons-program .bitflow-parsons-line-else code {
+  font-style: italic;
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-parsons-structogram .bitflow-parsons-program .bitflow-parsons-line-else {
+  border-top-style: double;
+  border-top-width: 4px;
 }

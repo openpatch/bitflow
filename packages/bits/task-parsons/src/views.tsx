@@ -4,6 +4,7 @@ import {
   Disclosure,
   errorFor,
   EvaluationFields,
+  SelectField,
   Markdown,
   TextAreaField,
   TextField,
@@ -184,6 +185,16 @@ export const Form = ({
       )}
 
       <Disclosure summary={t("advanced")}>
+        <SelectField<"code" | "structogram">
+          label={t("displayLabel")}
+          hint={t("displayHint")}
+          value={data.display}
+          options={[
+            { value: "code", label: t("displayCode") },
+            { value: "structogram", label: t("displayStructogram") },
+          ]}
+          onChange={(display) => patch({ display })}
+        />
         <CheckboxField
           label={t("indentationLabel")}
           hint={t("indentationHint")}

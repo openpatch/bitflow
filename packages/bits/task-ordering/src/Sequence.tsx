@@ -1,5 +1,5 @@
 import { translate, type Locale } from "@bitflow/core";
-import { usePointerDrag } from "@bitflow/element";
+import { useAutoScroll, usePointerDrag } from "@bitflow/element";
 import {
   useReducer,
   useRef,
@@ -116,6 +116,10 @@ export const Sequence = ({
 
   const startDrag = (event: ReactPointerEvent, id: string) => {
     if (readonly || event.button !== 0) return;
+    // A finger on the row is a scroll — the rows fill the width, and a list
+    // that swallowed every swipe would leave nowhere to scroll the step from.
+    // Only the grip, which says it can be taken hold of, starts a drag.
+    if (isFinger(event.pointerType) && !isGrip(event.target)) return;
     const box = (event.currentTarget as HTMLElement).getBoundingClientRect();
     dragRef.current = {
       id,
@@ -133,7 +137,7 @@ export const Sequence = ({
     redraw();
   };
 
-  const moveDrag = (event: PointerEvent | ReactPointerEvent) => {
+  const moveDrag = (event: Pick<PointerEvent, "clientX" | "clientY">) => {
     const current = dragRef.current;
     if (!current) return;
 
@@ -151,10 +155,14 @@ export const Sequence = ({
         Math.abs(event.clientX - current.fromX) > 3 ||
         Math.abs(event.clientY - current.fromY) > 3,
     };
+    if (dragRef.current.moved) {
+      autoScroll.follow(listRef.current, event.clientX, event.clientY);
+    }
     redraw();
   };
 
   const endDrag = () => {
+    autoScroll.stop();
     const current = dragRef.current;
     dragRef.current = null;
     redraw();
@@ -167,6 +175,13 @@ export const Sequence = ({
       say(current.id, current.order);
     }
   };
+
+  // The rows move under a pointer that holds still while the list scrolls,
+  // so what it is over is measured again after every step of the scroll.
+  const autoScroll = useAutoScroll(() => {
+    const current = dragRef.current;
+    if (current) moveDrag({ clientX: current.x, clientY: current.y });
+  });
 
   usePointerDrag(moveDrag, endDrag);
 
@@ -227,6 +242,7 @@ export const Sequence = ({
               >
                 {!isGap && (
                   <>
+                    {!readonly && <Grip />}
                     <span className="bitflow-ordering-position" aria-hidden="true">
                       {index + 1}
                     </span>
@@ -263,6 +279,7 @@ export const Sequence = ({
             } as CSSProperties
           }
         >
+          <Grip />
           <span className="bitflow-ordering-position">
             {drag.order.indexOf(drag.id) + 1}
           </span>
@@ -276,6 +293,19 @@ export const Sequence = ({
     </div>
   );
 };
+
+/** Where a finger takes hold of a row. Decoration to anything but a touch. */
+const Grip = () => (
+  <span className="bitflow-ordering-grip" aria-hidden="true" />
+);
+
+/** A touch or a pen: a pointer whose drag the browser would take for a scroll. */
+const isFinger = (pointerType: string): boolean =>
+  pointerType === "touch" || pointerType === "pen";
+
+const isGrip = (target: EventTarget | null): boolean =>
+  target instanceof Element &&
+  target.closest(".bitflow-ordering-grip") !== null;
 
 const renderContent = (item: Item) =>
   item.kind === "image" && item.image?.src ? (

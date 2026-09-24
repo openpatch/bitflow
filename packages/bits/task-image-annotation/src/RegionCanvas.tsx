@@ -88,7 +88,11 @@ export const RegionCanvas = ({
 
   return (
     <div
-      className="bitflow-annotate-picture bitflow-annotate-editor"
+      // Drawing or moving a region is always a drag here, whichever shape the
+      // author is placing, so the authoring canvas keeps the browser out of
+      // the gesture unconditionally — unlike the learner's picture, which
+      // only needs that for a `rect` mark.
+      className="bitflow-annotate-picture bitflow-annotate-picture-drag bitflow-annotate-editor"
       ref={pictureRef}
       style={{ aspectRatio: `${data.size.width} / ${data.size.height}` }}
       onPointerDown={(event) => {

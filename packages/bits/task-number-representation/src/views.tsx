@@ -105,8 +105,22 @@ export const Task = ({
           ]
             .filter(Boolean)
             .join(" ")}
-          inputMode={data.targetRepresentation === "text" ? "text" : "numeric"}
+          /*
+           * `hex` needs A–F as well as digits, so it gets the same text
+           * keyboard as `text` rather than the digits-only pad `numeric`
+           * brings up — that pad has no letters at all, and a hex answer
+           * would be untypeable on a phone. `decimal`, `binary` and `octal`
+           * are digits only, so `numeric` is the right, smaller keyboard for
+           * them.
+           */
+          inputMode={
+            data.targetRepresentation === "text" || data.targetRepresentation === "hex"
+              ? "text"
+              : "numeric"
+          }
           autoComplete="off"
+          autoCapitalize="off"
+          autoCorrect="off"
           spellCheck={false}
           value={answer?.raw ?? ""}
           disabled={readonly}

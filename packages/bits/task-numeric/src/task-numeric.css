@@ -19,6 +19,36 @@
   box-shadow: var(--bitflow-shadow-outline);
 }
 
+/* The iOS `decimal` keypad has no minus key, so a coarse pointer gets a way
+   to flip the sign that a physical keyboard already has built in. Hidden by
+   default and brought back only under a coarse pointer, so a mouse or
+   keyboard user — who never lost the minus key — sees no extra control. */
+.bitflow-numeric-sign {
+  display: none;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  font: inherit;
+  font-size: var(--bitflow-font-size-standard);
+  color: var(--bitflow-color-text);
+  background: var(--bitflow-color-neutral-100);
+  border: 0;
+  border-inline-end: var(--bitflow-border-width) solid
+    var(--bitflow-color-border);
+  border-start-start-radius: inherit;
+  border-end-start-radius: inherit;
+  cursor: pointer;
+}
+
+@media (pointer: coarse) {
+  .bitflow-numeric-sign {
+    display: inline-flex;
+  }
+}
+
 .bitflow-numeric-input {
   flex: 1 1 auto;
   min-width: 0;

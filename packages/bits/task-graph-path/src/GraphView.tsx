@@ -2,10 +2,12 @@ import { translate, type Locale } from "@bitflow/core";
 import { usePointerDrag } from "@bitflow/element";
 import {
   useId,
+  useLayoutEffect,
   useRef,
   useState,
   type PointerEvent as ReactPointerEvent,
   type ReactElement,
+  type RefObject,
 } from "react";
 import { routeEdges } from "./graph";
 import { messages } from "./messages";
@@ -27,18 +29,59 @@ export const VIEW_WIDTH = 1000;
 export const VIEW_HEIGHT = 600;
 const RADIUS = 34;
 
+/**
+ * The viewBox scales every user unit by rendered-width / VIEW_WIDTH, so a
+ * node drawn at a fixed RADIUS, and text set at a fixed font-size, shrink in
+ * lockstep with the element — down to an unreadable ~8px weight label and a
+ * ~22px node on a 326px phone. REFERENCE_WIDTH is the rendered width below
+ * which that shrink is undone (a diagram rendered at or above it needs no
+ * help); MAX_SCALE caps how far the undoing goes, so an extremely narrow host
+ * does not blow the diagram out of proportion to the page around it.
+ */
+const REFERENCE_WIDTH = 560;
+const MAX_SCALE = 2.2;
+
 const at = (fraction: number, extent: number) => fraction * extent;
+
+/**
+ * How much to enlarge node size and font size by, worked out from how wide
+ * the SVG actually renders. A ResizeObserver is the only way to know that —
+ * the viewBox never changes, so nothing in the markup itself says how many
+ * physical pixels a user unit comes out to. Without one (jsdom, and any other
+ * host that lacks it) the diagram stays at its designed size rather than
+ * guessing from a layout that may not be real.
+ */
+const useGraphScale = (ref: RefObject<SVGSVGElement | null>): number => {
+  const [scale, setScale] = useState(1);
+  useLayoutEffect(() => {
+    const element = ref.current;
+    if (!element || typeof ResizeObserver === "undefined") return;
+    const measure = () => {
+      const width = element.getBoundingClientRect().width;
+      if (!width) return;
+      setScale(Math.min(MAX_SCALE, Math.max(1, REFERENCE_WIDTH / width)));
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [ref]);
+  return scale;
+};
 
 /**
  * Where a connection's line should stop: at the edge of the circle rather than
  * at its middle, or an arrowhead would be drawn underneath the place it points
- * at.
+ * at. `radius` is the (possibly scaled) node radius at both ends; `gap` is
+ * how far short of the target to stop, which is the radius again except for a
+ * directed edge, where it also has to clear the arrowhead.
  */
 const endpoints = (
   fromX: number,
   fromY: number,
   toX: number,
   toY: number,
+  radius: number,
   gap: number,
 ) => {
   const dx = toX - fromX;
@@ -47,8 +90,8 @@ const endpoints = (
   const unitX = dx / length;
   const unitY = dy / length;
   return {
-    x1: fromX + unitX * RADIUS,
-    y1: fromY + unitY * RADIUS,
+    x1: fromX + unitX * radius,
+    y1: fromY + unitY * radius,
     x2: toX - unitX * gap,
     y2: toY - unitY * gap,
   };
@@ -78,6 +121,8 @@ export const GraphView = ({
   const rawId = useId();
   const arrow = `bitflow-graph-arrow-${rawId.replace(/[^\w-]/g, "")}`;
   const svg = useRef<SVGSVGElement | null>(null);
+  const scale = useGraphScale(svg);
+  const radius = RADIUS * scale;
   /**
    * The place being dragged, and where it was held: the offset between the
    * pointer and the place's own middle, kept from where the drag began. Without
@@ -163,6 +208,11 @@ export const GraphView = ({
         viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
         role="img"
         aria-label={t("diagramLabel")}
+        // A custom property rather than a prop threaded through every element
+        // below: the stylesheet reads it for font-size and hit-target width,
+        // and a fallback of 1 is what keeps the rule doing something sane
+        // before the observer has measured anything.
+        style={{ "--bitflow-graph-scale": scale } as never}
       >
         {data.directed && (
           <defs>
@@ -189,7 +239,8 @@ export const GraphView = ({
             at(from.y, VIEW_HEIGHT),
             at(to.x, VIEW_WIDTH),
             at(to.y, VIEW_HEIGHT),
-            data.directed ? RADIUS + 10 : RADIUS,
+            radius,
+            data.directed ? radius + 10 * scale : radius,
           );
           const used = usedEdges.has(edge.id);
 
@@ -261,7 +312,7 @@ export const GraphView = ({
               <circle
                 cx={at(node.x, VIEW_WIDTH)}
                 cy={at(node.y, VIEW_HEIGHT)}
-                r={RADIUS}
+                r={radius}
               />
               <text
                 x={at(node.x, VIEW_WIDTH)}
@@ -276,8 +327,8 @@ export const GraphView = ({
               {order !== -1 && (
                 <text
                   className="bitflow-graph-step"
-                  x={at(node.x, VIEW_WIDTH) + RADIUS}
-                  y={at(node.y, VIEW_HEIGHT) - RADIUS}
+                  x={at(node.x, VIEW_WIDTH) + radius}
+                  y={at(node.y, VIEW_HEIGHT) - radius}
                   textAnchor="middle"
                 >
                   {order + 1}

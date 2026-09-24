@@ -32,6 +32,16 @@ describe("<Task>", () => {
     expect(screen.getByText(/in decimal · 8-bit, signed/i)).toBeTruthy();
   });
 
+  it("brings up a text keyboard for hex, whose letters a digits-only pad cannot type", () => {
+    render(<Answering initial={task({ targetRepresentation: "hex" })} />);
+    expect(box().inputMode).toBe("text");
+  });
+
+  it("keeps the numeric keypad for binary, which is digits only", () => {
+    render(<Answering initial={task({ targetRepresentation: "binary" })} />);
+    expect(box().inputMode).toBe("numeric");
+  });
+
   it("says what it makes of what was typed, as it is typed", () => {
     // The one task type where the thing marked is not the thing typed, so
     // nobody is marked on a figure they cannot see.

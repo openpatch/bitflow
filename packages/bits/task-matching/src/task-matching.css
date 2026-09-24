@@ -114,3 +114,20 @@
   border-style: solid;
   border-color: var(--bitflow-color-wrong);
 }
+
+/* Sticks to the bottom of the viewport while a card is held, so scrolling
+   from the left column to the right one — the only way there is room for both
+   on a phone — never scrolls the held card out of sight. `position: sticky`
+   rather than `fixed`: it only needs to outlast the scroll to the second
+   column, not sit over the page once the task is elsewhere. */
+.bitflow-matching-status {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin: 0;
+  padding: var(--bitflow-space-xsmall) var(--bitflow-space-small);
+  color: var(--bitflow-color-text);
+  background: var(--bitflow-color-surface);
+  border-top: var(--bitflow-border-width) solid var(--bitflow-color-primary);
+  box-shadow: var(--bitflow-shadow-medium);
+}
