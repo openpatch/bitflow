@@ -1,5 +1,30 @@
 # @bitflow/core
 
+## 0.8.0
+
+### Minor Changes
+
+- [`e235646`](https://github.com/openpatch/bitflow/commit/e235646ad679307acf26a0b07fcaf2dc0f438ad2) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - `parseExpression` and `parseQuantity` — the small, hand-parsed arithmetic
+  language task-numeric reads answers with — are exported from core, with
+  optional named variables (`{ variables: { x: 2 } }`) and, when there are any,
+  multiplication by juxtaposition (`3x`). Nothing is ever passed to `eval` or
+  `Function`; a name nobody gave a value is not arithmetic.
+
+- [`7d7de7f`](https://github.com/openpatch/bitflow/commit/7d7de7fae99128aebbb8fd398f8a2a2767b9d5cd) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - A dark theme. Every colour token is a `light-dark()` pair, so bitflow follows
+  the `color-scheme` of the page around it: set `color-scheme: dark` on a
+  container (or `light dark` on the page to follow the OS) and the flow, its
+  native controls and its scrollbars go dark. A page that says nothing stays
+  light, whatever the OS prefers.
+
+- [`08d3067`](https://github.com/openpatch/bitflow/commit/08d30673cdb2e49d3015c364bd472b3c729ef6a5) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - New theme token `--bitflow-color-on-primary` for text drawn on the primary
+  colour (filled buttons, numbered badges), so a host with a light brand colour
+  can keep those labels readable. `--bitflow-shadow-outline` now derives from
+  `--bitflow-color-primary`.
+
+- [`7d7de7f`](https://github.com/openpatch/bitflow/commit/7d7de7fae99128aebbb8fd398f8a2a2767b9d5cd) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - bitflow no longer asks for Montserrat: `--bitflow-font-family` defaults to
+  `inherit`, so a flow is set in the font of the page it sits on. Set the token
+  to a font stack to give bitflow its own.
+
 ## 0.7.0
 
 ### Minor Changes
