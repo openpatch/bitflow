@@ -1,0 +1,242 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second copy of
+   the same stylesheet in every bundle. */
+
+.bitflow-function-plot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+/* Sized by its width and the viewBox's proportions, so a handle at 40% up the
+   y‑axis is 40% up whatever the plot is drawn at. No `touch-action` here: a
+   swipe that starts on the plot itself (rather than on a knob's own hit
+   circle, see below) must keep scrolling the page like a swipe anywhere
+   else. */
+.bitflow-function-plot-diagram {
+  width: 100%;
+  height: auto;
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-function-plot-grid line {
+  stroke: var(--bitflow-color-neutral-200);
+  stroke-width: calc(1.5 * var(--bitflow-function-plot-scale, 1));
+}
+
+.bitflow-function-plot-axis line {
+  stroke: var(--bitflow-color-neutral-700);
+  stroke-width: calc(3 * var(--bitflow-function-plot-scale, 1));
+}
+
+.bitflow-function-plot-zero {
+  stroke: var(--bitflow-color-neutral-400);
+  stroke-width: calc(2 * var(--bitflow-function-plot-scale, 1));
+}
+
+/* Ticks and axis names are sized in viewBox units, which shrink with the
+   plot; the scale the component measures brings them back to a readable size
+   on a phone — the same numbers and reasoning as task-point-plot. */
+.bitflow-function-plot-ticks text {
+  fill: var(--bitflow-color-text-muted);
+  font-family: var(--bitflow-font-family);
+  font-size: calc(22px * var(--bitflow-function-plot-scale, 1));
+  font-variant-numeric: tabular-nums;
+}
+
+.bitflow-function-plot-axis-label {
+  fill: var(--bitflow-color-text);
+  font-family: var(--bitflow-font-family);
+  font-size: calc(24px * var(--bitflow-function-plot-scale, 1));
+  font-weight: var(--bitflow-font-weight-medium);
+}
+
+.bitflow-function-plot-shown {
+  fill: none;
+  stroke: var(--bitflow-function-plot-color, var(--bitflow-color-info));
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The target: hidden until the task is marked (see `PlotView`'s `showTarget`),
+   then drawn dashed and muted so it never reads as a second, competing
+   answer next to the learner's own coloured line. */
+.bitflow-function-plot-target {
+  fill: none;
+  stroke: var(--bitflow-color-neutral-700);
+  stroke-width: 4;
+  stroke-dasharray: 10 7;
+  stroke-linecap: round;
+}
+
+/* The learner's own sketch, through whichever handles are actually set. */
+.bitflow-function-plot-sketch {
+  fill: none;
+  stroke: var(--bitflow-color-primary);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bitflow-function-plot-track {
+  stroke: var(--bitflow-color-neutral-400);
+  stroke-width: 2;
+  stroke-dasharray: 3 5;
+  pointer-events: none;
+}
+
+/* The wide, invisible click target along a handle's whole track — a plain
+   click, not a drag, so it needs no `touch-action` override and a swipe
+   across it still scrolls the page. */
+.bitflow-function-plot-track-hit {
+  fill: transparent;
+  cursor: pointer;
+}
+
+.bitflow-function-plot-knob {
+  cursor: grab;
+}
+
+.bitflow-function-plot-knob:focus-visible {
+  outline: none;
+}
+
+.bitflow-function-plot-knob:focus-visible .bitflow-function-plot-knob-ring {
+  opacity: 1;
+}
+
+.bitflow-function-plot-knob-ring {
+  fill: none;
+  stroke: var(--bitflow-color-primary);
+  stroke-width: 3;
+  opacity: 0;
+}
+
+/* The only element with `touch-action: none`: the enlarged, invisible circle
+   a finger actually has to land in to start a drag. Everything else on the
+   plot keeps its default touch behaviour. */
+.bitflow-function-plot-knob-hit {
+  fill: transparent;
+  touch-action: none;
+}
+
+.bitflow-function-plot-knob-fill {
+  fill: var(--bitflow-color-surface);
+  stroke: var(--bitflow-color-text);
+  stroke-width: 3;
+  stroke-dasharray: 4 3;
+}
+
+/* Set (but not yet graded): filled solid, no dashes — the same shape reads as
+   "placed" rather than "empty". */
+.bitflow-function-plot-knob-set .bitflow-function-plot-knob-fill {
+  fill: var(--bitflow-color-primary);
+  stroke: var(--bitflow-color-primary-dark);
+  stroke-dasharray: none;
+}
+
+.bitflow-function-plot-knob-correct .bitflow-function-plot-knob-fill {
+  fill: var(--bitflow-color-correct);
+  stroke: var(--bitflow-color-text);
+  stroke-dasharray: none;
+}
+
+.bitflow-function-plot-knob-wrong .bitflow-function-plot-knob-fill {
+  fill: var(--bitflow-color-wrong);
+  stroke: var(--bitflow-color-text);
+  stroke-dasharray: none;
+}
+
+.bitflow-function-plot-verdict {
+  font-family: var(--bitflow-font-family);
+  font-size: 24px;
+  font-weight: var(--bitflow-font-weight-bold);
+  fill: var(--bitflow-color-text);
+  pointer-events: none;
+}
+
+/* A curve's colour swatch and the target's, in the legend below the plot. */
+.bitflow-function-plot-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-small);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--bitflow-font-size-small);
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-function-plot-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-function-plot-legend-swatch {
+  display: inline-block;
+  width: 1.25rem;
+  height: 3px;
+  border-radius: var(--bitflow-radius-small);
+  background: var(--bitflow-function-plot-color, var(--bitflow-color-info));
+}
+
+.bitflow-function-plot-legend-swatch-target {
+  background: repeating-linear-gradient(
+    to right,
+    var(--bitflow-color-neutral-700) 0 6px,
+    transparent 6px 10px
+  );
+}
+
+/* The precise, always-visible fallback: one number field per handle. */
+.bitflow-function-plot-fields {
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-function-plot-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-function-plot-row-label {
+  flex: 1 1 6rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.bitflow-function-plot-badge {
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-function-plot-badge-correct {
+  color: var(--bitflow-color-correct);
+}
+
+.bitflow-function-plot-badge-wrong {
+  color: var(--bitflow-color-wrong);
+}
+
+/* Authoring ---------------------------------------------------------------- */
+
+.bitflow-function-plot-editor-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-function-plot-editor-row > .bitflow-input {
+  flex: 1 1 10rem;
+  width: auto;
+  min-width: 0;
+}
+
+.bitflow-function-plot-number {
+  flex: 0 1 6rem;
+  width: 6rem;
+}

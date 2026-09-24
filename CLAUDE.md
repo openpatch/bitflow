@@ -33,92 +33,31 @@ gives a stale answer.
   tests (a11y, theme, catalogs, fixtures) that hold every package to the
   conventions below.
 - `platforms/web` — the demo gallery. `platforms/vscode` — the editor extension.
-- `platforms/party` — the live-session server: a PartyServer room on a
-  Cloudflare Worker you deploy to your own account with `wrangler`, not to a
-  hosted PartyKit. Private, not published; in `.changeset/config.json`'s
-  `ignore` beside `web` and `bitflow-studio`.
 - `fixtures/` — committed valid and deliberately broken flows.
 
-## Live sessions
+## Running a flow with a class
 
-`platforms/party` plus the host/join pages in `platforms/web` run a flow *with
-a class*. Three constraints shape them, and must not be broken:
+That lives in another repository: **Lernen mit Spaß** (`../lms`), OpenPatch's
+lobby for live lessons, has a `bitflow` game. The teacher gives the address of a
+`.bitflow` file; each device fetches it, runs `<bitflow-flow>` and marks it
+there; the lobby is sent progress and a report. The session server that used to
+live in `platforms/party` is gone — lms already runs lobbies, accounts and the
+review after the lesson, and keeping a second one parked here cost more than it
+gave.
 
-- **The packages stay transport-free.** `@bitflow/core`, `@bitflow/bitflow` and
-  `@bitflow/web-component` learn nothing about sockets or sessions. The one
-  runtime addition is `lockedNodeIds` on `<Flow>` — a host-supplied constraint
-  in exactly the same shape as `readonly`. The socket lives entirely in
-  `platforms/`.
-- **The server stores results, never content.** The room holds a flow URL, a
-  lock list, and one stripped report per participant. It never imports
-  `@bitflow/core` (it never parses a document) and must not import
-  `@bitflow/report` at runtime — that package's index calls `injectStyles` at
-  module scope. It is a type-only devDependency for the drift assertion in
-  `room.test.ts`.
-- **Answers never leave the learner's browser.** The student's page builds a
-  report and drops `answer` from each node report before it goes anywhere. The
-  protocol declares the node report with `z.strictObject`, so a frame
-  carrying an `answer` key is rejected by the schema itself. A modified
-  client cannot push answers to the host even deliberately.
-- **Results never reach the rest of the class.** A participant row carries a
-  name and a stripped report, so it leaves the server only as a `toHosts`
-  effect, resolved from the rows in `server.ts` rather than from a list the
-  reducer built. The `session` frame is the one everybody gets, and it carries
-  the flow and the locks and nothing about anybody. Do not put a row on a
-  broadcast: a student page not drawing the board is no protection at all.
+What this repository owes that game, and must not break:
 
-The room logic is a pure `applyMessage(state, from, message)` reducer in
-`platforms/party/src/room.ts`, so it is testable without a worker.
-
-**Nothing of this is deployed at the moment.** A live session needs two halves
-in two places — a Cloudflare Worker for the server, GitHub Pages for the host
-and join pages — and deployment here is deliberately down to the one static
-site, so the gallery ships without it. The code stays: `platforms/party` still
-builds and its tests still run, `host.ts`/`join.ts`/`session.ts` still
-type-check, and nothing in `packages/` ever knew about any of it. Turning it
-back on is four edits:
-
-1. `platforms/web/vite.config.ts` — `host` and `join` back in
-   `rollupOptions.input`.
-2. `platforms/web/index.html` — the two cards back on the gallery index.
-3. `.github/workflows/deploy-web.yml` — `VITE_PARTY_HOST: ${{ vars.PARTY_HOST }}`
-   back on the `pnpm build` step, and a `PARTY_HOST` repository variable set to
-   the host `wrangler deploy` printed. A *variable*, not a secret: students'
-   browsers connect to it, so it is compiled into the bundle and public by
-   nature. Unset, the pages look for `localhost:1999`.
-4. A workflow that runs `pnpm --filter bitflow-party deploy` with
-   `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` (an API token with "Edit
-   Cloudflare Workers", which covers the Durable Object too). It was
-   `deploy-party.yml`, and that is the whole of it — checkout, pnpm, install,
-   that one command. The same two variables in a shell deploy from a laptop,
-   which is all a session needs to try out.
-
-It runs on a Cloudflare Worker you deploy yourself — `wrangler deploy`, one
-SQLite-backed Durable Object per room — and three things about that shell are
-easy to break silently:
-
-- **The party name is a contract across two packages.** `routePartykitRequest`
-  kebab-cases the Durable Object *binding* name, so `Session` in
-  `wrangler.jsonc` serves `/parties/session/<code>` and
-  `platforms/web/src/session.ts` passes `party: "session"`. PartyServer has no
-  default party; rename one side alone and every client gets a 400.
-- **A room deletes itself two hours after its last frame**, via an alarm
-  pushed forward on each message — so the clock is from when the room went
-  quiet, not from when it was made. That is a retention rule, not a storage
-  one: a room holds a class's worth of names against marks and nothing else
-  here ever removes them. It deletes the keys it owns rather than calling
-  `deleteAll()`, which would take PartyServer's bookkeeping with it.
-- **A close is not always a disconnect.** A reload opens the new socket
-  before the old one's close arrives, with no ordering between them, so
-  `onClose` checks whether another live connection still claims the
-  participant id before marking the row gone. Nothing takes such a mark back:
-  a `progress` frame carries `connected` forward rather than setting it, so a
-  live student would sit on the board as absent for the rest of the lesson.
-- **The room hibernates**, so nothing may live in a field that matters. The
-  room reloads from storage in `onStart`; the participant id behind a socket
-  rides on the socket, through `connection.setState`, which is written to the
-  WebSocket attachment. A `Record<participantId, connectionId>` in memory is
-  the obvious shape and does not survive the nap.
+- **The packages stay transport-free.** Nothing in `packages/` knows about
+  sockets, lobbies or lms. The one runtime concession to a host is
+  `lockedNodeIds` on `<Flow>`, a constraint in the same shape as `readonly`.
+- **`createShareableReport`**, exported from `@bitflow/web-component` and its
+  `/flow` entry, is how a report leaves a learner's browser: the attempt's
+  report with every node's `answer` taken out. lms checks what it receives
+  against a strict schema of its own, so a node report must not grow a key
+  that could carry what the learner wrote. `parseFlow` and `flowProgress`
+  are exported beside it, so an embedding page needs only the one package.
+- **Answers never leave the learner's browser**, and the gallery's own
+  `bitflow-statechange` consumers follow the same rule.
 
 ## Adding a bit
 

@@ -1,0 +1,198 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-number-line {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+/* Sized by its width and the viewBox's proportions, so a value at 40% along
+   the line is 40% across whatever the line is drawn at. No `touch-action`
+   here: only the marker handles are ever dragged, so a swipe anywhere else on
+   the diagram scrolls the page like a swipe anywhere else would. */
+.bitflow-number-line-diagram {
+  width: 100%;
+  height: auto;
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-number-line-axis {
+  stroke: var(--bitflow-color-neutral-700);
+  stroke-width: calc(3 * var(--bitflow-number-line-scale, 1));
+  stroke-linecap: round;
+}
+
+.bitflow-number-line-ticks-major line {
+  stroke: var(--bitflow-color-neutral-700);
+  stroke-width: calc(2.5 * var(--bitflow-number-line-scale, 1));
+}
+
+.bitflow-number-line-ticks-minor line {
+  stroke: var(--bitflow-color-neutral-200);
+  stroke-width: calc(1.5 * var(--bitflow-number-line-scale, 1));
+}
+
+/* Sized in viewBox units, which shrink with the diagram; the scale the
+   component measures brings them back to a readable size on a phone, the
+   same reasoning as task-point-plot's tick labels. */
+.bitflow-number-line-tick-labels text {
+  fill: var(--bitflow-color-text-muted);
+  font-family: var(--bitflow-font-family);
+  font-size: calc(23px * var(--bitflow-number-line-scale, 1));
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+}
+
+.bitflow-number-line-catcher {
+  cursor: crosshair;
+}
+
+/* The answer key: a dashed pointer, never filled, so it never reads as a
+   marker the learner could have placed. */
+.bitflow-number-line-answer line {
+  stroke: var(--bitflow-color-text-muted);
+  stroke-width: 3;
+  stroke-dasharray: 6 5;
+}
+
+/* A marker's label. `paint-order` draws the halo stroke under the fill, so
+   the text stays legible over the line, a tick or another label's halo
+   without any layout work to size a background rect behind it. */
+.bitflow-number-line-label text {
+  fill: var(--bitflow-color-text);
+  stroke: var(--bitflow-color-surface);
+  stroke-width: 5px;
+  paint-order: stroke fill;
+  font-family: var(--bitflow-font-family);
+  font-size: 22px;
+  font-weight: var(--bitflow-font-weight-medium);
+  text-anchor: middle;
+}
+
+.bitflow-number-line-dot {
+  fill: var(--bitflow-color-primary);
+  stroke: var(--bitflow-color-on-primary);
+  stroke-width: 2;
+}
+
+.bitflow-number-line-dot-active {
+  stroke: var(--bitflow-color-neutral-900);
+  stroke-width: 3;
+}
+
+/* Colour is never the only channel a verdict is carried on — the ✓/✗ glyph
+   next to the dot, and the hidden "correct"/"wrong" text, say the same thing
+   without it. */
+.bitflow-number-line-dot-correct {
+  fill: var(--bitflow-color-correct);
+}
+
+.bitflow-number-line-dot-wrong {
+  fill: var(--bitflow-color-wrong);
+}
+
+.bitflow-number-line-verdict {
+  font-family: var(--bitflow-font-family);
+  font-size: 22px;
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-number-line-verdict-correct {
+  fill: var(--bitflow-color-correct);
+}
+
+.bitflow-number-line-verdict-wrong {
+  fill: var(--bitflow-color-wrong);
+}
+
+/* Where a finger or a pointer actually has to land — far larger than the
+   dot it wraps, and the one place `touch-action` is set: only the handle
+   itself should stop the browser's own scroll gesture, never the page
+   around it. */
+.bitflow-number-line-hit {
+  fill: transparent;
+  stroke: none;
+  cursor: grab;
+  touch-action: none;
+}
+
+.bitflow-number-line-hit:focus-visible {
+  outline: 3px solid var(--bitflow-color-primary);
+  outline-offset: 2px;
+}
+
+/* The chips above the line, the same radio-button-as-swatch idiom as
+   task-point-plot's palette. */
+.bitflow-number-line-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-number-line-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-small);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-full);
+  background: var(--bitflow-color-surface);
+  cursor: pointer;
+}
+
+.bitflow-number-line-chip:has(:checked) {
+  border-color: var(--bitflow-color-neutral-900);
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-number-line-chip:has(:focus-visible) {
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+.bitflow-number-line-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-number-line-row-label {
+  flex: 1 1 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.bitflow-number-line-badge {
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-number-line-badge-correct {
+  color: var(--bitflow-color-correct);
+}
+
+.bitflow-number-line-badge-wrong {
+  color: var(--bitflow-color-wrong);
+}
+
+/* Authoring ---------------------------------------------------------------- */
+
+.bitflow-number-line-editor-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-number-line-editor-row > .bitflow-input {
+  flex: 1 1 8rem;
+  width: auto;
+  min-width: 0;
+}
+
+.bitflow-number-line-number {
+  flex: 0 1 var(--bitflow-number-line-number-width, 6rem);
+  width: var(--bitflow-number-line-number-width, 6rem);
+}

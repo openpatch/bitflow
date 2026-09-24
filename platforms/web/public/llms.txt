@@ -698,6 +698,7 @@ Shuffled code lines to arrange. Answer is `{ lines: [...] }`.
 | `lines` | array of `{ id (required), text, indent: integer, distractor: boolean }` | `[]` |
 | `indentationMatters` | boolean | `false` |
 | `penaliseDistractors` | boolean | `false` |
+| `display` | `code` \| `structogram` | `"code"` — `structogram` draws the program as a Nassi–Shneiderman diagram; same lines, same answer |
 
 ### task-code-trace — "Code trace"
 
@@ -899,6 +900,175 @@ The learner places their own marks. Answer is `{ annotations: [...] }`.
 | `penaliseExtras` | boolean | `false` |
 | `caseSensitive` | boolean | `false` |
 
+### task-array-steps — "Algorithm steps"
+
+An array and the steps of an algorithm over it — sorting passes, stack or
+queue operations. The learner writes the array as it stands after each step.
+Answer is `{ rows: string[][] }`, one row per step; a step not yet touched
+counts as the row before it, carried forward.
+
+| field | type | default |
+| --- | --- | --- |
+| `instruction` | string | `""` |
+| `initial` | string[] | `[]` — the starting array |
+| `steps` | array of `{ id (required), label, expected: string[] }` | `[]` |
+| `mode` | `rearrange` \| `write` | `"rearrange"` — `rearrange` swaps boxes, so every `expected` must be a reordering of `initial`; `write` types into boxes, blanks allowed |
+| `slots` | integer, optional | `write` only: boxes per row; omitted means the widest row |
+| `showIndices` | boolean | `true` |
+| `caseSensitive` | boolean | `false` |
+| `partialCredit` | boolean | `true` — a point per step |
+
+### task-binary-tree — "Binary tree"
+
+A binary tree walked in a traversal order, searched, or grown by inserting
+keys. The right answer is computed from the tree, never authored. Answer is
+`{ sequence: nodeId[], notFound?: boolean, placements: { key, parent:
+nodeId|null, side: "left"|"right"|"root" }[] }`; a key inserted as the n-th
+placement gets the node id `insert-<n>`.
+
+| field | type | default |
+| --- | --- | --- |
+| `instruction` | string | `""` |
+| `mode` | `traversal` \| `search` \| `insert` | `"traversal"` |
+| `traversal` | `preorder` \| `inorder` \| `postorder` \| `levelorder` | `"inorder"` |
+| `tree` | `{ root?: nodeId, nodes: { id (required), label, left?: nodeId, right?: nodeId }[] }` | `{ "nodes": [] }` — at most 31 nodes, one root, no shared children |
+| `searchKey` | string | `""` — `search` only; may be absent from the tree |
+| `insertKeys` | string[] | `[]` — `insert` only, inserted in order, no duplicates |
+| `partialCredit` | boolean | `true` |
+
+In `search` and `insert` the tree must be a binary search tree. Keys compare
+as numbers when every key is a number, otherwise as text.
+
+### task-pixel-grid — "Pixel grid"
+
+A grid the learner paints from a palette, marked cell by cell. Answer is
+`{ cells: paletteId[][] }`, rows by columns.
+
+| field | type | default |
+| --- | --- | --- |
+| `instruction` | string | `""` — a PBM listing reads well in a code block |
+| `rows`, `columns` | integer 1–32 | `5`, `5` |
+| `palette` | array of `{ id (required), color: "#rrggbb", label }` | white `"0"` and black `"1"` |
+| `target` | paletteId[][] | `[]` — must be `rows` × `columns` |
+| `given` | boolean[][] | `[]` — locked, pre-filled cells; `[]` locks nothing |
+| `startColor` | paletteId | `"white"` |
+| `showCoordinates` | boolean | `true` |
+| `showLabels` | boolean | `false` — draw each colour's label in its cells |
+| `partialCredit` | boolean | `true` — a point per free cell |
+
+### task-table — "Fill in the table"
+
+A table with given and blank cells: a predicted query result, a value table,
+a copied spreadsheet formula. Answer is `{ cells: Record<"rowId:columnId",
+string> }`.
+
+| field | type | default |
+| --- | --- | --- |
+| `instruction` | string | `""` |
+| `caption` | string | `""` |
+| `columns` | array of `{ id (required), header, kind: "text"\|"number"\|"formula" }` | `[]` |
+| `rows` | array of `{ id (required), header?, cells: Record<columnId, { given: string } \| { accepted: string[] }> }` | `[]` — every row needs a cell under every column |
+| `rowHeaders` | boolean | `false` |
+| `rowOrder` | `fixed` \| `any` | `"fixed"` — `any` matches each learner row to the answer row it fits best (a query without ORDER BY) |
+| `caseSensitive` | boolean | `false` |
+| `ignoreWhitespace` | boolean | `true` |
+| `numberTolerance` | number ≥ 0 | `0` — for `number` cells; comma or point both work |
+| `partialCredit` | boolean | `true` — a point per blank cell |
+
+A `formula` cell ignores case and spaces but not `$`.
+
+### task-point-plot — "Classify points"
+
+A scatter plot whose open points the learner assigns to classes — a k-nearest
+neighbours prediction, or a k-means assignment step when centroids are
+present. Answer is `{ assignments: Record<pointId, classId> }`.
+
+| field | type | default |
+| --- | --- | --- |
+| `instruction` | string | `""` |
+| `axes` | `{ x: { label, min, max }, y: { label, min, max } }` | both `0`–`10` |
+| `classes` | array of `{ id (required), label, color: "#rrggbb", shape: "circle"\|"square"\|"triangle"\|"diamond" }` | `[]` |
+| `points` | array of `{ id (required), x, y, label?, class?, expected?, centroid }` | `[]` |
+| `showGrid` | boolean | `true` |
+| `partialCredit` | boolean | `true` — a point per open point |
+
+A point with `class` is known and drawn filled; one with `expected` is open
+and never shows its answer; `centroid: true` with a `class` marks a cluster
+centre. A point is never both known and open. Coordinates are in axis units.
+
+### task-call-stack — "Call stack"
+
+A program shown as text and the call stack at a few moments of its run. The
+learner pushes and pops frames. Answer is `{ stacks: Record<checkpointId,
+Frame[]> }`, each stack top first; a moment not yet touched counts as the one
+before it.
+
+| field | type | default |
+| --- | --- | --- |
+| `instruction` | string | `""` |
+| `language` | string | `""` — a label only; nothing runs the code |
+| `code` | string | `""` |
+| `showLineNumbers` | boolean | `true` |
+| `showLocals` | boolean | `false` — also ask for each frame's local variables |
+| `checkpoints` | array of `{ id (required), label, line?, expected: { call, locals }[] }` | `[]` — `expected` top first |
+| `caseSensitive` | boolean | `false` |
+| `partialCredit` | boolean | `true` — a point per moment |
+
+Spaces never matter when a call or its locals are compared.
+
+### task-cardinality — "Cardinalities"
+
+Entities and relationships drawn by the author; the learner labels each
+relationship end. Answer is `{ ends: Record<"relationshipId:from"|"relationshipId:to", label> }`.
+
+| field | type | default |
+| --- | --- | --- |
+| `instruction` | string | `""` |
+| `notation` | `chen` \| `minmax` \| `uml` | `"chen"` — labels `1 n m`, `(0,1) (1,1) (0,*) (1,*)`, or `0..1 1 * 1..*` |
+| `entities` | array of `{ id (required), name, x, y }` | `[]` — x, y are fractions 0–1 |
+| `relationships` | array of `{ id (required), name, from, to, expectedFrom, expectedTo }` | `[]` — `from` and `to` are two different entity ids |
+| `partialCredit` | boolean | `true` — a point per end |
+
+In `chen`, `n` and `m` both mean "many" and are marked as the same answer.
+
+### task-number-line — "Number line"
+
+Values the learner places on a number line. Answer is `{ positions:
+Record<itemId, number> }`.
+
+| field | type | default |
+| --- | --- | --- |
+| `instruction` | string | `""` |
+| `min`, `max` | number | `min < max` |
+| `tickStep` | number > 0 | at most 40 major ticks across the line |
+| `minorTicks` | integer 0–10 | `0` — subdivisions between major ticks |
+| `labelTicks` | boolean | `true` |
+| `items` | array of `{ id (required), label, value, tolerance? }` | at least one; `value` inside `[min, max]` |
+| `tolerance` | number ≥ 0, optional | `tickStep / 4` — how far off still counts |
+| `snap` | `none` \| `minor` \| `major` | `"minor"` |
+| `partialCredit` | boolean | `true` — a point per item |
+
+### task-function-plot — "Sketch the graph"
+
+A coordinate system in which the learner sets a function's value at fixed x
+positions. Answer is `{ values: Record<string, number> }`, keyed by the handle's
+x written as `String(x)`.
+
+| field | type | default |
+| --- | --- | --- |
+| `instruction` | string | `""` |
+| `axes` | `{ x: { label, min, max, step }, y: { label, min, max, step } }` | `step` is the grid spacing |
+| `target` | string | the function of `x` to sketch, e.g. `"0.5x^2 - 2"` — must be finite and inside the y axis at every handle |
+| `shown` | array of `{ expression, label }` | `[]` — functions drawn as given, e.g. f when the task is f′ |
+| `handles` | number[] | five evenly spaced x positions when empty; at most 15, distinct, inside the x axis |
+| `tolerance` | number, optional | `axes.y.step / 2` |
+| `snap` | `none` \| `grid` \| `half` | `"half"` |
+| `partialCredit` | boolean | `true` — a point per handle |
+
+Functions are written in a small arithmetic grammar: `+ - * / ^`, brackets,
+`sqrt sin cos tan exp ln log abs`, `pi`, `e`, and `3x` for `3*x`. Nothing is
+ever run as code.
+
 ### task-mouse-accuracy — "Pointing accuracy"
 
 Timed clicks on a sequence of targets, for lessons about pointing (Fitts's law,
@@ -967,6 +1137,15 @@ What `{ "kind": "answer", "nodeId": "…" }` resolves to, for writing `path`:
 | `task-find-hotspots` | `{ selection?: { x, y, hotspotId? } }` |
 | `task-drag-drop` | `{ placements: Placement[] }` |
 | `task-image-annotation` | `{ annotations: Annotation[] }` |
+| `task-array-steps` | `{ rows: string[][] }` |
+| `task-binary-tree` | `{ sequence: string[], notFound?: boolean, placements: Placement[] }` |
+| `task-pixel-grid` | `{ cells: string[][] }` |
+| `task-table` | `{ cells: Record<"rowId:columnId", string> }` |
+| `task-point-plot` | `{ assignments: Record<pointId, classId> }` |
+| `task-call-stack` | `{ stacks: Record<checkpointId, { call, locals }[]> }` |
+| `task-cardinality` | `{ ends: Record<"relationshipId:from"\|"relationshipId:to", string> }` |
+| `task-number-line` | `{ positions: Record<itemId, number> }` |
+| `task-function-plot` | `{ values: Record<string, number> }` |
 | `task-mouse-accuracy` | `{ rounds: Round[], optedOut: boolean }` |
 | `task-keyboard-speed` | `{ typed: string, elapsedMs: number, optedOut: boolean }` |
 

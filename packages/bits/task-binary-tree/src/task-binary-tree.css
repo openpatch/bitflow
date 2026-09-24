@@ -1,0 +1,160 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-tree {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+/* Sized by its width and the viewBox's proportions. No `touch-action`: the
+   tree is only ever tapped, so a swipe on it scrolls like a swipe anywhere. */
+.bitflow-tree-scroll {
+  overflow-x: auto;
+}
+
+.bitflow-tree-diagram {
+  display: block;
+  width: 100%;
+  min-width: calc(var(--bitflow-tree-columns, 1) * 2.5rem);
+  height: auto;
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-tree-edge {
+  stroke: var(--bitflow-color-neutral-400);
+  stroke-width: calc(3 * var(--bitflow-tree-scale, 1));
+}
+
+.bitflow-tree-edge-empty {
+  stroke-dasharray: 8 6;
+}
+
+.bitflow-tree-node circle {
+  fill: var(--bitflow-color-surface);
+  stroke: var(--bitflow-color-neutral-700);
+  stroke-width: calc(3 * var(--bitflow-tree-scale, 1));
+}
+
+.bitflow-tree-node text {
+  fill: var(--bitflow-color-text);
+  font-family: var(--bitflow-font-family);
+  font-size: calc(28px * var(--bitflow-tree-scale, 1));
+  font-weight: var(--bitflow-font-weight-medium);
+  /* A double tap on a label would otherwise select the text of the page
+     around it. */
+  user-select: none;
+}
+
+.bitflow-tree-node-live {
+  cursor: pointer;
+}
+
+.bitflow-tree-node-chosen circle {
+  fill: var(--bitflow-color-primary-light);
+  stroke: var(--bitflow-color-primary);
+}
+
+.bitflow-tree-node-right circle {
+  fill: var(--bitflow-color-correct-surface);
+  stroke: var(--bitflow-color-correct);
+}
+
+/* Wrong is dashed as well as red, so it is not told by colour alone. */
+.bitflow-tree-node-wrong circle {
+  fill: var(--bitflow-color-wrong-surface);
+  stroke: var(--bitflow-color-wrong);
+  stroke-dasharray: 10 6;
+}
+
+.bitflow-tree-node text.bitflow-tree-step {
+  fill: var(--bitflow-color-primary-dark);
+  font-size: calc(22px * var(--bitflow-tree-scale, 1));
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-tree-node text.bitflow-tree-verdict {
+  font-size: calc(22px * var(--bitflow-tree-scale, 1));
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-tree-node-right text.bitflow-tree-verdict {
+  fill: var(--bitflow-color-correct);
+}
+
+.bitflow-tree-node-wrong text.bitflow-tree-verdict {
+  fill: var(--bitflow-color-wrong);
+}
+
+/* An empty place a key could go: dashed, and a target only while there is a
+   key left to place. */
+.bitflow-tree-slot {
+  fill: transparent;
+  stroke: var(--bitflow-color-neutral-400);
+  stroke-width: calc(2 * var(--bitflow-tree-scale, 1));
+  stroke-dasharray: 6 5;
+}
+
+.bitflow-tree-slot-live {
+  cursor: pointer;
+  stroke: var(--bitflow-color-primary);
+}
+
+.bitflow-tree-slot-live:hover {
+  fill: var(--bitflow-color-primary-light);
+}
+
+.bitflow-tree-next {
+  margin: 0;
+  font-weight: var(--bitflow-font-weight-medium);
+}
+
+.bitflow-tree-chosen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xxsmall);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: bitflow-tree-step;
+}
+
+.bitflow-tree-chip {
+  counter-increment: bitflow-tree-step;
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  border-radius: var(--bitflow-radius-full);
+  background: var(--bitflow-color-primary-light);
+  color: var(--bitflow-color-primary-dark);
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-tree-chip::before {
+  content: counter(bitflow-tree-step) ". ";
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-tree-chip-correct {
+  background: var(--bitflow-color-correct-surface);
+  color: var(--bitflow-color-correct);
+}
+
+.bitflow-tree-chip-wrong {
+  background: var(--bitflow-color-wrong-surface);
+  color: var(--bitflow-color-wrong);
+  text-decoration: line-through;
+}
+
+/* Authoring ---------------------------------------------------------------- */
+
+.bitflow-tree-text {
+  font-family: var(--bitflow-font-family-mono);
+}
+
+.bitflow-tree-keys {
+  flex: 1 1 12rem;
+  width: auto;
+  min-width: 0;
+}

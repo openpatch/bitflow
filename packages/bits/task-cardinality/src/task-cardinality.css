@@ -1,0 +1,123 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-cardinality {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+/* Sized by its width and the viewBox's proportions. No `touch-action`:
+   nothing on it is dragged, so a swipe scrolls like a swipe anywhere. */
+.bitflow-cardinality-diagram {
+  width: 100%;
+  height: auto;
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-cardinality-relationship line {
+  stroke: var(--bitflow-color-neutral-700);
+  stroke-width: calc(2.5 * var(--bitflow-cardinality-scale, 1));
+}
+
+.bitflow-cardinality-diamond {
+  fill: var(--bitflow-color-surface);
+  stroke: var(--bitflow-color-neutral-700);
+  stroke-width: calc(2.5 * var(--bitflow-cardinality-scale, 1));
+}
+
+.bitflow-cardinality-diagram text {
+  fill: var(--bitflow-color-text);
+  font-family: var(--bitflow-font-family);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.bitflow-cardinality-verb {
+  font-size: calc(20px * var(--bitflow-cardinality-scale, 1));
+  font-style: italic;
+}
+
+.bitflow-cardinality-entity rect {
+  fill: var(--bitflow-color-primary-light);
+  stroke: var(--bitflow-color-primary);
+  stroke-width: calc(2.5 * var(--bitflow-cardinality-scale, 1));
+}
+
+.bitflow-cardinality-entity text {
+  font-size: calc(24px * var(--bitflow-cardinality-scale, 1));
+  font-weight: var(--bitflow-font-weight-medium);
+}
+
+.bitflow-cardinality-end text {
+  font-family: var(--bitflow-font-family-mono);
+  font-size: calc(24px * var(--bitflow-cardinality-scale, 1));
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-cardinality-end-correct text {
+  fill: var(--bitflow-color-correct);
+}
+
+.bitflow-cardinality-end-wrong text {
+  fill: var(--bitflow-color-wrong);
+}
+
+/* One relationship per group: its name, then its two ends side by side while
+   there is room, stacked when there is not. */
+.bitflow-cardinality-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xsmall) var(--bitflow-space-small);
+  margin: 0;
+  padding: var(--bitflow-space-xsmall) 0 0;
+  border: 0;
+  border-top: 1px solid var(--bitflow-color-border);
+}
+
+.bitflow-cardinality-row legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+.bitflow-cardinality-end-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+  flex: 1 1 10rem;
+}
+
+/* Doubled so the outcome outranks the neutral select styling. */
+.bitflow-select.bitflow-cardinality-select-correct {
+  border-color: var(--bitflow-color-correct);
+  background: var(--bitflow-color-correct-surface);
+}
+
+.bitflow-select.bitflow-cardinality-select-wrong {
+  border-color: var(--bitflow-color-wrong);
+  background: var(--bitflow-color-wrong-surface);
+}
+
+/* Authoring ---------------------------------------------------------------- */
+
+.bitflow-cardinality-editor-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-cardinality-editor-row > .bitflow-input,
+.bitflow-cardinality-editor-row > .bitflow-select {
+  flex: 1 1 var(--bitflow-cardinality-editor-min, 7rem);
+  width: auto;
+  min-width: 0;
+}
+
+.bitflow-cardinality-editor-row > .bitflow-cardinality-percent {
+  flex: 0 1 5rem;
+}

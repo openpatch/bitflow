@@ -69,25 +69,19 @@ arrives inside one of them.
 | [`packages/bits/*`](packages/bits) | One package per task type — 31 of them, each its own chunk at runtime. | inside web-component |
 | [`platforms/vscode`](platforms/vscode) | Bitflow Studio — a visual editor for `.bitflow` files. | VS Code Marketplace and [Open VSX](https://open-vsx.org), not npm |
 | [`platforms/web`](platforms/web) | Demo pages for each of the above, published to [openpatch.github.io/bitflow](https://openpatch.github.io/bitflow/) on every push to main. | no |
-| [`platforms/party`](platforms/party) | A PartyServer room — a Cloudflare Worker you deploy yourself — for running a flow with a class: a live board and step locks. Not part of the deployed gallery either. | no |
 
-## Live sessions
+## Running a flow with a class
 
-`platforms/party` plus the host and join pages in `platforms/web` add the first
-thing that runs *with a class*: a host points a session at a flow URL, shares a
-code, students join and work through it at their own pace, and the host watches
-a live board and can lock steps. The server stores results, never the document,
-and never an answer — and grading still runs in the learner's page, so the
-progress the board shows is self-reported and can be forged. A room deletes
-itself two hours after its last frame, results and all. A live session
-makes a lesson easier to run; it does not change [what bitflow is not
-for](#what-bitflow-is-not-for).
-
-It is **not running on the published gallery**. A session needs a Cloudflare
-Worker deployed beside the pages, and deployment here is kept to the one static
-site, so the host and join pages are left out of that build. Everything still
-works locally — `pnpm --filter bitflow-party dev` alongside `pnpm --filter web
-dev` — and CLAUDE.md says what to put back to deploy it.
+A flow can be played by a whole class in
+[Lernen mit Spaß](https://github.com/openpatch/lms), OpenPatch's lobby for live
+lessons: the teacher gives the address of a `.bitflow` file, the class joins
+with a code and works through it at their own pace, and the teacher's screen
+shows each learner's progress and score. The flow still runs and is marked in
+each learner's browser; what goes to the lobby is the report
+`createShareableReport` makes from `@bitflow/web-component/flow`, with every
+answer taken out. It makes a lesson easier to run; it does not change [what
+bitflow is not for](#what-bitflow-is-not-for) — the progress the board shows is
+self-reported.
 
 ## Task types
 

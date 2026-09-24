@@ -6,11 +6,6 @@ name: Deploy web
 # One manual step, once: Settings → Pages → Source: GitHub Actions.
 # (`configure-pages` below asks for that itself, but the toggle is the thing
 # that makes it stick.)
-#
-# The live-session pages are deliberately not part of this. `platforms/party`
-# and the host/join pages still build and are still tested, but they need a
-# Cloudflare Worker deployed alongside them, so the gallery ships without
-# them — see the "Live sessions" section of CLAUDE.md for turning them back on.
 
 on:
   push:

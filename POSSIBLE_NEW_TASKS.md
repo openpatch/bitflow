@@ -387,7 +387,17 @@ that goes wrong at step four got the first three right.
 
 ### Algorithm Simulation
 
-**Suggested type:** `task-algorithm-simulation`
+**Suggested type:** `task-algorithm-simulation` — **built** for arrays, as
+[`@bitflow/task-array-steps`](packages/bits/task-array-steps).
+
+What got built is the most common case in a school book: the array after each
+step of a sort, a stack or a queue. A sort is answered by swapping boxes, since
+a sort only moves elements; a stack or a queue by typing into boxes, since it
+grows and shrinks. Each step starts from the learner's own previous row and is
+marked on its own. Searches over a graph are `task-graph-path`'s traversals;
+trees are `task-binary-tree`.
+
+The original suggestion follows.
 
 Ask the learner to perform the next step of a known algorithm, such as
 selection sort, insertion sort, BFS, DFS, Dijkstra, or binary search.
@@ -448,6 +458,55 @@ digits of one, so `0100_1000` cannot mean two things at once. Where the leading
 zeros are required the answer can also be marked digit by digit. The answer is
 the raw text alone — what it comes to is derived, and shown back as it is typed.
 
+### Binary Trees
+
+**Suggested type:** `task-binary-tree` — **built**, as
+[`@bitflow/task-binary-tree`](packages/bits/task-binary-tree).
+
+A binary tree walked in pre-, in-, post- or level order, searched, or grown by
+inserting keys into a search tree. The answer is always computed from the tree,
+never authored. Came out of hyperbook-informatik, which asked for tree
+traversals through ordering and Parsons tasks for want of this.
+
+### Pixel Grid
+
+**Suggested type:** `task-pixel-grid` — **built**, as
+[`@bitflow/task-pixel-grid`](packages/bits/task-pixel-grid).
+
+A grid painted from a palette and marked cell by cell — the PBM/PGM chapter of
+a school book, graded. The form reads a pasted `P1` listing.
+
+### Point Classification
+
+**Suggested type:** `task-point-plot` — **built**, as
+[`@bitflow/task-point-plot`](packages/bits/task-point-plot).
+
+A scatter plot whose open points are assigned to classes: a k-nearest
+neighbours prediction, or a k-means assignment step when centroids are placed.
+The form fills in the expected classes by either rule.
+
+### Call Stack
+
+**Suggested type:** `task-call-stack` — **built**, as
+[`@bitflow/task-call-stack`](packages/bits/task-call-stack).
+
+The stack of a running program at a few moments, built with push and pop,
+frames compared from the bottom up. The code is never run. Came out of
+hyperbook-informatik's recursion chapter and its Java memory playground.
+
+### Relationship Cardinalities
+
+**Suggested type:** `task-cardinality` — **built**, as
+[`@bitflow/task-cardinality`](packages/bits/task-cardinality).
+
+An entity-relationship diagram drawn by the author, its relationship ends
+labelled by the learner in Chen, min-max or UML notation.
+
+### Structograms
+
+**Built** as a way of drawing `task-parsons` (`display: "structogram"`): the
+same puzzle as a Nassi–Shneiderman diagram.
+
 ### Boolean Logic and Truth Tables
 
 **Suggested type:** `task-boolean-logic`
@@ -488,7 +547,14 @@ implemented and fully browser-compatible.
 
 ### Function Plot and Point Placement
 
-**Suggested type:** `task-function-plot`
+**Suggested type:** `task-function-plot` — **built** for sketching a graph, as
+[`@bitflow/task-function-plot`](packages/bits/task-function-plot); point
+placement is `task-point-plot`.
+
+The learner sets a function's value at fixed x positions, by tap, drag, arrow
+keys or a number field, and each is compared with the author's function within
+a tolerance. Built on lms's draw stations; the function is read by
+`@bitflow/core`'s arithmetic grammar.
 
 Ask learners to plot a function, place points, identify intercepts, or match a
 formula to a graph.
@@ -500,7 +566,9 @@ coordinate entry as an alternative to pointer placement.
 
 ### Fractions and Number Lines
 
-**Suggested type:** `task-fractions`
+**Suggested type:** `task-fractions` — the number-line half **built**, as
+[`@bitflow/task-number-line`](packages/bits/task-number-line), from lms's
+number line. Simplifying and comparing fractions is still open.
 
 Ask learners to simplify a fraction, find equivalent fractions, place values
 on a number line, or compare rational numbers.
@@ -523,7 +591,13 @@ addition to a visual Venn diagram.
 
 ### Table Completion
 
-**Suggested type:** `task-table-completion`
+**Suggested type:** `task-table-completion` — **built**, together with SQL
+result prediction, as [`@bitflow/task-table`](packages/bits/task-table).
+
+Blank cells are compared by their column's kind: text, a number within a
+tolerance, or a spreadsheet formula that ignores case and spaces but not `$`.
+Rows can be marked in any order, which is what a query result without
+`ORDER BY` needs.
 
 Ask learners to fill missing cells in an authored table: program traces, truth
 tables, dynamic-programming tables, frequency tables, or conversion tables.
@@ -558,7 +632,8 @@ forbidden test strings; the learner answer is the pattern plus enabled flags.
 
 ### SQL Result Prediction
 
-**Suggested type:** `task-sql-result`
+**Suggested type:** `task-sql-result` — **built** as `task-table` with
+`rowOrder: "any"`; see Table Completion above.
 
 Show an authored SQL query and database tables, then ask the learner to
 predict the output rows/columns or choose from candidate result tables.
@@ -655,14 +730,22 @@ browser, with no server algebra service.
 15. ~~Number Representation~~ — built
 16. ~~Boolean Logic and Truth Tables~~ — built
 17. Equation Transformation Steps
-18. Fractions and Number Lines
-19. Table Completion
+18. Fractions and Number Lines — number line built, as `task-number-line`
+19. ~~Table Completion~~ — built, as `task-table`
 20. Proof Builder
 21. Regular Expression
-22. SQL Result Prediction
+22. ~~SQL Result Prediction~~ — built, as `task-table`
 23. Boolean Circuit Builder
 24. Network Topology
 25. Complexity Classification
 26. Bug Finder
 27. Coordinate Transformations
 28. Matrix Operations
+29. ~~Algorithm Simulation (arrays)~~ — built, as `task-array-steps`
+30. ~~Binary Trees~~ — built
+31. ~~Pixel Grid~~ — built
+32. ~~Point Classification~~ — built
+33. ~~Call Stack~~ — built
+34. ~~Relationship Cardinalities~~ — built
+35. ~~Structograms~~ — built, as a `task-parsons` display
+36. ~~Function plot (sketching)~~ — built, as `task-function-plot`

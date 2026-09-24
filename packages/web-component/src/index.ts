@@ -21,3 +21,8 @@ export {
 export { BitflowEditorElement, defineEditorElement } from "./EditorElement";
 export { BitflowFlowElement, defineFlowElement } from "./FlowElement";
 export { defineReportElements } from "./ReportElements";
+export {
+  createShareableReport,
+  type ShareableNodeReport,
+  type ShareableReport,
+} from "./shareableReport";

@@ -12,12 +12,6 @@ import { defineConfig } from "vite";
 // Plain HTML pages, one per thing being demonstrated. Deliberately no
 // framework: the point of these components is that a page needs nothing but a
 // script tag, and a React demo would not show that.
-//
-// `host.html` and `join.html` are missing from the inputs on purpose. The live
-// session needs a Cloudflare Worker deployed beside the gallery, and without
-// one those two pages load and then fail to connect — worse than not being
-// there. Their source stays in the repo and still type-checks; put the two
-// lines back, with the host card and `VITE_PARTY_HOST`, to ship them again.
 export default defineConfig({
   base: "/",
   build: {

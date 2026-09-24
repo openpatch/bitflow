@@ -696,6 +696,239 @@ export const examples: Example[] = [
       evaluation,
     },
   },
+  {
+    type: "task-array-steps",
+    name: "Algorithm steps",
+    shows:
+      "The learner writes down the array after each pass of an algorithm, by swapping boxes with two taps \u2014 no dragging, so it works the same with a thumb as with a mouse. Each pass starts from the learner's own previous one, and is marked on its own.",
+    data: {
+      instruction: "Sort the array with **bubble sort**. Show the array after each of the first two passes.",
+      initial: ["5", "2", "8", "1", "9"],
+      steps: [
+        { id: "p1", label: "After pass 1", expected: ["2", "5", "1", "8", "9"] },
+        { id: "p2", label: "After pass 2", expected: ["2", "1", "5", "8", "9"] },
+      ],
+      mode: "rearrange",
+      showIndices: true,
+      caseSensitive: false,
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-binary-tree",
+    name: "Binary tree",
+    shows:
+      "A traversal answered by tapping the places in order. The right order is worked out from the tree, never stored beside it, so editing a key can never leave a stale answer key behind. The same bit searches a search tree and inserts keys into one.",
+    data: {
+      instruction: "In which order does a **postorder** traversal visit the places?",
+      mode: "traversal",
+      traversal: "postorder",
+      tree: {
+        root: "n8",
+        nodes: [
+          { id: "n8", label: "8", left: "n3", right: "n10" },
+          { id: "n3", label: "3", left: "n1", right: "n6" },
+          { id: "n1", label: "1" },
+          { id: "n6", label: "6", left: "n4", right: "n7" },
+          { id: "n4", label: "4" },
+          { id: "n7", label: "7" },
+          { id: "n10", label: "10", right: "n14" },
+          { id: "n14", label: "14" },
+        ],
+      },
+      searchKey: "",
+      insertKeys: [],
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-pixel-grid",
+    name: "Pixel grid",
+    shows:
+      "A PBM listing turned back into a picture: the learner paints the grid with a tap or a drag, and every free cell is marked against the picture the author painted.",
+    data: {
+      instruction:
+        "Paint the picture this PBM file describes.\n\n```\nP1\n5 5\n0 0 1 0 0\n0 1 0 1 0\n1 1 1 1 1\n1 0 0 0 1\n1 0 1 0 1\n```",
+      rows: 5,
+      columns: 5,
+      palette: [
+        { id: "white", color: "#ffffff", label: "0" },
+        { id: "black", color: "#000000", label: "1" },
+      ],
+      target: [
+        ["white", "white", "black", "white", "white"],
+        ["white", "black", "white", "black", "white"],
+        ["black", "black", "black", "black", "black"],
+        ["black", "white", "white", "white", "black"],
+        ["black", "white", "black", "white", "black"],
+      ],
+      given: [],
+      startColor: "white",
+      showCoordinates: true,
+      showLabels: true,
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-table",
+    name: "Fill in the table",
+    shows:
+      "A query result predicted without running anything. The rows may be typed in any order, because a query without ORDER BY does not promise one \u2014 each row is marked against the answer row it matches best.",
+    data: {
+      instruction:
+        "What does this query return?\n\n```sql\nSELECT name, city FROM pupils WHERE age > 15\n```\n\n| name | age | city |\n|---|---|---|\n| Ada | 16 | London |\n| Alan | 15 | Wilmslow |\n| Grace | 17 | New York |",
+      caption: "Result",
+      columns: [
+        { id: "name", header: "name", kind: "text" },
+        { id: "city", header: "city", kind: "text" },
+      ],
+      rows: [
+        { id: "r1", cells: { name: { accepted: ["Ada"] }, city: { accepted: ["London"] } } },
+        { id: "r2", cells: { name: { accepted: ["Grace"] }, city: { accepted: ["New York"] } } },
+      ],
+      rowHeaders: false,
+      rowOrder: "any",
+      caseSensitive: false,
+      ignoreWhitespace: true,
+      numberTolerance: 0,
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-point-plot",
+    name: "Classify points",
+    shows:
+      "One step of k-means done by hand: each open point goes to the centre it sits closest to. Classes differ in shape as well as colour, and every open point can also be answered from a list under the plot.",
+    data: {
+      instruction: "Assign every open point to the cluster whose **centre** is nearest.",
+      axes: {
+        x: { label: "Hours of sleep", min: 0, max: 10 },
+        y: { label: "Hours online", min: 0, max: 10 },
+      },
+      classes: [
+        { id: "a", label: "Cluster A", color: "#017460", shape: "circle" },
+        { id: "b", label: "Cluster B", color: "#a3282d", shape: "square" },
+      ],
+      points: [
+        { id: "ca", x: 7, y: 3, class: "a", centroid: true },
+        { id: "cb", x: 4, y: 7, class: "b", centroid: true },
+        { id: "p1", x: 8, y: 2, expected: "a" },
+        { id: "p2", x: 6, y: 4, expected: "a" },
+        { id: "p3", x: 3, y: 8, expected: "b" },
+        { id: "p4", x: 5, y: 6, expected: "b" },
+        { id: "p5", x: 6, y: 5, expected: "a" },
+      ],
+      showGrid: true,
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-call-stack",
+    name: "Call stack",
+    shows:
+      "The stack of a recursive call written down frame by frame, the running call on top. A frame is pushed and popped, the two things a program does to a stack, so the answer cannot be an order no run could produce. The code is shown and never run.",
+    data: {
+      instruction: "`fak(3)` has just been called. Write down the stack at each moment, with each call's `n`.",
+      language: "Java",
+      code: "int fak(int n) {\n  if (n <= 1) {\n    return 1;\n  }\n  return n * fak(n - 1);\n}",
+      showLineNumbers: true,
+      showLocals: true,
+      checkpoints: [
+        {
+          id: "m1",
+          label: "fak(2) is called",
+          line: 5,
+          expected: [
+            { call: "fak(2)", locals: "n = 2" },
+            { call: "fak(3)", locals: "n = 3" },
+          ],
+        },
+        {
+          id: "m2",
+          label: "The base case is reached",
+          line: 3,
+          expected: [
+            { call: "fak(1)", locals: "n = 1" },
+            { call: "fak(2)", locals: "n = 2" },
+            { call: "fak(3)", locals: "n = 3" },
+          ],
+        },
+      ],
+      caseSensitive: false,
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-cardinality",
+    name: "Cardinalities",
+    shows:
+      "The step of data modelling that is about reading a situation, not drawing: the author draws the entities and relationships, the learner labels the ends. Chen's n and m both count as many, since they only keep the two ends apart.",
+    data: {
+      instruction:
+        "A pupil can borrow several books at once. A book is lent to at most one pupil at a time. A teacher tutors several pupils; a pupil has one tutor.",
+      notation: "chen",
+      entities: [
+        { id: "teacher", name: "Teacher", x: 0.2, y: 0.25 },
+        { id: "pupil", name: "Pupil", x: 0.2, y: 0.75 },
+        { id: "book", name: "Book", x: 0.8, y: 0.75 },
+      ],
+      relationships: [
+        { id: "borrows", name: "borrows", from: "pupil", to: "book", expectedFrom: "1", expectedTo: "n" },
+        { id: "tutors", name: "tutors", from: "teacher", to: "pupil", expectedFrom: "1", expectedTo: "n" },
+      ],
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-number-line",
+    name: "Number line",
+    shows:
+      "Values placed on a number line by choosing one and tapping where it goes, then nudged by dragging or with the arrow keys. Each is marked by how close it lands, and the right place is shown beside a wrong one afterwards.",
+    data: {
+      instruction: "Place **1/2**, **−3/4** and **1.25** on the number line.",
+      min: -2,
+      max: 2,
+      tickStep: 1,
+      minorTicks: 3,
+      labelTicks: true,
+      items: [
+        { id: "a", label: "1/2", value: 0.5 },
+        { id: "b", label: "-3/4", value: -0.75 },
+        { id: "c", label: "1.25", value: 1.25 },
+      ],
+      tolerance: 0.25,
+      snap: "minor",
+      partialCredit: true,
+      evaluation,
+    },
+  },
+  {
+    type: "task-function-plot",
+    name: "Sketch the graph",
+    shows:
+      "A derivative sketched from the function shown: the learner sets the value at a few x positions, by tapping, dragging or typing, and each is marked against the function the author wrote. The function is text in a small arithmetic grammar; nothing is ever run as code.",
+    data: {
+      instruction: "Here is **f(x) = x²**. Sketch its derivative **f′**.",
+      axes: {
+        x: { label: "x", min: -3, max: 3, step: 1 },
+        y: { label: "y", min: -7, max: 7, step: 1 },
+      },
+      target: "2x",
+      shown: [{ expression: "x^2", label: "f" }],
+      handles: [-3, -1.5, 0, 1.5, 3],
+      tolerance: 0.5,
+      snap: "half",
+      partialCredit: true,
+      evaluation,
+    },
+  },
 ];
 
 export const exampleFor = (type: string | null): Example =>

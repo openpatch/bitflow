@@ -8,3 +8,14 @@ defineFlowElement();
 
 export { BitflowFlowElement, defineFlowElement } from "./FlowElement";
 export { bitLoaders, bitTypesIn, KNOWN_BIT_TYPES, loadBits } from "./bitLoaders";
+export {
+  flowProgress,
+  parseFlow,
+  type AttemptSnapshot,
+  type BitflowDocument,
+} from "@bitflow/core";
+export {
+  createShareableReport,
+  type ShareableNodeReport,
+  type ShareableReport,
+} from "./shareableReport";

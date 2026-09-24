@@ -844,6 +844,12 @@ four-space and tabbed programs all mean the same thing — the narrowest indent
 that occurs is one step — and the form says back what level each line came out
 at, which is the half of the answer a stray space is easiest to lose.
 
+The same puzzle can be drawn as a structogram (`display: "structogram"`): the
+program becomes a Nassi–Shneiderman diagram, each nested block set inside the
+loop or branch it belongs to, with that block's strip down its side. The lines,
+the answer and the marking do not change, so a puzzle about a loop's body can
+be set before a class has written any code.
+
 ### Accessibility
 
 Every move is a drag and a keystroke, neither one the poor relation. A line is
@@ -1436,6 +1442,205 @@ is called, and how it was judged — which is not a courtesy, it is the only way
 anybody removes or renames one, and it is how the answer reads back as words.
 What was missed is named there too, since an outline on a picture cannot say it
 to everybody.
+
+## Algorithm steps
+
+`<bitflow-task-array-steps>` shows an array and asks what it looks like after
+each step of an algorithm: each pass of a sort, each push and pop on a stack.
+It is the question a textbook animation of bubble sort leaves the reader to
+check by eye, asked so that it can be marked.
+
+There are two ways to answer a step, because the two things it is used for
+change an array differently. A sort only ever moves elements, so in
+`rearrange` mode a row is answered by swapping boxes — tap one, then the one
+to swap it with — and every row the author writes has to be a reordering of
+the start. A stack or a queue grows and shrinks, so in `write` mode each box is
+typed into and may be left empty.
+
+Each step starts from the learner's own previous row, not from the right one.
+That is what a hand simulation is, and it is why each step is marked on its
+own: a mistake in pass one shows in pass one, and a pass two worked correctly
+from a wrong pass one is still a wrong array.
+
+### Accessibility
+
+Every box is a real button, so a swap is Enter on one and Enter on the other,
+the same two decisions two taps make. The arrow keys move between boxes and
+between steps, Escape puts a held box down, and every swap is announced. A
+marked row says which boxes are wrong in words as well as by colour. Nothing
+is dragged, so the task works the same with a thumb.
+
+## Binary tree
+
+`<bitflow-task-binary-tree>` draws a binary tree and asks for one of three
+things: the order a traversal visits it in, the places a binary search passes
+on its way to a key, or where each of a list of keys goes when it is inserted
+into a search tree.
+
+The right answer is never stored. It is worked out from the tree — the four
+traversal orders, the search path, the insertion points — so an author who
+changes a key cannot leave a stale answer key behind. Insertion grows the
+learner's own tree: a key placed wrongly stays where it was put, and the next
+one is placed into that tree, as it would be on paper. A search for a key that
+is not there ends with the learner saying so.
+
+What went wrong is said without giving the answer away: the order goes wrong
+partway, stops too early, runs on past the end; the key is in the tree after
+all.
+
+### Accessibility
+
+The diagram is one image; the tree is also a row of buttons under it — "Add 6",
+"Left of 8" — which do exactly what tapping the diagram does, and are the
+keyboard and screen-reader route. The order chosen so far is a numbered list,
+every choice is announced, and Undo takes the last one back. On a narrow
+screen the nodes grow to a size a finger can hit, and a wide tree scrolls
+sideways rather than shrinking them again.
+
+## Pixel grid
+
+`<bitflow-task-pixel-grid>` is a grid of squares the learner paints from a
+palette: the picture a PBM listing describes, the letter drawn by a row of
+bits. Each free square is marked against the picture the author painted, and
+squares the author locked start filled in and count for nothing either way.
+
+The default palette is white and black labelled 0 and 1, which is what a PBM
+listing means, and the authoring form reads a pasted `P1` listing straight
+into the grid.
+
+### Accessibility
+
+The grid is a single focus stop with a cursor the arrow keys move; Space
+paints, and the number keys choose a colour, so there are not a thousand tab
+stops. Each square's name says its colour and its row and column. A wrong
+square is hatched as well as outlined, and says "wrong" to a screen reader,
+since its colour is the answer and cannot also be the mark.
+
+## Fill in the table
+
+`<bitflow-task-table>` is a table with some cells given and some left blank:
+the result of a query shown in the instruction, a value table, the formula a
+spreadsheet makes of `=B4*(1-$H$2)+$H3` copied two columns right. Each blank is
+marked on its own.
+
+What a cell is compared against depends on its column. Text is compared
+ignoring case and extra spaces unless the author says otherwise. A number is
+compared as a number, with either a comma or a point before the decimals and
+an optional tolerance. A formula ignores case and spaces but not `$`, which is
+the one character that changes what a copied formula means.
+
+A query without `ORDER BY` does not promise an order, so the rows can be
+marked in any order: each row the learner writes is matched to the answer row
+it fits best, and the matching is the best one overall, not the first that
+comes to hand.
+
+### Accessibility
+
+It is a real table, with a caption and header cells, and each input is named
+by its column and row. On a narrow screen the table scrolls sideways inside
+itself rather than widening the page. Inputs never autocorrect or capitalise,
+and every blank gets a full keyboard, since the iPhone's number pad has no
+minus sign. A marked cell says whether it was right in words as well as by
+colour.
+
+## Classify points
+
+`<bitflow-task-point-plot>` is a scatter plot with some points already
+classified and some open, for the learner to assign to a class: the class a
+nearest-neighbour vote would give a new point, or the cluster a k-means step
+puts each point in. Which one it is follows from whether the author places
+centroids — the two algorithms differ only in what they measure distance to.
+
+The authoring form can fill in the expected classes itself, by nearest
+centroid or by the k nearest known points, so an author never works out
+distances by hand. Evaluation still only compares with what ends up stored.
+
+### Accessibility
+
+A class differs from another by shape as well as colour. Every open point is
+also a row under the plot, with its coordinates and a select to answer it —
+the keyboard and screen-reader route, and on a phone often the more precise
+one. The points, known and open, are listed as text under the plot. On a
+narrow screen the markers and labels grow so they can be read and tapped.
+
+## Call stack
+
+`<bitflow-task-call-stack>` shows a program and asks what is on the call stack
+at a few moments of its run: halfway down a recursion, the moment the base case
+returns. The learner pushes a frame, writes the call into it — and, when the
+task asks, its local variables — and pops frames off again. Those are the only
+two things a program does to its stack, so an answer cannot be an order no run
+could produce.
+
+The code is shown as text and never run. Each moment starts from the stack the
+learner wrote for the one before, as a hand simulation does, and each is
+marked on its own. A frame is compared from the bottom of the stack up, where
+its history is: a stack missing only the call on top keeps every frame under it
+right. Spaces never count, so `fak( 2 )` is `fak(2)`.
+
+### Accessibility
+
+Every frame's field is named by its place — "top frame", "frame 2 below the
+top" — and by the moment it belongs to, and every push and pop is announced
+with the height the stack has reached. The moments are marked beside their
+lines in the listing, and the line numbers are real text, read out with the
+line.
+
+## Cardinalities
+
+`<bitflow-task-cardinality>` draws entities and the relationships between them
+and asks for the cardinality at each end: "a pupil borrows many books, a book
+is lent to one pupil at a time". The author draws; the learner only labels —
+modelling a situation is a question about reading it, and drawing a diagram on
+a phone is not a question anyone should be asked.
+
+Three notations are offered: Chen's 1, n and m; min-max pairs; and UML
+multiplicities. In Chen's notation n and m both mean many — the letters only
+keep the ends of an n:m relationship apart — so either is right where the
+other was written. How an end is read, across the line or at its own entity,
+differs between textbooks and is the author's to teach; the bit only asks
+which label belongs at which end.
+
+### Accessibility
+
+Each relationship is a group of two selects under the diagram, named in words
+— "Pupil — borrows — Book", "At Book" — which is how every end is answered.
+The diagram shows the choice at each end, or a question mark. A marked end
+says whether it was right in words as well as by colour, and on a narrow
+screen the names and labels grow so they stay readable.
+
+## Number line
+
+`<bitflow-task-number-line>` asks for values on a number line — fractions,
+decimals, negatives, roots — and marks each by how close it lands. A value is
+chosen from the tray above the line and placed with a tap; a placed marker is
+nudged by dragging it or with the arrow keys, and snaps to the ticks the
+author chose. Once marked, a wrong marker has the right place drawn beside it.
+
+### Accessibility
+
+Every placed marker is a slider named after its value, moved with the arrow
+keys (Shift for a whole tick, Home and End for the ends), and every placement is
+announced. Only the marker's handle takes a finger's drag; a swipe anywhere else
+on the line scrolls the page. On a narrow screen the ticks, labels and markers
+grow to a size that can be read and hit.
+
+## Sketch the graph
+
+`<bitflow-task-function-plot>` asks for a function's graph by its values at a
+few x positions: the learner sets each handle by tapping its track, dragging it,
+or typing the value, and each is marked against the function the author wrote
+— within a tolerance, so a sketch is judged as a sketch. Functions the task is
+about, f when the question is f′, can be drawn as given. The function is text in
+a small arithmetic grammar read by `@bitflow/core`'s `parseExpression`; nothing
+is ever run as code.
+
+### Accessibility
+
+Every handle is a slider ("Value at x = 1"), moved with the arrow keys, and
+every handle also has a number field under the plot — the precise way on a
+phone and the way a screen reader answers. After marking, the function that was
+meant is drawn dashed and each handle says in words whether it was right.
 
 ## Item pools
 

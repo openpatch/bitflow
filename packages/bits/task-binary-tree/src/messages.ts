@@ -1,0 +1,103 @@
+import type { Catalogs } from "@bitflow/core";
+
+/**
+ * Learner-facing strings and the palette entry. The authoring form's labels
+ * live in `formMessages.ts`, so each catalog can be complete in the languages
+ * it declares.
+ */
+export const messages: Catalogs = {
+  en: {
+    name: "Binary tree",
+    description:
+      "A binary tree the learner walks in a traversal order, searches, or grows by inserting keys.",
+    howToTraversal:
+      "Tap the places in {order} order, or use the buttons below. Undo takes the last one back.",
+    howToSearch:
+      "Tap the places a binary search for {key} visits, in order. If {key} is not in the tree, finish with “Not found”.",
+    howToInsert:
+      "Insert the keys one after another: tap the empty place (dashed) where each one belongs, or use the buttons below.",
+    howToReadonly: "The tree is shown as it was left.",
+    orderPreorder: "preorder",
+    orderInorder: "inorder",
+    orderPostorder: "postorder",
+    orderLevelorder: "level order",
+    diagramLabel: "Binary tree",
+    chosenLabel: "Your order",
+    nothingChosen: "Nothing chosen yet.",
+    placesLabel: "Places",
+    slotsLabel: "Empty places",
+    addNode: "Add {key}",
+    slotRoot: "As the root",
+    slotLeft: "Left of {key}",
+    slotRight: "Right of {key}",
+    nextKey: "Next key to insert: {key}",
+    allPlaced: "All keys are placed.",
+    notFound: "Not found",
+    notFoundOn: "Marked as not found",
+    notFoundOff: "No longer marked as not found",
+    undo: "Undo",
+    reset: "Start again",
+    added: "{key} added, step {step}",
+    alreadyChosen: "{key} is already in your order",
+    placed: "{key} placed: {where}",
+    undone: "Last step taken back",
+    cleared: "Started again",
+    correct: "correct",
+    wrong: "wrong",
+    reason_correct: "That is right.",
+    reason_empty: "Nothing was chosen.",
+    reason_wrongOrder: "The order goes wrong partway through.",
+    reason_missesPlaces: "The order stops too early.",
+    reason_extraSteps: "The order goes on past where it should end.",
+    reason_saidNotFoundButFound: "The key is in the tree.",
+    reason_missedNotFound: "The search ends without finding the key — say so with “Not found”.",
+    reason_wrongPlacement: "Not every key is where a search tree puts it.",
+  },
+  de: {
+    name: "Binärbaum",
+    description:
+      "Ein Binärbaum, der in einer Traversierungsreihenfolge durchlaufen, durchsucht oder durch Einfügen von Schlüsseln erweitert wird.",
+    howToTraversal:
+      "Tippe die Knoten in {order} an oder nutze die Knöpfe darunter. Rückgängig nimmt den letzten zurück.",
+    howToSearch:
+      "Tippe die Knoten an, die eine binäre Suche nach {key} besucht, in dieser Reihenfolge. Ist {key} nicht im Baum, schließe mit „Nicht gefunden“ ab.",
+    howToInsert:
+      "Füge die Schlüssel nacheinander ein: Tippe auf die leere (gestrichelte) Stelle, an die jeder gehört, oder nutze die Knöpfe darunter.",
+    howToReadonly: "Der Baum steht so, wie er gelassen wurde.",
+    orderPreorder: "Preorder",
+    orderInorder: "Inorder",
+    orderPostorder: "Postorder",
+    orderLevelorder: "Levelorder",
+    diagramLabel: "Binärbaum",
+    chosenLabel: "Deine Reihenfolge",
+    nothingChosen: "Noch nichts gewählt.",
+    placesLabel: "Knoten",
+    slotsLabel: "Leere Stellen",
+    addNode: "{key} hinzufügen",
+    slotRoot: "Als Wurzel",
+    slotLeft: "Links von {key}",
+    slotRight: "Rechts von {key}",
+    nextKey: "Nächster einzufügender Schlüssel: {key}",
+    allPlaced: "Alle Schlüssel sind eingefügt.",
+    notFound: "Nicht gefunden",
+    notFoundOn: "Als nicht gefunden markiert",
+    notFoundOff: "Nicht mehr als nicht gefunden markiert",
+    undo: "Rückgängig",
+    reset: "Neu beginnen",
+    added: "{key} hinzugefügt, Schritt {step}",
+    alreadyChosen: "{key} ist schon in deiner Reihenfolge",
+    placed: "{key} eingefügt: {where}",
+    undone: "Letzter Schritt zurückgenommen",
+    cleared: "Neu begonnen",
+    correct: "richtig",
+    wrong: "falsch",
+    reason_correct: "Das ist richtig.",
+    reason_empty: "Es wurde nichts gewählt.",
+    reason_wrongOrder: "Die Reihenfolge stimmt ab einer Stelle nicht mehr.",
+    reason_missesPlaces: "Die Reihenfolge hört zu früh auf.",
+    reason_extraSteps: "Die Reihenfolge geht weiter, als sie sollte.",
+    reason_saidNotFoundButFound: "Der Schlüssel ist im Baum.",
+    reason_missedNotFound: "Die Suche endet, ohne den Schlüssel zu finden — sag das mit „Nicht gefunden“.",
+    reason_wrongPlacement: "Nicht jeder Schlüssel steht dort, wo ein Suchbaum ihn einfügt.",
+  },
+};

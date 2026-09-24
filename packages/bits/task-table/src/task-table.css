@@ -1,0 +1,106 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+/* A wide table scrolls inside itself rather than pushing the page sideways on
+   a phone. The inputs are focusable, so the whole of it is still reachable
+   from the keyboard without a scroll container that is its own tab stop. */
+.bitflow-table-scroll {
+  overflow-x: auto;
+}
+
+.bitflow-table {
+  border-collapse: collapse;
+  /* Sized from the content, not from the container: cells at a fraction of a
+     fit-content parent collapse into a smear. */
+  width: auto;
+  min-width: 100%;
+}
+
+.bitflow-table caption {
+  text-align: start;
+  padding-bottom: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-table th,
+.bitflow-table td {
+  padding: var(--bitflow-space-xxsmall);
+  border: 1px solid var(--bitflow-color-border);
+  text-align: start;
+  vertical-align: middle;
+}
+
+.bitflow-table thead th,
+.bitflow-table tbody th {
+  background: var(--bitflow-color-neutral-100);
+  font-weight: var(--bitflow-font-weight-medium);
+  white-space: nowrap;
+}
+
+.bitflow-table-cell-given {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shorter than a standalone field — a table of 44px controls is a wall — but
+   never below 16px text, or iOS zooms the page the moment one is focused. */
+.bitflow-table-input {
+  min-height: 2.25rem;
+  min-width: var(--bitflow-table-cell-width, 7rem);
+  font-size: var(--bitflow-font-size-standard);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Doubled for the same reason as task-choice: the outcome must outrank the
+   neutral input styling. */
+.bitflow-table-cell-correct .bitflow-input {
+  border-color: var(--bitflow-color-correct);
+  background: var(--bitflow-color-correct-surface);
+}
+
+.bitflow-table-cell-wrong .bitflow-input {
+  border-color: var(--bitflow-color-wrong);
+  background: var(--bitflow-color-wrong-surface);
+}
+
+/* Authoring ---------------------------------------------------------------- */
+
+/* A column or a row as one line of the form. Wrapping, so in a narrow
+   inspector the buttons drop to their own line instead of being pushed out
+   of reach. */
+.bitflow-table-editor-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-table-editor-row > .bitflow-input,
+.bitflow-table-editor-row > .bitflow-select {
+  /* `min-width: 0` or a long placeholder sets the basis and nothing wraps. */
+  flex: 1 1 var(--bitflow-table-editor-min, 7rem);
+  min-width: 0;
+}
+
+.bitflow-table-row-name {
+  flex: 1 1 auto;
+}
+
+.bitflow-table-actions {
+  flex: none;
+  flex-wrap: nowrap;
+}
+
+/* Given or blank, above what the cell holds. */
+.bitflow-table-cell-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-table-select {
+  min-height: 2.25rem;
+}
+
+.bitflow-table-tolerance {
+  width: var(--bitflow-table-tolerance-width, 8rem);
+}

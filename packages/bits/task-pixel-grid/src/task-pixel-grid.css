@@ -1,0 +1,216 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-pixelgrid-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-pixelgrid-swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bitflow-space-xxsmall);
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  min-height: 44px;
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  cursor: pointer;
+  font-size: var(--bitflow-font-size-small);
+}
+
+/* Outlined rather than only tinted: the fill itself is the author's literal
+   colour, so a background tint would be lost against it — or worse, would
+   look like part of the swatch. */
+.bitflow-pixelgrid-swatch:has(:checked) {
+  border-color: var(--bitflow-color-primary);
+  border-width: calc(var(--bitflow-border-width) * 1.5);
+}
+
+.bitflow-pixelgrid-swatch:has(:focus-visible) {
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+.bitflow-pixelgrid-swatch-fill {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--bitflow-radius-small);
+  border: 1px solid var(--bitflow-color-border);
+  flex: none;
+}
+
+/* Row and column numbers sit outside the grid this drives, in a plain CSS
+   grid: one column for the row numbers, one row for the column numbers, and
+   the pixel grid itself in the remaining cell. Splitting it this way — rather
+   than a header cell woven into each row — keeps the pixel grid's own
+   bounding box exactly the rectangle the pointer maths divides by columns and
+   rows, with nothing else to subtract first. */
+.bitflow-pixelgrid-table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  /* Up to a finger's width per square — a small picture gets squares a thumb
+     can hit — and never wider than the space there is. */
+  width: min(100%, calc(var(--bitflow-pixelgrid-columns, 5) * 3rem));
+}
+
+.bitflow-pixelgrid-table:not(.bitflow-pixelgrid-coords) {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.bitflow-pixelgrid-corner {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.bitflow-pixelgrid-colheads {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+}
+
+.bitflow-pixelgrid-colheads span {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+}
+
+.bitflow-pixelgrid-rowheads {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.bitflow-pixelgrid-rowheads span {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+}
+
+.bitflow-pixelgrid-corner,
+.bitflow-pixelgrid-colheads span,
+.bitflow-pixelgrid-rowheads span {
+  /* 11px is the floor for the coordinate numbers even on a narrow grid — the
+     one place here that is not a design token, because the theme's smallest
+     size (14px) would crowd a 16-column row on a phone. */
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--bitflow-color-text-muted);
+  padding-inline: 2px;
+  user-select: none;
+}
+
+.bitflow-pixelgrid-grid {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  overflow: hidden;
+  /* The picture itself is the puzzle: dragging across it must not smear a
+     text selection over the page. Bounded to a small grid, which is the
+     trade-off word search and crossword already make the same way. */
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.bitflow-pixelgrid-table:not(.bitflow-pixelgrid-coords) .bitflow-pixelgrid-grid {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.bitflow-pixelgrid-grid:focus-visible {
+  outline: none;
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+.bitflow-pixelgrid-row {
+  display: flex;
+}
+
+.bitflow-pixelgrid-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 1;
+  /* So a label drawn inside can be sized against its own square. */
+  container-type: inline-size;
+  outline: 1px solid var(--bitflow-color-border);
+  outline-offset: -1px;
+}
+
+.bitflow-pixelgrid-label {
+  font-family: var(--bitflow-font-family-mono);
+  font-size: 55cqw;
+  line-height: 1;
+}
+
+.bitflow-pixelgrid-cell-cursor {
+  box-shadow: inset 0 0 0 2px var(--bitflow-color-primary);
+  z-index: 1;
+}
+
+/* A locked cell's fill is the author's own literal colour, so a marker drawn
+   only in one colour can vanish against it — a black ring is invisible on a
+   black cell. Stacking a white and a black ring keeps at least one of the two
+   visible against almost anything the author picks. */
+.bitflow-pixelgrid-cell-given {
+  box-shadow:
+    inset 0 0 0 2px #ffffff,
+    inset 0 0 0 4px #000000;
+}
+
+.bitflow-pixelgrid-cell-cursor.bitflow-pixelgrid-cell-given {
+  box-shadow:
+    inset 0 0 0 2px var(--bitflow-color-primary),
+    inset 0 0 0 4px #ffffff,
+    inset 0 0 0 6px #000000;
+}
+
+/* The same black-on-white doubling as above, as a hatch rather than a ring —
+   so a wrong cell reads differently from a locked one even to someone who
+   cannot tell the colours apart, and never relies on colour alone. */
+.bitflow-pixelgrid-cell-wrong::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.45) 0 3px, transparent 3px 9px),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.45) 4.5px 7.5px, transparent 7.5px 9px);
+}
+
+.bitflow-pixelgrid-palette-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-pixelgrid-color-input {
+  flex: none;
+  width: 2.5rem;
+  height: 44px;
+  padding: 2px;
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  background: var(--bitflow-color-surface);
+}
+
+.bitflow-pixelgrid-palette-row > .bitflow-input {
+  flex: 1 1 10rem;
+  min-width: 0;
+}
+
+/* Two numbers side by side in the authoring form: sized to the digits they
+   hold, not stretched across the inspector. */
+.bitflow-pixelgrid-size {
+  width: var(--bitflow-pixelgrid-size-width, 6rem);
+}

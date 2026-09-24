@@ -24,7 +24,6 @@
     "@bitflow/element",
     "@bitflow/bitflow",
     "@bitflow/report",
-    "web",
-    "bitflow-party"
+    "web"
   ]
 }

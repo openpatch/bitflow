@@ -1,0 +1,237 @@
+/* The tokens and primitives arrive with @bitflow/element, which every
+   package here depends on. Importing them again would ship a second
+   copy of the same stylesheet in every bundle. */
+
+.bitflow-point-plot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+/* Sized by its width and the viewBox's proportions, so a point at 40% across
+   is 40% across whatever the plot is drawn at. No `touch-action` here: the
+   plot is only ever tapped, never dragged, so a swipe on it scrolls the page
+   like a swipe anywhere else. */
+.bitflow-point-plot-diagram {
+  width: 100%;
+  height: auto;
+  background: var(--bitflow-color-surface);
+  border: 1px solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-point-plot-grid line {
+  stroke: var(--bitflow-color-neutral-200);
+  stroke-width: calc(1.5 * var(--bitflow-point-plot-scale, 1));
+}
+
+.bitflow-point-plot-axis line {
+  stroke: var(--bitflow-color-neutral-700);
+  stroke-width: calc(3 * var(--bitflow-point-plot-scale, 1));
+}
+
+/* Ticks and axis names are sized in viewBox units, which shrink with the plot;
+   the scale the component measures brings them back to a readable size on a
+   phone. */
+.bitflow-point-plot-ticks text {
+  fill: var(--bitflow-color-text-muted);
+  font-family: var(--bitflow-font-family);
+  font-size: calc(22px * var(--bitflow-point-plot-scale, 1));
+  font-variant-numeric: tabular-nums;
+}
+
+.bitflow-point-plot-axis-label {
+  fill: var(--bitflow-color-text);
+  font-family: var(--bitflow-font-family);
+  font-size: calc(24px * var(--bitflow-point-plot-scale, 1));
+  font-weight: var(--bitflow-font-weight-medium);
+}
+
+/* A marker is filled with its class's literal colour and outlined in the
+   text colour, so it stays visible against the plot in either theme whatever
+   colour the author chose. The shape, not the colour, is what tells two
+   classes apart. */
+.bitflow-point-plot-point circle:not(.bitflow-point-plot-hit):not(.bitflow-point-plot-ring),
+.bitflow-point-plot-point polygon,
+.bitflow-point-plot-swatch-icon circle,
+.bitflow-point-plot-swatch-icon polygon {
+  fill: var(--bitflow-point-plot-color, transparent);
+  stroke: var(--bitflow-color-text);
+  stroke-width: 3;
+}
+
+/* An open point before it is assigned: hollow, dashed, with a question mark. */
+.bitflow-point-plot-mark {
+  fill: var(--bitflow-color-text);
+  font-family: var(--bitflow-font-family);
+  font-size: 22px;
+  font-weight: var(--bitflow-font-weight-bold);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+/* Where a finger lands. Invisible, and much larger than the marker. */
+.bitflow-point-plot-hit {
+  fill: transparent;
+  stroke: none;
+  cursor: pointer;
+}
+
+.bitflow-point-plot-ring {
+  fill: none;
+  stroke: var(--bitflow-color-text);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+  pointer-events: none;
+}
+
+.bitflow-point-plot-point > :not(.bitflow-point-plot-hit) {
+  pointer-events: none;
+}
+
+/* A cluster centre: a large ring with a cross, in its class's colour. */
+.bitflow-point-plot-centroid circle {
+  fill: color-mix(in srgb, var(--bitflow-point-plot-color, transparent) 25%, transparent);
+  stroke: var(--bitflow-point-plot-color, var(--bitflow-color-text));
+  stroke-width: 5;
+}
+
+.bitflow-point-plot-centroid line {
+  stroke: var(--bitflow-color-text);
+  stroke-width: 4;
+}
+
+.bitflow-point-plot-label {
+  fill: var(--bitflow-color-text);
+  font-family: var(--bitflow-font-family);
+  font-size: 20px;
+  text-anchor: middle;
+}
+
+.bitflow-point-plot-verdict {
+  font-family: var(--bitflow-font-family);
+  font-size: 24px;
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-point-plot-verdict-correct {
+  fill: var(--bitflow-color-correct);
+}
+
+.bitflow-point-plot-verdict-wrong {
+  fill: var(--bitflow-color-wrong);
+}
+
+.bitflow-point-plot-catcher {
+  cursor: crosshair;
+}
+
+/* The classes to choose from, as a row of radio buttons. */
+.bitflow-point-plot-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-point-plot-swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bitflow-space-xxsmall);
+  min-height: 44px;
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  background: var(--bitflow-color-surface);
+  cursor: pointer;
+}
+
+/* Which class is chosen is carried by the border and the weight, not by a
+   tint that could be confused with a class colour. */
+.bitflow-point-plot-swatch:has(:checked) {
+  border-color: var(--bitflow-color-neutral-900);
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-point-plot-swatch:has(:focus-visible) {
+  box-shadow: var(--bitflow-shadow-outline);
+}
+
+.bitflow-point-plot-swatch-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: none;
+}
+
+/* One open point per line, with a select as the precise way to answer. */
+.bitflow-point-plot-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-point-plot-row-label {
+  flex: 1 1 10rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.bitflow-point-plot-row > .bitflow-select {
+  flex: 1 1 10rem;
+  width: auto;
+}
+
+.bitflow-point-plot-badge {
+  font-weight: var(--bitflow-font-weight-bold);
+}
+
+.bitflow-point-plot-badge-correct {
+  color: var(--bitflow-color-correct);
+}
+
+.bitflow-point-plot-badge-wrong {
+  color: var(--bitflow-color-wrong);
+}
+
+.bitflow-point-plot-written summary {
+  cursor: pointer;
+  color: var(--bitflow-color-text-muted);
+  font-size: var(--bitflow-font-size-small);
+}
+
+.bitflow-point-plot-written ul {
+  margin: var(--bitflow-space-xxsmall) 0 0;
+  padding-inline-start: var(--bitflow-space-medium);
+}
+
+/* Authoring ---------------------------------------------------------------- */
+
+.bitflow-point-plot-editor-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+.bitflow-point-plot-editor-row > .bitflow-input,
+.bitflow-point-plot-editor-row > .bitflow-select {
+  flex: 1 1 var(--bitflow-point-plot-editor-min, 7rem);
+  width: auto;
+  min-width: 0;
+}
+
+.bitflow-point-plot-editor-row > .bitflow-point-plot-number,
+.bitflow-point-plot-number {
+  flex: 0 1 var(--bitflow-point-plot-number-width, 5.5rem);
+  width: var(--bitflow-point-plot-number-width, 5.5rem);
+}
+
+.bitflow-point-plot-color-input {
+  flex: none;
+  width: 2.5rem;
+  height: 44px;
+  padding: 2px;
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+  background: var(--bitflow-color-surface);
+}

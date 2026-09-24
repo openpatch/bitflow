@@ -63,7 +63,11 @@
     "@bitflow/start-consent": "workspace:*",
     "@bitflow/start-identify": "workspace:*",
     "@bitflow/start-simple": "workspace:*",
+    "@bitflow/task-array-steps": "workspace:*",
+    "@bitflow/task-binary-tree": "workspace:*",
     "@bitflow/task-boolean-logic": "workspace:*",
+    "@bitflow/task-call-stack": "workspace:*",
+    "@bitflow/task-cardinality": "workspace:*",
     "@bitflow/task-choice": "workspace:*",
     "@bitflow/task-code-trace": "workspace:*",
     "@bitflow/task-crossword": "workspace:*",
@@ -71,6 +75,7 @@
     "@bitflow/task-fill-in-the-blank": "workspace:*",
     "@bitflow/task-find-hotspots": "workspace:*",
     "@bitflow/task-free-text": "workspace:*",
+    "@bitflow/task-function-plot": "workspace:*",
     "@bitflow/task-graph-path": "workspace:*",
     "@bitflow/task-highlighting": "workspace:*",
     "@bitflow/task-image-annotation": "workspace:*",
@@ -79,10 +84,14 @@
     "@bitflow/task-matching": "workspace:*",
     "@bitflow/task-math": "workspace:*",
     "@bitflow/task-mouse-accuracy": "workspace:*",
+    "@bitflow/task-number-line": "workspace:*",
     "@bitflow/task-number-representation": "workspace:*",
     "@bitflow/task-numeric": "workspace:*",
     "@bitflow/task-ordering": "workspace:*",
     "@bitflow/task-parsons": "workspace:*",
+    "@bitflow/task-pixel-grid": "workspace:*",
+    "@bitflow/task-point-plot": "workspace:*",
+    "@bitflow/task-table": "workspace:*",
     "@bitflow/task-word-search": "workspace:*",
     "@bitflow/task-yes-no": "workspace:*",
     "@bitflow/title-simple": "workspace:*",
@@ -99,6 +108,7 @@
     "rimraf": "^6.1.3",
     "typescript": "^7.0.2",
     "vite": "^7.3.6",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "zod": "^4.4.3"
   }
 }

@@ -1,0 +1,94 @@
+.bitflow-array-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-small);
+}
+
+.bitflow-array-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-array-step-header {
+  display: flex;
+  align-items: center;
+  gap: var(--bitflow-space-xsmall);
+}
+
+/* A box and its index number travel together as one unit, so that when the
+   row wraps onto a second line on a narrow screen the numbering wraps with
+   it rather than drifting out of register with the boxes below it. */
+.bitflow-array-cells {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bitflow-space-xsmall);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.bitflow-array-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--bitflow-space-xxsmall);
+}
+
+.bitflow-array-index {
+  font-size: var(--bitflow-font-size-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--bitflow-color-text-muted);
+}
+
+/* Every box is at least a comfortable touch target, whether it is a fixed
+   value, a button to pick up, or a text box to type into. */
+.bitflow-array-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  color: var(--bitflow-color-text);
+  text-align: center;
+  background: var(--bitflow-color-surface);
+  border: var(--bitflow-border-width) solid var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
+}
+
+.bitflow-array-cell-fixed {
+  background: var(--bitflow-color-neutral-100);
+}
+
+.bitflow-array-cell-button {
+  cursor: pointer;
+}
+
+.bitflow-array-cell-button:disabled {
+  cursor: default;
+}
+
+.bitflow-array-cell-input {
+  width: 3.5rem;
+}
+
+/* Picked up. Not colour alone — the outline thickens — because "which box am
+   I holding" is the one thing the whole interaction turns on. */
+.bitflow-array-cell.bitflow-array-cell-held {
+  background: var(--bitflow-color-neutral-100);
+  border-color: var(--bitflow-color-primary);
+  box-shadow: 0 0 0 2px var(--bitflow-color-primary);
+}
+
+.bitflow-array-cell.bitflow-array-cell-correct {
+  background: color-mix(in srgb, var(--bitflow-color-correct) 12%, var(--bitflow-color-surface));
+  border-color: var(--bitflow-color-correct);
+}
+
+.bitflow-array-cell.bitflow-array-cell-wrong {
+  background: color-mix(in srgb, var(--bitflow-color-wrong) 12%, var(--bitflow-color-surface));
+  border-color: var(--bitflow-color-wrong);
+}

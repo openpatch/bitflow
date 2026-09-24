@@ -45,6 +45,15 @@ export const bitLoaders: Record<string, () => Promise<unknown>> = {
   "task-free-text": () => import("@bitflow/task-free-text"),
   "task-boolean-logic": () => import("@bitflow/task-boolean-logic"),
   "task-image-annotation": () => import("@bitflow/task-image-annotation"),
+  "task-array-steps": () => import("@bitflow/task-array-steps"),
+  "task-binary-tree": () => import("@bitflow/task-binary-tree"),
+  "task-pixel-grid": () => import("@bitflow/task-pixel-grid"),
+  "task-table": () => import("@bitflow/task-table"),
+  "task-point-plot": () => import("@bitflow/task-point-plot"),
+  "task-call-stack": () => import("@bitflow/task-call-stack"),
+  "task-cardinality": () => import("@bitflow/task-cardinality"),
+  "task-number-line": () => import("@bitflow/task-number-line"),
+  "task-function-plot": () => import("@bitflow/task-function-plot"),
 };
 
 export const KNOWN_BIT_TYPES = Object.keys(bitLoaders);
