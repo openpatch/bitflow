@@ -1,7 +1,7 @@
 .bitflow-typing {
   display: flex;
   flex-direction: column;
-  gap: var(--bitflow-space-xsmall);
+  gap: var(--bitflow-space-small);
 }
 
 /* The passage, marked character by character as it is passed. Monospaced so

@@ -35,6 +35,7 @@ registerBit<Data, Answer>({
     given: [],
     startColor: DEFAULT_PALETTE[0].id,
     showCoordinates: true,
+    firstIndex: 1,
     showLabels: false,
     partialCredit: true,
     evaluation: defaultEvaluation(),

@@ -61,6 +61,88 @@
   color: var(--bitflow-color-primary-dark);
 }
 
+/* Headings in author prose are structure inside one step, never the page's
+   own headings, so they step down from the step's text rather than from the
+   browser's 2em h1. */
+.bitflow-prose :is(h1, h2, h3, h4, h5, h6) {
+  margin-block: var(--bitflow-space-small) var(--bitflow-space-xsmall);
+  line-height: var(--bitflow-line-height-tight);
+}
+
+.bitflow-prose h1 {
+  font-size: var(--bitflow-font-size-xlarge);
+}
+
+.bitflow-prose h2 {
+  font-size: var(--bitflow-font-size-large);
+}
+
+.bitflow-prose :is(h3, h4, h5, h6) {
+  font-size: var(--bitflow-font-size-standard);
+}
+
+.bitflow-prose hr {
+  border: 0;
+  border-top: 1px solid var(--bitflow-color-border);
+  margin-block: var(--bitflow-space-small);
+}
+
+/* A table of given data — the rows a query runs over, the values a trace
+   starts from. Ruled and padded like the tables the tasks draw, and able to
+   scroll on its own when it is wider than a phone. */
+.bitflow-prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin-block: 0 var(--bitflow-space-xsmall);
+  font-variant-numeric: tabular-nums;
+}
+
+.bitflow-prose th,
+.bitflow-prose td {
+  padding: var(--bitflow-space-xxsmall) var(--bitflow-space-xsmall);
+  border: 1px solid var(--bitflow-color-border);
+  text-align: start;
+}
+
+.bitflow-prose th {
+  background: var(--bitflow-color-neutral-100);
+  font-weight: var(--bitflow-font-weight-medium);
+}
+
+.bitflow-prose ul,
+.bitflow-prose ol {
+  padding-inline-start: 1.5em;
+}
+
+/* Maths. KaTeX sizes itself in em from the surrounding text, so inline maths
+   matches the prose it sits in. A displayed formula wider than a phone
+   scrolls on its own rather than pushing the whole step sideways; the small
+   block padding keeps the scrollbar clear of descenders. */
+.bitflow-prose .katex {
+  font-size: 1.1em;
+}
+
+.bitflow-prose .katex-display {
+  margin: var(--bitflow-space-xsmall) 0;
+  padding-block: var(--bitflow-space-xxsmall);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* The TeX source, while KaTeX is on its way or if it never arrives: readable
+   as what it is, and not mistaken for prose. */
+.bitflow-math-pending {
+  font-family: var(--bitflow-font-family-mono);
+  color: var(--bitflow-color-text-muted);
+}
+
+.bitflow-math-display.bitflow-math-pending {
+  display: block;
+  margin: var(--bitflow-space-xsmall) 0;
+}
+
 /* Authoring forms */
 
 .bitflow-disclosure {

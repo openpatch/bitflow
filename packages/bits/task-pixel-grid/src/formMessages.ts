@@ -33,6 +33,11 @@ export const formMessages: Catalogs = {
     startColorHint: "What every unlocked cell looks like before the learner paints it.",
     showCoordinatesLabel: "Show row and column numbers",
     showCoordinatesHint: "Along the edges of the grid.",
+    firstIndexLabel: "Count rows and columns from",
+    firstIndexHint:
+      "Used along the edges and in each cell's name for screen readers. Choose 0 when the grid stands beside code that indexes an array, so row 0 here is row 0 there.",
+    firstIndexOne: "1, as a picture is counted",
+    firstIndexZero: "0, as an array is indexed",
     showLabelsLabel: "Show colour labels in the cells",
     showLabelsHint:
       'Useful for a PBM grid of 0s and 1s, where the colour alone is easy to misread.',
@@ -77,6 +82,11 @@ export const formMessages: Catalogs = {
     startColorHint: "Wie jede ungesperrte Zelle aussieht, bevor sie bemalt wird.",
     showCoordinatesLabel: "Zeilen- und Spaltennummern anzeigen",
     showCoordinatesHint: "An den Rändern des Rasters.",
+    firstIndexLabel: "Zeilen und Spalten zählen ab",
+    firstIndexHint:
+      "Gilt für die Nummern am Rand und für den Namen jeder Zelle im Screenreader. Wähle 0, wenn das Raster neben Code steht, der ein Feld indiziert – dann ist Zeile 0 hier auch Zeile 0 dort.",
+    firstIndexOne: "1, wie man ein Bild abzählt",
+    firstIndexZero: "0, wie man ein Feld indiziert",
     showLabelsLabel: "Farbbeschriftungen in den Zellen anzeigen",
     showLabelsHint:
       "Nützlich für ein PBM-Raster aus Nullen und Einsen, bei dem die Farbe allein leicht misszuverstehen ist.",

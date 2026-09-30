@@ -467,7 +467,7 @@ const Controls = ({
   }
 
   return (
-    <div className="bitflow-stack-small">
+    <div className="bitflow-stack-small bitflow-stack">
       <div className="bitflow-field">
         <span className="bitflow-label">
           {data.goal === "traversal" ? t("chosenOrder") : t("chosenRoute")}

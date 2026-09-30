@@ -473,6 +473,22 @@ exams. [What bitflow is not for](../../README.md#what-bitflow-is-not-for) has
 the full picture, and [SECURITY.md](../../SECURITY.md) says which of this we
 treat as a bug (none of it) and which we do.
 
+## Maths in text
+
+Every field that takes Markdown also takes TeX, typeset with
+[KaTeX](https://katex.org): `$f(x) = x^2$` inline, and `$$…$$` for a formula
+on its own line. The dollar rules are Pandoc's, so prose about money is left
+alone — the opening `$` must be followed by a non-space, the closing one must
+follow a non-space and not be followed by a digit, and `\$` is a literal
+dollar. Inside `` `code` `` nothing is typeset.
+
+KaTeX is loaded only when a text contains maths — a flow without a formula
+never downloads it — and its fonts are inside the chunk, so there is nothing
+to deploy beside the script. Until it arrives the TeX source is shown. It runs
+with `trust: false`, so `\href` and friends render as an error rather than as
+a link; author TeX is as untrusted as author HTML. Each formula also carries
+MathML, which is what a screen reader reads.
+
 ## Pictures are stored, not linked
 
 Every picture a task uses is embedded in the `.bitflow` document as a `data:`
@@ -1507,6 +1523,11 @@ squares the author locked start filled in and count for nothing either way.
 The default palette is white and black labelled 0 and 1, which is what a PBM
 listing means, and the authoring form reads a pasted `P1` listing straight
 into the grid.
+
+Rows and columns are numbered from 1, the way a picture is counted. Set
+`firstIndex` to `0` when the grid stands beside code that indexes an array —
+`bild[zeile][spalte]`, `grid[row][col]` — so that row 0 in the program is row 0
+on the grid, along the edges and in each cell's name alike.
 
 ### Accessibility
 

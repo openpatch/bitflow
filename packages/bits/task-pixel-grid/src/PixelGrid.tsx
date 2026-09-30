@@ -206,7 +206,11 @@ export const PixelGrid = ({
   const cellLabel = (row: number, column: number) => {
     const id = cells[row]?.[column];
     const index = data.palette.findIndex((entry) => entry.id === id);
-    const parts = [t("cellAt", { color: colorLabel(id, index), row: row + 1, column: column + 1 })];
+    const parts = [t("cellAt", {
+        color: colorLabel(id, index),
+        row: row + data.firstIndex,
+        column: column + data.firstIndex,
+      })];
     if (given?.[row]?.[column]) parts.push(t("given"));
     if (wrong?.[row]?.[column]) parts.push(t("wrong"));
     return parts.join(". ");
@@ -262,12 +266,12 @@ export const PixelGrid = ({
             <div className="bitflow-pixelgrid-corner" aria-hidden="true" />
             <div className="bitflow-pixelgrid-colheads" aria-hidden="true">
               {Array.from({ length: data.columns }, (_column, column) => (
-                <span key={column}>{column + 1}</span>
+                <span key={column}>{column + data.firstIndex}</span>
               ))}
             </div>
             <div className="bitflow-pixelgrid-rowheads" aria-hidden="true">
               {Array.from({ length: data.rows }, (_row, row) => (
-                <span key={row}>{row + 1}</span>
+                <span key={row}>{row + data.firstIndex}</span>
               ))}
             </div>
           </>

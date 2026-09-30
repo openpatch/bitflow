@@ -767,6 +767,7 @@ export const examples: Example[] = [
       given: [],
       startColor: "white",
       showCoordinates: true,
+      firstIndex: 1,
       showLabels: true,
       partialCredit: true,
       evaluation,
@@ -915,7 +916,7 @@ export const examples: Example[] = [
     shows:
       "A derivative sketched from the function shown: the learner sets the value at a few x positions, by tapping, dragging or typing, and each is marked against the function the author wrote. The function is text in a small arithmetic grammar; nothing is ever run as code.",
     data: {
-      instruction: "Here is **f(x) = x²**. Sketch its derivative **f′**.",
+      instruction: "Here is $f(x) = x^2$. Sketch its derivative $f'(x)$.",
       axes: {
         x: { label: "x", min: -3, max: 3, step: 1 },
         y: { label: "y", min: -7, max: 7, step: 1 },

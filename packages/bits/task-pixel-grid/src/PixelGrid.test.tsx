@@ -101,6 +101,32 @@ describe("<PixelGrid>", () => {
     ).toContain("0, row 2, column 3. locked");
   });
 
+  it("counts from 0 along the edges and in the names when firstIndex is 0", () => {
+    const fromZero = DataSchema.parse({ ...data, firstIndex: 0 });
+    const { container } = render(
+      <PixelGrid
+        data={fromZero}
+        cells={effectiveCells(fromZero)}
+        given={fromZero.given}
+        locale="en"
+        onChange={() => {}}
+      />,
+    );
+    const heads = (selector: string) =>
+      Array.from(container.querySelectorAll(`${selector} span`)).map((span) => span.textContent);
+    expect(heads(".bitflow-pixelgrid-colheads")).toEqual(["0", "1", "2"]);
+    expect(heads(".bitflow-pixelgrid-rowheads")).toEqual(["0", "1"]);
+    expect(
+      screen.getAllByRole("gridcell").map((cell) => cell.getAttribute("aria-label")),
+    ).toContain("0, row 1, column 2. locked");
+  });
+
+  it("counts from 1 when a document says nothing", () => {
+    const minimal = { rows: 1, columns: 1, target: [["white"]] };
+    expect(DataSchema.parse(minimal).firstIndex).toBe(1);
+    expect(DataSchema.safeParse({ ...minimal, firstIndex: 2 }).success).toBe(false);
+  });
+
   it("changes nothing when read-only", () => {
     render(<Stateful readonly />);
     const grid = layOut();

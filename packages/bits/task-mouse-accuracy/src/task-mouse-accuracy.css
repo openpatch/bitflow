@@ -1,7 +1,7 @@
 .bitflow-mouse {
   display: flex;
   flex-direction: column;
-  gap: var(--bitflow-space-xsmall);
+  gap: var(--bitflow-space-small);
 }
 
 /* A coarse pointer means a touchscreen, and this task measures a mouse or

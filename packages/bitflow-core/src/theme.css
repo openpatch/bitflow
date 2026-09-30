@@ -429,6 +429,33 @@ h6.bitflow-heading {
   font-weight: var(--bitflow-font-weight-medium);
 }
 
+/* A group of fields under one name — the axes of a plot, a list of zones —
+   is a fieldset, which is what tells a screen reader the controls belong
+   together. The browser draws it as a grooved box with the legend cut into
+   its top edge, which nothing else in bitflow looks like; it should look like
+   any other field. A legend is not a flex item, so the gap does not reach it
+   and it carries its own. `min-width: 0` undoes the fieldset's habit of
+   growing to its widest child instead of wrapping. */
+fieldset.bitflow-field {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+fieldset.bitflow-field > legend {
+  padding: 0;
+  margin-bottom: var(--bitflow-space-xxsmall);
+}
+
+/* A label is often a heading for what follows it — "Lines to choose from" is
+   an h3 so a screen reader can jump to it — but it should look like a label,
+   not like the browser's 1.17em h3. */
+:is(h1, h2, h3, h4, h5, h6).bitflow-label {
+  font-size: inherit;
+  line-height: var(--bitflow-line-height-tight);
+}
+
 /* The teacher-facing hint under a field label; progressive disclosure means
    most authoring settings carry one rather than a manual page. */
 .bitflow-hint {
@@ -439,6 +466,23 @@ h6.bitflow-heading {
 .bitflow-field-error {
   color: var(--bitflow-color-wrong);
   font-size: var(--bitflow-font-size-small);
+}
+
+/* The primitives carry no outer margin of their own. Every one of them sits
+   in a stack, a row or a grid whose gap is the spacing, and the browser's
+   default 1em on a <p> or <h3> came on top of that gap — so a hint under an
+   instruction stood 30px off it while the same hint under a field stood 4px
+   off. `:where` keeps this at zero specificity, so a bit that does want a
+   margin on one of them only has to say so. */
+:where(
+    .bitflow-text,
+    .bitflow-text-muted,
+    .bitflow-hint,
+    .bitflow-label,
+    .bitflow-field-error,
+    .bitflow-alert
+  ) {
+  margin: 0;
 }
 
 /* Result states ----------------------------------------------------------- */

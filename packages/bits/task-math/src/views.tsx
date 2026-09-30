@@ -147,7 +147,7 @@ export const Form = ({
           {blanks.length > 0 ? t("blanksHeading") : t("singleHeading")}
         </legend>
         {names.map((name) => (
-          <div className="bitflow-stack-small" key={name}>
+          <div className="bitflow-stack-small bitflow-stack" key={name}>
             <TextField
               label={
                 name === SINGLE_BLANK

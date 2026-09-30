@@ -1,7 +1,7 @@
 .bitflow-matching {
   display: flex;
   flex-direction: column;
-  gap: var(--bitflow-space-xsmall);
+  gap: var(--bitflow-space-small);
 }
 
 /* Two columns while there is room, stacked when there is not: on a phone,

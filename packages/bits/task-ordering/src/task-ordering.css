@@ -1,7 +1,7 @@
 .bitflow-ordering {
   display: flex;
   flex-direction: column;
-  gap: var(--bitflow-space-xsmall);
+  gap: var(--bitflow-space-small);
 }
 
 .bitflow-ordering-list {

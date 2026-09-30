@@ -426,6 +426,7 @@ export const steps = [
     given: [],
     startColor: "white",
     showCoordinates: true,
+    firstIndex: 1,
     showLabels: false,
     partialCredit: true,
     evaluation,

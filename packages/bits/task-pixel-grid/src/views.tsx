@@ -317,6 +317,16 @@ export const Form = ({
           checked={data.showCoordinates}
           onChange={(showCoordinates) => patch({ showCoordinates })}
         />
+        <SelectField
+          label={t("firstIndexLabel")}
+          hint={t("firstIndexHint")}
+          value={String(data.firstIndex) as "0" | "1"}
+          options={[
+            { value: "1", label: t("firstIndexOne") },
+            { value: "0", label: t("firstIndexZero") },
+          ]}
+          onChange={(firstIndex) => patch({ firstIndex: firstIndex === "0" ? 0 : 1 })}
+        />
         <CheckboxField
           label={t("showLabelsLabel")}
           hint={t("showLabelsHint")}

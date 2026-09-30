@@ -9,8 +9,17 @@
   --brand: #017460;
 }
 
+/* bitflow sets itself in the page's font, so the page has to have chosen
+   one — without this every component in the gallery reads in Times. */
 body {
   margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Ubuntu,
+    sans-serif;
   color: var(--ink);
   background: var(--page);
   line-height: 1.5;
@@ -64,6 +73,11 @@ h1 {
   margin-block: 16px;
 }
 
+/* A standalone bit has no shell around it to hold it off the border. */
+.demo-padded {
+  padding: 16px;
+}
+
 .demo-tall {
   height: 70vh;
 }
@@ -84,6 +98,13 @@ h1 {
   white-space: pre-wrap;
 }
 
+/* A log nothing has been written to yet is still a place something will
+   appear, not a dark sliver. */
+.log:empty::before {
+  content: "Nothing yet.";
+  color: #a4a4a4;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -91,13 +112,19 @@ h1 {
   align-items: center;
 }
 
-button.plain {
+button.plain,
+select {
   font: inherit;
   padding: 8px 16px;
   border-radius: 8px;
   border: 2px solid var(--line);
   background: #fff;
   cursor: pointer;
+}
+
+select {
+  padding: 6px 10px;
+  color: inherit;
 }
 
 .cards {

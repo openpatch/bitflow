@@ -56,6 +56,13 @@ export const DataSchema = z
     startColor: z.string().default(() => DEFAULT_PALETTE[0]!.id),
     /** Row and column numbers along the edges. */
     showCoordinates: z.boolean().default(true),
+    /**
+     * The number the first row and column are called by, along the edges and
+     * in each cell's accessible name. 1 is how a picture is counted; 0 is how
+     * a program indexes it, so a grid beside `bild[zeile][spalte]` or
+     * `grid[row][col]` names its cells the way the code does.
+     */
+    firstIndex: z.union([z.literal(0), z.literal(1)]).default(1),
     /** Each palette entry's label drawn inside its cells — useful for a PBM
      * grid of 0s and 1s, where the colour alone is easy to misread. */
     showLabels: z.boolean().default(false),

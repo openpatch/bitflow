@@ -85,15 +85,23 @@
   vertical-align: middle;
 }
 
+/* Top-aligned, so every column's name sits on one line whether or not a note
+   hangs under it; centred, the names without a note floated half a line
+   lower than the ones with. */
 .bitflow-trace-table thead th {
   background: var(--bitflow-color-neutral-100);
   font-weight: var(--bitflow-font-weight-medium);
   white-space: nowrap;
+  vertical-align: top;
+  padding: var(--bitflow-space-xsmall);
 }
 
+/* Wide enough that "end of the second pass" is two lines, not four. */
 .bitflow-trace-table tbody th {
   font-weight: var(--bitflow-font-weight-standard);
   background: var(--bitflow-color-neutral-100);
+  min-width: var(--bitflow-trace-moment-width, 10rem);
+  padding-inline: var(--bitflow-space-xsmall);
 }
 
 /* The second line of a header: what the column holds, or the line a row sits

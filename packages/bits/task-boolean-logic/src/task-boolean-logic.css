@@ -30,10 +30,14 @@
   vertical-align: middle;
 }
 
+/* Top-aligned, so a column name with a note under it ("given") sits on the
+   same line as the names without one. */
 .bitflow-truth-table thead th {
   background: var(--bitflow-color-neutral-100);
   font-weight: var(--bitflow-font-weight-medium);
   white-space: nowrap;
+  vertical-align: top;
+  padding: var(--bitflow-space-xsmall);
 }
 
 /* The input side is the question, not part of the answer: it reads as the
@@ -44,6 +48,7 @@
   font-weight: var(--bitflow-font-weight-standard);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  padding-inline: var(--bitflow-space-xsmall);
 }
 
 /* A second line in a heading: that this column is worked out already. */

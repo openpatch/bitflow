@@ -409,8 +409,10 @@ past), `task` (accepts an answer and is graded), `end` (terminal — an `end` bi
 needs no outgoing edge, and is the only kind that may have none).
 
 Every field below is optional with the default shown unless marked
-**required**. Fields named `markdown` or `instruction` take Markdown. Every
-`task-*` bit also takes `evaluation` (above), omitted from each table.
+**required**. Fields named `markdown` or `instruction` take Markdown, with
+maths in TeX: `$x^2$` inline, `$$\frac{a}{b}$$` displayed (KaTeX; `\$` for a
+literal dollar). Every `task-*` bit also takes `evaluation` (above), omitted
+from each table.
 
 Every flow finishes at one or more `end` bits — with every other node needing
 an outgoing edge, there is nowhere else for it to stop. A fresh attempt begins
@@ -953,6 +955,7 @@ A grid the learner paints from a palette, marked cell by cell. Answer is
 | `given` | boolean[][] | `[]` — locked, pre-filled cells; `[]` locks nothing |
 | `startColor` | paletteId | `"white"` |
 | `showCoordinates` | boolean | `true` |
+| `firstIndex` | `0` or `1` | `1` — what the first row and column are numbered, on the edges and in cell names; `0` when the grid sits beside code indexing an array |
 | `showLabels` | boolean | `false` — draw each colour's label in its cells |
 | `partialCredit` | boolean | `true` — a point per free cell |
 

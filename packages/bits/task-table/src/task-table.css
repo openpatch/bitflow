@@ -37,6 +37,18 @@
   white-space: nowrap;
 }
 
+/* Top-aligned for the same reason as task-code-trace: a heading with a
+   second line must not push its neighbours' names half a line down. */
+.bitflow-table thead th {
+  vertical-align: top;
+  padding: var(--bitflow-space-xsmall);
+}
+
+.bitflow-table tbody th,
+.bitflow-table-cell-given {
+  padding-inline: var(--bitflow-space-xsmall);
+}
+
 .bitflow-table-cell-given {
   font-variant-numeric: tabular-nums;
 }

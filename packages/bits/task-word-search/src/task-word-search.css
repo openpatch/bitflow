@@ -1,7 +1,7 @@
 .bitflow-wordsearch {
   display: flex;
   flex-direction: column;
-  gap: var(--bitflow-space-xsmall);
+  gap: var(--bitflow-space-small);
 }
 
 /* Grid and word list side by side while there is room, stacked when there is

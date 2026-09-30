@@ -1,7 +1,7 @@
 .bitflow-crossword {
   display: flex;
   flex-direction: column;
-  gap: var(--bitflow-space-xsmall);
+  gap: var(--bitflow-space-small);
 }
 
 /* Grid and clues side by side while there is room, stacked when there is not:

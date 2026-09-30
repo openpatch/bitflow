@@ -1,7 +1,7 @@
 .bitflow-parsons {
   display: flex;
   flex-direction: column;
-  gap: var(--bitflow-space-xsmall);
+  gap: var(--bitflow-space-small);
 }
 
 /* Bank and program side by side while there is room, stacked when there is
@@ -19,6 +19,21 @@
   padding: 0;
   margin: var(--bitflow-space-xxsmall) 0 0;
   list-style: none;
+}
+
+/* An empty side is still a place to drop a line, so it is drawn as one: the
+   same inset as the list it stands in for, dashed rather than solid so it
+   does not read as a line of code. */
+.bitflow-parsons-columns > * > .bitflow-text-muted {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 6rem;
+  margin-top: var(--bitflow-space-xxsmall);
+  padding: var(--bitflow-space-small);
+  text-align: center;
+  border: var(--bitflow-border-width) dashed var(--bitflow-color-border);
+  border-radius: var(--bitflow-radius-standard);
 }
 
 .bitflow-parsons-line {

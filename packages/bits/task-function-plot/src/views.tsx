@@ -215,7 +215,7 @@ export const Form = ({
         <span className="bitflow-hint">{t("shownHint")}</span>
         {data.shown.length === 0 && <p className="bitflow-text-muted">{t("noShown")}</p>}
         {data.shown.map((curve, index) => (
-          <div key={index} className="bitflow-stack-small">
+          <div key={index} className="bitflow-stack-small bitflow-stack">
             <div className="bitflow-function-plot-editor-row">
               <input
                 type="text"

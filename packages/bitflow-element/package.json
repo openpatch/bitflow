@@ -34,11 +34,15 @@
   "scripts": {
     "version": "pnpm build",
     "lint": "tsc --noEmit",
+    "prelint": "node scripts/inlineKatexFonts.mjs",
     "test": "vitest run",
+    "pretest": "node scripts/inlineKatexFonts.mjs",
     "test:watch": "vitest",
-    "build": "rimraf dist && vite build && pnpm build:types",
+    "build": "rimraf dist && node scripts/inlineKatexFonts.mjs && vite build && pnpm build:types",
     "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly",
-    "dev": "vite build --watch"
+    "dev": "vite build --watch",
+    "predev": "node scripts/inlineKatexFonts.mjs",
+    "prepare-fonts": "node scripts/inlineKatexFonts.mjs"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -48,6 +52,7 @@
     "@bitflow/core": "workspace:*",
     "@r2wc/react-to-web-component": "^2.1.1",
     "dompurify": "^3.4.13",
+    "katex": "^0.18.9",
     "marked": "^18.0.9"
   },
   "devDependencies": {

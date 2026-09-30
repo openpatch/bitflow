@@ -1,4 +1,6 @@
+import katex from "katex";
 import { describe, expect, it } from "vitest";
+import { hasMath } from "./katex";
 import { renderMarkdown } from "./Markdown";
 
 /**
@@ -75,6 +77,51 @@ describe("renderMarkdown", () => {
     it("survives an svg-based handler", () => {
       const html = rendered('<svg><a xlink:href="javascript:alert(1)"><text>x</text></a></svg>');
       expect(html).not.toContain("javascript:");
+    });
+  });
+
+  describe("maths", () => {
+    it("typesets inline and displayed TeX once KaTeX is there", () => {
+      const inline = renderMarkdown("Area is $\\pi r^2$.", katex);
+      expect(inline).toContain('class="katex"');
+      expect(inline).toContain("<math");
+      expect(inline).not.toContain("data-bitflow-tex");
+
+      const display = renderMarkdown("$$\n\\frac{a}{b}\n$$", katex);
+      expect(display).toContain('class="katex-display"');
+    });
+
+    it("keeps KaTeX's own layout styles, which the sanitizer strips from authors", () => {
+      expect(renderMarkdown("$x^2$", katex)).toContain("style=");
+      expect(renderMarkdown('<p style="color:red">$x$</p>', katex)).not.toContain(
+        "color:red",
+      );
+    });
+
+    it("shows the TeX source until KaTeX arrives", () => {
+      const html = renderMarkdown("Area is $\\pi r^2$.");
+      expect(html).toContain("bitflow-math-pending");
+      expect(html).toContain("$\\pi r^2$");
+    });
+
+    it("leaves prices, escaped dollars and code alone", () => {
+      for (const text of ["It costs $5 and $10.", "a \\$x$ b", "`$x$`"]) {
+        expect(renderMarkdown(text, katex)).not.toContain("katex");
+      }
+    });
+
+    it("does not let TeX run script", () => {
+      const html = renderMarkdown("$\\href{javascript:alert(1)}{x}$", katex);
+      // The source survives as a MathML annotation, which is text; what
+      // must not exist is a link to it.
+      expect(html).not.toMatch(/<a[\s>]/);
+      expect(html).not.toContain("href=");
+    });
+
+    it("only asks for KaTeX when there is maths to typeset", () => {
+      expect(hasMath("no maths here")).toBe(false);
+      expect(hasMath("$x$")).toBe(true);
+      expect(hasMath("$$\n x \n$$")).toBe(true);
     });
   });
 });
