@@ -1,5 +1,17 @@
 # @bitflow/web-component
 
+## 0.3.0
+
+### Minor Changes
+
+- [`425db22`](https://github.com/openpatch/bitflow/commit/425db22dec8c86a5311e15d3a0ba4917b778a01f) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Maths in Markdown. Every field that takes Markdown now typesets TeX with KaTeX — `$…$` inline, `$$…$$` displayed — loaded only when a text contains maths, with its fonts bundled in the same lazy chunk.
+
+  A spacing and alignment pass over the tasks: hints, labels and empty-state notes no longer carry the browser's default margins on top of their layout gap; section labels render at text size instead of as large headings; grouped fields lose the browser's grooved fieldset border; column headings in the trace, truth and result tables line up whether or not they carry a note; the empty side of a Parsons puzzle is drawn as a drop area; and Markdown tables, headings and rules are styled.
+
+- [`425db22`](https://github.com/openpatch/bitflow/commit/425db22dec8c86a5311e15d3a0ba4917b778a01f) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - `task-pixel-grid` can number its rows and columns from 0. The new `firstIndex` field (`0` or `1`, default `1`) sets the numbers along the edges and in each cell's accessible name, so a grid beside code like `bild[zeile][spalte]` names its cells the way the array does.
+
+- [`686b737`](https://github.com/openpatch/bitflow/commit/686b737efb3716ca80e3dce31e8c6e9c09123e0c) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Update package to inlcude new bits
+
 ## 0.2.0
 
 ### Minor Changes
