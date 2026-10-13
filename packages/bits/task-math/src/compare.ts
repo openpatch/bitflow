@@ -22,7 +22,10 @@ type BoxedExpression = {
   isValid: boolean;
 };
 
-type Engine = { parse: (latex: string) => BoxedExpression };
+type Engine = {
+  parse: (latex: string) => BoxedExpression;
+  latexOptions: Record<string, unknown>;
+};
 
 let pending: Promise<Engine> | undefined;
 
@@ -32,11 +35,20 @@ let pending: Promise<Engine> | undefined;
  * Constructing it parses a dictionary of several hundred definitions, so a new
  * one per comparison would make marking a ten-blank question ten times slower
  * than it needs to be.
+ *
+ * It reads `{,}` as a decimal comma. That is what a mathfield writes when a
+ * learner in a comma locale types `1,5` (see `decimalSeparatorFor`), and what
+ * an author writes in a template so the comma is not spaced like punctuation.
+ * The point is still read as well, so `1.5` and `1{,}5` are one number in
+ * every locale — and a bare `(1,2)` stays a pair, because only the braced
+ * comma is a decimal one.
  */
 export const computeEngine = async (): Promise<Engine> => {
-  pending ??= import("@cortex-js/compute-engine").then(
-    (module) => new module.ComputeEngine() as unknown as Engine,
-  );
+  pending ??= import("@cortex-js/compute-engine").then((module) => {
+    const engine = new module.ComputeEngine() as unknown as Engine;
+    engine.latexOptions = { ...engine.latexOptions, decimalSeparator: "{,}" };
+    return engine;
+  });
   return pending;
 };
 

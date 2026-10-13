@@ -8,6 +8,7 @@ import {
 } from "react";
 import type { BlankOutcome } from "./evaluate";
 import {
+  applyDecimalSeparator,
   loadMathfield,
   thinIncorrectStrike,
   type MathfieldApi,
@@ -149,6 +150,7 @@ const Mathfield = ({
   useEffect(() => {
     if (!host.current || field.current) return;
 
+    applyDecimalSeparator(module, locale);
     const element = new module.MathfieldElement();
     element.mathVirtualKeyboardPolicy = data.virtualKeyboard ? "auto" : "manual";
     element.className = "bitflow-math-field";

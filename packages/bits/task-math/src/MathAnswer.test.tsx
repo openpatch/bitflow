@@ -122,6 +122,25 @@ describe("a formula with no blanks", () => {
   });
 });
 
+describe("the decimal separator", () => {
+  const separator = () =>
+    (FakeMathfield as unknown as { decimalSeparator?: string }).decimalSeparator;
+
+  it("is a comma in a German flow", async () => {
+    const { container } = render(
+      <MathAnswer data={make()} answer={{ prompts: {} }} locale="de" onChange={() => {}} />,
+    );
+    await waitFor(() => expect(fieldIn(container)).not.toBeNull());
+    expect(separator()).toBe(",");
+  });
+
+  it("is a point in an English flow", async () => {
+    const { container } = render(<Live data={make()} />);
+    await waitFor(() => expect(fieldIn(container)).not.toBeNull());
+    expect(separator()).toBe(".");
+  });
+});
+
 describe("a formula with blanks", () => {
   const data = make({
     latex: "x=\\placeholder[a]{}+\\placeholder[b]{}",

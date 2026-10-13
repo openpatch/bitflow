@@ -1,4 +1,4 @@
-import { injectStyles } from "@bitflow/core";
+import { injectStyles, type Locale } from "@bitflow/core";
 
 /**
  * Loading MathLive, once, on demand, with its fonts already in the bundle.
@@ -26,7 +26,43 @@ import { injectStyles } from "@bitflow/core";
  */
 
 export type MathfieldModule = {
-  MathfieldElement: new () => HTMLElement & MathfieldApi;
+  MathfieldElement: (new () => HTMLElement & MathfieldApi) & {
+    /** MathLive's own setting, and a static one: it holds for every field on the page. */
+    decimalSeparator?: "," | ".";
+  };
+};
+
+/**
+ * The decimal separator a learner in `locale` writes: `,` in German, French
+ * and most of Europe, `.` in English.
+ *
+ * Read off `Intl` rather than kept as a list, so a locale added to the catalog
+ * later gets the right one without anybody remembering this file.
+ */
+export const decimalSeparatorFor = (locale: Locale): "," | "." => {
+  try {
+    const part = new Intl.NumberFormat(locale)
+      .formatToParts(1.5)
+      .find((entry) => entry.type === "decimal");
+    return part?.value === "," ? "," : ".";
+  } catch {
+    return ".";
+  }
+};
+
+/**
+ * Tells MathLive which decimal separator to use, before a field is built.
+ *
+ * With `,` the comma key after a digit writes `{,}` instead of a bare comma,
+ * so `1,5` is a number rather than the pair (1, 5), and the virtual keyboard's
+ * decimal key shows a comma. `compare.ts` reads `{,}` back as a decimal.
+ *
+ * The setting is static in MathLive, so it applies page-wide; the last flow to
+ * build a field decides. A page mixing an English and a German flow is the one
+ * case where that shows, and even there a typed point is always understood.
+ */
+export const applyDecimalSeparator = (module: MathfieldModule, locale: Locale): void => {
+  module.MathfieldElement.decimalSeparator = decimalSeparatorFor(locale);
 };
 
 /** The parts of a mathfield this bit uses. */

@@ -62,6 +62,26 @@ describe("value", () => {
   });
 });
 
+describe("decimal commas", () => {
+  it("reads {,} as a decimal comma, as a mathfield writes it in a comma locale", async () => {
+    expect(await same("-1{,}2", "-1.2")).toBe(true);
+    expect(await same("-1{,}2", "-1{,}2")).toBe(true);
+    expect(await same("1{,}5x", "1.5x")).toBe(true);
+    expect(await same("-\\frac{6}{5}", "-1{,}2")).toBe(true);
+    expect(await same("1{,}2", "-1.2")).toBe(false);
+  });
+
+  it("still reads the point, so either separator is understood in every locale", async () => {
+    expect(await same("-1.2", "-1{,}2")).toBe(true);
+  });
+
+  it("leaves a bare comma a separator between items", async () => {
+    // Only the braced comma is a decimal one: (1,2) is still a pair.
+    expect(await same("(1,2)", "(1,2)")).toBe(true);
+    expect(await same("(1,2)", "1.2")).toBe(false);
+  });
+});
+
 describe("what will not parse", () => {
   it("is not the same as anything, including itself", async () => {
     // Two unreadable answers agreeing with each other would mark gibberish
