@@ -168,6 +168,63 @@ describe("engine", () => {
       );
       expect(distanceToEnd(stranded, "a")).toBe(Number.POSITIVE_INFINITY);
     });
+
+    /**
+     * Tasks each with a hint beside them that loops back for a second try or
+     * moves on — the shape a flow with "hint, then one more go" takes.
+     */
+    const hintChain = (tasks: number) => {
+      const nodes = [node("start", "test-start"), node("end", "test-end")];
+      const edges = [edge("start", "t1")];
+      for (let i = 1; i <= tasks; i++) {
+        const next = i === tasks ? "end" : `t${i + 1}`;
+        nodes.push(node(`t${i}`, "test-task", { correct: "a" }), node(`h${i}`, "test-content"));
+        edges.push(edge(`t${i}`, `h${i}`), edge(`h${i}`, `t${i}`), edge(`h${i}`, next), edge(`t${i}`, next));
+      }
+      return doc(nodes, edges);
+    };
+
+    /** The walk over every route, as it was before results were remembered. */
+    const everyRoute = (
+      document: ReturnType<typeof hintChain>,
+      fromId: string,
+      mode: "pessimistic" | "optimistic",
+    ): number => {
+      const visiting = new Set<string>();
+      const walk = (nodeId: string): number => {
+        if (isTerminalNode(document, nodeId)) return 0;
+        if (visiting.has(nodeId)) return Number.POSITIVE_INFINITY;
+        visiting.add(nodeId);
+        const distances = outgoingEdges(document, nodeId)
+          .map((e) => walk(e.target) + 1)
+          .filter(Number.isFinite);
+        visiting.delete(nodeId);
+        if (distances.length === 0) return Number.POSITIVE_INFINITY;
+        return mode === "optimistic" ? Math.min(...distances) : Math.max(...distances);
+      };
+      return walk(fromId);
+    };
+
+    it("agrees with walking every route where loops lead back along it", () => {
+      for (const tasks of [1, 2, 5, 8]) {
+        const chain = hintChain(tasks);
+        for (const from of ["start", "t1", `h${tasks}`]) {
+          for (const mode of ["optimistic", "pessimistic"] as const) {
+            expect(distanceToEnd(chain, from, mode)).toBe(everyRoute(chain, from, mode));
+          }
+        }
+      }
+    });
+
+    it("stays fast however many tasks have a hint loop beside them", () => {
+      // Every hint loop doubles the routes: thirty of them are a billion, which
+      // is what used to freeze the page while the progress line counted.
+      const chain = hintChain(30);
+      const started = performance.now();
+      expect(distanceToEnd(chain, "start", "optimistic")).toBe(31);
+      expect(distanceToEnd(chain, "start", "pessimistic")).toBe(61);
+      expect(performance.now() - started).toBeLessThan(500);
+    });
   });
 
   it("reports progress as visited over visited-plus-remaining", () => {

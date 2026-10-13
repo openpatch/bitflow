@@ -530,30 +530,65 @@ export const distanceToEnd = (
    */
   isActive: (node: BitNode) => boolean = () => true,
 ): number => {
-  const visiting = new Set<string>();
+  /** Nodes on the current route, with their depth in it. */
+  const onRoute = new Map<string, number>();
+  /**
+   * Answers that hold however a node was reached, so each node is worked out
+   * once rather than once per route into it. Without this every task with a
+   * hint loop beside it doubled the routes, and a flow of two dozen such tasks
+   * froze the page while the progress line counted sixteen million of them.
+   */
+  const settled = new Map<string, number>();
 
-  const walk = (nodeId: string): number => {
-    if (isTerminalNode(doc, nodeId)) return 0;
-    if (visiting.has(nodeId)) return Number.POSITIVE_INFINITY;
+  /**
+   * The distance from `nodeId`, and the shallowest route depth a cut cycle
+   * pointed back to on the way (`Infinity` if none did).
+   *
+   * A result is only remembered when every cycle it cut closed on the node
+   * itself or below it. A cut back to a node further up the route depends on
+   * how this node was reached — from elsewhere, that edge might be open — so
+   * such a result is worked out again next time.
+   *
+   * For loops that lead back along the route — a hint that returns to its
+   * task, a retry — this gives the same answer as walking every route. Where
+   * cycles interlock, a remembered value can count a route the current one
+   * could not take. That is the price of finishing at all: the longest route
+   * without repeats is not something any walk can afford in general, and this
+   * is a progress estimate, not a guarantee.
+   */
+  const walk = (nodeId: string, depth: number): { distance: number; cutAt: number } => {
+    if (isTerminalNode(doc, nodeId)) return { distance: 0, cutAt: Number.POSITIVE_INFINITY };
+    const known = settled.get(nodeId);
+    if (known !== undefined) return { distance: known, cutAt: Number.POSITIVE_INFINITY };
+    const ancestor = onRoute.get(nodeId);
+    if (ancestor !== undefined) return { distance: Number.POSITIVE_INFINITY, cutAt: ancestor };
 
-    visiting.add(nodeId);
-    const distances = outgoingEdges(doc, nodeId)
-      .map((edge) => {
-        const target = getNode(doc, edge.target);
-        const rest = walk(edge.target);
-        if (!Number.isFinite(rest)) return rest;
-        return target && !isActive(target) ? rest : rest + 1;
-      })
-      .filter(Number.isFinite);
-    visiting.delete(nodeId);
+    onRoute.set(nodeId, depth);
+    let cutAt = Number.POSITIVE_INFINITY;
+    const distances: number[] = [];
+    for (const edge of outgoingEdges(doc, nodeId)) {
+      const target = getNode(doc, edge.target);
+      const rest = walk(edge.target, depth + 1);
+      cutAt = Math.min(cutAt, rest.cutAt);
+      if (!Number.isFinite(rest.distance)) continue;
+      distances.push(target && !isActive(target) ? rest.distance : rest.distance + 1);
+    }
+    onRoute.delete(nodeId);
 
-    if (distances.length === 0) return Number.POSITIVE_INFINITY;
-    return mode === "optimistic"
-      ? Math.min(...distances)
-      : Math.max(...distances);
+    const distance =
+      distances.length === 0
+        ? Number.POSITIVE_INFINITY
+        : mode === "optimistic"
+          ? Math.min(...distances)
+          : Math.max(...distances);
+    if (cutAt >= depth) {
+      settled.set(nodeId, distance);
+      return { distance, cutAt: Number.POSITIVE_INFINITY };
+    }
+    return { distance, cutAt };
   };
 
-  return getNode(doc, fromId) ? walk(fromId) : Number.POSITIVE_INFINITY;
+  return getNode(doc, fromId) ? walk(fromId, 0).distance : Number.POSITIVE_INFINITY;
 };
 
 // --- time -------------------------------------------------------------------
