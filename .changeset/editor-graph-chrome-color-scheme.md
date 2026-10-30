@@ -1,5 +1,4 @@
 ---
-"@bitflow/bitflow": patch
 "@bitflow/web-component": patch
 ---
 
