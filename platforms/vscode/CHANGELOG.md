@@ -1,5 +1,24 @@
 # bitflow-studio
 
+## 0.1.3
+
+### Patch Changes
+
+- [`d6dce81`](https://github.com/openpatch/bitflow/commit/d6dce81cebd4050ec5c009b678857f40741d9b55) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - Bitflow Studio takes its fonts and colour scheme from the workbench. A webview is its own document, so nothing of VS Code's typography reached the editor by inheritance: the canvas sat in the browser default serif and stayed light in a dark workbench. The editor now reads `--vscode-font-family` and `--vscode-editor-font-family`, and a dark workbench sets `color-scheme: dark`, which is what the `light-dark()` theme resolves against.
+- Updated dependencies [[`d6dce81`](https://github.com/openpatch/bitflow/commit/d6dce81cebd4050ec5c009b678857f40741d9b55)]:
+  - @bitflow/core@0.9.0
+  - @bitflow/bitflow@0.0.0
+  - @bitflow/element@0.0.0
+  - @bitflow/end-tries@0.0.0
+  - @bitflow/input-markdown@0.0.0
+  - @bitflow/start-simple@0.0.0
+  - @bitflow/task-choice@0.0.0
+  - @bitflow/task-fill-in-the-blank@0.0.0
+  - @bitflow/task-highlighting@0.0.0
+  - @bitflow/task-input@0.0.0
+  - @bitflow/task-yes-no@0.0.0
+  - @bitflow/title-simple@0.0.0
+
 ## 0.1.2
 
 ### Patch Changes
