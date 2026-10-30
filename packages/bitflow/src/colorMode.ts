@@ -48,7 +48,7 @@ export const useFlowColorMode = (target: RefObject<Element | null>): "light" | "
     const update = () => setColorMode(usedColorScheme(element));
     update();
 
-    const attributes = { attributes: true, attributeFilter: ["class", "style"] } as const;
+    const attributes: MutationObserverInit = { attributes: true, attributeFilter: ["class", "style"] };
     const observer = new MutationObserver(update);
     observer.observe(document.documentElement, attributes);
     observer.observe(document.body, attributes);
