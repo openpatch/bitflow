@@ -10,6 +10,19 @@
  * through a shadow boundary, so `:root` alone is enough whenever the host page
  * loads this file. The `:host` copy is what makes a single bit element work
  * when it is dropped on a page that only loaded that one bundle.
+ *
+ * Hyperbook is the host bitflow is embedded in most, so where it has a token
+ * of its own — `--color-brand`, `--color-background`, `--color-text`,
+ * `--color-text-deactivated` — that token comes first and bitflow's value
+ * becomes the fallback, the way learningmap reads them. The host flips its
+ * tokens per theme itself, so a fallback cannot be a light-dark() pair *and*
+ * follow the host: where the host is present its one value wins for both
+ * schemes, and the light-dark() pair is what a host without the token sees.
+ *
+ * A Hyperbook host still owes bitflow two things it cannot take: the page's
+ * own font (bitflow inherits it — see the type tokens) and a `color-scheme`
+ * on the container, without which the light-dark() pairs resolve light in a
+ * dark book. See the theming section of @bitflow/web-component's README.
  */
 :root,
 :host {
@@ -26,7 +39,12 @@
      blocked cells and grid lines stay the opposite of its letter cells — and
      each feedback accent clears 4.5:1 both on its own surface and as text on
      the page. */
-  --bitflow-color-primary: light-dark(#017460, #57a396); /* OpenPatch Green */
+  /* The host's brand where it declares one — Hyperbook flips --color-brand
+     with its theme, so a flow on its pages wears the book's green, not ours.
+     on-primary needs a matching color-scheme from the host in the dark theme:
+     Hyperbook's dark brand is a light mint, and white on it would be
+     unreadable. */
+  --bitflow-color-primary: var(--color-brand, light-dark(#017460, #57a396)); /* OpenPatch Green */
   --bitflow-color-primary-dark: light-dark(#004c45, #7cbfb2); /* Deep Forest */
   --bitflow-color-primary-light: light-dark(#b5e3d8, #214640); /* Fresh Mint */
   /* Text and marks drawn *on* the primary colour: a filled button's label, a
@@ -61,12 +79,22 @@
   --bitflow-color-manual: light-dark(#5a4b8a, #958cb4);
   --bitflow-color-manual-surface: light-dark(#eeebf6, #2b2836);
 
-  /* Surfaces */
-  --bitflow-color-background: light-dark(#f5f5f5, #1e1e1e);
+  /* Surfaces. Where the host paints the page itself — a book, the editor
+     frame of Hyperbook Cloud — bitflow is part of that page: its background
+     and text come from the host's tokens so the shell is not a box in a
+     slightly different grey. The other neutrals stay bitflow's own, because
+     the host has no scale that inverts the way the bits need (see above). */
+  --bitflow-color-background: var(
+    --color-background,
+    light-dark(#f5f5f5, #1e1e1e)
+  );
   --bitflow-color-surface: light-dark(#ffffff, #2c2c2c);
   --bitflow-color-border: var(--bitflow-color-neutral-200);
-  --bitflow-color-text: var(--bitflow-color-neutral-900);
-  --bitflow-color-text-muted: var(--bitflow-color-neutral-700);
+  --bitflow-color-text: var(--color-text, var(--bitflow-color-neutral-900));
+  --bitflow-color-text-muted: var(
+    --color-text-deactivated,
+    var(--bitflow-color-neutral-700)
+  );
 
   /* Type */
   /* The page's own font: bitflow sits inside someone else's page and should

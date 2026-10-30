@@ -86,6 +86,43 @@ declared, so the derived ones are already fixed to bitflow's green by the
 time they reach your container; re-declaring only `--bitflow-color-primary`
 gives a new button colour with the old hover and focus ring.
 
+### Hyperbook
+
+Where the host is a Hyperbook — a book page or an editor frame of Hyperbook
+Cloud — bitflow reads four of its tokens by name, with its own values as the
+fallback, so it follows the book's theme without a mapping stylesheet:
+
+| bitflow token | Hyperbook token | What the host owes beyond it |
+| --- | --- | --- |
+| `--bitflow-color-primary` | `--color-brand` | nothing |
+| `--bitflow-color-background` | `--color-background` | nothing |
+| `--bitflow-color-text` | `--color-text` | nothing |
+| `--bitflow-color-text-muted` | `--color-text-deactivated` | nothing |
+
+Hyperbook flips those tokens per theme itself, so they arrive already right
+for the current scheme. A host that declares them on a container (the way
+Hyperbook has to — bitflow injects its own tokens after the host's
+stylesheets) wins outright over this table, which is only the default.
+
+Two things a Hyperbook host still has to hand over, because bitflow cannot
+take them:
+
+```css
+/* The container a flow sits in. Hyperbook switches the class with its
+   theme; without the color-scheme the feedback colours stay light in a dark
+   book. */
+.directive-bitflow {
+  color-scheme: light; /* dark in dark.css */
+  /* The book's own code font; the body font arrives by inheritance. */
+  --bitflow-font-family-mono: hyperbook-code, monospace;
+}
+```
+
+An editor frame that is a bare document — visual.html in Hyperbook Cloud, a
+VS Code webview — inherits no font at all, so it has to give the page one for
+`inherit` to pick up (`font-family: var(--vscode-font-family)` on the body is
+what Bitflow Studio does) and set the `color-scheme` with the theme.
+
 ## `<bitflow-flow-editor>`
 
 Authors an assessment. Loads the whole bit palette up front.

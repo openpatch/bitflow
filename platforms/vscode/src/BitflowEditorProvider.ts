@@ -175,9 +175,26 @@ export class BitflowEditorProvider implements vscode.CustomTextEditorProvider {
       height: 100%;
       overflow: hidden;
     }
+    /* A webview is its own document: nothing of the workbench's typography
+       reaches it by inheritance. VS Code hands it over as variables instead,
+       so the editor reads them off the body — bitflow's own font token is
+       "inherit", which is what makes the workbench font arrive everywhere. */
+    body {
+      font-family: var(--vscode-font-family);
+    }
     #root {
       width: 100%;
       height: 100%;
+      /* Code is the one place bitflow does not inherit: its mono token has a
+         stack of its own, so the editor font is taken explicitly. */
+      --bitflow-font-family-mono: var(--vscode-editor-font-family, "Ubuntu Mono", Menlo, Consolas, monospace);
+    }
+    /* bitflow's colours are light-dark() pairs and resolve against the
+       color-scheme of the element using them. The workbench's choice arrives
+       as a class on the body, so that is where the scheme is set — without
+       this, a dark workbench gets a light editor. */
+    body.vscode-dark {
+      color-scheme: dark;
     }
   </style>
 </head>
