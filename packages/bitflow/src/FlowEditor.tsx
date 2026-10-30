@@ -48,6 +48,7 @@ import {
   type Ref,
 } from "react";
 import { useStore } from "zustand";
+import { useFlowColorMode } from "./colorMode";
 import { ConditionEditor, summariseCondition } from "./ConditionEditor";
 import { createEditorStore, type EditorStore } from "./editorStore";
 import { nodeTypes } from "./EditorNode";
@@ -135,6 +136,10 @@ const FlowEditorBody = ({
   const palettePanel = useGroups(["palette"]);
   const settingsPanels = useGroups();
   const editorRef = useRef<HTMLDivElement>(null);
+  // The graph chrome (zoom buttons, minimap, background) follows the same
+  // color-scheme as bitflow's own light-dark() palette, so neither can end up
+  // the only light thing in a dark host.
+  const colorMode = useFlowColorMode(editorRef);
 
   const t = useCallback(
     (key: string, vars?: Record<string, string | number>) =>
@@ -333,6 +338,7 @@ const FlowEditorBody = ({
             nodes={canvasNodes}
             edges={edges}
             nodeTypes={nodeTypes as never}
+            colorMode={colorMode}
             nodesDraggable={!readonly}
             nodesConnectable={!readonly}
             edgesReconnectable={!readonly}

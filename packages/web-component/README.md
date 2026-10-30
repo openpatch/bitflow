@@ -79,7 +79,9 @@ Dark mode follows the CSS `color-scheme` of the page around the element, never
 the OS by itself: every colour token is a `light-dark()` pair. Set
 `color-scheme: dark` on a container when your page switches to dark, or
 `color-scheme: light dark` on the page to follow the OS. A page that sets
-neither gets the light theme.
+neither gets the light theme. The editor's graph chrome — the zoom buttons,
+the minimap, the dotted canvas — reads the same `color-scheme` and follows it
+live, so it cannot end up the only light thing in a dark host.
 
 Set the primary family together. A custom property is resolved where it is
 declared, so the derived ones are already fixed to bitflow's green by the
