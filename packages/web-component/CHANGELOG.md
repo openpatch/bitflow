@@ -1,5 +1,11 @@
 # @bitflow/web-component
 
+## 0.4.0
+
+### Minor Changes
+
+- [`f0e8281`](https://github.com/openpatch/bitflow/commit/f0e828165a3bb82649378303d0f05f120dfded9a) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - The bundled theme now reads four of Hyperbook's design tokens where the host declares them — `--color-brand`, `--color-background`, `--color-text`, `--color-text-deactivated` — with bitflow's own palette as the fallback. A flow on a Hyperbook page (and the editor in a frame of Hyperbook Cloud) follows the book's brand, background and text in both themes without a mapping stylesheet. A host that declares the bitflow tokens itself still wins outright; and a Hyperbook still owes the container a `color-scheme`, without which the `light-dark()` feedback colours stay light in a dark book.
+
 ## 0.3.1
 
 ### Patch Changes
