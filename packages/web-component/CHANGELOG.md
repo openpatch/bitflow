@@ -1,5 +1,11 @@
 # @bitflow/web-component
 
+## 0.3.1
+
+### Patch Changes
+
+- [`cf0bffe`](https://github.com/openpatch/bitflow/commit/cf0bffe6003c90ff51272e5d6c44dd3baf78a3c8) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - The progress line no longer freezes the page on long flows with hint loops. Working out "step 3 of about 12" walked every route through the flow, and each task with a hint that loops back for a second try doubled the routes — two dozen such tasks were sixteen million routes. Each step is now worked out once, so the same flow takes a few milliseconds.
+
 ## 0.3.0
 
 ### Minor Changes
