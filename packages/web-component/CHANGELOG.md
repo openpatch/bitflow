@@ -1,5 +1,11 @@
 # @bitflow/web-component
 
+## 0.5.0
+
+### Minor Changes
+
+- [`274f331`](https://github.com/openpatch/bitflow/commit/274f331ef235b54844b1d968c677cf1ae2eb4845) Thanks [@mikebarkmin](https://github.com/mikebarkmin)! - The choice task no longer badges a wrong answer the learner _correctly left unticked_ as green "correct" — that told students a wrong answer was the right one. Outcome markers now say what happened to each choice: a ticked correct choice is green "correct", a ticked wrong choice is red "wrong", a correct choice the learner failed to tick is shown green with a dashed border as "correct answer, not selected", and a wrong choice left unticked carries no marker at all. Scoring, including partial credit, is unchanged.
+
 ## 0.4.1
 
 ### Patch Changes
