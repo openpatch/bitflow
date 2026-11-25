@@ -30,6 +30,16 @@
   background: var(--bitflow-color-wrong-surface);
 }
 
+/* A correct answer the learner did not tick. Green, because it *was* a right
+   answer — but dashed, so "this is what you should have picked" never looks
+   like "you picked this". The visually-hidden label carries the same nuance,
+   so colour remains a convenience and not the only signal. */
+.bitflow-option.bitflow-option-missed {
+  border-style: dashed;
+  border-color: var(--bitflow-color-correct);
+  background: var(--bitflow-color-correct-surface);
+}
+
 /* Authoring: one row per choice — correct mark, text, reorder, remove.
    Wrapping, so in a narrow inspector the buttons drop below the text they
    belong to rather than squeezing it to nothing. */

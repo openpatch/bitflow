@@ -43,9 +43,18 @@ describe("evaluate", () => {
   it("reports the state of every choice", () => {
     const result = evaluate({ data: data(), answer: { selected: ["a", "c"] } });
     expect(result.detail?.choices).toEqual({
-      a: "correct", // ticked, and it should be
-      b: "wrong", // not ticked, but it should have been
+      a: "correct", // ticked, as it should have been
+      b: "missed", // not ticked, but it should have been
       c: "wrong", // ticked, but it should not have been
+    });
+  });
+
+  it("leaves a wrong choice that was correctly not ticked neutral, not green", () => {
+    const result = evaluate({ data: data(), answer: { selected: ["a", "b"] } });
+    expect(result.detail?.choices).toEqual({
+      a: "correct",
+      b: "correct",
+      c: "neutral", // wrong answer, and correctly left unticked
     });
   });
 

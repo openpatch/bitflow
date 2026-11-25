@@ -27,10 +27,15 @@ export const evaluate = ({
   for (const choice of data.choices) {
     const checked = selected.has(choice.id);
     // Right means "matches what the teacher marked" — ticking a wrong choice
-    // and leaving a correct one unticked are both mistakes.
+    // and leaving a correct one unticked are both mistakes, and both count
+    // against the score. What is *shown* is a different question: a wrong
+    // answer left unticked is no achievement, so it stays `neutral` instead
+    // of appearing in green next to the learner's actual picks.
     const correct = checked === choice.correct;
     if (correct) right += 1;
-    choices[choice.id] = correct ? "correct" : "wrong";
+    choices[choice.id] = checked
+      ? (choice.correct ? "correct" : "wrong")
+      : (choice.correct ? "missed" : "neutral");
 
     if (data.evaluation.showFeedback) {
       const message = checked

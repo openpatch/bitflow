@@ -91,5 +91,11 @@ export const AnswerSchema = z.object({
 });
 export type Answer = z.infer<typeof AnswerSchema>;
 
-/** Per-choice outcome, surfaced in `BitResult.detail.choices`. */
-export type ChoiceState = "correct" | "wrong" | "neutral";
+/**
+ * Per-choice outcome, surfaced in `BitResult.detail.choices`.
+ *
+ * `missed` is a correct answer the learner did not tick; a wrong answer
+ * correctly left unticked is `neutral`, not `correct` — marking it green
+ * told the learner a wrong answer was the right one.
+ */
+export type ChoiceState = "correct" | "missed" | "wrong" | "neutral";

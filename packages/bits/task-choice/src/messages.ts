@@ -16,6 +16,7 @@ export const messages: Catalogs = {
     legendMultiple: "Choose all answers that apply",
     correct: "correct",
     wrong: "wrong",
+    missed: "correct answer, not selected",
     // Authoring
   },
   de: {
@@ -25,6 +26,7 @@ export const messages: Catalogs = {
     legendMultiple: "Wähle alle zutreffenden Antworten",
     correct: "richtig",
     wrong: "falsch",
+    missed: "richtige Antwort, nicht gewählt",
   },
   fr: {
     name: "Choix",
@@ -33,6 +35,7 @@ export const messages: Catalogs = {
     legendMultiple: "Choisissez toutes les réponses qui conviennent",
     correct: "correct",
     wrong: "incorrect",
+    missed: "bonne réponse, non sélectionnée",
   },
   nl: {
     name: "Keuze",
@@ -41,6 +44,7 @@ export const messages: Catalogs = {
     legendMultiple: "Kies alle antwoorden die kloppen",
     correct: "juist",
     wrong: "niet juist",
+    missed: "juist antwoord, niet gekozen",
   },
   es: {
     name: "Elección",
@@ -49,6 +53,7 @@ export const messages: Catalogs = {
     legendMultiple: "Elige todas las respuestas correctas",
     correct: "correcto",
     wrong: "incorrecto",
+    missed: "respuesta correcta, no seleccionada",
   },
   it: {
     name: "Scelta",
@@ -57,6 +62,7 @@ export const messages: Catalogs = {
     legendMultiple: "Scegli tutte le risposte corrette",
     correct: "corretto",
     wrong: "non corretto",
+    missed: "risposta corretta, non selezionata",
   },
   pt: {
     name: "Escolha",
@@ -65,6 +71,7 @@ export const messages: Catalogs = {
     legendMultiple: "Escolhe todas as respostas corretas",
     correct: "correto",
     wrong: "incorreto",
+    missed: "resposta correta, não selecionada",
   },
   tr: {
     name: "Seçim",
@@ -73,5 +80,6 @@ export const messages: Catalogs = {
     legendMultiple: "Uygun olan tüm yanıtları seçin",
     correct: "doğru",
     wrong: "yanlış",
+    missed: "doğru cevap, seçilmedi",
   },
 };

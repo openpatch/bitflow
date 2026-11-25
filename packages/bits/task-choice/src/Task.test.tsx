@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import { evaluate } from "./evaluate";
 import { DataSchema, type Answer, type Data } from "./schema";
 import { Task } from "./Task";
 
@@ -118,12 +119,33 @@ describe("Task", () => {
       answer: { selected: ["a", "c"] },
       result: {
         state: "wrong",
-        detail: { choices: { a: "correct", b: "wrong", c: "wrong" } },
+        detail: { choices: { a: "correct", b: "missed", c: "wrong" } },
       },
       readonly: true,
     });
     expect(screen.getAllByText("correct")).toHaveLength(1);
-    expect(screen.getAllByText("wrong")).toHaveLength(2);
+    expect(screen.getByText("correct answer, not selected")).toBeDefined();
+    expect(screen.getAllByText("wrong")).toHaveLength(1);
+  });
+
+  it("labels a choice the learner merely failed to tick as missed, not as wrong", () => {
+    renderTask({
+      answer: { selected: ["c"] },
+      result: evaluate({ data: data(), answer: { selected: ["c"] } }),
+      readonly: true,
+    });
+    expect(screen.getAllByText("correct answer, not selected")).toHaveLength(2);
+  });
+
+  it("does not badge a wrong choice that was correctly left unticked", () => {
+    renderTask({
+      answer: { selected: ["a", "b"] },
+      result: evaluate({ data: data(), answer: { selected: ["a", "b"] } }),
+      readonly: true,
+    });
+    expect(screen.getAllByText("correct")).toHaveLength(2);
+    expect(screen.queryByText("wrong")).toBeNull();
+    expect(screen.queryByText("correct answer, not selected")).toBeNull();
   });
 
   it("groups the choices under an accessible legend", () => {
